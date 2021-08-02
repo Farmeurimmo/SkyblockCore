@@ -122,14 +122,16 @@ public class MakeRanksGui {
 		ItemStack custom10 = new ItemStack(Material.WITHER_SKELETON_SKULL, 1);
 		ItemMeta customi = custom10.getItemMeta();
 		customi.setDisplayName("§bZeus");
-		customi.setLore(Arrays.asList("§7","§8» §7Permissions","§8» §b/fly permanant","§8» §b/craft","§8» §b/enchantement","§8» §b/hat","§8» §b/feed","§8» §b/is rename"));
+		customi.setLore(Arrays.asList("§8» §7/fly permanant","§8» §7/sellall","§8» §7/craft","§8» §7/enchantement","§8» §7/hat","§8» §7/feed",
+				"§8» §7/is rename","§7","§6Prix: " + Farm2WinGui.zeusprix + "$"));
 		custom10.setItemMeta(customi);
 		invboutiquefarm2win.setItem(10, custom10);
 		} else {
 			ItemStack custom10 = new ItemStack(Material.BEDROCK, 1);
 			ItemMeta customi = custom10.getItemMeta();
 			customi.setDisplayName("§bZeus");
-			customi.setLore(Arrays.asList("§7soon", "§7"));
+			customi.setLore(Arrays.asList("§8» §7/fly permanant","§8» §7/sellall","§8» §7/craft","§8» §7/enchantement","§8» §7/hat","§8» §7/feed",
+					"§8» §7/is rename","§7","§6Prix: " + Farm2WinGui.zeusprix + "$"));
 			custom10.setItemMeta(customi);
 			invboutiquefarm2win.setItem(10, custom10);
 		}
@@ -138,14 +140,16 @@ public class MakeRanksGui {
 		ItemStack custom11 = new ItemStack(Material.BEACON, 1);
 		ItemMeta customj = custom11.getItemMeta();
 		customj.setDisplayName("§9Dieu");
-		customj.setLore(Arrays.asList("§7soon", "§7"));
+		customj.setLore(Arrays.asList("§8» §76 heures de fly journalier /dailyfly","§8» §7/craft","§8» §7/enchantement","§8» §7/hat","§8» §7/feed",
+				"§6Prix: " + Farm2WinGui.dieuprix + "$"));
 		custom11.setItemMeta(customj);
 		invboutiquefarm2win.setItem(19, custom11);
 		} else {
 			ItemStack custom11 = new ItemStack(Material.BEDROCK, 1);
 			ItemMeta customj = custom11.getItemMeta();
 			customj.setDisplayName("§9Dieu");
-			customj.setLore(Arrays.asList("§7soon", "§7"));
+			customj.setLore(Arrays.asList("§8» §76 heures de fly journalier /dailyfly","§8» §7/craft","§8» §7/enchantement","§8» §7/hat","§8» §7/feed",
+					"§6Prix: " + Farm2WinGui.dieuprix + "$"));
 			custom11.setItemMeta(customj);
 			invboutiquefarm2win.setItem(19, custom11);
 		}
