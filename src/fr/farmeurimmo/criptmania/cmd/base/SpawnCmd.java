@@ -25,6 +25,7 @@ public class SpawnCmd implements CommandExecutor {
 				final int timeLeft = Main.instance1.getCooldown(player.getName());
 				if(player.hasPermission("spawninstant.*")) {
 					player.teleport(Spawn);
+					SendActionBar.SendActionBarMsg(player, "§6Téléportation effectuée !");
 					return true;
 				}
 				else {
