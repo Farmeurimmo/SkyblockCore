@@ -1,5 +1,6 @@
 package fr.farmeurimmo.criptmania.events;
 
+import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -14,6 +15,7 @@ public class SwitchWorld implements Listener {
 		Player player = e.getPlayer();
 		if(player.getWorld().getName().equalsIgnoreCase("world")) {
 		if(player.getAllowFlight() == true) {
+			if(player.getGameMode() == GameMode.CREATIVE || player.getGameMode() == GameMode.SPECTATOR) return;
 			player.setAllowFlight(false);
 			player.setFlying(false);
 			SendActionBar.SendActionBarMsg(player, "§aFly désactivé");
