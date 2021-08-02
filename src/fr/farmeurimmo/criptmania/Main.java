@@ -28,6 +28,7 @@ import fr.farmeurimmo.criptmania.cmd.base.WikiCmd;
 import fr.farmeurimmo.criptmania.events.AntiExplo;
 import fr.farmeurimmo.criptmania.events.Interact;
 import fr.farmeurimmo.criptmania.events.JoinLeave;
+import fr.farmeurimmo.criptmania.events.SwitchWorld;
 import fr.farmeurimmo.criptmania.events.Tchat;
 import fr.farmeurimmo.criptmania.featherfly.DailyFlyCmd;
 import fr.farmeurimmo.criptmania.featherfly.FeatherFlyCmd;
@@ -108,6 +109,7 @@ public class Main extends JavaPlugin implements Listener {
 		getServer().getPluginManager().registerEvents(new WineGui(), this);
 		getServer().getPluginManager().registerEvents(new WarpGui(), this);
 		getServer().getPluginManager().registerEvents(new FeatherFlyInteract(), this);
+		getServer().getPluginManager().registerEvents(new SwitchWorld(), this);
 		this.getCommand("spawn").setExecutor(new SpawnCmd());
 		this.getCommand("wiki").setExecutor(new WikiCmd());
 		this.getCommand("build").setExecutor(new BuildCmd());

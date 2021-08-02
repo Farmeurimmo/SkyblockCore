@@ -23,15 +23,13 @@ public class SpawnCmd implements CommandExecutor {
 				final Location Spawn = new Location(Bukkit.getServer().getWorld("world"), -186.5, 110, -63.5, 0, 0);
 				final Player player = (Player) sender;
 				final int timeLeft = Main.instance1.getCooldown(player.getName());
-				player.setFlying(false);
 				if(player.hasPermission("spawninstant.*")) {
 					player.teleport(Spawn);
-					SendActionBar.SendActionBarMsg(player, "§6Vous avez été téléporté au spawn !");
 					return true;
 				}
 				else {
-					SendActionBar.SendActionBarMsg(player, "§6Téléportation au spawn dans 5 secondes !");
 					if (timeLeft == 0) {
+						SendActionBar.SendActionBarMsg(player, "§6Téléportation dans 5 secondes...");
 						int cooldown = 5;
 						Main.instance1.setCooldown(player.getName(), cooldown);
 						new BukkitRunnable() {

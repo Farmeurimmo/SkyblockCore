@@ -15,13 +15,20 @@ public class FlyCmd implements CommandExecutor {
 		if(sender instanceof Player) {
 		Player player = (Player) sender;
 		if(player.hasPermission("fly")) {
+			if(!player.getWorld().getName().equalsIgnoreCase("world")) {
 			if(player.getAllowFlight() == false) {
 				player.setAllowFlight(true);
+				player.setFlying(true);
 				SendActionBar.SendActionBarMsg(player, "§aFly activé !");
 			}
 			else {
 				player.setAllowFlight(false);
+				player.setFlying(false);
 				SendActionBar.SendActionBarMsg(player, "§aFly désactivé !");
+			}
+		}
+			else {
+				SendActionBar.SendActionBarMsg(player, "§cImpossible de fly dans ce monde !");
 			}
 		}
 		else {
