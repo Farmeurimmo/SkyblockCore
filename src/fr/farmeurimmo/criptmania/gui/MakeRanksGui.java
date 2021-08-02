@@ -122,16 +122,16 @@ public class MakeRanksGui {
 		ItemStack custom10 = new ItemStack(Material.WITHER_SKELETON_SKULL, 1);
 		ItemMeta customi = custom10.getItemMeta();
 		customi.setDisplayName("§bZeus");
-		customi.setLore(Arrays.asList("§8» §7/fly permanant","§8» §7/sellall","§8» §7/craft","§8» §7/enchantement","§8» §7/hat","§8» §7/feed",
-				"§8» §7/is rename","§7","§6Prix: " + Farm2WinGui.zeusprix + "$"));
+		customi.setLore(Arrays.asList("§8» §7/fly permanant","§8» §7/sellall","§8» §7/is rename","§8» §7/enchantement","§8» §7/hat",
+				"§8» §7/craft","§8» §7/feed","§7","§6Prix: " + Farm2WinGui.zeusprix + "$"));
 		custom10.setItemMeta(customi);
 		invboutiquefarm2win.setItem(10, custom10);
 		} else {
 			ItemStack custom10 = new ItemStack(Material.BEDROCK, 1);
 			ItemMeta customi = custom10.getItemMeta();
 			customi.setDisplayName("§bZeus");
-			customi.setLore(Arrays.asList("§8» §7/fly permanant","§8» §7/sellall","§8» §7/craft","§8» §7/enchantement","§8» §7/hat","§8» §7/feed",
-					"§8» §7/is rename","§7","§6Prix: " + Farm2WinGui.zeusprix + "$"));
+			customi.setLore(Arrays.asList("§8» §7/fly permanant","§8» §7/sellall","§8» §7/is rename","§8» §7/enchantement","§8» §7/hat",
+					"§8» §7/craft","§8» §7/feed","§7","§6Prix: " + Farm2WinGui.zeusprix + "$"));
 			custom10.setItemMeta(customi);
 			invboutiquefarm2win.setItem(10, custom10);
 		}
@@ -140,16 +140,16 @@ public class MakeRanksGui {
 		ItemStack custom11 = new ItemStack(Material.BEACON, 1);
 		ItemMeta customj = custom11.getItemMeta();
 		customj.setDisplayName("§9Dieu");
-		customj.setLore(Arrays.asList("§8» §76 heures de fly journalier /dailyfly","§8» §7/craft","§8» §7/enchantement","§8» §7/hat","§8» §7/feed",
-				"§6Prix: " + Farm2WinGui.dieuprix + "$"));
+		customj.setLore(Arrays.asList("§8» §7180 minutes de fly journalier /dailyfly","§8» §7/is rename","§8» §7/enchantement","§8» §7/hat",
+				"§8» §7/craft","§8» §7/feed","§7","§6Prix: " + Farm2WinGui.dieuprix + "$"));
 		custom11.setItemMeta(customj);
 		invboutiquefarm2win.setItem(19, custom11);
 		} else {
 			ItemStack custom11 = new ItemStack(Material.BEDROCK, 1);
 			ItemMeta customj = custom11.getItemMeta();
 			customj.setDisplayName("§9Dieu");
-			customj.setLore(Arrays.asList("§8» §76 heures de fly journalier /dailyfly","§8» §7/craft","§8» §7/enchantement","§8» §7/hat","§8» §7/feed",
-					"§6Prix: " + Farm2WinGui.dieuprix + "$"));
+			customj.setLore(Arrays.asList("§8» §7180 minutes de fly journalier /dailyfly","§8» §7/is rename","§8» §7/enchantement","§8» §7/hat",
+					"§8» §7/craft","§8» §7/feed","§7","§6Prix: " + Farm2WinGui.dieuprix + "$"));
 			custom11.setItemMeta(customj);
 			invboutiquefarm2win.setItem(19, custom11);
 		}
@@ -158,14 +158,16 @@ public class MakeRanksGui {
 		ItemStack custom12 = new ItemStack(Material.NETHERITE_BLOCK, 1);
 		ItemMeta customk = custom12.getItemMeta();
 		customk.setDisplayName("§eLégende");
-		customk.setLore(Arrays.asList("§7soon", "§7"));
+		customk.setLore(Arrays.asList("§8» §790 minutes de fly journalier /dailyfly","§8» §7Accès au shop spawneurs","§8» §7/craft","§8» §7/feed",
+				"§7","§6Prix: " + Farm2WinGui.legendeprix + "$"));
 		custom12.setItemMeta(customk);
 		invboutiquefarm2win.setItem(28, custom12);
 		} else {
 			ItemStack custom12 = new ItemStack(Material.BEDROCK, 1);
 			ItemMeta customk = custom12.getItemMeta();
 			customk.setDisplayName("§eLégende");
-			customk.setLore(Arrays.asList("§7soon", "§7"));
+			customk.setLore(Arrays.asList("§8» §790 minutes de fly journalier /dailyfly","§8» §7Accès au shop spawneurs","§8» §7/craft","§8» §7/feed",
+					"§7","§6Prix: " + Farm2WinGui.legendeprix + "$"));
 			custom12.setItemMeta(customk);
 			invboutiquefarm2win.setItem(28, custom12);
 		}
