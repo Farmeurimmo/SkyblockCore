@@ -1,0 +1,64 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>SkyblockCore</groupId>
+  <artifactId>SkyblockCore</artifactId>
+  <version>0.1.0-SNAPSHOT</version>
+  <name>SkyblockCore CriptMania</name>
+  <description>CriptMania all right reserved</description>
+  <repositories>
+        <repository>
+            <id>net.luckperms</id>
+            <url>https://repo1.maven.org/maven2/net/luckperms/api/5.3/</url>
+        </repository>
+        <repository>
+            <id>everything</id>
+            <url>https://repo.citizensnpcs.co/</url>
+        </repository>
+<repository>
+        <id>spigot-repo</id>
+        <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
+    </repository>
+<repository>
+    <id>savagelabs</id>
+    <url>https://nexus.savagelabs.net/repository/maven-releases/</url>
+</repository>
+    </repositories>
+    <dependencies>
+        <dependency>
+            <groupId>net.luckperms</groupId>
+            <artifactId>api</artifactId>
+            <version>5.3</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.citizensnpcs</groupId>
+            <artifactId>citizens-main</artifactId>
+            <version>2.0.27-SNAPSHOT</version>
+            <type>jar</type>
+            <scope>provided</scope>
+        </dependency>
+<dependency>
+           <groupId>org.spigotmc</groupId>
+           <artifactId>spigot-api</artifactId>
+           <version>1.16.5-R0.1-SNAPSHOT</version>
+           <scope>provided</scope>
+    </dependency>
+<dependency>
+    <groupId>com.iridium</groupId>
+    <artifactId>IridiumSkyblock</artifactId>
+    <version>LATEST</version>
+</dependency>
+    </dependencies>
+  <build>
+    <sourceDirectory>src</sourceDirectory>
+    <plugins>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.8.1</version>
+        <configuration>
+          <release>15</release>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>

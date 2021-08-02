@@ -1,0 +1,25 @@
+name: SkyblockCore
+version: 1.0
+author: Farmeurimmo
+main: fr.farmeurimmo.criptmania.Main
+depend: [Citizens, TheNewEconomy, IridiumSkyblock]
+api-version: 1.16
+commands:
+  spawn:
+  wiki:
+  build:
+  farm2win:
+    aliases: [boutiqueig]
+  bar:
+  menu:
+  warp:
+  warps:
+  featherfly:
+  dailyfly:
+  itemleg:
+  fly:
+  feed:
+  hat:
+  craft:
+  enchantement:
+    aliases: [ench]

@@ -1,0 +1,15 @@
+bossbar:
+  #Nombre de bossbar, si vous ne modifer pas ce chiffre alors que vous avez ajouté/enlevé un display, DE GROS BUGS PEUVENT SURVENIR, je n'en serais pas responsable
+  number: 4
+  display:
+    1: "\u00A7e\u00A7lCriptMania \u00A7c\u00A7>>> \u00A7fBon jeu sur CriptMania !"
+    2: "\u00A7e\u00A7lCriptMania \u00A7c\u00A7>>> \u00A7fUn probl\u00e8me ? Contacte un STAFF"
+    3: "\u00A7e\u00A7lCriptMania \u00A7c\u00A7>>> \u00A7fwww.criptmania.net"
+    4: "\u00A7e\u00A7lCriptMania \u00A7c\u00A7>>> \u00A7fhttps://discord.io/criptmania"
+  #20 = 1 seconde
+  #80 = 4 secondes
+  delay: 380
+  intraspeed: 2
+  activated: "BossBar activée, les modifications peuvent prendre un moment !"
+  disabled: "BossBar désactivée, les modifications peuvent prendre un moment !"
+  invalidargs: "Arguments invalides"
