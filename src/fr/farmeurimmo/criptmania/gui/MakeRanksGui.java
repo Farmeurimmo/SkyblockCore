@@ -122,7 +122,7 @@ public class MakeRanksGui {
 		ItemStack custom10 = new ItemStack(Material.WITHER_SKELETON_SKULL, 1);
 		ItemMeta customi = custom10.getItemMeta();
 		customi.setDisplayName("§bZeus");
-		customi.setLore(Arrays.asList("§7soon", "§7"));
+		customi.setLore(Arrays.asList("§7","§8» §7Grade Joueur §75 slots amis et 5 slots de groupe","§8» §bGrade Rusher §76 slots amis et 5 slots de groupe"));
 		custom10.setItemMeta(customi);
 		invboutiquefarm2win.setItem(10, custom10);
 		} else {
