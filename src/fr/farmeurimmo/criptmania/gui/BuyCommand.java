@@ -86,6 +86,18 @@ public class BuyCommand {
 			     }
 			}, 2);
 		}
+		if(cmd.contains("sellall")) {
+			if(money >= Farm2WinGui.sellallprix);
+			ecoAPI.getAccount(player.getName()).removeHoldings(new BigDecimal(Farm2WinGui.sellallprix));
+			Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + player.getName() + " permission set economyshopgui.sellall");
+			player.sendMessage("§6Vous avez reçu l'accès à la commande /sellall !");
+			Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
+			     public void run() {
+					 player.closeInventory();
+					 MakeCommandsGui.MakeCommandGui(player);
+			     }
+			}, 2);
+		}
 	}
 
 }

@@ -19,11 +19,13 @@ public class Farm2WinGui implements Listener {
 	static boolean feedcmd = true;
 	static boolean craftcmd = true;
 	static boolean isrenamecmd = true;
+	static boolean sellallcmd = true;
 	static boolean enchantementcmd = true;
 	static boolean legendeachat = true;
 	static boolean dieueachat = true;
 	static boolean zeusachat = true;
 	public static int hatprix = 500000;
+	public static int sellallprix = 10000000;
 	public static int flyprix = 10000000;
 	public static int craftprix = 750000;
 	public static int enchantementprix = 500000;
@@ -205,6 +207,33 @@ public class Farm2WinGui implements Listener {
 						Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
 						     public void run() {
 						    	 current.setType(Material.LEATHER_HELMET);
+						     }
+						}, 60);
+					}
+				}
+			}
+			if(current.getType() == Material.OAK_SIGN) {
+				if(!player.hasPermission("economyshopgui.sellall")){
+					if(ecoAPI.getAccount(player.getName()).getHoldings().intValue() >= sellallprix) {
+					player.sendMessage("§6Vérification de la disponibilité de la commande...");
+					current.setType(Material.BARRIER);
+					Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
+					     public void run() {
+					    	 if(hatcmd == false) {
+					    	 player.sendMessage("§cErreur, achat indisponible !");
+					    	 } else {
+					    		 BuyCommand.BuyCmd("sellall", player);
+					    	 }
+					    	 current.setType(Material.OAK_SIGN);
+					     }
+					}, 60);
+				}
+					else {
+						player.sendMessage("§cFonds insuffisants !");
+						current.setType(Material.BARRIER);
+						Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
+						     public void run() {
+						    	 current.setType(Material.OAK_SIGN);
 						     }
 						}, 60);
 					}

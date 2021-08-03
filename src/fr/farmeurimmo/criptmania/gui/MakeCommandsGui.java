@@ -119,6 +119,22 @@ public class MakeCommandsGui {
 			inv.setItem(20, custom7);
 		}
 		
+		if(!player.hasPermission("economyshopgui.sellall")) {
+			ItemStack custom7 = new ItemStack(Material.OAK_SIGN, 1);
+			ItemMeta customg = custom7.getItemMeta();
+			customg.setDisplayName("§e/sellall");
+			customg.setLore(Arrays.asList("§7Cette commande permet de","§7de vendre tous les items","§7vendables dans votre inventaire","§7","§6Prix: " + Farm2WinGui.sellallprix + "$"));
+			custom7.setItemMeta(customg);
+			inv.setItem(22, custom7);
+			} else {
+				ItemStack custom7 = new ItemStack(Material.BEDROCK, 1);
+				ItemMeta customg = custom7.getItemMeta();
+				customg.setDisplayName("§e/sellall §c(Déjà possédée)");
+				customg.setLore(Arrays.asList("§7Cette commande permet de","§7de vendre tous les items","§7vendables dans votre inventaire","§7","§6Prix: " + Farm2WinGui.sellallprix + "$"));
+				custom7.setItemMeta(customg);
+				inv.setItem(22, custom7);
+			}
+		
 		if(!player.hasPermission("enchantement")) {
 		ItemStack custom1 = new ItemStack(Material.ENCHANTING_TABLE, 1);
 		ItemMeta customa = custom1.getItemMeta();
@@ -163,7 +179,6 @@ public class MakeCommandsGui {
 		inv.setItem(18, custom9);
 		inv.setItem(19, custom9);
 		inv.setItem(21, custom9);
-		inv.setItem(22, custom9);
 		inv.setItem(23, custom9);
 		inv.setItem(25, custom9);
 		inv.setItem(26, custom9);
