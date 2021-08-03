@@ -20,6 +20,10 @@ public class GetTeleportDelay {
 			return time + 3;
 		} else if(player.hasPermission("vip")){
 			return time + 3;
+		} else if(player.hasPermission("mania")){
+			return time + 3;
+		} else if(player.hasPermission("rusher")) {
+			return time + 4;
 		} else {
 			return time + 5;
 		}
