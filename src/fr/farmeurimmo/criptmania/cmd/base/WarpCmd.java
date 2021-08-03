@@ -7,7 +7,8 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import fr.farmeurimmo.criptmania.utils.SendActionBar;
+import fr.farmeurimmo.criptmania.utils.GetTeleportDelay;
+import fr.farmeurimmo.criptmania.utils.TeleportPlayer;
 
 public class WarpCmd implements CommandExecutor {
 
@@ -22,16 +23,13 @@ public class WarpCmd implements CommandExecutor {
 			Player player = (Player) sender;
 		if(args.length == 1) {
 			if(args[0].equalsIgnoreCase("boxes")) {
-			player.teleport(Crates);
-			SendActionBar.SendActionBarMsg(player, "§6Vous avez été téléporté au warp des boxes");	
+				TeleportPlayer.TeleportPlayerFromRequest(player, Crates, GetTeleportDelay.GetPlayerTeleportingdelay(player));
 			}
 			if(args[0].equalsIgnoreCase("enchantement")) {
-				player.teleport(Enchantement);
-				SendActionBar.SendActionBarMsg(player, "§6Vous avez été téléporté au warp enchantement");	
+				TeleportPlayer.TeleportPlayerFromRequest(player, Enchantement, GetTeleportDelay.GetPlayerTeleportingdelay(player));
 				}
 			if(args[0].equalsIgnoreCase("bar")) {
-				player.teleport(Bar);
-				SendActionBar.SendActionBarMsg(player, "§6Vous avez été téléporté au warp bar");	
+				TeleportPlayer.TeleportPlayerFromRequest(player, Bar, GetTeleportDelay.GetPlayerTeleportingdelay(player));
 				}
 			}
 			else {
