@@ -15,11 +15,11 @@ public class GetTeleportDelay {
 		} else if(player.hasPermission("legende")) {
 			return time + 3;
 		} else if(player.hasPermission("elite")) {
-			return time + 2;
+			return time;
 		} else if(player.hasPermission("premium")) {
-			return time + 3;
+			return time + 1;
 		} else if(player.hasPermission("vip")){
-			return time + 3;
+			return time + 2;
 		} else if(player.hasPermission("mania")){
 			return time + 3;
 		} else if(player.hasPermission("rusher")) {

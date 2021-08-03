@@ -71,9 +71,6 @@ public class Main extends JavaPlugin implements Listener {
 		saveDefaultConfig();
 		instance = this;
 		instance1 = this;
-		System.out.println("-----------------------------------------------------------------------------------------------------");
-		System.out.println("Plugin démarré !");
-		System.out.println("-----------------------------------------------------------------------------------------------------");
 		Bukkit.getPluginManager().isPluginEnabled("LuckPerms");
 		Bukkit.getPluginManager().isPluginEnabled("Citizens");
 		Bukkit.getPluginManager().isPluginEnabled("TheNewEconomy");
@@ -93,10 +90,25 @@ public class Main extends JavaPlugin implements Listener {
 		}
 		if (Bukkit.getPluginManager().getPlugin("Citizens") != null) {
 			System.out.println("Le plugin Citizens a été trouvé !");
+			System.out.println("-----------------------------------------------------------------------------------------------------");
+			System.out.println("Initialisation de l'api Citizens en cours...");
+			System.out.println("API initialisé !");
+			System.out.println("-----------------------------------------------------------------------------------------------------");
 		} else {
 			getLogger().warning("Le plugin Citizens est manquant.");
 			Bukkit.getPluginManager().disablePlugin(this);
 		}
+		if (Bukkit.getPluginManager().getPlugin("TheNewEconomy") != null) {
+			System.out.println("Le plugin TNE a été trouvé !");
+			System.out.println("-----------------------------------------------------------------------------------------------------");
+			System.out.println("Initialisation de l'api TNE en cours...");
+			System.out.println("API initialisé !");
+			System.out.println("-----------------------------------------------------------------------------------------------------");
+		} else {
+			getLogger().warning("Le plugin TheNewEconomy est manquant.");
+			Bukkit.getPluginManager().disablePlugin(this);
+		}
+		System.out.println("§aDémarrage du plugin réussi !");
 		System.out.println("-----------------------------------------------------------------------------------------------------");
 		getServer().getPluginManager().registerEvents(new JoinLeave(), this);
 		getServer().getPluginManager().registerEvents(new Tchat(), this);

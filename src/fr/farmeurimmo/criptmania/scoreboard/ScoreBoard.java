@@ -144,6 +144,13 @@ public class ScoreBoard implements Listener {
 				board.getTeam("iscrystaux").setPrefix("§fCrystaux §8» §a" + iscristal);
 				board.getTeam("ismoney").setPrefix("§fArgent §8» §a" + ismoney);
 				
+			} else {
+				board.getTeam("Ile").setPrefix("§6§lIle");
+				board.getTeam("gradeis").setPrefix("§fGrade d'ile §8» §aN/A");
+				board.getTeam("classementis").setPrefix("§fClassement §8» §aN/A");
+				board.getTeam("ismembre").setPrefix("§fMembres §8» §aN/A");
+				board.getTeam("iscrystaux").setPrefix("§fCrystaux §8» §aN/A");
+				board.getTeam("ismoney").setPrefix("§fArgent §8» §aN/A");
 			}
 
 		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
