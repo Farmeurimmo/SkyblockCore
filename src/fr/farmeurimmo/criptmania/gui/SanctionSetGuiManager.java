@@ -46,56 +46,103 @@ public class SanctionSetGuiManager implements Listener {
 		}
 		if(e.getView().getTitle().equalsIgnoreCase("§6Menu des Mutes")) {
 			e.setCancelled(true);
+			Player aaa = Bukkit.getPlayer(e.getInventory().getItem(18).getItemMeta().getDisplayName().replace("§7", ""));
 			if(current.getType() == Material.ARROW) {
 				player.closeInventory();
 				SanctionSetGui.MakeSSGui(player, Bukkit.getPlayer(e.getInventory().getItem(18).getItemMeta().getDisplayName().replace("§7", "")));
 			}
 			if(current.getType() == Material.BOW) {
 				player.closeInventory();
-				Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "mute 20m Spam");
+				Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "mute " + aaa.getName() + " 20m Spam");
 				player.sendMessage("§6La sanction a été appliquée !");
 			}
 			if(current.getType() == Material.DIAMOND_SWORD) {
 				player.closeInventory();
-				Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "mute 20m Flood");
+				Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "mute " + aaa.getName() + " 20m Flood");
 				player.sendMessage("§6La sanction a été appliquée !");
 			}
 			if(current.getType() == Material.ANVIL) {
 				player.closeInventory();
-				Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "mute 30m Insultes");
+				Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "mute " + aaa.getName() + " 30m Insultes");
 				player.sendMessage("§6La sanction a été appliquée !");
 			}
 			if(current.getType() == Material.REDSTONE_BLOCK) {
 				player.closeInventory();
-				Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "mute 30m Provocation");
+				Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "mute " + aaa.getName() + " 30m Provocation");
 				player.sendMessage("§6La sanction a été appliquée !");
 			}
 			if(current.getType() == Material.ACTIVATOR_RAIL) {
 				player.closeInventory();
-				Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "mute 30m Incitation");
+				Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "mute " + aaa.getName() + " 1h Incitation");
 				player.sendMessage("§6La sanction a été appliquée !");
 			}
 			if(current.getType() == Material.ARMOR_STAND) {
 				player.closeInventory();
-				Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "mute 1h Contournement");
+				Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "mute " + aaa.getName() + " 1h Contournement");
 				player.sendMessage("§6La sanction a été appliquée !");
 			}
 			if(current.getType() == Material.COMPASS) {
 				player.closeInventory();
-				Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "mute 2h Pub");
+				Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "mute " + aaa.getName() + " 2h Pub");
 				player.sendMessage("§6La sanction a été appliquée !");
 			}
 			if(current.getType() == Material.FLINT_AND_STEEL) {
 				player.closeInventory();
-				Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "mute 1h Menaces");
+				Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "mute " + aaa.getName() + " 3h Menaces");
 				player.sendMessage("§6La sanction a été appliquée !");
 			}
 		}
 		if(e.getView().getTitle().equalsIgnoreCase("§6Menu des Bans")) {
 			e.setCancelled(true);
+			Player aaa = Bukkit.getPlayer(e.getInventory().getItem(18).getItemMeta().getDisplayName().replace("§7", ""));
 			if(current.getType() == Material.ARROW) {
 				player.closeInventory();
 				SanctionSetGui.MakeSSGui(player, Bukkit.getPlayer(e.getInventory().getItem(18).getItemMeta().getDisplayName().replace("§7", "")));
+			}
+			if(current.getType() == Material.DIAMOND_SWORD) {
+				player.closeInventory();
+				Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "tempban " + aaa.getName() + " 7d KillAura");
+				player.sendMessage("§6La sanction a été appliquée !");
+			}
+			if(current.getType() == Material.WOODEN_SWORD) {
+				player.closeInventory();
+				Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "tempban " + aaa.getName() + " 7d CPS");
+				player.sendMessage("§6La sanction a été appliquée !");
+			}
+			if(current.getType() == Material.FEATHER) {
+				player.closeInventory();
+				Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "tempban " + aaa.getName() + " 7d Fly");
+				player.sendMessage("§6La sanction a été appliquée !");
+			}
+			if(current.getType() == Material.NAME_TAG) {
+				player.closeInventory();
+				Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "ban " + aaa.getName() + " Pseudo Incorrect");
+				player.sendMessage("§6La sanction a été appliquée !");
+			}
+			if(current.getType() == Material.STICK) {
+				player.closeInventory();
+				Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "tempban " + aaa.getName() + " 7d AntiKnockBack");
+				player.sendMessage("§6La sanction a été appliquée !");
+			}
+			if(current.getType() == Material.GOLDEN_AXE) {
+				player.closeInventory();
+				Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "tempban " + aaa.getName() + " 7d Reach");
+				player.sendMessage("§6La sanction a été appliquée !");
+			}
+			if(current.getType() == Material.ARMOR_STAND) {
+				player.closeInventory();
+				Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "tempban " + aaa.getName() + " 7d Autres Cheats");
+				player.sendMessage("§6La sanction a été appliquée !");
+			}
+			if(current.getType() == Material.DIAMOND_CHESTPLATE) {
+				player.closeInventory();
+				Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "tempban " + aaa.getName() + " 7d Autres");
+				player.sendMessage("§6La sanction a été appliquée !");
+			}
+			if(current.getType() == Material.LEATHER) {
+				player.closeInventory();
+				Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "tempban " + aaa.getName() + " 7d Skin Incorrect");
+				player.sendMessage("§6La sanction a été appliquée !");
 			}
 		}
 		if(e.getView().getTitle().equalsIgnoreCase("§6Menu des Bans-Ip")) {
