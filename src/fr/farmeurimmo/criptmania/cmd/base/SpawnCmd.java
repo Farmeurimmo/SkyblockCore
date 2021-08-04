@@ -19,10 +19,10 @@ import fr.farmeurimmo.criptmania.utils.TeleportPlayer;
 
 public class SpawnCmd implements CommandExecutor, TabCompleter {
 
+	public static final Location Spawn = new Location(Bukkit.getServer().getWorld("world"), -186.5, 110, -63.5, 0, 0);
+	
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-		
-		final Location Spawn = new Location(Bukkit.getServer().getWorld("world"), -186.5, 110, -63.5, 0, 0);
 		
 		if(sender instanceof Player) {
 			final Player player = (Player) sender;

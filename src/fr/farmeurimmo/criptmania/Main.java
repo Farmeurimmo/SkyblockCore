@@ -12,6 +12,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import fr.farmeurimmo.criptmania.WineLottery.WineGui;
 import fr.farmeurimmo.criptmania.WineLottery.WineSpawn;
+import fr.farmeurimmo.criptmania.cmd.base.AntiAfkMineCmd;
 import fr.farmeurimmo.criptmania.cmd.base.BarCmd;
 import fr.farmeurimmo.criptmania.cmd.base.BuildCmd;
 import fr.farmeurimmo.criptmania.cmd.base.CraftCmd;
@@ -36,6 +37,7 @@ import fr.farmeurimmo.criptmania.events.Tchat;
 import fr.farmeurimmo.criptmania.featherfly.DailyFlyCmd;
 import fr.farmeurimmo.criptmania.featherfly.FeatherFlyCmd;
 import fr.farmeurimmo.criptmania.featherfly.FeatherFlyInteract;
+import fr.farmeurimmo.criptmania.gui.AfkMineCaptchaGui;
 import fr.farmeurimmo.criptmania.gui.Farm2WinGui;
 import fr.farmeurimmo.criptmania.gui.WarpGui;
 import fr.farmeurimmo.criptmania.gui.WikiGui;
@@ -126,6 +128,7 @@ public class Main extends JavaPlugin implements Listener {
 		getServer().getPluginManager().registerEvents(new FeatherFlyInteract(), this);
 		getServer().getPluginManager().registerEvents(new SwitchWorld(), this);
 		getServer().getPluginManager().registerEvents(new Tabulation(), this);
+		getServer().getPluginManager().registerEvents(new AfkMineCaptchaGui(), this);
 		this.getCommand("spawn").setExecutor(new SpawnCmd());
 		this.getCommand("wiki").setExecutor(new WikiCmd());
 		this.getCommand("build").setExecutor(new BuildCmd());
@@ -147,6 +150,7 @@ public class Main extends JavaPlugin implements Listener {
 		this.getCommand("gmc").setExecutor(new GmLCmd());
 		this.getCommand("gmsp").setExecutor(new GmLCmd());
 		this.getCommand("gma").setExecutor(new GmLCmd());
+		this.getCommand("afkmine").setExecutor(new AntiAfkMineCmd());
 		PluginManager pm = getServer().getPluginManager();
 		pm.registerEvents(this, this);
 		Main.spawncooldown.clear();
