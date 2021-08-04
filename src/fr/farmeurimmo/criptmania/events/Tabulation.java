@@ -13,7 +13,10 @@ public class Tabulation implements Listener {
 	public void OnTabulation(PlayerCommandSendEvent e) {
 		e.getCommands().clear();
 		e.getCommands().addAll(Arrays.asList("is","shop","sellall","warp","warps","menu","farm2win","spawn","hat","feed","fly","dailyfly"
-				,"craft","enchantement","build"));
+				,"craft","enchantement","wiki","money","baltop"));
+		if(e.getPlayer().hasPermission("*")) {
+			e.getCommands().addAll(Arrays.asList("gm","gmc","gms","gmsp","gma","ban","mute","ban-ip","pardon","pardon-ip"));
+		}
 	}
 
 }
