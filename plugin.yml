@@ -24,3 +24,7 @@ commands:
   enchantement:
     aliases: [ench]
   gm:
+  gma:
+  gmc:
+  gmsp:
+  gms:
