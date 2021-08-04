@@ -13,7 +13,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import fr.farmeurimmo.criptmania.WineLottery.WineGui;
 import fr.farmeurimmo.criptmania.WineLottery.WineSpawn;
-import fr.farmeurimmo.criptmania.cmd.base.AntiAfkMineCmd;
 import fr.farmeurimmo.criptmania.cmd.base.BarCmd;
 import fr.farmeurimmo.criptmania.cmd.base.BuildCmd;
 import fr.farmeurimmo.criptmania.cmd.base.CraftCmd;
@@ -29,6 +28,8 @@ import fr.farmeurimmo.criptmania.cmd.base.SpawnCmd;
 import fr.farmeurimmo.criptmania.cmd.base.WarpCmd;
 import fr.farmeurimmo.criptmania.cmd.base.WarpsCmd;
 import fr.farmeurimmo.criptmania.cmd.base.WikiCmd;
+import fr.farmeurimmo.criptmania.cmd.moderation.AntiAfkMineCmd;
+import fr.farmeurimmo.criptmania.cmd.moderation.SSCmd;
 import fr.farmeurimmo.criptmania.evenement.ChatReaction;
 import fr.farmeurimmo.criptmania.events.AfkMineBreakCheck;
 import fr.farmeurimmo.criptmania.events.AntiExplo;
@@ -156,6 +157,7 @@ public class Main extends JavaPlugin implements Listener {
 		this.getCommand("gmsp").setExecutor(new GmLCmd());
 		this.getCommand("gma").setExecutor(new GmLCmd());
 		this.getCommand("afkmine").setExecutor(new AntiAfkMineCmd());
+		this.getCommand("ss").setExecutor(new SSCmd());
 		PluginManager pm = getServer().getPluginManager();
 		pm.registerEvents(this, this);
 		Main.spawncooldown.clear();
