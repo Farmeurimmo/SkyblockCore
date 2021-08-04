@@ -165,7 +165,7 @@ public class Main extends JavaPlugin implements Listener {
 		for(Player player : Bukkit.getOnlinePlayers()) {
 			ScoreBoard.setScoreBoard(player);
 		}
-		ChatReaction.mots.addAll(Arrays.asList("Chat","Chiens","CriptMania","Skyblock"));
+		ChatReaction.mots.addAll(Arrays.asList("Chat","Chiens","CriptMania","Skyblock","Classement"));
 	    ChatReaction.StartChatReaction();
 	}
 	@Override
