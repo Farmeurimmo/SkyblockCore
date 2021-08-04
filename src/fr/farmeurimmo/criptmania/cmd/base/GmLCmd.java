@@ -1,15 +1,20 @@
 package fr.farmeurimmo.criptmania.cmd.base;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
 import fr.farmeurimmo.criptmania.utils.SendActionBar;
 
-public class GmLCmd implements CommandExecutor {
+public class GmLCmd implements CommandExecutor, TabCompleter {
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
@@ -101,5 +106,21 @@ public class GmLCmd implements CommandExecutor {
 		}
 		return false;
 	}
-
+	@Override
+	 public List<String> onTabComplete(CommandSender sender, Command cmd, String commandLabel, String[] args) {
+		 ArrayList<String> subcmd = new ArrayList<String>();
+	        if (cmd.getName().equalsIgnoreCase("gma") || cmd.getName().equalsIgnoreCase("gms")
+	        		|| cmd.getName().equalsIgnoreCase("gmsp") || cmd.getName().equalsIgnoreCase("gmc")) {
+	            if (args.length == 1) {
+	            	for(Player player : Bukkit.getOnlinePlayers()) {
+	            		subcmd.add(player.getName());
+	            	}
+	            	Collections.sort(subcmd);
+	            } else if (args.length >= 2){
+	            	subcmd.add("");
+	            	Collections.sort(subcmd);
+	            }
+	        }
+			return subcmd;
+	 }
 }

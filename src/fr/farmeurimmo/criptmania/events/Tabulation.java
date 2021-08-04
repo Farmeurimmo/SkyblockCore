@@ -15,8 +15,7 @@ public class Tabulation implements Listener {
 		e.getCommands().addAll(Arrays.asList("is","shop","sellall","warp","warps","menu","farm2win","spawn","hat","feed","fly","dailyfly"
 				,"craft","enchantement","wiki","money","baltop"));
 		if(e.getPlayer().hasPermission("*")) {
-			e.getCommands().addAll(Arrays.asList("gm","gmc","gms","gmsp","gma","ban","mute","ban-ip","pardon","pardon-ip"));
+			e.getCommands().addAll(Arrays.asList("gm","gmc","gms","gmsp","gma","ban","mute","ban-ip","pardon","pardon-ip","build"));
 		}
 	}
-
 }
