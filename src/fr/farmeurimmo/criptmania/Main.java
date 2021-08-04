@@ -19,6 +19,7 @@ import fr.farmeurimmo.criptmania.cmd.base.EnchantementCmd;
 import fr.farmeurimmo.criptmania.cmd.base.Farm2WinCmd;
 import fr.farmeurimmo.criptmania.cmd.base.FeedCmd;
 import fr.farmeurimmo.criptmania.cmd.base.FlyCmd;
+import fr.farmeurimmo.criptmania.cmd.base.GmCmd;
 import fr.farmeurimmo.criptmania.cmd.base.HatCmd;
 import fr.farmeurimmo.criptmania.cmd.base.MenuCmd;
 import fr.farmeurimmo.criptmania.cmd.base.SpawnCmd;
@@ -140,6 +141,7 @@ public class Main extends JavaPlugin implements Listener {
 		this.getCommand("hat").setExecutor(new HatCmd());
 		this.getCommand("craft").setExecutor(new CraftCmd());
 		this.getCommand("enchantement").setExecutor(new EnchantementCmd());
+		this.getCommand("gm").setExecutor(new GmCmd());
 		PluginManager pm = getServer().getPluginManager();
 		pm.registerEvents(this, this);
 		Main.spawncooldown.clear();
