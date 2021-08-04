@@ -147,9 +147,30 @@ public class SanctionSetGuiManager implements Listener {
 		}
 		if(e.getView().getTitle().equalsIgnoreCase("§6Menu des Bans-Ip")) {
 			e.setCancelled(true);
+			Player aaa = Bukkit.getPlayer(e.getInventory().getItem(18).getItemMeta().getDisplayName().replace("§7", ""));
 			if(current.getType() == Material.ARROW) {
 				player.closeInventory();
 				SanctionSetGui.MakeSSGui(player, Bukkit.getPlayer(e.getInventory().getItem(18).getItemMeta().getDisplayName().replace("§7", "")));
+			}
+			if(current.getType() == Material.NAME_TAG) {
+				player.closeInventory();
+				Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "ban-ip " + aaa.getName() + " Usurpation d'identitée");
+				player.sendMessage("§6La sanction a été appliquée !");
+			}
+			if(current.getType() == Material.CLAY_BALL) {
+				player.closeInventory();
+				Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "ban-ip " + aaa.getName() + " Double Compte");
+				player.sendMessage("§6La sanction a été appliquée !");
+			}
+			if(current.getType() == Material.PAPER) {
+				player.closeInventory();
+				Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "ban-ip " + aaa.getName() + " Grandes Récidives");
+				player.sendMessage("§6La sanction a été appliquée !");
+			}
+			if(current.getType() == Material.ARMOR_STAND) {
+				player.closeInventory();
+				Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "ban-ip " + aaa.getName() + " Autres");
+				player.sendMessage("§6La sanction a été appliquée !");
 			}
 		}
 		if(e.getView().getTitle().equalsIgnoreCase("§6Menu des Purges")) {
