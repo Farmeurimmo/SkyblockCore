@@ -34,39 +34,44 @@ public class ItemLegCmd implements CommandExecutor {
 			      if(!sb.isEmpty() && sb.length() < 2) {
 				ItemStack custom6 = new ItemStack(Material.DIAMOND_PICKAXE, 1);
 				ItemMeta customf = custom6.getItemMeta();
-				customf.setUnbreakable(true);
 				customf.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
 				customf.setDisplayName("§6Pioche légendaire §8| §eTier §c" + sb);
 				Random rand = new Random();
 				int Tier = Integer.parseInt(sb.toString());
 				int n1 = 0;
 				int n2 = 0;
+				int n3 = 0;
 				if(Tier == 1) {
 				n1 = rand.nextInt(3);
 				n2 = rand.nextInt(2);
 				n1 = n1 + 5;
 				n2 = n2 + 5;
+				n3 = 5;
 				}
 				if(Tier == 2) {
 					n1 = rand.nextInt(4);
 					n2 = rand.nextInt(3);
 					n1 = n1 + 6;
 					n2 = n2 + 6;
+					n3 = 10;
 				}
 				if(Tier == 3) {
 					n1 = rand.nextInt(4);
 					n2 = rand.nextInt(3);
 					n1 = n1 + 7;
 					n2 = n2 + 7;
+					n3 = 15;
 				}
 				if(Tier == 4) {
 					n1 = rand.nextInt(4);
 					n2 = rand.nextInt(3);
 					n1 = n1 + 8;
 					n2 = n2 + 8;
+					n3 = 20;
 				}
 				customf.addEnchant(Enchantment.DIG_SPEED, n1, true);
 				customf.addEnchant(Enchantment.LOOT_BONUS_BLOCKS, n2, true);
+				customf.addEnchant(Enchantment.DURABILITY, n3, true);
 				custom6.setItemMeta(customf);
 				Player player = Bukkit.getPlayer(args[1]);
 				player.getInventory().addItem(custom6);
