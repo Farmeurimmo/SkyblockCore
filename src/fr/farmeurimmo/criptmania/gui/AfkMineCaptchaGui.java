@@ -106,7 +106,7 @@ public class AfkMineCaptchaGui implements Listener {
 	}
 	@EventHandler
 	public void CloseInventory(InventoryCloseEvent e) {
-		Player player = Bukkit.getPlayer("Farmeurimmo");
+		Player player = Bukkit.getPlayer(e.getPlayer().getName());
 		String aaa = e.getView().getTitle();
 		if(aaa.equalsIgnoreCase("§6Captcha AfkMine")) {
 			if(Captcha.contains(player)) {
