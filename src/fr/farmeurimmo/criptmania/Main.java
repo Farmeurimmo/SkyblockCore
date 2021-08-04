@@ -43,6 +43,7 @@ import fr.farmeurimmo.criptmania.featherfly.FeatherFlyCmd;
 import fr.farmeurimmo.criptmania.featherfly.FeatherFlyInteract;
 import fr.farmeurimmo.criptmania.gui.AfkMineCaptchaGui;
 import fr.farmeurimmo.criptmania.gui.Farm2WinGui;
+import fr.farmeurimmo.criptmania.gui.SanctionSetGuiManager;
 import fr.farmeurimmo.criptmania.gui.WarpGui;
 import fr.farmeurimmo.criptmania.gui.WikiGui;
 import fr.farmeurimmo.criptmania.items.ItemLegCmd;
@@ -135,6 +136,7 @@ public class Main extends JavaPlugin implements Listener {
 		getServer().getPluginManager().registerEvents(new AfkMineCaptchaGui(), this);
 		getServer().getPluginManager().registerEvents(new AfkMineBreakCheck(), this);
 		getServer().getPluginManager().registerEvents(new ChatReaction(), this);
+		getServer().getPluginManager().registerEvents(new SanctionSetGuiManager(), this);
 		this.getCommand("spawn").setExecutor(new SpawnCmd());
 		this.getCommand("wiki").setExecutor(new WikiCmd());
 		this.getCommand("build").setExecutor(new BuildCmd());
