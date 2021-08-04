@@ -28,6 +28,7 @@ import fr.farmeurimmo.criptmania.cmd.base.SpawnCmd;
 import fr.farmeurimmo.criptmania.cmd.base.WarpCmd;
 import fr.farmeurimmo.criptmania.cmd.base.WarpsCmd;
 import fr.farmeurimmo.criptmania.cmd.base.WikiCmd;
+import fr.farmeurimmo.criptmania.events.AfkMineBreakCheck;
 import fr.farmeurimmo.criptmania.events.AntiExplo;
 import fr.farmeurimmo.criptmania.events.Interact;
 import fr.farmeurimmo.criptmania.events.JoinLeave;
@@ -129,6 +130,7 @@ public class Main extends JavaPlugin implements Listener {
 		getServer().getPluginManager().registerEvents(new SwitchWorld(), this);
 		getServer().getPluginManager().registerEvents(new Tabulation(), this);
 		getServer().getPluginManager().registerEvents(new AfkMineCaptchaGui(), this);
+		getServer().getPluginManager().registerEvents(new AfkMineBreakCheck(), this);
 		this.getCommand("spawn").setExecutor(new SpawnCmd());
 		this.getCommand("wiki").setExecutor(new WikiCmd());
 		this.getCommand("build").setExecutor(new BuildCmd());
