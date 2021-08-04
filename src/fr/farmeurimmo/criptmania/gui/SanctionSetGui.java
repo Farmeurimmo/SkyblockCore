@@ -267,4 +267,71 @@ public class SanctionSetGui {
 		
 		
 	}
+	@SuppressWarnings("deprecation")
+	public static void MakeBanIpGui(Player player, Player aaa) {
+		
+		User user = LuckPermsProvider.get().getUserManager().getUser(aaa.getName());
+		String Grade = user.getCachedData().getMetaData().getPrefix().replace("&", "§");
+		TNEAPI ecoAPI = TNE.instance().api();
+		
+        Inventory inv = Bukkit.createInventory(null, 27, "§6Menu des Bans-Ip");
+        
+        ItemStack custom3 = new ItemStack(Material.PLAYER_HEAD, 1);
+		SkullMeta customc = (SkullMeta) custom3.getItemMeta();
+		customc.setOwner(aaa.getName());
+		customc.setDisplayName("§7" + aaa.getName());
+		customc.setLore(Arrays.asList("§7Grade: " + Grade, "§7Argent: " + ecoAPI.getAccount(aaa.getName()).getHoldings().intValue()));
+		custom3.setItemMeta(customc);
+		
+		ItemStack custom1 = new ItemStack(Material.NAME_TAG, 1);
+		ItemMeta customa = custom1.getItemMeta();
+		customa.setDisplayName("§6Usurpation d'identitée §8| §7(clic)");
+		custom1.setItemMeta(customa);
+		
+		ItemStack custom4 = new ItemStack(Material.CLAY_BALL, 2);
+		ItemMeta customd = custom4.getItemMeta();
+		customd.setDisplayName("§6Double Compte §8| §7(clic)");
+		custom4.setItemMeta(customd);
+		
+		ItemStack custom5 = new ItemStack(Material.PAPER, 1);
+		ItemMeta custome = custom5.getItemMeta();
+		custome.setDisplayName("§6Grandes récidives §8| §7(clic)");
+		custom5.setItemMeta(custome);
+		
+		ItemStack custom6 = new ItemStack(Material.ARMOR_STAND, 1);
+		ItemMeta customf = custom6.getItemMeta();
+		customf.setDisplayName("§6Autres §8| §7(clic)");
+		custom6.setItemMeta(customf);
+		
+		ItemStack custom11 = new ItemStack(Material.ARROW, 1);
+		ItemMeta customk = custom11.getItemMeta();
+		customk.setDisplayName("§6Retour au menu principal §8| §7(clic)");
+		custom11.setItemMeta(customk);
+		
+		inv.setItem(10, custom1);
+		inv.setItem(11, custom4);
+		inv.setItem(12, custom5);
+		inv.setItem(13, custom6);
+		inv.setItem(18, custom3);
+		inv.setItem(26, custom11);
+		
+		ItemStack custom2 = new ItemStack(Material.WHITE_STAINED_GLASS_PANE, 1);
+		ItemMeta customb = custom2.getItemMeta();
+		customb.setDisplayName("§6");
+		custom2.setItemMeta(customb);
+		
+		for (int i = 0; i < inv.getSize(); i++) {
+            if (inv.getItem(i) == null || inv.getItem(i).getType().equals(Material.AIR)) {
+            	inv.setItem(i, custom2);
+            }
+        }
+		
+		
+		player.openInventory(inv);
+		
+		
+		
+		
+		
+	}
 }
