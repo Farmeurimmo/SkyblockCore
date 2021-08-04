@@ -20,8 +20,6 @@ import fr.farmeurimmo.criptmania.cmd.base.EnchantementCmd;
 import fr.farmeurimmo.criptmania.cmd.base.Farm2WinCmd;
 import fr.farmeurimmo.criptmania.cmd.base.FeedCmd;
 import fr.farmeurimmo.criptmania.cmd.base.FlyCmd;
-import fr.farmeurimmo.criptmania.cmd.base.GmCmd;
-import fr.farmeurimmo.criptmania.cmd.base.GmLCmd;
 import fr.farmeurimmo.criptmania.cmd.base.HatCmd;
 import fr.farmeurimmo.criptmania.cmd.base.MenuCmd;
 import fr.farmeurimmo.criptmania.cmd.base.SpawnCmd;
@@ -29,6 +27,9 @@ import fr.farmeurimmo.criptmania.cmd.base.WarpCmd;
 import fr.farmeurimmo.criptmania.cmd.base.WarpsCmd;
 import fr.farmeurimmo.criptmania.cmd.base.WikiCmd;
 import fr.farmeurimmo.criptmania.cmd.moderation.AntiAfkMineCmd;
+import fr.farmeurimmo.criptmania.cmd.moderation.CheckFlyCmd;
+import fr.farmeurimmo.criptmania.cmd.moderation.GmCmd;
+import fr.farmeurimmo.criptmania.cmd.moderation.GmLCmd;
 import fr.farmeurimmo.criptmania.cmd.moderation.SSCmd;
 import fr.farmeurimmo.criptmania.evenement.ChatReaction;
 import fr.farmeurimmo.criptmania.events.AfkMineBreakCheck;
@@ -160,6 +161,7 @@ public class Main extends JavaPlugin implements Listener {
 		this.getCommand("gma").setExecutor(new GmLCmd());
 		this.getCommand("afkmine").setExecutor(new AntiAfkMineCmd());
 		this.getCommand("ss").setExecutor(new SSCmd());
+		this.getCommand("checkfly").setExecutor(new CheckFlyCmd());
 		PluginManager pm = getServer().getPluginManager();
 		pm.registerEvents(this, this);
 		Main.spawncooldown.clear();
@@ -169,7 +171,7 @@ public class Main extends JavaPlugin implements Listener {
 		for(Player player : Bukkit.getOnlinePlayers()) {
 			ScoreBoard.setScoreBoard(player);
 		}
-		ChatReaction.mots.addAll(Arrays.asList("Chat","Chiens","CriptMania","Skyblock"));
+		ChatReaction.mots.addAll(Arrays.asList("CriptMania","Skyblock","Ile","Farm2Win"));
 	    ChatReaction.StartChatReaction();
 	}
 	@Override

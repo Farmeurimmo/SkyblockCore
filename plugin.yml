@@ -31,3 +31,4 @@ commands:
   afkmine:
   ss:
     aliases: [sanctionset]
+  checkfly:
