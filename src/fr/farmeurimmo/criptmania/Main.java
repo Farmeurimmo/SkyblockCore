@@ -1,5 +1,6 @@
 package fr.farmeurimmo.criptmania;
 
+import java.util.Arrays;
 import java.util.HashMap;
 
 import org.bukkit.Bukkit;
@@ -28,6 +29,7 @@ import fr.farmeurimmo.criptmania.cmd.base.SpawnCmd;
 import fr.farmeurimmo.criptmania.cmd.base.WarpCmd;
 import fr.farmeurimmo.criptmania.cmd.base.WarpsCmd;
 import fr.farmeurimmo.criptmania.cmd.base.WikiCmd;
+import fr.farmeurimmo.criptmania.evenement.ChatReaction;
 import fr.farmeurimmo.criptmania.events.AfkMineBreakCheck;
 import fr.farmeurimmo.criptmania.events.AntiExplo;
 import fr.farmeurimmo.criptmania.events.Interact;
@@ -131,6 +133,7 @@ public class Main extends JavaPlugin implements Listener {
 		getServer().getPluginManager().registerEvents(new Tabulation(), this);
 		getServer().getPluginManager().registerEvents(new AfkMineCaptchaGui(), this);
 		getServer().getPluginManager().registerEvents(new AfkMineBreakCheck(), this);
+		getServer().getPluginManager().registerEvents(new ChatReaction(), this);
 		this.getCommand("spawn").setExecutor(new SpawnCmd());
 		this.getCommand("wiki").setExecutor(new WikiCmd());
 		this.getCommand("build").setExecutor(new BuildCmd());
@@ -162,6 +165,8 @@ public class Main extends JavaPlugin implements Listener {
 		for(Player player : Bukkit.getOnlinePlayers()) {
 			ScoreBoard.setScoreBoard(player);
 		}
+		ChatReaction.mots.addAll(Arrays.asList("Chat","Chiens","CriptMania","Skyblock"));
+	    ChatReaction.StartChatReaction();
 	}
 	@Override
 	public void onDisable() {
