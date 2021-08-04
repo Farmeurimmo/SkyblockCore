@@ -28,11 +28,22 @@ public class SanctionSetGuiManager implements Listener {
 				player.closeInventory();
 				SanctionSetGui.MakeMuteGui(player, Bukkit.getPlayer(e.getInventory().getItem(13).getItemMeta().getDisplayName().replace("§7", "")));
 			}
+			if(current.getType() == Material.ANVIL) {
+				player.closeInventory();
+				SanctionSetGui.MakeBanGui(player, Bukkit.getPlayer(e.getInventory().getItem(13).getItemMeta().getDisplayName().replace("§7", "")));
+			}
 			if(current.getType() == Material.IRON_DOOR) {
 				player.closeInventory();
 			}
 		}
 		if(e.getView().getTitle().equalsIgnoreCase("§6Menu des Mutes")) {
+			e.setCancelled(true);
+			if(current.getType() == Material.ARROW) {
+				player.closeInventory();
+				SanctionSetGui.MakeSSGui(player, Bukkit.getPlayer(e.getInventory().getItem(18).getItemMeta().getDisplayName().replace("§7", "")));
+			}
+		}
+		if(e.getView().getTitle().equalsIgnoreCase("§6Menu des Bans")) {
 			e.setCancelled(true);
 			if(current.getType() == Material.ARROW) {
 				player.closeInventory();
