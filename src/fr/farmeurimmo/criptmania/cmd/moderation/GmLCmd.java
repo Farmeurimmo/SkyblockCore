@@ -1,4 +1,4 @@
-package fr.farmeurimmo.criptmania.cmd.base;
+package fr.farmeurimmo.criptmania.cmd.moderation;
 
 import java.util.ArrayList;
 import java.util.Collections;

@@ -35,19 +35,18 @@ public class ChatReaction implements Listener {
         }
         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
 			public void run() {
-				if(bbb = false) {
-				Bukkit.broadcastMessage("§6§lChatReaction §8» §fPersonne n'a recopié le mot à temps !");
-				} else {
-				bbb = true;
+				if(bbb == false) {
+					Bukkit.broadcastMessage("§6§lChatReaction §8» §fPersonne n'a recopié le mot à temps !");
 				}
-				Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
-					public void run() {
-						bbb = false;
-						StartChatReaction();
-					}
-				}, 11400);
+				bbb = true;
 			}
 		}, 600);
+        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
+			public void run() {
+				bbb = false;
+				StartChatReaction();
+			}
+		}, 12000);
 	}
 	@EventHandler
 	public void OnMessageSend(PlayerChatEvent e) {
