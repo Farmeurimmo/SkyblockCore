@@ -55,6 +55,7 @@ public class SpawnCmd implements CommandExecutor, TabCompleter {
 	 public List<String> onTabComplete(CommandSender sender, Command cmd, String commandLabel, String[] args) {
 		 ArrayList<String> subcmd = new ArrayList<String>();
 	        if (cmd.getName().equalsIgnoreCase("spawn")) {
+	        	if(sender.hasPermission("*")) {
 	            if (args.length == 1){
 	            	for(Player player : Bukkit.getOnlinePlayers()) {
 	            		subcmd.add(player.getName());
@@ -64,6 +65,10 @@ public class SpawnCmd implements CommandExecutor, TabCompleter {
 	            	subcmd.add("");
 	            	Collections.sort(subcmd);
 	            }
+	        	} else {
+	        		subcmd.add("");
+	            	Collections.sort(subcmd);
+	        	}
 	        }
 			return subcmd;
 	 }
