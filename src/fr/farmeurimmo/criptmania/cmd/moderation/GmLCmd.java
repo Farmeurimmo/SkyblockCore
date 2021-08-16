@@ -102,6 +102,8 @@ public class GmLCmd implements CommandExecutor, TabCompleter {
 						SendActionBar.SendActionBarMsg(player, "§c/gmsp [Joueur]");
 					}
 				}
+			} else {
+				SendActionBar.SendActionBarMsg(player, "§cVous n'avez pas la permission !");
 			}
 		}
 		return false;

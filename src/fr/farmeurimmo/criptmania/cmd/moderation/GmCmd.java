@@ -84,6 +84,8 @@ public class GmCmd implements CommandExecutor, TabCompleter{
 				else {
 					SendActionBar.SendActionBarMsg(player, "§c/gm <0,1,2,3> [Joueur]");
 				}
+			} else {
+				SendActionBar.SendActionBarMsg(player, "§cVous n'avez pas la permission !");
 			}
 		}
 		return false;

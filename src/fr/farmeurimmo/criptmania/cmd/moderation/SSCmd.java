@@ -29,6 +29,8 @@ public class SSCmd implements CommandExecutor, TabCompleter {
 				} else {
 					SendActionBar.SendActionBarMsg(player, "§c/ss <Joueur>");
 				}
+			} else {
+				SendActionBar.SendActionBarMsg(player, "§cVous n'avez pas la permission !");
 			}
 		}
 		

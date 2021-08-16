@@ -49,6 +49,8 @@ public class CheckFlyCmd implements CommandExecutor, TabCompleter {
 					} else {
 						SendActionBar.SendActionBarMsg(player, "§c/checkfly <Joueur>");
 					}
+			} else {
+				SendActionBar.SendActionBarMsg(player, "§cVous n'avez pas la permission !");
 			}
 		}
 		return false;
