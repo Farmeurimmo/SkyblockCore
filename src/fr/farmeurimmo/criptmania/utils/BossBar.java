@@ -14,16 +14,19 @@ import fr.farmeurimmo.criptmania.cmd.base.BarCmd;
 public class BossBar {
 	
 	public static int Numberofbossbar = Main.getInstance().getConfig().getInt("bossbar.number");
-	public static int CurrentBossBar = 0;
+	public static int CurrentBossBar = 1;
 	public static int DurationProgress = 0;
 	public static double BossBarSpeed = 0;
 	public static int reverse = 0;
 	public static int reset = 0;
 	public static ArrayList<Player> Disable = BarCmd.Disable;
+	static org.bukkit.boss.BossBar aaa = Bukkit.createBossBar(Main.getInstance().getConfig().getString("bossbar.display." + CurrentBossBar), BarColor.YELLOW, BarStyle.SOLID, BarFlag.DARKEN_SKY);
 	
 	public static void CreateBossBar(Integer number) {
-		org.bukkit.boss.BossBar aaa = Bukkit.createBossBar(Main.getInstance().getConfig().getString("bossbar.display." + CurrentBossBar), BarColor.YELLOW, BarStyle.SOLID, BarFlag.DARKEN_SKY);
 		BossBarForEveryone(aaa);
+	}
+	public static void RemoveBossBarForPlayers() {
+		aaa.removeAll();
 	}
 	public static void ChangeTitle(org.bukkit.boss.BossBar aaa) {
 		reset = 1;
@@ -59,10 +62,7 @@ public class BossBar {
             }
         }, Main.getInstance().getConfig().getInt("bossbar.delay"));
 	}
-	public static void RemoveBossBar() {
-	}
-	
-	public static void AddProgressBossbar(org.bukkit.boss.BossBar aaa) {
+	public static  void AddProgressBossbar(org.bukkit.boss.BossBar aaa) {
 		if(reset != 0) {
 		if(reverse == 0) {
 		if(BossBarSpeed <= 0.98) {

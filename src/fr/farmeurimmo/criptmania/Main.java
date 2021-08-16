@@ -214,6 +214,7 @@ public class Main extends JavaPlugin implements Listener {
 	@Override
 	public void onDisable() {
 		WineSpawn.RemovePnj();
+		BossBar.RemoveBossBarForPlayers();
 		System.out.println("-----------------------------------------------------------------------------------------------------");
 		System.out.println("Plugin stoppé !");
 		System.out.println("-----------------------------------------------------------------------------------------------------");
