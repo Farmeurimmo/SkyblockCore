@@ -23,6 +23,7 @@ public class AfkMineCaptchaGui implements Listener {
 	
 	public static ArrayList<Player> Captcha = new ArrayList<Player>();
 	public static ArrayList<Player> SeconTry = new ArrayList<Player>();
+	public static ItemStack items;
 	
 	public static void MakeAfkMineCaptchaGui(Player player) {
         Inventory inv = Bukkit.createInventory(null, InventoryType.HOPPER, "§6Captcha AfkMine");
@@ -54,6 +55,28 @@ public class AfkMineCaptchaGui implements Listener {
 		
 		
 		player.openInventory(inv);
+		CheckAfterTime(player);
+	}
+	public static void CheckAfterTime(Player player) {
+		if(Captcha.contains(player)) {
+			Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
+			     public void run() {
+			    	 if(Captcha.contains(player)) {
+						Captcha.remove(player);
+						if(SeconTry.contains(player)) {
+							SeconTry.remove(player);
+						}
+						Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
+						     public void run() {
+						    	TeleportPlayer.TeleportPlayerFromRequest(player, SpawnCmd.Spawn, 0);
+								SendActionBar.SendActionBarMsg(player, "§cVous n'avez pas réussi le Captcha, vous avez donc été envoyé au spawn");
+								player.closeInventory();
+						     }
+						}, 2L);
+			    	 }
+			     }
+			}, 200L);
+	     }
 	}
 	@EventHandler
 	public void OnInventoryInteract(InventoryClickEvent e) {
@@ -66,6 +89,13 @@ public class AfkMineCaptchaGui implements Listener {
 		if(current.getType() == null) {
 			return;
 		}
+		
+		for(Player p : Bukkit.getOnlinePlayers()) {
+			if(e.getView().getTitle().equalsIgnoreCase(p.getName())) {
+				e.setCancelled(true);
+			}
+		}
+		
 		
 		if(e.getView().getTitle().equalsIgnoreCase("§6Captcha AfkMine")) {
 			e.setCancelled(true);
