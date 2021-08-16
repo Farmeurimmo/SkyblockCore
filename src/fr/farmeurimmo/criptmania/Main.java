@@ -30,6 +30,7 @@ import fr.farmeurimmo.criptmania.cmd.moderation.AntiAfkMineCmd;
 import fr.farmeurimmo.criptmania.cmd.moderation.CheckFlyCmd;
 import fr.farmeurimmo.criptmania.cmd.moderation.GmCmd;
 import fr.farmeurimmo.criptmania.cmd.moderation.GmLCmd;
+import fr.farmeurimmo.criptmania.cmd.moderation.InvseeCmd;
 import fr.farmeurimmo.criptmania.cmd.moderation.SSCmd;
 import fr.farmeurimmo.criptmania.evenement.ChatReaction;
 import fr.farmeurimmo.criptmania.events.AfkMineBreakCheck;
@@ -162,6 +163,7 @@ public class Main extends JavaPlugin implements Listener {
 		this.getCommand("afkmine").setExecutor(new AntiAfkMineCmd());
 		this.getCommand("ss").setExecutor(new SSCmd());
 		this.getCommand("checkfly").setExecutor(new CheckFlyCmd());
+		this.getCommand("invsee").setExecutor(new InvseeCmd());
 		PluginManager pm = getServer().getPluginManager();
 		pm.registerEvents(this, this);
 		Main.spawncooldown.clear();
