@@ -162,33 +162,11 @@ public class MakeCommandsGui {
 		meta9.setDisplayName("§6");
 		custom9.setItemMeta(meta9);
 		
-		inv.setItem(0, custom9);
-		inv.setItem(1, custom9);
-		inv.setItem(2, custom9);
-		inv.setItem(3, custom9);
-		inv.setItem(4, custom9);
-		inv.setItem(5, custom9);
-		inv.setItem(6, custom9);
-		inv.setItem(7, custom9);
-		inv.setItem(8, custom9);
-		inv.setItem(9, custom9);
-		inv.setItem(11, custom9);
-		inv.setItem(13, custom9);
-		inv.setItem(15, custom9);
-		inv.setItem(17, custom9);
-		inv.setItem(18, custom9);
-		inv.setItem(19, custom9);
-		inv.setItem(21, custom9);
-		inv.setItem(23, custom9);
-		inv.setItem(25, custom9);
-		inv.setItem(26, custom9);
-		inv.setItem(27, custom9);
-		inv.setItem(28, custom9);
-		inv.setItem(29, custom9);
-		inv.setItem(30, custom9);
-		inv.setItem(32, custom9);
-		inv.setItem(33, custom9);
-		inv.setItem(34, custom9);
+		for (int i = 0; i < inv.getSize(); i++) {
+            if (inv.getItem(i) == null || inv.getItem(i).getType().equals(Material.AIR)) {
+            	inv.setItem(i, custom9);
+            }
+        }
 		
 		player.openInventory(inv);
 	}

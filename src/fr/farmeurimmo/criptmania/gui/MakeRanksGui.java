@@ -179,41 +179,11 @@ public class MakeRanksGui {
 		ItemMeta meta9 = custom9.getItemMeta();
 		meta9.setDisplayName("§6");
 		custom9.setItemMeta(meta9);
-		invboutiquefarm2win.setItem(0, custom9);
-		invboutiquefarm2win.setItem(1, custom9);
-		invboutiquefarm2win.setItem(2, custom9);
-		invboutiquefarm2win.setItem(3, custom9);
-		invboutiquefarm2win.setItem(4, custom9);
-		invboutiquefarm2win.setItem(5, custom9);
-		invboutiquefarm2win.setItem(6, custom9);
-		invboutiquefarm2win.setItem(7, custom9);
-		invboutiquefarm2win.setItem(8, custom9);
-		invboutiquefarm2win.setItem(9, custom9);
-		invboutiquefarm2win.setItem(11, custom9);
-		invboutiquefarm2win.setItem(12, custom9);
-		invboutiquefarm2win.setItem(14, custom9);
-		invboutiquefarm2win.setItem(15, custom9);
-		invboutiquefarm2win.setItem(17, custom9);
-		invboutiquefarm2win.setItem(18, custom9);
-		invboutiquefarm2win.setItem(20, custom9);
-		invboutiquefarm2win.setItem(21, custom9);
-		invboutiquefarm2win.setItem(23, custom9);
-		invboutiquefarm2win.setItem(24, custom9);
-		invboutiquefarm2win.setItem(26, custom9);
-		invboutiquefarm2win.setItem(27, custom9);
-		invboutiquefarm2win.setItem(29, custom9);
-		invboutiquefarm2win.setItem(30, custom9);
-		invboutiquefarm2win.setItem(31, custom9);
-		invboutiquefarm2win.setItem(32, custom9);
-		invboutiquefarm2win.setItem(33, custom9);
-		invboutiquefarm2win.setItem(35, custom9);
-		invboutiquefarm2win.setItem(36, custom9);
-		invboutiquefarm2win.setItem(37, custom9);
-		invboutiquefarm2win.setItem(38, custom9);
-		invboutiquefarm2win.setItem(39, custom9);
-		invboutiquefarm2win.setItem(41, custom9);
-		invboutiquefarm2win.setItem(42, custom9);
-		invboutiquefarm2win.setItem(43, custom9);
+		for (int i = 0; i < invboutiquefarm2win.getSize(); i++) {
+            if (invboutiquefarm2win.getItem(i) == null || invboutiquefarm2win.getItem(i).getType().equals(Material.AIR)) {
+            	invboutiquefarm2win.setItem(i, custom9);
+            }
+        }
 		
 		player.openInventory(invboutiquefarm2win);
 	}

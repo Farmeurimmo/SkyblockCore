@@ -10,6 +10,8 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import fr.farmeurimmo.criptmania.utils.SendActionBar;
+
 public class WikiGui implements Listener {
 	
 	public static void OpenWikiMainGui(Player player) {
@@ -39,6 +41,22 @@ public class WikiGui implements Listener {
 		custom4.setItemMeta(customd);
 		inv.setItem(16, custom4);
 		
+		ItemStack custom9 = new ItemStack(Material.ARROW, 1);
+		ItemMeta customh = custom9.getItemMeta();
+		customh.setDisplayName("§6Retour §8| §7(clic gauche)");
+		custom9.setItemMeta(customh);
+		inv.setItem(26, custom9);
+		
+		ItemStack custom8 = new ItemStack(Material.WHITE_STAINED_GLASS_PANE, 1);
+		ItemMeta meta8 = custom8.getItemMeta();
+		meta8.setDisplayName("§6");
+		custom8.setItemMeta(meta8);
+		for (int i = 0; i < inv.getSize(); i++) {
+            if (inv.getItem(i) == null || inv.getItem(i).getType().equals(Material.AIR)) {
+            	inv.setItem(i, custom8);
+            }
+        }
+		
 		player.openInventory(inv);
 	}
 	
@@ -49,23 +67,18 @@ public class WikiGui implements Listener {
 		
 		if(event.getView().getTitle().equalsIgnoreCase("§6Wiki")) {
 			event.setCancelled(true);
+			SendActionBar.SendActionBarMsg(player, "§cWiki indisponible !");
 			if(current.getType() == Material.GRASS_BLOCK) {
-				org.bukkit.inventory.Inventory invwikiile = Bukkit.createInventory(null, 27, "§6Sous-Wikis");
-				
-				ItemStack custom1 = new ItemStack(Material.BEDROCK, 1);
-				ItemMeta customa = custom1.getItemMeta();
-				customa.setDisplayName("§cIndispo");
-				custom1.setItemMeta(customa);
-				invwikiile.setItem(10, custom1);
-				player.openInventory(invwikiile);
 			}
 			if(current.getType() == Material.BEDROCK) {
 			}
 			if(current.getType() == Material.BOOKSHELF) {
 			}
-		}
-		if(event.getView().getTitle().equalsIgnoreCase("§6Sous-Wikis")) {
-			event.setCancelled(true);
+			if(current.getType() == Material.COMMAND_BLOCK) {
+			}
+			if(current.getType() == Material.ARROW) {
+				MenuGui.OpenMainMenu(player);
+			}
 		}
 	}
 

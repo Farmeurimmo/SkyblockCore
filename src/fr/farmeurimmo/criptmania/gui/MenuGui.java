@@ -65,43 +65,12 @@ public class MenuGui {
 		ItemMeta meta8 = custom8.getItemMeta();
 		meta8.setDisplayName("§6");
 		custom8.setItemMeta(meta8);
-		inv.setItem(0, custom8);
-		inv.setItem(1, custom8);
-		inv.setItem(2, custom8);
-		inv.setItem(3, custom8);
-		inv.setItem(4, custom8);
-		inv.setItem(5, custom8);
-		inv.setItem(6, custom8);
-		inv.setItem(7, custom8);
-		inv.setItem(8, custom8);
-		inv.setItem(9, custom8);
-		inv.setItem(11, custom8);
-		inv.setItem(13, custom8);
-		inv.setItem(15, custom8);
-		inv.setItem(17, custom8);
-		inv.setItem(18, custom8);
-		inv.setItem(19, custom8);
-		inv.setItem(20, custom8);
-		inv.setItem(21, custom8);
-		inv.setItem(22, custom8);
-		inv.setItem(23, custom8);
-		inv.setItem(24, custom8);
-		inv.setItem(25, custom8);
-		inv.setItem(26, custom8);
-		inv.setItem(27, custom8);
-		inv.setItem(29, custom8);
-		inv.setItem(31, custom8);
-		inv.setItem(33, custom8);
-		inv.setItem(35, custom8);
-		inv.setItem(36, custom8);
-		inv.setItem(37, custom8);
-		inv.setItem(38, custom8);
-		inv.setItem(39, custom8);
-		inv.setItem(40, custom8);
-		inv.setItem(41, custom8);
-		inv.setItem(42, custom8);
-		inv.setItem(43, custom8);
-		inv.setItem(44, custom8);
+		
+		for (int i = 0; i < inv.getSize(); i++) {
+            if (inv.getItem(i) == null || inv.getItem(i).getType().equals(Material.AIR)) {
+            	inv.setItem(i, custom8);
+            }
+        }
 		
 		player.openInventory(inv);
 	}
