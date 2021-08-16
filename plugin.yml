@@ -34,3 +34,7 @@ commands:
   checkfly:
   invsee:
   redstone:
+  tpa:
+  tpacancel:
+  tpyes:
+  tpno:
