@@ -25,9 +25,14 @@ public class TpYesCmd implements CommandExecutor, TabCompleter {
 			if(Main.haverequest.contains(player)) {
 				Main.haverequest.remove(player);
 				for(Player p : Bukkit.getOnlinePlayers()) {
+					if(Main.instance1.getTarget(p.getName()) != null) {
 					if(Main.instance1.getTarget(p.getName()).equalsIgnoreCase(player.getName())) {
 						TeleportPlayer.TeleportPlayerFromRequestToAnotherPlayer(player, p, GetTeleportDelay.GetPlayerTeleportingdelay(p));
 						Main.pending.remove(Main.instance1.getTarget(p.getName()));
+						Main.instance1.ClearPlayerAndTarget(p.getName());
+					}		
+					} else {
+						p.sendMessage("§6§lTéléportation §8» §fVous ne possédez aucune demande de téléportation.");
 					}
 				}
 			} else {

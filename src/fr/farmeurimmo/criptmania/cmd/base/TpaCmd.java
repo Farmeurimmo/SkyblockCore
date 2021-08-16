@@ -27,9 +27,13 @@ public class TpaCmd implements CommandExecutor, TabCompleter {
 						if(Bukkit.getPlayer(args[0]) != null) {
 							if(Bukkit.getPlayer(args[0]).isOnline()) {
 							Player p = Bukkit.getPlayer(args[0]);
+							if(Main.haverequest.contains(p)) {
+								Main.haverequest.remove(p);
+							}
 							Main.haverequest.add(p);
 							Main.pending.add(player);
 							Main.instance1.setTarget(player.getName(), p.getName());
+							TpaCmd.TpaExperation(player, p);
 							p.sendMessage("§6§lTéléportation §8» §f" + player.getName() + " souhaite ce téléporter à vous. \n \nVous avez 60 secondes"
 									+ " pour accepter ou refuser avec les commandes: §a/tpyes §fou §c/tpno \n§f");
 							
@@ -49,6 +53,21 @@ public class TpaCmd implements CommandExecutor, TabCompleter {
 				}
 		}
 		return false;
+	}
+	public static void TpaExperation(Player player, Player p) {
+		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
+			public void run() {
+				if(Main.instance1.getTarget(player.getName()) != null) {
+				if(Main.instance1.getTarget(player.getName()).equalsIgnoreCase(p.getName())) {
+					Main.instance1.ClearPlayerAndTarget(player.getName());
+					player.sendMessage("§6§lTéléportation §8» §fVotre demande de téléportation à §a" + p.getName() + " §f a expiré.");
+					if(Main.pending.contains(player)) {
+					Main.pending.remove(player);
+					}
+				}
+				}
+			}
+		}, 1200);
 	}
 	@Override
 	 public List<String> onTabComplete(CommandSender sender, Command cmd, String commandLabel, String[] args) {

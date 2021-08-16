@@ -89,6 +89,10 @@ public class Main extends JavaPlugin implements Listener {
     	else
     		return null;
     }
+    public void ClearPlayerAndTarget(String player) {
+    	if(tpatarget.containsKey(player))
+    	tpatarget.remove(player);
+    }
 	
    private static HashMap<String, Integer> spawncooldown = new HashMap<>();
 	
