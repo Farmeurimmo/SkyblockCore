@@ -9,7 +9,10 @@ import org.bukkit.event.block.BlockBurnEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntitySpawnEvent;
 import org.bukkit.event.entity.ExplosionPrimeEvent;
+import org.bukkit.event.player.PlayerDropItemEvent;
+import org.bukkit.event.player.PlayerPickupItemEvent;
 
+@SuppressWarnings("deprecation")
 public class AntiExplo implements Listener {
 	
 	@EventHandler
@@ -29,6 +32,18 @@ public class AntiExplo implements Listener {
 				Player player = (Player) e.getEntity();
 				player.teleport(Spawn);
 			}
+		}
+	}
+	@EventHandler
+	public void dropItem(PlayerDropItemEvent e) {
+		if(e.getPlayer().getWorld().getName().equalsIgnoreCase("world")) {
+			e.setCancelled(true);
+		}
+	}
+	@EventHandler
+	public void pickupItem(PlayerPickupItemEvent e) {
+		if(e.getPlayer().getWorld().getName().equalsIgnoreCase("world")) {
+			e.setCancelled(true);
 		}
 	}
 	@EventHandler
