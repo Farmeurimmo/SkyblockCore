@@ -30,9 +30,11 @@ public class SwitchWorld implements Listener {
 		}
 		if(player.getWorld().getName().equalsIgnoreCase("IlesSkyblock")) {
 			if(player.hasPermission("fly")) {
+				if(player.getAllowFlight() == false) {
 				player.setAllowFlight(true);
 				player.setFlying(true);
 				SendActionBar.SendActionBarMsg(player, "§aFly activé");
+				}
 			}
 		}
 	}
