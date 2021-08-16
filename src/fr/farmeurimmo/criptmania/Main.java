@@ -24,6 +24,7 @@ import fr.farmeurimmo.criptmania.cmd.base.FlyCmd;
 import fr.farmeurimmo.criptmania.cmd.base.HatCmd;
 import fr.farmeurimmo.criptmania.cmd.base.MenuCmd;
 import fr.farmeurimmo.criptmania.cmd.base.SpawnCmd;
+import fr.farmeurimmo.criptmania.cmd.base.TpNoCmd;
 import fr.farmeurimmo.criptmania.cmd.base.TpYesCmd;
 import fr.farmeurimmo.criptmania.cmd.base.TpaCancelCmd;
 import fr.farmeurimmo.criptmania.cmd.base.TpaCmd;
@@ -193,6 +194,7 @@ public class Main extends JavaPlugin implements Listener {
 		this.getCommand("tpa").setExecutor(new TpaCmd());
 		this.getCommand("tpacancel").setExecutor(new TpaCancelCmd());
 		this.getCommand("tpyes").setExecutor(new TpYesCmd());
+		this.getCommand("tpno").setExecutor(new TpNoCmd());
 		PluginManager pm = getServer().getPluginManager();
 		pm.registerEvents(this, this);
 		Main.spawncooldown.clear();
