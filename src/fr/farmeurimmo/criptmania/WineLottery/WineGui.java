@@ -36,8 +36,11 @@ public class WineGui implements Listener {
 	@EventHandler
 	public void OnInteractWithNPC(NPCRightClickEvent e) {
 		Player player = e.getClicker();
+		if(!player.hasPermission("*")) {
 		SendActionBar.SendActionBarMsg(player, "§cLe bar est encore en développement !");
+		} else {
 		BuyWinePotion.MakeWinePotionGui(player);
+		}
 	}
 	@SuppressWarnings("deprecation")
 	@EventHandler
