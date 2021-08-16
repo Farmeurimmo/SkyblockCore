@@ -27,6 +27,7 @@ public class TpaCmd implements CommandExecutor, TabCompleter {
 						if(Bukkit.getPlayer(args[0]) != null) {
 							if(Bukkit.getPlayer(args[0]).isOnline()) {
 							Player p = Bukkit.getPlayer(args[0]);
+							Main.haverequest.add(p);
 							Main.pending.add(player);
 							Main.instance1.setTarget(player.getName(), p.getName());
 							p.sendMessage("§6§lTéléportation §8» §f" + player.getName() + " souhaite ce téléporter à vous. \n \nVous avez 60 secondes"

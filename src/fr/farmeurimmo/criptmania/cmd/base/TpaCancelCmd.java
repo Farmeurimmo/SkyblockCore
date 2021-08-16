@@ -14,6 +14,7 @@ import fr.farmeurimmo.criptmania.Main;
 
 public class TpaCancelCmd implements CommandExecutor, TabCompleter {
 
+	@SuppressWarnings("unlikely-arg-type")
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		if(sender instanceof Player) {
@@ -22,6 +23,7 @@ public class TpaCancelCmd implements CommandExecutor, TabCompleter {
 				Main.pending.remove(player);
 				player.sendMessage("§§6§lTéléportation §8» §fVous avez §cannulé §fvotre demande de téléportation à "
 				+ Main.instance1.getTarget(player.getName()) + ".");
+				Main.haverequest.remove(Main.instance1.getTarget(player.getName()));
 			} else {
 				player.sendMessage("§§6§lTéléportation §8» §fVous ne possédez aucune demande de téléportaiton de votre part.");
 			}

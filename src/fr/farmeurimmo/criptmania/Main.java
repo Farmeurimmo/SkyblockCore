@@ -24,6 +24,7 @@ import fr.farmeurimmo.criptmania.cmd.base.FlyCmd;
 import fr.farmeurimmo.criptmania.cmd.base.HatCmd;
 import fr.farmeurimmo.criptmania.cmd.base.MenuCmd;
 import fr.farmeurimmo.criptmania.cmd.base.SpawnCmd;
+import fr.farmeurimmo.criptmania.cmd.base.TpYesCmd;
 import fr.farmeurimmo.criptmania.cmd.base.TpaCancelCmd;
 import fr.farmeurimmo.criptmania.cmd.base.TpaCmd;
 import fr.farmeurimmo.criptmania.cmd.base.WarpCmd;
@@ -62,6 +63,7 @@ import net.luckperms.api.LuckPerms;
 public class Main extends JavaPlugin implements Listener {
 	
 	public static ArrayList<Player> pending = new ArrayList<Player>();
+	public static ArrayList<Player> haverequest = new ArrayList<Player>();
 	
 	static LuckPerms api;
     private static Main instance;
@@ -190,6 +192,7 @@ public class Main extends JavaPlugin implements Listener {
 		this.getCommand("redstone").setExecutor(new RedstoneToggleCmd());
 		this.getCommand("tpa").setExecutor(new TpaCmd());
 		this.getCommand("tpacancel").setExecutor(new TpaCancelCmd());
+		this.getCommand("tpyes").setExecutor(new TpYesCmd());
 		PluginManager pm = getServer().getPluginManager();
 		pm.registerEvents(this, this);
 		Main.spawncooldown.clear();
