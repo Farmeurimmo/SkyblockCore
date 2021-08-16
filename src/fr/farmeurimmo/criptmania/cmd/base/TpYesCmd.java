@@ -17,6 +17,7 @@ import fr.farmeurimmo.criptmania.utils.TeleportPlayer;
 
 public class TpYesCmd implements CommandExecutor, TabCompleter {
 
+	@SuppressWarnings("unlikely-arg-type")
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 		if(sender instanceof Player) {
@@ -26,6 +27,7 @@ public class TpYesCmd implements CommandExecutor, TabCompleter {
 				for(Player p : Bukkit.getOnlinePlayers()) {
 					if(Main.instance1.getTarget(p.getName()).equalsIgnoreCase(player.getName())) {
 						TeleportPlayer.TeleportPlayerFromRequestToAnotherPlayer(player, p, GetTeleportDelay.GetPlayerTeleportingdelay(p));
+						Main.pending.remove(Main.instance1.getTarget(p.getName()));
 					}
 				}
 			} else {
