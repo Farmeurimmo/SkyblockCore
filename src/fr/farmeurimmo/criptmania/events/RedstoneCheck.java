@@ -1,5 +1,6 @@
 package fr.farmeurimmo.criptmania.events;
 
+import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -12,7 +13,7 @@ public class RedstoneCheck implements Listener {
 	@EventHandler(priority = EventPriority.MONITOR)
 	public void onRedstoneActivation(BlockRedstoneEvent e) {
 		if(redstone == false) {
-			e.getBlock().breakNaturally();
+			e.getBlock().setType(Material.AIR);
 		}
 	}
 

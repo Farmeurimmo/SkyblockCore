@@ -22,8 +22,10 @@ public class RedstoneToggleCmd implements CommandExecutor, TabCompleter {
 					} else if (args.length == 1){
 						if(args[0].equalsIgnoreCase("on")) {
 							RedstoneCheck.redstone = true;
+							sender.sendMessage("§aRedstone activée !");
 						} else if(args[0].equalsIgnoreCase("off")) {
 							RedstoneCheck.redstone = false;
+							sender.sendMessage("§cRedstone désactivée !");
 						} else {
 							sender.sendMessage("§c/redstone <On>/<Off>");
 						}
