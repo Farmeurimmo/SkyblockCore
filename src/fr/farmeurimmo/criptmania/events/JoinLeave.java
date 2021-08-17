@@ -15,6 +15,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import com.iridium.iridiumskyblock.api.IridiumSkyblockAPI;
 
+import fr.farmeurimmo.criptmania.Main;
 import fr.farmeurimmo.criptmania.featherfly.CountdownFly;
 import fr.farmeurimmo.criptmania.items.PermanantItem;
 import fr.farmeurimmo.criptmania.scoreboard.ScoreBoard;
@@ -65,6 +66,12 @@ public class JoinLeave implements Listener {
 				JoinMessage = "§7[§a+§7] [#" + classement + "] " + Grade.replace("&", "§").replace("&", "§") + player.getName();
 			}
 			event.setJoinMessage(JoinMessage);
+			
+			if(Main.instance1.getData().getString("Joueurs."+player.getName()) == null) {
+				Main.instance1.getData().set("Joueurs."+player.getName()+".Challenges.Daily.1.Active", true);
+				Main.instance1.getData().set("Joueurs."+player.getName()+".Challenges.Daily.1.Progression", 0);
+				Main.instance1.saveData();
+			}
 	}
 	@EventHandler
 	public void OnLeave(PlayerQuitEvent event) {

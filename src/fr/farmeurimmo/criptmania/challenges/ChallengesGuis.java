@@ -40,11 +40,6 @@ public class ChallengesGuis implements Listener {
 		player.sendMessage("§6§lChallenges §8» §fVous venez de compléter le challenge journalier n°" + nombre);
 	}
 	public static void MakeDailyGui(Player player) {
-		if(Main.instance1.getData().getString("Joueurs."+player.getName()) == null) {
-			Main.instance1.getData().set("Joueurs."+player.getName()+".Challenges.Daily.1.Active", true);
-			Main.instance1.getData().set("Joueurs."+player.getName()+".Challenges.Daily.1.Progression", 0);
-			Main.instance1.saveData();
-		}
         Inventory inv = Bukkit.createInventory(null, 54, "§6Challenges journaliers");
 		
         if(Main.instance1.getData().getBoolean("Joueurs."+player.getName()+".Challenges.Daily.1.Active") == true) {
