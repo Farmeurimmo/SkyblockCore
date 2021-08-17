@@ -13,7 +13,7 @@ public class Tabulation implements Listener {
 	public void OnTabulation(PlayerCommandSendEvent e) {
 		e.getCommands().clear();
 		e.getCommands().addAll(Arrays.asList("is","shop","sellall","warp","warps","menu","farm2win","spawn","hat","feed","fly","dailyfly"
-				,"craft","enchantement","wiki","money","baltop","bar","tpa","tpacancel","tpyes","tpno","pay"));
+				,"craft","enchantement","wiki","money","baltop","bar","tpa","tpacancel","tpyes","tpno","pay","challenges","c"));
 		if(e.getPlayer().hasPermission("*")) {
 			e.getCommands().addAll(Arrays.asList("gm","gmc","gms","gmsp","gma","ban","tempban","mute","ban-ip","pardon","pardon-ip","build","lp","lpb","afkmine","clear","checkfly",
 					"ss","sanctionset","invsee","redstone"));

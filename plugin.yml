@@ -38,3 +38,5 @@ commands:
   tpacancel:
   tpyes:
   tpno:
+  challenges:
+    aliases: [c]
