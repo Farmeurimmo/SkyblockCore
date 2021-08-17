@@ -23,7 +23,7 @@ public class ChallengesGuis implements Listener {
 	public static void CompleteChallenge(Player player, int nombre) {
 		if(nombre == 1) {
 			Main.instance1.getData().set("Joueurs."+player.getName()+".Challenges.Daily.1.Active", false);
-			Main.instance1.getData().set("Joueurs."+player.getName()+".Challenges.Daily.1.progression", 0);
+			Main.instance1.getData().set("Joueurs."+player.getName()+".Challenges.Daily.1.Progression", 0);
 			Main.instance1.saveData();
 		} else {
 			return;
@@ -33,7 +33,7 @@ public class ChallengesGuis implements Listener {
 	public static void MakeDailyGui(Player player) {
 		if(Main.instance1.getData().getString("Joueurs."+player.getName()) == null) {
 			Main.instance1.getData().set("Joueurs."+player.getName()+".Challenges.Daily.1.Active", true);
-			Main.instance1.getData().set("Joueurs."+player.getName()+".Challenges.Daily.1.progression", 0);
+			Main.instance1.getData().set("Joueurs."+player.getName()+".Challenges.Daily.1.Progression", 0);
 			Main.instance1.saveData();
 		}
         Inventory inv = Bukkit.createInventory(null, 54, "§6Challenges journaliers");

@@ -18,6 +18,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import fr.farmeurimmo.criptmania.WineLottery.WineGui;
 import fr.farmeurimmo.criptmania.WineLottery.WineSpawn;
+import fr.farmeurimmo.criptmania.challenges.ChallengesBlockBreak;
 import fr.farmeurimmo.criptmania.challenges.ChallengesCmd;
 import fr.farmeurimmo.criptmania.challenges.ChallengesGuis;
 import fr.farmeurimmo.criptmania.cmd.base.BarCmd;
@@ -177,6 +178,7 @@ public class Main extends JavaPlugin implements Listener {
 		getServer().getPluginManager().registerEvents(new SanctionSetGuiManager(), this);
 		getServer().getPluginManager().registerEvents(new RedstoneCheck(), this);
 		getServer().getPluginManager().registerEvents(new ChallengesGuis(), this);
+		getServer().getPluginManager().registerEvents(new ChallengesBlockBreak(), this);
 		this.getCommand("spawn").setExecutor(new SpawnCmd());
 		this.getCommand("wiki").setExecutor(new WikiCmd());
 		this.getCommand("build").setExecutor(new BuildCmd());
