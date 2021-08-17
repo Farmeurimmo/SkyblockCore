@@ -1,11 +1,15 @@
 package fr.farmeurimmo.criptmania;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.PluginManager;
@@ -151,6 +155,7 @@ public class Main extends JavaPlugin implements Listener {
 		}
 		System.out.println("§aDémarrage du plugin réussi !");
 		System.out.println("-----------------------------------------------------------------------------------------------------");
+		setup();
 		getServer().getPluginManager().registerEvents(new JoinLeave(), this);
 		getServer().getPluginManager().registerEvents(new Tchat(), this);
 		getServer().getPluginManager().registerEvents(new ScoreBoard(), this);
@@ -219,4 +224,42 @@ public class Main extends JavaPlugin implements Listener {
 		System.out.println("Plugin stoppé !");
 		System.out.println("-----------------------------------------------------------------------------------------------------");
 	}
+	public FileConfiguration data;
+    public File dfile;
+   
+    public void setup() {
+        dfile = new File(this.getDataFolder(), "Challenges.yml");
+       
+        if(!dfile.exists()) {
+            try {
+                dfile.createNewFile();
+            }
+            catch(IOException e) {
+                getLogger().info("§c§lErreur lors de la création de Challenges.yml");
+            }
+        }
+       
+        data = YamlConfiguration.loadConfiguration(dfile);
+       
+    }
+   
+    public FileConfiguration getData() {
+        return data;
+    }
+   
+    public void saveData() {
+        try {
+            data.save(dfile);
+        }
+        catch(IOException e) {
+            getLogger().info("§c§lErreur lors de la sauvegarde!");
+        }
+    }
 }
+
+
+
+
+
+
+
