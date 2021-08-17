@@ -5,8 +5,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Event.Result;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
+import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -21,6 +23,30 @@ public class PermanantItem implements Listener {
 			e.setCancelled(true);
 		}
 	}
+	}
+	@EventHandler
+	public void onDeath(PlayerDeathEvent e) {
+		ItemStack custom1 = new ItemStack(Material.NETHER_STAR, 1);
+		ItemMeta customS = custom1.getItemMeta();
+		customS.setUnbreakable(true);
+		customS.setDisplayName(PermanantItem.NameMenuItem);
+		custom1.setItemMeta(customS);
+		for(ItemStack aa : e.getEntity().getInventory().getContents()) {
+			if(aa != null) {
+				if(aa.getType() == custom1.getType() && aa.getItemMeta().getDisplayName().equalsIgnoreCase(custom1.getItemMeta().getDisplayName())) {
+					aa.setAmount(0);
+				}
+			}
+		}
+	}
+	@EventHandler
+	public void onRespawn(PlayerRespawnEvent e) {
+		ItemStack custom1 = new ItemStack(Material.NETHER_STAR, 1);
+		ItemMeta customS = custom1.getItemMeta();
+		customS.setUnbreakable(true);
+		customS.setDisplayName(PermanantItem.NameMenuItem);
+		custom1.setItemMeta(customS);
+		e.getPlayer().getInventory().setItem(8, custom1);
 	}
 	@SuppressWarnings("deprecation")
 	@EventHandler
