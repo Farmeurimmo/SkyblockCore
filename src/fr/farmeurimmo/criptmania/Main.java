@@ -21,6 +21,7 @@ import fr.farmeurimmo.criptmania.WineLottery.WineSpawn;
 import fr.farmeurimmo.criptmania.challenges.ChallengesBlockBreak;
 import fr.farmeurimmo.criptmania.challenges.ChallengesCmd;
 import fr.farmeurimmo.criptmania.challenges.ChallengesGuis;
+import fr.farmeurimmo.criptmania.challenges.ChallengesReset;
 import fr.farmeurimmo.criptmania.cmd.base.BarCmd;
 import fr.farmeurimmo.criptmania.cmd.base.BuildCmd;
 import fr.farmeurimmo.criptmania.cmd.base.CraftCmd;
@@ -221,6 +222,7 @@ public class Main extends JavaPlugin implements Listener {
 		}
 		ChatReaction.mots.addAll(Arrays.asList("CriptMania","Skyblock","Ile","Farm2Win"));
 	    ChatReaction.StartChatReaction();
+	    ChallengesReset.CheckForReset();
 	}
 	@Override
 	public void onDisable() {

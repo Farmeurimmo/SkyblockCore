@@ -29,7 +29,7 @@ public class MenuGui {
 		ItemMeta meta3 = custom3.getItemMeta();
 		meta3.setDisplayName("§6Wiki §8| §7(clic gauche)");
 		custom3.setItemMeta(meta3);
-		inv.setItem(30, custom3);
+		inv.setItem(34, custom3);
 		
 		ItemStack custom7 = new ItemStack(Material.ENDER_EYE, 1);
 		ItemMeta meta7 = custom7.getItemMeta();
@@ -55,11 +55,11 @@ public class MenuGui {
 		custom6.setItemMeta(meta6);
 		inv.setItem(16, custom6);
 		
-		ItemStack custom10 = new ItemStack(Material.BEDROCK, 1);
+		ItemStack custom10 = new ItemStack(Material.IRON_SWORD, 1);
 		ItemMeta meta10 = custom10.getItemMeta();
-		meta10.setDisplayName("§cSoon");
+		meta10.setDisplayName("§6Challenges journaliers §8| §7(clic gauche)");
 		custom10.setItemMeta(meta10);
-		inv.setItem(34, custom10);
+		inv.setItem(30, custom10);
 		
 		ItemStack custom8 = new ItemStack(Material.WHITE_STAINED_GLASS_PANE, 1);
 		ItemMeta meta8 = custom8.getItemMeta();

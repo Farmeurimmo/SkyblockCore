@@ -101,6 +101,10 @@ public class PermanantItem implements Listener {
 			player.closeInventory();
 			player.chat("/shop");
 		}
+		if(current.getType() == Material.IRON_SWORD) {
+			player.closeInventory();
+			player.chat("/c");
+		}
 	}
 	}
 }
