@@ -29,7 +29,7 @@ public class AtoutGui implements Listener{
 		ItemStack custom1 = new ItemStack(Material.GOLDEN_PICKAXE, 1);
 		ItemMeta customa = custom1.getItemMeta();
 		customa.setDisplayName("§6Haste 1");
-		customa.setLore(Arrays.asList("§7","§7Clic ici pour débloquer l'atout","§7permanant haste 1"));
+		customa.setLore(Arrays.asList("§7","§cAchetez cet atout dans le /farm2win"));
 		custom1.setItemMeta(customa);
 		inv.setItem(10, custom1);
         } else if (Main.instance1.getData().getInt("Joueurs."+player.getName()+".Atout.1.Level") == 1) {
@@ -65,7 +65,7 @@ public class AtoutGui implements Listener{
     		ItemStack custom1 = new ItemStack(Material.SUGAR, 1);
     		ItemMeta customa = custom1.getItemMeta();
     		customa.setDisplayName("§6Speed 1");
-    		customa.setLore(Arrays.asList("§7","§7Clic ici pour débloquer l'atout","§7permanant speed 1"));
+    		customa.setLore(Arrays.asList("§7","§cAchetez cet atout dans le /farm2win"));
     		custom1.setItemMeta(customa);
     		inv.setItem(12, custom1);
             } else if (Main.instance1.getData().getInt("Joueurs."+player.getName()+".Atout.2.Level") == 1) {
@@ -101,7 +101,7 @@ public class AtoutGui implements Listener{
     		ItemStack custom1 = new ItemStack(Material.RABBIT_FOOT, 1);
     		ItemMeta customa = custom1.getItemMeta();
     		customa.setDisplayName("§6Jumpboost 1");
-    		customa.setLore(Arrays.asList("§7","§7Clic ici pour débloquer l'atout","§7permanant Jumpboost 1"));
+    		customa.setLore(Arrays.asList("§7","§cAchetez cet atout dans le /farm2win"));
     		custom1.setItemMeta(customa);
     		inv.setItem(14, custom1);
             } else if (Main.instance1.getData().getInt("Joueurs."+player.getName()+".Atout.3.Level") == 1) {
