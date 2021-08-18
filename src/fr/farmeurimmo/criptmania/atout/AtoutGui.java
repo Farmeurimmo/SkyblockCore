@@ -41,7 +41,7 @@ public class AtoutGui implements Listener{
         		customa.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         		customa.setDisplayName("§6Haste 1 §a(Actif)");
     		} else {
-    			customa.setDisplayName("§6Haste 1");
+    			customa.setDisplayName("§6Haste 1 §c(Inactif)");
     		}
     		custom1.setItemMeta(customa);
     		inv.setItem(10, custom1);
@@ -54,11 +54,47 @@ public class AtoutGui implements Listener{
         		customa.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         		customa.setDisplayName("§6Haste 2 §a(Actif)");
     		} else {
-    			customa.setDisplayName("§6Haste 2");
+    			customa.setDisplayName("§6Haste 2 §c(Inactif)");
     		}
     		custom1.setItemMeta(customa);
     		inv.setItem(10, custom1);
         }
+        
+        
+        if(Main.instance1.getData().getInt("Joueurs."+player.getName()+".Atout.2.Level") == 0) {
+    		ItemStack custom1 = new ItemStack(Material.SUGAR, 1);
+    		ItemMeta customa = custom1.getItemMeta();
+    		customa.setDisplayName("§6Speed 1");
+    		customa.setLore(Arrays.asList("§7","§7Clic ici pour débloquer l'atout","§7permanant speed 1"));
+    		custom1.setItemMeta(customa);
+    		inv.setItem(12, custom1);
+            } else if (Main.instance1.getData().getInt("Joueurs."+player.getName()+".Atout.2.Level") == 1) {
+            	ItemStack custom1 = new ItemStack(Material.SUGAR, 1);
+        		ItemMeta customa = custom1.getItemMeta();
+        		customa.setLore(Arrays.asList("§7","§7Cliquez ici pour améliorer votre","§7atout speed au niveau 2"));
+        		if(Main.instance1.getData().getBoolean("Joueurs."+player.getName()+".Atout.2.Active") == true) {
+        			customa.addEnchant(Enchantment.ARROW_FIRE, 1, true);
+            		customa.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            		customa.setDisplayName("§6Speed 1 §a(Actif)");
+        		} else {
+        			customa.setDisplayName("§6Speed 1 §c(Inactif)");
+        		}
+        		custom1.setItemMeta(customa);
+        		inv.setItem(12, custom1);
+            } else if (Main.instance1.getData().getInt("Joueurs."+player.getName()+".Atout.2.Level") == 2) {
+            	ItemStack custom1 = new ItemStack(Material.SUGAR, 1);
+        		ItemMeta customa = custom1.getItemMeta();
+        		customa.setLore(Arrays.asList("§7","§7Votre atout speed est au niveau maximum"));
+        		if(Main.instance1.getData().getBoolean("Joueurs."+player.getName()+".Atout.2.Active") == true) {
+        			customa.addEnchant(Enchantment.ARROW_FIRE, 1, true);
+            		customa.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            		customa.setDisplayName("§6Speed 2 §a(Actif)");
+        		} else {
+        			customa.setDisplayName("§6Speed 2 §c(Inactif)");
+        		}
+        		custom1.setItemMeta(customa);
+        		inv.setItem(12, custom1);
+            }
 		
         
 		
@@ -98,22 +134,51 @@ public class AtoutGui implements Listener{
 				player.removePotionEffect(PotionEffectType.FAST_DIGGING);
 				Main.instance1.getData().set("Joueurs."+player.getName()+".Atout.1.Active", false);
 				Main.instance1.saveData();
-				SendActionBar.SendActionBarMsg(player, "§6Atout haste §cdésactivé !");
+				SendActionBar.SendActionBarMsg(player, "§6Atout haste §c§ldésactivé !");
 				AtoutGui.MakeAtoutGui(player);
 				return;
 			}
 			if(current.getType() == Material.GOLDEN_PICKAXE) {
 				if(Main.instance1.getData().getInt("Joueurs."+player.getName()+".Atout.1.Level") == 1) {
 				player.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 999999999, 0));
-				SendActionBar.SendActionBarMsg(player, "§6Atout haste §aactivé !");
+				SendActionBar.SendActionBarMsg(player, "§6Atout haste §a§lactivé !");
 				Main.instance1.getData().set("Joueurs."+player.getName()+".Atout.1.Active", true);
 				Main.instance1.saveData();
 				AtoutGui.MakeAtoutGui(player);
 				return;
 				} else if(Main.instance1.getData().getInt("Joueurs."+player.getName()+".Atout.1.Level") == 2) {
 					player.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 999999999, 1));
-					SendActionBar.SendActionBarMsg(player, "§6Atout haste §aactivé !");
+					SendActionBar.SendActionBarMsg(player, "§6Atout haste §a§lactivé !");
 					Main.instance1.getData().set("Joueurs."+player.getName()+".Atout.1.Active", true);
+					Main.instance1.saveData();
+					AtoutGui.MakeAtoutGui(player);
+					return;
+				} else {
+					SendActionBar.SendActionBarMsg(player, "§cAchetez cet atout dans le /farm2win");
+				}
+			}
+			
+			
+			if(current.getType() == Material.SUGAR && current.getItemMeta().getItemFlags().contains(ItemFlag.HIDE_ENCHANTS)) {
+				player.removePotionEffect(PotionEffectType.SPEED);
+				Main.instance1.getData().set("Joueurs."+player.getName()+".Atout.2.Active", false);
+				Main.instance1.saveData();
+				SendActionBar.SendActionBarMsg(player, "§6Atout speed §c§ldésactivé !");
+				AtoutGui.MakeAtoutGui(player);
+				return;
+			}
+			if(current.getType() == Material.SUGAR) {
+				if(Main.instance1.getData().getInt("Joueurs."+player.getName()+".Atout.2.Level") == 1) {
+				player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999999, 0));
+				SendActionBar.SendActionBarMsg(player, "§6Atout speed §a§lactivé !");
+				Main.instance1.getData().set("Joueurs."+player.getName()+".Atout.2.Active", true);
+				Main.instance1.saveData();
+				AtoutGui.MakeAtoutGui(player);
+				return;
+				} else if(Main.instance1.getData().getInt("Joueurs."+player.getName()+".Atout.2.Level") == 2) {
+					player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999999, 1));
+					SendActionBar.SendActionBarMsg(player, "§6Atout speed §a§lactivé !");
+					Main.instance1.getData().set("Joueurs."+player.getName()+".Atout.2.Active", true);
 					Main.instance1.saveData();
 					AtoutGui.MakeAtoutGui(player);
 					return;
