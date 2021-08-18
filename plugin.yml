@@ -43,4 +43,5 @@ commands:
   atout:
     aliases: [atouts]
   datafile:
+  key:
   

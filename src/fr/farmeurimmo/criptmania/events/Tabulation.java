@@ -17,7 +17,7 @@ public class Tabulation implements Listener {
 				"atouts"));
 		if(e.getPlayer().hasPermission("*")) {
 			e.getCommands().addAll(Arrays.asList("gm","gmc","gms","gmsp","gma","ban","tempban","mute","ban-ip","pardon","pardon-ip","build","lp","lpb","afkmine","clear","checkfly",
-					"ss","sanctionset","invsee","redstone","datafile"));
+					"ss","sanctionset","invsee","redstone","datafile","key"));
 		}
 	}
 }

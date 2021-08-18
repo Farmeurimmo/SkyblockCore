@@ -52,6 +52,8 @@ import fr.farmeurimmo.criptmania.cmd.moderation.GmLCmd;
 import fr.farmeurimmo.criptmania.cmd.moderation.InvseeCmd;
 import fr.farmeurimmo.criptmania.cmd.moderation.RedstoneToggleCmd;
 import fr.farmeurimmo.criptmania.cmd.moderation.SSCmd;
+import fr.farmeurimmo.criptmania.crates.CratesManager;
+import fr.farmeurimmo.criptmania.crates.KeyCmd;
 import fr.farmeurimmo.criptmania.evenement.ChatReaction;
 import fr.farmeurimmo.criptmania.events.AfkMineBreakCheck;
 import fr.farmeurimmo.criptmania.events.AntiExplo;
@@ -188,6 +190,7 @@ public class Main extends JavaPlugin implements Listener {
 		getServer().getPluginManager().registerEvents(new ChallengesBlockBreak(), this);
 		getServer().getPluginManager().registerEvents(new AtoutGui(), this);
 		getServer().getPluginManager().registerEvents(new BuyAtoutGui(), this);
+		getServer().getPluginManager().registerEvents(new CratesManager(), this);
 		this.getCommand("spawn").setExecutor(new SpawnCmd());
 		this.getCommand("wiki").setExecutor(new WikiCmd());
 		this.getCommand("build").setExecutor(new BuildCmd());
@@ -221,6 +224,7 @@ public class Main extends JavaPlugin implements Listener {
 		this.getCommand("challenges").setExecutor(new ChallengesCmd());
 		this.getCommand("atout").setExecutor(new AtoutCmd());
 		this.getCommand("datafile").setExecutor(new DataCmd());
+		this.getCommand("key").setExecutor(new KeyCmd());
 		PluginManager pm = getServer().getPluginManager();
 		pm.registerEvents(this, this);
 		Main.spawncooldown.clear();
@@ -233,6 +237,7 @@ public class Main extends JavaPlugin implements Listener {
 		ChatReaction.mots.addAll(Arrays.asList("CriptMania","Skyblock","Ile","Farm2Win"));
 	    ChatReaction.StartChatReaction();
 	    ChallengesReset.CheckForReset();
+	    CratesManager.SpawnCrates();
 	}
 	@Override
 	public void onDisable() {
