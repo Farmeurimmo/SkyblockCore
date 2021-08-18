@@ -1,5 +1,6 @@
 package fr.farmeurimmo.criptmania.challenges;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 
 import org.bukkit.Bukkit;
@@ -13,10 +14,15 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import com.iridium.iridiumskyblock.api.IridiumSkyblockAPI;
+
 import org.bukkit.event.inventory.InventoryClickEvent;
 
 import fr.farmeurimmo.criptmania.Main;
 import fr.farmeurimmo.criptmania.gui.MenuGui;
+import net.tnemc.core.TNE;
+import net.tnemc.core.common.api.TNEAPI;
 
 public class ChallengesGuis implements Listener {
 	
@@ -31,11 +37,21 @@ public class ChallengesGuis implements Listener {
 		}
 	}
 	public static void CompleteChallenge(Player player, int nombre) {
-		Main.instance1.getData().set("Joueurs."+player.getName()+".Challenges.Daily."+nombre+".Active", false);
-		Main.instance1.getData().set("Joueurs."+player.getName()+".Challenges.Daily."+nombre+".Progression", 0);
-		Main.instance1.saveData();
-		player.playSound(player.getLocation(), Sound.UI_TOAST_CHALLENGE_COMPLETE, 5, 1);
-		player.sendMessage("§6§lChallenges §8» §fVous venez de compléter le challenge journalier n°" + nombre);
+		if(IridiumSkyblockAPI.getInstance().getUser(player).getIsland().isPresent()) {
+			Main.instance1.getData().set("Joueurs."+player.getName()+".Challenges.Daily."+nombre+".Active", false);
+			Main.instance1.getData().set("Joueurs."+player.getName()+".Challenges.Daily."+nombre+".Progression", 0);
+			Main.instance1.saveData();
+			Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "is bank give " + player.getName() + " crystals 2");
+			TNEAPI ecoAPI = TNE.instance().api();
+			ecoAPI.getAccount(player.getName()).getHoldings().add(new BigDecimal(5000));
+			player.playSound(player.getLocation(), Sound.UI_TOAST_CHALLENGE_COMPLETE, 5, 1);
+			player.sendMessage("§6§lChallenges §8» §fVous venez de compléter le challenge journalier n°" + nombre+".");
+			player.sendMessage("§6§lChallenges §8» §fVous avez reçu 2 crystaux et 5000$.");
+			
+		} else {
+			player.sendMessage("§6§lChallenges §8» §fVous pouvez uniquement compléter les challenges en possédant ou en"
+					+ " fesant partie d'une ile.");
+		}
 	}
 	public static void MakeDailyGui(Player player) {
         Inventory inv = Bukkit.createInventory(null, 54, "§6Challenges journaliers");

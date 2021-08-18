@@ -28,7 +28,7 @@ public class ChallengesBlockBreak implements Listener {
 			int progress = Main.instance1.getData().getInt("Joueurs."+player.getName()+".Challenges.Daily.1.Progression") + 1;
 			Main.instance1.getData().set("Joueurs."+player.getName()+".Challenges.Daily.1.Progression", progress);
 			Main.instance1.saveData();
-			if(progress == 320) {
+			if(progress >= 320) {
 				ChallengesGuis.CompleteChallenge(player, 1);
 				Main.instance1.getData().set("Joueurs."+player.getName()+".Challenges.Daily.1.Active", false);
 				Main.instance1.getData().set("Joueurs."+player.getName()+".Challenges.Daily.1.Progression", 0);
@@ -40,7 +40,7 @@ public class ChallengesBlockBreak implements Listener {
 			int progress = Main.instance1.getData().getInt("Joueurs."+player.getName()+".Challenges.Daily.2.Progression") + 1;
 			Main.instance1.getData().set("Joueurs."+player.getName()+".Challenges.Daily.2.Progression", progress);
 			Main.instance1.saveData();
-			if(progress == 288) {
+			if(progress >= 288) {
 				ChallengesGuis.CompleteChallenge(player, 2);
 				Main.instance1.getData().set("Joueurs."+player.getName()+".Challenges.Daily.2.Active", false);
 				Main.instance1.getData().set("Joueurs."+player.getName()+".Challenges.Daily.2.Progression", 0);
@@ -52,7 +52,7 @@ public class ChallengesBlockBreak implements Listener {
 			int progress = Main.instance1.getData().getInt("Joueurs."+player.getName()+".Challenges.Daily.3.Progression") + 1;
 			Main.instance1.getData().set("Joueurs."+player.getName()+".Challenges.Daily.3.Progression", progress);
 			Main.instance1.saveData();
-			if(progress == 256) {
+			if(progress >= 256) {
 				ChallengesGuis.CompleteChallenge(player, 3);
 				Main.instance1.getData().set("Joueurs."+player.getName()+".Challenges.Daily.3.Active", false);
 				Main.instance1.getData().set("Joueurs."+player.getName()+".Challenges.Daily.3.Progression", 0);
@@ -64,7 +64,7 @@ public class ChallengesBlockBreak implements Listener {
 			int progress = Main.instance1.getData().getInt("Joueurs."+player.getName()+".Challenges.Daily.4.Progression") + 1;
 			Main.instance1.getData().set("Joueurs."+player.getName()+".Challenges.Daily.4.Progression", progress);
 			Main.instance1.saveData();
-			if(progress == 192) {
+			if(progress >= 192) {
 				ChallengesGuis.CompleteChallenge(player, 4);
 				Main.instance1.getData().set("Joueurs."+player.getName()+".Challenges.Daily.4.Active", false);
 				Main.instance1.getData().set("Joueurs."+player.getName()+".Challenges.Daily.4.Progression", 0);
@@ -76,7 +76,7 @@ public class ChallengesBlockBreak implements Listener {
 			int progress = Main.instance1.getData().getInt("Joueurs."+player.getName()+".Challenges.Daily.5.Progression") + 1;
 			Main.instance1.getData().set("Joueurs."+player.getName()+".Challenges.Daily.5.Progression", progress);
 			Main.instance1.saveData();
-			if(progress == 128) {
+			if(progress >= 128) {
 				ChallengesGuis.CompleteChallenge(player, 5);
 				Main.instance1.getData().set("Joueurs."+player.getName()+".Challenges.Daily.5.Active", false);
 				Main.instance1.getData().set("Joueurs."+player.getName()+".Challenges.Daily.5.Progression", 0);
@@ -88,7 +88,7 @@ public class ChallengesBlockBreak implements Listener {
 			int progress = Main.instance1.getData().getInt("Joueurs."+player.getName()+".Challenges.Daily.6.Progression") + 1;
 			Main.instance1.getData().set("Joueurs."+player.getName()+".Challenges.Daily.6.Progression", progress);
 			Main.instance1.saveData();
-			if(progress == 64) {
+			if(progress >= 64) {
 				ChallengesGuis.CompleteChallenge(player, 6);
 				Main.instance1.getData().set("Joueurs."+player.getName()+".Challenges.Daily.6.Active", false);
 				Main.instance1.getData().set("Joueurs."+player.getName()+".Challenges.Daily.6.Progression", 0);
@@ -100,7 +100,7 @@ public class ChallengesBlockBreak implements Listener {
 			int progress = Main.instance1.getData().getInt("Joueurs."+player.getName()+".Challenges.Daily.7.Progression") + 1;
 			Main.instance1.getData().set("Joueurs."+player.getName()+".Challenges.Daily.7.Progression", progress);
 			Main.instance1.saveData();
-			if(progress == 16) {
+			if(progress >= 16) {
 				ChallengesGuis.CompleteChallenge(player, 7);
 				Main.instance1.getData().set("Joueurs."+player.getName()+".Challenges.Daily.7.Active", false);
 				Main.instance1.getData().set("Joueurs."+player.getName()+".Challenges.Daily.7.Progression", 0);
