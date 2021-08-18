@@ -1,6 +1,7 @@
 package fr.farmeurimmo.criptmania;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -8,6 +9,7 @@ import java.util.HashMap;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -253,6 +255,15 @@ public class Main extends JavaPlugin implements Listener {
    
     public FileConfiguration getData() {
         return data;
+    }
+    
+    public void reloadData() throws FileNotFoundException, IOException {
+            try {
+				data.load(dfile);
+			} catch (InvalidConfigurationException e) {
+				getLogger().info("§c§lErreur lors de la sauvegarde!");
+				e.printStackTrace();
+        }
     }
    
     public void saveData() {
