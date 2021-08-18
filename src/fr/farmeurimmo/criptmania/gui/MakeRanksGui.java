@@ -43,7 +43,7 @@ public class MakeRanksGui {
 		} else {
 			ItemStack custom3 = new ItemStack(Material.BEDROCK, 1);
 			ItemMeta customc = custom3.getItemMeta();
-			customc.setDisplayName("§eV.I.P");
+			customc.setDisplayName("§eV.I.P §c(Déjà possédé)");
 			customc.setLore(Arrays.asList("§7Uniquement disponible à ", "§7l'achat sur le site du serveur"));
 			custom3.setItemMeta(customc);
 			invboutiquefarm2win.setItem(34, custom3);
@@ -59,7 +59,7 @@ public class MakeRanksGui {
 		} else {
 			ItemStack custom4 = new ItemStack(Material.BEDROCK, 1);
 			ItemMeta customd = custom4.getItemMeta();
-			customd.setDisplayName("§aPremium");
+			customd.setDisplayName("§aPremium §c(Déjà possédé)");
 			customd.setLore(Arrays.asList("§7Uniquement disponible à ", "§7l'achat sur le site du serveur"));
 			custom4.setItemMeta(customd);
 			invboutiquefarm2win.setItem(25, custom4);
@@ -75,7 +75,7 @@ public class MakeRanksGui {
 		} else {
 			ItemStack custom5 = new ItemStack(Material.BEDROCK, 1);
 			ItemMeta custome = custom5.getItemMeta();
-			custome.setDisplayName("§cElite");
+			custome.setDisplayName("§cElite §c(Déjà possédé)");
 			custome.setLore(Arrays.asList("§7Uniquement disponible à ", "§7l'achat sur le site du serveur"));
 			custom5.setItemMeta(custome);
 			invboutiquefarm2win.setItem(16, custom5);
@@ -91,7 +91,7 @@ public class MakeRanksGui {
 		} else {
 			ItemStack custom6 = new ItemStack(Material.BEDROCK, 1);
 			ItemMeta customf = custom6.getItemMeta();
-			customf.setDisplayName("§dMania");
+			customf.setDisplayName("§dMania §c(Déjà possédé)");
 			customf.setLore(Arrays.asList("§7Uniquement disponible à ", "§7l'achat sur le lobby"));
 			custom6.setItemMeta(customf);
 			invboutiquefarm2win.setItem(13, custom6);
@@ -107,7 +107,7 @@ public class MakeRanksGui {
 		} else {
 			ItemStack custom7 = new ItemStack(Material.BEDROCK, 1);
 			ItemMeta customg = custom7.getItemMeta();
-			customg.setDisplayName("§bRusher");
+			customg.setDisplayName("§bRusher §c(Déjà possédé)");
 			customg.setLore(Arrays.asList("§7Uniquement disponible à ", "§7l'achat sur le lobby"));
 			custom7.setItemMeta(customg);
 			invboutiquefarm2win.setItem(22, custom7);
@@ -129,7 +129,7 @@ public class MakeRanksGui {
 		} else {
 			ItemStack custom10 = new ItemStack(Material.BEDROCK, 1);
 			ItemMeta customi = custom10.getItemMeta();
-			customi.setDisplayName("§bZeus");
+			customi.setDisplayName("§bZeus §c(Déjà possédé)");
 			customi.setLore(Arrays.asList("§8» §7/fly permanant","§8» §7/sellall","§8» §7/is rename","§8» §7/enchantement","§8» §7/hat",
 					"§8» §7/craft","§8» §7/feed","§7","§6Prix: " + Farm2WinGui.zeusprix + "$"));
 			custom10.setItemMeta(customi);
@@ -147,7 +147,7 @@ public class MakeRanksGui {
 		} else {
 			ItemStack custom11 = new ItemStack(Material.BEDROCK, 1);
 			ItemMeta customj = custom11.getItemMeta();
-			customj.setDisplayName("§9Dieu");
+			customj.setDisplayName("§9Dieu §c(Déjà possédé)");
 			customj.setLore(Arrays.asList("§8» §7180 minutes de fly journalier /dailyfly","§8» §7/is rename","§8» §7/enchantement","§8» §7/hat",
 					"§8» §7/craft","§8» §7/feed","§7","§6Prix: " + Farm2WinGui.dieuprix + "$"));
 			custom11.setItemMeta(customj);
@@ -165,7 +165,7 @@ public class MakeRanksGui {
 		} else {
 			ItemStack custom12 = new ItemStack(Material.BEDROCK, 1);
 			ItemMeta customk = custom12.getItemMeta();
-			customk.setDisplayName("§eLégende");
+			customk.setDisplayName("§eLégende §c(Déjà possédé)");
 			customk.setLore(Arrays.asList("§8» §790 minutes de fly journalier /dailyfly","§8» §7Accès au shop spawneurs","§8» §7/craft","§8» §7/feed",
 					"§7","§6Prix: " + Farm2WinGui.legendeprix + "$"));
 			custom12.setItemMeta(customk);
