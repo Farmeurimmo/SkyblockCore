@@ -97,6 +97,7 @@ public class AtoutGui implements Listener{
 			if(current.getType() == Material.GOLDEN_PICKAXE && current.getItemMeta().getItemFlags().contains(ItemFlag.HIDE_ENCHANTS)) {
 				player.removePotionEffect(PotionEffectType.FAST_DIGGING);
 				Main.instance1.getData().set("Joueurs."+player.getName()+".Atout.1.Active", false);
+				Main.instance1.saveData();
 				SendActionBar.SendActionBarMsg(player, "§6Atout haste §cdésactivé !");
 				AtoutGui.MakeAtoutGui(player);
 				return;
@@ -106,16 +107,18 @@ public class AtoutGui implements Listener{
 				player.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 999999999, 0));
 				SendActionBar.SendActionBarMsg(player, "§6Atout haste §aactivé !");
 				Main.instance1.getData().set("Joueurs."+player.getName()+".Atout.1.Active", true);
+				Main.instance1.saveData();
 				AtoutGui.MakeAtoutGui(player);
 				return;
 				} else if(Main.instance1.getData().getInt("Joueurs."+player.getName()+".Atout.1.Level") == 2) {
 					player.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 999999999, 1));
 					SendActionBar.SendActionBarMsg(player, "§6Atout haste §aactivé !");
 					Main.instance1.getData().set("Joueurs."+player.getName()+".Atout.1.Active", true);
+					Main.instance1.saveData();
 					AtoutGui.MakeAtoutGui(player);
 					return;
 				} else {
-					player.sendMessage("aa");
+					SendActionBar.SendActionBarMsg(player, "§cAchetez cet atout dans le /farm2win");
 				}
 			}
 		}	

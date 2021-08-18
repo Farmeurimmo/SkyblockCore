@@ -12,6 +12,8 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 import com.iridium.iridiumskyblock.api.IridiumSkyblockAPI;
 
@@ -122,6 +124,13 @@ public class JoinLeave implements Listener {
 				Main.instance1.getData().set("Joueurs."+player.getName()+".Atout.4.Level", 0);
 				Main.instance1.saveData();
 			}
+			if(Main.instance1.getData().getBoolean("Joueurs."+player.getName()+".Atout.1.Active") == true) {
+				if(Main.instance1.getData().getInt("Joueurs."+player.getName()+".Atout.1.Level") == 1) {
+				player.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 999999999, 0));
+				} else if(Main.instance1.getData().getInt("Joueurs."+player.getName()+".Atout.1.Level") == 2) {
+					player.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 999999999, 1));
+				}
+				}
 	}
 	@EventHandler
 	public void OnLeave(PlayerQuitEvent event) {
