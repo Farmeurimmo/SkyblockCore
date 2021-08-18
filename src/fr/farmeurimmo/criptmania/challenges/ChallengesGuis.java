@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -41,6 +42,7 @@ public class ChallengesGuis implements Listener {
 		} else {
 			return;
 		}
+		player.playSound(player.getLocation(), Sound.UI_TOAST_CHALLENGE_COMPLETE, 5, 1);
 		player.sendMessage("§6§lChallenges §8» §fVous venez de compléter le challenge journalier n°" + nombre);
 	}
 	public static void MakeDailyGui(Player player) {
@@ -84,17 +86,9 @@ public class ChallengesGuis implements Listener {
         		inv.setItem(11, custom1);
             }
 		
-		ItemStack custom2 = new ItemStack(Material.COMMAND_BLOCK_MINECART, 1);
-		ItemMeta customb = custom2.getItemMeta();
-		customb.setDisplayName("§6Boutique des commandes §8| §7(clic gauche)");
-		custom2.setItemMeta(customb);
-		inv.setItem(12, custom2);
-		
-		ItemStack custom4 = new ItemStack(Material.NETHERITE_BLOCK, 1);
-		ItemMeta customd = custom4.getItemMeta();
-		customd.setDisplayName("§6Boutique des clées §8| §7(clic gauche)");
-		custom4.setItemMeta(customd);
-		inv.setItem(16, custom4);
+        
+        
+        
 		
 		ItemStack custom9 = new ItemStack(Material.ARROW, 1);
 		ItemMeta customh = custom9.getItemMeta();
