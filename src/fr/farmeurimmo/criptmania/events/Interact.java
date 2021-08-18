@@ -10,7 +10,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
-import fr.farmeurimmo.criptmania.cmd.base.BuildCmd;
+import fr.farmeurimmo.criptmania.cmd.moderation.BuildCmd;
 import fr.farmeurimmo.criptmania.gui.MenuGui;
 import fr.farmeurimmo.criptmania.utils.SendActionBar;
 

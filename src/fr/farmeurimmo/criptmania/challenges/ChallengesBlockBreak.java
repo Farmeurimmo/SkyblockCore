@@ -12,6 +12,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 
 import fr.farmeurimmo.criptmania.Main;
+import fr.farmeurimmo.criptmania.cmd.moderation.BuildCmd;
 
 public class ChallengesBlockBreak implements Listener {
 	
@@ -22,17 +23,17 @@ public class ChallengesBlockBreak implements Listener {
 		Player player = e.getPlayer();
 		Block aaa = e.getBlock();
 		if(aaa.getType() == Material.COBBLESTONE && !placed.contains(aaa.getLocation()) &&
-				Main.instance1.getData().getBoolean("Joueurs."+player.getName()+".Challenges.Daily.1.Active") == true) {
+				Main.instance1.getData().getBoolean("Joueurs."+player.getName()+".Challenges.Daily.1.Active") == true
+				&& !e.isCancelled() && !BuildCmd.Build.contains(player)) {
 			int progress = Main.instance1.getData().getInt("Joueurs."+player.getName()+".Challenges.Daily.1.Progression") + 1;
 			Main.instance1.getData().set("Joueurs."+player.getName()+".Challenges.Daily.1.Progression", progress);
 			Main.instance1.saveData();
-			if(progress == 64) {
+			if(progress == 320) {
 				ChallengesGuis.CompleteChallenge(player, 1);
 				Main.instance1.getData().set("Joueurs."+player.getName()+".Challenges.Daily.1.Active", false);
 				Main.instance1.getData().set("Joueurs."+player.getName()+".Challenges.Daily.1.Progression", 0);
 				Main.instance1.saveData();
 			}
-			player.sendMessage("progress: " + progress);
 		}
 		if(aaa.getType() == Material.COBBLESTONE && placed.contains(e.getBlock().getLocation())) {
 			placed.remove(e.getBlock().getLocation());

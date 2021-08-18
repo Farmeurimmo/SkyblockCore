@@ -45,15 +45,15 @@ public class ChallengesGuis implements Listener {
         if(Main.instance1.getData().getBoolean("Joueurs."+player.getName()+".Challenges.Daily.1.Active") == true) {
 		ItemStack custom1 = new ItemStack(Material.COBBLESTONE, 1);
 		ItemMeta customa = custom1.getItemMeta();
-		customa.setDisplayName("§6Miner 64 pierres");
+		customa.setDisplayName("§6Miner 320 pierres");
 		customa.setLore(Arrays.asList("§7" + Main.instance1.getData().getInt("Joueurs."+player.getName()+".Challenges.Daily.1.Progression")+
-				"/64"));
+				"/320"));
 		custom1.setItemMeta(customa);
 		inv.setItem(10, custom1);
         } else {
         	ItemStack custom1 = new ItemStack(Material.COBBLESTONE, 1);
     		ItemMeta customa = custom1.getItemMeta();
-    		customa.setDisplayName("§6Miner 64 pierres");
+    		customa.setDisplayName("§6Miner 320 pierres");
     		customa.setLore(Arrays.asList("§7Terminé"));
     		customa.addEnchant(Enchantment.ARROW_FIRE, 1, true);
     		customa.addItemFlags(ItemFlag.HIDE_ENCHANTS);
