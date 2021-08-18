@@ -95,6 +95,55 @@ public class AtoutGui implements Listener{
         		custom1.setItemMeta(customa);
         		inv.setItem(12, custom1);
             }
+        
+        
+        if(Main.instance1.getData().getInt("Joueurs."+player.getName()+".Atout.3.Level") == 0) {
+    		ItemStack custom1 = new ItemStack(Material.RABBIT_FOOT, 1);
+    		ItemMeta customa = custom1.getItemMeta();
+    		customa.setDisplayName("§6Jumpboost 1");
+    		customa.setLore(Arrays.asList("§7","§7Clic ici pour débloquer l'atout","§7permanant Jumpboost 1"));
+    		custom1.setItemMeta(customa);
+    		inv.setItem(14, custom1);
+            } else if (Main.instance1.getData().getInt("Joueurs."+player.getName()+".Atout.3.Level") == 1) {
+            	ItemStack custom1 = new ItemStack(Material.RABBIT_FOOT, 1);
+        		ItemMeta customa = custom1.getItemMeta();
+        		customa.setLore(Arrays.asList("§7","§7Cliquez ici pour améliorer votre","§7atout Jumpboost au niveau 2"));
+        		if(Main.instance1.getData().getBoolean("Joueurs."+player.getName()+".Atout.3.Active") == true) {
+        			customa.addEnchant(Enchantment.ARROW_FIRE, 1, true);
+            		customa.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            		customa.setDisplayName("§6Jumpboost 1 §a(Actif)");
+        		} else {
+        			customa.setDisplayName("§6Jumpboost 1 §c(Inactif)");
+        		}
+        		custom1.setItemMeta(customa);
+        		inv.setItem(14, custom1);
+            } else if (Main.instance1.getData().getInt("Joueurs."+player.getName()+".Atout.3.Level") == 2) {
+            	ItemStack custom1 = new ItemStack(Material.RABBIT_FOOT, 1);
+        		ItemMeta customa = custom1.getItemMeta();
+        		customa.setLore(Arrays.asList("§7","§7Cliquez ici pour améliorer votre","§7atout Jumpboost au niveau 3"));
+        		if(Main.instance1.getData().getBoolean("Joueurs."+player.getName()+".Atout.3.Active") == true) {
+        			customa.addEnchant(Enchantment.ARROW_FIRE, 1, true);
+            		customa.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            		customa.setDisplayName("§6Jumpboost 2 §a(Actif)");
+        		} else {
+        			customa.setDisplayName("§6Jumpboost 2 §c(Inactif)");
+        		}
+        		custom1.setItemMeta(customa);
+        		inv.setItem(14, custom1);
+            } else if (Main.instance1.getData().getInt("Joueurs."+player.getName()+".Atout.3.Level") == 3) {
+            	ItemStack custom1 = new ItemStack(Material.RABBIT_FOOT, 1);
+        		ItemMeta customa = custom1.getItemMeta();
+        		customa.setLore(Arrays.asList("§7","§7Votre atout Jumpboost est au niveau maximum"));
+        		if(Main.instance1.getData().getBoolean("Joueurs."+player.getName()+".Atout.3.Active") == true) {
+        			customa.addEnchant(Enchantment.ARROW_FIRE, 1, true);
+            		customa.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            		customa.setDisplayName("§6Jumpboost 3 §a(Actif)");
+        		} else {
+        			customa.setDisplayName("§6Jumpboost 3 §c(Inactif)");
+        		}
+        		custom1.setItemMeta(customa);
+        		inv.setItem(14, custom1);
+            }
 		
         
 		
@@ -179,6 +228,42 @@ public class AtoutGui implements Listener{
 					player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999999, 1));
 					SendActionBar.SendActionBarMsg(player, "§6Atout speed §a§lactivé !");
 					Main.instance1.getData().set("Joueurs."+player.getName()+".Atout.2.Active", true);
+					Main.instance1.saveData();
+					AtoutGui.MakeAtoutGui(player);
+					return;
+				} else {
+					SendActionBar.SendActionBarMsg(player, "§cAchetez cet atout dans le /farm2win");
+				}
+			}
+			
+			
+			if(current.getType() == Material.RABBIT_FOOT && current.getItemMeta().getItemFlags().contains(ItemFlag.HIDE_ENCHANTS)) {
+				player.removePotionEffect(PotionEffectType.JUMP);
+				Main.instance1.getData().set("Joueurs."+player.getName()+".Atout.3.Active", false);
+				Main.instance1.saveData();
+				SendActionBar.SendActionBarMsg(player, "§6Atout Jumpboost §c§ldésactivé !");
+				AtoutGui.MakeAtoutGui(player);
+				return;
+			}
+			if(current.getType() == Material.RABBIT_FOOT) {
+				if(Main.instance1.getData().getInt("Joueurs."+player.getName()+".Atout.3.Level") == 1) {
+				player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 999999999, 0));
+				SendActionBar.SendActionBarMsg(player, "§6Atout Jumpboost §a§lactivé !");
+				Main.instance1.getData().set("Joueurs."+player.getName()+".Atout.3.Active", true);
+				Main.instance1.saveData();
+				AtoutGui.MakeAtoutGui(player);
+				return;
+				} else if(Main.instance1.getData().getInt("Joueurs."+player.getName()+".Atout.3.Level") == 2) {
+					player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 999999999, 1));
+					SendActionBar.SendActionBarMsg(player, "§6Atout Jumpboost §a§lactivé !");
+					Main.instance1.getData().set("Joueurs."+player.getName()+".Atout.3.Active", true);
+					Main.instance1.saveData();
+					AtoutGui.MakeAtoutGui(player);
+					return;
+				} else if(Main.instance1.getData().getInt("Joueurs."+player.getName()+".Atout.3.Level") == 3) {
+					player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 999999999, 2));
+					SendActionBar.SendActionBarMsg(player, "§6Atout Jumpboost §a§lactivé !");
+					Main.instance1.getData().set("Joueurs."+player.getName()+".Atout.3.Active", true);
 					Main.instance1.saveData();
 					AtoutGui.MakeAtoutGui(player);
 					return;
