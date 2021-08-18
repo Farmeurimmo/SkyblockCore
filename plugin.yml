@@ -40,3 +40,6 @@ commands:
   tpno:
   challenges:
     aliases: [c]
+  atout:
+    aliases: [atouts]
+  

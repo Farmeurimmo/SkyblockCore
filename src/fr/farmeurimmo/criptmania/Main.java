@@ -20,6 +20,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import fr.farmeurimmo.criptmania.WineLottery.WineGui;
 import fr.farmeurimmo.criptmania.WineLottery.WineSpawn;
+import fr.farmeurimmo.criptmania.atout.AtoutCmd;
+import fr.farmeurimmo.criptmania.atout.AtoutGui;
 import fr.farmeurimmo.criptmania.challenges.ChallengesBlockBreak;
 import fr.farmeurimmo.criptmania.challenges.ChallengesCmd;
 import fr.farmeurimmo.criptmania.challenges.ChallengesGuis;
@@ -182,6 +184,7 @@ public class Main extends JavaPlugin implements Listener {
 		getServer().getPluginManager().registerEvents(new RedstoneCheck(), this);
 		getServer().getPluginManager().registerEvents(new ChallengesGuis(), this);
 		getServer().getPluginManager().registerEvents(new ChallengesBlockBreak(), this);
+		getServer().getPluginManager().registerEvents(new AtoutGui(), this);
 		this.getCommand("spawn").setExecutor(new SpawnCmd());
 		this.getCommand("wiki").setExecutor(new WikiCmd());
 		this.getCommand("build").setExecutor(new BuildCmd());
@@ -213,6 +216,7 @@ public class Main extends JavaPlugin implements Listener {
 		this.getCommand("tpyes").setExecutor(new TpYesCmd());
 		this.getCommand("tpno").setExecutor(new TpNoCmd());
 		this.getCommand("challenges").setExecutor(new ChallengesCmd());
+		this.getCommand("atout").setExecutor(new AtoutCmd());
 		PluginManager pm = getServer().getPluginManager();
 		pm.registerEvents(this, this);
 		Main.spawncooldown.clear();
