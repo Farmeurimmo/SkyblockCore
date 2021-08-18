@@ -26,6 +26,9 @@ public class ChallengesGuis implements Listener {
 	@EventHandler
 	public void InventoryClickEvent(InventoryClickEvent e) {
 		ItemStack current = e.getCurrentItem();
+		if(current == null) {
+			return;
+		}
 		if(e.getView().getTitle().equalsIgnoreCase("§6Challenges journaliers")) {
 			e.setCancelled(true);
 			if(current.getType() == Material.ARROW) {
