@@ -31,17 +31,9 @@ public class ChallengesGuis implements Listener {
 		}
 	}
 	public static void CompleteChallenge(Player player, int nombre) {
-		if(nombre == 1) {
-			Main.instance1.getData().set("Joueurs."+player.getName()+".Challenges.Daily.1.Active", false);
-			Main.instance1.getData().set("Joueurs."+player.getName()+".Challenges.Daily.1.Progression", 0);
-			Main.instance1.saveData();
-		} else if(nombre == 2) {
-			Main.instance1.getData().set("Joueurs."+player.getName()+".Challenges.Daily.2.Active", false);
-			Main.instance1.getData().set("Joueurs."+player.getName()+".Challenges.Daily.2.Progression", 0);
-			Main.instance1.saveData();
-		} else {
-			return;
-		}
+		Main.instance1.getData().set("Joueurs."+player.getName()+".Challenges.Daily."+nombre+".Active", false);
+		Main.instance1.getData().set("Joueurs."+player.getName()+".Challenges.Daily."+nombre+".Progression", 0);
+		Main.instance1.saveData();
 		player.playSound(player.getLocation(), Sound.UI_TOAST_CHALLENGE_COMPLETE, 5, 1);
 		player.sendMessage("§6§lChallenges §8» §fVous venez de compléter le challenge journalier n°" + nombre);
 	}
