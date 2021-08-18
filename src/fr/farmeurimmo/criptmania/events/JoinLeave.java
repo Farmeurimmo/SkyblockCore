@@ -102,6 +102,26 @@ public class JoinLeave implements Listener {
 				Main.instance1.getData().set("Joueurs."+player.getName()+".Challenges.Daily.7.Progression", 0);
 				Main.instance1.saveData();
 			}
+			if(Main.instance1.getData().getString("Joueurs."+player.getName()+".Atout.1.Active") == null) {
+				Main.instance1.getData().set("Joueurs."+player.getName()+".Atout.1.Active", false);
+				Main.instance1.getData().set("Joueurs."+player.getName()+".Atout.1.Level", 0);
+				Main.instance1.saveData();
+			}
+			if(Main.instance1.getData().getString("Joueurs."+player.getName()+".Atout.2.Active") == null) {
+				Main.instance1.getData().set("Joueurs."+player.getName()+".Atout.2.Active", false);
+				Main.instance1.getData().set("Joueurs."+player.getName()+".Atout.2.Level", 0);
+				Main.instance1.saveData();
+			}
+			if(Main.instance1.getData().getString("Joueurs."+player.getName()+".Atout.3.Active") == null) {
+				Main.instance1.getData().set("Joueurs."+player.getName()+".Atout.3.Active", false);
+				Main.instance1.getData().set("Joueurs."+player.getName()+".Atout.3.Level", 0);
+				Main.instance1.saveData();
+			}
+			if(Main.instance1.getData().getString("Joueurs."+player.getName()+".Atout.4.Active") == null) {
+				Main.instance1.getData().set("Joueurs."+player.getName()+".Atout.4.Active", false);
+				Main.instance1.getData().set("Joueurs."+player.getName()+".Atout.4.Level", 0);
+				Main.instance1.saveData();
+			}
 	}
 	@EventHandler
 	public void OnLeave(PlayerQuitEvent event) {
