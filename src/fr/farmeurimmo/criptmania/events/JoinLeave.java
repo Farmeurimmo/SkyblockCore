@@ -67,9 +67,14 @@ public class JoinLeave implements Listener {
 			}
 			event.setJoinMessage(JoinMessage);
 			
-			if(Main.instance1.getData().getString("Joueurs."+player.getName()) == null) {
+			if(Main.instance1.getData().getString("Joueurs."+player.getName()+".Challenges.Daily.1.Active") == null) {
 				Main.instance1.getData().set("Joueurs."+player.getName()+".Challenges.Daily.1.Active", true);
 				Main.instance1.getData().set("Joueurs."+player.getName()+".Challenges.Daily.1.Progression", 0);
+				Main.instance1.saveData();
+			}
+			if(Main.instance1.getData().getString("Joueurs."+player.getName()+".Challenges.Daily.2.Active") == null) {
+				Main.instance1.getData().set("Joueurs."+player.getName()+".Challenges.Daily.2.Active", true);
+				Main.instance1.getData().set("Joueurs."+player.getName()+".Challenges.Daily.2.Progression", 0);
 				Main.instance1.saveData();
 			}
 	}

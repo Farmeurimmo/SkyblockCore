@@ -27,6 +27,8 @@ public class ChallengesReset {
 		for(String aa : Main.instance1.getData().getConfigurationSection("Joueurs").getKeys(false)) {
 			Main.instance1.getData().set("Joueurs."+aa+".Challenges.Daily.1.Active", true);
 			Main.instance1.getData().set("Joueurs."+aa+".Challenges.Daily.1.Progression", 0);
+			Main.instance1.getData().set("Joueurs."+aa+".Challenges.Daily.2.Active", true);
+			Main.instance1.getData().set("Joueurs."+aa+".Challenges.Daily.2.Progression", 0);
 		}
 		Main.instance1.saveData();
 		Bukkit.broadcastMessage("§6§lChallenges §8» §fTous les challenges journaliers ont été réinitialisé !");

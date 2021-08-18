@@ -22,9 +22,9 @@ public class ChallengesBlockBreak implements Listener {
 	public void blockBreakEvent(BlockBreakEvent e) {
 		Player player = e.getPlayer();
 		Block aaa = e.getBlock();
-		if(aaa.getType() == Material.COBBLESTONE && !placed.contains(aaa.getLocation()) &&
-				Main.instance1.getData().getBoolean("Joueurs."+player.getName()+".Challenges.Daily.1.Active") == true
-				&& !e.isCancelled() && !BuildCmd.Build.contains(player)) {
+		if(!e.isCancelled() && !BuildCmd.Build.contains(player) && !placed.contains(aaa.getLocation())) {
+		if(aaa.getType() == Material.COBBLESTONE &&
+				Main.instance1.getData().getBoolean("Joueurs."+player.getName()+".Challenges.Daily.1.Active") == true) {
 			int progress = Main.instance1.getData().getInt("Joueurs."+player.getName()+".Challenges.Daily.1.Progression") + 1;
 			Main.instance1.getData().set("Joueurs."+player.getName()+".Challenges.Daily.1.Progression", progress);
 			Main.instance1.saveData();
@@ -35,13 +35,27 @@ public class ChallengesBlockBreak implements Listener {
 				Main.instance1.saveData();
 			}
 		}
-		if(aaa.getType() == Material.COBBLESTONE && placed.contains(e.getBlock().getLocation())) {
+		if(aaa.getType() == Material.COAL_ORE &&
+				Main.instance1.getData().getBoolean("Joueurs."+player.getName()+".Challenges.Daily.2.Active") == true) {
+			int progress = Main.instance1.getData().getInt("Joueurs."+player.getName()+".Challenges.Daily.2.Progression") + 1;
+			Main.instance1.getData().set("Joueurs."+player.getName()+".Challenges.Daily.2.Progression", progress);
+			Main.instance1.saveData();
+			if(progress == 288) {
+				ChallengesGuis.CompleteChallenge(player, 2);
+				Main.instance1.getData().set("Joueurs."+player.getName()+".Challenges.Daily.2.Active", false);
+				Main.instance1.getData().set("Joueurs."+player.getName()+".Challenges.Daily.2.Progression", 0);
+				Main.instance1.saveData();
+			}
+		}
+		}
+		if(aaa.getType() == Material.COBBLESTONE && aaa.getType() == Material.COAL_ORE && placed.contains(e.getBlock().getLocation())) {
 			placed.remove(e.getBlock().getLocation());
 		}
 	}
 	@EventHandler
 	public void blockPlaceEvent(BlockPlaceEvent e) {
-		if(!placed.contains(e.getBlock().getLocation()) && e.getBlock().getType() == Material.COBBLESTONE) {
+		if(!placed.contains(e.getBlock().getLocation()) && e.getBlock().getType() == Material.COBBLESTONE
+				&& e.getBlock().getType() == Material.COAL_ORE) {
 			placed.add(e.getBlock().getLocation());
 		}
 	}

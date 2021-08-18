@@ -34,6 +34,10 @@ public class ChallengesGuis implements Listener {
 			Main.instance1.getData().set("Joueurs."+player.getName()+".Challenges.Daily.1.Active", false);
 			Main.instance1.getData().set("Joueurs."+player.getName()+".Challenges.Daily.1.Progression", 0);
 			Main.instance1.saveData();
+		} else if(nombre == 2) {
+			Main.instance1.getData().set("Joueurs."+player.getName()+".Challenges.Daily.2.Active", false);
+			Main.instance1.getData().set("Joueurs."+player.getName()+".Challenges.Daily.2.Progression", 0);
+			Main.instance1.saveData();
 		} else {
 			return;
 		}
@@ -53,7 +57,7 @@ public class ChallengesGuis implements Listener {
         } else {
         	ItemStack custom1 = new ItemStack(Material.COBBLESTONE, 1);
     		ItemMeta customa = custom1.getItemMeta();
-    		customa.setDisplayName("§6Miner 320 pierres");
+    		customa.setDisplayName("§6Miner 288 minerais de charbon");
     		customa.setLore(Arrays.asList("§7Terminé"));
     		customa.addEnchant(Enchantment.ARROW_FIRE, 1, true);
     		customa.addItemFlags(ItemFlag.HIDE_ENCHANTS);
@@ -61,11 +65,24 @@ public class ChallengesGuis implements Listener {
     		inv.setItem(10, custom1);
         }
 		
-		ItemStack custom3 = new ItemStack(Material.CHEST, 1);
-		ItemMeta customc = custom3.getItemMeta();
-		customc.setDisplayName("§6Boutique des items §8| §7(clic gauche)");
-		custom3.setItemMeta(customc);
-		inv.setItem(14, custom3);
+        if(Main.instance1.getData().getBoolean("Joueurs."+player.getName()+".Challenges.Daily.2.Active") == true) {
+    		ItemStack custom1 = new ItemStack(Material.COAL_ORE, 1);
+    		ItemMeta customa = custom1.getItemMeta();
+    		customa.setDisplayName("§6Miner 288 charbons");
+    		customa.setLore(Arrays.asList("§7" + Main.instance1.getData().getInt("Joueurs."+player.getName()+".Challenges.Daily.2.Progression")+
+    				"/288"));
+    		custom1.setItemMeta(customa);
+    		inv.setItem(11, custom1);
+            } else {
+            	ItemStack custom1 = new ItemStack(Material.COAL_ORE, 1);
+        		ItemMeta customa = custom1.getItemMeta();
+        		customa.setDisplayName("§6Miner 288 charbons");
+        		customa.setLore(Arrays.asList("§7Terminé"));
+        		customa.addEnchant(Enchantment.ARROW_FIRE, 1, true);
+        		customa.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+        		custom1.setItemMeta(customa);
+        		inv.setItem(11, custom1);
+            }
 		
 		ItemStack custom2 = new ItemStack(Material.COMMAND_BLOCK_MINECART, 1);
 		ItemMeta customb = custom2.getItemMeta();
