@@ -11,6 +11,8 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import fr.farmeurimmo.criptmania.atout.BuyAtoutGui;
 import net.tnemc.core.TNE;
 import net.tnemc.core.common.api.TNEAPI;
 
@@ -72,7 +74,8 @@ public class Farm2WinGui implements Listener {
 				player.closeInventory();
 				MenuGui.OpenMainMenu(player);
 			}
-			if(current.getType() == Material.CHEST) {
+			if(current.getType() == Material.POTION) {
+				BuyAtoutGui.MakeBuyAtoutGui(player);
 			}
 			if(current.getType() == Material.COMMAND_BLOCK_MINECART) {
 				player.closeInventory();
@@ -412,9 +415,9 @@ public class Farm2WinGui implements Listener {
 		custom2.setItemMeta(customb);
 		inv.setItem(12, custom2);
 		
-		ItemStack custom4 = new ItemStack(Material.NETHERITE_BLOCK, 1);
+		ItemStack custom4 = new ItemStack(Material.POTION, 1);
 		ItemMeta customd = custom4.getItemMeta();
-		customd.setDisplayName("§6Boutique des clées §8| §7(clic gauche)");
+		customd.setDisplayName("§6Boutique des atouts §8| §7(clic gauche)");
 		custom4.setItemMeta(customd);
 		inv.setItem(16, custom4);
 		

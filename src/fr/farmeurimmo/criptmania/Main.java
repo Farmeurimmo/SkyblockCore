@@ -22,6 +22,7 @@ import fr.farmeurimmo.criptmania.WineLottery.WineGui;
 import fr.farmeurimmo.criptmania.WineLottery.WineSpawn;
 import fr.farmeurimmo.criptmania.atout.AtoutCmd;
 import fr.farmeurimmo.criptmania.atout.AtoutGui;
+import fr.farmeurimmo.criptmania.atout.BuyAtoutGui;
 import fr.farmeurimmo.criptmania.challenges.ChallengesBlockBreak;
 import fr.farmeurimmo.criptmania.challenges.ChallengesCmd;
 import fr.farmeurimmo.criptmania.challenges.ChallengesGuis;
@@ -186,6 +187,7 @@ public class Main extends JavaPlugin implements Listener {
 		getServer().getPluginManager().registerEvents(new ChallengesGuis(), this);
 		getServer().getPluginManager().registerEvents(new ChallengesBlockBreak(), this);
 		getServer().getPluginManager().registerEvents(new AtoutGui(), this);
+		getServer().getPluginManager().registerEvents(new BuyAtoutGui(), this);
 		this.getCommand("spawn").setExecutor(new SpawnCmd());
 		this.getCommand("wiki").setExecutor(new WikiCmd());
 		this.getCommand("build").setExecutor(new BuildCmd());
