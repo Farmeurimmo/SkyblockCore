@@ -34,7 +34,7 @@ public class BuyAtoutGui implements Listener {
 		TNEAPI ecoAPI = TNE.instance().api();
 		
 		
-        Inventory inv = Bukkit.createInventory(null, 36, "§6Boutique des atouts");
+        Inventory inv = Bukkit.createInventory(null, 27, "§6Boutique des atouts");
 		
 		ItemStack custom2 = new ItemStack(Material.PLAYER_HEAD, 1);
 		SkullMeta customb = (SkullMeta) custom2.getItemMeta();
@@ -42,7 +42,7 @@ public class BuyAtoutGui implements Listener {
 		customb.setDisplayName("§7" + player.getName());
 		customb.setLore(Arrays.asList("§7Grade: " + Grade, "§7Argent: " + ecoAPI.getAccount(player.getName()).getHoldings().intValue()));
 		custom2.setItemMeta(customb);
-		inv.setItem(31, custom2);
+		inv.setItem(22, custom2);
 		
 		if(Main.instance1.getData().getInt("Joueurs."+player.getName()+".Atout.1.Level") == 0) {
 			ItemStack custom1 = new ItemStack(Material.GOLDEN_PICKAXE, 1);
@@ -95,7 +95,7 @@ public class BuyAtoutGui implements Listener {
 		ItemMeta customh = custom8.getItemMeta();
 		customh.setDisplayName("§6Retour §8| §7(clic gauche)");
 		custom8.setItemMeta(customh);
-		inv.setItem(35, custom8);
+		inv.setItem(26, custom8);
 		
 		ItemStack custom9 = new ItemStack(Material.WHITE_STAINED_GLASS_PANE, 1);
 		ItemMeta meta9 = custom9.getItemMeta();

@@ -37,9 +37,9 @@ public class MenuGui {
 		custom7.setItemMeta(meta7);
 		inv.setItem(28, custom7);
 		
-		ItemStack custom4 = new ItemStack(Material.BOOKSHELF, 1);
+		ItemStack custom4 = new ItemStack(Material.POTION, 1);
 		ItemMeta meta4 = custom4.getItemMeta();
-		meta4.setDisplayName("§6Règles §8| §7(clic gauche)");
+		meta4.setDisplayName("§6Atouts §8| §7(clic gauche)");
 		custom4.setItemMeta(meta4);
 		inv.setItem(32, custom4);
 		

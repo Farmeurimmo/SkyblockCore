@@ -48,7 +48,6 @@ public class PermanantItem implements Listener {
 		custom1.setItemMeta(customS);
 		e.getPlayer().getInventory().setItem(8, custom1);
 	}
-	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void onInventoryClick(InventoryClickEvent e) {
 	Player player = (Player) e.getWhoClicked();
@@ -89,10 +88,6 @@ public class PermanantItem implements Listener {
 			player.closeInventory();
 			player.chat("/warps");
 		}
-		if(current.getType() == Material.LEGACY_BOOK_AND_QUILL) {
-			player.closeInventory();
-			player.chat("/regles");
-		}
 		if(current.getType() == Material.SADDLE) {
 			player.closeInventory();
 			player.chat("/hdv");
@@ -104,6 +99,10 @@ public class PermanantItem implements Listener {
 		if(current.getType() == Material.IRON_SWORD) {
 			player.closeInventory();
 			player.chat("/c");
+		}
+		if(current.getType() == Material.POTION) {
+			player.closeInventory();
+			player.chat("/atout");
 		}
 	}
 	}
