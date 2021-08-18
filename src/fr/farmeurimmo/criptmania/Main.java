@@ -45,6 +45,7 @@ import fr.farmeurimmo.criptmania.cmd.base.WikiCmd;
 import fr.farmeurimmo.criptmania.cmd.moderation.AntiAfkMineCmd;
 import fr.farmeurimmo.criptmania.cmd.moderation.BuildCmd;
 import fr.farmeurimmo.criptmania.cmd.moderation.CheckFlyCmd;
+import fr.farmeurimmo.criptmania.cmd.moderation.DataCmd;
 import fr.farmeurimmo.criptmania.cmd.moderation.GmCmd;
 import fr.farmeurimmo.criptmania.cmd.moderation.GmLCmd;
 import fr.farmeurimmo.criptmania.cmd.moderation.InvseeCmd;
@@ -217,6 +218,7 @@ public class Main extends JavaPlugin implements Listener {
 		this.getCommand("tpno").setExecutor(new TpNoCmd());
 		this.getCommand("challenges").setExecutor(new ChallengesCmd());
 		this.getCommand("atout").setExecutor(new AtoutCmd());
+		this.getCommand("datafile").setExecutor(new DataCmd());
 		PluginManager pm = getServer().getPluginManager();
 		pm.registerEvents(this, this);
 		Main.spawncooldown.clear();

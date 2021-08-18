@@ -42,4 +42,5 @@ commands:
     aliases: [c]
   atout:
     aliases: [atouts]
+  datafile:
   
