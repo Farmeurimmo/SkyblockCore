@@ -29,6 +29,16 @@ public class ChallengesReset {
 			Main.instance1.getData().set("Joueurs."+aa+".Challenges.Daily.1.Progression", 0);
 			Main.instance1.getData().set("Joueurs."+aa+".Challenges.Daily.2.Active", true);
 			Main.instance1.getData().set("Joueurs."+aa+".Challenges.Daily.2.Progression", 0);
+			Main.instance1.getData().set("Joueurs."+aa+".Challenges.Daily.3.Active", true);
+			Main.instance1.getData().set("Joueurs."+aa+".Challenges.Daily.3.Progression", 0);
+			Main.instance1.getData().set("Joueurs."+aa+".Challenges.Daily.4.Active", true);
+			Main.instance1.getData().set("Joueurs."+aa+".Challenges.Daily.4.Progression", 0);
+			Main.instance1.getData().set("Joueurs."+aa+".Challenges.Daily.5.Active", true);
+			Main.instance1.getData().set("Joueurs."+aa+".Challenges.Daily.5.Progression", 0);
+			Main.instance1.getData().set("Joueurs."+aa+".Challenges.Daily.6.Active", true);
+			Main.instance1.getData().set("Joueurs."+aa+".Challenges.Daily.6.Progression", 0);
+			Main.instance1.getData().set("Joueurs."+aa+".Challenges.Daily.7.Active", true);
+			Main.instance1.getData().set("Joueurs."+aa+".Challenges.Daily.7.Progression", 0);
 		}
 		Main.instance1.saveData();
 		Bukkit.broadcastMessage("§6§lChallenges §8» §fTous les challenges journaliers ont été réinitialisé !");
