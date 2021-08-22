@@ -35,7 +35,6 @@ public class AtoutGui implements Listener{
         } else if (Main.instance1.getData().getInt("Joueurs."+player.getName()+".Atout.1.Level") == 2) {
         	ItemStack custom1 = new ItemStack(Material.GOLDEN_PICKAXE, 1);
     		ItemMeta customa = custom1.getItemMeta();
-    		customa.setLore(Arrays.asList("§7","§7Votre atout haste est au niveau maximum"));
     		if(Main.instance1.getData().getBoolean("Joueurs."+player.getName()+".Atout.1.Active") == true) {
     			customa.addEnchant(Enchantment.ARROW_FIRE, 1, true);
         		customa.addItemFlags(ItemFlag.HIDE_ENCHANTS);
@@ -58,7 +57,6 @@ public class AtoutGui implements Listener{
             } else if (Main.instance1.getData().getInt("Joueurs."+player.getName()+".Atout.2.Level") == 2) {
             	ItemStack custom1 = new ItemStack(Material.SUGAR, 1);
         		ItemMeta customa = custom1.getItemMeta();
-        		customa.setLore(Arrays.asList("§7","§7Votre atout speed est au niveau maximum"));
         		if(Main.instance1.getData().getBoolean("Joueurs."+player.getName()+".Atout.2.Active") == true) {
         			customa.addEnchant(Enchantment.ARROW_FIRE, 1, true);
             		customa.addItemFlags(ItemFlag.HIDE_ENCHANTS);
@@ -81,7 +79,6 @@ public class AtoutGui implements Listener{
             } else if (Main.instance1.getData().getInt("Joueurs."+player.getName()+".Atout.3.Level") == 3) {
             	ItemStack custom1 = new ItemStack(Material.RABBIT_FOOT, 1);
         		ItemMeta customa = custom1.getItemMeta();
-        		customa.setLore(Arrays.asList("§7","§7Votre atout Jumpboost est au niveau maximum"));
         		if(Main.instance1.getData().getBoolean("Joueurs."+player.getName()+".Atout.3.Active") == true) {
         			customa.addEnchant(Enchantment.ARROW_FIRE, 1, true);
             		customa.addItemFlags(ItemFlag.HIDE_ENCHANTS);
