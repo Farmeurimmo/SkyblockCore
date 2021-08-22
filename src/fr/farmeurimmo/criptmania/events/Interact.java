@@ -13,6 +13,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import fr.farmeurimmo.criptmania.cmd.moderation.BuildCmd;
 import fr.farmeurimmo.criptmania.gui.MenuGui;
 import fr.farmeurimmo.criptmania.utils.SendActionBar;
+import fr.farmeurimmo.criptmania.crates.CratesManager;
 
 public class Interact implements Listener {
 	
@@ -51,7 +52,9 @@ public class Interact implements Listener {
 				return;
 				}
 			else {
-				if(player.getItemInHand().getType() != Material.NETHER_STAR) {
+				if(player.getItemInHand().getType() != Material.NETHER_STAR && e.getClickedBlock().getLocation().getX() != 
+						CratesManager.BoxLegendaire.getX() && e.getClickedBlock().getLocation().getZ() != 
+								CratesManager.BoxLegendaire.getZ()) {
 					SendActionBar.SendActionBarMsg(player, "§cImpossible d'intéragir avec le spawn");
 					e.setCancelled(true);
 			}

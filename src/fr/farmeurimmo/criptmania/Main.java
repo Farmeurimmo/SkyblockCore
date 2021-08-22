@@ -213,7 +213,7 @@ public class Main extends JavaPlugin implements Listener {
 		this.getCommand("gmsp").setExecutor(new GmLCmd());
 		this.getCommand("gma").setExecutor(new GmLCmd());
 		this.getCommand("afkmine").setExecutor(new AntiAfkMineCmd());
-		this.getCommand("ss").setExecutor(new SSCmd());
+		this.getCommand("sanctionset").setExecutor(new SSCmd());
 		this.getCommand("checkfly").setExecutor(new CheckFlyCmd());
 		this.getCommand("invsee").setExecutor(new InvseeCmd());
 		this.getCommand("redstone").setExecutor(new RedstoneToggleCmd());
