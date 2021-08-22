@@ -83,9 +83,6 @@ public class ItemLegCmd implements CommandExecutor {
 		else {
 			sender.sendMessage("§cErreur, faites /itemleg help pour voir les commandes !");
 		}
-		if(args[0].equalsIgnoreCase("help")) {
-			sender.sendMessage("§7/itemleg give <pseudo> <tier>(1 a 4)");
-		}
 		}
 		return false;
 	}
