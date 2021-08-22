@@ -86,7 +86,7 @@ public class ScoreBoard implements Listener {
 			public void run() {
 				updateScoreBoard(player);
 			}
-		}, 5);
+		}, 2);
 
 	}
 
