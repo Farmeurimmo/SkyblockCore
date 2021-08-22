@@ -1,5 +1,8 @@
 package fr.farmeurimmo.criptmania.items;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 
 import org.bukkit.Bukkit;
@@ -7,13 +10,13 @@ import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-public class ItemLegCmd implements CommandExecutor {
+public class ItemLegCmd implements CommandExecutor, TabCompleter {
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
@@ -32,9 +35,8 @@ public class ItemLegCmd implements CommandExecutor {
 			         }
 			      }
 			      if(!sb.isEmpty() && sb.length() < 2) {
-				ItemStack custom6 = new ItemStack(Material.DIAMOND_PICKAXE, 1);
+				ItemStack custom6 = new ItemStack(Material.NETHERITE_PICKAXE, 1);
 				ItemMeta customf = custom6.getItemMeta();
-				customf.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
 				customf.setDisplayName("§6Pioche légendaire §8| §eTier §c" + sb);
 				Random rand = new Random();
 				int Tier = Integer.parseInt(sb.toString());
@@ -86,5 +88,28 @@ public class ItemLegCmd implements CommandExecutor {
 		}
 		return false;
 	}
-
+	@Override
+	 public List<String> onTabComplete(CommandSender sender, Command cmd, String commandLabel, String[] args) {
+		 ArrayList<String> subcmd = new ArrayList<String>();
+	        if (cmd.getName().equalsIgnoreCase("itemleg")) {
+	        	if(sender.hasPermission("*")) {
+	            if (args.length == 1){
+	            	subcmd.add("give");
+	            } else if(args.length == 2) {
+	            	for(Player player : Bukkit.getOnlinePlayers()) {
+	            		subcmd.add(player.getName());
+	            	}
+	            } else if(args.length == 3){
+	        		subcmd.add("1");
+	        		subcmd.add("2");
+	        		subcmd.add("3");
+	        		subcmd.add("4");
+	        	} else if(args.length >= 4){
+	        		subcmd.add("");
+	        	}
+	        }
+	     }
+	        Collections.sort(subcmd);
+			return subcmd;
+	 }
 }
