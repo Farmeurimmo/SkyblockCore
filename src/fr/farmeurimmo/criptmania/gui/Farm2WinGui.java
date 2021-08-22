@@ -1,7 +1,5 @@
 package fr.farmeurimmo.criptmania.gui;
 
-import java.util.Arrays;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -50,19 +48,6 @@ public class Farm2WinGui implements Listener {
 		}
 		if(current.getType() == null) {
 			return;
-		}
-		
-		if(event.getView().getTitle().equalsIgnoreCase("§6Boutique des vins")) {
-			event.setCancelled(true);
-			if(current.getType() == Material.POTION && current.getItemMeta().getDisplayName().equalsIgnoreCase("§6Cidre")) {
-				ItemStack custom1 = new ItemStack(Material.POTION, 1);
-				ItemMeta customa = custom1.getItemMeta();
-				customa.setDisplayName("§6Cidre");
-				customa.setLore(Arrays.asList("§7test"));
-				custom1.setItemMeta(customa);
-				
-				player.getInventory().addItem(custom1);
-			}
 		}
 		if(event.getView().getTitle().equalsIgnoreCase("§6Boutique Farm2Win")) {
 			event.setCancelled(true);
