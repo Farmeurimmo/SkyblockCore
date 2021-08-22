@@ -29,8 +29,7 @@ commands:
   gmsp:
   gms:
   afkmine:
-  ss:
-    aliases: [sanctionset]
+  sanctionset:
   checkfly:
   invsee:
   redstone:

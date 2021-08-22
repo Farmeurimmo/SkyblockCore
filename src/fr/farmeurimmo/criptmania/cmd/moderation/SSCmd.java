@@ -39,7 +39,7 @@ public class SSCmd implements CommandExecutor, TabCompleter {
 	@Override
 	 public List<String> onTabComplete(CommandSender sender, Command cmd, String commandLabel, String[] args) {
 		 ArrayList<String> subcmd = new ArrayList<String>();
-	        if (cmd.getName().equalsIgnoreCase("ss") || cmd.getName().equalsIgnoreCase("sanctionset")) {
+	        if (cmd.getName().equalsIgnoreCase("sanctionset")) {
 	        	if(sender.hasPermission("*")) {
 	            if (args.length == 1){
 	            	for(Player player : Bukkit.getOnlinePlayers()) {
