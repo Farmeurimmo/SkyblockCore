@@ -25,11 +25,11 @@ public class BuildCmd implements CommandExecutor, TabCompleter {
 				if(player.hasPermission("build")) {
 					if(Build.contains(player)) {
 						Build.remove(player);
-						SendActionBar.SendActionBarMsg(player, "§6Mode buildeurs désactivé !");
+						SendActionBar.SendActionBarMsg(player, "§6Mode buildeur désactivé !");
 					}
 					else {
 						Build.add(player);
-						SendActionBar.SendActionBarMsg(player, "§6Mode buildeurs activé !");
+						SendActionBar.SendActionBarMsg(player, "§6Mode buildeur activé !");
 					}
 				}
 				else {
