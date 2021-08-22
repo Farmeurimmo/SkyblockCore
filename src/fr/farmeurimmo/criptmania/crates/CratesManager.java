@@ -19,6 +19,8 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import fr.farmeurimmo.criptmania.utils.CheckPlayerInventory;
+
 import org.bukkit.event.inventory.InventoryClickEvent;
 
 public class CratesManager implements Listener {
@@ -42,7 +44,8 @@ public class CratesManager implements Listener {
 					ItemStack bb = player.getItemInHand();
 					if(bb.getType() == Material.TRIPWIRE_HOOK) {
 						if(bb.getItemMeta().getDisplayName().equalsIgnoreCase("§6§lClée légendaire") &&
-								bb.getItemMeta().getItemFlags().contains(ItemFlag.HIDE_UNBREAKABLE)) {
+								bb.getItemMeta().getItemFlags().contains(ItemFlag.HIDE_UNBREAKABLE)
+								&& CheckPlayerInventory.CheckPlayerInventoryForSlot(player) == true) {
 							String loot = LegCratesLoot(player);
 							if(!loot.equalsIgnoreCase("reroll")) {
 							int amount = player.getItemInHand().getAmount();
@@ -52,7 +55,7 @@ public class CratesManager implements Listener {
 							player.getItemInHand().setAmount(amount - 1);
 							}
 							Bukkit.broadcastMessage("§6§lCrates §8» §f" + player.getName() + " ouvre une clée légendaire "
-									+ "et obtient " + LegCratesLoot(player));
+									+ "et obtient " + loot);
 							for(Player p : Bukkit.getOnlinePlayers()) {
 								if(p.getWorld().getName().equalsIgnoreCase("world")) {
 							p.playSound(p.getLocation(), Sound.ENTITY_DRAGON_FIREBALL_EXPLODE, 5, 1);
@@ -62,6 +65,9 @@ public class CratesManager implements Listener {
 								player.sendMessage("§6§lCrates §8» §fVous avez reçu un grade que vous possédez "
 										+ "déjà dans la boxe légendaire, la clée ne vous a donc pas été enlevé !");
 							}
+						} else {
+							player.sendMessage("§6§lCrates §8» §fVous devez avoir un slot libre dans votre inventaire "
+									+ "pour ouvrir cette boxe !");
 						}
 					} else if(bb.getType() != Material.TRIPWIRE_HOOK){
 						player.sendMessage("§6§lCrates §8» §fVous devez avoir une clée légendaire dans votre main "
@@ -74,7 +80,7 @@ public class CratesManager implements Listener {
 	public String LegCratesLoot(Player player) {
 		String loot = null;
 		Random rand = new Random();
-            int n = rand.nextInt(13);
+            int n = rand.nextInt(16);
             if (n == 0){
             	loot = "x1 Pioche légendaire T4";
             	Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "itemleg give " + player.getName() + " 4");
@@ -107,9 +113,20 @@ public class CratesManager implements Listener {
             		loot = "reroll";
             	}
             }
+            if (n == 13 || n == 14 || n == 15){
+            	loot = "x1 Spawneur à Iron Golem";
+            	Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "silkspawners add "+player.getName()+" iron_golem");
+            }
+            if (n == 16 || n == 17){
+            	loot = "x2 Spawneurs à Iron Golem";
+            	Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "silkspawners add "+player.getName()+" iron_golem 2");
+            }
+            if (n == 18){
+            	loot = "x3 Spawneurs à Iron Golem";
+            	Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "silkspawners add "+player.getName()+" iron_golem 3");
+            }
 		
-		
-		return loot;
+            return loot;
 	}
 	@EventHandler
 	public void CratesBreakEvent(BlockBreakEvent e) {
