@@ -22,7 +22,7 @@ public class BossBar {
 	public static ArrayList<Player> Disable = BarCmd.Disable;
 	static org.bukkit.boss.BossBar aaa = Bukkit.createBossBar(Main.getInstance().getConfig().getString("bossbar.display." + CurrentBossBar), BarColor.YELLOW, BarStyle.SOLID, BarFlag.DARKEN_SKY);
 	
-	public static void CreateBossBar(Integer number) {
+	public static void CreateBossBar() {
 		BossBarForEveryone();
 	}
 	public static void RemoveBossBarForPlayers() {
@@ -39,7 +39,6 @@ public class BossBar {
 		aaa.setTitle(Main.getInstance().getConfig().getString("bossbar.display." + CurrentBossBar));
 		BossBarSpeed = 0.01;
 		reverse = 0;
-		BossBarForEveryone();
 	}
 	public static void AddBossBarForPlayer(Player player) {
 		aaa.addPlayer(player);
@@ -53,16 +52,17 @@ public class BossBar {
 				aaa.removePlayer(player);
 			}
 		}
-		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
-            public void run() {
             	aaa.setProgress(0);
             	reverse = 0;
             	reset = 1;
             	BossBarSpeed = 0.01;
             	ChangeTitle();
             	AddProgressBossbar();
-            }
-        }, Main.getInstance().getConfig().getInt("bossbar.delay"));
+            	Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
+                    public void run() {
+                    	BossBarForEveryone();
+                    }
+                }, Main.getInstance().getConfig().getInt("bossbar.delay"));
 	}
 	public static  void AddProgressBossbar() {
 		if(reset != 0) {
