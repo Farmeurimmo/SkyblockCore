@@ -49,6 +49,7 @@ public class CratesManager implements Listener {
 								&& CheckPlayerInventory.CheckPlayerInventoryForSlot(player) == true) {
 							String loot = LegCratesLoot(player);
 							if(!loot.equalsIgnoreCase("reroll")) {
+								if(!loot.equalsIgnoreCase("error")) {
 							int amount = player.getItemInHand().getAmount();
 							if(amount == 1) {
 								player.getItemInHand().setAmount(0);
@@ -61,6 +62,10 @@ public class CratesManager implements Listener {
 								if(p.getWorld().getName().equalsIgnoreCase("world")) {
 							p.playSound(p.getLocation(), Sound.ENTITY_DRAGON_FIREBALL_EXPLODE, 5, 1);
 								}
+								}
+								} else {
+									player.sendMessage("§6§lCrates §8» §fErreur lors de l'ouverture de la "
+											+ "boxe légendaire, la clée ne vous a donc pas été enlevé !");
 								}
 							} else {
 								player.sendMessage("§6§lCrates §8» §fVous avez reçu un grade que vous possédez "
@@ -81,24 +86,28 @@ public class CratesManager implements Listener {
 	public String LegCratesLoot(Player player) {
 		String loot = null;
 		Random rand = new Random();
-            int n = rand.nextInt(32);
-            if (n == 0){
+            int n = rand.nextInt(101);
+            if (n >= 0 && n <= 6){
             	loot = "x1 Pioche légendaire T4";
             	Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "itemleg give " + player.getName() + " 4");
             }
-            if (n == 1 || n == 27){
+            if (n >= 7 && n <= 11){
             	loot = "x1 Pioche légendaire T3";
             	Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "itemleg give " + player.getName() + " 3");
             }
-            if (n == 2 || n == 3){
+            if (n >= 12 && n <= 16){
             	loot = "x1 Pioche légendaire T2";
             	Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "itemleg give " + player.getName() + " 2");
             }
-            if (n == 4 || n == 5 || n == 6){
+            if (n >= 17 && n <= 20){
             	loot = "x1 Pioche légendaire T1";
             	Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "itemleg give " + player.getName() + " 1");
             }
-            if (n == 7){
+            if (n >= 21 && n <= 31){
+            	loot = "100 000$";
+            	Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "money give "+player.getName()+" 100000");
+            }
+            if (n >= 32 && n <= 33){
             	if(!player.hasPermission("dieu")) {
             	loot = "Grade §9Dieu";
             	Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " +player.getName() + " parent set Dieu server=skyblock");
@@ -106,7 +115,7 @@ public class CratesManager implements Listener {
             		loot = "reroll";
             	}
             }
-            if (n == 8){
+            if (n >= 34 && n <= 37){
             	if(!player.hasPermission("legende")) {
             	loot = "Grade §eLégende";
             	Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " +player.getName() + " parent set Legende server=skyblock");
@@ -114,59 +123,58 @@ public class CratesManager implements Listener {
             		loot = "reroll";
             	}
             }
-            if (n == 10 || n == 11 || n == 12){
+            if (n >= 38 && n <= 43){
             	loot = "x1 Spawneur à Iron Golem";
             	Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "silkspawners add "+player.getName()+" iron_golem");
             }
-            if (n == 13 || n == 14){
+            if (n >= 44 && n <= 48){
             	loot = "x2 Spawneurs à Iron Golem";
             	Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "silkspawners add "+player.getName()+" iron_golem 2");
             }
-            if (n == 15){
+            if (n >= 49 && n <= 53){
             	loot = "x3 Spawneurs à Iron Golem";
             	Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "silkspawners add "+player.getName()+" iron_golem 3");
             }
-            if (n == 16 || n == 17){
+            if (n >= 54 && n <= 64){
+            	loot = "x48 Blocs d'émeraude";
+            	player.getInventory().addItem(new ItemStack(Material.EMERALD_BLOCK, 48));
+            }
+            if (n >= 65 && n <= 68){
             	loot = "x1 SellChest";
             	Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "chests give "+player.getName()+" sell_chest");
             }
-            if (n == 18){
+            if (n >= 69 && n <= 72){
             	loot = "x2 SellChest";
             	Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "chests give "+player.getName()+" sell_chest 2");
             }
-            if (n == 19 || n == 20){
-            	loot = "x1 Balise";
-            	player.getInventory().addItem(new ItemStack(Material.BEACON, 1));
-            }
-            if (n == 21){
+            if (n >= 73 && n <= 78){
             	loot = "x2 Balises";
             	player.getInventory().addItem(new ItemStack(Material.BEACON, 2));
             }
-            if (n == 22 || n == 23 || n == 24){
-            	loot = "x12 Blocs de netherite";
-            	player.getInventory().addItem(new ItemStack(Material.NETHERITE_BLOCK, 12));
+            if (n >= 79 && n <= 84){
+            	loot = "x3 Balises";
+            	player.getInventory().addItem(new ItemStack(Material.BEACON, 3));
             }
-            if (n == 25){
+            if (n >= 85 && n <= 90){
             	loot = "x18 Blocs de netherite";
             	player.getInventory().addItem(new ItemStack(Material.NETHERITE_BLOCK, 18));
             }
-            if (n == 9){
+            if (n >= 91 && n <= 97){
             	loot = "x24 Blocs de netherite";
             	player.getInventory().addItem(new ItemStack(Material.NETHERITE_BLOCK, 24));
             }
-            if (n == 26 || n == 27 || n == 28 || n == 29){
-            	loot = "100 000$";
-            	Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "money give "+player.getName()+" 100000");
-            }
-            if (n == 30){
+            if (n >= 55 && n <= 62){
             	loot = "250 000$";
             	Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "money give "+player.getName()+" 250000");
             }
-            if (n == 31){
+            if (n >= 98 && n <= 100){
             	loot = "500 000$";
             	Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "money give "+player.getName()+" 500000");
             }
-		
+            if(loot == null) {
+            	loot = "error";
+            	Bukkit.broadcastMessage("aaa: " + n);
+            }
             return loot;
 	}
 	@EventHandler
@@ -252,15 +260,15 @@ public class CratesManager implements Listener {
 		custom10.setItemMeta(meta10);
 		inv.setItem(20, custom10);
 		
-		ItemStack custom11 = new ItemStack(Material.BEACON, 1);
+		ItemStack custom11 = new ItemStack(Material.BEACON, 2);
 		ItemMeta meta11 = custom11.getItemMeta();
-		meta11.setDisplayName("§6Balise x1");
+		meta11.setDisplayName("§6Balise x2");
 		custom11.setItemMeta(meta11);
 		inv.setItem(21, custom11);
 		
-		ItemStack custom12 = new ItemStack(Material.BEACON, 2);
+		ItemStack custom12 = new ItemStack(Material.BEACON, 3);
 		ItemMeta meta12 = custom12.getItemMeta();
-		meta12.setDisplayName("§6Balise x2");
+		meta12.setDisplayName("§6Balise x3");
 		custom12.setItemMeta(meta12);
 		inv.setItem(22, custom12);
 		
@@ -282,35 +290,41 @@ public class CratesManager implements Listener {
 		custom15.setItemMeta(meta15);
 		inv.setItem(25, custom15);
 		
+		ItemStack custom21 = new ItemStack(Material.EMERALD_BLOCK, 48);
+		ItemMeta meta21 = custom21.getItemMeta();
+		meta21.setDisplayName("§6Bloc d'émeraude x48");
+		custom21.setItemMeta(meta21);
+		inv.setItem(28, custom21);
+		
 		ItemStack custom16 = new ItemStack(Material.SUNFLOWER, 1);
 		ItemMeta meta16 = custom16.getItemMeta();
 		meta16.setDisplayName("§6100 000$");
 		custom16.setItemMeta(meta16);
-		inv.setItem(28, custom16);
+		inv.setItem(29, custom16);
 		
 		ItemStack custom17 = new ItemStack(Material.SUNFLOWER, 1);
 		ItemMeta meta17 = custom17.getItemMeta();
 		meta17.setDisplayName("§6250 000$");
 		custom17.setItemMeta(meta17);
-		inv.setItem(29, custom17);
+		inv.setItem(30, custom17);
 		
 		ItemStack custom18 = new ItemStack(Material.SUNFLOWER, 1);
 		ItemMeta meta18 = custom18.getItemMeta();
 		meta18.setDisplayName("§6500 000$");
 		custom18.setItemMeta(meta18);
-		inv.setItem(30, custom18);
+		inv.setItem(31, custom18);
 		
 		ItemStack custom19 = new ItemStack(Material.PAPER, 1);
 		ItemMeta meta19 = custom19.getItemMeta();
 		meta19.setDisplayName("§6Grade §eLégende");
 		custom19.setItemMeta(meta19);
-		inv.setItem(31, custom19);
+		inv.setItem(32, custom19);
 		
 		ItemStack custom20 = new ItemStack(Material.PAPER, 1);
 		ItemMeta meta20 = custom20.getItemMeta();
 		meta20.setDisplayName("§6Grade §9Dieu");
 		custom20.setItemMeta(meta20);
-		inv.setItem(32, custom20);
+		inv.setItem(33, custom20);
 		
 		
 		
