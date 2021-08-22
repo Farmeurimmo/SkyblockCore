@@ -1,5 +1,6 @@
 package fr.farmeurimmo.criptmania.items;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event.Result;
@@ -11,6 +12,10 @@ import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
+
+import fr.farmeurimmo.criptmania.Main;
 
 public class PermanantItem implements Listener {
 	
@@ -47,6 +52,26 @@ public class PermanantItem implements Listener {
 		customS.setDisplayName(PermanantItem.NameMenuItem);
 		custom1.setItemMeta(customS);
 		e.getPlayer().getInventory().setItem(8, custom1);
+		Player player = e.getPlayer();
+		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
+			public void run() {
+				if(Main.instance1.getData().getBoolean("Joueurs."+player.getName()+".Atout.1.Active") == true) {
+					if(Main.instance1.getData().getInt("Joueurs."+player.getName()+".Atout.1.Level") == 2) {
+					player.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 999999999, 1));
+					}
+					}
+				if(Main.instance1.getData().getBoolean("Joueurs."+player.getName()+".Atout.2.Active") == true) {
+					if(Main.instance1.getData().getInt("Joueurs."+player.getName()+".Atout.2.Level") == 2) {
+					player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999999, 1));
+					}
+					}
+				if(Main.instance1.getData().getBoolean("Joueurs."+player.getName()+".Atout.3.Active") == true) {
+					if(Main.instance1.getData().getInt("Joueurs."+player.getName()+".Atout.3.Level") == 3) {
+					player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 999999999, 2));
+					}
+					}
+			}
+		}, 5);
 	}
 	@EventHandler
 	public void onInventoryClick(InventoryClickEvent e) {

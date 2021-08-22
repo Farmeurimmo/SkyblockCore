@@ -125,17 +125,18 @@ public class JoinLeave implements Listener {
 				Main.instance1.saveData();
 			}
 			if(Main.instance1.getData().getBoolean("Joueurs."+player.getName()+".Atout.1.Active") == true) {
-				if(Main.instance1.getData().getInt("Joueurs."+player.getName()+".Atout.1.Level") == 1) {
-				player.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 999999999, 0));
-				} else if(Main.instance1.getData().getInt("Joueurs."+player.getName()+".Atout.1.Level") == 2) {
-					player.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 999999999, 1));
+				if(Main.instance1.getData().getInt("Joueurs."+player.getName()+".Atout.1.Level") == 2) {
+				player.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 999999999, 1));
 				}
 				}
 			if(Main.instance1.getData().getBoolean("Joueurs."+player.getName()+".Atout.2.Active") == true) {
-				if(Main.instance1.getData().getInt("Joueurs."+player.getName()+".Atout.2.Level") == 1) {
-				player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999999, 0));
-				} else if(Main.instance1.getData().getInt("Joueurs."+player.getName()+".Atout.2.Level") == 2) {
-					player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999999, 1));
+				if(Main.instance1.getData().getInt("Joueurs."+player.getName()+".Atout.2.Level") == 2) {
+				player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999999, 1));
+				}
+				}
+			if(Main.instance1.getData().getBoolean("Joueurs."+player.getName()+".Atout.3.Active") == true) {
+				if(Main.instance1.getData().getInt("Joueurs."+player.getName()+".Atout.3.Level") == 3) {
+				player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 999999999, 2));
 				}
 				}
 	}
