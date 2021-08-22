@@ -23,12 +23,12 @@ public class BossBar {
 	static org.bukkit.boss.BossBar aaa = Bukkit.createBossBar(Main.getInstance().getConfig().getString("bossbar.display." + CurrentBossBar), BarColor.YELLOW, BarStyle.SOLID, BarFlag.DARKEN_SKY);
 	
 	public static void CreateBossBar(Integer number) {
-		BossBarForEveryone(aaa);
+		BossBarForEveryone();
 	}
 	public static void RemoveBossBarForPlayers() {
 		aaa.removeAll();
 	}
-	public static void ChangeTitle(org.bukkit.boss.BossBar aaa) {
+	public static void ChangeTitle() {
 		reset = 1;
 		if(CurrentBossBar == Numberofbossbar) {
 			CurrentBossBar = 1;
@@ -39,10 +39,12 @@ public class BossBar {
 		aaa.setTitle(Main.getInstance().getConfig().getString("bossbar.display." + CurrentBossBar));
 		BossBarSpeed = 0.01;
 		reverse = 0;
-		BossBarForEveryone(aaa);
+		BossBarForEveryone();
 	}
-	
-	public static void BossBarForEveryone(org.bukkit.boss.BossBar aaa) {
+	public static void AddBossBarForPlayer(Player player) {
+		aaa.addPlayer(player);
+	}
+	public static void BossBarForEveryone() {
 		for(Player player : Bukkit.getOnlinePlayers()) {
 			if(!Disable.contains(player)) {
 			aaa.addPlayer(player);
@@ -57,12 +59,12 @@ public class BossBar {
             	reverse = 0;
             	reset = 1;
             	BossBarSpeed = 0.01;
-            	ChangeTitle(aaa);
-            	AddProgressBossbar(aaa);
+            	ChangeTitle();
+            	AddProgressBossbar();
             }
         }, Main.getInstance().getConfig().getInt("bossbar.delay"));
 	}
-	public static  void AddProgressBossbar(org.bukkit.boss.BossBar aaa) {
+	public static  void AddProgressBossbar() {
 		if(reset != 0) {
 		if(reverse == 0) {
 		if(BossBarSpeed <= 0.98) {
@@ -87,7 +89,7 @@ public class BossBar {
         		aaa.setProgress(BossBarSpeed);
         		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
                     public void run() {
-                    	AddProgressBossbar(aaa);
+                    	AddProgressBossbar();
                     }
                 }, Main.getInstance().getConfig().getInt("bossbar.intraspeed") - 1);
         		return;

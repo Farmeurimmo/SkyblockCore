@@ -2,7 +2,6 @@ package fr.farmeurimmo.criptmania.events;
 
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.WorldBorder;
 import org.bukkit.entity.Player;
@@ -21,6 +20,7 @@ import fr.farmeurimmo.criptmania.Main;
 import fr.farmeurimmo.criptmania.featherfly.CountdownFly;
 import fr.farmeurimmo.criptmania.items.PermanantItem;
 import fr.farmeurimmo.criptmania.scoreboard.ScoreBoard;
+import fr.farmeurimmo.criptmania.utils.BossBar;
 import net.luckperms.api.LuckPermsProvider;
 import net.luckperms.api.model.user.User;
 
@@ -32,9 +32,6 @@ public class JoinLeave implements Listener {
 	public void OnJoin(PlayerJoinEvent event) {
 		Player player = event.getPlayer();
 		
-		final Location Spawn = new Location(Bukkit.getServer().getWorld("world"), -186.5, 110, -63.5, 0, 0);
-		player.teleport(Spawn);
-		
 		ItemStack custom1 = new ItemStack(Material.NETHER_STAR, 1);
 		ItemMeta customS = custom1.getItemMeta();
 		customS.setUnbreakable(true);
@@ -44,6 +41,8 @@ public class JoinLeave implements Listener {
 		player.getInventory().setItem(8, custom1);
 		
 		player.setGameMode(GameMode.SURVIVAL);
+		
+		BossBar.AddBossBarForPlayer(player);
 		
 		ScoreBoard.setScoreBoard(player);
 		
