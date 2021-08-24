@@ -27,7 +27,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 
 public class CratesManager implements Listener {
 	
-	public static final Location BoxLegendaire = new Location(Bukkit.getServer().getWorld("world"), -186, 96, -63);
+	public static final Location BoxLegendaire = new Location(Bukkit.getServer().getWorld("world"), -181, 109, -53);
 	
 	@SuppressWarnings("deprecation")
 	@EventHandler(priority = EventPriority.MONITOR)
