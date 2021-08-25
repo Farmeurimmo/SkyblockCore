@@ -43,6 +43,7 @@ public class BossBar {
 	public static void AddBossBarForPlayer(Player player) {
 		aaa.addPlayer(player);
 	}
+	@SuppressWarnings("deprecation")
 	public static void BossBarForEveryone() {
 		for(Player player : Bukkit.getOnlinePlayers()) {
 			if(!Disable.contains(player)) {
@@ -58,12 +59,13 @@ public class BossBar {
             	BossBarSpeed = 0.01;
             	ChangeTitle();
             	AddProgressBossbar();
-            	Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
+            	Bukkit.getServer().getScheduler().scheduleAsyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
                     public void run() {
                     	BossBarForEveryone();
                     }
                 }, Main.getInstance().getConfig().getInt("bossbar.delay"));
 	}
+	@SuppressWarnings("deprecation")
 	public static  void AddProgressBossbar() {
 		if(reset != 0) {
 		if(reverse == 0) {
@@ -82,12 +84,12 @@ public class BossBar {
 				reverse = 2;
 			}
 			}
-		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
+		Bukkit.getServer().getScheduler().scheduleAsyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
             public void run() {
             	if(reverse != 2) {
         			if(BossBarSpeed <= 0.99 && BossBarSpeed >= 0.01) {
         		aaa.setProgress(BossBarSpeed);
-        		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
+        		Bukkit.getServer().getScheduler().scheduleAsyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
                     public void run() {
                     	AddProgressBossbar();
                     }
