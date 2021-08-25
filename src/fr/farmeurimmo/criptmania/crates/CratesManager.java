@@ -20,6 +20,10 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.plugin.Plugin;
+
+import com.gmail.filoghost.holographicdisplays.api.Hologram;
+import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
 
 import fr.farmeurimmo.criptmania.utils.CheckPlayerInventory;
 
@@ -28,6 +32,11 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 public class CratesManager implements Listener {
 	
 	public static final Location BoxLegendaire = new Location(Bukkit.getServer().getWorld("world"), -181, 109, -53);
+	
+	static Location holo = new Location(Bukkit.getServer().getWorld("world"), BoxLegendaire.getX()+0.5,
+			BoxLegendaire.getY() + 2, BoxLegendaire.getZ()+0.5);
+	static Plugin plugin = Bukkit.getPluginManager().getPlugin("SkyblockCore");
+	static Hologram hologram = HologramsAPI.createHologram(plugin, holo);
 	
 	@SuppressWarnings("deprecation")
 	@EventHandler(priority = EventPriority.MONITOR)
@@ -357,5 +366,12 @@ public class CratesManager implements Listener {
 	}
 	public static void SpawnCrates() {
 		Bukkit.getWorld("world").getBlockAt(BoxLegendaire).setType(Material.TRAPPED_CHEST);
+		
+		hologram.appendTextLine("§6Boxe légendaire");
+		hologram.appendTextLine("§7Clic droit pour ouvrir");
+		hologram.appendTextLine("§7Clic gauche pour prévisualiser");
+	}
+	public static void RemoveLegBoxeHolo() {
+		hologram.clearLines();
 	}
 }
