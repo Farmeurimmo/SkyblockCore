@@ -175,9 +175,18 @@ public class Main extends JavaPlugin implements Listener {
 			getLogger().warning("Le plugin HolographicDisplays est manquant.");
 			Bukkit.getPluginManager().disablePlugin(this);
 		}
-		System.out.println("§aDémarrage du plugin réussi !");
-		System.out.println("-----------------------------------------------------------------------------------------------------");
 		setup();
+		Main.spawncooldown.clear();
+		BossBar.CreateBossBar();
+		BuildCmd.Build.clear();
+		WineSpawn.SpawnPnj(new Location(Bukkit.getServer().getWorld("world"), -194.5, 109, -49.5, -90, 2));
+		for(Player player : Bukkit.getOnlinePlayers()) {
+			ScoreBoard.setScoreBoard(player);
+		}
+		ChatReaction.mots.addAll(Arrays.asList("CriptMania","Skyblock","Ile","Farm2Win"));
+	    ChatReaction.StartChatReaction();
+	    ChallengesReset.CheckForReset();
+	    CratesManager.SpawnCrates();
 		getServer().getPluginManager().registerEvents(new JoinLeave(), this);
 		getServer().getPluginManager().registerEvents(new Tchat(), this);
 		getServer().getPluginManager().registerEvents(new ScoreBoard(), this);
@@ -237,17 +246,8 @@ public class Main extends JavaPlugin implements Listener {
 		this.getCommand("key").setExecutor(new KeyCmd());
 		PluginManager pm = getServer().getPluginManager();
 		pm.registerEvents(this, this);
-		Main.spawncooldown.clear();
-		BossBar.CreateBossBar();
-		BuildCmd.Build.clear();
-		WineSpawn.SpawnPnj(new Location(Bukkit.getServer().getWorld("world"), -194.5, 109, -49.5, -90, 2));
-		for(Player player : Bukkit.getOnlinePlayers()) {
-			ScoreBoard.setScoreBoard(player);
-		}
-		ChatReaction.mots.addAll(Arrays.asList("CriptMania","Skyblock","Ile","Farm2Win"));
-	    ChatReaction.StartChatReaction();
-	    ChallengesReset.CheckForReset();
-	    CratesManager.SpawnCrates();
+		System.out.println("§aDémarrage du plugin réussi !");
+		System.out.println("-----------------------------------------------------------------------------------------------------");
 	}
 	@Override
 	public void onDisable() {
