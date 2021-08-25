@@ -165,6 +165,16 @@ public class Main extends JavaPlugin implements Listener {
 			getLogger().warning("Le plugin TheNewEconomy est manquant.");
 			Bukkit.getPluginManager().disablePlugin(this);
 		}
+		if (Bukkit.getPluginManager().getPlugin("HolographicDisplays") != null) {
+			System.out.println("Le plugin HolographicDisplays a été trouvé !");
+			System.out.println("-----------------------------------------------------------------------------------------------------");
+			System.out.println("Initialisation de l'api HolographicDisplays en cours...");
+			System.out.println("API initialisé !");
+			System.out.println("-----------------------------------------------------------------------------------------------------");
+		} else {
+			getLogger().warning("Le plugin HolographicDisplays est manquant.");
+			Bukkit.getPluginManager().disablePlugin(this);
+		}
 		System.out.println("§aDémarrage du plugin réussi !");
 		System.out.println("-----------------------------------------------------------------------------------------------------");
 		setup();
@@ -242,6 +252,7 @@ public class Main extends JavaPlugin implements Listener {
 	@Override
 	public void onDisable() {
 		WineSpawn.RemovePnj();
+		CratesManager.RemoveLegBoxeHolo();
 		BossBar.RemoveBossBarForPlayers();
 		System.out.println("-----------------------------------------------------------------------------------------------------");
 		System.out.println("Plugin stoppé !");
