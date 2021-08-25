@@ -35,13 +35,13 @@ public class Interact implements Listener {
 			return;
 		}
 		if(player.getWorld().getName().equalsIgnoreCase("world")) {
+			if(Build.contains(player)) {
+				return;
+				}
 			if(player.getItemInHand().getType() == Material.NETHER_STAR && e.getClickedBlock().getType() == Material.BEACON || e.getClickedBlock().getType() == Material.CHEST || e.getClickedBlock().getType() == Material.TRAPPED_CHEST || e.getClickedBlock().getType() == Material.FURNACE || 
 					e.getClickedBlock().getType() == Material.BARREL || e.getClickedBlock().getType() == Material.ENDER_CHEST) {
 				e.setCancelled(true);
 			}
-			if(Build.contains(player)) {
-				return;
-				}
 			else {
 				e.setCancelled(true);
 			}
