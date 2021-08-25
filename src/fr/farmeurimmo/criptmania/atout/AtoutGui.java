@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
@@ -111,6 +112,31 @@ public class AtoutGui implements Listener{
 		
 		
 		player.openInventory(inv);
+	}
+	@EventHandler
+	public void MilkConsume(PlayerItemConsumeEvent e) {
+		if(e.getItem().getType() == Material.MILK_BUCKET) {
+			Player player = e.getPlayer();
+			Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
+				public void run() {
+					if(Main.instance1.getData().getBoolean("Joueurs."+player.getName()+".Atout.1.Active") == true) {
+						if(Main.instance1.getData().getInt("Joueurs."+player.getName()+".Atout.1.Level") == 2) {
+						player.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 999999999, 1));
+						}
+						}
+					if(Main.instance1.getData().getBoolean("Joueurs."+player.getName()+".Atout.2.Active") == true) {
+						if(Main.instance1.getData().getInt("Joueurs."+player.getName()+".Atout.2.Level") == 2) {
+						player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999999, 1));
+						}
+						}
+					if(Main.instance1.getData().getBoolean("Joueurs."+player.getName()+".Atout.3.Active") == true) {
+						if(Main.instance1.getData().getInt("Joueurs."+player.getName()+".Atout.3.Level") == 3) {
+						player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 999999999, 2));
+						}
+						}
+				}
+			}, 1);
+		}
 	}
 	@EventHandler
 	public void InventoryClickEvent(InventoryClickEvent e) {
