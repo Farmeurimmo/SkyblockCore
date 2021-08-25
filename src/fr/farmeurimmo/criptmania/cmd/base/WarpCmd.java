@@ -38,6 +38,7 @@ public class WarpCmd implements CommandExecutor, TabCompleter {
 				TeleportPlayer.TeleportPlayerFromRequest(player, Bar, GetTeleportDelay.GetPlayerTeleportingdelay(player));
 				}
 			} else if(args.length == 2) {
+				if(player.hasPermission("*")) {
 				if(Bukkit.getPlayer(args[1]) != null) {
 					if(Bukkit.getPlayer(args[1]).isOnline()) {
 					Player p = Bukkit.getPlayer(args[1]);
@@ -52,11 +53,18 @@ public class WarpCmd implements CommandExecutor, TabCompleter {
 					if(args[0].equalsIgnoreCase("bar")) {
 						p.teleport(Bar);
 						SendActionBar.SendActionBarMsg(p, "§aVous avez été téléporté au warp bar par un membre du staff !");
+					}
 						}
 					}
+				} else {
+					player.sendMessage("§c/warp <warp>");
 				}
 			} else {
+				if(player.hasPermission("*")) {
 				player.sendMessage("§c/warp <warp> [Joueur]");
+				} else {
+					player.sendMessage("§c/warp <warp>");
+				}
 			}
 		}
 		return false;
@@ -71,8 +79,12 @@ public class WarpCmd implements CommandExecutor, TabCompleter {
 	            	subcmd.add("bar");
 	            	Collections.sort(subcmd);
 	            } else if (args.length == 2) {
+	            	if(sender.hasPermission("*")) {
 	            	for(Player player : Bukkit.getOnlinePlayers()) {
 	            		subcmd.add(player.getName());
+	            	}
+	            	} else {
+	            		subcmd.add("");
 	            	}
 	            	Collections.sort(subcmd);
 	            } else if(args.length >= 3) {
