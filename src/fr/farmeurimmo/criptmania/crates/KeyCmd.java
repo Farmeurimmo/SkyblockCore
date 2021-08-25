@@ -37,6 +37,9 @@ public class KeyCmd implements CommandExecutor, TabCompleter {
 						    	  if(args[1].equalsIgnoreCase("Légendaire")) {
 						    		  CratesKeyManager.GiveCrateKey(p, nombre, "Légendaire");
 						      }
+						    	  if(args[1].equalsIgnoreCase("Challenge")) {
+						    		  CratesKeyManager.GiveCrateKey(p, nombre, "Challenge");
+						      }
 						}
 						}
 					}
@@ -59,6 +62,7 @@ public class KeyCmd implements CommandExecutor, TabCompleter {
 		            	}
 		            } else if (args.length == 2){
 		            	subcmd.add("Légendaire");
+		            	subcmd.add("Challenge");
 		            } else if (args.length == 3){
 		            	subcmd.add("1");
 		            } else if (args.length >= 4){

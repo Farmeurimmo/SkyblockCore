@@ -252,7 +252,7 @@ public class Main extends JavaPlugin implements Listener {
 	@Override
 	public void onDisable() {
 		WineSpawn.RemovePnj();
-		CratesManager.RemoveLegBoxeHolo();
+		CratesManager.RemoveBoxeHolo();
 		BossBar.RemoveBossBarForPlayers();
 		System.out.println("-----------------------------------------------------------------------------------------------------");
 		System.out.println("Plugin stoppé !");

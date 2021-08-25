@@ -1,6 +1,5 @@
 package fr.farmeurimmo.criptmania.crates;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -20,7 +19,17 @@ public class CratesKeyManager {
 	  		customa.setDisplayName("§6§lClée légendaire");
 	  		custom1.setItemMeta(customa);
 	  		player.getInventory().addItem(custom1);
-	  		Bukkit.broadcastMessage("§6§lCrates §8» §fVous avez reçu x" + nombre + " clée(s) légendaire !");
+	  		player.sendMessage("§6§lCrates §8» §fVous avez reçu x" + nombre + " clée(s) légendaire !");
+		} else if(type.equalsIgnoreCase("challenge")) {
+			ItemStack custom1 = new ItemStack(Material.TRIPWIRE_HOOK, nombre);
+	  		ItemMeta customa = custom1.getItemMeta();
+	  		customa.addEnchant(Enchantment.DURABILITY, 10, true);
+	  		customa.setUnbreakable(true);
+	  		customa.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
+	  		customa.setDisplayName("§6§lClée challenge");
+	  		custom1.setItemMeta(customa);
+	  		player.getInventory().addItem(custom1);
+	  		player.sendMessage("§6§lCrates §8» §fVous avez reçu x" + nombre + " clée(s) challenge !");
 		}
 	}
 }
