@@ -20,6 +20,7 @@ public class CratesKeyManager {
 	  		custom1.setItemMeta(customa);
 	  		player.getInventory().addItem(custom1);
 	  		player.sendMessage("§6§lCrates §8» §fVous avez reçu x" + nombre + " clée(s) légendaire !");
+	  		
 		} else if(type.equalsIgnoreCase("challenge")) {
 			ItemStack custom1 = new ItemStack(Material.TRIPWIRE_HOOK, nombre);
 	  		ItemMeta customa = custom1.getItemMeta();
@@ -30,6 +31,7 @@ public class CratesKeyManager {
 	  		custom1.setItemMeta(customa);
 	  		player.getInventory().addItem(custom1);
 	  		player.sendMessage("§6§lCrates §8» §fVous avez reçu x" + nombre + " clée(s) challenge !");
+	  		
 		}
 	}
 }

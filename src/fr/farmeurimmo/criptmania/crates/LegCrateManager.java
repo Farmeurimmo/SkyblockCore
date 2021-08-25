@@ -14,7 +14,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class LegCrateManager {
 	
-	public static String LegCratesLoot(Player player) {
+	public static String LegCrateLoot(Player player) {
 		String loot = null;
 		Random rand = new Random();
             int n = rand.nextInt(101);
@@ -109,7 +109,7 @@ public class LegCrateManager {
             return loot;
 	}
 	
-	public static void LegCratesPreview(Player player) {
+	public static void LegCratePreview(Player player) {
         Inventory inv = Bukkit.createInventory(null, 45, "§6Boxe légendaire");
         
     	ItemStack custom1 = new ItemStack(Material.NETHERITE_PICKAXE, 1);
