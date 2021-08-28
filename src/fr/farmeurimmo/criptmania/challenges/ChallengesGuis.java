@@ -41,8 +41,8 @@ public class ChallengesGuis implements Listener {
 			Main.instance1.getData().set("Joueurs."+player.getName()+".Challenges.Daily."+nombre+".Active", false);
 			Main.instance1.getData().set("Joueurs."+player.getName()+".Challenges.Daily."+nombre+".Progression", 0);
 			Main.instance1.saveData();
-			Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "is bank give " + player.getName() + " crystals 2");
-			Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "is bank give " + player.getName() + " money 5000");
+			Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "is bank give " + player.getName() + " crystaux 2");
+			Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "is bank give " + player.getName() + " argent 5000");
 			
 			player.playSound(player.getLocation(), Sound.UI_TOAST_CHALLENGE_COMPLETE, 5, 1);
 			player.sendMessage("§6§lChallenges §8» §fVous venez de compléter le challenge journalier n°" + nombre+".");

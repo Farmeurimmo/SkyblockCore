@@ -28,7 +28,7 @@ public class ChallengeCrateManager {
     	ItemStack custom1 = new ItemStack(Material.BARRIER, 1);
 		ItemMeta meta1 = custom1.getItemMeta();
 		meta1.setDisplayName("§4En dev");
-		meta1.setLore(Arrays.asList("§70%"));
+		meta1.setLore(Arrays.asList("§760%"));
 		custom1.setItemMeta(meta1);
 		inv.setItem(10, custom1);
 		
