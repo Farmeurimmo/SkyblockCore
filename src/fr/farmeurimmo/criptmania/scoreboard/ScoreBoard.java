@@ -45,7 +45,6 @@ public class ScoreBoard implements Listener {
 		obj.getScore("§d").setScore(2);
 
 
-		Team playernam = board.registerNewTeam("playername");
 		Team rank = board.registerNewTeam("rank");
 		Team money = board.registerNewTeam("money");
 		Team Ile = board.registerNewTeam("Ile");
@@ -65,7 +64,6 @@ public class ScoreBoard implements Listener {
 		gradeis.addEntry("§5");
 		Ile.addEntry("§4");
 		money.addEntry("§3");
-		playernam.addEntry("§1");
 		rank.addEntry("§2");
 		
 		
@@ -82,15 +80,16 @@ public class ScoreBoard implements Listener {
 
 		player.setScoreboard(board);
 
-		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
+		Bukkit.getServer().getScheduler().scheduleAsyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
 			public void run() {
 				updateScoreBoard(player);
 			}
-		}, 2);
+		}, 1);
 
 	}
 
 
+	@SuppressWarnings("deprecation")
 	public static void updateScoreBoard(Player player){
 		Scoreboard board = player.getScoreboard();
 		
@@ -153,7 +152,7 @@ public class ScoreBoard implements Listener {
 				board.getTeam("ismoney").setPrefix("§fArgent §8» §aN/A");
 			}
 
-		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
+		Bukkit.getServer().getScheduler().scheduleAsyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
 			public void run() {
 				if(player.isOnline()) {
 				updateScoreBoard(player);
