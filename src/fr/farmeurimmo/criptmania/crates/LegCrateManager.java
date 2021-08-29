@@ -14,28 +14,33 @@ import org.bukkit.inventory.meta.ItemMeta;
 public class LegCrateManager {
 	
 	public static String LegCrateLoot(Player player) {
-		String loot = null;
+		String loot = "error";
 		Random rand = new Random();
-            int n = rand.nextInt(101);
+            int n = rand.nextInt(100);
             if (n >= 0 && n <= 5){
             	loot = "x1 Pelle légendaire";
             	Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "itemleg give " + player.getName() + " pelle");
+            	return loot;
             }
             if (n >= 6 && n <= 10){
             	loot = "x1 Hache légendaire";
             	Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "itemleg give " + player.getName() + " hache");
+            	return loot;
             }
             if (n >= 11 && n <= 15){
             	loot = "x1 Pioche légendaire";
             	Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "itemleg give " + player.getName() + " pioche");
+            	return loot;
             }
             if (n >= 16 && n <= 20){
             	loot = "x1 Epée légendaire";
             	Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "itemleg give " + player.getName() + " épée");
+            	return loot;
             }
             if (n >= 21 && n <= 31){
             	loot = "100 000$";
             	Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "money give "+player.getName()+" 100000");
+            	return loot;
             }
             if (n >= 32 && n <= 33){
             	if(!player.hasPermission("dieu")) {
@@ -44,6 +49,7 @@ public class LegCrateManager {
             	} else {
             		loot = "reroll";
             	}
+            	return loot;
             }
             if (n >= 34 && n <= 37){
             	if(!player.hasPermission("legende")) {
@@ -52,58 +58,67 @@ public class LegCrateManager {
             	} else {
             		loot = "reroll";
             	}
+            	return loot;
             }
             if (n >= 38 && n <= 43){
             	loot = "x1 Spawneur à Iron Golem";
             	Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "silkspawners add "+player.getName()+" iron_golem");
+            	return loot;
             }
             if (n >= 44 && n <= 48){
             	loot = "x2 Spawneurs à Iron Golem";
             	Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "silkspawners add "+player.getName()+" iron_golem 2");
+            	return loot;
             }
             if (n >= 49 && n <= 52){
             	loot = "x3 Spawneurs à Iron Golem";
             	Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "silkspawners add "+player.getName()+" iron_golem 3");
+            	return loot;
             }
             if (n >= 53 && n <= 64){
             	loot = "x48 Blocs d'émeraude";
             	player.getInventory().addItem(new ItemStack(Material.EMERALD_BLOCK, 48));
+            	return loot;
             }
             if (n >= 65 && n <= 68){
             	loot = "x1 SellChest";
             	Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "chests give "+player.getName()+" sell_chest");
+            	return loot;
             }
             if (n >= 69 && n <= 72){
             	loot = "x2 SellChest";
             	Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "chests give "+player.getName()+" sell_chest 2");
+            	return loot;
             }
             if (n >= 73 && n <= 78){
             	loot = "x2 Balises";
             	player.getInventory().addItem(new ItemStack(Material.BEACON, 2));
+            	return loot;
             }
             if (n >= 79 && n <= 84){
             	loot = "x3 Balises";
             	player.getInventory().addItem(new ItemStack(Material.BEACON, 3));
+            	return loot;
             }
             if (n >= 85 && n <= 90){
             	loot = "x18 Blocs de netherite";
             	player.getInventory().addItem(new ItemStack(Material.NETHERITE_BLOCK, 18));
+            	return loot;
             }
             if (n >= 91 && n <= 97){
             	loot = "x24 Blocs de netherite";
             	player.getInventory().addItem(new ItemStack(Material.NETHERITE_BLOCK, 24));
+            	return loot;
             }
             if (n >= 55 && n <= 62){
             	loot = "250 000$";
             	Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "money give "+player.getName()+" 250000");
+            	return loot;
             }
-            if (n >= 98 && n <= 100){
+            if (n >= 98 && n <= 99){
             	loot = "500 000$";
             	Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "money give "+player.getName()+" 500000");
-            }
-            if(loot == null) {
-            	loot = "error";
-            	Bukkit.broadcastMessage("aaa: " + n);
+            	return loot;
             }
             return loot;
 	}
