@@ -114,7 +114,7 @@ public class LegCrateManager {
         ItemStack custom1 = new ItemStack(Material.NETHERITE_PICKAXE, 1);
 		ItemMeta meta1 = custom1.getItemMeta();
 		meta1.setDisplayName("§6Pioche légendaire");
-		meta1.setLore(Arrays.asList("§76%"));
+		meta1.setLore(Arrays.asList("§7","§e6%"));
 		meta1.addEnchant(Enchantment.DIG_SPEED, 7, true);
 		meta1.addEnchant(Enchantment.LOOT_BONUS_BLOCKS, 5, true);
 		meta1.addEnchant(Enchantment.DURABILITY, 5, true);
@@ -125,7 +125,7 @@ public class LegCrateManager {
 		ItemStack custom2 = new ItemStack(Material.NETHERITE_AXE, 1);
 		ItemMeta meta2 = custom2.getItemMeta();
 		meta2.setDisplayName("§6Hache légendaire");
-		meta2.setLore(Arrays.asList("§75%"));
+		meta2.setLore(Arrays.asList("§7","§e5%"));
 		meta2.addEnchant(Enchantment.DIG_SPEED, 7, true);
 		meta2.addEnchant(Enchantment.LOOT_BONUS_BLOCKS, 5, true);
 		meta2.addEnchant(Enchantment.DURABILITY, 5, true);
@@ -136,7 +136,7 @@ public class LegCrateManager {
 		ItemStack custom3 = new ItemStack(Material.NETHERITE_SHOVEL, 1);
 		ItemMeta meta3 = custom3.getItemMeta();
 		meta3.setDisplayName("§6Pelle légendaire");
-		meta3.setLore(Arrays.asList("§75%"));
+		meta3.setLore(Arrays.asList("§7","§e5%"));
 		meta3.addEnchant(Enchantment.DIG_SPEED, 7, true);
 		meta3.addEnchant(Enchantment.LOOT_BONUS_BLOCKS, 5, true);
 		meta3.addEnchant(Enchantment.DURABILITY, 5, true);
@@ -147,7 +147,7 @@ public class LegCrateManager {
 		ItemStack custom4 = new ItemStack(Material.NETHERITE_SWORD, 1);
 		ItemMeta meta4 = custom4.getItemMeta();
 		meta4.setDisplayName("§6Epée légendaire");
-		meta4.setLore(Arrays.asList("§75%"));
+		meta4.setLore(Arrays.asList("§7","§e5%"));
 		meta4.addEnchant(Enchantment.DAMAGE_ALL, 7, true);
 		meta4.addEnchant(Enchantment.DAMAGE_UNDEAD, 7, true);
 		meta4.addEnchant(Enchantment.DAMAGE_ARTHROPODS, 7, true);
@@ -160,69 +160,69 @@ public class LegCrateManager {
 		ItemStack custom5 = new ItemStack(Material.SPAWNER, 1);
 		ItemMeta meta5 = custom5.getItemMeta();
 		meta5.setDisplayName("§6Spawneur à Iron Golem x1");
-		meta5.setLore(Arrays.asList("§76%"));
+		meta5.setLore(Arrays.asList("§7","§e6%"));
 		custom5.setItemMeta(meta5);
 		inv.setItem(14, custom5);
 		
 		ItemStack custom6 = new ItemStack(Material.SPAWNER, 2);
 		ItemMeta meta6 = custom6.getItemMeta();
 		meta6.setDisplayName("§6Spawneur à Iron Golem x2");
-		meta6.setLore(Arrays.asList("§75%"));
+		meta6.setLore(Arrays.asList("§7","§e5%"));
 		custom6.setItemMeta(meta6);
 		inv.setItem(15, custom6);
 		
 		ItemStack custom7 = new ItemStack(Material.SPAWNER, 3);
 		ItemMeta meta7 = custom7.getItemMeta();
 		meta7.setDisplayName("§6Spawneur à Iron Golem x3");
-		meta7.setLore(Arrays.asList("§74%"));
+		meta7.setLore(Arrays.asList("§7","§e4%"));
 		custom7.setItemMeta(meta7);
 		inv.setItem(16, custom7);
 		
 		ItemStack custom9 = new ItemStack(Material.CHEST, 1);
 		ItemMeta meta9 = custom9.getItemMeta();
 		meta9.setDisplayName("§6SellChest x1");
-		meta9.setLore(Arrays.asList("§74%"));
+		meta9.setLore(Arrays.asList("§7","§e4%"));
 		custom9.setItemMeta(meta9);
 		inv.setItem(19, custom9);
 		
 		ItemStack custom10 = new ItemStack(Material.CHEST, 2);
 		ItemMeta meta10 = custom10.getItemMeta();
 		meta10.setDisplayName("§6SellChest x2");
-		meta10.setLore(Arrays.asList("§74%"));
+		meta10.setLore(Arrays.asList("§7","§e4%"));
 		custom10.setItemMeta(meta10);
 		inv.setItem(20, custom10);
 		
 		ItemStack custom11 = new ItemStack(Material.BEACON, 2);
 		ItemMeta meta11 = custom11.getItemMeta();
 		meta11.setDisplayName("§6Balise x2");
-		meta11.setLore(Arrays.asList("§76%"));
+		meta11.setLore(Arrays.asList("§7","§e6%"));
 		custom11.setItemMeta(meta11);
 		inv.setItem(21, custom11);
 		
 		ItemStack custom12 = new ItemStack(Material.BEACON, 3);
 		ItemMeta meta12 = custom12.getItemMeta();
 		meta12.setDisplayName("§6Balise x3");
-		meta12.setLore(Arrays.asList("§76%"));
+		meta12.setLore(Arrays.asList("§7","§e6%"));
 		custom12.setItemMeta(meta12);
 		inv.setItem(22, custom12);
 		
 		ItemStack custom13 = new ItemStack(Material.NETHERITE_BLOCK, 18);
 		ItemMeta meta13 = custom13.getItemMeta();
 		meta13.setDisplayName("§6Bloc de netherite x18");
-		meta13.setLore(Arrays.asList("§76%"));
+		meta13.setLore(Arrays.asList("§7","§e6%"));
 		custom13.setItemMeta(meta13);
 		inv.setItem(23, custom13);
 		
 		ItemStack custom14 = new ItemStack(Material.NETHERITE_BLOCK, 24);
 		ItemMeta meta14 = custom14.getItemMeta();
 		meta14.setDisplayName("§6Bloc de netherite x24");
-		meta14.setLore(Arrays.asList("§77%"));
+		meta14.setLore(Arrays.asList("§7","§e7%"));
 		custom14.setItemMeta(meta14);
 		inv.setItem(24, custom14);
 		
 		ItemStack custom21 = new ItemStack(Material.EMERALD_BLOCK, 48);
 		ItemMeta meta21 = custom21.getItemMeta();
-		meta21.setLore(Arrays.asList("§710%"));
+		meta21.setLore(Arrays.asList("§7","§e10%"));
 		meta21.setDisplayName("§6Bloc d'émeraude x48");
 		custom21.setItemMeta(meta21);
 		inv.setItem(25, custom21);
@@ -230,35 +230,35 @@ public class LegCrateManager {
 		ItemStack custom16 = new ItemStack(Material.SUNFLOWER, 1);
 		ItemMeta meta16 = custom16.getItemMeta();
 		meta16.setDisplayName("§6100 000$");
-		meta16.setLore(Arrays.asList("§78%"));
+		meta16.setLore(Arrays.asList("§7","§e8%"));
 		custom16.setItemMeta(meta16);
 		inv.setItem(28, custom16);
 		
 		ItemStack custom17 = new ItemStack(Material.SUNFLOWER, 1);
 		ItemMeta meta17 = custom17.getItemMeta();
 		meta17.setDisplayName("§6250 000$");
-		meta17.setLore(Arrays.asList("§77%"));
+		meta17.setLore(Arrays.asList("§7","§e7%"));
 		custom17.setItemMeta(meta17);
 		inv.setItem(29, custom17);
 		
 		ItemStack custom18 = new ItemStack(Material.SUNFLOWER, 1);
 		ItemMeta meta18 = custom18.getItemMeta();
 		meta18.setDisplayName("§6500 000$");
-		meta18.setLore(Arrays.asList("§73%"));
+		meta18.setLore(Arrays.asList("§7","§e3%"));
 		custom18.setItemMeta(meta18);
 		inv.setItem(30, custom18);
 		
 		ItemStack custom19 = new ItemStack(Material.PAPER, 1);
 		ItemMeta meta19 = custom19.getItemMeta();
 		meta19.setDisplayName("§6Grade §eLégende");
-		meta19.setLore(Arrays.asList("§73%"));
+		meta19.setLore(Arrays.asList("§7","§e3%"));
 		custom19.setItemMeta(meta19);
 		inv.setItem(31, custom19);
 		
 		ItemStack custom20 = new ItemStack(Material.PAPER, 1);
 		ItemMeta meta20 = custom20.getItemMeta();
 		meta20.setDisplayName("§6Grade §9Dieu");
-		meta20.setLore(Arrays.asList("§71%"));
+		meta20.setLore(Arrays.asList("§7","§e1%"));
 		custom20.setItemMeta(meta20);
 		inv.setItem(32, custom20);
 		
