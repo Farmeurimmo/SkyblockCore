@@ -17,9 +17,77 @@ public class ChallengeCrateManager {
 	public static String ChallengeCrateLoot(Player player) {
 		String loot = null;
 		Random rand = new Random();
-            int n = rand.nextInt(101);
-            if(n <= 100) {
-            	loot = "rien miskine";
+		loot = "error";
+            int n = rand.nextInt(100);
+            if(n >= 0 && n <= 11) {
+            	loot = "10 000$";
+            	Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "money give "+player.getName()+" 10000");
+            	return loot;
+            }
+            if(n >= 12 && n <= 17) {
+            	loot = "25 000$";
+            	Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "money give "+player.getName()+" 25000");
+            	return loot;
+            }
+            if(n >= 18 && n <= 20) {
+            	loot = "50 000$";
+            	Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "money give "+player.getName()+" 50000");
+            	return loot;
+            }
+            if(n >= 21 && n <= 27) {
+            	loot = "x2 Clée challenge";
+            	CratesKeyManager.GiveCrateKey(player, 2, "Challenge");
+            	return loot;
+            }
+            if(n >= 28 && n <= 29) {
+            	loot = "x1 Clée légendaire";
+            	CratesKeyManager.GiveCrateKey(player, 1, "Légendaire");
+            	return loot;
+            }
+            if(n >= 30 && n <= 34) {
+            	loot = "x6 Bloc de netherite";
+            	player.getInventory().addItem(new ItemStack(Material.NETHERITE_BLOCK, 6));	
+            	return loot;
+            }
+            if(n >= 35 && n <= 39) {
+            	loot = "x12 Bloc d'émeraude";
+            	player.getInventory().addItem(new ItemStack(Material.EMERALD_BLOCK, 12));
+            	return loot;
+            }
+            if(n >= 40 && n <= 47) {
+            	loot = "x18 Bloc de diamant";
+            	player.getInventory().addItem(new ItemStack(Material.DIAMOND_BLOCK, 18));
+            	return loot;
+            }
+            if(n >= 48 && n <= 57) {
+            	loot = "x24 Bloc d'or";
+            	player.getInventory().addItem(new ItemStack(Material.GOLD_BLOCK, 24));
+            	return loot;
+            }
+            if(n >= 58 && n <= 69) {
+            	loot = "x32 Bloc de fer";
+            	player.getInventory().addItem(new ItemStack(Material.IRON_BLOCK, 32));
+            	return loot;
+            }
+            if(n >= 70 && n <= 84) {
+            	loot = "x48 Bloc de charbon";
+            	player.getInventory().addItem(new ItemStack(Material.COAL_BLOCK, 48));
+            	return loot;
+            }
+            if(n >= 85 && n <= 91) {
+            	loot = "x1 Fly de 10 minutes";
+            	Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "featherfly give " + player.getName() + " 10min");
+            	return loot;
+            }
+            if(n >= 92 && n <= 96) {
+            	loot = "x1 Fly de 20 minutes";
+            	Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "featherfly give " + player.getName() + " 20min");
+            	return loot;
+            }
+            if(n >= 97 && n <= 99) {
+            	loot = "x1 Fly de 30 minutes";
+            	Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "featherfly give " + player.getName() + " 30min");
+            	return loot;
             }
             return loot;
 	}
