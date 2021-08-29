@@ -3,7 +3,6 @@ package fr.farmeurimmo.criptmania.items;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -26,65 +25,68 @@ public class ItemLegCmd implements CommandExecutor, TabCompleter {
 		if(args.length == 3) {
 			if(args[0].equalsIgnoreCase("give")) {
 			if(Bukkit.getPlayer(args[1]).isOnline() == true) {
-				String sample = args[2];
-				char[] chars = sample.toCharArray();
-			      StringBuilder sb = new StringBuilder();
-			      for(char c : chars){
-			         if(Character.isDigit(c)){
-			            sb.append(c);
-			         }
-			      }
-			      if(!sb.isEmpty() && sb.length() < 2) {
+				if(args[2].equalsIgnoreCase("pioche")) {
 				ItemStack custom6 = new ItemStack(Material.NETHERITE_PICKAXE, 1);
 				ItemMeta customf = custom6.getItemMeta();
-				customf.setDisplayName("§6Pioche légendaire §8| §eTier §c" + sb);
-				Random rand = new Random();
-				int Tier = Integer.parseInt(sb.toString());
-				int n1 = 0;
-				int n2 = 0;
-				int n3 = 0;
-				if(Tier == 1) {
-				n1 = rand.nextInt(3);
-				n2 = rand.nextInt(2);
-				n1 = n1 + 5;
-				n2 = n2 + 5;
-				n3 = 5;
-				}
-				if(Tier == 2) {
-					n1 = rand.nextInt(4);
-					n2 = rand.nextInt(3);
-					n1 = n1 + 6;
-					n2 = n2 + 6;
-					n3 = 10;
-				}
-				if(Tier == 3) {
-					n1 = rand.nextInt(4);
-					n2 = rand.nextInt(3);
-					n1 = n1 + 7;
-					n2 = n2 + 7;
-					n3 = 15;
-				}
-				if(Tier == 4) {
-					n1 = rand.nextInt(4);
-					n2 = rand.nextInt(3);
-					n1 = n1 + 8;
-					n2 = n2 + 8;
-					n3 = 20;
-				}
-				customf.addEnchant(Enchantment.DIG_SPEED, n1, true);
-				customf.addEnchant(Enchantment.LOOT_BONUS_BLOCKS, n2, true);
-				customf.addEnchant(Enchantment.DURABILITY, n3, true);
+				customf.setDisplayName("§6Pioche légendaire");
+				customf.addEnchant(Enchantment.DIG_SPEED, 7, true);
+				customf.addEnchant(Enchantment.LOOT_BONUS_BLOCKS, 5, true);
+				customf.addEnchant(Enchantment.DURABILITY, 5, true);
+				customf.addEnchant(Enchantment.MENDING, 1, true);
 				custom6.setItemMeta(customf);
 				Player player = Bukkit.getPlayer(args[1]);
 				player.getInventory().addItem(custom6);
-				player.sendMessage("§eVous avez reçu une pioche légendaire de tier §c" + Tier);
+				player.sendMessage("§eVous avez reçu une pioche légendaire");
+				
+				} else if(args[2].equalsIgnoreCase("hache")) {
+					ItemStack custom6 = new ItemStack(Material.NETHERITE_AXE, 1);
+					ItemMeta customf = custom6.getItemMeta();
+					customf.setDisplayName("§6Hache légendaire");
+					customf.addEnchant(Enchantment.DIG_SPEED, 7, true);
+					customf.addEnchant(Enchantment.LOOT_BONUS_BLOCKS, 5, true);
+					customf.addEnchant(Enchantment.DURABILITY, 5, true);
+					customf.addEnchant(Enchantment.MENDING, 1, true);
+					custom6.setItemMeta(customf);
+					Player player = Bukkit.getPlayer(args[1]);
+					player.getInventory().addItem(custom6);
+					player.sendMessage("§eVous avez reçu une hache légendaire");
+					
+					} else if(args[2].equalsIgnoreCase("pelle")) {
+						ItemStack custom6 = new ItemStack(Material.NETHERITE_SHOVEL, 1);
+						ItemMeta customf = custom6.getItemMeta();
+						customf.setDisplayName("§6Pelle légendaire");
+						customf.addEnchant(Enchantment.DIG_SPEED, 7, true);
+						customf.addEnchant(Enchantment.LOOT_BONUS_BLOCKS, 5, true);
+						customf.addEnchant(Enchantment.DURABILITY, 5, true);
+						customf.addEnchant(Enchantment.MENDING, 1, true);
+						custom6.setItemMeta(customf);
+						Player player = Bukkit.getPlayer(args[1]);
+						player.getInventory().addItem(custom6);
+						player.sendMessage("§eVous avez reçu une pelle légendaire");
+						
+						} else if(args[2].equalsIgnoreCase("épée")) {
+							ItemStack custom6 = new ItemStack(Material.NETHERITE_SWORD, 1);
+							ItemMeta customf = custom6.getItemMeta();
+							customf.setDisplayName("§6Epée légendaire");
+							customf.addEnchant(Enchantment.DAMAGE_ALL, 7, true);
+							customf.addEnchant(Enchantment.DAMAGE_UNDEAD, 7, true);
+							customf.addEnchant(Enchantment.DAMAGE_ARTHROPODS, 7, true);
+							customf.addEnchant(Enchantment.LOOT_BONUS_MOBS, 5, true);
+							customf.addEnchant(Enchantment.DURABILITY, 5, true);
+							customf.addEnchant(Enchantment.MENDING, 1, true);
+							custom6.setItemMeta(customf);
+							Player player = Bukkit.getPlayer(args[1]);
+							player.getInventory().addItem(custom6);
+							player.sendMessage("§eVous avez reçu une épée légendaire");
+							} else {
+								sender.sendMessage("§6Arg disponnible: pioche, hache, pelle, épée");
+							}
 					}
 			}
 			}
 		}
 		else {
 			sender.sendMessage("§cErreur, faites /itemleg help pour voir les commandes !");
-		}
 		}
 		return false;
 	}
@@ -100,10 +102,10 @@ public class ItemLegCmd implements CommandExecutor, TabCompleter {
 	            		subcmd.add(player.getName());
 	            	}
 	            } else if(args.length == 3){
-	        		subcmd.add("1");
-	        		subcmd.add("2");
-	        		subcmd.add("3");
-	        		subcmd.add("4");
+	        		subcmd.add("pioche");
+	        		subcmd.add("hache");
+	        		subcmd.add("épée");
+	        		subcmd.add("pelle");
 	        	} else if(args.length >= 4){
 	        		subcmd.add("");
 	        	}
