@@ -8,7 +8,6 @@ import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -19,20 +18,20 @@ public class LegCrateManager {
 		Random rand = new Random();
             int n = rand.nextInt(101);
             if (n >= 0 && n <= 5){
-            	loot = "x1 Pioche légendaire T4";
-            	Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "itemleg give " + player.getName() + " 4");
+            	loot = "x1 Pelle légendaire";
+            	Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "itemleg give " + player.getName() + " pelle");
             }
-            if (n >= 6 && n <= 11){
-            	loot = "x1 Pioche légendaire T3";
-            	Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "itemleg give " + player.getName() + " 3");
+            if (n >= 6 && n <= 10){
+            	loot = "x1 Hache légendaire";
+            	Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "itemleg give " + player.getName() + " hache");
             }
-            if (n >= 12 && n <= 16){
-            	loot = "x1 Pioche légendaire T2";
-            	Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "itemleg give " + player.getName() + " 2");
+            if (n >= 11 && n <= 15){
+            	loot = "x1 Pioche légendaire";
+            	Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "itemleg give " + player.getName() + " pioche");
             }
-            if (n >= 17 && n <= 20){
-            	loot = "x1 Pioche légendaire T1";
-            	Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "itemleg give " + player.getName() + " 1");
+            if (n >= 16 && n <= 20){
+            	loot = "x1 Epée légendaire";
+            	Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "itemleg give " + player.getName() + " épée");
             }
             if (n >= 21 && n <= 31){
             	loot = "100 000$";
@@ -112,39 +111,45 @@ public class LegCrateManager {
 	public static void LegCratePreview(Player player) {
         Inventory inv = Bukkit.createInventory(null, 45, "§6Boxe légendaire");
         
-    	ItemStack custom1 = new ItemStack(Material.NETHERITE_PICKAXE, 1);
+        ItemStack custom1 = new ItemStack(Material.NETHERITE_PICKAXE, 1);
 		ItemMeta meta1 = custom1.getItemMeta();
-		meta1.setDisplayName("§6Pioche légendaire §8| §eTier §c1");
-		meta1.setLore(Arrays.asList("§74%"));
-		meta1.addEnchant(Enchantment.DIG_SPEED, 5, true);
-		meta1.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+		meta1.setDisplayName("§6Pioche légendaire");
+		meta1.addEnchant(Enchantment.DIG_SPEED, 7, true);
+		meta1.addEnchant(Enchantment.LOOT_BONUS_BLOCKS, 5, true);
+		meta1.addEnchant(Enchantment.DURABILITY, 5, true);
+		meta1.addEnchant(Enchantment.MENDING, 1, true);
 		custom1.setItemMeta(meta1);
 		inv.setItem(10, custom1);
 		
-		ItemStack custom2 = new ItemStack(Material.NETHERITE_PICKAXE, 1);
+		ItemStack custom2 = new ItemStack(Material.NETHERITE_AXE, 1);
 		ItemMeta meta2 = custom2.getItemMeta();
-		meta2.setDisplayName("§6Pioche légendaire §8| §eTier §c2");
-		meta2.setLore(Arrays.asList("§75%"));
-		meta2.addEnchant(Enchantment.DIG_SPEED, 5, true);
-		meta2.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+		meta2.setDisplayName("§6Hache légendaire");
+		meta2.addEnchant(Enchantment.DIG_SPEED, 7, true);
+		meta2.addEnchant(Enchantment.LOOT_BONUS_BLOCKS, 5, true);
+		meta2.addEnchant(Enchantment.DURABILITY, 5, true);
+		meta2.addEnchant(Enchantment.MENDING, 1, true);
 		custom2.setItemMeta(meta2);
 		inv.setItem(11, custom2);
 		
-		ItemStack custom3 = new ItemStack(Material.NETHERITE_PICKAXE, 1);
+		ItemStack custom3 = new ItemStack(Material.NETHERITE_SHOVEL, 1);
 		ItemMeta meta3 = custom3.getItemMeta();
-		meta3.setDisplayName("§6Pioche légendaire §8| §eTier §c3");
-		meta3.setLore(Arrays.asList("§75%"));
-		meta3.addEnchant(Enchantment.DIG_SPEED, 5, true);
-		meta3.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+		meta3.setDisplayName("§6Pelle légendaire");
+		meta3.addEnchant(Enchantment.DIG_SPEED, 7, true);
+		meta3.addEnchant(Enchantment.LOOT_BONUS_BLOCKS, 5, true);
+		meta3.addEnchant(Enchantment.DURABILITY, 5, true);
+		meta3.addEnchant(Enchantment.MENDING, 1, true);
 		custom3.setItemMeta(meta3);
 		inv.setItem(12, custom3);
 		
-		ItemStack custom4 = new ItemStack(Material.NETHERITE_PICKAXE, 1);
+		ItemStack custom4 = new ItemStack(Material.NETHERITE_SWORD, 1);
 		ItemMeta meta4 = custom4.getItemMeta();
-		meta4.setDisplayName("§6Pioche légendaire §8| §eTier §c4");
-		meta4.setLore(Arrays.asList("§76%"));
-		meta4.addEnchant(Enchantment.DIG_SPEED, 5, true);
-		meta4.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+		meta4.setDisplayName("§6Epée légendaire");
+		meta4.addEnchant(Enchantment.DAMAGE_ALL, 7, true);
+		meta4.addEnchant(Enchantment.DAMAGE_UNDEAD, 7, true);
+		meta4.addEnchant(Enchantment.DAMAGE_ARTHROPODS, 7, true);
+		meta4.addEnchant(Enchantment.LOOT_BONUS_MOBS, 5, true);
+		meta4.addEnchant(Enchantment.DURABILITY, 5, true);
+		meta4.addEnchant(Enchantment.MENDING, 1, true);
 		custom4.setItemMeta(meta4);
 		inv.setItem(13, custom4);
 		
