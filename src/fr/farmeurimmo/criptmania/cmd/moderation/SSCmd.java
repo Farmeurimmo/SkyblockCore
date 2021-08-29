@@ -21,7 +21,7 @@ public class SSCmd implements CommandExecutor, TabCompleter {
 		
 		if(sender instanceof Player) {
 			Player player = (Player) sender;
-			if(player.hasPermission("*")) {
+			if(player.hasPermission("mod")) {
 				if(args.length == 0) {
 					SendActionBar.SendActionBarMsg(player, "§c/ss <Joueur>");
 				} else if(args.length == 1) {
@@ -40,7 +40,7 @@ public class SSCmd implements CommandExecutor, TabCompleter {
 	 public List<String> onTabComplete(CommandSender sender, Command cmd, String commandLabel, String[] args) {
 		 ArrayList<String> subcmd = new ArrayList<String>();
 	        if (cmd.getName().equalsIgnoreCase("sanctionset")) {
-	        	if(sender.hasPermission("*")) {
+	        	if(sender.hasPermission("mod")) {
 	            if (args.length == 1){
 	            	for(Player player : Bukkit.getOnlinePlayers()) {
 	            		subcmd.add(player.getName());
