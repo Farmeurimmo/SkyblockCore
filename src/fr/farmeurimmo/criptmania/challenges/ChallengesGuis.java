@@ -19,6 +19,7 @@ import com.iridium.iridiumskyblock.api.IridiumSkyblockAPI;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
 import fr.farmeurimmo.criptmania.Main;
+import fr.farmeurimmo.criptmania.crates.CratesKeyManager;
 import fr.farmeurimmo.criptmania.gui.MenuGui;
 
 public class ChallengesGuis implements Listener {
@@ -43,10 +44,11 @@ public class ChallengesGuis implements Listener {
 			Main.instance1.saveData();
 			Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "is bank give " + player.getName() + " crystaux 2");
 			Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "is bank give " + player.getName() + " argent 5000");
+			CratesKeyManager.GiveCrateKey(player, 1, "Challenge");
 			
 			player.playSound(player.getLocation(), Sound.UI_TOAST_CHALLENGE_COMPLETE, 5, 1);
 			player.sendMessage("§6§lChallenges §8» §fVous venez de compléter le challenge journalier n°" + nombre+".");
-			player.sendMessage("§6§lChallenges §8» §fVous avez reçu 2 crystaux et 5000$.");
+			player.sendMessage("§6§lChallenges §8» §fVous avez reçu 2 crystaux, 5000$ et x1 clée Challenge.");
 			
 		} else {
 			player.sendMessage("§6§lChallenges §8» §fVous pouvez uniquement compléter les challenges en possédant ou en"
