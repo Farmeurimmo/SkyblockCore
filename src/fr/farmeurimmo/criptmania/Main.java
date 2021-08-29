@@ -175,6 +175,7 @@ public class Main extends JavaPlugin implements Listener {
 			getLogger().warning("Le plugin HolographicDisplays est manquant.");
 			Bukkit.getPluginManager().disablePlugin(this);
 		}
+		System.out.println("Initialisation des class et des méthodes en cours...");
 		setup();
 		Main.spawncooldown.clear();
 		BossBar.CreateBossBar();
