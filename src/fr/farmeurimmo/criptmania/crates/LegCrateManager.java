@@ -114,6 +114,7 @@ public class LegCrateManager {
         ItemStack custom1 = new ItemStack(Material.NETHERITE_PICKAXE, 1);
 		ItemMeta meta1 = custom1.getItemMeta();
 		meta1.setDisplayName("§6Pioche légendaire");
+		meta1.setLore(Arrays.asList("§76%"));
 		meta1.addEnchant(Enchantment.DIG_SPEED, 7, true);
 		meta1.addEnchant(Enchantment.LOOT_BONUS_BLOCKS, 5, true);
 		meta1.addEnchant(Enchantment.DURABILITY, 5, true);
@@ -124,6 +125,7 @@ public class LegCrateManager {
 		ItemStack custom2 = new ItemStack(Material.NETHERITE_AXE, 1);
 		ItemMeta meta2 = custom2.getItemMeta();
 		meta2.setDisplayName("§6Hache légendaire");
+		meta2.setLore(Arrays.asList("§75%"));
 		meta2.addEnchant(Enchantment.DIG_SPEED, 7, true);
 		meta2.addEnchant(Enchantment.LOOT_BONUS_BLOCKS, 5, true);
 		meta2.addEnchant(Enchantment.DURABILITY, 5, true);
@@ -134,6 +136,7 @@ public class LegCrateManager {
 		ItemStack custom3 = new ItemStack(Material.NETHERITE_SHOVEL, 1);
 		ItemMeta meta3 = custom3.getItemMeta();
 		meta3.setDisplayName("§6Pelle légendaire");
+		meta3.setLore(Arrays.asList("§75%"));
 		meta3.addEnchant(Enchantment.DIG_SPEED, 7, true);
 		meta3.addEnchant(Enchantment.LOOT_BONUS_BLOCKS, 5, true);
 		meta3.addEnchant(Enchantment.DURABILITY, 5, true);
@@ -144,6 +147,7 @@ public class LegCrateManager {
 		ItemStack custom4 = new ItemStack(Material.NETHERITE_SWORD, 1);
 		ItemMeta meta4 = custom4.getItemMeta();
 		meta4.setDisplayName("§6Epée légendaire");
+		meta4.setLore(Arrays.asList("§75%"));
 		meta4.addEnchant(Enchantment.DAMAGE_ALL, 7, true);
 		meta4.addEnchant(Enchantment.DAMAGE_UNDEAD, 7, true);
 		meta4.addEnchant(Enchantment.DAMAGE_ARTHROPODS, 7, true);
