@@ -10,7 +10,6 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
-import fr.farmeurimmo.criptmania.utils.SendActionBar;
 
 public class KeyCmd implements CommandExecutor, TabCompleter {
 
@@ -18,8 +17,7 @@ public class KeyCmd implements CommandExecutor, TabCompleter {
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		
 		if(sender instanceof Player) {
-			Player player = (Player) sender;
-			if(player.hasPermission("*")) {
+			if(sender.hasPermission("*")) {
 				if(args.length == 3) {
 					if(Bukkit.getPlayer(args[0]) != null) {
 						if(Bukkit.getPlayer(args[0]).isOnline()) {
@@ -42,10 +40,12 @@ public class KeyCmd implements CommandExecutor, TabCompleter {
 						      }
 						}
 						}
+					} else {
+						sender.sendMessage("§cJoueur invalide !");
 					}
 				}
 			} else {
-				SendActionBar.SendActionBarMsg(player, "§cPermissions insuffisantes !");
+				sender.sendMessage("§cVous n'avez pas la permission !");
 			}
 		}
 		
