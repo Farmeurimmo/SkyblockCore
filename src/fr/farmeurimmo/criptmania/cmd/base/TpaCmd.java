@@ -27,6 +27,7 @@ public class TpaCmd implements CommandExecutor, TabCompleter {
 						if(Bukkit.getPlayer(args[0]) != null) {
 							if(Bukkit.getPlayer(args[0]).isOnline()) {
 							Player p = Bukkit.getPlayer(args[0]);
+							if(!p.getName().equalsIgnoreCase(player.getName())) {
 							if(Main.haverequest.contains(p)) {
 								Main.haverequest.remove(p);
 							}
@@ -40,6 +41,9 @@ public class TpaCmd implements CommandExecutor, TabCompleter {
 							player.sendMessage("§6§lTéléportation §8» §fVous avez envoyé une demande de téléportation au joueur " + p.getName() + ".\n \n§fSi vous "
 									+ "souhaitez §cannuler §fvotre demande de téléportation, merci d'effectuer la commande §c/tpacancel \n§f");
 							return true;
+							} else {
+								SendActionBar.SendActionBarMsg(player, "§6§lTéléportation §8» §fVous ne pouvez pas vous téléporter à vous même.");
+							}
 							} else {
 								SendActionBar.SendActionBarMsg(player, "§cCe joueur n'est pas en ligne !");
 							}
@@ -75,7 +79,9 @@ public class TpaCmd implements CommandExecutor, TabCompleter {
 	        if (cmd.getName().equalsIgnoreCase("tpa")) {
 	            if (args.length == 1) {
 	            	for(Player player : Bukkit.getOnlinePlayers()) {
+	            		if(!sender.getName().equalsIgnoreCase(player.getName())) {
 	            		subcmd.add(player.getName());
+	            		}
 	            	}
 	            	Collections.sort(subcmd);
 	            } else if (args.length >= 2){
