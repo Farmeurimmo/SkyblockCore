@@ -9,7 +9,7 @@ import net.citizensnpcs.trait.SkinTrait;
 
 public class WineSpawn {
 	
-	static NPC npc = CitizensAPI.getNPCRegistry().createNPC(EntityType.PLAYER, "§6Barman §c(en développement)");
+	static NPC npc = CitizensAPI.getNPCRegistry().createNPC(EntityType.PLAYER, "§6Barman");
 
     @SuppressWarnings("deprecation")
 	public static void SpawnPnj(Location loc){
