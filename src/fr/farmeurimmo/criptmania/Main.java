@@ -121,7 +121,6 @@ public class Main extends JavaPlugin implements Listener {
         return (spawncooldown.get(player) == null ? 0 : spawncooldown.get(player));
     }
     
-    
 	@Override
 	public void onEnable() {
 		saveDefaultConfig();
