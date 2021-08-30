@@ -7,6 +7,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 import fr.farmeurimmo.criptmania.cmd.moderation.BuildCmd;
@@ -31,7 +32,8 @@ public class Interact implements Listener {
 		if(e.getClickedBlock() == null) {
 			return;
 		}
-		if(e.getClickedBlock().getType() == Material.ENDER_CHEST) {
+		if(e.getClickedBlock().getType() == Material.ENDER_CHEST || e.getClickedBlock().getType() == Material.ENCHANTING_TABLE
+				|| e.getClickedBlock().getType() == Material.CRAFTING_TABLE || e.getClickedBlock().getType() == Material.ANVIL) {
 			return;
 		}
 		if(player.getWorld().getName().equalsIgnoreCase("world")) {
@@ -45,6 +47,12 @@ public class Interact implements Listener {
 			else {
 				e.setCancelled(true);
 			}
+		}
+	}
+	@EventHandler
+	public void BlockBreake(BlockBreakEvent e) {
+		if(e.getBlock().getLocation().getWorld().getName().equalsIgnoreCase("world")) {
+			e.setCancelled(true);
 		}
 	}
 }
