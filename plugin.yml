@@ -6,7 +6,6 @@ depend: [Citizens, TheNewEconomy, IridiumSkyblock, HolographicDisplays]
 api-version: 1.16
 commands:
   spawn:
-  wiki:
   build:
   farm2win:
     aliases: [boutiqueig]

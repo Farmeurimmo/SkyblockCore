@@ -25,9 +25,9 @@ public class MenuGui {
 		custom2.setItemMeta(meta2);
 		inv.setItem(12, custom2);
 		
-		ItemStack custom3 = new ItemStack(Material.BOOK, 1);
+		ItemStack custom3 = new ItemStack(Material.BEDROCK, 1);
 		ItemMeta meta3 = custom3.getItemMeta();
-		meta3.setDisplayName("§6Wiki §8| §7(clic gauche)");
+		meta3.setDisplayName("§c????");
 		custom3.setItemMeta(meta3);
 		inv.setItem(34, custom3);
 		
