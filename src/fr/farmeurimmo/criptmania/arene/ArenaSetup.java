@@ -20,7 +20,7 @@ public class ArenaSetup {
 	static Plugin plugin = Bukkit.getPluginManager().getPlugin("SkyblockCore");
 	static Hologram hologram = HologramsAPI.createHologram(plugin, holo);
 	
-	static Location holo1 = new Location(Bukkit.getServer().getWorld("world"), -182.5, 113, -65.5);
+	static Location holo1 = new Location(Bukkit.getServer().getWorld("world"), -182.5, 111, -65.5);
 	static Hologram hologram1 = HologramsAPI.createHologram(plugin, holo1);
 
     @SuppressWarnings("deprecation")
