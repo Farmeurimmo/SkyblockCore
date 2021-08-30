@@ -20,6 +20,7 @@ import net.citizensnpcs.trait.SkinTrait;
 public class ArenaSetup implements Listener {
 	
 	static NPC npc = CitizensAPI.getNPCRegistry().createNPC(EntityType.PLAYER, "§6Arène");
+	static NPC npca = CitizensAPI.getNPCRegistry().createNPC(EntityType.PLAYER, "§6Auctions");
 	
 	static Location holo = new Location(Bukkit.getServer().getWorld("world"), -143.5, 110, -50.5);
 	static Plugin plugin = Bukkit.getPluginManager().getPlugin("SkyblockCore");
@@ -31,6 +32,9 @@ public class ArenaSetup implements Listener {
 	@EventHandler
 	public void OnInteractWithNPC(NPCRightClickEvent e) {
 		Player player = e.getClicker();
+		if(e.getNPC().getName().equalsIgnoreCase("§6Auctions")) {
+			player.chat("/ah");
+		}
 		if(player.hasPermission("*")) {
 			if(e.getNPC().getName().equalsIgnoreCase("§6Arène")) {
 				
@@ -49,8 +53,18 @@ public class ArenaSetup implements Listener {
         skin.setSkinName("Farmeurimmo");
         npc.spawn(loc);
     }
+    @SuppressWarnings("deprecation")
+   	public static void SpawnPnj2(Location loc){
+           SkinTrait skin = npca.getTrait(SkinTrait.class);
+           npca.setAlwaysUseNameHologram(false);
+           npca.setProtected(true);
+           npca.setFlyable(true);
+           skin.setSkinName("Tomashb");
+           npca.spawn(loc);
+       }
     public static void RemovePnj() {
     	npc.destroy();
+    	npca.destroy();
     }
     public static void SpawnCrates() {
 		hologram.appendTextLine("§6Arène");

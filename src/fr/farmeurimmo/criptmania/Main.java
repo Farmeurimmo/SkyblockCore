@@ -181,6 +181,7 @@ public class Main extends JavaPlugin implements Listener {
 		BuildCmd.Build.clear();
 		WineSpawn.SpawnPnj(new Location(Bukkit.getServer().getWorld("world"), -194.5, 109, -49.5, -90, 2));
 		ArenaSetup.SpawnPnj(new Location(Bukkit.getServer().getWorld("world"), -136.5, 107, -50.5, 90, 0));
+		ArenaSetup.SpawnPnj2(new Location(Bukkit.getServer().getWorld("world"), -174.5, 109, -13.5, 180, 0));
 		ArenaSetup.SpawnCrates();
 		for(Player player : Bukkit.getOnlinePlayers()) {
 			ScoreBoard.setScoreBoard(player);
