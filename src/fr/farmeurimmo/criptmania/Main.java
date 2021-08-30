@@ -20,6 +20,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import fr.farmeurimmo.criptmania.WineLottery.WineGui;
 import fr.farmeurimmo.criptmania.WineLottery.WineSpawn;
+import fr.farmeurimmo.criptmania.arene.ArenaSetup;
 import fr.farmeurimmo.criptmania.atout.AtoutCmd;
 import fr.farmeurimmo.criptmania.atout.AtoutGui;
 import fr.farmeurimmo.criptmania.atout.BuyAtoutGui;
@@ -179,6 +180,8 @@ public class Main extends JavaPlugin implements Listener {
 		BossBar.CreateBossBar();
 		BuildCmd.Build.clear();
 		WineSpawn.SpawnPnj(new Location(Bukkit.getServer().getWorld("world"), -194.5, 109, -49.5, -90, 2));
+		ArenaSetup.SpawnPnj(new Location(Bukkit.getServer().getWorld("world"), -136.5, 107, -50.5, 90, 0));
+		ArenaSetup.SpawnCrates();
 		for(Player player : Bukkit.getOnlinePlayers()) {
 			ScoreBoard.setScoreBoard(player);
 		}
@@ -249,6 +252,8 @@ public class Main extends JavaPlugin implements Listener {
 	@Override
 	public void onDisable() {
 		WineSpawn.RemovePnj();
+		ArenaSetup.RemoveBoxeHolo();
+		ArenaSetup.RemovePnj();
 		CratesManager.RemoveBoxeHolo();
 		BossBar.RemoveBossBarForPlayers();
 		System.out.println("-----------------------------------------------------------------------------------------------------");
