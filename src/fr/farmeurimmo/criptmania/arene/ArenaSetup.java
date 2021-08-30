@@ -62,10 +62,6 @@ public class ArenaSetup implements Listener {
            skin.setSkinName("Tomashb");
            npca.spawn(loc);
        }
-    public static void RemovePnj() {
-    	npc.destroy();
-    	npca.destroy();
-    }
     public static void SpawnCrates() {
 		hologram.appendTextLine("§6Arène");
 		hologram.appendTextLine("§7Vous souhaitez vous régler un différent?");

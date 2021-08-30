@@ -74,6 +74,8 @@ import fr.farmeurimmo.criptmania.items.ItemLegCmd;
 import fr.farmeurimmo.criptmania.items.PermanantItem;
 import fr.farmeurimmo.criptmania.scoreboard.ScoreBoard;
 import fr.farmeurimmo.criptmania.utils.BossBar;
+import net.citizensnpcs.api.CitizensAPI;
+import net.citizensnpcs.api.npc.NPCRegistry;
 import net.luckperms.api.LuckPerms;
 
 public class Main extends JavaPlugin implements Listener {
@@ -253,11 +255,12 @@ public class Main extends JavaPlugin implements Listener {
 	}
 	@Override
 	public void onDisable() {
-		WineSpawn.RemovePnj();
 		ArenaSetup.RemoveBoxeHolo();
-		ArenaSetup.RemovePnj();
 		CratesManager.RemoveBoxeHolo();
 		BossBar.RemoveBossBarForPlayers();
+		for(NPCRegistry aa : CitizensAPI.getNPCRegistries()){
+			aa.despawnNPCs(null);
+		}
 		System.out.println("-----------------------------------------------------------------------------------------------------");
 		System.out.println("Plugin stoppé !");
 		System.out.println("-----------------------------------------------------------------------------------------------------");
