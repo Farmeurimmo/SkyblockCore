@@ -3,16 +3,21 @@ package fr.farmeurimmo.criptmania.arene;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 
 import com.gmail.filoghost.holographicdisplays.api.Hologram;
 import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
 
+import fr.farmeurimmo.criptmania.utils.SendActionBar;
 import net.citizensnpcs.api.CitizensAPI;
+import net.citizensnpcs.api.event.NPCRightClickEvent;
 import net.citizensnpcs.api.npc.NPC;
 import net.citizensnpcs.trait.SkinTrait;
 
-public class ArenaSetup {
+public class ArenaSetup implements Listener {
 	
 	static NPC npc = CitizensAPI.getNPCRegistry().createNPC(EntityType.PLAYER, "§6Arène");
 	
@@ -22,7 +27,19 @@ public class ArenaSetup {
 	
 	static Location holo1 = new Location(Bukkit.getServer().getWorld("world"), -182.5, 111, -65.5);
 	static Hologram hologram1 = HologramsAPI.createHologram(plugin, holo1);
-
+	
+	@EventHandler
+	public void OnInteractWithNPC(NPCRightClickEvent e) {
+		Player player = e.getClicker();
+		if(player.hasPermission("*")) {
+			if(e.getNPC().getName().equalsIgnoreCase("§6Arène")) {
+				
+		}
+		} else {
+			SendActionBar.SendActionBarMsg(player, "§cVous n'avez pas la permission !");
+		}
+	}
+	
     @SuppressWarnings("deprecation")
 	public static void SpawnPnj(Location loc){
         SkinTrait skin = npc.getTrait(SkinTrait.class);

@@ -211,6 +211,7 @@ public class Main extends JavaPlugin implements Listener {
 		getServer().getPluginManager().registerEvents(new AtoutGui(), this);
 		getServer().getPluginManager().registerEvents(new BuyAtoutGui(), this);
 		getServer().getPluginManager().registerEvents(new CratesManager(), this);
+		getServer().getPluginManager().registerEvents(new ArenaSetup(), this);
 		this.getCommand("spawn").setExecutor(new SpawnCmd());
 		this.getCommand("build").setExecutor(new BuildCmd());
 		this.getCommand("farm2win").setExecutor(new Farm2WinCmd());
