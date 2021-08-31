@@ -8,6 +8,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 import fr.farmeurimmo.criptmania.cmd.moderation.BuildCmd;
@@ -52,6 +53,15 @@ public class Interact implements Listener {
 	@EventHandler
 	public void BlockBreake(BlockBreakEvent e) {
 		if(e.getBlock().getLocation().getWorld().getName().equalsIgnoreCase("world")) {
+			if(!Build.contains(e.getPlayer())) {
+			e.setCancelled(true);
+			}
+		}
+	}
+	@EventHandler
+	public void playerlosefood(FoodLevelChangeEvent e) {
+		Player player = (Player) e.getEntity();
+		if(player.getWorld().getName().equalsIgnoreCase("world")) {
 			e.setCancelled(true);
 		}
 	}
