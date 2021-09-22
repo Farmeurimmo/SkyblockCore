@@ -17,7 +17,7 @@ public class WineSpawn {
         npc.setAlwaysUseNameHologram(false);
         npc.setProtected(true);
         npc.setFlyable(true);
-        skin.setSkinName("Platinewold");
+        skin.setSkinName("mairekl");
         npc.spawn(loc);
     }
 }

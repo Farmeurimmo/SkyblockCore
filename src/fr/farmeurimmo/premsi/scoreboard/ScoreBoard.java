@@ -27,9 +27,9 @@ public class ScoreBoard implements Listener {
 	@SuppressWarnings("deprecation")
 	public static void setScoreBoard(Player player){
 		Scoreboard board = Bukkit.getScoreboardManager().getNewScoreboard();
-		Objective obj = board.registerNewObjective("CriptMania", "dummy");
+		Objective obj = board.registerNewObjective("PremsiServ", "dummy");
 		obj.setDisplaySlot(DisplaySlot.SIDEBAR);
-		obj.setDisplayName("§6§lCriptMania");
+		obj.setDisplayName("§6§lPremsiServ");
 		
 		User user = LuckPermsProvider.get().getUserManager().getUser(player.getName());
 		if (user.getCachedData().getMetaData().getPrefix() != null) {
@@ -38,7 +38,7 @@ public class ScoreBoard implements Listener {
 		
 		
 		obj.getScore("§6§l" + player.getName()).setScore(14);
-		obj.getScore(" §eplay.criptmania.net").setScore(1);
+		obj.getScore(" §eplay.premsiserv.com").setScore(1);
 		obj.getScore("§a").setScore(15);
 		obj.getScore("§l").setScore(11);
 		obj.getScore("§o").setScore(4);
