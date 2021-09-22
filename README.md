@@ -1,4 +1,4 @@
-Ceci est le plugin core du skyblock de criptmania.
+Ceci est le plugin core du skyblock de premsiserv.
 
 Vous n'avez aucun droit sur la copie.
 Toute copie est donc interdite.
