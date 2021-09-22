@@ -143,14 +143,14 @@ public class Main extends JavaPlugin implements Listener {
 		System.out.println("Initialisation de l'api LuckPerms en cours...");
 		if (provider != null) {
 			api = provider.getProvider();
-			System.out.println("API initialisé !");
+			System.out.println("API initialisée !");
 			System.out.println("-----------------------------------------------------------------------------------------------------");
 		}
 		if (Bukkit.getPluginManager().getPlugin("Citizens") != null) {
 			System.out.println("Le plugin Citizens a été trouvé !");
 			System.out.println("-----------------------------------------------------------------------------------------------------");
 			System.out.println("Initialisation de l'api Citizens en cours...");
-			System.out.println("API initialisé !");
+			System.out.println("API initialisée !");
 			System.out.println("-----------------------------------------------------------------------------------------------------");
 		} else {
 			getLogger().warning("Le plugin Citizens est manquant.");
@@ -160,7 +160,7 @@ public class Main extends JavaPlugin implements Listener {
 			System.out.println("Le plugin TNE a été trouvé !");
 			System.out.println("-----------------------------------------------------------------------------------------------------");
 			System.out.println("Initialisation de l'api TNE en cours...");
-			System.out.println("API initialisé !");
+			System.out.println("API initialisée !");
 			System.out.println("-----------------------------------------------------------------------------------------------------");
 		} else {
 			getLogger().warning("Le plugin TheNewEconomy est manquant.");
@@ -170,7 +170,7 @@ public class Main extends JavaPlugin implements Listener {
 			System.out.println("Le plugin HolographicDisplays a été trouvé !");
 			System.out.println("-----------------------------------------------------------------------------------------------------");
 			System.out.println("Initialisation de l'api HolographicDisplays en cours...");
-			System.out.println("API initialisé !");
+			System.out.println("API initialisée !");
 			System.out.println("-----------------------------------------------------------------------------------------------------");
 		} else {
 			getLogger().warning("Le plugin HolographicDisplays est manquant.");
