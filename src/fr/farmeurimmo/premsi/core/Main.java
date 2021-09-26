@@ -18,6 +18,8 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.iridium.iridiumskyblock.api.IridiumSkyblockAPI;
+
 import fr.farmeurimmo.premsi.WineLottery.WineGui;
 import fr.farmeurimmo.premsi.WineLottery.WineSpawn;
 import fr.farmeurimmo.premsi.arene.ArenaSetup;
@@ -51,7 +53,6 @@ import fr.farmeurimmo.premsi.cmd.moderation.GmCmd;
 import fr.farmeurimmo.premsi.cmd.moderation.GmLCmd;
 import fr.farmeurimmo.premsi.cmd.moderation.InvseeCmd;
 import fr.farmeurimmo.premsi.cmd.moderation.RedstoneToggleCmd;
-import fr.farmeurimmo.premsi.cmd.moderation.SSCmd;
 import fr.farmeurimmo.premsi.crates.CratesManager;
 import fr.farmeurimmo.premsi.crates.KeyCmd;
 import fr.farmeurimmo.premsi.evenement.ChatReaction;
@@ -62,13 +63,11 @@ import fr.farmeurimmo.premsi.events.JoinLeave;
 import fr.farmeurimmo.premsi.events.RedstoneCheck;
 import fr.farmeurimmo.premsi.events.SwitchWorld;
 import fr.farmeurimmo.premsi.events.Tabulation;
-import fr.farmeurimmo.premsi.events.Tchat;
 import fr.farmeurimmo.premsi.featherfly.DailyFlyCmd;
 import fr.farmeurimmo.premsi.featherfly.FeatherFlyCmd;
 import fr.farmeurimmo.premsi.featherfly.FeatherFlyInteract;
 import fr.farmeurimmo.premsi.gui.AfkMineCaptchaGui;
 import fr.farmeurimmo.premsi.gui.Farm2WinGui;
-import fr.farmeurimmo.premsi.gui.SanctionSetGuiManager;
 import fr.farmeurimmo.premsi.gui.WarpGui;
 import fr.farmeurimmo.premsi.items.ItemLegCmd;
 import fr.farmeurimmo.premsi.items.PermanantItem;
@@ -176,6 +175,9 @@ public class Main extends JavaPlugin implements Listener {
 			getLogger().warning("Le plugin HolographicDisplays est manquant.");
 			Bukkit.getPluginManager().disablePlugin(this);
 		}
+		if(IridiumSkyblockAPI.getInstance() == null) {
+			Bukkit.getPluginManager().disablePlugin(this);
+		}
 		System.out.println("Initialisation des class et des méthodes en cours...");
 		setup();
 		Main.spawncooldown.clear();
@@ -194,7 +196,6 @@ public class Main extends JavaPlugin implements Listener {
 	    CratesManager.SpawnCrates();
 	    ScoreBoard.updateScoreBoard();
 		getServer().getPluginManager().registerEvents(new JoinLeave(), this);
-		getServer().getPluginManager().registerEvents(new Tchat(), this);
 		getServer().getPluginManager().registerEvents(new ScoreBoard(), this);
 		getServer().getPluginManager().registerEvents(new Interact(), this);
 		getServer().getPluginManager().registerEvents(new PermanantItem(), this);
@@ -208,7 +209,6 @@ public class Main extends JavaPlugin implements Listener {
 		getServer().getPluginManager().registerEvents(new AfkMineCaptchaGui(), this);
 		getServer().getPluginManager().registerEvents(new AfkMineBreakCheck(), this);
 		getServer().getPluginManager().registerEvents(new ChatReaction(), this);
-		getServer().getPluginManager().registerEvents(new SanctionSetGuiManager(), this);
 		getServer().getPluginManager().registerEvents(new RedstoneCheck(), this);
 		getServer().getPluginManager().registerEvents(new ChallengesGuis(), this);
 		getServer().getPluginManager().registerEvents(new ChallengesBlockBreak(), this);
@@ -237,7 +237,6 @@ public class Main extends JavaPlugin implements Listener {
 		this.getCommand("gmsp").setExecutor(new GmLCmd());
 		this.getCommand("gma").setExecutor(new GmLCmd());
 		this.getCommand("afkmine").setExecutor(new AntiAfkMineCmd());
-		this.getCommand("sanctionset").setExecutor(new SSCmd());
 		this.getCommand("checkfly").setExecutor(new CheckFlyCmd());
 		this.getCommand("invsee").setExecutor(new InvseeCmd());
 		this.getCommand("redstone").setExecutor(new RedstoneToggleCmd());
