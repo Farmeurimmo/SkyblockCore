@@ -2,7 +2,7 @@ name: SkyblockCore
 version: 1.0
 author: Farmeurimmo
 main: fr.farmeurimmo.premsi.core.Main
-depend: [Citizens, TheNewEconomy, IridiumSkyblock, HolographicDisplays]
+depend: [Citizens, TheNewEconomy, IridiumSkyblock, HolographicDisplays, Core]
 api-version: 1.16
 commands:
   spawn:

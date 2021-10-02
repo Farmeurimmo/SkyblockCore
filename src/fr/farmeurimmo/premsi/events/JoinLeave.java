@@ -15,6 +15,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import com.iridium.iridiumskyblock.api.IridiumSkyblockAPI;
+import com.premsiserv.core.paper.PaperAPI;
 
 import fr.farmeurimmo.premsi.core.Main;
 import fr.farmeurimmo.premsi.featherfly.CountdownFly;
@@ -58,6 +59,7 @@ public class JoinLeave implements Listener {
 		Grade = user.getCachedData().getMetaData().getPrefix();
 		}
 		String JoinMessage = null;
+		if(!PaperAPI.getInstance().GetVanishedList().contains(player)) {
 		if(!IridiumSkyblockAPI.getInstance().getUser(player).getIsland().isPresent()) {
 			JoinMessage = "§7[§a+§7] " + Grade.replace("&", "§").replace("&", "§") + " " + player.getName();
 			}
@@ -66,6 +68,7 @@ public class JoinLeave implements Listener {
 				classement = IridiumSkyblockAPI.getInstance().getUser(player).getIsland().get().getRank();
 				JoinMessage = "§7[§a+§7] [#" + classement + "] " + Grade.replace("&", "§").replace("&", "§") + " " + player.getName();
 			}
+		}
 			event.setJoinMessage(JoinMessage);
 			
 			if(Main.instance1.getData().getString("Joueurs."+player.getName()+".Challenges.Daily.1.Active") == null) {
@@ -147,6 +150,7 @@ public class JoinLeave implements Listener {
 			Grade = user.getCachedData().getMetaData().getPrefix();
 			}
 		String LeaveMessage = null;
+		if(!PaperAPI.getInstance().GetVanishedList().contains(player)) {
 		if(!IridiumSkyblockAPI.getInstance().getUser(player).getIsland().isPresent()) {
 		LeaveMessage = "§7[§c-§7] " + Grade.replace("&", "§").replace("&", "§") + " " + player.getName();
 		}
@@ -154,6 +158,7 @@ public class JoinLeave implements Listener {
 			int classement = 0;
 			classement = IridiumSkyblockAPI.getInstance().getUser(player).getIsland().get().getRank();
 			LeaveMessage = "§7[§c-§7] [#" + classement + "] " + Grade.replace("&", "§").replace("&", "§") + " " + player.getName();
+		}
 		}
 		event.setQuitMessage(LeaveMessage);
 	}
