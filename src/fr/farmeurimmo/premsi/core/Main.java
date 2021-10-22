@@ -22,7 +22,6 @@ import com.iridium.iridiumskyblock.api.IridiumSkyblockAPI;
 
 import fr.farmeurimmo.premsi.WineLottery.WineGui;
 import fr.farmeurimmo.premsi.WineLottery.WineSpawn;
-import fr.farmeurimmo.premsi.arene.ArenaSetup;
 import fr.farmeurimmo.premsi.atout.AtoutCmd;
 import fr.farmeurimmo.premsi.atout.AtoutGui;
 import fr.farmeurimmo.premsi.atout.BuyAtoutGui;
@@ -69,6 +68,7 @@ import fr.farmeurimmo.premsi.featherfly.FeatherFlyInteract;
 import fr.farmeurimmo.premsi.gui.AfkMineCaptchaGui;
 import fr.farmeurimmo.premsi.gui.Farm2WinGui;
 import fr.farmeurimmo.premsi.gui.WarpGui;
+import fr.farmeurimmo.premsi.holos.HolosSetup;
 import fr.farmeurimmo.premsi.items.ItemLegCmd;
 import fr.farmeurimmo.premsi.items.PermanantItem;
 import fr.farmeurimmo.premsi.scoreboard.ScoreBoard;
@@ -183,10 +183,9 @@ public class Main extends JavaPlugin implements Listener {
 		Main.spawncooldown.clear();
 		BossBar.CreateBossBar();
 		BuildCmd.Build.clear();
-		WineSpawn.SpawnPnj(new Location(Bukkit.getServer().getWorld("world"), -194.5, 109, -49.5, -90, 2));
-		ArenaSetup.SpawnPnj(new Location(Bukkit.getServer().getWorld("world"), -136.5, 107, -50.5, 90, 0));
-		ArenaSetup.SpawnPnj2(new Location(Bukkit.getServer().getWorld("world"), -174.5, 109, -13.5, 180, 0));
-		ArenaSetup.SpawnCrates();
+		WineSpawn.SpawnPnj(new Location(Bukkit.getServer().getWorld("world"), -212.5, 111.5, -29.5, -90, 0));
+		HolosSetup.SpawnPnj2(new Location(Bukkit.getServer().getWorld("world"), -174.5, 109, -13.5, 180, 0));
+		HolosSetup.SpawnCrates();
 		for(Player player : Bukkit.getOnlinePlayers()) {
 			ScoreBoard.setScoreBoard(player);
 		}
@@ -215,7 +214,7 @@ public class Main extends JavaPlugin implements Listener {
 		getServer().getPluginManager().registerEvents(new AtoutGui(), this);
 		getServer().getPluginManager().registerEvents(new BuyAtoutGui(), this);
 		getServer().getPluginManager().registerEvents(new CratesManager(), this);
-		getServer().getPluginManager().registerEvents(new ArenaSetup(), this);
+		getServer().getPluginManager().registerEvents(new HolosSetup(), this);
 		this.getCommand("spawn").setExecutor(new SpawnCmd());
 		this.getCommand("build").setExecutor(new BuildCmd());
 		this.getCommand("farm2win").setExecutor(new Farm2WinCmd());
@@ -255,7 +254,7 @@ public class Main extends JavaPlugin implements Listener {
 	}
 	@Override
 	public void onDisable() {
-		ArenaSetup.RemoveBoxeHolo();
+		HolosSetup.RemoveBoxeHolo();
 		CratesManager.RemoveBoxeHolo();
 		BossBar.RemoveBossBarForPlayers();
 		for(NPCRegistry aa : CitizensAPI.getNPCRegistries()){

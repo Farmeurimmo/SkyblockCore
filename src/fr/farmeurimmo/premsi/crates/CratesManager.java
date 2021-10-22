@@ -24,9 +24,9 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 
 public class CratesManager implements Listener {
 	
-	public static final Location BoxLegendaire = new Location(Bukkit.getServer().getWorld("world"), -201, 110, -68);
-	public static final Location BoxChallenge = new Location(Bukkit.getServer().getWorld("world"), -200, 110, -71);
-	public static final Location BoxVote = new Location(Bukkit.getServer().getWorld("world"), -199, 110, -74);
+	public static final Location BoxLegendaire = new Location(Bukkit.getServer().getWorld("world"), -208, 112, -45);
+	public static final Location BoxChallenge = new Location(Bukkit.getServer().getWorld("world"), -202, 112, -51);
+	public static final Location BoxVote = new Location(Bukkit.getServer().getWorld("world"), -205, 112, -48);
 	
 	static Location holo = new Location(Bukkit.getServer().getWorld("world"), BoxLegendaire.getX()+0.5,
 			BoxLegendaire.getY() + 2.3, BoxLegendaire.getZ()+0.5);
@@ -204,6 +204,7 @@ public class CratesManager implements Listener {
 		Bukkit.getWorld("world").getBlockAt(BoxChallenge).setType(Material.TRAPPED_CHEST);
 		
 		Bukkit.getWorld("world").getBlockAt(BoxVote).setType(Material.TRAPPED_CHEST);
+
 		
 		hologramc.appendTextLine("§6Boxe challenge");
 		hologramc.appendTextLine("§eObtenable dans le /c");

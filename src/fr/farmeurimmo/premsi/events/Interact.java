@@ -12,6 +12,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.inventory.ItemStack;
 
 import fr.farmeurimmo.premsi.cmd.moderation.BuildCmd;
@@ -79,6 +80,12 @@ public class Interact implements Listener {
 		if(aaa.getType() == Material.NETHER_STAR && aaa.getItemMeta().getDisplayName().equalsIgnoreCase(PermanantItem.NameMenuItem)) {
 			e.setCancelled(true);
 		}
+		}
+	}
+	@EventHandler
+	public void Bucketevent(PlayerItemConsumeEvent e) {
+		if(e.getPlayer().getWorld().getName().equalsIgnoreCase("world")) {
+			e.setCancelled(true);
 		}
 	}
 	@EventHandler
