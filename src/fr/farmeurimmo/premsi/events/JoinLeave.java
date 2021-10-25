@@ -59,7 +59,7 @@ public class JoinLeave implements Listener {
 		Grade = user.getCachedData().getMetaData().getPrefix();
 		}
 		String JoinMessage = null;
-		if(!PaperAPI.getInstance().GetVanishedList().contains(player)) {
+		if(!PaperAPI.getInstance().GetVanishedList().contains(player.getName())) {
 		if(!IridiumSkyblockAPI.getInstance().getUser(player).getIsland().isPresent()) {
 			JoinMessage = "§7[§a+§7] " + Grade.replace("&", "§").replace("&", "§") + " " + player.getName();
 			}
@@ -150,7 +150,7 @@ public class JoinLeave implements Listener {
 			Grade = user.getCachedData().getMetaData().getPrefix();
 			}
 		String LeaveMessage = null;
-		if(!PaperAPI.getInstance().GetVanishedList().contains(player)) {
+		if(!PaperAPI.getInstance().GetVanishedList().contains(player.getName())) {
 		if(!IridiumSkyblockAPI.getInstance().getUser(player).getIsland().isPresent()) {
 		LeaveMessage = "§7[§c-§7] " + Grade.replace("&", "§").replace("&", "§") + " " + player.getName();
 		}

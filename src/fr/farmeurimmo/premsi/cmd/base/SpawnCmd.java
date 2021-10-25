@@ -19,7 +19,7 @@ import fr.farmeurimmo.premsi.utils.TeleportPlayer;
 
 public class SpawnCmd implements CommandExecutor, TabCompleter {
 
-	public static final Location Spawn = new Location(Bukkit.getServer().getWorld("world"), -186.5, 110, -59.5, 0, 0);
+	public static final Location Spawn = new Location(Bukkit.getServer().getWorld("world"), -186.5, 111, -59.5, 0, 0);
 	
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {

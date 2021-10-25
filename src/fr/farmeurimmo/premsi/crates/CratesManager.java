@@ -29,16 +29,16 @@ public class CratesManager implements Listener {
 	public static final Location BoxVote = new Location(Bukkit.getServer().getWorld("world"), -205, 112, -48);
 	
 	static Location holo = new Location(Bukkit.getServer().getWorld("world"), BoxLegendaire.getX()+0.5,
-			BoxLegendaire.getY() + 2.3, BoxLegendaire.getZ()+0.5);
+			BoxLegendaire.getY() + 2.5, BoxLegendaire.getZ()+0.5);
 	static Plugin plugin = Bukkit.getPluginManager().getPlugin("SkyblockCore");
 	static Hologram hologram = HologramsAPI.createHologram(plugin, holo);
 	
 	static Location holoc = new Location(Bukkit.getServer().getWorld("world"), BoxChallenge.getX()+0.5,
-			BoxChallenge.getY() + 2, BoxChallenge.getZ()+0.5);
+			BoxChallenge.getY() + 2.5, BoxChallenge.getZ()+0.5);
 	static Hologram hologramc = HologramsAPI.createHologram(plugin, holoc);
 	
 	static Location holod = new Location(Bukkit.getServer().getWorld("world"), BoxVote.getX()+0.5,
-			BoxVote.getY() + 2, BoxVote.getZ()+0.5);
+			BoxVote.getY() + 2.5, BoxVote.getZ()+0.5);
 	static Hologram hologramd = HologramsAPI.createHologram(plugin, holod);
 	
 	@SuppressWarnings("deprecation")
@@ -57,8 +57,7 @@ public class CratesManager implements Listener {
 				}
 				if(e.getAction() == Action.RIGHT_CLICK_BLOCK) {
 					ItemStack bb = player.getItemInHand();
-					if(bb.getType() == Material.TRIPWIRE_HOOK) {
-						if(bb.getItemMeta().getDisplayName().equalsIgnoreCase("§6§lClée légendaire") &&
+						if(bb.getType() == Material.TRIPWIRE_HOOK && bb.getItemMeta().getDisplayName().equalsIgnoreCase("§6§lClée légendaire") &&
 								bb.getItemMeta().getItemFlags().contains(ItemFlag.HIDE_UNBREAKABLE)
 								&& CheckPlayerInventory.CheckPlayerInventoryForSlot(player) == true) {
 							String loot = LegCrateManager.LegCrateLoot(player);
@@ -86,16 +85,7 @@ public class CratesManager implements Listener {
 								player.sendMessage("§6§lCrates §8» §fVous avez reçu un grade que vous possédez "
 										+ "déjà dans la boxe légendaire, la clée ne vous a donc pas été enlevé !");
 								return;
-							}
-						} else {
-							player.sendMessage("§6§lCrates §8» §fVous devez avoir un slot libre dans votre inventaire ou une clée légendaire "
-									+ "pour ouvrir cette boxe !");
-							return;
 						}
-					} else {
-						player.sendMessage("§6§lCrates §8» §fVous devez avoir une clée légendaire dans votre main "
-								+ "pour ouvrir cette boxe !");
-						return;
 					}
 				}
 			}
@@ -108,8 +98,7 @@ public class CratesManager implements Listener {
 				}
 				if(e.getAction() == Action.RIGHT_CLICK_BLOCK) {
 					ItemStack bb = player.getItemInHand();
-					if(bb.getType() == Material.TRIPWIRE_HOOK) {
-						if(bb.getItemMeta().getDisplayName().equalsIgnoreCase("§6§lClée challenge") &&
+						if(bb.getType() == Material.TRIPWIRE_HOOK && bb.getItemMeta().getDisplayName().equalsIgnoreCase("§6§lClée challenge") &&
 								bb.getItemMeta().getItemFlags().contains(ItemFlag.HIDE_UNBREAKABLE)
 								&& CheckPlayerInventory.CheckPlayerInventoryForSlot(player) == true) {
 							String loot = ChallengeCrateManager.ChallengeCrateLoot(player);
@@ -131,18 +120,9 @@ public class CratesManager implements Listener {
 								} else {
 									player.sendMessage("§6§lCrates §8» §fErreur lors de l'ouverture de la "
 											+ "boxe challenge, la clée ne vous a donc pas été enlevé !");
-								}
 							}
-						} else {
-							player.sendMessage("§6§lCrates §8» §fVous devez avoir un slot libre dans votre inventaire ou une clée challenge "
-									+ "pour ouvrir cette boxe !");
-							return;
 						}
-					} else {
-						player.sendMessage("§6§lCrates §8» §fVous devez avoir une clée challenge dans votre main "
-								+ "pour ouvrir cette boxe !");
-						return;
-					}
+					} 
 				}
 			}
 		}
@@ -154,8 +134,7 @@ public class CratesManager implements Listener {
 				}
 				if(e.getAction() == Action.RIGHT_CLICK_BLOCK) {
 					ItemStack bb = player.getItemInHand();
-					if(bb.getType() == Material.TRIPWIRE_HOOK) {
-						if(bb.getItemMeta().getDisplayName().equalsIgnoreCase("§6§lClée vote") &&
+						if(bb.getType() == Material.TRIPWIRE_HOOK && bb.getItemMeta().getDisplayName().equalsIgnoreCase("§6§lClée vote") &&
 								bb.getItemMeta().getItemFlags().contains(ItemFlag.HIDE_UNBREAKABLE)
 								&& CheckPlayerInventory.CheckPlayerInventoryForSlot(player) == true) {
 							String loot = "error";
@@ -177,17 +156,8 @@ public class CratesManager implements Listener {
 								} else {
 									player.sendMessage("§6§lCrates §8» §fErreur lors de l'ouverture de la "
 											+ "boxe vote, la clée ne vous a donc pas été enlevé !");
-								}
 							}
-						} else {
-							player.sendMessage("§6§lCrates §8» §fVous devez avoir un slot libre dans votre inventaire ou une clée vote "
-									+ "pour ouvrir cette boxe !");
-							return;
 						}
-					} else {
-						player.sendMessage("§6§lCrates §8» §fVous devez avoir une clée vote dans votre main "
-								+ "pour ouvrir cette boxe !");
-						return;
 					}
 				}
 			}
@@ -219,17 +189,19 @@ public class CratesManager implements Listener {
 		
 		hologramc.appendTextLine("§6Boxe challenge");
 		hologramc.appendTextLine("§eObtenable dans le /c");
+		hologramc.appendTextLine("");
 		hologramc.appendTextLine("§7Clic droit ouvrir");
 		hologramc.appendTextLine("§7Clic gauche prévisualiser");
 		
 		hologramd.appendTextLine("§6Boxe vote");
 		hologramd.appendTextLine("§eObtenable avec le /vote");
+		hologramd.appendTextLine("");
 		hologramd.appendTextLine("§7Clic droit ouvrir");
 		hologramd.appendTextLine("§7Clic gauche prévisualiser");
 		
 		hologram.appendTextLine("§6Boxe légendaire");
-		hologram.appendTextLine("§eObtenable sur le site");
-		hologram.appendTextLine("§eou dans les boxes");
+		hologram.appendTextLine("§eObtenable dans les boxes");
+		hologram.appendTextLine("");
 		hologram.appendTextLine("§7Clic droit ouvrir");
 		hologram.appendTextLine("§7Clic gauche prévisualiser");
 	}

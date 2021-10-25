@@ -22,7 +22,7 @@ public class HolosSetup implements Listener {
 	
 	static Plugin plugin = Bukkit.getPluginManager().getPlugin("SkyblockCore");
 	
-	static Location holo1 = new Location(Bukkit.getServer().getWorld("world"), -182.5, 111, -65.5);
+	static Location holo1 = new Location(Bukkit.getServer().getWorld("world"), -175.5, 114, -55.5);
 	static Hologram hologram1 = HologramsAPI.createHologram(plugin, holo1);
 	
 	@EventHandler
@@ -39,9 +39,12 @@ public class HolosSetup implements Listener {
            npca.setAlwaysUseNameHologram(false);
            npca.setProtected(true);
            npca.setFlyable(true);
-           skin.setSkinName("Tomashb");
+           skin.setSkinName("Farmeurimmo");
            npca.spawn(loc);
        }
+    public static void RemoveNpc() {
+    	npca.destroy();
+    }
     public static void SpawnCrates() {
 		
 		hologram1.appendTextLine("§6Zone Enchantmenents");

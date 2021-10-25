@@ -73,8 +73,6 @@ import fr.farmeurimmo.premsi.items.ItemLegCmd;
 import fr.farmeurimmo.premsi.items.PermanantItem;
 import fr.farmeurimmo.premsi.scoreboard.ScoreBoard;
 import fr.farmeurimmo.premsi.utils.BossBar;
-import net.citizensnpcs.api.CitizensAPI;
-import net.citizensnpcs.api.npc.NPCRegistry;
 import net.luckperms.api.LuckPerms;
 
 public class Main extends JavaPlugin implements Listener {
@@ -257,9 +255,8 @@ public class Main extends JavaPlugin implements Listener {
 		HolosSetup.RemoveBoxeHolo();
 		CratesManager.RemoveBoxeHolo();
 		BossBar.RemoveBossBarForPlayers();
-		for(NPCRegistry aa : CitizensAPI.getNPCRegistries()){
-			aa.despawnNPCs(null);
-		}
+		HolosSetup.RemoveNpc();
+		WineSpawn.DestroyPnj();
 		System.out.println("-----------------------------------------------------------------------------------------------------");
 		System.out.println("Plugin stoppé !");
 		System.out.println("-----------------------------------------------------------------------------------------------------");

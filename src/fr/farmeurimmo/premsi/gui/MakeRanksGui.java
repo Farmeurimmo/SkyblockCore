@@ -33,86 +33,6 @@ public class MakeRanksGui {
 		customb.setLore(Arrays.asList("§7Grade: " + Grade, "§7Argent: " + ecoAPI.getAccount(player.getName()).getHoldings().intValue()));
 		custom2.setItemMeta(customb);
 		
-		if(!player.hasPermission("vip")) {
-		ItemStack custom3 = new ItemStack(Material.GOLD_BLOCK, 1);
-		ItemMeta customc = custom3.getItemMeta();
-		customc.setDisplayName("§eV.I.P");
-		customc.setLore(Arrays.asList("§7Uniquement disponible à ", "§7l'achat sur le site du serveur"));
-		custom3.setItemMeta(customc);
-		invboutiquefarm2win.setItem(34, custom3);
-		} else {
-			ItemStack custom3 = new ItemStack(Material.BEDROCK, 1);
-			ItemMeta customc = custom3.getItemMeta();
-			customc.setDisplayName("§eV.I.P §c(Déjà possédé)");
-			customc.setLore(Arrays.asList("§7Uniquement disponible à ", "§7l'achat sur le site du serveur"));
-			custom3.setItemMeta(customc);
-			invboutiquefarm2win.setItem(34, custom3);
-		}
-		
-		if(!player.hasPermission("premium")) {
-		ItemStack custom4 = new ItemStack(Material.DIAMOND_BLOCK, 1);
-		ItemMeta customd = custom4.getItemMeta();
-		customd.setDisplayName("§aPremium");
-		customd.setLore(Arrays.asList("§7Uniquement disponible à ", "§7l'achat sur le site du serveur"));
-		custom4.setItemMeta(customd);
-		invboutiquefarm2win.setItem(25, custom4);
-		} else {
-			ItemStack custom4 = new ItemStack(Material.BEDROCK, 1);
-			ItemMeta customd = custom4.getItemMeta();
-			customd.setDisplayName("§aPremium §c(Déjà possédé)");
-			customd.setLore(Arrays.asList("§7Uniquement disponible à ", "§7l'achat sur le site du serveur"));
-			custom4.setItemMeta(customd);
-			invboutiquefarm2win.setItem(25, custom4);
-		}
-		
-		if(!player.hasPermission("elite")){
-		ItemStack custom5 = new ItemStack(Material.EMERALD_BLOCK, 1);
-		ItemMeta custome = custom5.getItemMeta();
-		custome.setDisplayName("§cElite");
-		custome.setLore(Arrays.asList("§7Uniquement disponible à ", "§7l'achat sur le site du serveur"));
-		custom5.setItemMeta(custome);
-		invboutiquefarm2win.setItem(16, custom5);
-		} else {
-			ItemStack custom5 = new ItemStack(Material.BEDROCK, 1);
-			ItemMeta custome = custom5.getItemMeta();
-			custome.setDisplayName("§cElite §c(Déjà possédé)");
-			custome.setLore(Arrays.asList("§7Uniquement disponible à ", "§7l'achat sur le site du serveur"));
-			custom5.setItemMeta(custome);
-			invboutiquefarm2win.setItem(16, custom5);
-		}
-		
-		if(!player.hasPermission("mania")){
-		ItemStack custom6 = new ItemStack(Material.DIAMOND_SWORD, 1);
-		ItemMeta customf = custom6.getItemMeta();
-		customf.setDisplayName("§dMania");
-		customf.setLore(Arrays.asList("§7Uniquement disponible à ", "§7l'achat sur le lobby"));
-		custom6.setItemMeta(customf);
-		invboutiquefarm2win.setItem(13, custom6);
-		} else {
-			ItemStack custom6 = new ItemStack(Material.BEDROCK, 1);
-			ItemMeta customf = custom6.getItemMeta();
-			customf.setDisplayName("§dMania §c(Déjà possédé)");
-			customf.setLore(Arrays.asList("§7Uniquement disponible à ", "§7l'achat sur le lobby"));
-			custom6.setItemMeta(customf);
-			invboutiquefarm2win.setItem(13, custom6);
-		}
-		
-		if(!player.hasPermission("rusher")){
-		ItemStack custom7 = new ItemStack(Material.IRON_SWORD, 1);
-		ItemMeta customg = custom7.getItemMeta();
-		customg.setDisplayName("§bRusher");
-		customg.setLore(Arrays.asList("§7Uniquement disponible à ", "§7l'achat sur le lobby"));
-		custom7.setItemMeta(customg);
-		invboutiquefarm2win.setItem(22, custom7);
-		} else {
-			ItemStack custom7 = new ItemStack(Material.BEDROCK, 1);
-			ItemMeta customg = custom7.getItemMeta();
-			customg.setDisplayName("§bRusher §c(Déjà possédé)");
-			customg.setLore(Arrays.asList("§7Uniquement disponible à ", "§7l'achat sur le lobby"));
-			custom7.setItemMeta(customg);
-			invboutiquefarm2win.setItem(22, custom7);
-		}
-		
 		ItemStack custom8 = new ItemStack(Material.ARROW, 1);
 		ItemMeta customh = custom8.getItemMeta();
 		customh.setDisplayName("§6Retour §8| §7(clic gauche)");
@@ -125,7 +45,7 @@ public class MakeRanksGui {
 		customi.setLore(Arrays.asList("§8» §7/fly permanant","§8» §7/sellall","§8» §7/is rename","§8» §7/enchantement","§8» §7/hat",
 				"§8» §7/craft","§8» §7/feed","§7","§6Prix: " + Farm2WinGui.zeusprix + "$"));
 		custom10.setItemMeta(customi);
-		invboutiquefarm2win.setItem(10, custom10);
+		invboutiquefarm2win.setItem(34, custom10);
 		} else {
 			ItemStack custom10 = new ItemStack(Material.BEDROCK, 1);
 			ItemMeta customi = custom10.getItemMeta();
@@ -133,7 +53,7 @@ public class MakeRanksGui {
 			customi.setLore(Arrays.asList("§8» §7/fly permanant","§8» §7/sellall","§8» §7/is rename","§8» §7/enchantement","§8» §7/hat",
 					"§8» §7/craft","§8» §7/feed","§7","§6Prix: " + Farm2WinGui.zeusprix + "$"));
 			custom10.setItemMeta(customi);
-			invboutiquefarm2win.setItem(10, custom10);
+			invboutiquefarm2win.setItem(34, custom10);
 		}
 		
 		if(!player.hasPermission("dieu")){
@@ -143,7 +63,7 @@ public class MakeRanksGui {
 		customj.setLore(Arrays.asList("§8» §7180 minutes de fly journalier /dailyfly","§8» §7/is rename","§8» §7/enchantement","§8» §7/hat",
 				"§8» §7/craft","§8» §7/feed","§7","§6Prix: " + Farm2WinGui.dieuprix + "$"));
 		custom11.setItemMeta(customj);
-		invboutiquefarm2win.setItem(19, custom11);
+		invboutiquefarm2win.setItem(31, custom11);
 		} else {
 			ItemStack custom11 = new ItemStack(Material.BEDROCK, 1);
 			ItemMeta customj = custom11.getItemMeta();
@@ -151,7 +71,7 @@ public class MakeRanksGui {
 			customj.setLore(Arrays.asList("§8» §7180 minutes de fly journalier /dailyfly","§8» §7/is rename","§8» §7/enchantement","§8» §7/hat",
 					"§8» §7/craft","§8» §7/feed","§7","§6Prix: " + Farm2WinGui.dieuprix + "$"));
 			custom11.setItemMeta(customj);
-			invboutiquefarm2win.setItem(19, custom11);
+			invboutiquefarm2win.setItem(31, custom11);
 		}
 		
 		if(!player.hasPermission("legende")){
@@ -173,7 +93,7 @@ public class MakeRanksGui {
 		}
 		
 		invboutiquefarm2win.setItem(44, custom8);
-		invboutiquefarm2win.setItem(40, custom2);
+		invboutiquefarm2win.setItem(22, custom2);
 		
 		ItemStack custom9 = new ItemStack(Material.WHITE_STAINED_GLASS_PANE, 1);
 		ItemMeta meta9 = custom9.getItemMeta();

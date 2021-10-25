@@ -20,4 +20,7 @@ public class WineSpawn {
         skin.setSkinName("mairekl");
         npc.spawn(loc);
     }
+    public static void DestroyPnj() {
+    	npc.destroy();
+    }
 }
