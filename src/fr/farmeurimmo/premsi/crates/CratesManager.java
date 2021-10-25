@@ -49,9 +49,10 @@ public class CratesManager implements Listener {
 		if(aaa == null) {
 			return;
 		}
-		if(aaa.getType() == Material.TRAPPED_CHEST && aaa.getLocation().getWorld().getName().equalsIgnoreCase("world")) {
+		if(aaa.getType() == Material.END_ROD && aaa.getLocation().getWorld().getName().equalsIgnoreCase("world")) {
 			if(aaa.getLocation().getX() == BoxLegendaire.getX() && aaa.getLocation().getZ() == BoxLegendaire.getZ()){
 				if(e.getAction() == Action.LEFT_CLICK_BLOCK) {
+					e.setCancelled(true);
 					LegCrateManager.LegCratePreview(player);
 				}
 				if(e.getAction() == Action.RIGHT_CLICK_BLOCK) {
@@ -79,26 +80,31 @@ public class CratesManager implements Listener {
 								} else {
 									player.sendMessage("§6§lCrates §8» §fErreur lors de l'ouverture de la "
 											+ "boxe légendaire, la clée ne vous a donc pas été enlevé !");
+									return;
 								}
 							} else {
 								player.sendMessage("§6§lCrates §8» §fVous avez reçu un grade que vous possédez "
 										+ "déjà dans la boxe légendaire, la clée ne vous a donc pas été enlevé !");
+								return;
 							}
 						} else {
-							player.sendMessage("§6§lCrates §8» §fVous devez avoir un slot libre dans votre inventaire "
+							player.sendMessage("§6§lCrates §8» §fVous devez avoir un slot libre dans votre inventaire ou une clée légendaire "
 									+ "pour ouvrir cette boxe !");
+							return;
 						}
-					} else if(bb.getType() != Material.TRIPWIRE_HOOK){
+					} else {
 						player.sendMessage("§6§lCrates §8» §fVous devez avoir une clée légendaire dans votre main "
 								+ "pour ouvrir cette boxe !");
+						return;
 					}
 				}
 			}
 		}
-		if(aaa.getType() == Material.TRAPPED_CHEST && aaa.getLocation().getWorld().getName().equalsIgnoreCase("world")) {
+		if(aaa.getType() == Material.END_ROD && aaa.getLocation().getWorld().getName().equalsIgnoreCase("world")) {
 			if(aaa.getLocation().getX() == BoxChallenge.getX() && aaa.getLocation().getZ() == BoxChallenge.getZ()){
 				if(e.getAction() == Action.LEFT_CLICK_BLOCK) {
 					ChallengeCrateManager.ChallengeCratePreview(player);
+					e.setCancelled(true);
 				}
 				if(e.getAction() == Action.RIGHT_CLICK_BLOCK) {
 					ItemStack bb = player.getItemInHand();
@@ -128,20 +134,23 @@ public class CratesManager implements Listener {
 								}
 							}
 						} else {
-							player.sendMessage("§6§lCrates §8» §fVous devez avoir un slot libre dans votre inventaire "
+							player.sendMessage("§6§lCrates §8» §fVous devez avoir un slot libre dans votre inventaire ou une clée challenge "
 									+ "pour ouvrir cette boxe !");
+							return;
 						}
-					} else if(bb.getType() != Material.TRIPWIRE_HOOK){
+					} else {
 						player.sendMessage("§6§lCrates §8» §fVous devez avoir une clée challenge dans votre main "
 								+ "pour ouvrir cette boxe !");
+						return;
 					}
 				}
 			}
 		}
-		if(aaa.getType() == Material.TRAPPED_CHEST && aaa.getLocation().getWorld().getName().equalsIgnoreCase("world")) {
+		if(aaa.getType() == Material.END_ROD && aaa.getLocation().getWorld().getName().equalsIgnoreCase("world")) {
 			if(aaa.getLocation().getX() == BoxVote.getX() && aaa.getLocation().getZ() == BoxVote.getZ()){
 				if(e.getAction() == Action.LEFT_CLICK_BLOCK) {
 					VoteCrateManager.VoteCratePreview(player);
+					e.setCancelled(true);
 				}
 				if(e.getAction() == Action.RIGHT_CLICK_BLOCK) {
 					ItemStack bb = player.getItemInHand();
@@ -171,12 +180,14 @@ public class CratesManager implements Listener {
 								}
 							}
 						} else {
-							player.sendMessage("§6§lCrates §8» §fVous devez avoir un slot libre dans votre inventaire "
+							player.sendMessage("§6§lCrates §8» §fVous devez avoir un slot libre dans votre inventaire ou une clée vote "
 									+ "pour ouvrir cette boxe !");
+							return;
 						}
-					} else if(bb.getType() != Material.TRIPWIRE_HOOK){
-						player.sendMessage("§6§lCrates §8» §fVous devez avoir une clée challenge dans votre main "
+					} else {
+						player.sendMessage("§6§lCrates §8» §fVous devez avoir une clée vote dans votre main "
 								+ "pour ouvrir cette boxe !");
+						return;
 					}
 				}
 			}
@@ -199,11 +210,11 @@ public class CratesManager implements Listener {
 		}
 	}
 	public static void SpawnCrates() {
-		Bukkit.getWorld("world").getBlockAt(BoxLegendaire).setType(Material.TRAPPED_CHEST);
+		Bukkit.getWorld("world").getBlockAt(BoxLegendaire).setType(Material.END_ROD);
 		
-		Bukkit.getWorld("world").getBlockAt(BoxChallenge).setType(Material.TRAPPED_CHEST);
+		Bukkit.getWorld("world").getBlockAt(BoxChallenge).setType(Material.END_ROD);
 		
-		Bukkit.getWorld("world").getBlockAt(BoxVote).setType(Material.TRAPPED_CHEST);
+		Bukkit.getWorld("world").getBlockAt(BoxVote).setType(Material.END_ROD);
 
 		
 		hologramc.appendTextLine("§6Boxe challenge");
