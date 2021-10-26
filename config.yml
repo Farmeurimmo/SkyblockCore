@@ -1,11 +1,12 @@
 bossbar:
   #Nombre de bossbar, si vous ne modifer pas ce chiffre alors que vous avez ajouté/enlevé un display, DE GROS BUGS PEUVENT SURVENIR, je n'en serais pas responsable
-  number: 4
+  number: 5
   display:
     1: "\u00A7e\u00A7lPremsiServ \u00A7c\u00A7>>> \u00A7fBon jeu sur PremsiServ !"
     2: "\u00A7e\u00A7lPremsiServ \u00A7c\u00A7>>> \u00A7fUn probl\u00e8me ? Contacte un STAFF"
-    3: "\u00A7e\u00A7lPremsiServ \u00A7c\u00A7>>> \u00A7fwww.Premsiserv.com"
-    4: "\u00A7e\u00A7lPremsiServ \u00A7c\u00A7>>> \u00A7fhttps://discord.gg/PremsiServ"
+    3: "\u00A7e\u00A7lPremsiServ \u00A7c\u00A7>>> \u00A7fwww.premsiserv.com"
+    4: "\u00A7e\u00A7lPremsiServ \u00A7c\u00A7>>> \u00A7fhttps://discord.gg/DJgzEAdG28"
+    5: "\u00A7e\u00A7lPremsiServ \u00A7c\u00A7>>> \u00A7fVous \u00eates sur \u00A7eplay.premsiserv.com"
   #20 = 1 seconde
   #80 = 4 secondes
   delay: 380

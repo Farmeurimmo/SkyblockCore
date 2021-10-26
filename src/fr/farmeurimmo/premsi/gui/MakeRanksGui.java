@@ -24,7 +24,7 @@ public class MakeRanksGui {
 		TNEAPI ecoAPI = TNE.instance().api();
 		
 		
-		Inventory invboutiquefarm2win = Bukkit.createInventory(null, 45, "§6Boutique des grades Farm2Win");
+		Inventory invboutiquefarm2win = Bukkit.createInventory(null, 27, "§6Boutique des grades Farm2Win");
 		
 		ItemStack custom2 = new ItemStack(Material.PLAYER_HEAD, 1);
 		SkullMeta customb = (SkullMeta) custom2.getItemMeta();
@@ -45,7 +45,7 @@ public class MakeRanksGui {
 		customi.setLore(Arrays.asList("§8» §7/fly permanant","§8» §7/sellall","§8» §7/is rename","§8» §7/enchantement","§8» §7/hat",
 				"§8» §7/craft","§8» §7/feed","§7","§6Prix: " + Farm2WinGui.zeusprix + "$"));
 		custom10.setItemMeta(customi);
-		invboutiquefarm2win.setItem(34, custom10);
+		invboutiquefarm2win.setItem(16, custom10);
 		} else {
 			ItemStack custom10 = new ItemStack(Material.BEDROCK, 1);
 			ItemMeta customi = custom10.getItemMeta();
@@ -53,7 +53,7 @@ public class MakeRanksGui {
 			customi.setLore(Arrays.asList("§8» §7/fly permanant","§8» §7/sellall","§8» §7/is rename","§8» §7/enchantement","§8» §7/hat",
 					"§8» §7/craft","§8» §7/feed","§7","§6Prix: " + Farm2WinGui.zeusprix + "$"));
 			custom10.setItemMeta(customi);
-			invboutiquefarm2win.setItem(34, custom10);
+			invboutiquefarm2win.setItem(16, custom10);
 		}
 		
 		if(!player.hasPermission("dieu")){
@@ -63,7 +63,7 @@ public class MakeRanksGui {
 		customj.setLore(Arrays.asList("§8» §7180 minutes de fly journalier /dailyfly","§8» §7/is rename","§8» §7/enchantement","§8» §7/hat",
 				"§8» §7/craft","§8» §7/feed","§7","§6Prix: " + Farm2WinGui.dieuprix + "$"));
 		custom11.setItemMeta(customj);
-		invboutiquefarm2win.setItem(31, custom11);
+		invboutiquefarm2win.setItem(13, custom11);
 		} else {
 			ItemStack custom11 = new ItemStack(Material.BEDROCK, 1);
 			ItemMeta customj = custom11.getItemMeta();
@@ -71,7 +71,7 @@ public class MakeRanksGui {
 			customj.setLore(Arrays.asList("§8» §7180 minutes de fly journalier /dailyfly","§8» §7/is rename","§8» §7/enchantement","§8» §7/hat",
 					"§8» §7/craft","§8» §7/feed","§7","§6Prix: " + Farm2WinGui.dieuprix + "$"));
 			custom11.setItemMeta(customj);
-			invboutiquefarm2win.setItem(31, custom11);
+			invboutiquefarm2win.setItem(13, custom11);
 		}
 		
 		if(!player.hasPermission("legende")){
@@ -81,7 +81,7 @@ public class MakeRanksGui {
 		customk.setLore(Arrays.asList("§8» §790 minutes de fly journalier /dailyfly","§8» §7Accès au shop spawneurs","§8» §7/craft","§8» §7/feed",
 				"§7","§6Prix: " + Farm2WinGui.legendeprix + "$"));
 		custom12.setItemMeta(customk);
-		invboutiquefarm2win.setItem(28, custom12);
+		invboutiquefarm2win.setItem(10, custom12);
 		} else {
 			ItemStack custom12 = new ItemStack(Material.BEDROCK, 1);
 			ItemMeta customk = custom12.getItemMeta();
@@ -89,10 +89,10 @@ public class MakeRanksGui {
 			customk.setLore(Arrays.asList("§8» §790 minutes de fly journalier /dailyfly","§8» §7Accès au shop spawneurs","§8» §7/craft","§8» §7/feed",
 					"§7","§6Prix: " + Farm2WinGui.legendeprix + "$"));
 			custom12.setItemMeta(customk);
-			invboutiquefarm2win.setItem(28, custom12);
+			invboutiquefarm2win.setItem(10, custom12);
 		}
 		
-		invboutiquefarm2win.setItem(44, custom8);
+		invboutiquefarm2win.setItem(26, custom8);
 		invboutiquefarm2win.setItem(22, custom2);
 		
 		ItemStack custom9 = new ItemStack(Material.WHITE_STAINED_GLASS_PANE, 1);

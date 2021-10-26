@@ -67,6 +67,7 @@ import fr.farmeurimmo.premsi.featherfly.FeatherFlyCmd;
 import fr.farmeurimmo.premsi.featherfly.FeatherFlyInteract;
 import fr.farmeurimmo.premsi.gui.AfkMineCaptchaGui;
 import fr.farmeurimmo.premsi.gui.Farm2WinGui;
+import fr.farmeurimmo.premsi.gui.MenuGui;
 import fr.farmeurimmo.premsi.gui.WarpGui;
 import fr.farmeurimmo.premsi.holos.HolosSetup;
 import fr.farmeurimmo.premsi.items.ItemLegCmd;
@@ -211,6 +212,7 @@ public class Main extends JavaPlugin implements Listener {
 		getServer().getPluginManager().registerEvents(new BuyAtoutGui(), this);
 		getServer().getPluginManager().registerEvents(new CratesManager(), this);
 		getServer().getPluginManager().registerEvents(new HolosSetup(), this);
+		getServer().getPluginManager().registerEvents(new MenuGui(), this);
 		this.getCommand("spawn").setExecutor(new SpawnCmd());
 		this.getCommand("build").setExecutor(new BuildCmd());
 		this.getCommand("farm2win").setExecutor(new Farm2WinCmd());
