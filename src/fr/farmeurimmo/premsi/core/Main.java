@@ -70,7 +70,6 @@ import fr.farmeurimmo.premsi.gui.Farm2WinGui;
 import fr.farmeurimmo.premsi.gui.WarpGui;
 import fr.farmeurimmo.premsi.holos.HolosSetup;
 import fr.farmeurimmo.premsi.items.ItemLegCmd;
-import fr.farmeurimmo.premsi.items.PermanantItem;
 import fr.farmeurimmo.premsi.scoreboard.ScoreBoard;
 import fr.farmeurimmo.premsi.utils.BossBar;
 import net.luckperms.api.LuckPerms;
@@ -195,7 +194,6 @@ public class Main extends JavaPlugin implements Listener {
 		getServer().getPluginManager().registerEvents(new JoinLeave(), this);
 		getServer().getPluginManager().registerEvents(new ScoreBoard(), this);
 		getServer().getPluginManager().registerEvents(new Interact(), this);
-		getServer().getPluginManager().registerEvents(new PermanantItem(), this);
 		getServer().getPluginManager().registerEvents(new AntiExplo(), this);
 		getServer().getPluginManager().registerEvents(new Farm2WinGui(), this);
 		getServer().getPluginManager().registerEvents(new WineGui(), this);

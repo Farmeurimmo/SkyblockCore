@@ -1,16 +1,11 @@
 package fr.farmeurimmo.premsi.events;
 
-import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
-import org.bukkit.Material;
-import org.bukkit.WorldBorder;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -19,7 +14,6 @@ import com.premsiserv.core.paper.PaperAPI;
 
 import fr.farmeurimmo.premsi.core.Main;
 import fr.farmeurimmo.premsi.featherfly.CountdownFly;
-import fr.farmeurimmo.premsi.items.PermanantItem;
 import fr.farmeurimmo.premsi.scoreboard.ScoreBoard;
 import fr.farmeurimmo.premsi.utils.BossBar;
 import net.luckperms.api.LuckPermsProvider;
@@ -33,13 +27,6 @@ public class JoinLeave implements Listener {
 	public void OnJoin(PlayerJoinEvent event) {
 		Player player = event.getPlayer();
 		
-		ItemStack custom1 = new ItemStack(Material.NETHER_STAR, 1);
-		ItemMeta customS = custom1.getItemMeta();
-		customS.setUnbreakable(true);
-		customS.setDisplayName(PermanantItem.NameMenuItem);
-		custom1.setItemMeta(customS);
-		
-		player.getInventory().setItem(8, custom1);
 		
 		player.setGameMode(GameMode.SURVIVAL);
 		
@@ -48,11 +35,6 @@ public class JoinLeave implements Listener {
 		ScoreBoard.setScoreBoard(player);
 		
 		CountdownFly.CountDown(player);
-		
-			WorldBorder border = Bukkit.getWorld("world").getWorldBorder();
-			border.setCenter(-186, -63);
-			border.setSize(200);
-			border.setDamageAmount(1);
 		
 		User user = LuckPermsProvider.get().getUserManager().getUser(player.getName());
 		if(user.getCachedData().getMetaData().getPrefix() != null) {
