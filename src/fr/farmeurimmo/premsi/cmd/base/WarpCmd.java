@@ -21,9 +21,9 @@ public class WarpCmd implements CommandExecutor, TabCompleter {
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		
-		final Location Crates = new Location(Bukkit.getServer().getWorld("world"), -200.5, 111, -43.5, 133, 0);
-		final Location Enchantement = new Location(Bukkit.getServer().getWorld("world"), -175.5, 111, -55.5, -90, 17);
-		final Location Bar = new Location(Bukkit.getServer().getWorld("world"), -209.5, 111, -29.5, 90, 0);
+		final Location Crates = new Location(Bukkit.getServer().getWorld("world"), 2.5, 95, -138.5, 180, 0);
+		final Location Enchantement = new Location(Bukkit.getServer().getWorld("world"), -29.5, 99, -121.5, 180, 0);
+		final Location Bar = new Location(Bukkit.getServer().getWorld("world"), 13.5, 96, -140.5, -90, 0);
 		
 		if(sender instanceof Player) {
 			Player player = (Player) sender;

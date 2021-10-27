@@ -181,8 +181,9 @@ public class Main extends JavaPlugin implements Listener {
 		Main.spawncooldown.clear();
 		BossBar.CreateBossBar();
 		BuildCmd.Build.clear();
-		WineSpawn.SpawnPnj(new Location(Bukkit.getServer().getWorld("world"), -212.5, 111.5, -29.5, -90, 0));
-		HolosSetup.SpawnPnj2(new Location(Bukkit.getServer().getWorld("world"), -174.5, 109, -13.5, 180, 0));
+		WineSpawn.SpawnPnj(new Location(Bukkit.getServer().getWorld("world"), 17.5, 95.5, -140.5, 90, 0));
+		HolosSetup.SpawnPnj2(new Location(Bukkit.getServer().getWorld("world"), -15.5, 97, -111.5, -90, 0),
+				new Location(Bukkit.getServer().getWorld("world"), 1.5, 97, -99.5, 90, 0));
 		HolosSetup.SpawnCrates();
 		for(Player player : Bukkit.getOnlinePlayers()) {
 			ScoreBoard.setScoreBoard(player);
