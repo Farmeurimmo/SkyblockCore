@@ -18,21 +18,27 @@ import net.citizensnpcs.trait.SkinTrait;
 
 public class HolosSetup implements Listener {
 	
-	static NPC npca = CitizensAPI.getNPCRegistry().createNPC(EntityType.PLAYER, "�6Shop");
-	static NPC npcb = CitizensAPI.getNPCRegistry().createNPC(EntityType.PLAYER, "�6Menu du skyblock");
+	static NPC npca = CitizensAPI.getNPCRegistry().createNPC(EntityType.PLAYER, "§6Shop");
+	static NPC npcb = CitizensAPI.getNPCRegistry().createNPC(EntityType.PLAYER, "§6Menu du skyblock");
 	
 	static Plugin plugin = Bukkit.getPluginManager().getPlugin("SkyblockCore");
 	
 	static Location holo1 = new Location(Bukkit.getServer().getWorld("world"), -33.5, 101, -130.5);
+	static Location legende = new Location(Bukkit.getServer().getWorld("world"), -10.5, 100, -116.5);
+	static Location dieu = new Location(Bukkit.getServer().getWorld("world"), -9.5, 100, -122.5);
+	static Location zeus = new Location(Bukkit.getServer().getWorld("world"), -9.5, 100, -128.5);
 	static Hologram hologram1 = HologramsAPI.createHologram(plugin, holo1);
+	static Hologram hololegende = HologramsAPI.createHologram(plugin, legende);
+	static Hologram holodieu = HologramsAPI.createHologram(plugin, dieu);
+	static Hologram holozeus = HologramsAPI.createHologram(plugin, zeus);
 	
 	@EventHandler
 	public void OnInteractWithNPC(NPCRightClickEvent e) {
 		Player player = e.getClicker();
-		if(e.getNPC().getName().equalsIgnoreCase("�6Shop")) {
+		if(e.getNPC().getName().equalsIgnoreCase("§6Shop")) {
 			player.chat("/shop");
 		}
-		if(e.getNPC().getName().equalsIgnoreCase("�6Menu du skyblock")) {
+		if(e.getNPC().getName().equalsIgnoreCase("§6Menu du skyblock")) {
 			player.chat("/menu");
 		}
 	}
@@ -58,12 +64,59 @@ public class HolosSetup implements Listener {
     	npcb.destroy();
     }
     public static void SpawnCrates() {
-		
-		hologram1.appendTextLine("�6Zone Enchantmenents");
-		hologram1.appendTextLine("�7Vous souhaitez rajouter un peu piquant � votre stuff?");
-		hologram1.appendTextLine("�7Cette zone est pour vous !");
+    	hololegende.appendTextLine("§c§lPREMIER GRADE");
+    	hololegende.appendTextLine("");
+    	hololegende.appendTextLine("§6§lAvantages du Grade §e§lLégende");
+    	hololegende.appendTextLine("");
+    	hololegende.appendTextLine("§c§mAccès au /fly permanant");
+    	hololegende.appendTextLine("§a90 minutes de fly journalier /dailyfly");
+    	hololegende.appendTextLine("§aDélai de téléportation de §c§m§l5§f §6§l➞ §2§l3 §asecondes");
+    	hololegende.appendTextLine("§aAccès au shop spawneurs");
+    	hololegende.appendTextLine("§aAccès au /craft");
+    	hololegende.appendTextLine("§aAccès au /feed");
+    	hololegende.appendTextLine("§c§mAccès au /hat");
+    	hololegende.appendTextLine("§c§mAccès au /enchantement");
+    	hololegende.appendTextLine("§c§mAccès au /is rename");
+    	hololegende.appendTextLine("§c§mAccès au /sellall");
+    	
+    	holodieu.appendTextLine("§c§lGRADE INTERMÉDIAIRE");
+    	holodieu.appendTextLine("");
+    	holodieu.appendTextLine("§6§lAvantages du Grade §9§lDieu");
+    	holodieu.appendTextLine("");
+    	holodieu.appendTextLine("§c§mAccès au /fly permanant");
+    	holodieu.appendTextLine("§c§m§l90§f §6§l➞ §2§l180 §aminutes de fly journalier /dailyfly");
+    	holodieu.appendTextLine("§aDélai de téléportation de §c§m§l3§f §6§l➞ §2§l1 §asecondes");
+    	holodieu.appendTextLine("§aAccès au shop spawneurs");
+    	holodieu.appendTextLine("§aAccès au /craft");
+    	holodieu.appendTextLine("§aAccès au /feed");
+    	holodieu.appendTextLine("§aAccès au /hat");
+    	holodieu.appendTextLine("§aAccès au /enchantement");
+    	holodieu.appendTextLine("§c§mAccès au /is rename");
+    	holodieu.appendTextLine("§c§mAccès au /sellall");
+    	
+    	holozeus.appendTextLine("§c§lMEILLEUR GRADE");
+    	holozeus.appendTextLine("");
+    	holozeus.appendTextLine("§6§lAvantages du Grade §b§lZeus");
+    	holozeus.appendTextLine("");
+    	holozeus.appendTextLine("§aAccès au /fly permanant");
+    	holozeus.appendTextLine("§c§m180 minutes de fly journalier /dailyfly");
+    	holozeus.appendTextLine("§aDélai de téléportation de §c§m§L1§f §6§l➞ §2§linstantané");
+    	holozeus.appendTextLine("§aAccès au shop spawneurs");
+    	holozeus.appendTextLine("§aAccès au /craft");
+    	holozeus.appendTextLine("§aAccès au /feed");
+    	holozeus.appendTextLine("§aAccès au /hat");
+    	holozeus.appendTextLine("§aAccès au /enchantement");
+    	holozeus.appendTextLine("§aAccès au /is rename");
+    	holozeus.appendTextLine("§aAccès au /sellall");
+    	
+		hologram1.appendTextLine("§6Zone Enchantmenents");
+		hologram1.appendTextLine("§7Vous souhaitez rajouter un peu piquant à votre stuff?");
+		hologram1.appendTextLine("§7Cette zone est pour vous !");
 	}
 	public static void RemoveBoxeHolo() {
 		hologram1.clearLines();
+		hololegende.clearLines();
+		holodieu.clearLines();
+		holozeus.clearLines();
 	}
 }
