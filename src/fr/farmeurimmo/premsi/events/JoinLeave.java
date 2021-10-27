@@ -13,7 +13,6 @@ import com.iridium.iridiumskyblock.api.IridiumSkyblockAPI;
 import com.premsiserv.core.paper.PaperAPI;
 
 import fr.farmeurimmo.premsi.core.Main;
-import fr.farmeurimmo.premsi.featherfly.CountdownFly;
 import fr.farmeurimmo.premsi.scoreboard.ScoreBoard;
 import fr.farmeurimmo.premsi.utils.BossBar;
 import net.luckperms.api.LuckPermsProvider;
@@ -33,8 +32,6 @@ public class JoinLeave implements Listener {
 		BossBar.AddBossBarForPlayer(player);
 		
 		ScoreBoard.setScoreBoard(player);
-		
-		CountdownFly.CountDown(player);
 		
 		User user = LuckPermsProvider.get().getUserManager().getUser(player.getName());
 		if(user.getCachedData().getMetaData().getPrefix() != null) {

@@ -193,6 +193,7 @@ public class Main extends JavaPlugin implements Listener {
 	    ChallengesReset.CheckForReset();
 	    CratesManager.SpawnCrates();
 	    ScoreBoard.updateScoreBoard();
+	    FeatherFlyInteract.ReadForTempFly();
 		getServer().getPluginManager().registerEvents(new JoinLeave(), this);
 		getServer().getPluginManager().registerEvents(new ScoreBoard(), this);
 		getServer().getPluginManager().registerEvents(new Interact(), this);
@@ -253,6 +254,7 @@ public class Main extends JavaPlugin implements Listener {
 	}
 	@Override
 	public void onDisable() {
+		FeatherFlyInteract.WriteFlyLeft();
 		HolosSetup.RemoveBoxeHolo();
 		CratesManager.RemoveBoxeHolo();
 		BossBar.RemoveBossBarForPlayers();
@@ -263,10 +265,13 @@ public class Main extends JavaPlugin implements Listener {
 		System.out.println("-----------------------------------------------------------------------------------------------------");
 	}
 	public FileConfiguration data;
+	public FileConfiguration datac;
     public File dfile;
+    public File cfile;
    
     public void setup() {
         dfile = new File(this.getDataFolder(), "Challenges.yml");
+        cfile = new File(this.getDataFolder(), "Fly.yml");
        
         if(!dfile.exists()) {
             try {
@@ -278,9 +283,24 @@ public class Main extends JavaPlugin implements Listener {
         }
        
         data = YamlConfiguration.loadConfiguration(dfile);
-       
+        
+        if(!cfile.exists()) {
+            try {
+                cfile.createNewFile();
+            }
+            catch(IOException e) {
+                getLogger().info("§c§lErreur lors de la création de Fly.yml");
+            }
+        }
+        
+        datac = YamlConfiguration.loadConfiguration(cfile);
+        
     }
    
+    public FileConfiguration getDatac() {
+        return datac;
+    }
+    
     public FileConfiguration getData() {
         return data;
     }
@@ -292,11 +312,23 @@ public class Main extends JavaPlugin implements Listener {
 				getLogger().info("§c§lErreur lors de la sauvegarde!");
 				e.printStackTrace();
         }
+            try {
+				datac.load(cfile);
+			} catch (InvalidConfigurationException e) {
+				getLogger().info("§c§lErreur lors de la sauvegarde!");
+				e.printStackTrace();
+        }
     }
    
     public void saveData() {
         try {
             data.save(dfile);
+        }
+        catch(IOException e) {
+            getLogger().info("§c§lErreur lors de la sauvegarde!");
+        }
+        try {
+            datac.save(cfile);
         }
         catch(IOException e) {
             getLogger().info("§c§lErreur lors de la sauvegarde!");
