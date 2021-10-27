@@ -13,6 +13,8 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 import fr.farmeurimmo.premsi.core.Main;
 import fr.farmeurimmo.premsi.gui.Farm2WinGui;
@@ -143,6 +145,7 @@ public class BuyAtoutGui implements Listener {
 			Main.instance1.getData().set("Joueurs."+player.getName()+".Atout.1.Active", true);
 			Main.instance1.getData().set("Joueurs."+player.getName()+".Atout.1.Level", 2);
 			Main.instance1.saveData();
+			player.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 999999999, 1));
 			player.sendMessage("§6Vous avez reçu l'accès à l'atout haste 2 !");
 			Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
 			     public void run() {
@@ -157,6 +160,7 @@ public class BuyAtoutGui implements Listener {
 			Main.instance1.getData().set("Joueurs."+player.getName()+".Atout.2.Level", 2);
 			Main.instance1.saveData();
 			player.sendMessage("§6Vous avez reçu l'accès à l'atout speed 2 !");
+			player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999999, 1));
 			Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
 			     public void run() {
 					 MakeBuyAtoutGui(player);
@@ -170,6 +174,7 @@ public class BuyAtoutGui implements Listener {
 			Main.instance1.getData().set("Joueurs."+player.getName()+".Atout.3.Level", 3);
 			Main.instance1.saveData();
 			player.sendMessage("§6Vous avez reçu l'accès à l'atout Jumpboost 3 !");
+			player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 999999999, 2));
 			Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
 			     public void run() {
 					 MakeBuyAtoutGui(player);
