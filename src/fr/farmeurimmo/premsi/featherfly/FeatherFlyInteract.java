@@ -37,6 +37,7 @@ public class FeatherFlyInteract implements Listener {
 			CountdownFly.CountDown(aa);
 			Bukkit.broadcastMessage(aa+" " + a);
 			Main.instance1.getDatac().set("Joueurs."+aa+".Fly.timeleft", 0);
+			Main.instance1.saveData();
 			}
 		}
 	}
@@ -46,7 +47,6 @@ public class FeatherFlyInteract implements Listener {
 	public void onInteractWithFeather(PlayerInteractEvent e) {
 		Player player = e.getPlayer();
 		if(player.getItemInHand().getType() == Material.FEATHER && player.getItemInHand().getItemMeta().getItemFlags().contains(ItemFlag.HIDE_UNBREAKABLE)) {
-			if(!CountdownFly.fly.containsKey(player.getName())) {
 			String sample = player.getItemInHand().getItemMeta().getDisplayName();
 			char[] chars = sample.toCharArray();
 		      StringBuilder sb = new StringBuilder();
@@ -57,19 +57,11 @@ public class FeatherFlyInteract implements Listener {
 		      }
 		      if(!sb.isEmpty()) {
 		    	  int count = player.getInventory().getItemInHand().getAmount();
-		    	  if(count == 1) {
 		    		  CountdownFly.EnableFlyForPlayer(player, sample.replace("§eFly de ", "").replace(sb, "").replace(" ", ""), sb.toString());
 			    	  ItemStack aaa = player.getItemInHand();
-		    	      player.getInventory().removeItem(aaa);
-		    	  }
-		    	  else {
-		    		  player.sendMessage("§cUtilisez qu'une seule plûme à la fois.");
-		    	  }
+			    	  aaa.setAmount(count-1);
+		    	      player.getInventory().setItemInHand(aaa);
 		      }
-		}
-			else {
-				SendActionBar.SendActionBarMsg(player, "§cErreur, veuillez attendre la fin de votre fly.");
-			}
 		}
 	}
 	@EventHandler(priority = EventPriority.MONITOR)
