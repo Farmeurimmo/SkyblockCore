@@ -1,18 +1,22 @@
 package fr.farmeurimmo.premsi.featherfly;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-public class FeatherFlyCmd implements CommandExecutor {
+public class FeatherFlyCmd implements CommandExecutor, TabCompleter {
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
@@ -56,5 +60,26 @@ public class FeatherFlyCmd implements CommandExecutor {
 		}
 		return false;
 	}
+	@Override
+	 public List<String> onTabComplete(CommandSender sender, Command cmd, String commandLabel, String[] args) {
+		 ArrayList<String> subcmd = new ArrayList<String>();
+	        if (cmd.getName().equalsIgnoreCase("featherfly")) {
+	            if (args.length == 1) {
+	            	subcmd.add("give");
+	            } else if (args.length == 2){
+	            	for(Player player : Bukkit.getOnlinePlayers()) {
+	            		subcmd.add(player.getName());
+	            	}
+	            } else if(args.length == 3) {
+	            	subcmd.add("10sec");
+	            	subcmd.add("10min");
+	            	subcmd.add("1heur");
+	            	subcmd.add("10heur");
+	            	subcmd.add("24heur");
+	            }
+	            Collections.sort(subcmd);
+	        }
+			return subcmd;
+	 }
 
 }
