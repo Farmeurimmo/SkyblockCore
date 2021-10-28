@@ -8,6 +8,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
+import org.bukkit.event.player.PlayerBucketEmptyEvent;
+import org.bukkit.event.player.PlayerBucketFillEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
@@ -39,6 +41,18 @@ public class Interact implements Listener {
 			else {
 				e.setCancelled(true);
 			}
+		}
+	}
+	@EventHandler
+	public void BucketEmpty(PlayerBucketEmptyEvent e) {
+		if(e.getBlock().getWorld().getName().equalsIgnoreCase("world")) {
+			e.setCancelled(true);
+		}
+	}
+	@EventHandler
+	public void BucketFill(PlayerBucketFillEvent e) {
+		if(e.getBlock().getWorld().getName().equalsIgnoreCase("world")) {
+			e.setCancelled(true);
 		}
 	}
 	@EventHandler
