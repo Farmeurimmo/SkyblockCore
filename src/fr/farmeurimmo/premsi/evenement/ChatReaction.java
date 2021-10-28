@@ -3,6 +3,7 @@ package fr.farmeurimmo.premsi.evenement;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -22,6 +23,8 @@ public class ChatReaction implements Listener {
 	public static ArrayList<String> mots = new ArrayList<String>();
 	static String aaa = null;
 	static boolean bbb = false;
+	static long timestart = 0;
+	static long timeend = 0;
 	
 	public static void StartChatReaction() {
 		Random rand = new Random();
@@ -30,6 +33,7 @@ public class ChatReaction implements Listener {
         bbb = false;
 		TextComponent hmessage = new TextComponent("§6§lChatReaction §8» §fPassez votre souris ici pour voir le mot à recopier !");
         hmessage.setHoverEvent( new HoverEvent( HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("§fMot à recopier: §6" + aaa).create() ) );
+        timestart = System.currentTimeMillis();
         for(Player player : Bukkit.getOnlinePlayers()) {
         	player.spigot().sendMessage(hmessage);
         }
@@ -56,9 +60,17 @@ public class ChatReaction implements Listener {
 			TNEAPI ecoAPI = TNE.instance().api();
 			
 			bbb = true;
+			
+			timeend = System.currentTimeMillis();
+			
+			long timeelapsed = timeend - timestart;
+			long secelasp = TimeUnit.MILLISECONDS.toSeconds(timeelapsed);
+			long milliselasp = TimeUnit.SECONDS.toSeconds(timeelapsed);
+			
 			Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
 				public void run() {
-					Bukkit.broadcastMessage("§6§lChatReaction §8» §f" + player.getName() + " vient de gagner le ChatReaction !");
+					Bukkit.broadcastMessage("§6§lChatReaction §8» §f" + player.getName() + " vient de gagner le ChatReaction en " + 
+				secelasp + "." + milliselasp + " secondes !");
 					ecoAPI.getAccount(player.getName()).addHoldings(new BigDecimal(2000));
 					player.sendMessage("§6§lChatReaction §8» §fVous avez reçu 2000$.");
 				}
