@@ -2,7 +2,6 @@ package fr.farmeurimmo.premsi.featherfly;
 
 import java.util.Map.Entry;
 
-import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -35,7 +34,6 @@ public class FeatherFlyInteract implements Listener {
 			if(a >= 1) {
 			CountdownFly.setCooldown(aa, a);
 			CountdownFly.CountDown(aa);
-			Bukkit.broadcastMessage(aa+" " + a);
 			Main.instance1.getDatac().set("Joueurs."+aa+".Fly.timeleft", 0);
 			Main.instance1.saveData();
 			}
