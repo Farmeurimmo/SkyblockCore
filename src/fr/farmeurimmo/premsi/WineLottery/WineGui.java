@@ -150,8 +150,8 @@ public class WineGui implements Listener {
 					int n = rand.nextInt(2);
 		            if (n == 0){
 		                player.sendMessage("§6§lBarman §8» §fVous avez gagné " +  BuyWinePotion.cidreprice * 2 + "$");
-		                TNEAPI ecoAPI = TNE.instance().api();
-					    ecoAPI.getAccount(player.getName()).addHoldings(new BigDecimal(BuyWinePotion.cidreprice * 2));
+		                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "money give " + player.getName() + " " + 
+		                BuyWinePotion.cidreprice * 2);
 		                player.getItemInHand().setAmount(0);
 		            } else {
 		            	if(!player.hasPotionEffect(PotionEffectType.CONFUSION) && !player.hasPotionEffect(PotionEffectType.WEAKNESS) && !player.hasPotionEffect(PotionEffectType.BLINDNESS)) {
@@ -185,8 +185,8 @@ public class WineGui implements Listener {
 					int n = rand.nextInt(2);
 		            if (n == 0){
 		                player.sendMessage("§6§lBarman §8» §fVous avez gagné " +  BuyWinePotion.biereprice * 2 + "$");
-		                TNEAPI ecoAPI = TNE.instance().api();
-					    ecoAPI.getAccount(player.getName()).addHoldings(new BigDecimal(BuyWinePotion.biereprice * 2));
+		                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "money give " + player.getName() + " " + 
+				                BuyWinePotion.biereprice * 2);
 		                player.getItemInHand().setAmount(0);
 		            } else {
 		            	if(!player.hasPotionEffect(PotionEffectType.CONFUSION) && !player.hasPotionEffect(PotionEffectType.WEAKNESS) && !player.hasPotionEffect(PotionEffectType.BLINDNESS)) {
@@ -220,8 +220,8 @@ public class WineGui implements Listener {
 					int n = rand.nextInt(3);
 		            if (n == 0){
 		                player.sendMessage("§6§lBarman §8» §fVous avez gagné " +  BuyWinePotion.rhumprice * 2 + "$");
-		                TNEAPI ecoAPI = TNE.instance().api();
-					    ecoAPI.getAccount(player.getName()).addHoldings(new BigDecimal(BuyWinePotion.rhumprice * 2));
+		                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "money give " + player.getName() + " " + 
+				                BuyWinePotion.rhumprice * 2);
 		                player.getItemInHand().setAmount(0);
 		            } else {
 		            	if(!player.hasPotionEffect(PotionEffectType.CONFUSION) && !player.hasPotionEffect(PotionEffectType.WEAKNESS) && !player.hasPotionEffect(PotionEffectType.BLINDNESS)) {
@@ -255,8 +255,8 @@ public class WineGui implements Listener {
 					int n = rand.nextInt(3);
 		            if (n == 0){
 		                player.sendMessage("§6§lBarman §8» §fVous avez gagné " +  BuyWinePotion.vodkaprice * 2 + "$");
-		                TNEAPI ecoAPI = TNE.instance().api();
-					    ecoAPI.getAccount(player.getName()).addHoldings(new BigDecimal(BuyWinePotion.vodkaprice * 2));
+		                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "money give " + player.getName() + " " + 
+				                BuyWinePotion.vodkaprice * 2);
 		                player.getItemInHand().setAmount(0);
 		            } else {
 		            	if(!player.hasPotionEffect(PotionEffectType.CONFUSION) && !player.hasPotionEffect(PotionEffectType.WEAKNESS) && !player.hasPotionEffect(PotionEffectType.BLINDNESS)) {

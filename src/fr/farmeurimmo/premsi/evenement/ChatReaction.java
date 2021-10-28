@@ -1,6 +1,5 @@
 package fr.farmeurimmo.premsi.evenement;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
@@ -14,8 +13,6 @@ import org.bukkit.event.player.PlayerChatEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
-import net.tnemc.core.TNE;
-import net.tnemc.core.common.api.TNEAPI;
 
 @SuppressWarnings("deprecation")
 public class ChatReaction implements Listener {
@@ -57,7 +54,6 @@ public class ChatReaction implements Listener {
 		if(e.getMessage().equalsIgnoreCase(aaa)) {
 			if(bbb == false) {
 			Player player = e.getPlayer();
-			TNEAPI ecoAPI = TNE.instance().api();
 			
 			bbb = true;
 			
@@ -70,9 +66,8 @@ public class ChatReaction implements Listener {
 			Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
 				public void run() {
 					Bukkit.broadcastMessage("§6§lChatReaction §8» §f" + player.getName() + " vient de gagner le ChatReaction en " + 
-				secelasp + "." + milliselasp + " secondes !");
-					ecoAPI.getAccount(player.getName()).addHoldings(new BigDecimal(2000));
-					player.sendMessage("§6§lChatReaction §8» §fVous avez reçu 2000$.");
+				secelasp + "." + milliselasp + " secondes et remporte 5 000$ !");
+					Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "money give " + player.getName() + " 5000");
 				}
 			}, 1);
 		}
