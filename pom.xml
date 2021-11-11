@@ -3,8 +3,8 @@
   <groupId>SkyblockCore</groupId>
   <artifactId>SkyblockCore</artifactId>
   <version>0.1.0-SNAPSHOT</version>
-  <name>SkyblockCore Premsi</name>
-  <description>CriptMania all right reserved</description>
+  <name>SkyblockCore VeryMc</name>
+  <description>VeryMc all right reserved</description>
   <repositories>
         <repository>
             <id>net.luckperms</id>
@@ -18,6 +18,10 @@
         <id>spigot-repo</id>
         <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
     </repository>
+    <repository>
+    <id>iridiumdevelopment</id>
+    <url>https://nexus.iridiumdevelopment.net/repository/maven-releases/</url>
+</repository>
 <repository>
     <id>savagelabs</id>
     <url>https://nexus.savagelabs.net/repository/maven-releases/</url>
