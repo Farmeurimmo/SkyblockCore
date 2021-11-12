@@ -29,7 +29,7 @@ public class ScoreBoard implements Listener {
 		Scoreboard board = Bukkit.getScoreboardManager().getNewScoreboard();
 		Objective obj = board.registerNewObjective("VeryMc", "dummy");
 		obj.setDisplaySlot(DisplaySlot.SIDEBAR);
-		obj.setDisplayName("§6§lPremsiServ");
+		obj.setDisplayName("§6§lVery§f§lMc");
 		
 		User user = LuckPermsProvider.get().getUserManager().getUser(player.getName());
 		if (user.getCachedData().getMetaData().getPrefix() != null) {
@@ -38,7 +38,7 @@ public class ScoreBoard implements Listener {
 		
 		
 		obj.getScore("§6§l" + player.getName()).setScore(14);
-		obj.getScore(" §eplay.premsiserv.com").setScore(1);
+		obj.getScore(" §eplay.verymc.fr").setScore(1);
 		obj.getScore("§a").setScore(15);
 		obj.getScore("§l").setScore(11);
 		obj.getScore("§o").setScore(4);

@@ -28,7 +28,14 @@ public class FeatherFlyInteract implements Listener {
 	}
 	
 	public static void ReadForTempFly() {
+		if(Main.instance1.getDatac().getConfigurationSection("Joueurs") == null) {
+			Main.instance1.getDatac().set("Joueurs.ini", true);
+			Main.instance1.saveData();
+		}
 		for(String aa : Main.instance1.getDatac().getConfigurationSection("Joueurs").getKeys(false)) {
+			if(Main.instance1.getDatac().getBoolean(aa) == true) {
+				continue;
+			}
 			int a = 0;
 			a = Main.instance1.getDatac().getInt("Joueurs."+aa+".Fly.timeleft");
 			if(a >= 1) {
