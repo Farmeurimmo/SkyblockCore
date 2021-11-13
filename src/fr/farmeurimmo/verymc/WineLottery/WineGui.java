@@ -53,7 +53,7 @@ public class WineGui implements Listener {
 			    
 				
 				if(money >= BuyWinePotion.cidreprice) {
-					EcoAccountsManager.RemoveFounds(player, BuyWinePotion.cidreprice);
+					EcoAccountsManager.RemoveFounds(player.getName(), BuyWinePotion.cidreprice);
 				player.sendMessage("§6§lBarman §8» §fMerci de m'avoir acheté du cidre.");
 				ItemStack custom1 = new ItemStack(Material.POTION, 1);
 				ItemMeta customa = custom1.getItemMeta();
@@ -72,7 +72,7 @@ public class WineGui implements Listener {
 			    
 				
 				if(money >= BuyWinePotion.biereprice) {
-					EcoAccountsManager.RemoveFounds(player, BuyWinePotion.biereprice);
+					EcoAccountsManager.RemoveFounds(player.getName(), BuyWinePotion.biereprice);
 				player.sendMessage("§6§lBarman §8» §fMerci de m'avoir acheté de la bière.");
 				ItemStack custom1 = new ItemStack(Material.POTION, 1);
 				ItemMeta customa = custom1.getItemMeta();
@@ -91,7 +91,7 @@ public class WineGui implements Listener {
 			    
 				
 				if(money >= BuyWinePotion.rhumprice) {
-					EcoAccountsManager.RemoveFounds(player, BuyWinePotion.rhumprice);
+					EcoAccountsManager.RemoveFounds(player.getName(), BuyWinePotion.rhumprice);
 				player.sendMessage("§6§lBarman §8» §fMerci de m'avoir acheté du rhum.");
 				ItemStack custom1 = new ItemStack(Material.POTION, 1);
 				ItemMeta customa = custom1.getItemMeta();
@@ -110,7 +110,7 @@ public class WineGui implements Listener {
 			    
 				
 				if(money >= BuyWinePotion.vodkaprice) {
-					EcoAccountsManager.RemoveFounds(player, BuyWinePotion.vodkaprice);
+					EcoAccountsManager.RemoveFounds(player.getName(), BuyWinePotion.vodkaprice);
 				player.sendMessage("§6§lBarman §8» §fMerci de m'avoir acheté de la vodka.");
 				ItemStack custom1 = new ItemStack(Material.POTION, 1);
 				ItemMeta customa = custom1.getItemMeta();
@@ -144,7 +144,7 @@ public class WineGui implements Listener {
 					int n = rand.nextInt(2);
 		            if (n == 0){
 		                player.sendMessage("§6§lBarman §8» §fVous avez gagné " +  BuyWinePotion.cidreprice * 2 + "$");
-		                EcoAccountsManager.AddFounds(player, BuyWinePotion.cidreprice*2);
+		                EcoAccountsManager.AddFounds(player.getName(), BuyWinePotion.cidreprice*2);
 		                player.getItemInHand().setAmount(0);
 		            } else {
 		            	if(!player.hasPotionEffect(PotionEffectType.CONFUSION) && !player.hasPotionEffect(PotionEffectType.WEAKNESS) && !player.hasPotionEffect(PotionEffectType.BLINDNESS)) {
@@ -178,7 +178,7 @@ public class WineGui implements Listener {
 					int n = rand.nextInt(2);
 		            if (n == 0){
 		                player.sendMessage("§6§lBarman §8» §fVous avez gagné " +  BuyWinePotion.biereprice * 2 + "$");
-		                EcoAccountsManager.AddFounds(player, BuyWinePotion.biereprice*2);
+		                EcoAccountsManager.AddFounds(player.getName(), BuyWinePotion.biereprice*2);
 		                player.getItemInHand().setAmount(0);
 		            } else {
 		            	if(!player.hasPotionEffect(PotionEffectType.CONFUSION) && !player.hasPotionEffect(PotionEffectType.WEAKNESS) && !player.hasPotionEffect(PotionEffectType.BLINDNESS)) {
@@ -212,7 +212,7 @@ public class WineGui implements Listener {
 					int n = rand.nextInt(3);
 		            if (n == 0){
 		                player.sendMessage("§6§lBarman §8» §fVous avez gagné " +  BuyWinePotion.rhumprice * 2 + "$");
-		                EcoAccountsManager.AddFounds(player, BuyWinePotion.rhumprice*2);
+		                EcoAccountsManager.AddFounds(player.getName(), BuyWinePotion.rhumprice*2);
 		                player.getItemInHand().setAmount(0);
 		            } else {
 		            	if(!player.hasPotionEffect(PotionEffectType.CONFUSION) && !player.hasPotionEffect(PotionEffectType.WEAKNESS) && !player.hasPotionEffect(PotionEffectType.BLINDNESS)) {
@@ -246,7 +246,7 @@ public class WineGui implements Listener {
 					int n = rand.nextInt(3);
 		            if (n == 0){
 		                player.sendMessage("§6§lBarman §8» §fVous avez gagné " +  BuyWinePotion.vodkaprice * 2 + "$");
-		                EcoAccountsManager.AddFounds(player, BuyWinePotion.vodkaprice*2);
+		                EcoAccountsManager.AddFounds(player.getName(), BuyWinePotion.vodkaprice*2);
 		                player.getItemInHand().setAmount(0);
 		            } else {
 		            	if(!player.hasPotionEffect(PotionEffectType.CONFUSION) && !player.hasPotionEffect(PotionEffectType.WEAKNESS) && !player.hasPotionEffect(PotionEffectType.BLINDNESS)) {

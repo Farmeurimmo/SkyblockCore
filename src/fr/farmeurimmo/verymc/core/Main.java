@@ -38,6 +38,7 @@ import fr.farmeurimmo.verymc.cmd.base.FlyCmd;
 import fr.farmeurimmo.verymc.cmd.base.HatCmd;
 import fr.farmeurimmo.verymc.cmd.base.MenuCmd;
 import fr.farmeurimmo.verymc.cmd.base.MoneyCmd;
+import fr.farmeurimmo.verymc.cmd.base.PayCmd;
 import fr.farmeurimmo.verymc.cmd.base.SpawnCmd;
 import fr.farmeurimmo.verymc.cmd.base.TpNoCmd;
 import fr.farmeurimmo.verymc.cmd.base.TpYesCmd;
@@ -241,6 +242,7 @@ public class Main extends JavaPlugin implements Listener {
 		this.getCommand("key").setExecutor(new KeyCmd());
 		this.getCommand("chatreactionsuggest").setExecutor(new ChatReactionSuggestCmd());
 		this.getCommand("money").setExecutor(new MoneyCmd());
+		this.getCommand("pay").setExecutor(new PayCmd());
 		PluginManager pm = getServer().getPluginManager();
 		pm.registerEvents(this, this);
 		System.out.println("§aDémarrage du plugin réussi !");

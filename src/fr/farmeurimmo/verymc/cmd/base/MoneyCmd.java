@@ -11,6 +11,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
+import fr.farmeurimmo.verymc.core.Main;
 import fr.farmeurimmo.verymc.eco.EcoAccountsManager;
 
 public class MoneyCmd implements CommandExecutor, TabCompleter {
@@ -22,6 +23,9 @@ public class MoneyCmd implements CommandExecutor, TabCompleter {
 		if(sender instanceof Player) {
 			Player player = (Player) sender;
 			player.sendMessage("§6§lMonnaie §8» §fVous avez §6"+EcoAccountsManager.Moneys.get(player.getName())+"$");
+			Main.instance1.getDataz().set("Tester", 200);
+			Main.instance1.saveData();
+			EcoAccountsManager.Moneys.put("Tester", Main.instance1.getDataz().getInt(player.getName()));
 		}
 		} else if (args.length == 1) {
 			if(EcoAccountsManager.Moneys.get(args[0]) != null) {
@@ -35,7 +39,8 @@ public class MoneyCmd implements CommandExecutor, TabCompleter {
 				
 				if(args[2].length() <= 9) {
 				int aaa = Integer.parseInt(args[2]);
-				EcoAccountsManager.AddFounds(Bukkit.getPlayer(args[0]), aaa);
+				EcoAccountsManager.AddFounds(args[0], aaa);
+				sender.sendMessage("§6§lMonnaie §8» §f"+args[0]+" a reçu §6"+aaa+"$§f sur son compte avec succès.");
 				} else {
 					sender.sendMessage("§6§lMonnaie §8» §fVeuillez choisir un nombre plus petit.");
 				}
@@ -43,7 +48,16 @@ public class MoneyCmd implements CommandExecutor, TabCompleter {
 			} else if (args[1].equalsIgnoreCase("remove")) {
 				if(args[2].length() <= 9) {
 					int aaa = Integer.parseInt(args[2]);
-					EcoAccountsManager.RemoveFounds(Bukkit.getPlayer(args[0]), aaa);
+					EcoAccountsManager.RemoveFounds(args[0], aaa);
+					sender.sendMessage("§6§lMonnaie §8» §f"+args[0]+" a perdu §6"+aaa+"$§f sur son compte avec succès.");
+					} else {
+						sender.sendMessage("§6§lMonnaie §8» §fVeuillez choisir un nombre plus petit.");
+					}
+			} else if (args[1].equalsIgnoreCase("set")) {
+				if(args[2].length() <= 9) {
+					int aaa = Integer.parseInt(args[2]);
+					EcoAccountsManager.SetFounds(args[0], aaa);
+					sender.sendMessage("§6§lMonnaie §8» §fL'argent de "+args[0]+" a été définis sur §6"+aaa+"$§f avec succès.");
 					} else {
 						sender.sendMessage("§6§lMonnaie §8» §fVeuillez choisir un nombre plus petit.");
 					}
@@ -69,6 +83,7 @@ public class MoneyCmd implements CommandExecutor, TabCompleter {
 	            	if(sender.hasPermission("give")) {
 	            		subcmd.add("give");
 	            		subcmd.add("remove");
+	            		subcmd.add("set");
 	            	} else {
 	            	subcmd.add("");
 	            	}

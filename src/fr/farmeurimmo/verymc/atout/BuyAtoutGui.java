@@ -137,7 +137,7 @@ public class BuyAtoutGui implements Listener {
 	    
 		if(effect == 1) {
 			if(money >= haste);
-			EcoAccountsManager.RemoveFounds(player, haste);
+			EcoAccountsManager.RemoveFounds(player.getName(), haste);
 			Main.instance1.getData().set("Joueurs."+player.getName()+".Atout.1.Active", true);
 			Main.instance1.getData().set("Joueurs."+player.getName()+".Atout.1.Level", 2);
 			Main.instance1.saveData();
@@ -151,7 +151,7 @@ public class BuyAtoutGui implements Listener {
 		}
 		if(effect == 2) {
 			if(money >= speed);
-			EcoAccountsManager.RemoveFounds(player, speed);
+			EcoAccountsManager.RemoveFounds(player.getName(), speed);
 			Main.instance1.getData().set("Joueurs."+player.getName()+".Atout.2.Active", true);
 			Main.instance1.getData().set("Joueurs."+player.getName()+".Atout.2.Level", 2);
 			Main.instance1.saveData();
@@ -165,7 +165,7 @@ public class BuyAtoutGui implements Listener {
 		}
 		if(effect == 3) {
 			if(money >= jumpboost);
-			EcoAccountsManager.RemoveFounds(player, jumpboost);
+			EcoAccountsManager.RemoveFounds(player.getName(), jumpboost);
 			Main.instance1.getData().set("Joueurs."+player.getName()+".Atout.3.Active", true);
 			Main.instance1.getData().set("Joueurs."+player.getName()+".Atout.3.Level", 3);
 			Main.instance1.saveData();
