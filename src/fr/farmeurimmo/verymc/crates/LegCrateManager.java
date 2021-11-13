@@ -11,6 +11,8 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import fr.farmeurimmo.verymc.eco.EcoAccountsManager;
+
 public class LegCrateManager {
 	
 	public static String LegCrateLoot(Player player) {
@@ -39,7 +41,7 @@ public class LegCrateManager {
             }
             if (n >= 21 && n <= 31){
             	loot = "100 000$";
-            	Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "money give "+player.getName()+" 100000");
+            	EcoAccountsManager.AddFounds(player, 100000);
             	return loot;
             }
             if (n >= 32 && n <= 33){
@@ -112,12 +114,12 @@ public class LegCrateManager {
             }
             if (n >= 55 && n <= 62){
             	loot = "250 000$";
-            	Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "money give "+player.getName()+" 250000");
+            	EcoAccountsManager.AddFounds(player, 250000);
             	return loot;
             }
             if (n >= 98 && n <= 99){
             	loot = "500 000$";
-            	Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "money give "+player.getName()+" 500000");
+            	EcoAccountsManager.AddFounds(player, 500000);
             	return loot;
             }
             return loot;

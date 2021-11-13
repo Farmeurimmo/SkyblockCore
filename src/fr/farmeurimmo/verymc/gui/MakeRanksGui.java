@@ -10,10 +10,9 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 
+import fr.farmeurimmo.verymc.eco.EcoAccountsManager;
 import net.luckperms.api.LuckPermsProvider;
 import net.luckperms.api.model.user.User;
-import net.tnemc.core.TNE;
-import net.tnemc.core.common.api.TNEAPI;
 
 public class MakeRanksGui {
 	
@@ -21,7 +20,6 @@ public class MakeRanksGui {
 	public static void MakeRankGui(Player player) {
 		User user = LuckPermsProvider.get().getUserManager().getUser(player.getName());
 		String Grade = user.getCachedData().getMetaData().getPrefix().replace("&", "§");
-		TNEAPI ecoAPI = TNE.instance().api();
 		
 		
 		Inventory invboutiquefarm2win = Bukkit.createInventory(null, 27, "§6Boutique des grades Farm2Win");
@@ -30,7 +28,7 @@ public class MakeRanksGui {
 		SkullMeta customb = (SkullMeta) custom2.getItemMeta();
 		customb.setOwner(player.getName());
 		customb.setDisplayName("§7" + player.getName());
-		customb.setLore(Arrays.asList("§7Grade: " + Grade, "§7Argent: " + ecoAPI.getAccount(player.getName()).getHoldings().intValue()));
+		customb.setLore(Arrays.asList("§7Grade: " + Grade, "§7Argent: " + EcoAccountsManager.Moneys.get(player.getName())));
 		custom2.setItemMeta(customb);
 		
 		ItemStack custom8 = new ItemStack(Material.ARROW, 1);

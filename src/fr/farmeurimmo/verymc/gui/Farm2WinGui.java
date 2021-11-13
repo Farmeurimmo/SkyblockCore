@@ -11,8 +11,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import fr.farmeurimmo.verymc.atout.BuyAtoutGui;
-import net.tnemc.core.TNE;
-import net.tnemc.core.common.api.TNEAPI;
+import fr.farmeurimmo.verymc.eco.EcoAccountsManager;
 
 public class Farm2WinGui implements Listener {
 	
@@ -41,7 +40,6 @@ public class Farm2WinGui implements Listener {
 	public static void OnInventoryClic(InventoryClickEvent event) {
 		Player player = (Player) event.getWhoClicked();
 		ItemStack current = event.getCurrentItem();
-		TNEAPI ecoAPI = TNE.instance().api();
 		
 		if(current == null) {
 			return;
@@ -75,7 +73,7 @@ public class Farm2WinGui implements Listener {
 			}
 			if(current.getType() == Material.NETHERITE_BLOCK) {
 				if(!player.hasPermission("legende")){
-					if(ecoAPI.getAccount(player.getName()).getHoldings().intValue() >= legendeprix) {
+					if(EcoAccountsManager.Moneys.get(player.getName()) >= legendeprix) {
 					player.sendMessage("§6Vérification de la disponibilité du grade...");
 					current.setType(Material.BARRIER);
 					Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
@@ -102,7 +100,7 @@ public class Farm2WinGui implements Listener {
 			}
 			if(current.getType() == Material.BEACON) {
 				if(!player.hasPermission("dieu")){
-					if(ecoAPI.getAccount(player.getName()).getHoldings().intValue() >= dieuprix) {
+					if(EcoAccountsManager.Moneys.get(player.getName()) >= dieuprix) {
 						if(player.hasPermission("legende")) {
 					player.sendMessage("§6Vérification de la disponibilité du grade...");
 					current.setType(Material.BARRIER);
@@ -143,7 +141,7 @@ public class Farm2WinGui implements Listener {
 			}
 			if(current.getType() == Material.WITHER_SKELETON_SKULL) {
 				if(!player.hasPermission("zeus")){
-					if(ecoAPI.getAccount(player.getName()).getHoldings().intValue() >= zeusprix) {
+					if(EcoAccountsManager.Moneys.get(player.getName()) >= zeusprix) {
 						if(player.hasPermission("legende") && player.hasPermission("dieu")) {
 					player.sendMessage("§6Vérification de la disponibilité du grade...");
 					current.setType(Material.BARRIER);
@@ -189,7 +187,7 @@ public class Farm2WinGui implements Listener {
 			}
 			if(current.getType() == Material.LEATHER_HELMET) {
 				if(!player.hasPermission("hat")){
-					if(ecoAPI.getAccount(player.getName()).getHoldings().intValue() >= hatprix) {
+					if(EcoAccountsManager.Moneys.get(player.getName()) >= hatprix) {
 					player.sendMessage("§6Vérification de la disponibilité de la commande...");
 					current.setType(Material.BARRIER);
 					Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
@@ -216,7 +214,7 @@ public class Farm2WinGui implements Listener {
 			}
 			if(current.getType() == Material.OAK_SIGN) {
 				if(!player.hasPermission("economyshopgui.sellall")){
-					if(ecoAPI.getAccount(player.getName()).getHoldings().intValue() >= sellallprix) {
+					if(EcoAccountsManager.Moneys.get(player.getName()) >= sellallprix) {
 					player.sendMessage("§6Vérification de la disponibilité de la commande...");
 					current.setType(Material.BARRIER);
 					Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
@@ -243,7 +241,7 @@ public class Farm2WinGui implements Listener {
 			}
 			if(current.getType() == Material.FEATHER) {
 				if(!player.hasPermission("fly")){
-					if(ecoAPI.getAccount(player.getName()).getHoldings().intValue() >= flyprix) {
+					if(EcoAccountsManager.Moneys.get(player.getName()) >= flyprix) {
 					player.sendMessage("§6Vérification de la disponibilité de la commande...");
 					current.setType(Material.BARRIER);
 					Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
@@ -270,7 +268,7 @@ public class Farm2WinGui implements Listener {
 			}
 			if(current.getType() == Material.COOKED_BEEF) {
 				if(!player.hasPermission("feed")){
-					if(ecoAPI.getAccount(player.getName()).getHoldings().intValue() >= feedprix) {
+					if(EcoAccountsManager.Moneys.get(player.getName()) >= feedprix) {
 					player.sendMessage("§6Vérification de la disponibilité de la commande...");
 					current.setType(Material.BARRIER);
 					Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
@@ -297,7 +295,7 @@ public class Farm2WinGui implements Listener {
 			}
 			if(current.getType() == Material.CRAFTING_TABLE) {
 				if(!player.hasPermission("craft")){
-					if(ecoAPI.getAccount(player.getName()).getHoldings().intValue() >= craftprix) {
+					if(EcoAccountsManager.Moneys.get(player.getName()) >= craftprix) {
 					player.sendMessage("§6Vérification de la disponibilité de la commande...");
 					current.setType(Material.BARRIER);
 					Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
@@ -324,7 +322,7 @@ public class Farm2WinGui implements Listener {
 			}
 			if(current.getType() == Material.NAME_TAG) {
 				if(!player.hasPermission("iridiumskyblock.rename")){
-					if(ecoAPI.getAccount(player.getName()).getHoldings().intValue() >= isrenameprix) {
+					if(EcoAccountsManager.Moneys.get(player.getName()) >= isrenameprix) {
 					player.sendMessage("§6Vérification de la disponibilité de la commande...");
 					current.setType(Material.BARRIER);
 					Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
@@ -351,7 +349,7 @@ public class Farm2WinGui implements Listener {
 			}
 			if(current.getType() == Material.ENCHANTING_TABLE) {
 				if(!player.hasPermission("enchantement")){
-					if(ecoAPI.getAccount(player.getName()).getHoldings().intValue() >= enchantementprix) {
+					if(EcoAccountsManager.Moneys.get(player.getName()) >= enchantementprix) {
 					player.sendMessage("§6Vérification de la disponibilité de la commande...");
 					current.setType(Material.BARRIER);
 					Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {

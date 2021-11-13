@@ -11,11 +11,10 @@ import org.bukkit.scoreboard.Team;
 import com.iridium.iridiumskyblock.api.IridiumSkyblockAPI;
 
 import fr.farmeurimmo.verymc.core.Main;
+import fr.farmeurimmo.verymc.eco.EcoAccountsManager;
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.LuckPermsProvider;
 import net.luckperms.api.model.user.User;
-import net.tnemc.core.TNE;
-import net.tnemc.core.common.api.TNEAPI;
 
 public class ScoreBoard implements Listener {
 	
@@ -95,15 +94,11 @@ public class ScoreBoard implements Listener {
 		else {
 			Grade = "§7N/A";
 		}
-		TNEAPI ecoAPI = TNE.instance().api();
 		
 		if(board.getTeam("rank") != null) {
 			board.getTeam("rank").setPrefix("§fGrade §8» " + Grade);
 		} if(board.getTeam("money") != null) {
-			int a = 0;
-			if(ecoAPI.getAccount(player.getName()).getHoldings() != null) {
-				a = ecoAPI.getAccount(player.getName()).getHoldings().intValue();
-			}
+			int a = EcoAccountsManager.Moneys.get(player.getName());
 			board.getTeam("money").setPrefix("§fArgent §8» §e" + a);
 		} if(board.getTeam("online") != null) {
 			board.getTeam("online").setPrefix("§fSkyblock §8» §c" + Bukkit.getServer().getOnlinePlayers().size());

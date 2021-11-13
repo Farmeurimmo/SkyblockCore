@@ -12,6 +12,8 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import fr.farmeurimmo.verymc.eco.EcoAccountsManager;
+
 public class ChallengeCrateManager {
 	
 	public static String ChallengeCrateLoot(Player player) {
@@ -21,17 +23,17 @@ public class ChallengeCrateManager {
             int n = rand.nextInt(100);
             if(n >= 0 && n <= 11) {
             	loot = "10 000$";
-            	Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "money give "+player.getName()+" 10000");
+            	EcoAccountsManager.AddFounds(player, 10000);
             	return loot;
             }
             if(n >= 12 && n <= 17) {
             	loot = "25 000$";
-            	Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "money give "+player.getName()+" 25000");
+            	EcoAccountsManager.AddFounds(player, 25000);
             	return loot;
             }
             if(n >= 18 && n <= 20) {
             	loot = "50 000$";
-            	Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "money give "+player.getName()+" 50000");
+            	EcoAccountsManager.AddFounds(player, 50000);
             	return loot;
             }
             if(n >= 21 && n <= 27) {

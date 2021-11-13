@@ -12,7 +12,9 @@ import org.bukkit.potion.PotionEffectType;
 import com.iridium.iridiumskyblock.api.IridiumSkyblockAPI;
 import com.premsiserv.core.paper.PaperAPI;
 
+import fr.farmeurimmo.verymc.challenges.ChallengesReset;
 import fr.farmeurimmo.verymc.core.Main;
+import fr.farmeurimmo.verymc.eco.EcoAccountsManager;
 import fr.farmeurimmo.verymc.scoreboard.ScoreBoard;
 import fr.farmeurimmo.verymc.utils.BossBar;
 import net.luckperms.api.LuckPermsProvider;
@@ -50,41 +52,10 @@ public class JoinLeave implements Listener {
 		}
 			event.setJoinMessage(JoinMessage);
 			
-			if(Main.instance1.getData().getString("Joueurs."+player.getName()+".Challenges.Daily.1.Active") == null) {
-				Main.instance1.getData().set("Joueurs."+player.getName()+".Challenges.Daily.1.Active", true);
-				Main.instance1.getData().set("Joueurs."+player.getName()+".Challenges.Daily.1.Progression", 0);
-				Main.instance1.saveData();
-			}
-			if(Main.instance1.getData().getString("Joueurs."+player.getName()+".Challenges.Daily.2.Active") == null) {
-				Main.instance1.getData().set("Joueurs."+player.getName()+".Challenges.Daily.2.Active", true);
-				Main.instance1.getData().set("Joueurs."+player.getName()+".Challenges.Daily.2.Progression", 0);
-				Main.instance1.saveData();
-			}
-			if(Main.instance1.getData().getString("Joueurs."+player.getName()+".Challenges.Daily.3.Active") == null) {
-				Main.instance1.getData().set("Joueurs."+player.getName()+".Challenges.Daily.3.Active", true);
-				Main.instance1.getData().set("Joueurs."+player.getName()+".Challenges.Daily.3.Progression", 0);
-				Main.instance1.saveData();
-			}
-			if(Main.instance1.getData().getString("Joueurs."+player.getName()+".Challenges.Daily.4.Active") == null) {
-				Main.instance1.getData().set("Joueurs."+player.getName()+".Challenges.Daily.4.Active", true);
-				Main.instance1.getData().set("Joueurs."+player.getName()+".Challenges.Daily.4.Progression", 0);
-				Main.instance1.saveData();
-			}
-			if(Main.instance1.getData().getString("Joueurs."+player.getName()+".Challenges.Daily.5.Active") == null) {
-				Main.instance1.getData().set("Joueurs."+player.getName()+".Challenges.Daily.5.Active", true);
-				Main.instance1.getData().set("Joueurs."+player.getName()+".Challenges.Daily.5.Progression", 0);
-				Main.instance1.saveData();
-			}
-			if(Main.instance1.getData().getString("Joueurs."+player.getName()+".Challenges.Daily.6.Active") == null) {
-				Main.instance1.getData().set("Joueurs."+player.getName()+".Challenges.Daily.6.Active", true);
-				Main.instance1.getData().set("Joueurs."+player.getName()+".Challenges.Daily.6.Progression", 0);
-				Main.instance1.saveData();
-			}
-			if(Main.instance1.getData().getString("Joueurs."+player.getName()+".Challenges.Daily.7.Active") == null) {
-				Main.instance1.getData().set("Joueurs."+player.getName()+".Challenges.Daily.7.Active", true);
-				Main.instance1.getData().set("Joueurs."+player.getName()+".Challenges.Daily.7.Progression", 0);
-				Main.instance1.saveData();
-			}
+			ChallengesReset.CreateChallengesForPlayer(player.getName());
+			
+			EcoAccountsManager.CheckForAccount(player);
+			
 			if(Main.instance1.getData().getString("Joueurs."+player.getName()+".Atout.1.Active") == null) {
 				Main.instance1.getData().set("Joueurs."+player.getName()+".Atout.1.Active", false);
 				Main.instance1.getData().set("Joueurs."+player.getName()+".Atout.1.Level", 0);

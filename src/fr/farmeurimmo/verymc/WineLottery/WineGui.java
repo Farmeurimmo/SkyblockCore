@@ -1,6 +1,5 @@
 package fr.farmeurimmo.verymc.WineLottery;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
@@ -18,10 +17,9 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import fr.farmeurimmo.verymc.eco.EcoAccountsManager;
 import fr.farmeurimmo.verymc.utils.SendActionBar;
 import net.citizensnpcs.api.event.NPCRightClickEvent;
-import net.tnemc.core.TNE;
-import net.tnemc.core.common.api.TNEAPI;
 
 public class WineGui implements Listener {
 	
@@ -51,12 +49,11 @@ public class WineGui implements Listener {
 		if(e.getView().getTitle().equalsIgnoreCase("§6Boutique des vins")) {
 			e.setCancelled(true);
 			if(current.getType() == Material.POTION && current.getItemMeta().getDisplayName().equalsIgnoreCase("§6Cidre")) {
-				TNEAPI ecoAPI = TNE.instance().api();
-			    int money = ecoAPI.getAccount(player.getName()).getHoldings().intValue();
+			    int money = EcoAccountsManager.Moneys.get(player.getName());
 			    
 				
 				if(money >= BuyWinePotion.cidreprice) {
-				ecoAPI.getAccount(player.getName()).removeHoldings(new BigDecimal(BuyWinePotion.cidreprice));
+					EcoAccountsManager.RemoveFounds(player, BuyWinePotion.cidreprice);
 				player.sendMessage("§6§lBarman §8» §fMerci de m'avoir acheté du cidre.");
 				ItemStack custom1 = new ItemStack(Material.POTION, 1);
 				ItemMeta customa = custom1.getItemMeta();
@@ -71,12 +68,11 @@ public class WineGui implements Listener {
 				}
 			}
 			if(current.getType() == Material.POTION && current.getItemMeta().getDisplayName().equalsIgnoreCase("§6Bière")) {
-				TNEAPI ecoAPI = TNE.instance().api();
-			    int money = ecoAPI.getAccount(player.getName()).getHoldings().intValue();
+			    int money = EcoAccountsManager.Moneys.get(player.getName());
 			    
 				
 				if(money >= BuyWinePotion.biereprice) {
-				ecoAPI.getAccount(player.getName()).removeHoldings(new BigDecimal(BuyWinePotion.biereprice));
+					EcoAccountsManager.RemoveFounds(player, BuyWinePotion.biereprice);
 				player.sendMessage("§6§lBarman §8» §fMerci de m'avoir acheté de la bière.");
 				ItemStack custom1 = new ItemStack(Material.POTION, 1);
 				ItemMeta customa = custom1.getItemMeta();
@@ -91,12 +87,11 @@ public class WineGui implements Listener {
 				}
 			}
 			if(current.getType() == Material.POTION && current.getItemMeta().getDisplayName().equalsIgnoreCase("§6Rhum")) {
-				TNEAPI ecoAPI = TNE.instance().api();
-			    int money = ecoAPI.getAccount(player.getName()).getHoldings().intValue();
+			    int money = EcoAccountsManager.Moneys.get(player.getName());
 			    
 				
 				if(money >= BuyWinePotion.rhumprice) {
-				ecoAPI.getAccount(player.getName()).removeHoldings(new BigDecimal(BuyWinePotion.rhumprice));
+					EcoAccountsManager.RemoveFounds(player, BuyWinePotion.rhumprice);
 				player.sendMessage("§6§lBarman §8» §fMerci de m'avoir acheté du rhum.");
 				ItemStack custom1 = new ItemStack(Material.POTION, 1);
 				ItemMeta customa = custom1.getItemMeta();
@@ -111,12 +106,11 @@ public class WineGui implements Listener {
 				}
 			}
 			if(current.getType() == Material.POTION && current.getItemMeta().getDisplayName().equalsIgnoreCase("§6Vodka")) {
-				TNEAPI ecoAPI = TNE.instance().api();
-			    int money = ecoAPI.getAccount(player.getName()).getHoldings().intValue();
+			    int money = EcoAccountsManager.Moneys.get(player.getName());
 			    
 				
 				if(money >= BuyWinePotion.vodkaprice) {
-				ecoAPI.getAccount(player.getName()).removeHoldings(new BigDecimal(BuyWinePotion.vodkaprice));
+					EcoAccountsManager.RemoveFounds(player, BuyWinePotion.vodkaprice);
 				player.sendMessage("§6§lBarman §8» §fMerci de m'avoir acheté de la vodka.");
 				ItemStack custom1 = new ItemStack(Material.POTION, 1);
 				ItemMeta customa = custom1.getItemMeta();
@@ -150,8 +144,7 @@ public class WineGui implements Listener {
 					int n = rand.nextInt(2);
 		            if (n == 0){
 		                player.sendMessage("§6§lBarman §8» §fVous avez gagné " +  BuyWinePotion.cidreprice * 2 + "$");
-		                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "money give " + player.getName() + " " + 
-		                BuyWinePotion.cidreprice * 2);
+		                EcoAccountsManager.AddFounds(player, BuyWinePotion.cidreprice*2);
 		                player.getItemInHand().setAmount(0);
 		            } else {
 		            	if(!player.hasPotionEffect(PotionEffectType.CONFUSION) && !player.hasPotionEffect(PotionEffectType.WEAKNESS) && !player.hasPotionEffect(PotionEffectType.BLINDNESS)) {
@@ -185,8 +178,7 @@ public class WineGui implements Listener {
 					int n = rand.nextInt(2);
 		            if (n == 0){
 		                player.sendMessage("§6§lBarman §8» §fVous avez gagné " +  BuyWinePotion.biereprice * 2 + "$");
-		                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "money give " + player.getName() + " " + 
-				                BuyWinePotion.biereprice * 2);
+		                EcoAccountsManager.AddFounds(player, BuyWinePotion.biereprice*2);
 		                player.getItemInHand().setAmount(0);
 		            } else {
 		            	if(!player.hasPotionEffect(PotionEffectType.CONFUSION) && !player.hasPotionEffect(PotionEffectType.WEAKNESS) && !player.hasPotionEffect(PotionEffectType.BLINDNESS)) {
@@ -220,8 +212,7 @@ public class WineGui implements Listener {
 					int n = rand.nextInt(3);
 		            if (n == 0){
 		                player.sendMessage("§6§lBarman §8» §fVous avez gagné " +  BuyWinePotion.rhumprice * 2 + "$");
-		                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "money give " + player.getName() + " " + 
-				                BuyWinePotion.rhumprice * 2);
+		                EcoAccountsManager.AddFounds(player, BuyWinePotion.rhumprice*2);
 		                player.getItemInHand().setAmount(0);
 		            } else {
 		            	if(!player.hasPotionEffect(PotionEffectType.CONFUSION) && !player.hasPotionEffect(PotionEffectType.WEAKNESS) && !player.hasPotionEffect(PotionEffectType.BLINDNESS)) {
@@ -255,8 +246,7 @@ public class WineGui implements Listener {
 					int n = rand.nextInt(3);
 		            if (n == 0){
 		                player.sendMessage("§6§lBarman §8» §fVous avez gagné " +  BuyWinePotion.vodkaprice * 2 + "$");
-		                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "money give " + player.getName() + " " + 
-				                BuyWinePotion.vodkaprice * 2);
+		                EcoAccountsManager.AddFounds(player, BuyWinePotion.vodkaprice*2);
 		                player.getItemInHand().setAmount(0);
 		            } else {
 		            	if(!player.hasPotionEffect(PotionEffectType.CONFUSION) && !player.hasPotionEffect(PotionEffectType.WEAKNESS) && !player.hasPotionEffect(PotionEffectType.BLINDNESS)) {

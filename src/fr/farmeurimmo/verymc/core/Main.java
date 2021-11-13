@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 
 import org.bukkit.Bukkit;
@@ -30,6 +29,7 @@ import fr.farmeurimmo.verymc.challenges.ChallengesCmd;
 import fr.farmeurimmo.verymc.challenges.ChallengesGuis;
 import fr.farmeurimmo.verymc.challenges.ChallengesReset;
 import fr.farmeurimmo.verymc.cmd.base.BarCmd;
+import fr.farmeurimmo.verymc.cmd.base.ChatReactionSuggestCmd;
 import fr.farmeurimmo.verymc.cmd.base.CraftCmd;
 import fr.farmeurimmo.verymc.cmd.base.EnchantementCmd;
 import fr.farmeurimmo.verymc.cmd.base.Farm2WinCmd;
@@ -37,6 +37,7 @@ import fr.farmeurimmo.verymc.cmd.base.FeedCmd;
 import fr.farmeurimmo.verymc.cmd.base.FlyCmd;
 import fr.farmeurimmo.verymc.cmd.base.HatCmd;
 import fr.farmeurimmo.verymc.cmd.base.MenuCmd;
+import fr.farmeurimmo.verymc.cmd.base.MoneyCmd;
 import fr.farmeurimmo.verymc.cmd.base.SpawnCmd;
 import fr.farmeurimmo.verymc.cmd.base.TpNoCmd;
 import fr.farmeurimmo.verymc.cmd.base.TpYesCmd;
@@ -54,6 +55,7 @@ import fr.farmeurimmo.verymc.cmd.moderation.InvseeCmd;
 import fr.farmeurimmo.verymc.cmd.moderation.RedstoneToggleCmd;
 import fr.farmeurimmo.verymc.crates.CratesManager;
 import fr.farmeurimmo.verymc.crates.KeyCmd;
+import fr.farmeurimmo.verymc.eco.EcoAccountsManager;
 import fr.farmeurimmo.verymc.evenement.ChatReaction;
 import fr.farmeurimmo.verymc.events.AfkMineBreakCheck;
 import fr.farmeurimmo.verymc.events.AntiExplo;
@@ -128,7 +130,6 @@ public class Main extends JavaPlugin implements Listener {
 		instance1 = this;
 		Bukkit.getPluginManager().isPluginEnabled("LuckPerms");
 		Bukkit.getPluginManager().isPluginEnabled("Citizens");
-		Bukkit.getPluginManager().isPluginEnabled("TheNewEconomy");
 		RegisteredServiceProvider<LuckPerms> provider = Bukkit.getServicesManager().getRegistration(LuckPerms.class);
 		if (Bukkit.getPluginManager().getPlugin("LuckPerms") != null) {
 			System.out.println("Le plugin LuckPerms a été trouvé !");
@@ -153,16 +154,6 @@ public class Main extends JavaPlugin implements Listener {
 			getLogger().warning("Le plugin Citizens est manquant.");
 			Bukkit.getPluginManager().disablePlugin(this);
 		}
-		if (Bukkit.getPluginManager().getPlugin("TheNewEconomy") != null) {
-			System.out.println("Le plugin TNE a été trouvé !");
-			System.out.println("-----------------------------------------------------------------------------------------------------");
-			System.out.println("Initialisation de l'api TNE en cours...");
-			System.out.println("API initialisée !");
-			System.out.println("-----------------------------------------------------------------------------------------------------");
-		} else {
-			getLogger().warning("Le plugin TheNewEconomy est manquant.");
-			Bukkit.getPluginManager().disablePlugin(this);
-		}
 		if (Bukkit.getPluginManager().getPlugin("HolographicDisplays") != null) {
 			System.out.println("Le plugin HolographicDisplays a été trouvé !");
 			System.out.println("-----------------------------------------------------------------------------------------------------");
@@ -178,6 +169,7 @@ public class Main extends JavaPlugin implements Listener {
 		}
 		System.out.println("Initialisation des class et des méthodes en cours...");
 		setup();
+		EcoAccountsManager.UpdateHash();
 		Main.spawncooldown.clear();
 		BossBar.CreateBossBar();
 		BuildCmd.Build.clear();
@@ -188,7 +180,7 @@ public class Main extends JavaPlugin implements Listener {
 		for(Player player : Bukkit.getOnlinePlayers()) {
 			ScoreBoard.setScoreBoard(player);
 		}
-		ChatReaction.mots.addAll(Arrays.asList("VeryMc","Skyblock","Ile","Farm2Win"));
+		ChatReaction.WriteWords();
 	    ChatReaction.StartChatReaction();
 	    ChallengesReset.CheckForReset();
 	    CratesManager.SpawnCrates();
@@ -247,6 +239,8 @@ public class Main extends JavaPlugin implements Listener {
 		this.getCommand("atout").setExecutor(new AtoutCmd());
 		this.getCommand("datafile").setExecutor(new DataCmd());
 		this.getCommand("key").setExecutor(new KeyCmd());
+		this.getCommand("chatreactionsuggest").setExecutor(new ChatReactionSuggestCmd());
+		this.getCommand("money").setExecutor(new MoneyCmd());
 		PluginManager pm = getServer().getPluginManager();
 		pm.registerEvents(this, this);
 		System.out.println("§aDémarrage du plugin réussi !");
@@ -264,14 +258,21 @@ public class Main extends JavaPlugin implements Listener {
 		System.out.println("Plugin stoppé !");
 		System.out.println("-----------------------------------------------------------------------------------------------------");
 	}
+	
 	public FileConfiguration data;
 	public FileConfiguration datac;
+	public FileConfiguration dataa;
+	public FileConfiguration dataz;
     public File dfile;
     public File cfile;
+    public File afile;
+    public File zfile;
    
     public void setup() {
         dfile = new File(this.getDataFolder(), "Challenges.yml");
         cfile = new File(this.getDataFolder(), "Fly.yml");
+        afile = new File(this.getDataFolder(), "ChatReaction.yml");
+        zfile = new File(this.getDataFolder(), "Eco.yml");
        
         if(!dfile.exists()) {
             try {
@@ -295,6 +296,28 @@ public class Main extends JavaPlugin implements Listener {
         
         datac = YamlConfiguration.loadConfiguration(cfile);
         
+        if(!afile.exists()) {
+            try {
+                afile.createNewFile();
+            }
+            catch(IOException e) {
+                getLogger().info("§c§lErreur lors de la création de ChatReaction.yml");
+            }
+        }
+        
+        dataa = YamlConfiguration.loadConfiguration(afile);
+        
+        if(!zfile.exists()) {
+            try {
+                zfile.createNewFile();
+            }
+            catch(IOException e) {
+                getLogger().info("§c§lErreur lors de la création de Eco.yml");
+            }
+        }
+        
+        dataz = YamlConfiguration.loadConfiguration(zfile);
+        
     }
    
     public FileConfiguration getDatac() {
@@ -303,6 +326,13 @@ public class Main extends JavaPlugin implements Listener {
     
     public FileConfiguration getData() {
         return data;
+    }
+    
+    public FileConfiguration getDataa() {
+    	return dataa;
+    }
+    public FileConfiguration getDataz() {
+    	return dataz;
     }
     
     public void reloadData() throws FileNotFoundException, IOException {
@@ -318,6 +348,18 @@ public class Main extends JavaPlugin implements Listener {
 				getLogger().info("§c§lErreur lors de la sauvegarde!");
 				e.printStackTrace();
         }
+            try {
+				dataa.load(afile);
+			} catch (InvalidConfigurationException e) {
+				getLogger().info("§c§lErreur lors de la sauvegarde!");
+				e.printStackTrace();
+        }
+            try {
+				dataz.load(zfile);
+			} catch (InvalidConfigurationException e) {
+				getLogger().info("§c§lErreur lors de la sauvegarde!");
+				e.printStackTrace();
+        }
     }
    
     public void saveData() {
@@ -329,6 +371,18 @@ public class Main extends JavaPlugin implements Listener {
         }
         try {
             datac.save(cfile);
+        }
+        catch(IOException e) {
+            getLogger().info("§c§lErreur lors de la sauvegarde!");
+        }
+        try {
+            dataa.save(afile);
+        }
+        catch(IOException e) {
+            getLogger().info("§c§lErreur lors de la sauvegarde!");
+        }
+        try {
+            dataz.save(zfile);
         }
         catch(IOException e) {
             getLogger().info("§c§lErreur lors de la sauvegarde!");
