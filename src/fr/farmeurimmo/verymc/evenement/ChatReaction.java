@@ -11,6 +11,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerChatEvent;
 
+import fr.farmeurimmo.verymc.eco.EcoAccountsManager;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -79,7 +80,7 @@ public class ChatReaction implements Listener {
 				public void run() {
 					Bukkit.broadcastMessage("§6§lChatReaction §8» §f" + player.getName() + " vient de gagner le ChatReaction en " + 
 				secelasp + "." + milliselasp + " secondes et remporte 5 000$ !");
-					Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "money give " + player.getName() + " 5000");
+					EcoAccountsManager.AddFounds(player.getName(), 5000);
 				}
 			}, 1);
 		}

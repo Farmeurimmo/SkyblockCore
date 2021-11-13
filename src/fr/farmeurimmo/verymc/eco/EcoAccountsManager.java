@@ -25,6 +25,13 @@ public class EcoAccountsManager {
 		}
 		return a;
 	}
+	public static String GetMoney(String a) {
+		String b = "0";
+		if(Moneys.containsKey(a)) {
+			b = Moneys.get(a).toString();
+		}
+		return b;
+	}
 	public static boolean CheckForFounds(Player player, int needed) {
 		boolean aa = false;
 		if(Moneys.get(player.getName()) >= needed) {

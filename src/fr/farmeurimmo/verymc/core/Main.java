@@ -28,6 +28,7 @@ import fr.farmeurimmo.verymc.challenges.ChallengesBlockBreak;
 import fr.farmeurimmo.verymc.challenges.ChallengesCmd;
 import fr.farmeurimmo.verymc.challenges.ChallengesGuis;
 import fr.farmeurimmo.verymc.challenges.ChallengesReset;
+import fr.farmeurimmo.verymc.cmd.base.BaltopCmd;
 import fr.farmeurimmo.verymc.cmd.base.BarCmd;
 import fr.farmeurimmo.verymc.cmd.base.ChatReactionSuggestCmd;
 import fr.farmeurimmo.verymc.cmd.base.CraftCmd;
@@ -243,6 +244,7 @@ public class Main extends JavaPlugin implements Listener {
 		this.getCommand("chatreactionsuggest").setExecutor(new ChatReactionSuggestCmd());
 		this.getCommand("money").setExecutor(new MoneyCmd());
 		this.getCommand("pay").setExecutor(new PayCmd());
+		this.getCommand("baltop").setExecutor(new BaltopCmd());
 		PluginManager pm = getServer().getPluginManager();
 		pm.registerEvents(this, this);
 		System.out.println("§aDémarrage du plugin réussi !");
