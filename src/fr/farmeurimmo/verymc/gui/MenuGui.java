@@ -10,6 +10,10 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import fr.farmeurimmo.verymc.atout.AtoutGui;
+import fr.farmeurimmo.verymc.challenges.ChallengesGuis;
+import fr.farmeurimmo.verymc.shopgui.MainShopGui;
+
 public class MenuGui implements Listener{
 	
 	@EventHandler
@@ -26,36 +30,25 @@ public class MenuGui implements Listener{
 	if(e.getView().getTitle() == "§6Menu du Skyblock") {
 		e.setCancelled(true);
 		if(current.getType() == Material.GRASS_BLOCK) {
-			player.closeInventory();
 			player.chat("/is");
 		}
 		if(current.getType() == Material.DIAMOND_SWORD) {
-			player.closeInventory();
-			player.chat("/farm2win");
-		}
-		if(current.getType() == Material.BOOK) {
-			player.closeInventory();
-			player.chat("/wiki");
+			Farm2WinGui.MainBoutiqueGUI(player);
 		}
 		if(current.getType() == Material.ENDER_EYE) {
-			player.closeInventory();
-			player.chat("/warps");
+			WarpGui.OpenGUi(player);
 		}
 		if(current.getType() == Material.SADDLE) {
-			player.closeInventory();
 			player.chat("/hdv");
 		}
 		if(current.getType() == Material.VILLAGER_SPAWN_EGG) {
-			player.closeInventory();
-			player.chat("/shop");
+			MainShopGui.OpenMainShopMenu(player);
 		}
 		if(current.getType() == Material.IRON_SWORD) {
-			player.closeInventory();
-			player.chat("/c");
+			ChallengesGuis.MakeDailyGui(player);
 		}
 		if(current.getType() == Material.POTION) {
-			player.closeInventory();
-			player.chat("/atout");
+			AtoutGui.MakeAtoutGui(player);
 		}
 	}
 	}

@@ -30,7 +30,6 @@ import fr.farmeurimmo.verymc.challenges.ChallengesGuis;
 import fr.farmeurimmo.verymc.challenges.ChallengesReset;
 import fr.farmeurimmo.verymc.cmd.base.BaltopCmd;
 import fr.farmeurimmo.verymc.cmd.base.BarCmd;
-import fr.farmeurimmo.verymc.cmd.base.ChatReactionSuggestCmd;
 import fr.farmeurimmo.verymc.cmd.base.CraftCmd;
 import fr.farmeurimmo.verymc.cmd.base.EnchantementCmd;
 import fr.farmeurimmo.verymc.cmd.base.Farm2WinCmd;
@@ -76,6 +75,8 @@ import fr.farmeurimmo.verymc.gui.WarpGui;
 import fr.farmeurimmo.verymc.holos.HolosSetup;
 import fr.farmeurimmo.verymc.items.ItemLegCmd;
 import fr.farmeurimmo.verymc.scoreboard.ScoreBoard;
+import fr.farmeurimmo.verymc.shopgui.MainShopGui;
+import fr.farmeurimmo.verymc.shopgui.ShopGuiCmd;
 import fr.farmeurimmo.verymc.utils.BossBar;
 import net.luckperms.api.LuckPerms;
 
@@ -209,6 +210,7 @@ public class Main extends JavaPlugin implements Listener {
 		getServer().getPluginManager().registerEvents(new CratesManager(), this);
 		getServer().getPluginManager().registerEvents(new HolosSetup(), this);
 		getServer().getPluginManager().registerEvents(new MenuGui(), this);
+		getServer().getPluginManager().registerEvents(new MainShopGui(), this);
 		this.getCommand("spawn").setExecutor(new SpawnCmd());
 		this.getCommand("build").setExecutor(new BuildCmd());
 		this.getCommand("farm2win").setExecutor(new Farm2WinCmd());
@@ -241,10 +243,10 @@ public class Main extends JavaPlugin implements Listener {
 		this.getCommand("atout").setExecutor(new AtoutCmd());
 		this.getCommand("datafile").setExecutor(new DataCmd());
 		this.getCommand("key").setExecutor(new KeyCmd());
-		this.getCommand("chatreactionsuggest").setExecutor(new ChatReactionSuggestCmd());
 		this.getCommand("money").setExecutor(new MoneyCmd());
 		this.getCommand("pay").setExecutor(new PayCmd());
 		this.getCommand("baltop").setExecutor(new BaltopCmd());
+		this.getCommand("shop").setExecutor(new ShopGuiCmd());
 		PluginManager pm = getServer().getPluginManager();
 		pm.registerEvents(this, this);
 		System.out.println("§aDémarrage du plugin réussi !");
@@ -265,17 +267,14 @@ public class Main extends JavaPlugin implements Listener {
 	
 	public FileConfiguration data;
 	public FileConfiguration datac;
-	public FileConfiguration dataa;
 	public FileConfiguration dataz;
     public File dfile;
     public File cfile;
-    public File afile;
     public File zfile;
    
     public void setup() {
         dfile = new File(this.getDataFolder(), "Challenges.yml");
         cfile = new File(this.getDataFolder(), "Fly.yml");
-        afile = new File(this.getDataFolder(), "ChatReaction.yml");
         zfile = new File(this.getDataFolder(), "Eco.yml");
        
         if(!dfile.exists()) {
@@ -300,17 +299,6 @@ public class Main extends JavaPlugin implements Listener {
         
         datac = YamlConfiguration.loadConfiguration(cfile);
         
-        if(!afile.exists()) {
-            try {
-                afile.createNewFile();
-            }
-            catch(IOException e) {
-                getLogger().info("§c§lErreur lors de la création de ChatReaction.yml");
-            }
-        }
-        
-        dataa = YamlConfiguration.loadConfiguration(afile);
-        
         if(!zfile.exists()) {
             try {
                 zfile.createNewFile();
@@ -332,9 +320,6 @@ public class Main extends JavaPlugin implements Listener {
         return data;
     }
     
-    public FileConfiguration getDataa() {
-    	return dataa;
-    }
     public FileConfiguration getDataz() {
     	return dataz;
     }
@@ -348,12 +333,6 @@ public class Main extends JavaPlugin implements Listener {
         }
             try {
 				datac.load(cfile);
-			} catch (InvalidConfigurationException e) {
-				getLogger().info("§c§lErreur lors de la sauvegarde!");
-				e.printStackTrace();
-        }
-            try {
-				dataa.load(afile);
 			} catch (InvalidConfigurationException e) {
 				getLogger().info("§c§lErreur lors de la sauvegarde!");
 				e.printStackTrace();
@@ -375,12 +354,6 @@ public class Main extends JavaPlugin implements Listener {
         }
         try {
             datac.save(cfile);
-        }
-        catch(IOException e) {
-            getLogger().info("§c§lErreur lors de la sauvegarde!");
-        }
-        try {
-            dataa.save(afile);
         }
         catch(IOException e) {
             getLogger().info("§c§lErreur lors de la sauvegarde!");

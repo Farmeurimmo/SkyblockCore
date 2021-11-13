@@ -55,12 +55,6 @@ public class ChatReaction implements Listener {
 				StartChatReaction();
 			}
 		}, 12000);
-			Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
-			public void run() {
-				bbb = false;
-				StartChatReaction();
-			}
-		}, 12600);
 	}
 	@EventHandler
 	public void OnMessageSend(PlayerChatEvent e) {

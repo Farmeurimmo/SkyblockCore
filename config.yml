@@ -14,3 +14,157 @@ bossbar:
   activated: "BossBar activée, les modifications peuvent prendre un moment !"
   disabled: "BossBar désactivée, les modifications peuvent prendre un moment !"
   invalidargs: "Arguments invalides"
+Shops:
+  Blocs:
+    1:
+      material: MAGMA_BLOCK
+      buy: 80
+      sell: 10
+    2:
+      material: PACKED_ICE
+      buy: 200
+      sell: 6
+    3:
+      material: SOUL_SAND
+      buy: 45
+      sell: 8
+    4:
+      material: STONE
+      buy: 100
+      sell: 6
+    5:
+      material: GLOWSTONE
+      buy: 50
+      sell: 6
+    6:
+      material: SEA_LANTERN
+      buy: 80
+      sell: 12
+    7:
+      material: SHROOMLIGHT
+      buy: 80
+      sell: 12
+    8:
+      material: ANDESITE
+      buy: 60
+      sell: 4
+    9:
+      material: BLACKSTONE
+      buy: 50
+      sell: 3
+    10:
+      material: BRICKS
+      buy: 130
+      sell: 12
+    11:
+      material: BASALT
+      buy: 35
+      sell: 3
+    12:
+      material: COBBLESTONE
+      buy: 60
+      sell: 2
+    13:
+      material: DIORITE
+      buy: 60
+      sell: 5
+    14:
+      material: CLAY
+      buy: 50
+      sell: 5.25
+    15:
+      material: DIRT
+      buy: 80
+      sell: 1
+    16:
+      material: GRASS_BLOCK
+      buy: 160
+      sell: 2
+    17:
+      material: GRAVEL
+      buy: 40
+      sell: 2
+    18:
+      material: MYCELIUM
+      buy: 160
+      sell: 6
+    19:
+      material: PODZOL
+      buy: 160
+      sell: 6
+    20:
+      material: END_STONE
+      buy: 120
+      sell: 3
+    21:
+      material: GLASS
+      buy: 70
+      sell: 5
+    22:
+      material: GRANITE
+      buy: 40
+      sell: 6
+    23:
+      material: NETHERRACK
+      buy: 20
+      sell: 3
+    24:
+      material: NETHER_BRICKS
+      buy: 90
+      sell: 8
+    25:
+      material: RED_NETHER_BRICKS
+      buy: 120
+      sell: 12
+    26:
+      material: OBSIDIAN
+      buy: 100
+      sell: 15
+    27:
+      material: PRISMARINE
+      buy: 50
+      sell: 4
+    28:
+      material: DARK_PRISMARINE
+      buy: 75
+      sell: 8
+    29:
+      material: PURPUR_BLOCK
+      buy: 75
+      sell: 4
+    30:
+      material: RED_SAND
+      buy: 58
+      sell: 2
+    31:
+      material: SAND
+      buy: 60
+      sell: 2
+    32:
+      material: SANDSTONE
+      buy: 65
+      sell: 3
+    33:
+      material: RED_SANDSTONE
+      buy: 62
+      sell: 3
+    34:
+      material: ACACIA_LOG
+      buy: 40
+      sell: 7
+    35:
+      material: BIRCH_LOG
+      buy: 40
+      sell: 6
+    36:
+      material: DARK_OAK_LOG
+      buy: 40
+      sell: 6
+    37:
+      material: JUNGLE_LOG
+      buy: 40
+      sell: 7
+    38:
+      material: OAK_LOG
+      buy: 40
+      sell: 8

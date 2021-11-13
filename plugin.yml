@@ -41,8 +41,8 @@ commands:
     aliases: [atouts]
   datafile:
   key:
-  chatreactionsuggest:
   money:
   pay:
   baltop:
+  shop:
   
