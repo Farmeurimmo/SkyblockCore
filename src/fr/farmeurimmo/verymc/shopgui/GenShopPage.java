@@ -34,35 +34,37 @@ public class GenShopPage {
 		toshowtemp.clear();
         slotstofill.addAll(Arrays.asList(10,11,12,13,14,15,16,19,20,21,22,23,24,25,28,29,30,31,32,33,34,37,38,39,40,41,42,43));
         
-        int currentpage = 1;
+            int currentpage = 1;
 			int numberofitems = 0;
 			for(String aa : Main.instance1.getConfig().getConfigurationSection("Shops."+page).getKeys(false)) {
+				numberofitems+=1;
 				ItemStack custom1 = new ItemStack(Material.valueOf(Main.instance1.getConfig().getString("Shops."+page+"."+aa+".material")), 1);
 				int slot = GetNextSlot();
 				slotstofill.removeAll(Arrays.asList(slot));
-				toshowtemp.put(custom1,slot);
-				if(slot == 0) {
-				break;
+				if(slot != 0) {
+					toshowtemp.put(custom1, slot);
 				}
-				if(numberofitems >= 29) {
+				if(numberofitems > 28) {
 					if(currentpage == 1) {
 						for(Entry<ItemStack, Integer> cc : toshowtemp.entrySet()) {
 				        	blocspage1.put(cc.getKey(), cc.getValue());
 				        }
 						}
-					else if(currentpage == 2) {
-						for(Entry<ItemStack, Integer> cc : toshowtemp.entrySet()) {
-				        	blocspage2.put(cc.getKey(), cc.getValue());
-				        }
+					toshowtemp.clear();
+					if(slot == 0) {
+						slotstofill.clear();
+						slotstofill.addAll(Arrays.asList(10,11,12,13,14,15,16,19,20,21,22,23,24,25,28,29,30,31,32,33,34,37,38,39,40,41,42,43));
+						slot = GetNextSlot();
+						toshowtemp.put(custom1, slot);
 					}
 					currentpage+=1;
 					numberofitems = 0;
-					slotstofill.clear();
-					slotstofill.addAll(Arrays.asList(10,11,12,13,14,15,16,  19,20,21,22,23,24,25,  28,29,30,31,32,33,34,  37,38,39,40,41,42,43));
-					toshowtemp.clear();
 				}
-				numberofitems+=1;
-			}   
+			}
+			for(Entry<ItemStack, Integer> cc : toshowtemp.entrySet()) {
+	        	blocspage2.put(cc.getKey(), cc.getValue());
+	        }
+			Bukkit.broadcastMessage(blocspage2.toString());
 		slotstofill.clear();
 		toshowtemp.clear();
 	}
@@ -79,7 +81,7 @@ public class GenShopPage {
         for(Entry<ItemStack, Integer> cc : blocspage1.entrySet()) {
         	inv.setItem(cc.getValue(), cc.getKey());
         }
-        } else if(pagenum == 2) {
+        } else {
         	for(Entry<ItemStack, Integer> cc : blocspage2.entrySet()) {
             	inv.setItem(cc.getValue(), cc.getKey());
             }

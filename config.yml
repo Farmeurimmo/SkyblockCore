@@ -168,3 +168,7 @@ Shops:
       material: OAK_LOG
       buy: 40
       sell: 8
+    39:
+      material: TNT
+      buy: 40
+      sell: 8
