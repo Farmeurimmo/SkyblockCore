@@ -27,7 +27,7 @@ public class MainShopGui implements Listener {
 		if(e.getView().getTitle().equalsIgnoreCase("§6Boutiques")) {
 			e.setCancelled(true);
 			if(current.getType() == Material.GRASS_BLOCK) {
-				GenShopPage.GenenerateShopPage(player, "Blocs");
+				GenShopPage.GenenerateShopPage(player, "Boutique des blocs");
 			}
 			if(current.getType() == Material.LIME_DYE) {
 				
