@@ -39,6 +39,26 @@ public class GenShopPage {
 			for(String aa : Main.instance1.getConfig().getConfigurationSection("Shops."+page).getKeys(false)) {
 				numberofitems+=1;
 				ItemStack custom1 = new ItemStack(Material.valueOf(Main.instance1.getConfig().getString("Shops."+page+"."+aa+".material")), 1);
+				ItemMeta meta1 = custom1.getItemMeta();
+				
+				String achat = "";
+				int prixachat = Main.instance1.getConfig().getInt("Shops."+page+"."+aa+".buy");
+				if(prixachat == -1) {
+					achat = "§cNon achetable";
+				} else {
+					achat = "§c"+prixachat+"$";
+				}
+				
+				String vente = "";
+				int prixvente = Main.instance1.getConfig().getInt("Shops."+page+"."+aa+".sell");
+				if(prixvente == -1) {
+				    vente = "§cNon vendable";
+				} else {
+					vente = "§c"+prixvente+"$";
+				}
+				meta1.setLore(Arrays.asList("§6Achat: " + achat,"§6Vente: "+vente));
+				custom1.setItemMeta(meta1);
+				
 				int slot = GetNextSlot();
 				slotstofill.removeAll(Arrays.asList(slot));
 				if(slot != 0) {
@@ -64,7 +84,6 @@ public class GenShopPage {
 			for(Entry<ItemStack, Integer> cc : toshowtemp.entrySet()) {
 	        	blocspage2.put(cc.getKey(), cc.getValue());
 	        }
-			Bukkit.broadcastMessage(blocspage2.toString());
 		slotstofill.clear();
 		toshowtemp.clear();
 	}
