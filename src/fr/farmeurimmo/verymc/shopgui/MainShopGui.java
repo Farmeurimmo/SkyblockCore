@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -21,13 +22,22 @@ import net.luckperms.api.model.user.User;
 public class MainShopGui implements Listener {
 	
 	@EventHandler
+	public void OnInventoryClick(InventoryCloseEvent e) {
+		if(e.getView().getTitle().contains("/")) {
+			if(GenShopPage.numpages.containsKey(e.getPlayer().getName())) {
+			GenShopPage.numpages.remove(e.getPlayer().getName());
+			}
+		}
+	}
+	
+	@EventHandler
 	public void OnInventoryClick(InventoryClickEvent e) {
 		Player player = (Player) e.getWhoClicked();
 		ItemStack current = e.getCurrentItem();
 		if(e.getView().getTitle().equalsIgnoreCase("§6Boutiques")) {
 			e.setCancelled(true);
 			if(current.getType() == Material.GRASS_BLOCK) {
-				GenShopPage.GenenerateShopPage(player, "Boutique des blocs");
+				GenShopPage.OpenPreGenPage(player, "Blocs", 1);
 			}
 			if(current.getType() == Material.LIME_DYE) {
 				
