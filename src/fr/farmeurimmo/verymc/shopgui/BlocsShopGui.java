@@ -22,6 +22,8 @@ public class BlocsShopGui implements Listener {
 				if(current.getItemMeta().getDisplayName().contains("précédente")) {
 					backpage(player, "Blocs");
 				}
+			} else if (current.getType() != Material.PLAYER_HEAD) {
+				GenAmoutShopGui.OpenPregenAmoutShop(player, current);
 			}
 		}
 	}

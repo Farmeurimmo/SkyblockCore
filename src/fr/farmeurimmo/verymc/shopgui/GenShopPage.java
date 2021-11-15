@@ -24,8 +24,10 @@ public class GenShopPage {
 	public static HashMap <ItemStack, Integer> blocspage2 = new HashMap < > ();
 	public static HashMap <String, Integer> maxpage = new HashMap < > ();
 	
+	public static HashMap <Player, String> lastpage = new HashMap < > ();
+	public static HashMap <Player, Integer> lastnumpage = new HashMap < > ();
 	
-	public static HashMap <String, Integer > numpages = new HashMap < > ();
+	public static HashMap <String, Integer> numpages = new HashMap < > ();
 	public static ArrayList<Integer> slotstofill = new ArrayList<Integer>();
 	public static HashMap <ItemStack, Integer> toshowtemp = new HashMap < > ();
 	
@@ -132,6 +134,8 @@ public class GenShopPage {
             
     		player.openInventory(inv);
     		numpages.put(player.getName(), pagenum);
+    		lastpage.put(player, page);
+    		lastnumpage.put(player, pagenum);
 	}
 	public static int GetNextSlot() {
 		int slottoreturn = 0;
