@@ -77,6 +77,7 @@ import fr.farmeurimmo.verymc.items.ItemLegCmd;
 import fr.farmeurimmo.verymc.scoreboard.ScoreBoard;
 import fr.farmeurimmo.verymc.shopgui.AmountGuiManager;
 import fr.farmeurimmo.verymc.shopgui.BlocsShopGui;
+import fr.farmeurimmo.verymc.shopgui.BuyShopItem;
 import fr.farmeurimmo.verymc.shopgui.GenAmoutShopGui;
 import fr.farmeurimmo.verymc.shopgui.GenShopPage;
 import fr.farmeurimmo.verymc.shopgui.MainShopGui;
@@ -196,6 +197,7 @@ public class Main extends JavaPlugin implements Listener {
 	    GenShopPage.GetNumberOfPage();
 	    GenShopPage.GenenerateShopPageStartup("Blocs");
 	    GenAmoutShopGui.GenAmoutShopGuiStartup();
+	    BuyShopItem.GenPriceShopStartup();
 		getServer().getPluginManager().registerEvents(new JoinLeave(), this);
 		getServer().getPluginManager().registerEvents(new ScoreBoard(), this);
 		getServer().getPluginManager().registerEvents(new Interact(), this);
