@@ -21,7 +21,7 @@ public class GenAmoutShopGui {
 	public static HashMap <ItemStack, Integer> amountchoice = new HashMap < > ();
 	
 	@SuppressWarnings("deprecation")
-	public static void OpenPregenAmoutShop(Player player, ItemStack aa) {
+	public static void OpenPregenAmoutShop(Player player, ItemStack aa, boolean a, String shop) {
 		Inventory inv = Bukkit.createInventory(null, 54, "§6Choix de la quantité d'achat");
 		
 		User user = LuckPermsProvider.get().getUserManager().getUser(player.getName());
@@ -44,8 +44,15 @@ public class GenAmoutShopGui {
 		custom7.setItemMeta(customg);
 		inv.setItem(53, custom7);
 		
+		int price = 0;
 		ItemMeta tempameta = aa.getItemMeta();
 		tempameta.setLore(null);
+		if(a == true) {
+			price = BuyShopItem.pricesbuy.get(aa.getType().toString());
+			tempameta.setLore(Arrays.asList("§6Prix d'achat: §c"+price+"$/u","§6Coût total: §c"+price*aa.getAmount()+"$"));
+		} else {
+			
+		}
 		aa.setItemMeta(tempameta);
 		inv.setItem(22, aa);
         
