@@ -75,7 +75,9 @@ import fr.farmeurimmo.verymc.gui.WarpGui;
 import fr.farmeurimmo.verymc.holos.HolosSetup;
 import fr.farmeurimmo.verymc.items.ItemLegCmd;
 import fr.farmeurimmo.verymc.scoreboard.ScoreBoard;
+import fr.farmeurimmo.verymc.shopgui.AmountGuiManager;
 import fr.farmeurimmo.verymc.shopgui.BlocsShopGui;
+import fr.farmeurimmo.verymc.shopgui.GenAmoutShopGui;
 import fr.farmeurimmo.verymc.shopgui.GenShopPage;
 import fr.farmeurimmo.verymc.shopgui.MainShopGui;
 import fr.farmeurimmo.verymc.shopgui.ShopGuiCmd;
@@ -193,6 +195,7 @@ public class Main extends JavaPlugin implements Listener {
 	    FeatherFlyInteract.ReadForTempFly();
 	    GenShopPage.GetNumberOfPage();
 	    GenShopPage.GenenerateShopPageStartup("Blocs");
+	    GenAmoutShopGui.GenAmoutShopGuiStartup();
 		getServer().getPluginManager().registerEvents(new JoinLeave(), this);
 		getServer().getPluginManager().registerEvents(new ScoreBoard(), this);
 		getServer().getPluginManager().registerEvents(new Interact(), this);
@@ -216,6 +219,7 @@ public class Main extends JavaPlugin implements Listener {
 		getServer().getPluginManager().registerEvents(new MenuGui(), this);
 		getServer().getPluginManager().registerEvents(new MainShopGui(), this);
 		getServer().getPluginManager().registerEvents(new BlocsShopGui(), this);
+		getServer().getPluginManager().registerEvents(new AmountGuiManager(), this);
 		this.getCommand("spawn").setExecutor(new SpawnCmd());
 		this.getCommand("build").setExecutor(new BuildCmd());
 		this.getCommand("farm2win").setExecutor(new Farm2WinCmd());
