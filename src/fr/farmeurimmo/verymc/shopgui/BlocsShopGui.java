@@ -4,6 +4,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
@@ -15,6 +16,7 @@ public class BlocsShopGui implements Listener {
 		ItemStack current = e.getCurrentItem();
 		if(e.getView().getTitle().contains("§6Blocs ") && e.getView().getTitle().contains("/")) {
 			e.setCancelled(true);
+			if(e.getClick() == ClickType.LEFT) {
 			if(current.getType() == Material.ARROW) {
 				if(current.getItemMeta().getDisplayName().contains("suivante")) {
 					nextpage(player, "Blocs");
@@ -24,6 +26,10 @@ public class BlocsShopGui implements Listener {
 				}
 			} else if (current.getType() != Material.PLAYER_HEAD) {
 				GenAmoutShopGui.OpenPregenAmoutShop(player, current);
+			}
+			}
+			if(e.getClick() == ClickType.RIGHT) {
+				
 			}
 		}
 	}
