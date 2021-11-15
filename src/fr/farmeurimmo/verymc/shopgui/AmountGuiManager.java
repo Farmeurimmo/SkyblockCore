@@ -1,11 +1,14 @@
 package fr.farmeurimmo.verymc.shopgui;
 
+import java.util.Arrays;
+
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 public class AmountGuiManager implements Listener {
 	
@@ -28,6 +31,10 @@ public class AmountGuiManager implements Listener {
 					} else {
 						e.getInventory().getItem(22).setAmount(now);
 					}
+					ItemMeta temp = e.getInventory().getItem(22).getItemMeta();
+					int price = BuyShopItem.pricesbuy.get(e.getInventory().getItem(22).getType().toString());
+					temp.setLore(Arrays.asList("§6Prix d'achat: §c"+price+"$/u","§6Coût total: §c"+price*e.getInventory().getItem(22).getAmount()+"$"));
+					e.getInventory().getItem(22).setItemMeta(temp);
 				}
 				if(current.getType() == Material.RED_STAINED_GLASS_PANE) {
 					int amount = e.getInventory().getItem(22).getAmount();
@@ -42,6 +49,10 @@ public class AmountGuiManager implements Listener {
 					} else {
 						e.getInventory().getItem(22).setAmount(now);
 					}
+					ItemMeta temp = e.getInventory().getItem(22).getItemMeta();
+					int price = BuyShopItem.pricesbuy.get(e.getInventory().getItem(22).getType().toString());
+					temp.setLore(Arrays.asList("§6Prix d'achat: §c"+price+"$/u","§6Coût total: §c"+price*e.getInventory().getItem(22).getAmount()+"$"));
+					e.getInventory().getItem(22).setItemMeta(temp);
 				}
 			} else if(current.getType() == Material.ARROW) {
 				Player player = (Player) e.getWhoClicked();

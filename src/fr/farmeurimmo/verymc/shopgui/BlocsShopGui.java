@@ -25,7 +25,7 @@ public class BlocsShopGui implements Listener {
 					backpage(player, "Blocs");
 				}
 			} else if (current.getType() != Material.PLAYER_HEAD) {
-				GenAmoutShopGui.OpenPregenAmoutShop(player, current);
+				GenAmoutShopGui.OpenPregenAmoutShop(player, current, true, "Blocs");
 			}
 			}
 			if(e.getClick() == ClickType.RIGHT) {
