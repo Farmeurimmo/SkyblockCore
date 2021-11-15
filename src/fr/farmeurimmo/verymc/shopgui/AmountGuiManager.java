@@ -12,9 +12,9 @@ public class AmountGuiManager implements Listener {
 	@EventHandler
 	public void OnInventoryClick(InventoryClickEvent e) {
 		ItemStack current = e.getCurrentItem();
-		if(e.getView().getTitle().equalsIgnoreCase("§6Choix de la quantité")) {
+		if(e.getView().getTitle().equalsIgnoreCase("§6Choix de la quantité d'achat")) {
 			e.setCancelled(true);
-			if(current.getType() != Material.ARROW && current.getType() != Material.PLAYER_HEAD) {
+			if(current.getType() != Material.ARROW && current.getType() != Material.PLAYER_HEAD && current.getType() != Material.LIME_WOOL) {
 				if(current.getType() == Material.LIME_STAINED_GLASS_PANE) {
 					int amount = e.getInventory().getItem(22).getAmount();
 					int toadd = 0;

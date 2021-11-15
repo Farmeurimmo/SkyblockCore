@@ -22,7 +22,7 @@ public class GenAmoutShopGui {
 	
 	@SuppressWarnings("deprecation")
 	public static void OpenPregenAmoutShop(Player player, ItemStack aa) {
-		Inventory inv = Bukkit.createInventory(null, 54, "§6Choix de la quantité");
+		Inventory inv = Bukkit.createInventory(null, 54, "§6Choix de la quantité d'achat");
 		
 		User user = LuckPermsProvider.get().getUserManager().getUser(player.getName());
 		String Grade = user.getCachedData().getMetaData().getPrefix().replace("&", "§");
@@ -44,6 +44,9 @@ public class GenAmoutShopGui {
 		custom7.setItemMeta(customg);
 		inv.setItem(53, custom7);
 		
+		ItemMeta tempameta = aa.getItemMeta();
+		tempameta.setLore(null);
+		aa.setItemMeta(tempameta);
 		inv.setItem(22, aa);
         
 		player.openInventory(inv);
@@ -101,6 +104,16 @@ public class GenAmoutShopGui {
 		customj.setDisplayName("§c§l-64");
 		custom10.setItemMeta(customj);
 		
+		ItemStack custom11 = new ItemStack(Material.LIME_WOOL, 1);
+		ItemMeta customk = custom11.getItemMeta();
+		customk.setDisplayName("§aComfirmer l'achat");
+		custom11.setItemMeta(customk);
+		
+		ItemStack custom12 = new ItemStack(Material.LIME_WOOL, 64);
+		ItemMeta customl = custom12.getItemMeta();
+		customl.setDisplayName("§aAcheter des stacks");
+		custom12.setItemMeta(customl);
+		
 		amountchoice.put(custom1, 23);
 		amountchoice.put(custom3, 24);
 		amountchoice.put(custom2, 25);
@@ -112,5 +125,8 @@ public class GenAmoutShopGui {
 		amountchoice.put(custom8, 19);
 		amountchoice.put(custom9, 11);
 		amountchoice.put(custom10, 29);
+		
+		amountchoice.put(custom11, 40);
+		amountchoice.put(custom12, 4);
 	}
 }
