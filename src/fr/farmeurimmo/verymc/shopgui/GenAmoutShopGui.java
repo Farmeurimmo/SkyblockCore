@@ -20,9 +20,14 @@ public class GenAmoutShopGui {
 	
 	public static HashMap <ItemStack, Integer> amountchoice = new HashMap < > ();
 	
-	@SuppressWarnings({ "deprecation", "unlikely-arg-type" })
-	public static void OpenPregenAmoutShop(Player player, ItemStack aa, boolean a, String shop) {
-		Inventory inv = Bukkit.createInventory(null, 54, "§6Choix de la quantité d'achat");
+	@SuppressWarnings({ "deprecation"})
+	public static void OpenPregenAmoutShop(Player player, ItemStack aa, boolean a) {
+		Inventory inv;
+		if(a == true) {
+		inv = Bukkit.createInventory(null, 54, "§6Choix de la quantité à acheter");
+		} else {
+			inv = Bukkit.createInventory(null, 54, "§6Choix de la quantité à vendre");
+		}
 		
 		User user = LuckPermsProvider.get().getUserManager().getUser(player.getName());
 		String Grade = user.getCachedData().getMetaData().getPrefix().replace("&", "§");
@@ -44,17 +49,45 @@ public class GenAmoutShopGui {
 		custom7.setItemMeta(customg);
 		inv.setItem(53, custom7);
 		
+		ItemStack custom11 = new ItemStack(Material.LIME_WOOL, 1);
+		ItemMeta customk = custom11.getItemMeta();
+		if(a == true) {
+		customk.setDisplayName("§aComfirmer l'achat");
+		} else {
+			customk.setDisplayName("§aComfirmer la vente");
+		}
+		custom11.setItemMeta(customk);
+		
+		ItemStack custom4 = new ItemStack(Material.GREEN_STAINED_GLASS_PANE, 64);
+		ItemMeta customd = custom4.getItemMeta();
+		if(a==true) {
+			customd.setDisplayName("§cRemplir l'inventaire");
+		} else {
+		customd.setDisplayName("§aTout vendre");
+		}
+		custom4.setItemMeta(customd);
+		
 		int price = 0;
 		ItemMeta tempameta = aa.getItemMeta();
 		tempameta.setLore(null);
 		if(a == true) {
-			price = BuyShopItem.pricesbuy.get(aa.getType().toString());
-			tempameta.setLore(Arrays.asList("§6Prix d'achat: §c"+price+"$/u","§6Coût total: §c"+price*aa.getAmount()+"$"));
+			price = BuyShopItem.pricesbuy.get(new ItemStack(Material.valueOf(aa.getType().toString())));
+			tempameta.setLore(Arrays.asList("§6Prix d'achat: §c"+price+"$/u","§6Total: §c"+price*aa.getAmount()+"$"));
+			ItemMeta temp = custom11.getItemMeta();
+			temp.setLore(Arrays.asList("§aTotal: §c"+price*aa.getAmount()+"$"));
+			custom11.setItemMeta(temp);
 		} else {
-			
+			price = BuyShopItem.pricessell.get(new ItemStack(Material.valueOf(aa.getType().toString())));
+			tempameta.setLore(Arrays.asList("§6Prix de vente: §a"+price+"$/u","§6Total: §a"+price*aa.getAmount()+"$"));
+			ItemMeta temp = custom11.getItemMeta();
+			temp.setLore(Arrays.asList("§aTotal: §a"+price*aa.getAmount()+"$"));
+			custom11.setItemMeta(temp);
 		}
 		aa.setItemMeta(tempameta);
 		inv.setItem(22, aa);
+		
+		inv.setItem(40, custom11);
+		inv.setItem(45, custom4);
         
 		player.openInventory(inv);
 		
@@ -111,11 +144,6 @@ public class GenAmoutShopGui {
 		customj.setDisplayName("§c§l-64");
 		custom10.setItemMeta(customj);
 		
-		ItemStack custom11 = new ItemStack(Material.LIME_WOOL, 1);
-		ItemMeta customk = custom11.getItemMeta();
-		customk.setDisplayName("§aComfirmer l'achat");
-		custom11.setItemMeta(customk);
-		
 		ItemStack custom12 = new ItemStack(Material.LIME_WOOL, 64);
 		ItemMeta customl = custom12.getItemMeta();
 		customl.setDisplayName("§aAcheter des stacks");
@@ -133,7 +161,6 @@ public class GenAmoutShopGui {
 		amountchoice.put(custom9, 11);
 		amountchoice.put(custom10, 29);
 		
-		amountchoice.put(custom11, 40);
 		amountchoice.put(custom12, 4);
 	}
 }

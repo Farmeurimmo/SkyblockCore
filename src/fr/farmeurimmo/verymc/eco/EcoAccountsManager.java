@@ -34,7 +34,9 @@ public class EcoAccountsManager {
 	}
 	public static boolean CheckForFounds(Player player, int needed) {
 		boolean aa = false;
-		if(Moneys.get(player.getName()) >= needed) {
+		int moneyplayer = Moneys.get(player.getName());
+		int after = moneyplayer-needed;
+		if(after >= 0) {
 			aa = true;
 		}
 		return aa;

@@ -12,13 +12,14 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class AmountGuiManager implements Listener {
 	
-	@SuppressWarnings("unlikely-arg-type")
 	@EventHandler
 	public void OnInventoryClick(InventoryClickEvent e) {
 		ItemStack current = e.getCurrentItem();
-		if(e.getView().getTitle().equalsIgnoreCase("§6Choix de la quantité d'achat")) {
+		if(current == null) {
+			return;
+		}
+		if(e.getView().getTitle().equalsIgnoreCase("§6Choix de la quantité à acheter")) {
 			e.setCancelled(true);
-			if(current.getType() != Material.ARROW && current.getType() != Material.PLAYER_HEAD && current.getType() != Material.LIME_WOOL) {
 				if(current.getType() == Material.LIME_STAINED_GLASS_PANE) {
 					int amount = e.getInventory().getItem(22).getAmount();
 					int toadd = 0;
@@ -33,9 +34,13 @@ public class AmountGuiManager implements Listener {
 						e.getInventory().getItem(22).setAmount(now);
 					}
 					ItemMeta temp = e.getInventory().getItem(22).getItemMeta();
-					int price = BuyShopItem.pricesbuy.get(e.getInventory().getItem(22).getType().toString());
-					temp.setLore(Arrays.asList("§6Prix d'achat: §c"+price+"$/u","§6Coût total: §c"+price*e.getInventory().getItem(22).getAmount()+"$"));
+					int price = BuyShopItem.pricesbuy.get(new ItemStack(Material.valueOf(e.getInventory().getItem(22).getType().toString())));
+					int totalcost = price*e.getInventory().getItem(22).getAmount();
+					temp.setLore(Arrays.asList("§6Prix d'achat: §c"+price+"$/u","§6Total: §c"+totalcost+"$"));
 					e.getInventory().getItem(22).setItemMeta(temp);
+					ItemMeta temp2 = e.getInventory().getItem(40).getItemMeta();
+					temp2.setLore(Arrays.asList("§aTotal: §c"+totalcost+"$"));
+					e.getInventory().getItem(40).setItemMeta(temp2);
 				}
 				if(current.getType() == Material.RED_STAINED_GLASS_PANE) {
 					int amount = e.getInventory().getItem(22).getAmount();
@@ -51,18 +56,107 @@ public class AmountGuiManager implements Listener {
 						e.getInventory().getItem(22).setAmount(now);
 					}
 					ItemMeta temp = e.getInventory().getItem(22).getItemMeta();
-					int price = BuyShopItem.pricesbuy.get(e.getInventory().getItem(22).getType().toString());
-					temp.setLore(Arrays.asList("§6Prix d'achat: §c"+price+"$/u","§6Coût total: §c"+price*e.getInventory().getItem(22).getAmount()+"$"));
+					int price = BuyShopItem.pricesbuy.get(new ItemStack(Material.valueOf(e.getInventory().getItem(22).getType().toString())));
+					int totalcost = price*e.getInventory().getItem(22).getAmount();
+					temp.setLore(Arrays.asList("§6Prix d'achat: §c"+price+"$/u","§6Total: §c"+totalcost+"$"));
 					e.getInventory().getItem(22).setItemMeta(temp);
+					ItemMeta temp2 = e.getInventory().getItem(40).getItemMeta();
+					temp2.setLore(Arrays.asList("§aTotal: §c"+totalcost+"$"));
+					e.getInventory().getItem(40).setItemMeta(temp2);
 				}
-			} else if(current.getType() == Material.LIME_WOOL) {
+			if(current.getType() == Material.LIME_WOOL) {
 				if(current.getAmount() == 1) {
-					int price = BuyShopItem.pricesbuy.get(e.getInventory().getItem(22).getType().toString());
+					int price = BuyShopItem.pricesbuy.get(new ItemStack(Material.valueOf(e.getInventory().getItem(22).getType().toString())));
 					int amount = price*e.getInventory().getItem(22).getAmount();
-					BuyShopItem.BuyOSellItemNonStack(e.getInventory().getItem(22), (Player) e.getWhoClicked(), true, amount);
+					ItemStack od = e.getInventory().getItem(22);
+					int total = od.getAmount();
+					BuyShopItem.BuyOSellItemNonStack(od, (Player) e.getWhoClicked(), true, amount, total);
 				}
 			
-			} else if(current.getType() == Material.ARROW) {
+			}
+			if(current.getType() == Material.GREEN_STAINED_GLASS_PANE) {
+				ItemStack od = e.getInventory().getItem(22);
+				int amountinvinv = BuyShopItem.GetAmountToFillInInv(od, (Player) e.getWhoClicked());
+				int price = BuyShopItem.pricesbuy.get(new ItemStack(Material.valueOf(e.getInventory().getItem(22).getType().toString())));
+				if(amountinvinv >= 1) {
+					BuyShopItem.BuyOSellItemNonStack(od, (Player) e.getWhoClicked(), true, price, amountinvinv);
+				} else {
+					BuyShopItem.BuyOSellItemNonStack(od, (Player) e.getWhoClicked(), true, price, amountinvinv);
+				}
+			}
+			if(current.getType() == Material.ARROW) {
+				Player player = (Player) e.getWhoClicked();
+				String lastpage = GenShopPage.lastpage.get(player);
+				int pagecurrent = GenShopPage.lastnumpage.get(player);
+				GenShopPage.OpenPreGenPage(player, lastpage, pagecurrent);
+			}
+		}
+		if(e.getView().getTitle().equalsIgnoreCase("§6Choix de la quantité à vendre")) {
+			e.setCancelled(true);
+			if(current.getType() == Material.LIME_STAINED_GLASS_PANE) {
+				int amount = e.getInventory().getItem(22).getAmount();
+				int toadd = 0;
+				String totrait = current.getItemMeta().getDisplayName();
+				totrait = totrait.replace("+", "");
+				totrait = totrait.replace("§a§l", "");
+				toadd = Integer.parseInt(totrait);
+				int now = amount + toadd;
+				if(now > 64) {
+					e.getInventory().getItem(22).setAmount(64);
+				} else {
+					e.getInventory().getItem(22).setAmount(now);
+				}
+				ItemMeta temp = e.getInventory().getItem(22).getItemMeta();
+				int price = BuyShopItem.pricessell.get(new ItemStack(Material.valueOf(e.getInventory().getItem(22).getType().toString())));
+				int totalcost = price*e.getInventory().getItem(22).getAmount();
+				temp.setLore(Arrays.asList("§6Prix de vente: §a"+price+"$/u","§6Total: §a"+totalcost+"$"));
+				e.getInventory().getItem(22).setItemMeta(temp);
+				ItemMeta temp2 = e.getInventory().getItem(40).getItemMeta();
+				temp2.setLore(Arrays.asList("§aTotal: §a"+totalcost+"$"));
+				e.getInventory().getItem(40).setItemMeta(temp2);
+			}
+			if(current.getType() == Material.RED_STAINED_GLASS_PANE) {
+				int amount = e.getInventory().getItem(22).getAmount();
+				int toremove = 0;
+				String totrait = current.getItemMeta().getDisplayName();
+				totrait = totrait.replace("+", "");
+				totrait = totrait.replace("§c§l", "");
+				toremove = Integer.parseInt(totrait);
+				int now = amount + toremove;
+				if(now < 1) {
+					e.getInventory().getItem(22).setAmount(1);
+				} else {
+					e.getInventory().getItem(22).setAmount(now);
+				}
+				ItemMeta temp = e.getInventory().getItem(22).getItemMeta();
+				int price = BuyShopItem.pricessell.get(new ItemStack(Material.valueOf(e.getInventory().getItem(22).getType().toString())));
+				int totalcost = price*e.getInventory().getItem(22).getAmount();
+				temp.setLore(Arrays.asList("§6Prix de vente: §a"+price+"$/u","§6Total: §a"+totalcost+"$"));
+				e.getInventory().getItem(22).setItemMeta(temp);
+				ItemMeta temp2 = e.getInventory().getItem(40).getItemMeta();
+				temp2.setLore(Arrays.asList("§aTotal: §a"+totalcost+"$"));
+				e.getInventory().getItem(40).setItemMeta(temp2);
+			}
+			if(current.getType() == Material.LIME_WOOL) {
+				if(current.getAmount() == 1) {
+					int price = BuyShopItem.pricesbuy.get(new ItemStack(Material.valueOf(e.getInventory().getItem(22).getType().toString())));
+					int amount = price*e.getInventory().getItem(22).getAmount();
+					ItemStack od = e.getInventory().getItem(22);
+					int total = od.getAmount();
+					BuyShopItem.BuyOSellItemNonStack(od, (Player) e.getWhoClicked(), false, amount, total);
+				}
+			}
+			if(current.getType() == Material.GREEN_STAINED_GLASS_PANE) {
+				ItemStack od = e.getInventory().getItem(22);
+				int amountinvinv = BuyShopItem.GetAmountInInv(od, (Player) e.getWhoClicked());
+				int price = BuyShopItem.pricesbuy.get(new ItemStack(Material.valueOf(e.getInventory().getItem(22).getType().toString())));
+				if(amountinvinv >= 1) {
+					BuyShopItem.BuyOSellItemNonStack(od, (Player) e.getWhoClicked(), false, price, amountinvinv);
+				} else {
+					BuyShopItem.BuyOSellItemNonStack(od, (Player) e.getWhoClicked(), false, price, amountinvinv);
+				}
+			}
+			if(current.getType() == Material.ARROW) {
 				Player player = (Player) e.getWhoClicked();
 				String lastpage = GenShopPage.lastpage.get(player);
 				int pagecurrent = GenShopPage.lastnumpage.get(player);
