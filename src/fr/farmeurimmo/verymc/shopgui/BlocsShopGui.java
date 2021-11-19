@@ -24,12 +24,12 @@ public class BlocsShopGui implements Listener {
 				if(current.getItemMeta().getDisplayName().contains("précédente")) {
 					backpage(player, "Blocs");
 				}
-			} else if (current.getType() != Material.PLAYER_HEAD) {
-				GenAmoutShopGui.OpenPregenAmoutShop(player, current, true, "Blocs");
+			} else if (current.getType() != Material.PLAYER_HEAD && current.getType() != Material.ARROW) {
+				GenAmoutShopGui.OpenPregenAmoutShop(player, current, true);
 			}
 			}
-			if(e.getClick() == ClickType.RIGHT) {
-				
+			if(e.getClick() == ClickType.RIGHT && current.getType() != Material.PLAYER_HEAD && current.getType() != Material.ARROW) {
+				GenAmoutShopGui.OpenPregenAmoutShop(player, current, false);
 			}
 		}
 	}

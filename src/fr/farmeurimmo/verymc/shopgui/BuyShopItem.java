@@ -4,7 +4,9 @@ import java.util.HashMap;
 
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import fr.farmeurimmo.verymc.core.Main;
 import fr.farmeurimmo.verymc.eco.EcoAccountsManager;
@@ -25,20 +27,91 @@ public class BuyShopItem {
 		}
 		}
 	}
-	public static void BuyOSellItemNonStack(ItemStack a, Player player, boolean buy, int price) {
+	public static void removeItems(Inventory inventory, Material type, int amount) {
+        if (amount <= 0) return;
+        int size = inventory.getSize();
+        for (int slot = 0; slot < size; slot++) {
+            ItemStack is = inventory.getItem(slot);
+            if (is == null) continue;
+            if (type == is.getType()) {
+                int newAmount = is.getAmount() - amount;
+                if (newAmount > 0) {
+                    is.setAmount(newAmount);
+                    break;
+                } else {
+                    inventory.clear(slot);
+                    amount = -newAmount;
+                    if (amount == 0) break;
+                }
+            }
+        }
+    }
+	public static int GetAmountInInv(ItemStack aa, Player player) {
+		int total = 0;
+		
+		int size = player.getInventory().getSize();
+        for (int slot = 0; slot < size; slot++) {
+        	ItemStack is = player.getInventory().getItem(slot);
+        	if(is == null) continue;
+        	if(aa.getType() == is.getType()) {
+        		total+= is.getAmount();
+        	}
+        }
+		
+		return total;
+	}
+	public static int GetAmountToFillInInv(ItemStack aa, Player player) {
+		int total = 0;
+		
+		int size = player.getInventory().getSize();
+        for (int slot = 0; slot < size; slot++) {
+        	ItemStack is = player.getInventory().getItem(slot);
+        	if(is == null) {
+        		total+=64;
+        		continue;
+        	} else if(is.getType() == aa.getType()) {
+        		total+=64-is.getAmount();
+        		continue;
+        	}
+        }
+        	if(player.getInventory().getHelmet() == null) {
+        		total -= 64;
+        	}
+        	if(player.getInventory().getChestplate() == null) {
+        		total -= 64;
+        	}
+        	if(player.getInventory().getLeggings() == null) {
+        		total -= 64;
+        	}
+        	if(player.getInventory().getBoots() == null) {
+        		total -= 64;
+        	}
+        	if(player.getInventory().getItemInOffHand().getType() == Material.AIR) {
+        		total -= 64;
+        	}
+		
+		return total;
+	}
+	public static void BuyOSellItemNonStack(ItemStack a, Player player, boolean buy, int price, int amount) {
 		if(buy == true) {
-			if(EcoAccountsManager.CheckForFounds(player, pricesbuy.get(a))) {
+			if(EcoAccountsManager.CheckForFounds(player, pricesbuy.get(new ItemStack(Material.valueOf(a.getType().toString())))*amount) == true) {
+				ItemMeta tempmeta = a.getItemMeta();
+				tempmeta.setLore(null);
+				a.setItemMeta(tempmeta);
+				player.closeInventory();
+				a.setAmount(amount);
+				EcoAccountsManager.RemoveFounds(player.getName(), price*amount);
 				player.getInventory().addItem(a);
-				EcoAccountsManager.RemoveFounds(player.getName(), price);
 			} else {
-				int loa=price - EcoAccountsManager.GetMoney(player.getName());
+				int loa=price*amount - EcoAccountsManager.GetMoney(player.getName());
 				player.sendMessage("§6§lShop §8» §fIl vous manque §6"+loa+"$§f.");
 			}
 		} else {
-			if(player.getInventory().contains(a.getType(), a.getAmount())) {
-				int profit = pricessell.get(a)*a.getAmount();
-				player.getInventory().remove(a);
-				player.sendMessage("§6§lShop §8» §fVous avez vendu §ax"+a.getAmount()+" "+a.getType().toString()+"§f pour §6"+profit+"$§f.");
+			if(player.getInventory().contains(a.getType(), amount)) {
+				int profit = pricessell.get(new ItemStack(Material.valueOf(a.getType().toString())))*amount;
+				player.closeInventory();
+				removeItems(player.getInventory(), a.getType(), amount);
+				player.sendMessage("§6§lShop §8» §fVous avez vendu §ax"+amount+" "+a.getType().toString()+"§f pour §6"+profit+"$§f.");
 				EcoAccountsManager.AddFounds(player.getName(), profit);
 			} else {
 				player.sendMessage("§6§lShop §8» §fVous avez besoin de plus de "+a.getType().toString()+".");
