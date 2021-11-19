@@ -12,6 +12,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class AmountGuiManager implements Listener {
 	
+	@SuppressWarnings("unlikely-arg-type")
 	@EventHandler
 	public void OnInventoryClick(InventoryClickEvent e) {
 		ItemStack current = e.getCurrentItem();
@@ -54,6 +55,13 @@ public class AmountGuiManager implements Listener {
 					temp.setLore(Arrays.asList("§6Prix d'achat: §c"+price+"$/u","§6Coût total: §c"+price*e.getInventory().getItem(22).getAmount()+"$"));
 					e.getInventory().getItem(22).setItemMeta(temp);
 				}
+			} else if(current.getType() == Material.LIME_WOOL) {
+				if(current.getAmount() == 1) {
+					int price = BuyShopItem.pricesbuy.get(e.getInventory().getItem(22).getType().toString());
+					int amount = price*e.getInventory().getItem(22).getAmount();
+					BuyShopItem.BuyOSellItemNonStack(e.getInventory().getItem(22), (Player) e.getWhoClicked(), true, amount);
+				}
+			
 			} else if(current.getType() == Material.ARROW) {
 				Player player = (Player) e.getWhoClicked();
 				String lastpage = GenShopPage.lastpage.get(player);
