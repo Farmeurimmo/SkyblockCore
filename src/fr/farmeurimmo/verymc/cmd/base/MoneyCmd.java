@@ -23,9 +23,7 @@ public class MoneyCmd implements CommandExecutor, TabCompleter {
 		if(sender instanceof Player) {
 			Player player = (Player) sender;
 			player.sendMessage("§6§lMonnaie §8» §fVous avez §6"+EcoAccountsManager.Moneys.get(player.getName())+"$");
-			Main.instance1.getDataz().set("Tester", 200);
-			Main.instance1.saveData();
-			EcoAccountsManager.Moneys.put("Tester", Main.instance1.getDataz().getInt(player.getName()));
+			EcoAccountsManager.Moneys.put("Tester", (float) Main.instance1.getDataz().get(player.getName()));
 		}
 		} else if (args.length == 1) {
 			if(EcoAccountsManager.Moneys.get(args[0]) != null) {
@@ -38,7 +36,7 @@ public class MoneyCmd implements CommandExecutor, TabCompleter {
 			if(args[1].equalsIgnoreCase("give")) {
 				
 				if(args[2].length() <= 9) {
-				int aaa = Integer.parseInt(args[2]);
+				float aaa = Float.parseFloat(args[2]);
 				EcoAccountsManager.AddFounds(args[0], aaa);
 				sender.sendMessage("§6§lMonnaie §8» §f"+args[0]+" a reçu §6"+aaa+"$§f sur son compte avec succès.");
 				} else {
@@ -47,7 +45,7 @@ public class MoneyCmd implements CommandExecutor, TabCompleter {
 				
 			} else if (args[1].equalsIgnoreCase("remove")) {
 				if(args[2].length() <= 9) {
-					int aaa = Integer.parseInt(args[2]);
+					float aaa = Float.parseFloat(args[2]);
 					EcoAccountsManager.RemoveFounds(args[0], aaa);
 					sender.sendMessage("§6§lMonnaie §8» §f"+args[0]+" a perdu §6"+aaa+"$§f sur son compte avec succès.");
 					} else {
@@ -55,7 +53,7 @@ public class MoneyCmd implements CommandExecutor, TabCompleter {
 					}
 			} else if (args[1].equalsIgnoreCase("set")) {
 				if(args[2].length() <= 9) {
-					int aaa = Integer.parseInt(args[2]);
+					float aaa = Float.parseFloat(args[2]);
 					EcoAccountsManager.SetFounds(args[0], aaa);
 					sender.sendMessage("§6§lMonnaie §8» §fL'argent de "+args[0]+" a été définis sur §6"+aaa+"$§f avec succès.");
 					} else {

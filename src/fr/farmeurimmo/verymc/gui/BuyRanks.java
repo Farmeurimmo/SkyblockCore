@@ -8,7 +8,7 @@ import fr.farmeurimmo.verymc.eco.EcoAccountsManager;
 public class BuyRanks {
 	
 	public static void BuyRank(String rank, Player player) {
-	    int money = EcoAccountsManager.Moneys.get(player.getName());
+	    Float money = EcoAccountsManager.Moneys.get(player.getName());
 		
 	    if(rank.contains("legende")) {
 	    	if(money >= Farm2WinGui.legendeprix);

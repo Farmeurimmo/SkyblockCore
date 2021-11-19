@@ -133,7 +133,7 @@ public class BuyAtoutGui implements Listener {
 		}
 	}
 	public static void BuyAtout(int effect, Player player) {
-	    int money = EcoAccountsManager.Moneys.get(player.getName());
+	    Float money = EcoAccountsManager.Moneys.get(player.getName());
 	    
 		if(effect == 1) {
 			if(money >= haste);

@@ -22,6 +22,15 @@ public class GenShopPage {
 	
 	public static HashMap <ItemStack, Integer> blocspage1 = new HashMap < > ();
 	public static HashMap <ItemStack, Integer> blocspage2 = new HashMap < > ();
+	public static HashMap <ItemStack, Integer> agripage = new HashMap < > ();
+	public static HashMap <ItemStack, Integer> foodpage = new HashMap < > ();
+	public static HashMap <ItemStack, Integer> colopage = new HashMap < > ();
+	public static HashMap <ItemStack, Integer> mineraipage = new HashMap < > ();
+	public static HashMap <ItemStack, Integer> autrepage = new HashMap < > ();
+	public static HashMap <ItemStack, Integer> lootmpage = new HashMap < > ();
+	public static HashMap <ItemStack, Integer> redstonepage = new HashMap < > ();
+	public static HashMap <ItemStack, Integer> spawneurpage = new HashMap < > ();
+	
 	public static HashMap <String, Integer> maxpage = new HashMap < > ();
 	
 	public static HashMap <Player, String> lastpage = new HashMap < > ();
