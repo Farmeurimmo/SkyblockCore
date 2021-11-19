@@ -20,7 +20,7 @@ public class GenAmoutShopGui {
 	
 	public static HashMap <ItemStack, Integer> amountchoice = new HashMap < > ();
 	
-	@SuppressWarnings("deprecation")
+	@SuppressWarnings({ "deprecation", "unlikely-arg-type" })
 	public static void OpenPregenAmoutShop(Player player, ItemStack aa, boolean a, String shop) {
 		Inventory inv = Bukkit.createInventory(null, 54, "§6Choix de la quantité d'achat");
 		

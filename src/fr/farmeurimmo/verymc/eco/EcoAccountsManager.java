@@ -25,10 +25,10 @@ public class EcoAccountsManager {
 		}
 		return a;
 	}
-	public static String GetMoney(String a) {
-		String b = "0";
+	public static int GetMoney(String a) {
+		int b = 0;
 		if(Moneys.containsKey(a)) {
-			b = Moneys.get(a).toString();
+			b = Moneys.get(a);
 		}
 		return b;
 	}
