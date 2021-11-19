@@ -8,7 +8,7 @@ import fr.farmeurimmo.verymc.eco.EcoAccountsManager;
 public class BuyCommand {
 	
 	public static void BuyCmd(String cmd, Player player) {
-	    int money = EcoAccountsManager.Moneys.get(player.getName());
+	    Float money = EcoAccountsManager.Moneys.get(player.getName());
 	    
 		if(cmd.contains("hat")) {
 			if(money >= Farm2WinGui.hatprix);

@@ -49,7 +49,7 @@ public class WineGui implements Listener {
 		if(e.getView().getTitle().equalsIgnoreCase("§6Boutique des vins")) {
 			e.setCancelled(true);
 			if(current.getType() == Material.POTION && current.getItemMeta().getDisplayName().equalsIgnoreCase("§6Cidre")) {
-			    int money = EcoAccountsManager.Moneys.get(player.getName());
+			    Float money = EcoAccountsManager.Moneys.get(player.getName());
 			    
 				
 				if(money >= BuyWinePotion.cidreprice) {
@@ -68,7 +68,7 @@ public class WineGui implements Listener {
 				}
 			}
 			if(current.getType() == Material.POTION && current.getItemMeta().getDisplayName().equalsIgnoreCase("§6Bière")) {
-			    int money = EcoAccountsManager.Moneys.get(player.getName());
+			    Float money = EcoAccountsManager.Moneys.get(player.getName());
 			    
 				
 				if(money >= BuyWinePotion.biereprice) {
@@ -87,7 +87,7 @@ public class WineGui implements Listener {
 				}
 			}
 			if(current.getType() == Material.POTION && current.getItemMeta().getDisplayName().equalsIgnoreCase("§6Rhum")) {
-			    int money = EcoAccountsManager.Moneys.get(player.getName());
+			    Float money = EcoAccountsManager.Moneys.get(player.getName());
 			    
 				
 				if(money >= BuyWinePotion.rhumprice) {
@@ -106,7 +106,7 @@ public class WineGui implements Listener {
 				}
 			}
 			if(current.getType() == Material.POTION && current.getItemMeta().getDisplayName().equalsIgnoreCase("§6Vodka")) {
-			    int money = EcoAccountsManager.Moneys.get(player.getName());
+			    Float money = EcoAccountsManager.Moneys.get(player.getName());
 			    
 				
 				if(money >= BuyWinePotion.vodkaprice) {

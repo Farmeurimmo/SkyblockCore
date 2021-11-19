@@ -9,13 +9,13 @@ import fr.farmeurimmo.verymc.core.Main;
 
 public class EcoAccountsManager {
 	
-	public static HashMap <String, Integer > Moneys = new HashMap < > ();
+	public static HashMap <String, Float > Moneys = new HashMap < > ();
 	
 	public static void CheckForAccount(Player player) {
 		if(Main.instance1.getDataz().get(player.getName()) == null){
 			Main.instance1.getDataz().set(player.getName(), 200);
 			Main.instance1.saveData();
-			Moneys.put(player.getName(), Main.instance1.getDataz().getInt(player.getName()));
+			Moneys.put(player.getName(), (Float) Main.instance1.getDataz().get(player.getName()));
 		}
 	}
 	public static boolean IsExisting(String player) {
@@ -25,26 +25,26 @@ public class EcoAccountsManager {
 		}
 		return a;
 	}
-	public static int GetMoney(String a) {
-		int b = 0;
+	public static Float GetMoney(String a) {
+		Float b = (float) 0;
 		if(Moneys.containsKey(a)) {
 			b = Moneys.get(a);
 		}
 		return b;
 	}
-	public static boolean CheckForFounds(Player player, int needed) {
+	public static boolean CheckForFounds(Player player, float needed) {
 		boolean aa = false;
-		int moneyplayer = Moneys.get(player.getName());
-		int after = moneyplayer-needed;
+		Float moneyplayer = Moneys.get(player.getName());
+		float after = moneyplayer-needed;
 		if(after >= 0) {
 			aa = true;
 		}
 		return aa;
 	}
-	public static void RemoveFounds(String player, int toremove) {
-		int moneybefore = Moneys.get(player);
+	public static void RemoveFounds(String player, float toremove) {
+		Float moneybefore = Moneys.get(player);
 		if(moneybefore - toremove >= 0) {
-		int now = moneybefore - toremove;
+		float now = moneybefore - toremove;
 		Moneys.put(player, now);
 		Main.instance1.getDataz().set(player, now);
 		Main.instance1.saveData();
@@ -57,18 +57,18 @@ public class EcoAccountsManager {
 			}
 		}
 	}
-	public static void SetFounds(String player, int toset) {
-		Moneys.put(player, toset);
-		Main.instance1.getDataz().set(player, toset);
+	public static void SetFounds(String player, float aaa) {
+		Moneys.put(player, aaa);
+		Main.instance1.getDataz().set(player, aaa);
 		Main.instance1.saveData();
 		if(Bukkit.getPlayer(player) != null) {
-			Bukkit.getPlayer(player).sendMessage("§6§lMonnaie §8» §fVotre argent a été §adéfinis§f sur §6"+toset+"$§f.");
+			Bukkit.getPlayer(player).sendMessage("§6§lMonnaie §8» §fVotre argent a été §adéfinis§f sur §6"+aaa+"$§f.");
 		}
 	}
-	public static void AddFounds(String player, int toadd) {
-		int moneybefore = Moneys.get(player);
+	public static void AddFounds(String player, float toadd) {
+		Float moneybefore = Moneys.get(player);
 		if(moneybefore < 2147483647 - toadd) {
-		int now = Moneys.get(player) + toadd;
+		float now = Moneys.get(player) + toadd;
 		Moneys.put(player, now);
 		Main.instance1.getDataz().set(player, now);
 		Main.instance1.saveData();
@@ -83,7 +83,7 @@ public class EcoAccountsManager {
 	}
 	public static void UpdateHash() {
 		for(String aa : Main.instance1.getDataz().getConfigurationSection("").getKeys(false)) {
-			Moneys.put(aa, Main.instance1.getDataz().getInt(aa));
+			Moneys.put(aa, (float) Main.instance1.getDataz().getInt(aa));
 		}
 	}
 }

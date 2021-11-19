@@ -103,7 +103,7 @@ public class BuyShopItem {
 				EcoAccountsManager.RemoveFounds(player.getName(), price*amount);
 				player.getInventory().addItem(a);
 			} else {
-				int loa=price*amount - EcoAccountsManager.GetMoney(player.getName());
+				float loa=price*amount - EcoAccountsManager.GetMoney(player.getName());
 				player.sendMessage("§6§lShop §8» §fIl vous manque §6"+loa+"$§f.");
 			}
 		} else {
