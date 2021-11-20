@@ -43,7 +43,7 @@ public class BossBar {
 	public static void AddBossBarForPlayer(Player player) {
 		aaa.addPlayer(player);
 	}
-	@SuppressWarnings("deprecation")
+	
 	public static void BossBarForEveryone() {
 		for(Player player : Bukkit.getOnlinePlayers()) {
 			if(!Disable.contains(player)) {
@@ -65,7 +65,7 @@ public class BossBar {
                     }
                 }, Main.getInstance().getConfig().getInt("bossbar.delay"));
 	}
-	@SuppressWarnings("deprecation")
+	
 	public static  void AddProgressBossbar() {
 		if(reset != 0) {
 		if(reverse == 0) {

@@ -47,7 +47,6 @@ public class FeatherFlyInteract implements Listener {
 		}
 	}
 	
-	@SuppressWarnings({ "deprecation" })
 	@EventHandler
 	public void onInteractWithFeather(PlayerInteractEvent e) {
 		Player player = e.getPlayer();

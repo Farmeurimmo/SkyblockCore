@@ -12,7 +12,7 @@ import org.bukkit.event.entity.ExplosionPrimeEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 
-@SuppressWarnings("deprecation")
+
 public class AntiExplo implements Listener {
 	
 	@EventHandler

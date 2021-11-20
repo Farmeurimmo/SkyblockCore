@@ -11,7 +11,7 @@ public class WineSpawn {
 	
 	static NPC npc = CitizensAPI.getNPCRegistry().createNPC(EntityType.PLAYER, "§6Barman");
 
-    @SuppressWarnings("deprecation")
+    
 	public static void SpawnPnj(Location loc){
         SkinTrait skin = npc.getTrait(SkinTrait.class);
         npc.setAlwaysUseNameHologram(false);

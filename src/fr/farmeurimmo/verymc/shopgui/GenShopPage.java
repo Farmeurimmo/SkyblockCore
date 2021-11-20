@@ -135,7 +135,7 @@ public class GenShopPage {
 		slotstofill.clear();
 		toshowtemp.clear();
 	}
-	@SuppressWarnings("deprecation")
+	
 	public static void OpenPreGenPage(Player player, String page, int pagenum) {
 		User user = LuckPermsProvider.get().getUserManager().getUser(player.getName());
 		String Grade = user.getCachedData().getMetaData().getPrefix().replace("&", "§");

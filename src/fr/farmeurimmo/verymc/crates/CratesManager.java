@@ -41,7 +41,6 @@ public class CratesManager implements Listener {
 			BoxVote.getY() + 2.5, BoxVote.getZ()+0.5);
 	static Hologram hologramd = HologramsAPI.createHologram(plugin, holod);
 	
-	@SuppressWarnings("deprecation")
 	@EventHandler(priority = EventPriority.MONITOR)
 	public void OnInteract(PlayerInteractEvent e) {
 		Player player = e.getPlayer();
@@ -163,7 +162,6 @@ public class CratesManager implements Listener {
 			}
 		}
 	}
-	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void InventoryClickEvent(InventoryClickEvent e) {
 		ItemStack current = e.getCurrentItem();

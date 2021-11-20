@@ -22,27 +22,25 @@ public class ScoreBoard implements Listener {
 	public static Main instance;
 	static String Grade = "";
 	
-	
-	@SuppressWarnings("deprecation")
 	public static void setScoreBoard(Player player){
 		Scoreboard board = Bukkit.getScoreboardManager().getNewScoreboard();
 		Objective obj = board.registerNewObjective("VeryMc", "dummy");
 		obj.setDisplaySlot(DisplaySlot.SIDEBAR);
-		obj.setDisplayName("Â§6Â§lVeryÂ§fÂ§lMc");
+		obj.setDisplayName("§6§lVery§f§lMc");
 		
 		User user = LuckPermsProvider.get().getUserManager().getUser(player.getName());
 		if (user.getCachedData().getMetaData().getPrefix() != null) {
-			Grade = user.getCachedData().getMetaData().getPrefix().replace("&", "Â§");
+			Grade = user.getCachedData().getMetaData().getPrefix().replace("&", "§");
 		}
 		
 		
-		obj.getScore("Â§6Â§l" + player.getName()).setScore(14);
-		obj.getScore(" Â§eplay.verymc.fr").setScore(1);
-		obj.getScore("Â§a").setScore(15);
-		obj.getScore("Â§l").setScore(11);
-		obj.getScore("Â§6Ile").setScore(10);
-		obj.getScore("Â§o").setScore(4);
-		obj.getScore("Â§d").setScore(2);
+		obj.getScore("§6§l" + player.getName()).setScore(14);
+		obj.getScore(" §eplay.verymc.fr").setScore(1);
+		obj.getScore("§a").setScore(15);
+		obj.getScore("§l").setScore(11);
+		obj.getScore("§6Ile").setScore(10);
+		obj.getScore("§o").setScore(4);
+		obj.getScore("§d").setScore(2);
 
 
 		Team rank = board.registerNewTeam("rank");
@@ -55,51 +53,49 @@ public class ScoreBoard implements Listener {
 		Team online = board.registerNewTeam("online");
 		
 		
-		online.addEntry("Â§k");
-		ismoney.addEntry("Â§9");
-		iscrystaux.addEntry("Â§8");
-		ismembre.addEntry("Â§7");
-		classementis.addEntry("Â§6");
-		gradeis.addEntry("Â§5");
-		money.addEntry("Â§3");
-		rank.addEntry("Â§2");
+		online.addEntry("§k");
+		ismoney.addEntry("§9");
+		iscrystaux.addEntry("§8");
+		ismembre.addEntry("§7");
+		classementis.addEntry("§6");
+		gradeis.addEntry("§5");
+		money.addEntry("§3");
+		rank.addEntry("§2");
 		
 		
-		obj.getScore("Â§k").setScore(3);
-		obj.getScore("Â§9").setScore(6);
-		obj.getScore("Â§8").setScore(7);
-		obj.getScore("Â§7").setScore(5);
-		obj.getScore("Â§6").setScore(8);
-		obj.getScore("Â§5").setScore(9);
-		obj.getScore("Â§3").setScore(12);
-		obj.getScore("Â§2").setScore(13);
+		obj.getScore("§k").setScore(3);
+		obj.getScore("§9").setScore(6);
+		obj.getScore("§8").setScore(7);
+		obj.getScore("§7").setScore(5);
+		obj.getScore("§6").setScore(8);
+		obj.getScore("§5").setScore(9);
+		obj.getScore("§3").setScore(12);
+		obj.getScore("§2").setScore(13);
 
 
 		player.setScoreboard(board);
 	}
 
-
-	@SuppressWarnings("deprecation")
 	public static void updateScoreBoard(){
 		for(Player player : Bukkit.getOnlinePlayers()) {
 		Scoreboard board = player.getScoreboard();
 		
-		Grade = "Â§7N/A";
+		Grade = "§7N/A";
 		User user = LuckPermsProvider.get().getUserManager().getUser(player.getName());
 		if (user.getCachedData().getMetaData().getPrefix() != null) {
-			Grade = user.getCachedData().getMetaData().getPrefix().replace("&", "Â§");
+			Grade = user.getCachedData().getMetaData().getPrefix().replace("&", "§");
 		}
 		else {
-			Grade = "Â§7N/A";
+			Grade = "§7N/A";
 		}
 		
 		if(board.getTeam("rank") != null) {
-			board.getTeam("rank").setPrefix("Â§fGrade Â§8Â» " + Grade);
+			board.getTeam("rank").setPrefix("§fGrade §8» " + Grade);
 		} if(board.getTeam("money") != null) {
 			Double a = EcoAccountsManager.Moneys.get(player.getName());
-			board.getTeam("money").setPrefix("Â§fArgent Â§8Â» Â§e" + a);
+			board.getTeam("money").setPrefix("§fArgent §8» §e" + a);
 		} if(board.getTeam("online") != null) {
-			board.getTeam("online").setPrefix("Â§fSkyblock Â§8Â» Â§c" + Bukkit.getServer().getOnlinePlayers().size());
+			board.getTeam("online").setPrefix("§fSkyblock §8» §c" + Bukkit.getServer().getOnlinePlayers().size());
 		}
 			
 			if(IridiumSkyblockAPI.getInstance().getUser(player).getIsland().isPresent()) {
@@ -127,18 +123,18 @@ public class ScoreBoard implements Listener {
 					Gradeis = "Membre";
 				}
 				
-				board.getTeam("gradeis").setPrefix("Â§fGrade d'ile Â§8Â» Â§a" + Gradeis);
-				board.getTeam("classementis").setPrefix("Â§fClassement Â§8Â» Â§a#" + classement);
-				board.getTeam("ismembre").setPrefix("Â§fMembres Â§8Â» Â§a" + ismembre);
-				board.getTeam("iscrystaux").setPrefix("Â§fCrystaux Â§8Â» Â§a" + iscristal);
-				board.getTeam("ismoney").setPrefix("Â§fArgent Â§8Â» Â§a" + ismoney);
+				board.getTeam("gradeis").setPrefix("§fGrade d'ile §8» §a" + Gradeis);
+				board.getTeam("classementis").setPrefix("§fClassement §8» §a#" + classement);
+				board.getTeam("ismembre").setPrefix("§fMembres §8» §a" + ismembre);
+				board.getTeam("iscrystaux").setPrefix("§fCrystaux §8» §a" + iscristal);
+				board.getTeam("ismoney").setPrefix("§fArgent §8» §a" + ismoney);
 				
 			} else {
-				board.getTeam("gradeis").setPrefix("Â§fGrade d'ile Â§8Â» Â§aN/A");
-				board.getTeam("classementis").setPrefix("Â§fClassement Â§8Â» Â§aN/A");
-				board.getTeam("ismembre").setPrefix("Â§fMembres Â§8Â» Â§aN/A");
-				board.getTeam("iscrystaux").setPrefix("Â§fCrystaux Â§8Â» Â§aN/A");
-				board.getTeam("ismoney").setPrefix("Â§fArgent Â§8Â» Â§aN/A");
+				board.getTeam("gradeis").setPrefix("§fGrade d'ile §8» §aN/A");
+				board.getTeam("classementis").setPrefix("§fClassement §8» §aN/A");
+				board.getTeam("ismembre").setPrefix("§fMembres §8» §aN/A");
+				board.getTeam("iscrystaux").setPrefix("§fCrystaux §8» §aN/A");
+				board.getTeam("ismoney").setPrefix("§fArgent §8» §aN/A");
 			}
 		}
 		Bukkit.getServer().getScheduler().scheduleAsyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {

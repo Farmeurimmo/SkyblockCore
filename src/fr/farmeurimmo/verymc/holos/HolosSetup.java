@@ -43,7 +43,7 @@ public class HolosSetup implements Listener {
 		}
 	}
 	
-    @SuppressWarnings("deprecation")
+    
    	public static void SpawnPnj2(Location loc1, Location loc2){
            SkinTrait skin = npca.getTrait(SkinTrait.class);
            npca.setAlwaysUseNameHologram(false);

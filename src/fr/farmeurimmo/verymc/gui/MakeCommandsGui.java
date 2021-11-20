@@ -16,7 +16,7 @@ import net.luckperms.api.model.user.User;
 
 public class MakeCommandsGui {
 	
-	@SuppressWarnings("deprecation")
+	
 	public static void MakeCommandGui(Player player) {
 		User user = LuckPermsProvider.get().getUserManager().getUser(player.getName());
 		String Grade = user.getCachedData().getMetaData().getPrefix().replace("&", "§");

@@ -20,7 +20,6 @@ public class GenAmoutShopGui {
 	
 	public static HashMap <ItemStack, Integer> amountchoice = new HashMap < > ();
 	
-	@SuppressWarnings({ "deprecation"})
 	public static void OpenPregenAmoutShop(Player player, ItemStack aa, boolean a) {
 		Inventory inv;
 		if(a == true) {

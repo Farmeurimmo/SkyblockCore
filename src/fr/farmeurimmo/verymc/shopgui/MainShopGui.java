@@ -62,7 +62,7 @@ public class MainShopGui implements Listener {
 		}
 	}
 	
-	@SuppressWarnings("deprecation")
+	
 	public static void OpenMainShopMenu(Player player) {
 		User user = LuckPermsProvider.get().getUserManager().getUser(player.getName());
 		String Grade = user.getCachedData().getMetaData().getPrefix().replace("&", "§");

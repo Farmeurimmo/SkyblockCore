@@ -20,7 +20,7 @@ public class Interact implements Listener {
 	
 	public static ArrayList<Player> Build = BuildCmd.Build;
 	
-	@SuppressWarnings("deprecation")
+	
 	@EventHandler
 	public void OnInteract(PlayerInteractEvent e) {
 		Player player = e.getPlayer();

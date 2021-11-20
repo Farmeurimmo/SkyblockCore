@@ -128,7 +128,7 @@ public class WineGui implements Listener {
 			}
 		}
 	}
-	@SuppressWarnings("deprecation")
+	
 	@EventHandler
 	public void OnDrink(PlayerItemConsumeEvent e) {
 		Player player = e.getPlayer();

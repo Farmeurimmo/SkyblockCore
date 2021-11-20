@@ -9,7 +9,6 @@ import fr.farmeurimmo.verymc.core.Main;
 
 public class ChallengesReset {
 	
-	@SuppressWarnings("deprecation")
 	public static void CheckForReset() {
 		TimeZone.setDefault(TimeZone.getTimeZone("Europe/Paris"));
 		Calendar calendar = Calendar.getInstance();
