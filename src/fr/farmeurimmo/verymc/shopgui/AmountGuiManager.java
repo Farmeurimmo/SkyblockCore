@@ -34,8 +34,8 @@ public class AmountGuiManager implements Listener {
 						e.getInventory().getItem(22).setAmount(now);
 					}
 					ItemMeta temp = e.getInventory().getItem(22).getItemMeta();
-					int price = BuyShopItem.pricesbuy.get(new ItemStack(Material.valueOf(e.getInventory().getItem(22).getType().toString())));
-					int totalcost = price*e.getInventory().getItem(22).getAmount();
+					Float price = BuyShopItem.pricesbuy.get(new ItemStack(Material.valueOf(e.getInventory().getItem(22).getType().toString())));
+					float totalcost = price*e.getInventory().getItem(22).getAmount();
 					temp.setLore(Arrays.asList("§6Prix d'achat: §c"+price+"$/u","§6Total: §c"+totalcost+"$"));
 					e.getInventory().getItem(22).setItemMeta(temp);
 					ItemMeta temp2 = e.getInventory().getItem(40).getItemMeta();
@@ -56,8 +56,8 @@ public class AmountGuiManager implements Listener {
 						e.getInventory().getItem(22).setAmount(now);
 					}
 					ItemMeta temp = e.getInventory().getItem(22).getItemMeta();
-					int price = BuyShopItem.pricesbuy.get(new ItemStack(Material.valueOf(e.getInventory().getItem(22).getType().toString())));
-					int totalcost = price*e.getInventory().getItem(22).getAmount();
+					Float price = BuyShopItem.pricesbuy.get(new ItemStack(Material.valueOf(e.getInventory().getItem(22).getType().toString())));
+					float totalcost = price*e.getInventory().getItem(22).getAmount();
 					temp.setLore(Arrays.asList("§6Prix d'achat: §c"+price+"$/u","§6Total: §c"+totalcost+"$"));
 					e.getInventory().getItem(22).setItemMeta(temp);
 					ItemMeta temp2 = e.getInventory().getItem(40).getItemMeta();
@@ -66,8 +66,8 @@ public class AmountGuiManager implements Listener {
 				}
 			if(current.getType() == Material.LIME_WOOL) {
 				if(current.getAmount() == 1) {
-					int price = BuyShopItem.pricesbuy.get(new ItemStack(Material.valueOf(e.getInventory().getItem(22).getType().toString())));
-					int amount = price*e.getInventory().getItem(22).getAmount();
+					Float price = BuyShopItem.pricesbuy.get(new ItemStack(Material.valueOf(e.getInventory().getItem(22).getType().toString())));
+					float amount = price*e.getInventory().getItem(22).getAmount();
 					ItemStack od = e.getInventory().getItem(22);
 					int total = od.getAmount();
 					BuyShopItem.BuyOSellItemNonStack(od, (Player) e.getWhoClicked(), true, amount, total);
@@ -77,7 +77,7 @@ public class AmountGuiManager implements Listener {
 			if(current.getType() == Material.GREEN_STAINED_GLASS_PANE) {
 				ItemStack od = e.getInventory().getItem(22);
 				int amountinvinv = BuyShopItem.GetAmountToFillInInv(od, (Player) e.getWhoClicked());
-				int price = BuyShopItem.pricesbuy.get(new ItemStack(Material.valueOf(e.getInventory().getItem(22).getType().toString())));
+				float price = (float) BuyShopItem.pricesbuy.get(new ItemStack(Material.valueOf(e.getInventory().getItem(22).getType().toString())));
 				if(amountinvinv >= 1) {
 					BuyShopItem.BuyOSellItemNonStack(od, (Player) e.getWhoClicked(), true, price, amountinvinv);
 				} else {
@@ -107,8 +107,8 @@ public class AmountGuiManager implements Listener {
 					e.getInventory().getItem(22).setAmount(now);
 				}
 				ItemMeta temp = e.getInventory().getItem(22).getItemMeta();
-				int price = BuyShopItem.pricessell.get(new ItemStack(Material.valueOf(e.getInventory().getItem(22).getType().toString())));
-				int totalcost = price*e.getInventory().getItem(22).getAmount();
+				Float price = BuyShopItem.pricessell.get(new ItemStack(Material.valueOf(e.getInventory().getItem(22).getType().toString())));
+				float totalcost = price*e.getInventory().getItem(22).getAmount();
 				temp.setLore(Arrays.asList("§6Prix de vente: §a"+price+"$/u","§6Total: §a"+totalcost+"$"));
 				e.getInventory().getItem(22).setItemMeta(temp);
 				ItemMeta temp2 = e.getInventory().getItem(40).getItemMeta();
@@ -129,8 +129,8 @@ public class AmountGuiManager implements Listener {
 					e.getInventory().getItem(22).setAmount(now);
 				}
 				ItemMeta temp = e.getInventory().getItem(22).getItemMeta();
-				int price = BuyShopItem.pricessell.get(new ItemStack(Material.valueOf(e.getInventory().getItem(22).getType().toString())));
-				int totalcost = price*e.getInventory().getItem(22).getAmount();
+				Float price = BuyShopItem.pricessell.get(new ItemStack(Material.valueOf(e.getInventory().getItem(22).getType().toString())));
+				float totalcost = price*e.getInventory().getItem(22).getAmount();
 				temp.setLore(Arrays.asList("§6Prix de vente: §a"+price+"$/u","§6Total: §a"+totalcost+"$"));
 				e.getInventory().getItem(22).setItemMeta(temp);
 				ItemMeta temp2 = e.getInventory().getItem(40).getItemMeta();
@@ -139,8 +139,8 @@ public class AmountGuiManager implements Listener {
 			}
 			if(current.getType() == Material.LIME_WOOL) {
 				if(current.getAmount() == 1) {
-					int price = BuyShopItem.pricesbuy.get(new ItemStack(Material.valueOf(e.getInventory().getItem(22).getType().toString())));
-					int amount = price*e.getInventory().getItem(22).getAmount();
+					Float price = BuyShopItem.pricesbuy.get(new ItemStack(Material.valueOf(e.getInventory().getItem(22).getType().toString())));
+					float amount = price*e.getInventory().getItem(22).getAmount();
 					ItemStack od = e.getInventory().getItem(22);
 					int total = od.getAmount();
 					BuyShopItem.BuyOSellItemNonStack(od, (Player) e.getWhoClicked(), false, amount, total);
@@ -149,7 +149,7 @@ public class AmountGuiManager implements Listener {
 			if(current.getType() == Material.GREEN_STAINED_GLASS_PANE) {
 				ItemStack od = e.getInventory().getItem(22);
 				int amountinvinv = BuyShopItem.GetAmountInInv(od, (Player) e.getWhoClicked());
-				int price = BuyShopItem.pricesbuy.get(new ItemStack(Material.valueOf(e.getInventory().getItem(22).getType().toString())));
+				Float price = BuyShopItem.pricesbuy.get(new ItemStack(Material.valueOf(e.getInventory().getItem(22).getType().toString())));
 				if(amountinvinv >= 1) {
 					BuyShopItem.BuyOSellItemNonStack(od, (Player) e.getWhoClicked(), false, price, amountinvinv);
 				} else {

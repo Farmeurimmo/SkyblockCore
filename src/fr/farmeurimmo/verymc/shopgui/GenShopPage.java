@@ -48,21 +48,23 @@ public class GenShopPage {
             int currentpage = 1;
 			int numberofitems = 0;
 			for(String aa : Main.instance1.getConfig().getConfigurationSection("Shops."+page).getKeys(false)) {
-				numberofitems+=1;
 				ItemStack custom1 = new ItemStack(Material.valueOf(Main.instance1.getConfig().getString("Shops."+page+"."+aa+".material")), 1);
+				
+                numberofitems+=1;
+				
 				ItemMeta meta1 = custom1.getItemMeta();
 				
 				String achat = "";
-				int prixachat = Main.instance1.getConfig().getInt("Shops."+page+"."+aa+".buy");
-				if(prixachat == -1) {
+				Float prixachat = BuyShopItem.pricesbuy.get(custom1);
+				if(prixachat == null || prixachat == -1) {
 					achat = "§cNon achetable";
 				} else {
 					achat = "§c"+prixachat+"$";
 				}
 				
 				String vente = "";
-				int prixvente = Main.instance1.getConfig().getInt("Shops."+page+"."+aa+".sell");
-				if(prixvente == -1) {
+				Float prixvente = BuyShopItem.pricessell.get(custom1);
+				if(prixvente == null || prixvente == -1) {
 				    vente = "§cNon vendable";
 				} else {
 					vente = "§c"+prixvente+"$";
@@ -76,10 +78,11 @@ public class GenShopPage {
 					toshowtemp.put(custom1, slot);
 				}
 				if(numberofitems > 28) {
+					if(page.equals("Blocs")) {
 					if(currentpage == 1) {
 						for(Entry<ItemStack, Integer> cc : toshowtemp.entrySet()) {
 				        	blocspage1.put(cc.getKey(), cc.getValue());
-				        }
+				        } }
 						}
 					toshowtemp.clear();
 					if(slot == 0) {
@@ -91,10 +94,44 @@ public class GenShopPage {
 					currentpage+=1;
 					numberofitems = 0;
 				}
-			}
+			} if(page.equals("Blocs")) {
 			for(Entry<ItemStack, Integer> cc : toshowtemp.entrySet()) {
 	        	blocspage2.put(cc.getKey(), cc.getValue());
-	        }
+	        } } else if(page.equals("Agriculture")) {
+	        	agripage.clear();
+				for(Entry<ItemStack, Integer> cc : toshowtemp.entrySet()) {
+		        	agripage.put(cc.getKey(), cc.getValue());
+		        } }
+	        else if(page.equals("Nourritures")) {
+	        	foodpage.clear();
+				for(Entry<ItemStack, Integer> cc : toshowtemp.entrySet()) {
+		        	foodpage.put(cc.getKey(), cc.getValue());
+		        } }
+	        else if(page.equals("Colorants")) {
+	        	colopage.clear();
+				for(Entry<ItemStack, Integer> cc : toshowtemp.entrySet()) {
+		        	colopage.put(cc.getKey(), cc.getValue());
+		        } }
+	        else if(page.equals("Minerais")) {
+	        	mineraipage.clear();
+				for(Entry<ItemStack, Integer> cc : toshowtemp.entrySet()) {
+		        	mineraipage.put(cc.getKey(), cc.getValue());
+		        } }
+	        else if(page.equals("Autres")) {
+	        	autrepage.clear();
+				for(Entry<ItemStack, Integer> cc : toshowtemp.entrySet()) {
+		        	autrepage.put(cc.getKey(), cc.getValue());
+		        } }
+	        else if(page.equals("Drops")) {
+	        	lootmpage.clear();
+				for(Entry<ItemStack, Integer> cc : toshowtemp.entrySet()) {
+		        	lootmpage.put(cc.getKey(), cc.getValue());
+		        } }
+	        else if(page.equals("Redstone")) {
+	        	redstonepage.clear();
+				for(Entry<ItemStack, Integer> cc : toshowtemp.entrySet()) {
+		        	redstonepage.put(cc.getKey(), cc.getValue());
+		        } }
 		slotstofill.clear();
 		toshowtemp.clear();
 	}
@@ -107,12 +144,42 @@ public class GenShopPage {
         
         Inventory inv = Bukkit.createInventory(null, 54, "§6" + page + " "+pagenum+"/"+numberofpage);
         
+        if(page.equals("Blocs")) {
         if(pagenum == 1) {
         for(Entry<ItemStack, Integer> cc : blocspage1.entrySet()) {
         	inv.setItem(cc.getValue(), cc.getKey());
         }
         } else {
         	for(Entry<ItemStack, Integer> cc : blocspage2.entrySet()) {
+            	inv.setItem(cc.getValue(), cc.getKey());
+            }
+        }
+        } else if (page.equals("Agriculture")) {
+        	for(Entry<ItemStack, Integer> cc : agripage.entrySet()) {
+            	inv.setItem(cc.getValue(), cc.getKey());
+            }
+        } else if (page.equals("Colorants")) {
+        	for(Entry<ItemStack, Integer> cc : colopage.entrySet()) {
+            	inv.setItem(cc.getValue(), cc.getKey());
+            }
+        } else if (page.equals("Nourritures")) {
+        	for(Entry<ItemStack, Integer> cc : foodpage.entrySet()) {
+            	inv.setItem(cc.getValue(), cc.getKey());
+            }
+        } else if (page.equals("Minerais")) {
+        	for(Entry<ItemStack, Integer> cc : mineraipage.entrySet()) {
+            	inv.setItem(cc.getValue(), cc.getKey());
+            }
+        } else if (page.equals("Autres")) {
+        	for(Entry<ItemStack, Integer> cc : autrepage.entrySet()) {
+            	inv.setItem(cc.getValue(), cc.getKey());
+            }
+        } else if (page.equals("Drops")) {
+        	for(Entry<ItemStack, Integer> cc : lootmpage.entrySet()) {
+            	inv.setItem(cc.getValue(), cc.getKey());
+            }
+        } else if (page.equals("Redstone")) {
+        	for(Entry<ItemStack, Integer> cc : redstonepage.entrySet()) {
             	inv.setItem(cc.getValue(), cc.getKey());
             }
         }
@@ -132,6 +199,12 @@ public class GenShopPage {
     			custom6.setItemMeta(customh);
     			inv.setItem(45, custom6);
     		}
+    		
+    		ItemStack custom7 = new ItemStack(Material.IRON_DOOR, 1);
+    		ItemMeta customg = custom7.getItemMeta();
+    		customg.setDisplayName("§6Retour aux Catégories");
+    		custom7.setItemMeta(customg);
+    		inv.setItem(0, custom7);
     		
     		ItemStack custom2 = new ItemStack(Material.PLAYER_HEAD, 1);
     		SkullMeta customb = (SkullMeta) custom2.getItemMeta();
@@ -168,5 +241,13 @@ public class GenShopPage {
         int max = items/28;
         max+=1;
         maxpage.put("Blocs", max);
+        maxpage.put("Agriculture", 1);
+        maxpage.put("Nourritures", 1);
+        maxpage.put("Colorants", 1);
+        maxpage.put("Minerais", 1);
+        maxpage.put("Autres", 1);
+        maxpage.put("Drops", 1);
+        maxpage.put("Redstone", 1);
+        //maxpage.put("Spawneurs", 1);
 	}
 }
