@@ -179,7 +179,7 @@ public class Main extends JavaPlugin implements Listener {
 		if(IridiumSkyblockAPI.getInstance() == null) {
 			Bukkit.getPluginManager().disablePlugin(this);
 		}
-		System.out.println("Initialisation des class et des méthodes en cours...");
+		System.out.println("Initialisation des classes et des méthodes en cours...");
 		setup();
 		economyImplementer = new EconomyImplementer();
         vaultHook = new VaultHook();
