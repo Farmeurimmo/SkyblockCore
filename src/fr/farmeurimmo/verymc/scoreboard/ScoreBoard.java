@@ -98,7 +98,7 @@ public class ScoreBoard implements Listener {
 		if(board.getTeam("rank") != null) {
 			board.getTeam("rank").setPrefix("§fGrade §8» " + Grade);
 		} if(board.getTeam("money") != null) {
-			int a = EcoAccountsManager.Moneys.get(player.getName());
+			Double a = EcoAccountsManager.Moneys.get(player.getName());
 			board.getTeam("money").setPrefix("§fArgent §8» §e" + a);
 		} if(board.getTeam("online") != null) {
 			board.getTeam("online").setPrefix("§fSkyblock §8» §c" + Bukkit.getServer().getOnlinePlayers().size());

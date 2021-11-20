@@ -14,9 +14,9 @@ public class BaltopManager {
 		int maxi = page*10;
 		String un = "",deux = "",trois = "",quatre = "",cinq = "",six = "",sept = "",huit = "",neuf = "",dix = "";
 		while (current <= maxi) {
-			int bestvalue = 0;
+			Double bestvalue = (double) 0;
 			String playerlayer = "N/A";
-		for(Entry<String, Integer> aa : EcoAccountsManager.Moneys.entrySet()) {
+		for(Entry<String, Double> aa : EcoAccountsManager.Moneys.entrySet()) {
 			if(alreadyin.contains(aa.getKey())) {
 				continue;
 			}

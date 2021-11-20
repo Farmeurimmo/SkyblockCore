@@ -23,9 +23,9 @@ import net.luckperms.api.model.user.User;
 
 public class BuyAtoutGui implements Listener {
 	
-	static int haste = 600000;
-	static int speed = 400000;
-	static int jumpboost = 250000;
+	static Double haste = (double) 600000;
+	static Double speed = (double) 400000;
+	static Double jumpboost = (double) 250000;
 	
 	@SuppressWarnings("deprecation")
 	public static void MakeBuyAtoutGui(Player player) {
@@ -133,7 +133,7 @@ public class BuyAtoutGui implements Listener {
 		}
 	}
 	public static void BuyAtout(int effect, Player player) {
-	    int money = EcoAccountsManager.Moneys.get(player.getName());
+	    Double money = EcoAccountsManager.Moneys.get(player.getName());
 	    
 		if(effect == 1) {
 			if(money >= haste);

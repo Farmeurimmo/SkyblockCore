@@ -35,7 +35,7 @@ public class PayCmd implements CommandExecutor, TabCompleter {
 				    }
 					if(!args[1].contains("-") && digit == true) {
 					if(args[1].length() <= 9) {
-						int aaa = Integer.parseInt(args[1]);
+						Double aaa = Double.parseDouble(args[1]);
 						if(EcoAccountsManager.CheckForFounds(player, aaa) == true) {
 							EcoAccountsManager.AddFounds(args[0], aaa);
 						    EcoAccountsManager.RemoveFounds(player.getName(), aaa);

@@ -74,7 +74,7 @@ public class ChatReaction implements Listener {
 				public void run() {
 					Bukkit.broadcastMessage("§6§lChatReaction §8» §f" + player.getName() + " vient de gagner le ChatReaction en " + 
 				secelasp + "." + milliselasp + " secondes et remporte 5 000$ !");
-					EcoAccountsManager.AddFounds(player.getName(), 5000);
+					EcoAccountsManager.AddFounds(player.getName(), (double) 5000);
 				}
 			}, 1);
 		}

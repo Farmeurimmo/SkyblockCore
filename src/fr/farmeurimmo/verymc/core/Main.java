@@ -57,6 +57,8 @@ import fr.farmeurimmo.verymc.cmd.moderation.RedstoneToggleCmd;
 import fr.farmeurimmo.verymc.crates.CratesManager;
 import fr.farmeurimmo.verymc.crates.KeyCmd;
 import fr.farmeurimmo.verymc.eco.EcoAccountsManager;
+import fr.farmeurimmo.verymc.eco.EconomyImplementer;
+import fr.farmeurimmo.verymc.eco.VaultHook;
 import fr.farmeurimmo.verymc.evenement.ChatReaction;
 import fr.farmeurimmo.verymc.events.AfkMineBreakCheck;
 import fr.farmeurimmo.verymc.events.AntiExplo;
@@ -125,6 +127,8 @@ public class Main extends JavaPlugin implements Listener {
         return (spawncooldown.get(player) == null ? 0 : spawncooldown.get(player));
     }
     
+    public EconomyImplementer economyImplementer;
+    private VaultHook vaultHook;
     
 	@Override
 	public void onEnable() {
@@ -172,6 +176,9 @@ public class Main extends JavaPlugin implements Listener {
 		}
 		System.out.println("Initialisation des class et des méthodes en cours...");
 		setup();
+		economyImplementer = new EconomyImplementer();
+        vaultHook = new VaultHook();
+        vaultHook.hook();
 		EcoAccountsManager.UpdateHash();
 		Main.spawncooldown.clear();
 		BossBar.CreateBossBar();
@@ -260,6 +267,7 @@ public class Main extends JavaPlugin implements Listener {
 		BossBar.RemoveBossBarForPlayers();
 		HolosSetup.RemoveNpc();
 		WineSpawn.DestroyPnj();
+		vaultHook.unhook();
 		System.out.println("-----------------------------------------------------------------------------------------------------");
 		System.out.println("Plugin stoppé !");
 		System.out.println("-----------------------------------------------------------------------------------------------------");
