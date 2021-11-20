@@ -13,19 +13,34 @@ import fr.farmeurimmo.verymc.eco.EcoAccountsManager;
 
 public class BuyShopItem {
 	
-	public static HashMap <ItemStack, Integer> pricesbuy = new HashMap < > ();
-	public static HashMap <ItemStack, Integer> pricessell = new HashMap < > ();
+	public static HashMap <ItemStack, Float> pricesbuy = new HashMap < > ();
+	public static HashMap <ItemStack, Float> pricessell = new HashMap < > ();
 	
 	public static void GenPriceShopStartup() {
 		for(String bb : Main.instance1.getConfig().getConfigurationSection("Shops").getKeys(false)) {
 		for(String aa : Main.instance1.getConfig().getConfigurationSection("Shops."+bb).getKeys(false)) {
-			int a = Main.instance1.getConfig().getInt("Shops.Blocs."+aa+".buy");
-			int c = Main.instance1.getConfig().getInt("Shops.Blocs."+aa+".sell");
-			ItemStack b = new ItemStack(Material.valueOf(Main.instance1.getConfig().getString("Shops.Blocs."+aa+".material")));
-			pricesbuy.put(b, a);
-			pricessell.put(b, c);
+			double a = (float) Main.instance1.getConfig().getDouble("Shops."+bb+"."+aa+".buy");
+			double c = (float) Main.instance1.getConfig().getDouble("Shops."+bb+"."+aa+".sell");
+			if(Material.valueOf(Main.instance1.getConfig().getString("Shops."+bb+"."+aa+".material")) == null) continue;
+			ItemStack b = new ItemStack(Material.valueOf(Main.instance1.getConfig().getString("Shops."+bb+"."+aa+".material")));
+			pricesbuy.put(b, (float) a);
+			pricessell.put(b, (float) c);
 		}
 		}
+	}
+	public static boolean isBuyable(ItemStack a) {
+		boolean so = true;
+		if(pricessell.get(a) == null || pricesbuy.get(a) == -1) {
+			so = false;
+		}
+		return so;	
+	}
+	public static boolean isSellable(ItemStack a) {
+		boolean so = true;
+		if(pricessell.get(a) == null || pricessell.get(a) == -1) {
+			so = false;
+		}
+		return so;	
 	}
 	public static void removeItems(Inventory inventory, Material type, int amount) {
         if (amount <= 0) return;
@@ -92,9 +107,9 @@ public class BuyShopItem {
 		
 		return total;
 	}
-	public static void BuyOSellItemNonStack(ItemStack a, Player player, boolean buy, int price, int amount) {
+	public static void BuyOSellItemNonStack(ItemStack a, Player player, boolean buy, float price, int amount) {
 		if(buy == true) {
-			if(EcoAccountsManager.CheckForFounds(player, pricesbuy.get(new ItemStack(Material.valueOf(a.getType().toString())))*amount) == true) {
+			if(EcoAccountsManager.CheckForFounds(player, price*amount) == true) {
 				ItemMeta tempmeta = a.getItemMeta();
 				tempmeta.setLore(null);
 				a.setItemMeta(tempmeta);
@@ -108,7 +123,7 @@ public class BuyShopItem {
 			}
 		} else {
 			if(player.getInventory().contains(a.getType(), amount)) {
-				int profit = pricessell.get(new ItemStack(Material.valueOf(a.getType().toString())))*amount;
+				float profit = pricessell.get(new ItemStack(Material.valueOf(a.getType().toString())))*amount;
 				player.closeInventory();
 				removeItems(player.getInventory(), a.getType(), amount);
 				player.sendMessage("§6§lShop §8» §fVous avez vendu §ax"+amount+" "+a.getType().toString()+"§f pour §6"+profit+"$§f.");
