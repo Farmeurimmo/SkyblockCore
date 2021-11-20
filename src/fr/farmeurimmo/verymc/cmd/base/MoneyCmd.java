@@ -23,7 +23,7 @@ public class MoneyCmd implements CommandExecutor, TabCompleter {
 		if(sender instanceof Player) {
 			Player player = (Player) sender;
 			player.sendMessage("§6§lMonnaie §8» §fVous avez §6"+EcoAccountsManager.Moneys.get(player.getName())+"$");
-			EcoAccountsManager.Moneys.put("Tester", (float) Main.instance1.getDataz().get(player.getName()));
+			EcoAccountsManager.Moneys.put("Tester", (float) Main.instance1.getDataz().getDouble(player.getName()));
 		}
 		} else if (args.length == 1) {
 			if(EcoAccountsManager.Moneys.get(args[0]) != null) {

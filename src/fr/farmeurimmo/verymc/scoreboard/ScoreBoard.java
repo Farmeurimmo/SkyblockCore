@@ -40,13 +40,13 @@ public class ScoreBoard implements Listener {
 		obj.getScore(" §eplay.verymc.fr").setScore(1);
 		obj.getScore("§a").setScore(15);
 		obj.getScore("§l").setScore(11);
+		obj.getScore("§6Ile").setScore(10);
 		obj.getScore("§o").setScore(4);
 		obj.getScore("§d").setScore(2);
 
 
 		Team rank = board.registerNewTeam("rank");
 		Team money = board.registerNewTeam("money");
-		Team Ile = board.registerNewTeam("Ile");
 		Team gradeis = board.registerNewTeam("gradeis");
 		Team classementis = board.registerNewTeam("classementis");
 		Team ismembre = board.registerNewTeam("ismembre");
@@ -61,7 +61,6 @@ public class ScoreBoard implements Listener {
 		ismembre.addEntry("§7");
 		classementis.addEntry("§6");
 		gradeis.addEntry("§5");
-		Ile.addEntry("§4");
 		money.addEntry("§3");
 		rank.addEntry("§2");
 		
@@ -72,7 +71,6 @@ public class ScoreBoard implements Listener {
 		obj.getScore("§7").setScore(5);
 		obj.getScore("§6").setScore(8);
 		obj.getScore("§5").setScore(9);
-		obj.getScore("§4").setScore(10);
 		obj.getScore("§3").setScore(12);
 		obj.getScore("§2").setScore(13);
 
@@ -129,7 +127,6 @@ public class ScoreBoard implements Listener {
 					Gradeis = "Membre";
 				}
 				
-				board.getTeam("Ile").setPrefix("§6§lIle");
 				board.getTeam("gradeis").setPrefix("§fGrade d'ile §8» §a" + Gradeis);
 				board.getTeam("classementis").setPrefix("§fClassement §8» §a#" + classement);
 				board.getTeam("ismembre").setPrefix("§fMembres §8» §a" + ismembre);
@@ -137,7 +134,6 @@ public class ScoreBoard implements Listener {
 				board.getTeam("ismoney").setPrefix("§fArgent §8» §a" + ismoney);
 				
 			} else {
-				board.getTeam("Ile").setPrefix("§6§lIle");
 				board.getTeam("gradeis").setPrefix("§fGrade d'ile §8» §aN/A");
 				board.getTeam("classementis").setPrefix("§fClassement §8» §aN/A");
 				board.getTeam("ismembre").setPrefix("§fMembres §8» §aN/A");

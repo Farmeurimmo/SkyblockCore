@@ -15,9 +15,9 @@
             <url>https://repo.citizensnpcs.co/</url>
         </repository>
 <repository>
-        <id>spigot-repo</id>
-        <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
-    </repository>
+    <id>purpur</id>
+    <url>https://repo.pl3x.net/</url>
+</repository>
     <repository>
     <id>iridiumdevelopment</id>
     <url>https://nexus.iridiumdevelopment.net/repository/maven-releases/</url>
@@ -46,11 +46,11 @@
             <scope>provided</scope>
         </dependency>
 <dependency>
-           <groupId>org.spigotmc</groupId>
-           <artifactId>spigot-api</artifactId>
-           <version>1.16.5-R0.1-SNAPSHOT</version>
-           <scope>provided</scope>
-    </dependency>
+    <groupId>net.pl3x.purpur</groupId>
+    <artifactId>purpur-api</artifactId>
+    <version>1.16.5-R0.1-SNAPSHOT</version>
+    <scope>provided</scope>
+</dependency>
 <dependency>
     <groupId>com.iridium</groupId>
     <artifactId>IridiumSkyblock</artifactId>

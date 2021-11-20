@@ -9,6 +9,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class CratesKeyManager {
 	
+	@SuppressWarnings("deprecation")
 	public static void GiveCrateKey(Player player, int nombre, String type) {
 		if(type.equalsIgnoreCase("Légendaire")) {
 			ItemStack custom1 = new ItemStack(Material.TRIPWIRE_HOOK, nombre);
