@@ -81,8 +81,10 @@ import fr.farmeurimmo.verymc.shopgui.AmountGuiManager;
 import fr.farmeurimmo.verymc.shopgui.CateSelectGui;
 import fr.farmeurimmo.verymc.shopgui.BuyShopItem;
 import fr.farmeurimmo.verymc.shopgui.GenAmoutShopGui;
+import fr.farmeurimmo.verymc.shopgui.GenMultiStacksBuyGui;
 import fr.farmeurimmo.verymc.shopgui.GenShopPage;
 import fr.farmeurimmo.verymc.shopgui.MainShopGui;
+import fr.farmeurimmo.verymc.shopgui.MultiStacksShopGuiManager;
 import fr.farmeurimmo.verymc.shopgui.ShopGuiCmd;
 import fr.farmeurimmo.verymc.utils.BossBar;
 import net.luckperms.api.LuckPerms;
@@ -212,6 +214,7 @@ public class Main extends JavaPlugin implements Listener {
 	    GenShopPage.GenenerateShopPageStartup("Drops");
 	    GenShopPage.GenenerateShopPageStartup("Redstone");
 	    GenAmoutShopGui.GenAmoutShopGuiStartup();
+	    GenMultiStacksBuyGui.GenMultiShopGuiStartup();
 		getServer().getPluginManager().registerEvents(new JoinLeave(), this);
 		getServer().getPluginManager().registerEvents(new ScoreBoard(), this);
 		getServer().getPluginManager().registerEvents(new Interact(), this);
@@ -236,6 +239,7 @@ public class Main extends JavaPlugin implements Listener {
 		getServer().getPluginManager().registerEvents(new MainShopGui(), this);
 		getServer().getPluginManager().registerEvents(new CateSelectGui(), this);
 		getServer().getPluginManager().registerEvents(new AmountGuiManager(), this);
+		getServer().getPluginManager().registerEvents(new MultiStacksShopGuiManager(), this);
 		this.getCommand("spawn").setExecutor(new SpawnCmd());
 		this.getCommand("build").setExecutor(new BuildCmd());
 		this.getCommand("farm2win").setExecutor(new Farm2WinCmd());

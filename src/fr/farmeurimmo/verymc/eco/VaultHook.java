@@ -15,7 +15,7 @@ public class VaultHook {
 
     public void hook() {
         provider = plugin.economyImplementer;
-        Bukkit.getServicesManager().register(Economy.class, this.provider, this.plugin, ServicePriority.Normal);
+        Bukkit.getServicesManager().register(Economy.class, this.provider, this.plugin, ServicePriority.Highest);
         Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN + "VaultAPI hooked into " + ChatColor.AQUA + plugin.getName());
     }
 

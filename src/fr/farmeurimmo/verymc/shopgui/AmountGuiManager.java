@@ -74,16 +74,10 @@ public class AmountGuiManager implements Listener {
 				}
 			
 			}
-			if(current.getType() == Material.GREEN_STAINED_GLASS_PANE) {
+			if(current.getType() == Material.GREEN_STAINED_GLASS) {
 				ItemStack od = e.getInventory().getItem(22);
-				int amountinvinv = BuyShopItem.GetAmountToFillInInv(od, (Player) e.getWhoClicked());
-				float price = (float) BuyShopItem.pricesbuy.get(new ItemStack(Material.valueOf(e.getInventory().getItem(22).getType().toString())));
-				if(amountinvinv >= 1) {
-					BuyShopItem.BuyOSellItemNonStack(od, (Player) e.getWhoClicked(), true, price, amountinvinv);
-				} else {
-					BuyShopItem.BuyOSellItemNonStack(od, (Player) e.getWhoClicked(), true, price, amountinvinv);
+				GenMultiStacksBuyGui.OpenStacksAmoutShop((Player) e.getWhoClicked(), od);
 				}
-			}
 			if(current.getType() == Material.ARROW) {
 				Player player = (Player) e.getWhoClicked();
 				String lastpage = GenShopPage.lastpage.get(player);
@@ -146,7 +140,7 @@ public class AmountGuiManager implements Listener {
 					BuyShopItem.BuyOSellItemNonStack(od, (Player) e.getWhoClicked(), false, amount, total);
 				}
 			}
-			if(current.getType() == Material.GREEN_STAINED_GLASS_PANE) {
+			if(current.getType() == Material.GREEN_STAINED_GLASS) {
 				ItemStack od = e.getInventory().getItem(22);
 				int amountinvinv = BuyShopItem.GetAmountInInv(od, (Player) e.getWhoClicked());
 				Float price = BuyShopItem.pricesbuy.get(new ItemStack(Material.valueOf(e.getInventory().getItem(22).getType().toString())));

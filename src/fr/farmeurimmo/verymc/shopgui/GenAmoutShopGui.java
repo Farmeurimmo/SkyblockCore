@@ -57,10 +57,10 @@ public class GenAmoutShopGui {
 		}
 		custom11.setItemMeta(customk);
 		
-		ItemStack custom4 = new ItemStack(Material.GREEN_STAINED_GLASS_PANE, 64);
+		ItemStack custom4 = new ItemStack(Material.GREEN_STAINED_GLASS, 64);
 		ItemMeta customd = custom4.getItemMeta();
 		if(a==true) {
-			customd.setDisplayName("§cRemplir l'inventaire");
+			customd.setDisplayName("§aAchat par stacks");
 		} else {
 		customd.setDisplayName("§aTout vendre");
 		}
@@ -143,11 +143,6 @@ public class GenAmoutShopGui {
 		customj.setDisplayName("§c§l-64");
 		custom10.setItemMeta(customj);
 		
-		ItemStack custom12 = new ItemStack(Material.LIME_WOOL, 64);
-		ItemMeta customl = custom12.getItemMeta();
-		customl.setDisplayName("§aAcheter des stacks");
-		custom12.setItemMeta(customl);
-		
 		amountchoice.put(custom1, 23);
 		amountchoice.put(custom3, 24);
 		amountchoice.put(custom2, 25);
@@ -159,7 +154,5 @@ public class GenAmoutShopGui {
 		amountchoice.put(custom8, 19);
 		amountchoice.put(custom9, 11);
 		amountchoice.put(custom10, 29);
-		
-		amountchoice.put(custom12, 4);
 	}
 }
