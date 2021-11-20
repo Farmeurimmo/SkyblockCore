@@ -9,7 +9,7 @@ bossbar:
     5: "\u00a76\u00a7lVery\u00a7f\u00a7lMc \u00A7c\u00A7>>> \u00A7fVous \u00eates sur \u00A7eplay.verymc.fr"
   #20 = 1 seconde
   #80 = 4 secondes
-  delay: 390
+  delay: 380
   intraspeed: 2
   activated: "BossBar activée, les modifications peuvent prendre un moment !"
   disabled: "BossBar désactivée, les modifications peuvent prendre un moment !"

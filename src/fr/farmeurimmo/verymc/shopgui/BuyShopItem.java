@@ -116,7 +116,20 @@ public class BuyShopItem {
 				player.closeInventory();
 				a.setAmount(amount);
 				EcoAccountsManager.RemoveFounds(player.getName(), price*amount);
+				int amountininv = GetAmountToFillInInv(new ItemStack(a.getType()), player);
+				ItemStack od = new ItemStack(a.getType());
+				if(amountininv <= amount) {
+					int reste = amount - amountininv;
+					od.setAmount(amountininv);
+					player.getInventory().addItem(od);
+					od.setAmount(1);
+					while (reste > 0){
+					    player.getWorld().dropItem(player.getLocation(), od);
+					    reste -= 1;
+					}
+				} else {
 				player.getInventory().addItem(a);
+				}
 			} else {
 				double loa=price*amount - EcoAccountsManager.GetMoney(player.getName());
 				player.sendMessage("§6§lShop §8» §fIl vous manque §6"+loa+"$§f.");
