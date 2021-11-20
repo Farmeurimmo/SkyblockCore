@@ -12,8 +12,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 
-import com.destroystokyo.paper.inventory.ItemStackRecipeChoice;
-
 import fr.farmeurimmo.verymc.eco.EcoAccountsManager;
 import net.luckperms.api.LuckPermsProvider;
 import net.luckperms.api.model.user.User;
