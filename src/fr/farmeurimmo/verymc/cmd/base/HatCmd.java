@@ -16,7 +16,6 @@ import fr.farmeurimmo.verymc.utils.SendActionBar;
 
 public class HatCmd implements CommandExecutor, TabCompleter {
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		
