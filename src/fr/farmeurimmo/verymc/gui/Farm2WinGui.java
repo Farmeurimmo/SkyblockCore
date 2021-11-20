@@ -50,25 +50,21 @@ public class Farm2WinGui implements Listener {
 		if(event.getView().getTitle().equalsIgnoreCase("§6Boutique Farm2Win")) {
 			event.setCancelled(true);
 			if(current.getType() == Material.EMERALD_BLOCK) {
-				player.closeInventory();
 				MakeRanksGui.MakeRankGui(player);
 			}
 			if(current.getType() == Material.ARROW) {
-				player.closeInventory();
 				MenuGui.OpenMainMenu(player);
 			}
 			if(current.getType() == Material.POTION) {
 				BuyAtoutGui.MakeBuyAtoutGui(player);
 			}
 			if(current.getType() == Material.COMMAND_BLOCK_MINECART) {
-				player.closeInventory();
 				MakeCommandsGui.MakeCommandGui(player);
 			}
 		}
 		if(event.getView().getTitle().equalsIgnoreCase("§6Boutique des grades Farm2Win")) {
 			event.setCancelled(true);
 			if(current.getType() == Material.ARROW) {
-				player.closeInventory();
 				MainBoutiqueGUI(player);
 			}
 			if(current.getType() == Material.NETHERITE_BLOCK) {

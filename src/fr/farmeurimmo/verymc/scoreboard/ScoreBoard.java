@@ -38,7 +38,7 @@ public class ScoreBoard implements Listener {
 		obj.getScore(" §eplay.verymc.fr").setScore(1);
 		obj.getScore("§a").setScore(15);
 		obj.getScore("§l").setScore(11);
-		obj.getScore("§6Ile").setScore(10);
+		obj.getScore("§6§lIle").setScore(10);
 		obj.getScore("§o").setScore(4);
 		obj.getScore("§d").setScore(2);
 

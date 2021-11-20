@@ -67,7 +67,7 @@ public class AmountGuiManager implements Listener {
 			if(current.getType() == Material.LIME_WOOL) {
 				if(current.getAmount() == 1) {
 					Float price = BuyShopItem.pricesbuy.get(new ItemStack(Material.valueOf(e.getInventory().getItem(22).getType().toString())));
-					float amount = price*e.getInventory().getItem(22).getAmount();
+					float amount = price;
 					ItemStack od = e.getInventory().getItem(22);
 					int total = od.getAmount();
 					BuyShopItem.BuyOSellItemNonStack(od, (Player) e.getWhoClicked(), true, amount, total);
@@ -140,7 +140,7 @@ public class AmountGuiManager implements Listener {
 			if(current.getType() == Material.LIME_WOOL) {
 				if(current.getAmount() == 1) {
 					Float price = BuyShopItem.pricesbuy.get(new ItemStack(Material.valueOf(e.getInventory().getItem(22).getType().toString())));
-					float amount = price*e.getInventory().getItem(22).getAmount();
+					float amount = price;
 					ItemStack od = e.getInventory().getItem(22);
 					int total = od.getAmount();
 					BuyShopItem.BuyOSellItemNonStack(od, (Player) e.getWhoClicked(), false, amount, total);
