@@ -54,26 +54,26 @@ public class EconomyImplementer implements Economy {
 
 	@Override
 	public boolean hasAccount(String playerName) {
-		// TODO Auto-generated method stub
-		return false;
+		EcoAccountsManager.CheckForAccount(Bukkit.getPlayer(playerName));
+		return true;
 	}
 
 	@Override
 	public boolean hasAccount(OfflinePlayer player) {
-		// TODO Auto-generated method stub
-		return false;
+		EcoAccountsManager.CheckForAccount(Bukkit.getPlayer(player.getName()));
+		return true;
 	}
 
 	@Override
 	public boolean hasAccount(String playerName, String worldName) {
-		// TODO Auto-generated method stub
-		return false;
+		EcoAccountsManager.CheckForAccount(Bukkit.getPlayer(playerName));
+		return true;
 	}
 
 	@Override
 	public boolean hasAccount(OfflinePlayer player, String worldName) {
-		// TODO Auto-generated method stub
-		return false;
+		EcoAccountsManager.CheckForAccount(Bukkit.getPlayer(player.getName()));
+		return true;
 	}
 
 	@Override
@@ -154,25 +154,25 @@ public class EconomyImplementer implements Economy {
 
 	@Override
 	public EconomyResponse depositPlayer(String playerName, double amount) {
-		// TODO Auto-generated method stub
+		EcoAccountsManager.AddFounds(playerName, amount);
 		return null;
 	}
 
 	@Override
 	public EconomyResponse depositPlayer(OfflinePlayer player, double amount) {
-		// TODO Auto-generated method stub
+		EcoAccountsManager.AddFounds(player.getName(), amount);
 		return null;
 	}
 
 	@Override
 	public EconomyResponse depositPlayer(String playerName, String worldName, double amount) {
-		// TODO Auto-generated method stub
+		EcoAccountsManager.AddFounds(playerName, amount);
 		return null;
 	}
 
 	@Override
 	public EconomyResponse depositPlayer(OfflinePlayer player, String worldName, double amount) {
-		// TODO Auto-generated method stub
+		EcoAccountsManager.AddFounds(player.getName(), amount);
 		return null;
 	}
 
@@ -250,26 +250,26 @@ public class EconomyImplementer implements Economy {
 
 	@Override
 	public boolean createPlayerAccount(String playerName) {
-		// TODO Auto-generated method stub
-		return false;
+		EcoAccountsManager.CheckForAccount(Bukkit.getPlayer(playerName));
+		return true;
 	}
 
 	@Override
 	public boolean createPlayerAccount(OfflinePlayer player) {
-		// TODO Auto-generated method stub
-		return false;
+		EcoAccountsManager.CheckForAccount(Bukkit.getPlayer(player.getName()));
+		return true;
 	}
 
 	@Override
 	public boolean createPlayerAccount(String playerName, String worldName) {
-		// TODO Auto-generated method stub
-		return false;
+		EcoAccountsManager.CheckForAccount(Bukkit.getPlayer(playerName));
+		return true;
 	}
 
 	@Override
 	public boolean createPlayerAccount(OfflinePlayer player, String worldName) {
-		// TODO Auto-generated method stub
-		return false;
+		EcoAccountsManager.CheckForAccount(Bukkit.getPlayer(player.getName()));
+		return true;
 	}
 
 }
