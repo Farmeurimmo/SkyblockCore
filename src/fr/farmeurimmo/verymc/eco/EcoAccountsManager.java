@@ -49,11 +49,11 @@ public class EcoAccountsManager{
 		Main.instance1.getDataz().set(player, now);
 		Main.instance1.saveData();
 		if(Bukkit.getPlayer(player) != null) {
-			Bukkit.getPlayer(player).sendMessage("Â§6Â§lMonnaie Â§8Â» Â§6"+toremove+"$Â§f ont Ã©tÃ© Â§cretirÃ©Â§f de votre compte.");
+			Bukkit.getPlayer(player).sendMessage("§6§lMonnaie §8» §6"+toremove+"$§f ont été §cretiré§f de votre compte.");
 		}
 		} else {
 			if(Bukkit.getPlayer(player) != null) {
-			Bukkit.getPlayer(player).sendMessage("Â§6Â§lMonnaie Â§8Â» Â§6"+toremove+"$Â§f n'ont pas pu Ãªtre Â§cretirÃ©Â§f de votre compte.");
+			Bukkit.getPlayer(player).sendMessage("§6§lMonnaie §8» §6"+toremove+"$§f n'ont pas pu être §cretiré§f de votre compte.");
 			}
 		}
 	}
@@ -62,7 +62,7 @@ public class EcoAccountsManager{
 		Main.instance1.getDataz().set(player, toset);
 		Main.instance1.saveData();
 		if(Bukkit.getPlayer(player) != null) {
-			Bukkit.getPlayer(player).sendMessage("Â§6Â§lMonnaie Â§8Â» Â§fVotre argent a Ã©tÃ© Â§adÃ©finisÂ§f sur Â§6"+toset+"$Â§f.");
+			Bukkit.getPlayer(player).sendMessage("§6§lMonnaie §8» §fVotre argent a été §adéfinis§f sur §6"+toset+"$§f.");
 		}
 	}
 	public static void AddFounds(String player, Double aaa) {
@@ -73,11 +73,11 @@ public class EcoAccountsManager{
 		Main.instance1.getDataz().set(player, now);
 		Main.instance1.saveData();
 		if(Bukkit.getPlayer(player) != null) {
-		Bukkit.getPlayer(player).sendMessage("Â§6Â§lMonnaie Â§8Â» Â§6"+aaa+"$Â§f ont Ã©tÃ© Â§aajoutÃ©Â§f Ã  votre compte.");
+		Bukkit.getPlayer(player).sendMessage("§6§lMonnaie §8» §6"+aaa+"$§f ont été §aajouté§f à  votre compte.");
 		}
 		} else {
 			if(Bukkit.getPlayer(player) != null) {
-			Bukkit.getPlayer(player).sendMessage("Â§6Â§lMonnaie Â§8Â» Â§6"+aaa+"$Â§f n'ont pas pu Ãªtre Â§aajoutÃ©Â§f Ã  votre compte.");
+			Bukkit.getPlayer(player).sendMessage("§6§lMonnaie §8» §6"+aaa+"$§f n'ont pas pu être §aajouté§f à  votre compte.");
 			}
 		}
 	}

@@ -64,10 +64,10 @@ public class BaltopManager {
 		}
 		int TotalPlayers = EcoAccountsManager.Moneys.size();
 		int TotalPage = TotalPlayers/10+1;
-		player.sendMessage("Â§6----- Â§fÂ§lBaltop Â§6----- \n1. "+un+": "+EcoAccountsManager.GetMoney(un)+"\n2. "+deux+": "+EcoAccountsManager.GetMoney(deux)
+		player.sendMessage("§6----- §f§lBaltop §6----- \n1. "+un+": "+EcoAccountsManager.GetMoney(un)+"\n2. "+deux+": "+EcoAccountsManager.GetMoney(deux)
 		+"\n3. "+trois+": "+EcoAccountsManager.GetMoney(trois)+"\n4. "+quatre+": "+EcoAccountsManager.GetMoney(quatre)+"\n5. "+cinq+": "+EcoAccountsManager.GetMoney(cinq)
 		+"\n6. "+six+": "+EcoAccountsManager.GetMoney(six)+"\n7. "+sept+": "+EcoAccountsManager.GetMoney(sept)+"\n8. "+huit+": "+EcoAccountsManager.GetMoney(huit)
-		+"\n9. "+neuf+": "+EcoAccountsManager.GetMoney(neuf)+"\n10. "+dix+": "+EcoAccountsManager.GetMoney(dix)+"\nÂ§6--- Â§fÂ§lPage "+ page+"/"+TotalPage+" Â§6---");
+		+"\n9. "+neuf+": "+EcoAccountsManager.GetMoney(neuf)+"\n10. "+dix+": "+EcoAccountsManager.GetMoney(dix)+"\n§6--- §f§lPage "+ page+"/"+TotalPage+" §6---");
 		alreadyin.clear();
 	}
 }

@@ -57,19 +57,19 @@ public class GenShopPage {
 				String achat = "";
 				Float prixachat = BuyShopItem.pricesbuy.get(custom1);
 				if(prixachat == null || prixachat == -1) {
-					achat = "Â§cNon achetable";
+					achat = "§cNon achetable";
 				} else {
-					achat = "Â§c"+prixachat+"$";
+					achat = "§c"+prixachat+"$";
 				}
 				
 				String vente = "";
 				Float prixvente = BuyShopItem.pricessell.get(custom1);
 				if(prixvente == null || prixvente == -1) {
-				    vente = "Â§cNon vendable";
+				    vente = "§cNon vendable";
 				} else {
-					vente = "Â§c"+prixvente+"$";
+					vente = "§c"+prixvente+"$";
 				}
-				meta1.setLore(Arrays.asList("Â§6Achat: " + achat,"Â§6Vente: "+vente));
+				meta1.setLore(Arrays.asList("§6Achat: " + achat,"§6Vente: "+vente));
 				custom1.setItemMeta(meta1);
 				
 				int slot = GetNextSlot();
@@ -138,11 +138,11 @@ public class GenShopPage {
 	
 	public static void OpenPreGenPage(Player player, String page, int pagenum) {
 		User user = LuckPermsProvider.get().getUserManager().getUser(player.getName());
-		String Grade = user.getCachedData().getMetaData().getPrefix().replace("&", "Â§");
+		String Grade = user.getCachedData().getMetaData().getPrefix().replace("&", "§");
 		
 		int numberofpage = maxpage.get(page);
         
-        Inventory inv = Bukkit.createInventory(null, 54, "Â§6" + page + " "+pagenum+"/"+numberofpage);
+        Inventory inv = Bukkit.createInventory(null, 54, "§6" + page + " "+pagenum+"/"+numberofpage);
         
         if(page.equals("Blocs")) {
         if(pagenum == 1) {
@@ -187,7 +187,7 @@ public class GenShopPage {
         if(numberofpage >= 2 && pagenum < numberofpage) {
             ItemStack custom7 = new ItemStack(Material.ARROW, 1);
     		ItemMeta customg = custom7.getItemMeta();
-    		customg.setDisplayName("Â§6Page suivante");
+    		customg.setDisplayName("§6Page suivante");
     		custom7.setItemMeta(customg);
     		inv.setItem(53, custom7);
             }
@@ -195,22 +195,22 @@ public class GenShopPage {
     		if(pagenum >= 2) {
     		 ItemStack custom6 = new ItemStack(Material.ARROW, 1);
     			ItemMeta customh = custom6.getItemMeta();
-    			customh.setDisplayName("Â§6Page prÃ©cÃ©dente");
+    			customh.setDisplayName("§6Page précédente");
     			custom6.setItemMeta(customh);
     			inv.setItem(45, custom6);
     		}
     		
     		ItemStack custom7 = new ItemStack(Material.IRON_DOOR, 1);
     		ItemMeta customg = custom7.getItemMeta();
-    		customg.setDisplayName("Â§6Retour aux CatÃ©gories");
+    		customg.setDisplayName("§6Retour aux Catégories");
     		custom7.setItemMeta(customg);
     		inv.setItem(0, custom7);
     		
     		ItemStack custom2 = new ItemStack(Material.PLAYER_HEAD, 1);
     		SkullMeta customb = (SkullMeta) custom2.getItemMeta();
     		customb.setOwner(player.getName());
-    		customb.setDisplayName("Â§7" + player.getName());
-    		customb.setLore(Arrays.asList("Â§7Grade: " + Grade, "Â§7Argent: " + EcoAccountsManager.Moneys.get(player.getName())));
+    		customb.setDisplayName("§7" + player.getName());
+    		customb.setLore(Arrays.asList("§7Grade: " + Grade, "§7Argent: " + EcoAccountsManager.Moneys.get(player.getName())));
     		custom2.setItemMeta(customb);
     		inv.setItem(49, custom2);
             
