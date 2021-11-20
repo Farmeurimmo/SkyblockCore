@@ -107,9 +107,9 @@ public class BuyShopItem {
 		
 		return total;
 	}
-	public static void BuyOSellItemNonStack(ItemStack a, Player player, boolean buy, float price, int amount) {
+	public static void BuyOSellItemNonStack(ItemStack a, Player player, boolean buy, double price, int amount) {
 		if(buy == true) {
-			if(EcoAccountsManager.CheckForFounds(player, price*amount) == true) {
+			if(EcoAccountsManager.CheckForFounds(player, (double) (price*amount)) == true) {
 				ItemMeta tempmeta = a.getItemMeta();
 				tempmeta.setLore(null);
 				a.setItemMeta(tempmeta);
@@ -118,12 +118,12 @@ public class BuyShopItem {
 				EcoAccountsManager.RemoveFounds(player.getName(), price*amount);
 				player.getInventory().addItem(a);
 			} else {
-				float loa=price*amount - EcoAccountsManager.GetMoney(player.getName());
+				double loa=price*amount - EcoAccountsManager.GetMoney(player.getName());
 				player.sendMessage("§6§lShop §8» §fIl vous manque §6"+loa+"$§f.");
 			}
 		} else {
 			if(player.getInventory().contains(a.getType(), amount)) {
-				float profit = pricessell.get(new ItemStack(Material.valueOf(a.getType().toString())))*amount;
+				Double profit = (double) (pricessell.get(new ItemStack(Material.valueOf(a.getType().toString())))*amount);
 				player.closeInventory();
 				removeItems(player.getInventory(), a.getType(), amount);
 				player.sendMessage("§6§lShop §8» §fVous avez vendu §ax"+amount+" "+a.getType().toString()+"§f pour §6"+profit+"$§f.");

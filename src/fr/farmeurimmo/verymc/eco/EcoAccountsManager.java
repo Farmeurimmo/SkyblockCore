@@ -32,10 +32,10 @@ public class EcoAccountsManager{
 		}
 		return b;
 	}
-	public static boolean CheckForFounds(Player player, Double needed) {
+	public static boolean CheckForFounds(Player player, Double f) {
 		boolean aa = false;
-		Float moneyplayer = Moneys.get(player.getName());
-		float after = moneyplayer-needed;
+		Double moneyplayer = Moneys.get(player.getName());
+		Double after = (Double) moneyplayer-f;
 		if(after >= 0) {
 			aa = true;
 		}
@@ -62,7 +62,7 @@ public class EcoAccountsManager{
 		Main.instance1.getDataz().set(player, toset);
 		Main.instance1.saveData();
 		if(Bukkit.getPlayer(player) != null) {
-			Bukkit.getPlayer(player).sendMessage("§6§lMonnaie §8» §fVotre argent a été §adéfinis§f sur §6"+aaa+"$§f.");
+			Bukkit.getPlayer(player).sendMessage("§6§lMonnaie §8» §fVotre argent a été §adéfinis§f sur §6"+toset+"$§f.");
 		}
 	}
 	public static void AddFounds(String player, Double aaa) {
