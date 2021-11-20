@@ -24,31 +24,34 @@ public class MainShopGui implements Listener {
 	public void OnInventoryClick(InventoryClickEvent e) {
 		Player player = (Player) e.getWhoClicked();
 		ItemStack current = e.getCurrentItem();
+		if(current == null) {
+			return;
+		}
 		if(e.getView().getTitle().equalsIgnoreCase("§6Boutiques")) {
 			e.setCancelled(true);
 			if(current.getType() == Material.GRASS_BLOCK) {
-				GenShopPage.GenenerateShopPage(player, "Blocs");
+				GenShopPage.OpenPreGenPage(player, "Blocs", 1);
 			}
 			if(current.getType() == Material.LIME_DYE) {
-				
+				GenShopPage.OpenPreGenPage(player, "Colorants", 1);
 			}
 			if(current.getType() == Material.WHEAT) {
-				
+				GenShopPage.OpenPreGenPage(player, "Agriculture", 1);
 			}
 			if(current.getType() == Material.COOKED_BEEF) {
-				
+				GenShopPage.OpenPreGenPage(player, "Nourritures", 1);
 			}
 			if(current.getType() == Material.DIAMOND_ORE) {
-				
+				GenShopPage.OpenPreGenPage(player, "Minerais", 1);
 			}
 			if(current.getType() == Material.BELL) {
-				
+				GenShopPage.OpenPreGenPage(player, "Autres", 1);
 			}
 			if(current.getType() == Material.GUNPOWDER) {
-				
+				GenShopPage.OpenPreGenPage(player, "Drops", 1);
 			}
             if(current.getType() == Material.REDSTONE) {
-				
+            	GenShopPage.OpenPreGenPage(player, "Redstone", 1);
 			}
             if(current.getType() == Material.SPAWNER) {
             	

@@ -30,30 +30,30 @@ public class BuyAtoutGui implements Listener {
 	@SuppressWarnings("deprecation")
 	public static void MakeBuyAtoutGui(Player player) {
 		User user = LuckPermsProvider.get().getUserManager().getUser(player.getName());
-		String Grade = user.getCachedData().getMetaData().getPrefix().replace("&", "§");
+		String Grade = user.getCachedData().getMetaData().getPrefix().replace("&", "Â§");
 		
 		
-        Inventory inv = Bukkit.createInventory(null, 27, "§6Boutique des atouts");
+        Inventory inv = Bukkit.createInventory(null, 27, "Â§6Boutique des atouts");
 		
 		ItemStack custom2 = new ItemStack(Material.PLAYER_HEAD, 1);
 		SkullMeta customb = (SkullMeta) custom2.getItemMeta();
 		customb.setOwner(player.getName());
-		customb.setDisplayName("§7" + player.getName());
-		customb.setLore(Arrays.asList("§7Grade: " + Grade, "§7Argent: " + EcoAccountsManager.Moneys.get(player.getName())));
+		customb.setDisplayName("Â§7" + player.getName());
+		customb.setLore(Arrays.asList("Â§7Grade: " + Grade, "Â§7Argent: " + EcoAccountsManager.Moneys.get(player.getName())));
 		custom2.setItemMeta(customb);
 		inv.setItem(22, custom2);
 		
 		if(Main.instance1.getData().getInt("Joueurs."+player.getName()+".Atout.1.Level") == 0) {
 			ItemStack custom1 = new ItemStack(Material.GOLDEN_PICKAXE, 1);
 			ItemMeta customa = custom1.getItemMeta();
-			customa.setDisplayName("§eHaste 2");
-			customa.setLore(Arrays.asList("§7","§6Prix: " + haste + "$"));
+			customa.setDisplayName("Â§eHaste 2");
+			customa.setLore(Arrays.asList("Â§7","Â§6Prix: " + haste + "$"));
 			custom1.setItemMeta(customa);
 			inv.setItem(10, custom1);
 	        } else if (Main.instance1.getData().getInt("Joueurs."+player.getName()+".Atout.1.Level") == 2) {
 	        	ItemStack custom10 = new ItemStack(Material.BEDROCK, 1);
 	    		ItemMeta customi = custom10.getItemMeta();
-	    		customi.setDisplayName("§eHaste 2 §c(Déjà possédé)");
+	    		customi.setDisplayName("Â§eHaste 2 Â§c(DÃ©jÃ  possÃ©dÃ©)");
 	    		custom10.setItemMeta(customi);
 	    		inv.setItem(10, custom10);
 	        }
@@ -62,14 +62,14 @@ public class BuyAtoutGui implements Listener {
 		if(Main.instance1.getData().getInt("Joueurs."+player.getName()+".Atout.2.Level") == 0) {
 			ItemStack custom1 = new ItemStack(Material.SUGAR, 1);
 			ItemMeta customa = custom1.getItemMeta();
-			customa.setDisplayName("§eSpeed 2");
-			customa.setLore(Arrays.asList("§7","§6Prix: " + speed + "$"));
+			customa.setDisplayName("Â§eSpeed 2");
+			customa.setLore(Arrays.asList("Â§7","Â§6Prix: " + speed + "$"));
 			custom1.setItemMeta(customa);
 			inv.setItem(12, custom1);
 	        } else if (Main.instance1.getData().getInt("Joueurs."+player.getName()+".Atout.2.Level") == 2) {
 	        	ItemStack custom10 = new ItemStack(Material.BEDROCK, 1);
 	    		ItemMeta customi = custom10.getItemMeta();
-	    		customi.setDisplayName("§eSpeed 2 §c(Déjà possédé)");
+	    		customi.setDisplayName("Â§eSpeed 2 Â§c(DÃ©jÃ  possÃ©dÃ©)");
 	    		custom10.setItemMeta(customi);
 	    		inv.setItem(12, custom10);
 	        }
@@ -78,27 +78,27 @@ public class BuyAtoutGui implements Listener {
 		if(Main.instance1.getData().getInt("Joueurs."+player.getName()+".Atout.3.Level") == 0) {
 			ItemStack custom1 = new ItemStack(Material.RABBIT_FOOT, 1);
 			ItemMeta customa = custom1.getItemMeta();
-			customa.setDisplayName("§eJumpboost 3");
-			customa.setLore(Arrays.asList("§7","§6Prix: " + jumpboost + "$"));
+			customa.setDisplayName("Â§eJumpboost 3");
+			customa.setLore(Arrays.asList("Â§7","Â§6Prix: " + jumpboost + "$"));
 			custom1.setItemMeta(customa);
 			inv.setItem(14, custom1);
 	        } else if (Main.instance1.getData().getInt("Joueurs."+player.getName()+".Atout.3.Level") == 3) {
 	        	ItemStack custom10 = new ItemStack(Material.BEDROCK, 1);
 	    		ItemMeta customi = custom10.getItemMeta();
-	    		customi.setDisplayName("§eJumpboost 3 §c(Déjà possédé)");
+	    		customi.setDisplayName("Â§eJumpboost 3 Â§c(DÃ©jÃ  possÃ©dÃ©)");
 	    		custom10.setItemMeta(customi);
 	    		inv.setItem(14, custom10);
 	        }
 		
 		ItemStack custom8 = new ItemStack(Material.ARROW, 1);
 		ItemMeta customh = custom8.getItemMeta();
-		customh.setDisplayName("§6Retour §8| §7(clic gauche)");
+		customh.setDisplayName("Â§6Retour Â§8| Â§7(clic gauche)");
 		custom8.setItemMeta(customh);
 		inv.setItem(26, custom8);
 		
 		ItemStack custom9 = new ItemStack(Material.WHITE_STAINED_GLASS_PANE, 1);
 		ItemMeta meta9 = custom9.getItemMeta();
-		meta9.setDisplayName("§6");
+		meta9.setDisplayName("Â§6");
 		custom9.setItemMeta(meta9);
 		
 		for (int i = 0; i < inv.getSize(); i++) {
@@ -116,7 +116,7 @@ public class BuyAtoutGui implements Listener {
 		if(current == null) {
 			return;
 		}
-		if(e.getView().getTitle().equalsIgnoreCase("§6Boutique des atouts")) {
+		if(e.getView().getTitle().equalsIgnoreCase("Â§6Boutique des atouts")) {
 			e.setCancelled(true);
 			if(current.getType() == Material.ARROW) {
 				Farm2WinGui.MainBoutiqueGUI(player);
@@ -142,7 +142,7 @@ public class BuyAtoutGui implements Listener {
 			Main.instance1.getData().set("Joueurs."+player.getName()+".Atout.1.Level", 2);
 			Main.instance1.saveData();
 			player.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 999999999, 1));
-			player.sendMessage("§6Vous avez reçu l'accès à l'atout haste 2 !");
+			player.sendMessage("Â§6Vous avez reÃ§u l'accÃ¨s Ã  l'atout haste 2 !");
 			Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
 			     public void run() {
 					 MakeBuyAtoutGui(player);
@@ -155,7 +155,7 @@ public class BuyAtoutGui implements Listener {
 			Main.instance1.getData().set("Joueurs."+player.getName()+".Atout.2.Active", true);
 			Main.instance1.getData().set("Joueurs."+player.getName()+".Atout.2.Level", 2);
 			Main.instance1.saveData();
-			player.sendMessage("§6Vous avez reçu l'accès à l'atout speed 2 !");
+			player.sendMessage("Â§6Vous avez reÃ§u l'accÃ¨s Ã  l'atout speed 2 !");
 			player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999999, 1));
 			Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
 			     public void run() {
@@ -169,7 +169,7 @@ public class BuyAtoutGui implements Listener {
 			Main.instance1.getData().set("Joueurs."+player.getName()+".Atout.3.Active", true);
 			Main.instance1.getData().set("Joueurs."+player.getName()+".Atout.3.Level", 3);
 			Main.instance1.saveData();
-			player.sendMessage("§6Vous avez reçu l'accès à l'atout Jumpboost 3 !");
+			player.sendMessage("Â§6Vous avez reÃ§u l'accÃ¨s Ã  l'atout Jumpboost 3 !");
 			player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 999999999, 2));
 			Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
 			     public void run() {

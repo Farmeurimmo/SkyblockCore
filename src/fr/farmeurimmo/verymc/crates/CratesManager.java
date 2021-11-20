@@ -163,6 +163,7 @@ public class CratesManager implements Listener {
 			}
 		}
 	}
+	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void InventoryClickEvent(InventoryClickEvent e) {
 		ItemStack current = e.getCurrentItem();

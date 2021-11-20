@@ -28,12 +28,12 @@ public class PayCmd implements CommandExecutor, TabCompleter {
 					boolean digit = false;
 					try {
 				        @SuppressWarnings("unused")
-						int intValue = Integer.parseInt(args[1]);
+						float intValue = Float.parseFloat(args[1]);
 				        digit = true;
 				    } catch (NumberFormatException e) {
 				        digit = false;
 				    }
-					if(!args[1].contains("-") && digit == true) {
+					if(!args[1].contains("-") && !args[1].contains(",") && digit == true) {
 					if(args[1].length() <= 9) {
 						Double aaa = Double.parseDouble(args[1]);
 						if(EcoAccountsManager.CheckForFounds(player, aaa) == true) {
