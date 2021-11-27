@@ -5,11 +5,12 @@ import java.util.HashMap;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Listener;
 
 import fr.farmeurimmo.verymc.core.Main;
 import fr.farmeurimmo.verymc.utils.SendActionBar;
 
-public class CountdownFly {
+public class CountdownFly implements Listener {
 	
 public static HashMap<String, Integer> fly = new HashMap<>();
 	
