@@ -2,7 +2,7 @@ name: SkyblockCore
 version: 1.0
 author: Farmeurimmo
 main: fr.farmeurimmo.verymc.core.Main
-depend: [Citizens, IridiumSkyblock, HolographicDisplays, Core, Vault]
+depend: [Citizens, IridiumSkyblock, HolographicDisplays, Vault]
 api-version: 1.16
 commands:
   spawn:
