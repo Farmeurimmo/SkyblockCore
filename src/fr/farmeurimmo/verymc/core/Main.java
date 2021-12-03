@@ -69,6 +69,7 @@ import fr.farmeurimmo.verymc.events.JoinLeave;
 import fr.farmeurimmo.verymc.events.RedstoneCheck;
 import fr.farmeurimmo.verymc.events.SwitchWorld;
 import fr.farmeurimmo.verymc.events.Tabulation;
+import fr.farmeurimmo.verymc.events.TchatManager;
 import fr.farmeurimmo.verymc.featherfly.CountdownFly;
 import fr.farmeurimmo.verymc.featherfly.DailyFlyCmd;
 import fr.farmeurimmo.verymc.featherfly.FeatherFlyCmd;
@@ -245,6 +246,7 @@ public class Main extends JavaPlugin implements Listener {
 		getServer().getPluginManager().registerEvents(new MultiStacksShopGuiManager(), this);
 		getServer().getPluginManager().registerEvents(new SpawneurManager(), this);
 		getServer().getPluginManager().registerEvents(new CountdownFly(), this);
+		getServer().getPluginManager().registerEvents(new TchatManager(), this);
 		this.getCommand("spawn").setExecutor(new SpawnCmd());
 		this.getCommand("build").setExecutor(new BuildCmd());
 		this.getCommand("farm2win").setExecutor(new Farm2WinCmd());
