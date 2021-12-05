@@ -13,8 +13,8 @@ import fr.farmeurimmo.verymc.eco.EcoAccountsManager;
 
 public class BuyShopItem {
 	
-	public static HashMap <ItemStack, Float> pricesbuy = new HashMap < > ();
-	public static HashMap <ItemStack, Float> pricessell = new HashMap < > ();
+	public static HashMap <ItemStack, Double> pricesbuy = new HashMap < > ();
+	public static HashMap <ItemStack, Double> pricessell = new HashMap < > ();
 	
 	public static void GenPriceShopStartup() {
 		for(String bb : Main.instance1.getConfig().getConfigurationSection("Shops").getKeys(false)) {
@@ -23,8 +23,8 @@ public class BuyShopItem {
 			double c = (float) Main.instance1.getConfig().getDouble("Shops."+bb+"."+aa+".sell");
 			if(Material.valueOf(Main.instance1.getConfig().getString("Shops."+bb+"."+aa+".material")) == null) continue;
 			ItemStack b = new ItemStack(Material.valueOf(Main.instance1.getConfig().getString("Shops."+bb+"."+aa+".material")));
-			pricesbuy.put(b, (float) a);
-			pricessell.put(b, (float) c);
+			pricesbuy.put(b, (double) a);
+			pricessell.put(b, (double) c);
 		}
 		}
 	}

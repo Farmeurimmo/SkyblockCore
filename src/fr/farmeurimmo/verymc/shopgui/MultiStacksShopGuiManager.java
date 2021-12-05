@@ -25,11 +25,11 @@ public class MultiStacksShopGuiManager implements Listener {
 			if(current.getType() == Material.GREEN_STAINED_GLASS) {
 				if(current.getAmount() < 64) {
 					int numstacks = current.getAmount();
-					float price = (float) BuyShopItem.pricesbuy.get(new ItemStack(od.getType()));
+					double price = BuyShopItem.pricesbuy.get(new ItemStack(od.getType()));
 					BuyShopItem.BuyOSellItemNonStack(od, (Player) e.getWhoClicked(), true, price, numstacks*64);
 				} else {
 					int amountinvinv = BuyShopItem.GetAmountToFillInInv(od, (Player) e.getWhoClicked());
-					float price = (float) BuyShopItem.pricesbuy.get(new ItemStack(od.getType()));
+					double price = BuyShopItem.pricesbuy.get(new ItemStack(od.getType()));
 					BuyShopItem.BuyOSellItemNonStack(od, (Player) e.getWhoClicked(), true, price, amountinvinv);
 				}
 			}

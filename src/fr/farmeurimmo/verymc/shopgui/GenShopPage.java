@@ -55,7 +55,7 @@ public class GenShopPage {
 				ItemMeta meta1 = custom1.getItemMeta();
 				
 				String achat = "";
-				Float prixachat = BuyShopItem.pricesbuy.get(custom1);
+				Double prixachat = BuyShopItem.pricesbuy.get(custom1);
 				if(prixachat == null || prixachat == -1) {
 					achat = "§cNon achetable";
 				} else {
@@ -63,7 +63,7 @@ public class GenShopPage {
 				}
 				
 				String vente = "";
-				Float prixvente = BuyShopItem.pricessell.get(custom1);
+				Double prixvente = BuyShopItem.pricessell.get(custom1);
 				if(prixvente == null || prixvente == -1) {
 				    vente = "§cNon vendable";
 				} else {

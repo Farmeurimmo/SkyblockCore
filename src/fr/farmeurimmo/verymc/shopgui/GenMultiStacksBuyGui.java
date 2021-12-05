@@ -40,7 +40,7 @@ public class GenMultiStacksBuyGui {
 		custom7.setItemMeta(customg);
 		inv.setItem(53, custom7);
 		
-		Float price = (float) BuyShopItem.pricesbuy.get(new ItemStack(aa.getType()))*64;
+		Double price = (double) BuyShopItem.pricesbuy.get(new ItemStack(aa.getType()))*64;
 		ItemMeta tempameta = aa.getItemMeta();
 		tempameta.setLore(null);
 		tempameta.setLore(Arrays.asList("§aPrix par stack: §c"+price+"$"));;

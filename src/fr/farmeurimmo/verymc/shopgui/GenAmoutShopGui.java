@@ -66,7 +66,7 @@ public class GenAmoutShopGui {
 		}
 		custom4.setItemMeta(customd);
 		
-		Float price = (float) 0;
+		Double price = (Double) 0.0;
 		ItemMeta tempameta = aa.getItemMeta();
 		tempameta.setLore(null);
 		if(a == true) {
