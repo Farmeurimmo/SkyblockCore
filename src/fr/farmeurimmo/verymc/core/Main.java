@@ -21,8 +21,6 @@ import com.iridium.iridiumskyblock.api.IridiumSkyblockAPI;
 
 import fr.farmeurimmo.verymc.WineLottery.WineGui;
 import fr.farmeurimmo.verymc.WineLottery.WineSpawn;
-import fr.farmeurimmo.verymc.aspawneurs.ASpawneurCmd;
-import fr.farmeurimmo.verymc.aspawneurs.SpawneurManager;
 import fr.farmeurimmo.verymc.atout.AtoutCmd;
 import fr.farmeurimmo.verymc.atout.AtoutGui;
 import fr.farmeurimmo.verymc.atout.BuyAtoutGui;
@@ -89,6 +87,7 @@ import fr.farmeurimmo.verymc.shopgui.GenMultiStacksBuyGui;
 import fr.farmeurimmo.verymc.shopgui.GenShopPage;
 import fr.farmeurimmo.verymc.shopgui.MainShopGui;
 import fr.farmeurimmo.verymc.shopgui.MultiStacksShopGuiManager;
+import fr.farmeurimmo.verymc.shopgui.SellAllCmd;
 import fr.farmeurimmo.verymc.shopgui.ShopGuiCmd;
 import fr.farmeurimmo.verymc.utils.BossBar;
 import net.luckperms.api.LuckPerms;
@@ -244,7 +243,6 @@ public class Main extends JavaPlugin implements Listener {
 		getServer().getPluginManager().registerEvents(new CateSelectGui(), this);
 		getServer().getPluginManager().registerEvents(new AmountGuiManager(), this);
 		getServer().getPluginManager().registerEvents(new MultiStacksShopGuiManager(), this);
-		getServer().getPluginManager().registerEvents(new SpawneurManager(), this);
 		getServer().getPluginManager().registerEvents(new CountdownFly(), this);
 		getServer().getPluginManager().registerEvents(new TchatManager(), this);
 		this.getCommand("spawn").setExecutor(new SpawnCmd());
@@ -283,7 +281,7 @@ public class Main extends JavaPlugin implements Listener {
 		this.getCommand("pay").setExecutor(new PayCmd());
 		this.getCommand("baltop").setExecutor(new BaltopCmd());
 		this.getCommand("shop").setExecutor(new ShopGuiCmd());
-		this.getCommand("ASpawneur").setExecutor(new ASpawneurCmd());
+		this.getCommand("sellall").setExecutor(new SellAllCmd());
 		PluginManager pm = getServer().getPluginManager();
 		pm.registerEvents(this, this);
 		System.out.println("§aDémarrage du plugin réussi !");
@@ -306,17 +304,14 @@ public class Main extends JavaPlugin implements Listener {
 	public FileConfiguration data;
 	public FileConfiguration datac;
 	public FileConfiguration dataz;
-	public FileConfiguration datasp;
     public File dfile;
     public File cfile;
     public File zfile;
-    public File spfile;
    
     public void setup() {
         dfile = new File(this.getDataFolder(), "Challenges.yml");
         cfile = new File(this.getDataFolder(), "Fly.yml");
         zfile = new File(this.getDataFolder(), "Eco.yml");
-        spfile = new File(this.getDataFolder(), "Spawneurs.yml");
        
         if(!dfile.exists()) {
             try {
@@ -351,16 +346,6 @@ public class Main extends JavaPlugin implements Listener {
         
         dataz = YamlConfiguration.loadConfiguration(zfile);
         
-        if(!spfile.exists()) {
-            try {
-                spfile.createNewFile();
-            }
-            catch(IOException e) {
-                getLogger().info("§c§lErreur lors de la création de Spawneurs.yml");
-            }
-        }
-        
-        datasp = YamlConfiguration.loadConfiguration(spfile);
         
     }
    
@@ -376,9 +361,6 @@ public class Main extends JavaPlugin implements Listener {
     	return dataz;
     }
     
-    public FileConfiguration getDatasp() {
-    	return datasp;
-    }
     
     public void reloadData() throws FileNotFoundException, IOException {
             try {
@@ -395,12 +377,6 @@ public class Main extends JavaPlugin implements Listener {
         }
             try {
 				dataz.load(zfile);
-			} catch (InvalidConfigurationException e) {
-				getLogger().info("§c§lErreur lors de la sauvegarde!");
-				e.printStackTrace();
-        }
-            try {
-				datasp.load(spfile);
 			} catch (InvalidConfigurationException e) {
 				getLogger().info("§c§lErreur lors de la sauvegarde!");
 				e.printStackTrace();
@@ -422,12 +398,6 @@ public class Main extends JavaPlugin implements Listener {
         }
         try {
             dataz.save(zfile);
-        }
-        catch(IOException e) {
-            getLogger().info("§c§lErreur lors de la sauvegarde!");
-        }
-        try {
-            datasp.save(spfile);
         }
         catch(IOException e) {
             getLogger().info("§c§lErreur lors de la sauvegarde!");
