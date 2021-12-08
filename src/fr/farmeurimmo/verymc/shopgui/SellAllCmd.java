@@ -1,5 +1,7 @@
 package fr.farmeurimmo.verymc.shopgui;
 
+import java.util.stream.IntStream;
+
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -18,23 +20,22 @@ public class SellAllCmd implements CommandExecutor {
 		}
 		Player player = (Player) sender;
 		double total = 0;
-		for(ItemStack a : player.getInventory().getStorageContents()) {
+		ItemStack[] ddd = IntStream.range(0, 31).boxed().map(player.getInventory()::getItem).toArray(ItemStack[]::new);
+		for(ItemStack a : ddd) {
 			if(a == null) continue;
 			if(a.getType() == null) continue;
-			if(BuyShopItem.isSellable(a)==true) {
-				int amount = BuyShopItem.GetAmountInInv(a, player);
-				Double price = BuyShopItem.pricessell.get(a);
+			ItemStack searched = new ItemStack(a.getType());
+			searched.setAmount(a.getAmount());
+			if(BuyShopItem.pricessell.get(new ItemStack(a.getType())) != null && BuyShopItem.pricessell.get(new ItemStack(a.getType())) > 0) {
+				int amount = BuyShopItem.GetAmountInInv(searched, player);
+				Double price = BuyShopItem.pricessell.get(new ItemStack(a.getType()));
 				price = amount*price;
-				BuyShopItem.removeItems(player.getInventory(), a.getType(), amount);
+				BuyShopItem.removeItems(player.getInventory(), searched.getType(), amount);
 				total+=price;
 			}
 		}
-		if(total > 0) {
-		EcoAccountsManager.AddFounds(player.getName(), total);
+		if(total > 0) EcoAccountsManager.AddFounds(player.getName(), total);
 		player.sendMessage("§6§lShop §8» §fVous avez vendu tout les items vendables de votre inventaire pour §a"+total+"$.");
-		} else {
-			player.sendMessage("§6§lShop §8» §fVous n'avez rien à vendre dans votre inventaire.");
-		}
 		
 		return false;
 	}
