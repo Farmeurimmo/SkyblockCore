@@ -5,6 +5,8 @@ import java.util.Map.Entry;
 
 import org.bukkit.entity.Player;
 
+import fr.farmeurimmo.verymc.utils.Maths;
+
 public class BaltopManager {
 	
 	public static ArrayList<String> alreadyin = new ArrayList<String>();
@@ -64,10 +66,18 @@ public class BaltopManager {
 		}
 		int TotalPlayers = EcoAccountsManager.Moneys.size();
 		int TotalPage = TotalPlayers/10+1;
-		player.sendMessage("§6----- §f§lBaltop §6----- \n1. "+un+": "+EcoAccountsManager.GetMoney(un)+"\n2. "+deux+": "+EcoAccountsManager.GetMoney(deux)
-		+"\n3. "+trois+": "+EcoAccountsManager.GetMoney(trois)+"\n4. "+quatre+": "+EcoAccountsManager.GetMoney(quatre)+"\n5. "+cinq+": "+EcoAccountsManager.GetMoney(cinq)
-		+"\n6. "+six+": "+EcoAccountsManager.GetMoney(six)+"\n7. "+sept+": "+EcoAccountsManager.GetMoney(sept)+"\n8. "+huit+": "+EcoAccountsManager.GetMoney(huit)
-		+"\n9. "+neuf+": "+EcoAccountsManager.GetMoney(neuf)+"\n10. "+dix+": "+EcoAccountsManager.GetMoney(dix)+"\n§6--- §f§lPage "+ page+"/"+TotalPage+" §6---");
+		player.sendMessage("§6----- §f§lBaltop §6----- "+
+		"\n1. "+un+": "+Maths.arrondiNDecimales(EcoAccountsManager.GetMoney(un), 2)+
+		"\n2. "+deux+": "+Maths.arrondiNDecimales(EcoAccountsManager.GetMoney(deux), 2)+
+		"\n3. "+trois+": "+Maths.arrondiNDecimales(EcoAccountsManager.GetMoney(trois), 2)+
+		"\n4. "+quatre+": "+Maths.arrondiNDecimales(EcoAccountsManager.GetMoney(quatre), 2)+
+		"\n5. "+cinq+": "+Maths.arrondiNDecimales(EcoAccountsManager.GetMoney(cinq), 2)+
+		"\n6. "+six+": "+Maths.arrondiNDecimales(EcoAccountsManager.GetMoney(six), 2)+
+		"\n7. "+sept+": "+Maths.arrondiNDecimales(EcoAccountsManager.GetMoney(sept), 2)+
+		"\n8. "+huit+": "+Maths.arrondiNDecimales(EcoAccountsManager.GetMoney(huit), 2)+
+		"\n9. "+neuf+": "+Maths.arrondiNDecimales(EcoAccountsManager.GetMoney(neuf), 2)+
+		"\n10. "+dix+": "+Maths.arrondiNDecimales(EcoAccountsManager.GetMoney(dix), 2)+
+		"\n§6--- §f§lPage "+ page+"/"+TotalPage+" §6---");
 		alreadyin.clear();
 	}
 }

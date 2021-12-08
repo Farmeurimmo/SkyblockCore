@@ -75,7 +75,6 @@ public class ScoreBoard implements Listener {
 
 		player.setScoreboard(board);
 	}
-
 	public static void updateScoreBoard(){
 		for(Player player : Bukkit.getOnlinePlayers()) {
 		Scoreboard board = player.getScoreboard();
@@ -92,7 +91,7 @@ public class ScoreBoard implements Listener {
 		if(board.getTeam("rank") != null) {
 			board.getTeam("rank").setPrefix("§fGrade §8» " + Grade);
 		} if(board.getTeam("money") != null) {
-			Double a = EcoAccountsManager.Moneys.get(player.getName());
+			Double a = EcoAccountsManager.MoneyGetarrondiNDecimales(player.getName(), 2);
 			board.getTeam("money").setPrefix("§fArgent §8» §e" + a);
 		} if(board.getTeam("online") != null) {
 			board.getTeam("online").setPrefix("§fSkyblock §8» §c" + Bukkit.getServer().getOnlinePlayers().size());

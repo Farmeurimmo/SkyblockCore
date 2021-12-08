@@ -12,6 +12,7 @@ import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
 import fr.farmeurimmo.verymc.eco.EcoAccountsManager;
+import fr.farmeurimmo.verymc.utils.Maths;
 
 public class MoneyCmd implements CommandExecutor, TabCompleter {
 
@@ -21,11 +22,11 @@ public class MoneyCmd implements CommandExecutor, TabCompleter {
 		if(args.length == 0) {
 		if(sender instanceof Player) {
 			Player player = (Player) sender;
-			player.sendMessage("§6§lMonnaie §8» §fVous avez §6"+EcoAccountsManager.Moneys.get(player.getName())+"$");
+			player.sendMessage("§6§lMonnaie §8» §fVous avez §6"+Maths.arrondiNDecimales(EcoAccountsManager.GetMoney(player.getName()),2));
 		}
 		} else if (args.length == 1) {
 			if(EcoAccountsManager.Moneys.get(args[0]) != null) {
-				sender.sendMessage("§6§lMonnaie §8» §6"+args[0]+"§f possède §6"+EcoAccountsManager.Moneys.get(args[0])+"$");
+				sender.sendMessage("§6§lMonnaie §8» §6"+args[0]+"§f possède §6"+Maths.arrondiNDecimales(EcoAccountsManager.GetMoney(args[0]), 2)+"$");
 			}
 		} else if (args.length == 2) {
 			sender.sendMessage("§6§lMonnaie §8» §f/money <pseudo> <give/remove> <montant>");
