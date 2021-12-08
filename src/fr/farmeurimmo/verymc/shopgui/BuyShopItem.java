@@ -29,18 +29,18 @@ public class BuyShopItem {
 		}
 	}
 	public static boolean isBuyable(ItemStack a) {
-		boolean so = true;
-		if(pricessell.get(a) == null || pricesbuy.get(a) == -1) {
-			so = false;
+		if(pricesbuy.get(a) > 0) {
+			return true;
+		} else {
+			return false;	
 		}
-		return so;	
 	}
 	public static boolean isSellable(ItemStack a) {
-		boolean so = true;
-		if(pricessell.get(a) == null || pricessell.get(a) == -1) {
-			so = false;
+		if(pricessell.get(a) > 0) {
+			return true;
+		} else {
+			return false;
 		}
-		return so;	
 	}
 	public static void removeItems(Inventory inventory, Material type, int amount) {
         if (amount <= 0) return;
@@ -64,7 +64,7 @@ public class BuyShopItem {
 	public static int GetAmountInInv(ItemStack aa, Player player) {
 		int total = 0;
 		
-		int size = player.getInventory().getSize();
+		int size = player.getInventory().getSize()-5;
         for (int slot = 0; slot < size; slot++) {
         	ItemStack is = player.getInventory().getItem(slot);
         	if(is == null) continue;
