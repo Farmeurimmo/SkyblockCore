@@ -32,6 +32,12 @@ public class EcoAccountsManager{
 		}
 		return b;
 	}
+	public static double MoneyGetarrondiNDecimales(String playername, int n)
+	{
+		double money = EcoAccountsManager.GetMoney(playername);
+		double pow = Math.pow(10, n);
+		return (Math.floor(money * pow)) / pow;
+	}
 	public static boolean CheckForFounds(Player player, Double f) {
 		boolean aa = false;
 		Double moneyplayer = Moneys.get(player.getName());
