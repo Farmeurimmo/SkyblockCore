@@ -17,7 +17,7 @@ public class WineSpawn {
         npc.setAlwaysUseNameHologram(false);
         npc.setProtected(true);
         npc.setFlyable(true);
-        skin.setSkinName("mairekl");
+        skin.setSkinName("MANDOWNS");
         npc.spawn(loc);
     }
     public static void DestroyPnj() {
