@@ -53,9 +53,9 @@ public class FeatherFlyCmd implements CommandExecutor, TabCompleter {
 		}
 		else {
 			sender.sendMessage("§cErreur, faites /featherfly help pour voir les commandes !");
-		}
-		if(args[0].equalsIgnoreCase("help")) {
-			sender.sendMessage("§7/featherfly give <pseudo> <temp>+sec/min/heur");
+			if(args[0].equalsIgnoreCase("help")) {
+				sender.sendMessage("§7/featherfly give <pseudo> <temp>+sec/min/heur");
+			}
 		}
 		}
 		return false;

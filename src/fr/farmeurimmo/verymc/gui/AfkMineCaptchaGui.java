@@ -68,7 +68,7 @@ public class AfkMineCaptchaGui implements Listener {
 						}
 						Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
 						     public void run() {
-						    	TeleportPlayer.TeleportPlayerFromRequest(player, SpawnCmd.Spawn, 0);
+						    	player.chat("/spawn");
 								SendActionBar.SendActionBarMsg(player, "§cVous n'avez pas réussi le Captcha, vous avez donc été envoyé au spawn");
 								player.closeInventory();
 						     }
