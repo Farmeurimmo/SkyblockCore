@@ -17,7 +17,6 @@ import fr.farmeurimmo.verymc.utils.TeleportPlayer;
 
 public class TpYesCmd implements CommandExecutor, TabCompleter {
 
-	@SuppressWarnings("unlikely-arg-type")
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 		if(sender instanceof Player) {
@@ -27,8 +26,12 @@ public class TpYesCmd implements CommandExecutor, TabCompleter {
 				for(Player p : Bukkit.getOnlinePlayers()) {
 					if(Main.instance1.getTarget(p.getName()) != null) {
 					if(Main.instance1.getTarget(p.getName()).equalsIgnoreCase(player.getName())) {
-						TeleportPlayer.TeleportPlayerFromRequestToAnotherPlayer(player, p, GetTeleportDelay.GetPlayerTeleportingdelay(p));
-						Main.pending.remove(Main.instance1.getTarget(p.getName()));
+						TeleportPlayer.TeleportPlayerFromRequestToAnotherPlayer(p, player, GetTeleportDelay.GetPlayerTeleportingdelay(p));
+						Main.pending.remove(p);
+						Main.pending.remove(player);
+						if(Main.haverequest.contains(player)) {
+							Main.haverequest.remove(player);
+						}
 						Main.instance1.ClearPlayerAndTarget(p.getName());
 					}		
 					} else {
