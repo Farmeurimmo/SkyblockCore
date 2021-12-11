@@ -49,7 +49,7 @@ public class HolosSetup implements Listener {
            npca.setAlwaysUseNameHologram(false);
            npca.setProtected(true);
            npca.setFlyable(true);
-           skin.setSkinName("Farmeurimmo");
+           skin.setSkinName("mairekl");
            npca.spawn(loc1);
            
            SkinTrait skina = npcb.getTrait(SkinTrait.class);

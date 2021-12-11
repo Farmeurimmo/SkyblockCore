@@ -26,7 +26,7 @@ public class ChatReaction implements Listener {
 	
 	public static void WriteWords() {
 		mots.clear();
-		mots.addAll(Arrays.asList("VeryMc","Skyblock","Farmeurimmo"));
+		mots.addAll(Arrays.asList("VeryMc","Skyblock","Farmeurimmo","Orthographe","Minecraft","Téléphone","Développement","Forteresse"));
 	}
 	
 	public static void StartChatReaction() {

@@ -19,7 +19,7 @@ import fr.farmeurimmo.verymc.utils.TeleportPlayer;
 
 public class SpawnCmd implements CommandExecutor, TabCompleter {
 
-	public static final Location Spawn = new Location(Bukkit.getServer().getWorld("world"), -187.5, 72.5, -64.5, -90, 0);
+	public static final Location Spawn = new Location(Bukkit.getServer().getWorld("world"), -187.5, 72.5, -63.5, -90, 0);
 	
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {

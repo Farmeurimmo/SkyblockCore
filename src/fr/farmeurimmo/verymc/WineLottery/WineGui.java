@@ -28,12 +28,8 @@ public class WineGui implements Listener {
 	@EventHandler
 	public void OnInteractWithNPC(NPCRightClickEvent e) {
 		Player player = e.getClicker();
-		if(player.hasPermission("*")) {
-			if(e.getNPC().getName().equalsIgnoreCase("§6Barman")) {
-				BuyWinePotion.MakeWinePotionGui(player);
-		}
-		} else {
-			SendActionBar.SendActionBarMsg(player, "§cVous n'avez pas la permission !");
+		if(e.getNPC().getName().equalsIgnoreCase("§6Barman")) {
+			BuyWinePotion.MakeWinePotionGui(player);
 		}
 	}
 	@EventHandler
