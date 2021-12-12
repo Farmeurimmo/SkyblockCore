@@ -27,7 +27,7 @@ public class MainShopGui implements Listener {
 		if(current == null) {
 			return;
 		}
-		if(e.getView().getTitle().equalsIgnoreCase("§6Boutiques")) {
+		if(e.getView().getTitle().equalsIgnoreCase("§6Boutique")) {
 			e.setCancelled(true);
 			if(current.getType() == Material.GRASS_BLOCK) {
 				GenShopPage.OpenPreGenPage(player, "Blocs", 1);
@@ -66,7 +66,7 @@ public class MainShopGui implements Listener {
 	public static void OpenMainShopMenu(Player player) {
 		User user = LuckPermsProvider.get().getUserManager().getUser(player.getName());
 		String Grade = user.getCachedData().getMetaData().getPrefix().replace("&", "§");
-        Inventory inv = Bukkit.createInventory(null, 45, "§6Boutiques");
+        Inventory inv = Bukkit.createInventory(null, 45, "§6Boutique");
 		
 		ItemStack custom1 = new ItemStack(Material.GRASS_BLOCK, 1);
 		ItemMeta customa = custom1.getItemMeta();

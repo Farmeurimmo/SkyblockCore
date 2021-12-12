@@ -24,9 +24,9 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 
 public class CratesManager implements Listener {
 	
-	public static final Location BoxLegendaire = new Location(Bukkit.getServer().getWorld("world"), -162, 72, -68);
-	public static final Location BoxChallenge = new Location(Bukkit.getServer().getWorld("world"), -161, 72, -64);
-	public static final Location BoxVote = new Location(Bukkit.getServer().getWorld("world"), -162, 72, -60);
+	public static final Location BoxLegendaire = new Location(Bukkit.getServer().getWorld("world"), -173, 71, -45);
+	public static final Location BoxChallenge = new Location(Bukkit.getServer().getWorld("world"), -177, 71, -46);
+	public static final Location BoxVote = new Location(Bukkit.getServer().getWorld("world"), -179, 71, -49);
 	
 	static Location holo = new Location(Bukkit.getServer().getWorld("world"), BoxLegendaire.getX()+0.5,
 			BoxLegendaire.getY() + 2.5, BoxLegendaire.getZ()+0.5);
