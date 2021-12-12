@@ -59,8 +59,8 @@ public class BuyWinePotion {
 		ItemStack custom5 = new ItemStack(Material.BOOK, 1);
 		ItemMeta meta5 = custom5.getItemMeta();
 		meta5.setDisplayName("§6Informations");
-		meta5.setLore(Arrays.asList("§7Qui est le le barman et que fait-il?","§7Eh bien il vend des fioles d'alcool.",
-				"§7Si vous buvez ces fioles, vous pouvez obtenir","§7un §abonus §7comme un §cmalus§7.","§7Les §abonus §7et §cmalus §7sont aléatoirs",
+		meta5.setLore(Arrays.asList("§7Qui est le barman et que fait-il?","§7Eh bien il vend des fioles d'alcool fictives.",
+				"§7Si vous buvez ces fioles, vous pouvez obtenir","§7un §abonus §7comme un §cmalus§7.","§7Les §abonus §7et §cmalus §7sont aléatoires",
 				"§7Vous pouvez perdre comme gagner","§7plusieurs fois à la suite.","§7De plus les probabilitées de §agagner §7descendent",
 				"§7en fonction de la taille de la récompense.","§7","§7(L'abus d'alcool est dangereux pour la santé)"));
 		meta5.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);

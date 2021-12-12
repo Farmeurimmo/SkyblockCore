@@ -46,34 +46,56 @@ public class Interact implements Listener {
 	@EventHandler
 	public void BucketEmpty(PlayerBucketEmptyEvent e) {
 		if(e.getBlock().getWorld().getName().equalsIgnoreCase("world")) {
-			e.setCancelled(true);
+			if(Build.contains(e.getPlayer())) {
+				return;
+				}
+			else {
+				e.setCancelled(true);
+			}
 		}
 	}
 	@EventHandler
 	public void BucketFill(PlayerBucketFillEvent e) {
 		if(e.getBlock().getWorld().getName().equalsIgnoreCase("world")) {
-			e.setCancelled(true);
+			if(Build.contains(e.getPlayer())) {
+				return;
+				}
+			else {
+				e.setCancelled(true);
+			}
 		}
 	}
 	@EventHandler
 	public void BlockBreake(BlockBreakEvent e) {
 		if(e.getBlock().getLocation().getWorld().getName().equalsIgnoreCase("world")) {
-			if(!Build.contains(e.getPlayer())) {
-			e.setCancelled(true);
+			if(Build.contains(e.getPlayer())) {
+				return;
+				}
+			else {
+				e.setCancelled(true);
 			}
 		}
 	}
 	@EventHandler
 	public void playerdrop(PlayerDropItemEvent e) {
 		if(e.getPlayer().getWorld().getName().equalsIgnoreCase("world")) {
-			e.setCancelled(true);
-			return;
+			if(Build.contains(e.getPlayer())) {
+				return;
+				}
+			else {
+				e.setCancelled(true);
+			}
 		}
 	}
 	@EventHandler
 	public void Bucketevent(PlayerItemConsumeEvent e) {
 		if(e.getPlayer().getWorld().getName().equalsIgnoreCase("world")) {
-			e.setCancelled(true);
+			if(Build.contains(e.getPlayer())) {
+				return;
+				}
+			else {
+				e.setCancelled(true);
+			}
 		}
 	}
 	@EventHandler
