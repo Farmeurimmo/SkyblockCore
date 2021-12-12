@@ -9,6 +9,7 @@ import org.bukkit.inventory.ItemStack;
 
 import fr.farmeurimmo.verymc.core.Main;
 import fr.farmeurimmo.verymc.eco.EcoAccountsManager;
+import fr.farmeurimmo.verymc.utils.Maths;
 
 public class BuyShopItem {
 	
@@ -22,8 +23,8 @@ public class BuyShopItem {
 			double c = (float) Main.instance1.getConfig().getDouble("Shops."+bb+"."+aa+".sell");
 			if(Material.valueOf(Main.instance1.getConfig().getString("Shops."+bb+"."+aa+".material")) == null) continue;
 			ItemStack b = new ItemStack(Material.valueOf(Main.instance1.getConfig().getString("Shops."+bb+"."+aa+".material")));
-			pricesbuy.put(b, (double) a);
-			pricessell.put(b, (double) c);
+			pricesbuy.put(b, (double) Maths.arrondiNDecimales(a, 2));
+			pricessell.put(b, (double) Maths.arrondiNDecimales(c, 2));
 		}
 		}
 	}
