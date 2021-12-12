@@ -59,6 +59,7 @@
     <groupId>com.iridium</groupId>
     <artifactId>IridiumSkyblock</artifactId>
     <version>LATEST</version>
+    <scope>provided</scope>
 </dependency>
 <dependency>
     <groupId>com.gmail.filoghost.holographicdisplays</groupId>

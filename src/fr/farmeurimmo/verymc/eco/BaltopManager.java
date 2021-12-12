@@ -64,8 +64,8 @@ public class BaltopManager {
 		
 		current += 1;
 		}
-		int TotalPlayers = EcoAccountsManager.Moneys.size();
-		int TotalPage = TotalPlayers/10+1;
+		//int TotalPlayers = EcoAccountsManager.Moneys.size();
+		//int TotalPage = TotalPlayers/10+1;
 		player.sendMessage("§6----- §f§lBaltop §6----- "+
 		"\n1. "+un+": "+Maths.arrondiNDecimales(EcoAccountsManager.GetMoney(un), 2)+
 		"\n2. "+deux+": "+Maths.arrondiNDecimales(EcoAccountsManager.GetMoney(deux), 2)+
@@ -77,7 +77,7 @@ public class BaltopManager {
 		"\n8. "+huit+": "+Maths.arrondiNDecimales(EcoAccountsManager.GetMoney(huit), 2)+
 		"\n9. "+neuf+": "+Maths.arrondiNDecimales(EcoAccountsManager.GetMoney(neuf), 2)+
 		"\n10. "+dix+": "+Maths.arrondiNDecimales(EcoAccountsManager.GetMoney(dix), 2)+
-		"\n§6--- §f§lPage "+ page+"/"+TotalPage+" §6---");
+		"\n§6--- §f§lPage "+ page+" §6---");
 		alreadyin.clear();
 	}
 }
