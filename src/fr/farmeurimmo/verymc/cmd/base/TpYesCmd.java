@@ -38,8 +38,6 @@ public class TpYesCmd implements CommandExecutor, TabCompleter {
 						p.sendMessage("§6§lTéléportation §8» §fVous ne possédez aucune demande de téléportation.");
 					}
 				}
-			} else {
-				player.sendMessage("§6§lTéléportation §8» §fVous ne possédez aucune demande de téléportation.");
 			}
 		}
 		return false;

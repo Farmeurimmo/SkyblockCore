@@ -89,7 +89,11 @@ public class ScoreBoard implements Listener {
 		}
 		
 		if(board.getTeam("rank") != null) {
-			board.getTeam("rank").setPrefix("§fGrade §8» " + Grade);
+			if(Grade.length() < 64) {
+			  board.getTeam("rank").setPrefix("§fGrade §8» " + Grade);
+			} else {
+				board.getTeam("rank").setPrefix("§fGrade §8» ");
+			}
 		} if(board.getTeam("money") != null) {
 			Double a = EcoAccountsManager.MoneyGetarrondiNDecimales(player.getName(), 2);
 			board.getTeam("money").setPrefix("§fArgent §8» §e" + a);
