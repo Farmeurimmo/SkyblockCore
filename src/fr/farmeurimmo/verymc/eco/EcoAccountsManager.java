@@ -81,12 +81,12 @@ public class EcoAccountsManager{
 		if(dd == false) {
 		if(Bukkit.getPlayer(player) != null) {
 		Bukkit.getPlayer(player).sendMessage("§6§lMonnaie §8» §6"+aaa+"$§f ont été §aajouté§f à  votre compte.");
-		}
 		} else {
 			if(Bukkit.getPlayer(player) != null) {
 			Bukkit.getPlayer(player).sendMessage("§6§lMonnaie §8» §6"+aaa+"$§f n'ont pas pu être §aajouté§f à  votre compte.");
 			}
 		}
+	}
 		}
 	}
 	public static void UpdateHash() {

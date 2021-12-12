@@ -6,7 +6,6 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import fr.farmeurimmo.verymc.core.Main;
 import fr.farmeurimmo.verymc.eco.EcoAccountsManager;
@@ -110,9 +109,7 @@ public class BuyShopItem {
 	public static void BuyOSellItemNonStack(ItemStack a, Player player, boolean buy, double price, int amount) {
 		if(buy == true) {
 			if(EcoAccountsManager.CheckForFounds(player, (double) (price*amount)) == true) {
-				ItemMeta tempmeta = a.getItemMeta();
-				tempmeta.setLore(null);
-				a.setItemMeta(tempmeta);
+				a.setItemMeta(null);
 				player.closeInventory();
 				a.setAmount(amount);
 				EcoAccountsManager.RemoveFounds(player.getName(), price*amount);
