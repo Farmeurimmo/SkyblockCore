@@ -142,7 +142,7 @@ public class WineGui implements Listener {
 					int n = rand.nextInt(2);
 		            if (n == 0){
 		                player.sendMessage("§6§lBarman §8» §fVous avez gagné " +  BuyWinePotion.cidreprice * 2 + "$");
-		                EcoAccountsManager.AddFounds(player.getName(), (double) (BuyWinePotion.cidreprice*2));
+		                EcoAccountsManager.AddFounds(player.getName(), (double) (BuyWinePotion.cidreprice*2), false);
 		                player.getItemInHand().setAmount(0);
 		            } else {
 		            	if(!player.hasPotionEffect(PotionEffectType.CONFUSION) && !player.hasPotionEffect(PotionEffectType.WEAKNESS) && !player.hasPotionEffect(PotionEffectType.BLINDNESS)) {
@@ -176,7 +176,7 @@ public class WineGui implements Listener {
 					int n = rand.nextInt(2);
 		            if (n == 0){
 		                player.sendMessage("§6§lBarman §8» §fVous avez gagné " +  BuyWinePotion.biereprice * 2 + "$");
-		                EcoAccountsManager.AddFounds(player.getName(), (double) (BuyWinePotion.biereprice*2));
+		                EcoAccountsManager.AddFounds(player.getName(), (double) (BuyWinePotion.biereprice*2), false);
 		                player.getItemInHand().setAmount(0);
 		            } else {
 		            	if(!player.hasPotionEffect(PotionEffectType.CONFUSION) && !player.hasPotionEffect(PotionEffectType.WEAKNESS) && !player.hasPotionEffect(PotionEffectType.BLINDNESS)) {
@@ -210,7 +210,7 @@ public class WineGui implements Listener {
 					int n = rand.nextInt(3);
 		            if (n == 0){
 		                player.sendMessage("§6§lBarman §8» §fVous avez gagné " +  BuyWinePotion.rhumprice * 2 + "$");
-		                EcoAccountsManager.AddFounds(player.getName(), (double) (BuyWinePotion.rhumprice*2));
+		                EcoAccountsManager.AddFounds(player.getName(), (double) (BuyWinePotion.rhumprice*2), false);
 		                player.getItemInHand().setAmount(0);
 		            } else {
 		            	if(!player.hasPotionEffect(PotionEffectType.CONFUSION) && !player.hasPotionEffect(PotionEffectType.WEAKNESS) && !player.hasPotionEffect(PotionEffectType.BLINDNESS)) {
@@ -244,7 +244,7 @@ public class WineGui implements Listener {
 					int n = rand.nextInt(3);
 		            if (n == 0){
 		                player.sendMessage("§6§lBarman §8» §fVous avez gagné " +  BuyWinePotion.vodkaprice * 2 + "$");
-		                EcoAccountsManager.AddFounds(player.getName(), (double) (BuyWinePotion.vodkaprice*2));
+		                EcoAccountsManager.AddFounds(player.getName(), (double) (BuyWinePotion.vodkaprice*2), false);
 		                player.getItemInHand().setAmount(0);
 		            } else {
 		            	if(!player.hasPotionEffect(PotionEffectType.CONFUSION) && !player.hasPotionEffect(PotionEffectType.WEAKNESS) && !player.hasPotionEffect(PotionEffectType.BLINDNESS)) {

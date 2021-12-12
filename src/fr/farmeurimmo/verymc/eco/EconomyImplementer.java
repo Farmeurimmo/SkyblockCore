@@ -154,25 +154,25 @@ public class EconomyImplementer implements Economy {
 
 	@Override
 	public EconomyResponse depositPlayer(String playerName, double amount) {
-		EcoAccountsManager.AddFounds(playerName, amount);
+		EcoAccountsManager.AddFounds(playerName, amount, true);
 		return null;
 	}
 
 	@Override
 	public EconomyResponse depositPlayer(OfflinePlayer player, double amount) {
-		EcoAccountsManager.AddFounds(player.getName(), amount);
+		EcoAccountsManager.AddFounds(player.getName(), amount, true);
 		return null;
 	}
 
 	@Override
 	public EconomyResponse depositPlayer(String playerName, String worldName, double amount) {
-		EcoAccountsManager.AddFounds(playerName, amount);
+		EcoAccountsManager.AddFounds(playerName, amount, true);
 		return null;
 	}
 
 	@Override
 	public EconomyResponse depositPlayer(OfflinePlayer player, String worldName, double amount) {
-		EcoAccountsManager.AddFounds(player.getName(), amount);
+		EcoAccountsManager.AddFounds(player.getName(), amount, true);
 		return null;
 	}
 

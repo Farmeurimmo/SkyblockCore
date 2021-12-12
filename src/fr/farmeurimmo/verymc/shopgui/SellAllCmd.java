@@ -34,7 +34,7 @@ public class SellAllCmd implements CommandExecutor {
 				total+=price;
 			}
 		}
-		if(total > 0) EcoAccountsManager.AddFounds(player.getName(), total);
+		if(total > 0) EcoAccountsManager.AddFounds(player.getName(), total, false);
 		player.sendMessage("§6§lShop §8» §fVous avez vendu tout les items vendables de votre inventaire pour §a"+total+"$.");
 		
 		return false;

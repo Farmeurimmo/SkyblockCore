@@ -71,13 +71,14 @@ public class EcoAccountsManager{
 			Bukkit.getPlayer(player).sendMessage("§6§lMonnaie §8» §fVotre argent a été §adéfinis§f sur §6"+toset+"$§f.");
 		}
 	}
-	public static void AddFounds(String player, Double aaa) {
+	public static void AddFounds(String player, Double aaa, boolean dd) {
 		Double moneybefore = Moneys.get(player);
 		if(moneybefore < 2147483647 - aaa) {
 		double now = Moneys.get(player) + aaa;
 		Moneys.put(player, now);
 		Main.instance1.getDataz().set(player, now);
 		Main.instance1.saveData();
+		if(dd == false) {
 		if(Bukkit.getPlayer(player) != null) {
 		Bukkit.getPlayer(player).sendMessage("§6§lMonnaie §8» §6"+aaa+"$§f ont été §aajouté§f à  votre compte.");
 		}
@@ -85,6 +86,7 @@ public class EcoAccountsManager{
 			if(Bukkit.getPlayer(player) != null) {
 			Bukkit.getPlayer(player).sendMessage("§6§lMonnaie §8» §6"+aaa+"$§f n'ont pas pu être §aajouté§f à  votre compte.");
 			}
+		}
 		}
 	}
 	public static void UpdateHash() {

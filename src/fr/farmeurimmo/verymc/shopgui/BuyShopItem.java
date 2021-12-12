@@ -140,7 +140,7 @@ public class BuyShopItem {
 				player.closeInventory();
 				removeItems(player.getInventory(), a.getType(), amount);
 				player.sendMessage("§6§lShop §8» §fVous avez vendu §ax"+amount+" "+a.getType().toString()+"§f pour §6"+profit+"$§f.");
-				EcoAccountsManager.AddFounds(player.getName(), profit);
+				EcoAccountsManager.AddFounds(player.getName(), profit, false);
 			} else {
 				player.sendMessage("§6§lShop §8» §fVous avez besoin de plus de "+a.getType().toString()+".");
 			}
