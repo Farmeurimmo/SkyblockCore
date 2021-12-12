@@ -27,12 +27,11 @@ public class TchatManager implements Listener {
 		
 		User user = LuckPermsProvider.get().getUserManager().getUser(player.getName());
 		if(user.getCachedData().getMetaData().getPrefix() != null) {
-		Prefix = user.getCachedData().getMetaData().getPrefix();
+		    Prefix = user.getCachedData().getMetaData().getPrefix();
 		}
 		if(user.getCachedData().getMetaData().getSuffix() != null) {
 			Suffix = " " + user.getCachedData().getMetaData().getSuffix();
-		}
-		
+		}	
 		TextComponent message = new TextComponent();
         TextComponent symbole = new TextComponent();
         if(!IridiumSkyblockAPI.getInstance().getUser(player).getIsland().isPresent()) {
@@ -51,5 +50,4 @@ public class TchatManager implements Listener {
             p.sendMessage(symbole);
         }
 	}
-
 }

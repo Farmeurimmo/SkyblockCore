@@ -40,12 +40,12 @@ public class JoinLeave implements Listener {
 		}
 		String JoinMessage = null;
 		if(!IridiumSkyblockAPI.getInstance().getUser(player).getIsland().isPresent()) {
-			JoinMessage = "§7[§a+§7] " + Grade.replace("&", "§").replace("&", "§") + " " + player.getName();
+			JoinMessage = "§7[§a+§7] " + Grade.replace("&", "§") + " " + player.getName();
 			}
 			else {
 				int classement = 0;
 				classement = IridiumSkyblockAPI.getInstance().getUser(player).getIsland().get().getRank();
-				JoinMessage = "§7[§a+§7] [#" + classement + "] " + Grade.replace("&", "§").replace("&", "§") + " " + player.getName();
+				JoinMessage = "§7[§a+§7] [#" + classement + "] " + Grade.replace("&", "§") + " " + player.getName();
 			}
 			event.setJoinMessage(JoinMessage);
 			
