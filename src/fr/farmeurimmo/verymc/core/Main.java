@@ -269,10 +269,10 @@ public class Main extends JavaPlugin implements Listener {
 		this.getCommand("checkfly").setExecutor(new CheckFlyCmd());
 		this.getCommand("invsee").setExecutor(new InvseeCmd());
 		this.getCommand("redstone").setExecutor(new RedstoneToggleCmd());
-		this.getCommand("tpa").setExecutor(new TpaCmd());
-		this.getCommand("tpacancel").setExecutor(new TpaCancelCmd());
-		this.getCommand("tpyes").setExecutor(new TpYesCmd());
-		this.getCommand("tpno").setExecutor(new TpNoCmd());
+		//this.getCommand("tpa").setExecutor(new TpaCmd());
+		//this.getCommand("tpacancel").setExecutor(new TpaCancelCmd());
+		//this.getCommand("tpyes").setExecutor(new TpYesCmd());
+		//this.getCommand("tpno").setExecutor(new TpNoCmd());
 		this.getCommand("challenges").setExecutor(new ChallengesCmd());
 		this.getCommand("atout").setExecutor(new AtoutCmd());
 		this.getCommand("datafile").setExecutor(new DataCmd());
