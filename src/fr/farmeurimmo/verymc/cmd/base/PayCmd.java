@@ -37,12 +37,16 @@ public class PayCmd implements CommandExecutor, TabCompleter {
 					if(args[1].length() <= 9) {
 						Double aaa = Double.parseDouble(args[1]);
 						if(EcoAccountsManager.CheckForFounds(player, aaa) == true) {
+							if(aaa>= 5) {
 							EcoAccountsManager.AddFounds(args[0], aaa, false);
 						    EcoAccountsManager.RemoveFounds(player.getName(), aaa);
 						    player.sendMessage("§6§lMonnaie §8» §fVous avez envoyé avec §asuccès §6"+aaa+"$§f au joueur "+args[0]);
 						    if(Bukkit.getPlayer(args[0]) != null) {
 						    	Bukkit.getPlayer(args[0]).sendMessage("§6§lMonnaie §8» §fVous avez reçu avec §asuccès §6"+aaa+"$§f du joueur "+player.getName());
 						    }
+							} else {
+								player.sendMessage("§6§lMonnaie §8» §fVous devez entrer un montant égal ou supérieur à 5$.");
+							}
 						} else {
 							player.sendMessage("§6§lMonnaie §8» §fVous n'avez pas les fonds requis.");
 						}
