@@ -19,7 +19,7 @@ Shops:
     1:
       material: MAGMA_BLOCK
       buy: 80
-      sell: 10
+      sell: 5
     2:
       material: PACKED_ICE
       buy: 200
@@ -27,11 +27,11 @@ Shops:
     3:
       material: SOUL_SAND
       buy: 45
-      sell: 8
+      sell: 4
     4:
       material: STONE
       buy: 100
-      sell: 6
+      sell: 2
     5:
       material: GLOWSTONE
       buy: 50
@@ -47,7 +47,7 @@ Shops:
     8:
       material: ANDESITE
       buy: 60
-      sell: 4
+      sell: 2
     9:
       material: BLACKSTONE
       buy: 50
@@ -55,15 +55,15 @@ Shops:
     10:
       material: BRICKS
       buy: 130
-      sell: 12
+      sell: 2
     11:
       material: BASALT
       buy: 35
-      sell: 3
+      sell: 2
     12:
       material: COBBLESTONE
       buy: 60
-      sell: 2
+      sell: 0.5
     13:
       material: DIORITE
       buy: 60
@@ -71,7 +71,7 @@ Shops:
     14:
       material: CLAY
       buy: 50
-      sell: 5.25
+      sell: 0.80
     15:
       material: DIRT
       buy: 80
@@ -87,23 +87,23 @@ Shops:
     18:
       material: MYCELIUM
       buy: 160
-      sell: 6
+      sell: 2.7
     19:
       material: PODZOL
       buy: 160
-      sell: 6
+      sell: 2.5
     20:
       material: END_STONE
       buy: 120
-      sell: 3
+      sell: 2
     21:
       material: GLASS
       buy: 70
-      sell: 5
+      sell: 2.5
     22:
       material: GRANITE
       buy: 40
-      sell: 6
+      sell: 3
     23:
       material: NETHERRACK
       buy: 20
@@ -111,27 +111,27 @@ Shops:
     24:
       material: NETHER_BRICKS
       buy: 90
-      sell: 8
+      sell: 5
     25:
       material: RED_NETHER_BRICKS
       buy: 120
-      sell: 12
+      sell: 5
     26:
       material: OBSIDIAN
       buy: 100
-      sell: 15
+      sell: 10
     27:
       material: PRISMARINE
       buy: 50
-      sell: 4
+      sell: 0.5
     28:
       material: DARK_PRISMARINE
       buy: 75
-      sell: 8
+      sell: 0.5
     29:
       material: PURPUR_BLOCK
       buy: 75
-      sell: 4
+      sell: 2
     30:
       material: RED_SAND
       buy: 58
@@ -151,15 +151,15 @@ Shops:
     34:
       material: ACACIA_LOG
       buy: 40
-      sell: 7
+      sell: 4
     35:
       material: BIRCH_LOG
       buy: 40
-      sell: 6
+      sell: 4
     36:
       material: DARK_OAK_LOG
       buy: 40
-      sell: 6
+      sell: 4
     37:
       material: JUNGLE_LOG
       buy: 40
@@ -167,11 +167,11 @@ Shops:
     38:
       material: OAK_LOG
       buy: 40
-      sell: 8
+      sell: 4
     39:
       material: TNT
       buy: 40
-      sell: 8
+      sell: 4
       
   ####################
   
@@ -352,71 +352,71 @@ Shops:
 
     1:
       material: APPLE
-      buy: 10
+      buy: 15
       sell: -1
     2:
       material: BREAD
-      buy: 15.75
+      buy: 20
       sell: -1
     3:
       material: CAKE
-      buy: 240.68
+      buy: 60
       sell: -1
     4:
       material: COOKED_SALMON
-      buy: 6.3
+      buy: 20
       sell: -1
     5:
       material: COOKIE
-      buy: 2.1
+      buy: 20
       sell: -1
     7:
       material: HONEY_BOTTLE
-      buy: 7.94
+      buy: 15
       sell: -1
     8:
       material: BAKED_POTATO
-      buy: 5.25
+      buy: 20
       sell: -1
     9:
       material: COOKED_BEEF
-      buy: 6.3
+      buy: 20
       sell: -1
     10:
       material: COOKED_CHICKEN
-      buy: 6.3
+      buy: 20
       sell: -1
     11:
       material: COOKED_MUTTON
-      buy: 6.3
+      buy: 20
       sell: -1
     12:
       material: COOKED_PORKCHOP
-      buy: 6.3
+      buy: 20
       sell: -1
     13:
       material: COOKED_RABBIT
-      buy: 6.3
+      buy: 20
       sell: -1
     14:
       material: BEEF
-      buy: 6
+      buy: 10
       sell: 1.5
     15:
       material: CHICKEN
-      buy: 6
+      buy: 10
       sell: 1.5
     16:
       material: MUTTON
-      buy: 6
+      buy: 10
       sell: 1.5
     17:
       material: PORKCHOP
-      buy: 6
+      buy: 10
       sell: 1.5
     18:
       material: RABBIT
-      buy: 6
+      buy: 10
       sell: 1.5
     19:
       material: BEETROOT_SOUP
@@ -588,7 +588,7 @@ Shops:
       sell: -1
     7:
       material: ELYTRA
-      buy: 5000000
+      buy: -1
       sell: -1
     8:
       material: ENDER_CHEST
