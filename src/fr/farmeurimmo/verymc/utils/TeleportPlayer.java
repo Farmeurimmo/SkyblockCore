@@ -49,6 +49,8 @@ public class TeleportPlayer {
 					}
 					else if(timeLeft == 1) {
 						SendActionBar.SendActionBarMsg(player, "§6Téléportation dans " + timeLeft + " seconde...");
+					} else if(timeLeft <= 0) {
+						return;
 					}
 					}
 				}.runTaskTimer(Bukkit.getPluginManager().getPlugin("SkyblockCore"), 20, 20);
