@@ -145,13 +145,13 @@ public class CateSelectGui implements Listener {
 				return;
 			}
 			if(e.getClick() == ClickType.LEFT) {
-			 if (current.getType() != Material.PLAYER_HEAD && current.getType() != Material.ARROW) {
+			 if (current.getType() != Material.PLAYER_HEAD) {
 				if(BuyShopItem.isBuyable(new ItemStack(current.getType()))) {
 				GenAmoutShopGui.OpenPregenAmoutShop(player, current, true);
 				}
 			}
 			}
-			if(e.getClick() == ClickType.RIGHT && current.getType() != Material.PLAYER_HEAD && current.getType() != Material.ARROW) {
+			if(e.getClick() == ClickType.RIGHT && current.getType() != Material.PLAYER_HEAD) {
 				if(BuyShopItem.isSellable(new ItemStack(current.getType()))) {
 				GenAmoutShopGui.OpenPregenAmoutShop(player, current, false);
 				}
