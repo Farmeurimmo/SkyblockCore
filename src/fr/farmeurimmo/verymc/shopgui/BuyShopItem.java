@@ -2,7 +2,9 @@ package fr.farmeurimmo.verymc.shopgui;
 
 import java.util.HashMap;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -110,6 +112,58 @@ public class BuyShopItem {
 	public static void BuyOSellItemNonStack(ItemStack a, Player player, boolean buy, double price, int amount) {
 		if(buy == true) {
 			if(EcoAccountsManager.CheckForFounds(player, (double) (price*amount)) == true) {
+				if(a.getType() == Material.SPAWNER) {
+					String display = a.getDisplayName();
+					if(GenShopPage.spawneurtype.containsKey(display)) {
+						String togivetype = "";
+						if(GenShopPage.spawneurtype.get(display) == EntityType.BLAZE) {
+							togivetype = "Blaze";
+						} else if(GenShopPage.spawneurtype.get(display) == EntityType.CHICKEN) {
+							togivetype = "Chicken";
+						} else if(GenShopPage.spawneurtype.get(display) == EntityType.COW) {
+							togivetype = "Cow";
+						} else if(GenShopPage.spawneurtype.get(display) == EntityType.CREEPER) {
+							togivetype = "Creeper";
+						} else if(GenShopPage.spawneurtype.get(display) == EntityType.ENDERMAN) {
+							togivetype = "Enderman";
+						} else if(GenShopPage.spawneurtype.get(display) == EntityType.IRON_GOLEM) {
+							togivetype = "ig";
+						} else if(GenShopPage.spawneurtype.get(display) == EntityType.RABBIT) {
+							togivetype = "rabbit";
+						} else if(GenShopPage.spawneurtype.get(display) == EntityType.SHEEP) {
+							togivetype = "Sheep";
+						} else if(GenShopPage.spawneurtype.get(display) == EntityType.SKELETON) {
+							togivetype = "skeleton";
+						} else if(GenShopPage.spawneurtype.get(display) == EntityType.SLIME) {
+							togivetype = "slime";
+						} else if(GenShopPage.spawneurtype.get(display) == EntityType.SPIDER) {
+							togivetype = "spider";
+						} else if(GenShopPage.spawneurtype.get(display) == EntityType.SQUID) {
+							togivetype = "squid";
+						} else if(GenShopPage.spawneurtype.get(display) == EntityType.WITCH) {
+							togivetype = "witch";
+						} else if(GenShopPage.spawneurtype.get(display) == EntityType.ZOMBIE) {
+							togivetype = "zombie";
+						} else {
+							togivetype = "error";
+						}
+						if(togivetype.equalsIgnoreCase("") || togivetype.equalsIgnoreCase("error")) {
+							return;
+						}
+						a.setLore(null);
+						player.closeInventory();
+						a.setAmount(amount);
+						int amountininv = GetAmountToFillInInv(a, player);
+						if(amountininv <= amount) {
+							player.sendMessage("§6§lShop §8» §fIl vous manque de la place dans votre inventaire.");
+							return;
+						} else {
+							EcoAccountsManager.RemoveFounds(player.getName(), price*amount);
+							Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "ss give " + player.getName() + " " + togivetype);
+							return;
+						}
+					}
+				}
 				a.setItemMeta(null);
 				player.closeInventory();
 				a.setAmount(amount);

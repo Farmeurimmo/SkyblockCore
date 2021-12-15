@@ -216,6 +216,7 @@ public class Main extends JavaPlugin implements Listener {
 	    GenShopPage.GenenerateShopPageStartup("Autres");
 	    GenShopPage.GenenerateShopPageStartup("Drops");
 	    GenShopPage.GenenerateShopPageStartup("Redstone");
+	    GenShopPage.GenenerateShopPageStartup("Spawneurs");
 	    GenAmoutShopGui.GenAmoutShopGuiStartup();
 	    GenMultiStacksBuyGui.GenMultiShopGuiStartup();
 		getServer().getPluginManager().registerEvents(new JoinLeave(), this);

@@ -54,7 +54,7 @@ public class MainShopGui implements Listener {
             	GenShopPage.OpenPreGenPage(player, "Redstone", 1);
 			}
             if(current.getType() == Material.SPAWNER) {
-            	
+            	GenShopPage.OpenPreGenPage(player, "Spawneurs", 1);
             }
 			if(current.getType() == Material.ARROW) {
 				MenuGui.OpenMainMenu(player);

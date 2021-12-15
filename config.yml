@@ -1,5 +1,5 @@
 bossbar:
-  #Nombre de bossbar, si vous ne modifer pas ce chiffre alors que vous avez ajouté/enlevé un display, DE GROS BUGS PEUVENT SURVENIR, je n'en serais pas responsable
+  #Nombre de bossbar, si vous ne modifer pas ce chiffre alors que vous avez ajouté/enlevé un display, DE GROS BUGS PEUVENT SURVENIR, je n"en serais pas responsable
   number: 5
   display:
     1: "\u00a76\u00a7lVery\u00a7f\u00a7lMc \u00A7c\u00A7>>> \u00A7fBon jeu sur nos serveurs !"
@@ -675,7 +675,7 @@ Shops:
       buy: 35
       sell: -1
       
-   ###########################"  
+   ###########################
    
   Redstone:
 
@@ -722,4 +722,92 @@ Shops:
     21:
       material: PISTON
       buy: 180
+      sell: -1
+      
+   #######################
+  Spawneurs:
+
+    2:
+      material: SPAWNER
+      spawnertype: BLAZE
+      name: "§fGénérateur à §eBlaze"
+      buy: 125000
+      sell: -1
+    3:
+      material: SPAWNER
+      spawnertype: CHICKEN
+      name: "§fGénérateur à §ePoulet"
+      buy: 15000
+      sell: -1
+    4:
+      material: SPAWNER
+      spawnertype: COW
+      name: "§fGénérateur à §eVache"
+      buy: 100000
+      sell: -1
+    5:
+      material: SPAWNER
+      spawnertype: CREEPER
+      name: "§fGénérateur à §eCreeper"
+      buy: 150000
+      sell: -1
+    6:
+      material: SPAWNER
+      spawnertype: ENDERMAN
+      name: "§fGénérateur à §eEnderman"
+      buy: 175000
+      sell: -1
+    11:
+      material: SPAWNER
+      spawnertype: IRON_GOLEM
+      name: "§fGénérateur à §eIrongolem"
+      buy: 1000000
+      sell: -1
+    17:
+      material: SPAWNER
+      spawnertype: RABBIT
+      name: "§fGénérateur à §eLapin"
+      buy: 45000
+      sell: -1
+    18:
+      material: SPAWNER
+      spawnertype: SHEEP
+      name: "§fGénérateur à §eMouton"
+      buy: 45000
+      sell: -1
+    20:
+      material: SPAWNER
+      spawnertype: SKELETON
+      name: "§fGénérateur à §eSquelette"
+      buy: 125000
+      sell: -1
+    21:
+      material: SPAWNER
+      spawnertype: SLIME
+      name: "§fGénérateur à §eSlime"
+      buy: 550000
+      sell: -1
+    22:
+      material: SPAWNER
+      spawnertype: SPIDER
+      name: "§fGénérateur à §eAraignée"
+      buy: 45000
+      sell: -1
+    23:
+      material: SPAWNER
+      spawnertype: SQUID
+      name: "§fGénérateur à §ePoulpe"
+      buy: 100000
+      sell: -1
+    25:
+      material: SPAWNER
+      spawnertype: WITCH
+      name: "§fGénérateur à §eSorcière"
+      buy: 500000
+      sell: -1
+    27:
+      material: SPAWNER
+      spawnertype: ZOMBIE
+      name: "§fGénérateur à §eZombie"
+      buy: 120000
       sell: -1

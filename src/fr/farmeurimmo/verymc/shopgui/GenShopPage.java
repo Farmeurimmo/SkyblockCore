@@ -7,6 +7,7 @@ import java.util.Map.Entry;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -30,6 +31,7 @@ public class GenShopPage {
 	public static HashMap <ItemStack, Integer> lootmpage = new HashMap < > ();
 	public static HashMap <ItemStack, Integer> redstonepage = new HashMap < > ();
 	public static HashMap <ItemStack, Integer> spawneurpage = new HashMap < > ();
+	public static HashMap <String, EntityType> spawneurtype = new HashMap < > ();
 	
 	public static HashMap <String, Integer> maxpage = new HashMap < > ();
 	
@@ -75,7 +77,15 @@ public class GenShopPage {
 				int slot = GetNextSlot();
 				slotstofill.removeAll(Arrays.asList(slot));
 				if(slot != 0) {
-					toshowtemp.put(custom1, slot);
+					if(custom1.getType() != Material.SPAWNER) {
+					    toshowtemp.put(custom1, slot);
+					} else {
+						meta1.setDisplayName(Main.instance1.getConfig().getString("Shops."+page+"."+aa+".name"));
+						custom1.setItemMeta(meta1);
+						toshowtemp.put(custom1, slot);
+						custom1.getItemMeta().setLore(null);
+						spawneurtype.put(custom1.getDisplayName(), EntityType.valueOf(Main.instance1.getConfig().getString("Shops."+page+"."+aa+".spawnertype")));
+					}
 				}
 				if(numberofitems > 28) {
 					if(page.equals("Blocs")) {
@@ -132,6 +142,11 @@ public class GenShopPage {
 				for(Entry<ItemStack, Integer> cc : toshowtemp.entrySet()) {
 		        	redstonepage.put(cc.getKey(), cc.getValue());
 		        } }
+	        else if(page.equals("Spawneurs")) {
+	        	spawneurpage.clear();
+				for(Entry<ItemStack, Integer> cc : toshowtemp.entrySet()) {
+		        	spawneurpage.put(cc.getKey(), cc.getValue());
+		        }}
 		slotstofill.clear();
 		toshowtemp.clear();
 	}
@@ -180,6 +195,10 @@ public class GenShopPage {
             }
         } else if (page.equals("Redstone")) {
         	for(Entry<ItemStack, Integer> cc : redstonepage.entrySet()) {
+            	inv.setItem(cc.getValue(), cc.getKey());
+            }
+        } else if (page.equals("Spawneurs")) {
+        	for(Entry<ItemStack, Integer> cc : spawneurpage.entrySet()) {
             	inv.setItem(cc.getValue(), cc.getKey());
             }
         }
@@ -248,6 +267,6 @@ public class GenShopPage {
         maxpage.put("Autres", 1);
         maxpage.put("Drops", 1);
         maxpage.put("Redstone", 1);
-        //maxpage.put("Spawneurs", 1);
+        maxpage.put("Spawneurs", 1);
 	}
 }
