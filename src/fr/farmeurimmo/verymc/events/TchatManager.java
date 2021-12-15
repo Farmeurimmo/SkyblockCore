@@ -22,7 +22,9 @@ public class TchatManager implements Listener {
 		Player player = e.getPlayer();
 		String Prefix = "§7N/A";
 		String Suffix = "";
-		
+		if(e.isCancelled()) {
+			return;
+		}
 		e.setCancelled(true);
 		
 		User user = LuckPermsProvider.get().getUserManager().getUser(player.getName());
