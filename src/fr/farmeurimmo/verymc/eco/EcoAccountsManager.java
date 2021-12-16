@@ -49,17 +49,17 @@ public class EcoAccountsManager{
 	}
 	public static void RemoveFounds(String player, Double toremove) {
 		Double moneybefore = Moneys.get(player);
-		if(moneybefore - toremove >= 0) {
+		if(moneybefore - toremove >= Double.MIN_VALUE) {
 		double now = moneybefore - toremove;
 		Moneys.put(player, now);
 		Main.instance1.getDataz().set(player, now);
 		Main.instance1.saveData();
 		if(Bukkit.getPlayer(player) != null) {
-			Bukkit.getPlayer(player).sendMessage("§6§lMonnaie §8» §6"+toremove+"$§f ont été §cretiré§f de votre compte.");
+			Bukkit.getPlayer(player).sendMessage("§6§lMonnaie §8» §6"+toremove+"$§f ont été §cretiré §fde votre compte.");
 		}
 		} else {
 			if(Bukkit.getPlayer(player) != null) {
-			Bukkit.getPlayer(player).sendMessage("§6§lMonnaie §8» §6"+toremove+"$§f n'ont pas pu être §cretiré§f de votre compte.");
+			Bukkit.getPlayer(player).sendMessage("§6§lMonnaie §8» §6"+toremove+"$§f n'ont pas pu être §cretiré §fde votre compte.");
 			}
 		}
 	}
@@ -73,17 +73,17 @@ public class EcoAccountsManager{
 	}
 	public static void AddFounds(String player, Double aaa, boolean dd) {
 		Double moneybefore = Moneys.get(player);
-		if(moneybefore < 2147483647 - aaa) {
+		if(moneybefore < Double.MAX_VALUE - aaa) {
 		double now = Moneys.get(player) + aaa;
 		Moneys.put(player, now);
 		Main.instance1.getDataz().set(player, now);
 		Main.instance1.saveData();
 		if(dd == false) {
 		if(Bukkit.getPlayer(player) != null) {
-		Bukkit.getPlayer(player).sendMessage("§6§lMonnaie §8» §6"+aaa+"$§f ont été §aajouté§f à  votre compte.");
+		Bukkit.getPlayer(player).sendMessage("§6§lMonnaie §8» §6"+aaa+"$§f ont été §aajouté §fà votre compte.");
 		} else {
 			if(Bukkit.getPlayer(player) != null) {
-			Bukkit.getPlayer(player).sendMessage("§6§lMonnaie §8» §6"+aaa+"$§f n'ont pas pu être §aajouté§f à  votre compte.");
+			Bukkit.getPlayer(player).sendMessage("§6§lMonnaie §8» §6"+aaa+"$§f n'ont pas pu être §aajouté §fà votre compte.");
 			}
 		}
 	}
