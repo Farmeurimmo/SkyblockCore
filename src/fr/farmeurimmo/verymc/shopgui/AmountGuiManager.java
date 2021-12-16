@@ -34,7 +34,14 @@ public class AmountGuiManager implements Listener {
 						e.getInventory().getItem(22).setAmount(now);
 					}
 					ItemMeta temp = e.getInventory().getItem(22).getItemMeta();
-					Double price = BuyShopItem.pricesbuy.get(new ItemStack(Material.valueOf(e.getInventory().getItem(22).getType().toString())));
+					Double price = (double) 0.0;
+					if(e.getInventory().getItem(22).getType() != Material.SPAWNER) {
+						price = BuyShopItem.pricesbuy.get(new ItemStack(Material.valueOf(e.getInventory().getItem(22).getType().toString())));
+					} else {
+						ItemStack ddddd = new ItemStack(e.getInventory().getItem(22).getType());
+						ddddd.setDisplayName(temp.getDisplayName());
+						price = BuyShopItem.pricesbuy.get(ddddd);
+					}
 					double totalcost = price*e.getInventory().getItem(22).getAmount();
 					temp.setLore(Arrays.asList("§6Prix d'achat: §c"+price+"$/u","§6Total: §c"+totalcost+"$"));
 					e.getInventory().getItem(22).setItemMeta(temp);
@@ -66,9 +73,17 @@ public class AmountGuiManager implements Listener {
 				}
 			if(current.getType() == Material.LIME_WOOL) {
 				if(current.getAmount() == 1) {
-					Double price = BuyShopItem.pricesbuy.get(new ItemStack(Material.valueOf(e.getInventory().getItem(22).getType().toString())));
+					Double price = (double) 0.0;
+					if(e.getInventory().getItem(22).getType() != Material.SPAWNER) {
+						price = BuyShopItem.pricesbuy.get(new ItemStack(Material.valueOf(e.getInventory().getItem(22).getType().toString())));
+					} else {
+						ItemStack ddddd = new ItemStack(e.getInventory().getItem(22).getType());
+						ddddd.setDisplayName(e.getInventory().getItem(22).getDisplayName());
+						price = BuyShopItem.pricesbuy.get(ddddd);
+					}
 					Double amount = price;
 					ItemStack od = e.getInventory().getItem(22);
+					od.setLore(null);
 					int total = od.getAmount();
 					BuyShopItem.BuyOSellItemNonStack(od, (Player) e.getWhoClicked(), true, amount, total);
 				}

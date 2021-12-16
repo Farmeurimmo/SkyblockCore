@@ -70,7 +70,11 @@ public class GenAmoutShopGui {
 		ItemMeta tempameta = aa.getItemMeta();
 		tempameta.setLore(null);
 		if(a == true) {
+			if(aa.getType()!=Material.SPAWNER) {
 			price = BuyShopItem.pricesbuy.get(new ItemStack(Material.valueOf(aa.getType().toString())));
+			} else {
+				price = BuyShopItem.pricesbuy.get(aa);
+			}
 			tempameta.setLore(Arrays.asList("§6Prix d'achat: §c"+price+"$/u","§6Total: §c"+price*aa.getAmount()+"$"));
 			ItemMeta temp = custom11.getItemMeta();
 			temp.setLore(Arrays.asList("§aTotal: §c"+price*aa.getAmount()+"$"));

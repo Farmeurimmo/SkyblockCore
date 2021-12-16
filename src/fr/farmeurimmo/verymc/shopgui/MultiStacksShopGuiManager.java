@@ -20,8 +20,15 @@ public class MultiStacksShopGuiManager implements Listener {
 			e.setCancelled(true);
 			ItemStack od = e.getInventory().getItem(45);
 			if(current.getType() == Material.ARROW) {
-				GenAmoutShopGui.OpenPregenAmoutShop(player, od, true);
+				if(od.getType()!=Material.SPAWNER) {
+					GenAmoutShopGui.OpenPregenAmoutShop(player, od, true);
+				} else {
+					ItemStack ddddd = new ItemStack(od.getType());
+					ddddd.setDisplayName(od.getDisplayName());
+					GenAmoutShopGui.OpenPregenAmoutShop(player, ddddd, true);
+				}
 			}
+			if(od.getType()!=Material.SPAWNER) {
 			if(current.getType() == Material.GREEN_STAINED_GLASS) {
 				if(current.getAmount() < 64) {
 					int numstacks = current.getAmount();
@@ -31,6 +38,21 @@ public class MultiStacksShopGuiManager implements Listener {
 					int amountinvinv = BuyShopItem.GetAmountToFillInInv(od, (Player) e.getWhoClicked());
 					double price = BuyShopItem.pricesbuy.get(new ItemStack(od.getType()));
 					BuyShopItem.BuyOSellItemNonStack(od, (Player) e.getWhoClicked(), true, price, amountinvinv);
+				}
+			}
+			} else {
+				ItemStack ddddd = new ItemStack(od.getType());
+				ddddd.setDisplayName(od.getDisplayName());
+				if(current.getType() == Material.GREEN_STAINED_GLASS) {
+					if(current.getAmount() < 64) {
+						int numstacks = current.getAmount();
+						double price = BuyShopItem.pricesbuy.get(ddddd);
+						BuyShopItem.BuyOSellItemNonStack(ddddd, (Player) e.getWhoClicked(), true, price, numstacks*64);
+					} else {
+						int amountinvinv = BuyShopItem.GetAmountToFillInInv(ddddd, (Player) e.getWhoClicked());
+						double price = BuyShopItem.pricesbuy.get(ddddd);
+						BuyShopItem.BuyOSellItemNonStack(ddddd, (Player) e.getWhoClicked(), true, price, amountinvinv);
+					}
 				}
 			}
 		}

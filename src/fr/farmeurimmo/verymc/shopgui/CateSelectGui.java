@@ -182,16 +182,16 @@ public class CateSelectGui implements Listener {
 				MainShopGui.OpenMainShopMenu(player);
 				return;
 			}
-			if(e.getClick() == ClickType.LEFT) {
-			 if (current.getType() != Material.PLAYER_HEAD && current.getType() != Material.ARROW) {
-				if(BuyShopItem.isBuyable(new ItemStack(current.getType()))) {
-				GenAmoutShopGui.OpenPregenAmoutShop(player, current, true);
+			ItemStack a = new ItemStack(current.getType());
+			a.setDisplayName(current.getDisplayName());
+			if(e.getClick() == ClickType.LEFT && current.getType() != Material.PLAYER_HEAD && current.getType() != Material.ARROW) {
+				if(BuyShopItem.isBuyable(a)) {
+				GenAmoutShopGui.OpenPregenAmoutShop(player, a, true);
 				}
 			}
-			}
 			if(e.getClick() == ClickType.RIGHT && current.getType() != Material.PLAYER_HEAD && current.getType() != Material.ARROW) {
-				if(BuyShopItem.isSellable(new ItemStack(current.getType()))) {
-				GenAmoutShopGui.OpenPregenAmoutShop(player, current, false);
+				if(BuyShopItem.isSellable(a)) {
+				GenAmoutShopGui.OpenPregenAmoutShop(player, a, false);
 				}
 			}
 		}

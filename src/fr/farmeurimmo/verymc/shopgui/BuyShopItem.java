@@ -25,12 +25,18 @@ public class BuyShopItem {
 			double c = (float) Main.instance1.getConfig().getDouble("Shops."+bb+"."+aa+".sell");
 			if(Material.valueOf(Main.instance1.getConfig().getString("Shops."+bb+"."+aa+".material")) == null) continue;
 			ItemStack b = new ItemStack(Material.valueOf(Main.instance1.getConfig().getString("Shops."+bb+"."+aa+".material")));
+			if(Main.instance1.getConfig().getString("Shops."+bb+"."+aa+".name") != null) {
+				b.setDisplayName(Main.instance1.getConfig().getString("Shops."+bb+"."+aa+".name"));
+			}
 			pricesbuy.put(b, (double) Maths.arrondiNDecimales(a, 2));
 			pricessell.put(b, (double) Maths.arrondiNDecimales(c, 2));
 		}
 		}
 	}
 	public static boolean isBuyable(ItemStack a) {
+		if(pricesbuy.get(a) == null) {
+			return false;
+		}
 		if(pricesbuy.get(a) > 0) {
 			return true;
 		} else {
@@ -38,6 +44,9 @@ public class BuyShopItem {
 		}
 	}
 	public static boolean isSellable(ItemStack a) {
+		if(pricessell.get(a) == null) {
+			return false;
+		}
 		if(pricessell.get(a) > 0) {
 			return true;
 		} else {
@@ -159,7 +168,7 @@ public class BuyShopItem {
 							return;
 						} else {
 							EcoAccountsManager.RemoveFounds(player.getName(), price*amount);
-							Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "ss give " + player.getName() + " " + togivetype);
+							Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "ss give " + player.getName() + " " + togivetype + " " + amount);
 							return;
 						}
 					}

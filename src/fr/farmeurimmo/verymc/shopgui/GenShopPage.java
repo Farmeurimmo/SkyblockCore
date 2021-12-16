@@ -54,7 +54,14 @@ public class GenShopPage {
 				
                 numberofitems+=1;
 				
+                custom1.setItemMeta(null);
 				ItemMeta meta1 = custom1.getItemMeta();
+				
+				if(custom1.getType()==Material.SPAWNER) {
+				    meta1.setDisplayName(Main.instance1.getConfig().getString("Shops."+page+"."+aa+".name"));
+				    custom1.setItemMeta(meta1);
+				    spawneurtype.put(custom1.getDisplayName(), EntityType.valueOf(Main.instance1.getConfig().getString("Shops."+page+"."+aa+".spawnertype")));
+				}
 				
 				String achat = "";
 				Double prixachat = BuyShopItem.pricesbuy.get(custom1);
@@ -77,15 +84,7 @@ public class GenShopPage {
 				int slot = GetNextSlot();
 				slotstofill.removeAll(Arrays.asList(slot));
 				if(slot != 0) {
-					if(custom1.getType() != Material.SPAWNER) {
-					    toshowtemp.put(custom1, slot);
-					} else {
-						meta1.setDisplayName(Main.instance1.getConfig().getString("Shops."+page+"."+aa+".name").replace("SSSS", "§"));
-						custom1.setItemMeta(meta1);
-						toshowtemp.put(custom1, slot);
-						custom1.getItemMeta().setLore(null);
-						spawneurtype.put(custom1.getDisplayName(), EntityType.valueOf(Main.instance1.getConfig().getString("Shops."+page+"."+aa+".spawnertype")));
-					}
+					toshowtemp.put(custom1, slot);
 				}
 				if(numberofitems > 28) {
 					if(page.equals("Blocs")) {
