@@ -802,7 +802,7 @@ Shops:
     25:
       material: SPAWNER
       spawnertype: WITCH
-      name: "SSSSfG\u00e9n\u00e9rateur \u00e0 SSSSeSorcière"
+      name: "SSSSfG\u00e9n\u00e9rateur \u00e0 SSSSeSorci\u00e8re"
       buy: 500000
       sell: -1
     27:
