@@ -80,7 +80,7 @@ public class GenShopPage {
 					if(custom1.getType() != Material.SPAWNER) {
 					    toshowtemp.put(custom1, slot);
 					} else {
-						meta1.setDisplayName(Main.instance1.getConfig().getString("Shops."+page+"."+aa+".name"));
+						meta1.setDisplayName(Main.instance1.getConfig().getString("Shops."+page+"."+aa+".name").replace("SSSS", "§"));
 						custom1.setItemMeta(meta1);
 						toshowtemp.put(custom1, slot);
 						custom1.getItemMeta().setLore(null);

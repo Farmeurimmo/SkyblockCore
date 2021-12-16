@@ -178,9 +178,6 @@ public class CateSelectGui implements Listener {
 		}
 		if(e.getView().getTitle().contains("§6Spawneurs ") && e.getView().getTitle().contains("/")) {
 			e.setCancelled(true);
-			if(!player.getName().equalsIgnoreCase("Farmeurimmo")) {
-				return;
-			}
 			if(current.getType() == Material.IRON_DOOR) {
 				MainShopGui.OpenMainShopMenu(player);
 				return;
