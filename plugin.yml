@@ -31,10 +31,10 @@ commands:
   checkfly:
   invsee:
   redstone:
-  #tpa:
-  #tpacancel:
-  #tpyes:
-  #tpno:
+  tpa:
+  tpacancel:
+  tpyes:
+  tpno:
   challenges:
     aliases: [c]
   atout:

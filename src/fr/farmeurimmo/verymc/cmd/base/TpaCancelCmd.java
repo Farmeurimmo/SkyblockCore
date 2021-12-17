@@ -24,7 +24,7 @@ public class TpaCancelCmd implements CommandExecutor, TabCompleter {
 				player.sendMessage("§§6§lTéléportation §8» §fVous avez §cannulé §fvotre demande de téléportation à "
 				+ Main.instance1.getTarget(player.getName()) + ".");
 				Main.haverequest.remove(Main.instance1.getTarget(player.getName()));
-				Main.instance1.ClearPlayerAndTarget(player.getName());
+				Main.tpatarget.remove(player);
 			} else {
 				player.sendMessage("§§6§lTéléportation §8» §fVous ne possédez aucune demande de téléportaiton de votre part.");
 			}

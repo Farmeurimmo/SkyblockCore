@@ -95,6 +95,7 @@ import net.luckperms.api.LuckPerms;
 public class Main extends JavaPlugin implements Listener {
 	
 	public static ArrayList<Player> pending = new ArrayList<Player>();
+	
 	public static ArrayList<Player> haverequest = new ArrayList<Player>();
 	
 	static LuckPerms api;
@@ -106,7 +107,7 @@ public class Main extends JavaPlugin implements Listener {
         return instance;
     }
     
-   private static HashMap<String, String> tpatarget = new HashMap<>();
+   public static HashMap<String, String> tpatarget = new HashMap<>();
 	
 	public void setTarget(String uuid, String aaa) {
 		if (aaa == null)
@@ -119,10 +120,6 @@ public class Main extends JavaPlugin implements Listener {
     		return tpatarget.get(player);
     	else
     		return null;
-    }
-    public void ClearPlayerAndTarget(String player) {
-    	if(tpatarget.containsKey(player))
-    	tpatarget.remove(player);
     }
 	
    private static HashMap<String, Integer> spawncooldown = new HashMap<>();
@@ -270,10 +267,10 @@ public class Main extends JavaPlugin implements Listener {
 		this.getCommand("checkfly").setExecutor(new CheckFlyCmd());
 		this.getCommand("invsee").setExecutor(new InvseeCmd());
 		this.getCommand("redstone").setExecutor(new RedstoneToggleCmd());
-		//this.getCommand("tpa").setExecutor(new TpaCmd());
-		//this.getCommand("tpacancel").setExecutor(new TpaCancelCmd());
-		//this.getCommand("tpyes").setExecutor(new TpYesCmd());
-		//this.getCommand("tpno").setExecutor(new TpNoCmd());
+		this.getCommand("tpa").setExecutor(new TpaCmd());
+		this.getCommand("tpacancel").setExecutor(new TpaCancelCmd());
+		this.getCommand("tpyes").setExecutor(new TpYesCmd());
+		this.getCommand("tpno").setExecutor(new TpNoCmd());
 		this.getCommand("challenges").setExecutor(new ChallengesCmd());
 		this.getCommand("atout").setExecutor(new AtoutCmd());
 		this.getCommand("datafile").setExecutor(new DataCmd());

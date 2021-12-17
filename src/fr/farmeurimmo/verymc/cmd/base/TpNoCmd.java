@@ -25,15 +25,15 @@ public class TpNoCmd implements CommandExecutor, TabCompleter{
 				for(Player p : Bukkit.getOnlinePlayers()) {
 					if(Main.instance1.getTarget(p.getName()) != null) {
 					if(Main.instance1.getTarget(p.getName()).equalsIgnoreCase(player.getName())) {
-						Main.pending.remove(Main.instance1.getTarget(p.getName()));
-						Main.instance1.ClearPlayerAndTarget(p.getName());
+						Main.pending.remove(player.getName());
+						Main.tpatarget.remove(player.getName());
 						p.sendMessage("§6§lTéléportation §8» §a" + player.getName() + " §fa refusé votre demande de téléportation.");
 						player.sendMessage("§6§lTéléportation §8» §fLa demande de téléportation de " + p.getName() + " §fa été refusé avec succès.");
 					}
-					} else {
-						p.sendMessage("§6§lTéléportation §8» §fVous ne possédez aucune demande de téléportation.");
 					}
 				}
+			} else {
+				player.sendMessage("§6§lTéléportation §8» §fVous ne possédez aucune demande de téléportation.");
 			}
 		}
 		return false;
