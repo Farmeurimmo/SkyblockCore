@@ -1,128 +1,114 @@
 package fr.farmeurimmo.verymc.challenges;
 
-import java.util.ArrayList;
-
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.event.block.BlockPlaceEvent;
 
 import fr.farmeurimmo.verymc.cmd.moderation.BuildCmd;
 import fr.farmeurimmo.verymc.core.Main;
 
 public class ChallengesBlockBreak implements Listener {
 	
-	public static ArrayList<Location> placed = new ArrayList<Location>();
+	public static int cobble=428;
+	public static int coal=192;
+	public static int iron=128;
+	public static int gold=96;
+	public static int diamond=64;
+	public static int emerald=32;
+	public static int debris=16;
 	
 	@EventHandler
 	public void blockBreakEvent(BlockBreakEvent e) {
 		Player player = e.getPlayer();
 		Block aaa = e.getBlock();
-		if(!e.isCancelled() && !BuildCmd.Build.contains(player) && !placed.contains(aaa.getLocation())) {
-		if(aaa.getType() == Material.COBBLESTONE &&
-				Main.instance1.getData().getBoolean("Joueurs."+player.getName()+".Challenges.Daily.1.Active") == true) {
+		if(!e.isCancelled() && !BuildCmd.Build.contains(player)) {
+		if(aaa.getType() == Material.COBBLESTONE && Main.instance1.getData().getBoolean("Joueurs."+player.getName()+".Challenges.Daily.1.Active") == true) {
 			int progress = Main.instance1.getData().getInt("Joueurs."+player.getName()+".Challenges.Daily.1.Progression") + 1;
+			int palier = Main.instance1.getData().getInt("Joueurs."+player.getName()+".Challenges.Daily.1.Palier");
 			Main.instance1.getData().set("Joueurs."+player.getName()+".Challenges.Daily.1.Progression", progress);
 			Main.instance1.saveData();
-			if(progress >= 320) {
-				ChallengesGuis.CompleteChallenge(player, 1);
-				Main.instance1.getData().set("Joueurs."+player.getName()+".Challenges.Daily.1.Active", false);
+			if(progress >= cobble*palier) {
 				Main.instance1.getData().set("Joueurs."+player.getName()+".Challenges.Daily.1.Progression", 0);
+				Main.instance1.getData().set("Joueurs."+player.getName()+".Challenges.Daily.1.Palier", palier+1);
 				Main.instance1.saveData();
+				ChallengesGuis.CompleteChallenge(player, 1);
 			}
 		}
-		if(aaa.getType() == Material.COAL_ORE &&
-				Main.instance1.getData().getBoolean("Joueurs."+player.getName()+".Challenges.Daily.2.Active") == true) {
+		if(aaa.getType() == Material.COAL_ORE && Main.instance1.getData().getBoolean("Joueurs."+player.getName()+".Challenges.Daily.2.Active") == true) {
 			int progress = Main.instance1.getData().getInt("Joueurs."+player.getName()+".Challenges.Daily.2.Progression") + 1;
+			int palier = Main.instance1.getData().getInt("Joueurs."+player.getName()+".Challenges.Daily.2.Palier");
 			Main.instance1.getData().set("Joueurs."+player.getName()+".Challenges.Daily.2.Progression", progress);
 			Main.instance1.saveData();
-			if(progress >= 288) {
-				ChallengesGuis.CompleteChallenge(player, 2);
-				Main.instance1.getData().set("Joueurs."+player.getName()+".Challenges.Daily.2.Active", false);
+			if(progress >= coal*palier) {
 				Main.instance1.getData().set("Joueurs."+player.getName()+".Challenges.Daily.2.Progression", 0);
+				Main.instance1.getData().set("Joueurs."+player.getName()+".Challenges.Daily.2.Palier", palier+1);
 				Main.instance1.saveData();
+				ChallengesGuis.CompleteChallenge(player, 2);
 			}
 		}
-		if(aaa.getType() == Material.IRON_ORE &&
-				Main.instance1.getData().getBoolean("Joueurs."+player.getName()+".Challenges.Daily.3.Active") == true) {
+		if(aaa.getType() == Material.IRON_ORE && Main.instance1.getData().getBoolean("Joueurs."+player.getName()+".Challenges.Daily.3.Active") == true) {
 			int progress = Main.instance1.getData().getInt("Joueurs."+player.getName()+".Challenges.Daily.3.Progression") + 1;
+			int palier = Main.instance1.getData().getInt("Joueurs."+player.getName()+".Challenges.Daily.3.Palier");
 			Main.instance1.getData().set("Joueurs."+player.getName()+".Challenges.Daily.3.Progression", progress);
 			Main.instance1.saveData();
-			if(progress >= 256) {
-				ChallengesGuis.CompleteChallenge(player, 3);
-				Main.instance1.getData().set("Joueurs."+player.getName()+".Challenges.Daily.3.Active", false);
+			if(progress >= iron*palier) {
 				Main.instance1.getData().set("Joueurs."+player.getName()+".Challenges.Daily.3.Progression", 0);
+				Main.instance1.getData().set("Joueurs."+player.getName()+".Challenges.Daily.3.Palier", palier+1);
 				Main.instance1.saveData();
+				ChallengesGuis.CompleteChallenge(player, 3);
 			}
 		}
-		if(aaa.getType() == Material.GOLD_ORE &&
-				Main.instance1.getData().getBoolean("Joueurs."+player.getName()+".Challenges.Daily.4.Active") == true) {
+		if(aaa.getType() == Material.GOLD_ORE && Main.instance1.getData().getBoolean("Joueurs."+player.getName()+".Challenges.Daily.4.Active") == true) {
 			int progress = Main.instance1.getData().getInt("Joueurs."+player.getName()+".Challenges.Daily.4.Progression") + 1;
+			int palier = Main.instance1.getData().getInt("Joueurs."+player.getName()+".Challenges.Daily.4.Palier");
 			Main.instance1.getData().set("Joueurs."+player.getName()+".Challenges.Daily.4.Progression", progress);
 			Main.instance1.saveData();
-			if(progress >= 192) {
-				ChallengesGuis.CompleteChallenge(player, 4);
-				Main.instance1.getData().set("Joueurs."+player.getName()+".Challenges.Daily.4.Active", false);
+			if(progress >= gold*palier) {
 				Main.instance1.getData().set("Joueurs."+player.getName()+".Challenges.Daily.4.Progression", 0);
+				Main.instance1.getData().set("Joueurs."+player.getName()+".Challenges.Daily.4.Palier", palier+1);
 				Main.instance1.saveData();
+				ChallengesGuis.CompleteChallenge(player, 4);
 			}
 		}
-		if(aaa.getType() == Material.DIAMOND_ORE &&
-				Main.instance1.getData().getBoolean("Joueurs."+player.getName()+".Challenges.Daily.5.Active") == true) {
+		if(aaa.getType() == Material.DIAMOND_ORE && Main.instance1.getData().getBoolean("Joueurs."+player.getName()+".Challenges.Daily.5.Active") == true) {
 			int progress = Main.instance1.getData().getInt("Joueurs."+player.getName()+".Challenges.Daily.5.Progression") + 1;
+			int palier = Main.instance1.getData().getInt("Joueurs."+player.getName()+".Challenges.Daily.5.Palier");
 			Main.instance1.getData().set("Joueurs."+player.getName()+".Challenges.Daily.5.Progression", progress);
 			Main.instance1.saveData();
-			if(progress >= 128) {
-				ChallengesGuis.CompleteChallenge(player, 5);
-				Main.instance1.getData().set("Joueurs."+player.getName()+".Challenges.Daily.5.Active", false);
+			if(progress >= diamond*palier) {
 				Main.instance1.getData().set("Joueurs."+player.getName()+".Challenges.Daily.5.Progression", 0);
+				Main.instance1.getData().set("Joueurs."+player.getName()+".Challenges.Daily.5.Palier", palier+1);
 				Main.instance1.saveData();
+				ChallengesGuis.CompleteChallenge(player, 5);
 			}
 		}
-		if(aaa.getType() == Material.EMERALD_ORE &&
-				Main.instance1.getData().getBoolean("Joueurs."+player.getName()+".Challenges.Daily.6.Active") == true) {
+		if(aaa.getType() == Material.EMERALD_ORE && Main.instance1.getData().getBoolean("Joueurs."+player.getName()+".Challenges.Daily.6.Active") == true) {
 			int progress = Main.instance1.getData().getInt("Joueurs."+player.getName()+".Challenges.Daily.6.Progression") + 1;
+			int palier = Main.instance1.getData().getInt("Joueurs."+player.getName()+".Challenges.Daily.6.Palier");
 			Main.instance1.getData().set("Joueurs."+player.getName()+".Challenges.Daily.6.Progression", progress);
 			Main.instance1.saveData();
-			if(progress >= 64) {
-				ChallengesGuis.CompleteChallenge(player, 6);
-				Main.instance1.getData().set("Joueurs."+player.getName()+".Challenges.Daily.6.Active", false);
+			if(progress >= emerald*palier) {
 				Main.instance1.getData().set("Joueurs."+player.getName()+".Challenges.Daily.6.Progression", 0);
+				Main.instance1.getData().set("Joueurs."+player.getName()+".Challenges.Daily.6.Palier", palier+1);
 				Main.instance1.saveData();
+				ChallengesGuis.CompleteChallenge(player, 6);
 			}
 		}
-		if(aaa.getType() == Material.ANCIENT_DEBRIS &&
-				Main.instance1.getData().getBoolean("Joueurs."+player.getName()+".Challenges.Daily.7.Active") == true) {
+		if(aaa.getType() == Material.ANCIENT_DEBRIS && Main.instance1.getData().getBoolean("Joueurs."+player.getName()+".Challenges.Daily.7.Active") == true) {
 			int progress = Main.instance1.getData().getInt("Joueurs."+player.getName()+".Challenges.Daily.7.Progression") + 1;
+			int palier = Main.instance1.getData().getInt("Joueurs."+player.getName()+".Challenges.Daily.7.Palier");
 			Main.instance1.getData().set("Joueurs."+player.getName()+".Challenges.Daily.7.Progression", progress);
 			Main.instance1.saveData();
-			if(progress >= 16) {
-				ChallengesGuis.CompleteChallenge(player, 7);
-				Main.instance1.getData().set("Joueurs."+player.getName()+".Challenges.Daily.7.Active", false);
+			if(progress >= debris*palier) {
 				Main.instance1.getData().set("Joueurs."+player.getName()+".Challenges.Daily.7.Progression", 0);
+				Main.instance1.getData().set("Joueurs."+player.getName()+".Challenges.Daily.7.Palier", palier+1);
 				Main.instance1.saveData();
+				ChallengesGuis.CompleteChallenge(player, 7);
 			}
 		}
-		}
-		if(e.getBlock().getType() == Material.COBBLESTONE
-				&& e.getBlock().getType() == Material.COAL_ORE && e.getBlock().getType() == Material.IRON_ORE
-				&& e.getBlock().getType() == Material.GOLD_ORE && e.getBlock().getType() == Material.DIAMOND_ORE
-				&& e.getBlock().getType() == Material.EMERALD_ORE && e.getBlock().getType() == Material.ANCIENT_DEBRIS 
-				&& aaa.getType() == Material.COAL_ORE && placed.contains(e.getBlock().getLocation())) {
-			placed.remove(e.getBlock().getLocation());
-		}
-	}
-	@EventHandler
-	public void blockPlaceEvent(BlockPlaceEvent e) {
-		if(!placed.contains(e.getBlock().getLocation()) && e.getBlock().getType() == Material.COBBLESTONE
-				&& e.getBlock().getType() == Material.COAL_ORE && e.getBlock().getType() == Material.IRON_ORE
-				&& e.getBlock().getType() == Material.GOLD_ORE && e.getBlock().getType() == Material.DIAMOND_ORE
-				&& e.getBlock().getType() == Material.EMERALD_ORE && e.getBlock().getType() == Material.ANCIENT_DEBRIS) {
-			placed.add(e.getBlock().getLocation());
 		}
 	}
 }
