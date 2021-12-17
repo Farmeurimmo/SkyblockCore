@@ -45,7 +45,7 @@ public class MenuGui implements Listener{
 			MainShopGui.OpenMainShopMenu(player);
 		}
 		if(current.getType() == Material.IRON_SWORD) {
-			ChallengesGuis.MakeDailyGui(player);
+			ChallengesGuis.MakeMainGui(player);
 		}
 		if(current.getType() == Material.POTION) {
 			AtoutGui.MakeAtoutGui(player);
