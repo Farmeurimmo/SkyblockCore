@@ -52,6 +52,9 @@ public class Farm2WinGui implements Listener {
 			if(current.getType() == Material.EMERALD_BLOCK) {
 				MakeRanksGui.MakeRankGui(player);
 			}
+			if(current.getType() == Material.CHEST) {
+				MakeItemGui.MakeRankGui(player);
+			}
 			if(current.getType() == Material.ARROW) {
 				MenuGui.OpenMainMenu(player);
 			}
@@ -60,6 +63,36 @@ public class Farm2WinGui implements Listener {
 			}
 			if(current.getType() == Material.COMMAND_BLOCK_MINECART) {
 				MakeCommandsGui.MakeCommandGui(player);
+			}
+		}
+		if(event.getView().getTitle().equalsIgnoreCase("§6Boutique des items Farm2Win")) {
+			event.setCancelled(true);
+			if(current.getType() == Material.ARROW) {
+				Farm2WinGui.MainBoutiqueGUI(player);
+			}
+			if(current.getType() == Material.DRAGON_BREATH) {
+				if(EcoAccountsManager.GetMoney(player.getName())>=1000000) {
+					EcoAccountsManager.RemoveFounds(player.getName(), (double) 1000000);
+					Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "aminion give "+player.getName());
+				} else {
+					player.sendMessage("§cErreur, vous n'avez pas asser d'argent.");
+				}
+			}
+			if(current.getType() == Material.CHEST) {
+				if(EcoAccountsManager.GetMoney(player.getName())>=500000) {
+					EcoAccountsManager.RemoveFounds(player.getName(), (double) 500000);
+					Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "chests give "+player.getName()+" Collecteur");
+				} else {
+					player.sendMessage("§cErreur, vous n'avez pas asser d'argent.");
+				}
+			}
+			if(current.getType() == Material.TRAPPED_CHEST) {
+				if(EcoAccountsManager.GetMoney(player.getName())>=1000000) {
+					EcoAccountsManager.RemoveFounds(player.getName(), (double) 1000000);
+					Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "chests give "+player.getName()+" sell_chest");
+				} else {
+					player.sendMessage("§cErreur, vous n'avez pas asser d'argent.");
+				}
 			}
 		}
 		if(event.getView().getTitle().equalsIgnoreCase("§6Boutique des grades Farm2Win")) {
