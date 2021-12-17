@@ -90,7 +90,6 @@ public class WarpGui implements Listener {
 		if(e.getView().getTitle().equalsIgnoreCase("§6Warps")) {
 			e.setCancelled(true);
 			if(current.getType() == Material.ARROW) {
-				player.closeInventory();
 				MenuGui.OpenMainMenu(player);
 			}
 			if(current.getType() == Material.ENDER_CHEST) {
