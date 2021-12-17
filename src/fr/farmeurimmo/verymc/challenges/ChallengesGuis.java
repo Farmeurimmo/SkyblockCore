@@ -30,10 +30,22 @@ public class ChallengesGuis implements Listener {
 		if(current == null) {
 			return;
 		}
-		if(e.getView().getTitle().equalsIgnoreCase("§6Challenges journaliers")) {
+		if(e.getView().getTitle().equalsIgnoreCase("§6Challenges")) {
 			e.setCancelled(true);
 			if(current.getType() == Material.ARROW) {
 				MenuGui.OpenMainMenu((Player) e.getWhoClicked());
+				return;
+			}
+			if(current.getType() == Material.CLOCK) {
+				ChallengesGuis.MakeDailyGui((Player) e.getWhoClicked());
+				return;
+			}
+		}
+		if(e.getView().getTitle().equalsIgnoreCase("§6Challenges journaliers")) {
+			e.setCancelled(true);
+			if(current.getType() == Material.ARROW) {
+				ChallengesGuis.MakeMainGui((Player) e.getWhoClicked());
+				return;
 			}
 		}
 	}
@@ -60,6 +72,41 @@ public class ChallengesGuis implements Listener {
 			player.sendMessage("§6§lChallenges §8» §fVous pouvez uniquement compléter les challenges en possédant ou en"
 					+ " faisant partie d'une ile.");
 		}
+	}
+	public static void MakeMainGui(Player player) {
+        Inventory inv = Bukkit.createInventory(null, 27, "§6Challenges");
+        
+        ItemStack custom1 = new ItemStack(Material.CLOCK, 1);
+		ItemMeta customa = custom1.getItemMeta();
+		customa.setDisplayName("§6Challenges journaliers");
+		custom1.setItemMeta(customa);
+		inv.setItem(11, custom1);
+		
+		ItemStack custom2 = new ItemStack(Material.BUCKET, 1);
+		ItemMeta customb = custom2.getItemMeta();
+		customb.setDisplayName("§6Challenges normaux");
+		custom2.setItemMeta(customb);
+		inv.setItem(15, custom2);
+		
+        
+        ItemStack custom9 = new ItemStack(Material.ARROW, 1);
+		ItemMeta customh = custom9.getItemMeta();
+		customh.setDisplayName("§6Retour §8| §7(clic gauche)");
+		custom9.setItemMeta(customh);
+		inv.setItem(26, custom9);
+		
+		ItemStack custom8 = new ItemStack(Material.WHITE_STAINED_GLASS_PANE, 1);
+		ItemMeta meta8 = custom8.getItemMeta();
+		meta8.setDisplayName("§6");
+		custom8.setItemMeta(meta8);
+		
+		for (int i = 0; i < inv.getSize(); i++) {
+            if (inv.getItem(i) == null || inv.getItem(i).getType().equals(Material.AIR)) {
+            	inv.setItem(i, custom8);
+            }
+        }
+		
+		player.openInventory(inv);
 	}
 	public static void MakeDailyGui(Player player) {
         Inventory inv = Bukkit.createInventory(null, 36, "§6Challenges journaliers");

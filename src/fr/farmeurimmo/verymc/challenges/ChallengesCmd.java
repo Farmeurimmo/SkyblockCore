@@ -17,7 +17,7 @@ public class ChallengesCmd implements CommandExecutor, TabCompleter {
 		
 		if(sender instanceof Player) {
 			Player player = (Player) sender;
-			ChallengesGuis.MakeDailyGui(player);
+			ChallengesGuis.MakeMainGui(player);
 		}
 		
 		return false;
