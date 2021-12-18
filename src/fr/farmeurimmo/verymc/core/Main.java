@@ -191,7 +191,7 @@ public class Main extends JavaPlugin implements Listener {
 		BossBar.CreateBossBar();
 		BuildCmd.Build.clear();
 		WineSpawn.SpawnPnj(new Location(Bukkit.getServer().getWorld("world"), -184.5, 70.5, -77.5, -90, 0));
-		HolosSetup.SpawnPnj2(new Location(Bukkit.getServer().getWorld("world"), -155.5, 71, -62.5, 90, 0),
+		HolosSetup.SpawnPnj2(new Location(Bukkit.getServer().getWorld("world"), -155.5, 71, -60.5, 90, 0),
 				new Location(Bukkit.getServer().getWorld("world"), -172.5, 71, -64.5, 90, 0));
 		HolosSetup.SpawnCrates();
 		for(Player player : Bukkit.getOnlinePlayers()) {

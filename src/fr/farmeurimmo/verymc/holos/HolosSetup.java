@@ -24,9 +24,9 @@ public class HolosSetup implements Listener {
 	static Plugin plugin = Bukkit.getPluginManager().getPlugin("SkyblockCore");
 	
 	static Location holo1 = new Location(Bukkit.getServer().getWorld("world"), -33.5, 101, -130.5);
-	static Location legende = new Location(Bukkit.getServer().getWorld("world"), -10.5, 100, -116.5);
-	static Location dieu = new Location(Bukkit.getServer().getWorld("world"), -9.5, 100, -122.5);
-	static Location zeus = new Location(Bukkit.getServer().getWorld("world"), -9.5, 100, -128.5);
+	static Location legende = new Location(Bukkit.getServer().getWorld("world"), -157.5, 75, -67.5);
+	static Location dieu = new Location(Bukkit.getServer().getWorld("world"), -159.5, 75, -72.5);
+	static Location zeus = new Location(Bukkit.getServer().getWorld("world"), -164.5, 75, -75.5);
 	static Hologram hologram1 = HologramsAPI.createHologram(plugin, holo1);
 	static Hologram hololegende = HologramsAPI.createHologram(plugin, legende);
 	static Hologram holodieu = HologramsAPI.createHologram(plugin, dieu);
