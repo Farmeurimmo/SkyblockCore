@@ -71,8 +71,8 @@ public class Farm2WinGui implements Listener {
 				Farm2WinGui.MainBoutiqueGUI(player);
 			}
 			if(current.getType() == Material.DRAGON_BREATH) {
-				if(EcoAccountsManager.GetMoney(player.getName())>=1000000) {
-					EcoAccountsManager.RemoveFounds(player.getName(), (double) 1000000);
+				if(EcoAccountsManager.GetMoney(player.getName())>=25000) {
+					EcoAccountsManager.RemoveFounds(player.getName(), (double) 25000);
 					Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "aminion give "+player.getName());
 				} else {
 					player.sendMessage("§cErreur, vous n'avez pas asser d'argent.");
