@@ -89,7 +89,6 @@ import fr.farmeurimmo.verymc.shopgui.MainShopGui;
 import fr.farmeurimmo.verymc.shopgui.MultiStacksShopGuiManager;
 import fr.farmeurimmo.verymc.shopgui.SellAllCmd;
 import fr.farmeurimmo.verymc.shopgui.ShopGuiCmd;
-import fr.farmeurimmo.verymc.utils.BossBar;
 import net.luckperms.api.LuckPerms;
 
 public class Main extends JavaPlugin implements Listener {
@@ -160,7 +159,6 @@ public class Main extends JavaPlugin implements Listener {
 		}
 		if (Bukkit.getPluginManager().getPlugin("Citizens") != null) {
 			System.out.println("Le plugin Citizens a été trouvé !");
-			System.out.println("-----------------------------------------------------------------------------------------------------");
 			System.out.println("Initialisation de l'api Citizens en cours...");
 			System.out.println("API initialisée !");
 			System.out.println("-----------------------------------------------------------------------------------------------------");
@@ -170,7 +168,6 @@ public class Main extends JavaPlugin implements Listener {
 		}
 		if (Bukkit.getPluginManager().getPlugin("HolographicDisplays") != null) {
 			System.out.println("Le plugin HolographicDisplays a été trouvé !");
-			System.out.println("-----------------------------------------------------------------------------------------------------");
 			System.out.println("Initialisation de l'api HolographicDisplays en cours...");
 			System.out.println("API initialisée !");
 			System.out.println("-----------------------------------------------------------------------------------------------------");
@@ -188,7 +185,7 @@ public class Main extends JavaPlugin implements Listener {
         vaultHook.hook();
 		EcoAccountsManager.UpdateHash();
 		Main.spawncooldown.clear();
-		BossBar.CreateBossBar();
+		//BossBar.CreateBossBar();
 		BuildCmd.Build.clear();
 		WineSpawn.SpawnPnj(new Location(Bukkit.getServer().getWorld("world"), -184.5, 70.5, -77.5, -90, 0));
 		HolosSetup.SpawnPnj2(new Location(Bukkit.getServer().getWorld("world"), -155.5, 71, -60.5, 90, 0),
@@ -290,7 +287,7 @@ public class Main extends JavaPlugin implements Listener {
 		FeatherFlyInteract.WriteFlyLeft();
 		HolosSetup.RemoveBoxeHolo();
 		CratesManager.RemoveBoxeHolo();
-		BossBar.RemoveBossBarForPlayers();
+		//BossBar.RemoveBossBarForPlayers();
 		HolosSetup.RemoveNpc();
 		WineSpawn.DestroyPnj();
 		vaultHook.unhook();

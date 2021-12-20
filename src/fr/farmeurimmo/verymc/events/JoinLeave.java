@@ -15,7 +15,6 @@ import fr.farmeurimmo.verymc.challenges.ChallengesReset;
 import fr.farmeurimmo.verymc.core.Main;
 import fr.farmeurimmo.verymc.eco.EcoAccountsManager;
 import fr.farmeurimmo.verymc.scoreboard.ScoreBoard;
-import fr.farmeurimmo.verymc.utils.BossBar;
 import net.luckperms.api.LuckPermsProvider;
 import net.luckperms.api.model.user.User;
 
@@ -30,7 +29,7 @@ public class JoinLeave implements Listener {
 		
 		player.setGameMode(GameMode.SURVIVAL);
 		
-		BossBar.AddBossBarForPlayer(player);
+		//BossBar.AddBossBarForPlayer(player);
 		
 		ScoreBoard.setScoreBoard(player);
 		
