@@ -116,14 +116,17 @@ public class ScoreBoard implements Listener {
 				if(Gradeis.equalsIgnoreCase("OWNER")) {
 					Gradeis = "Chef";
 				}
-				if(Gradeis.equalsIgnoreCase("CO-OWNER")) {
+				if(Gradeis.equalsIgnoreCase("CO_OWNER")) {
 					Gradeis = "Co-Chef";
 				}
 				if(Gradeis.equalsIgnoreCase("MODERATOR")) {
-					Gradeis = "ModÃ©rateur";
+					Gradeis = "Modérateur";
 				}
 				if(Gradeis.equalsIgnoreCase("MEMBER")) {
 					Gradeis = "Membre";
+				}
+				if(Gradeis.equalsIgnoreCase("VISITOR")) {
+					Gradeis = "Visiteur";
 				}
 				
 				board.getTeam("gradeis").setPrefix("§fGrade d'ile §8» §a" + Gradeis);

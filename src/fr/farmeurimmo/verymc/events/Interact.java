@@ -20,7 +20,6 @@ public class Interact implements Listener {
 	
 	public static ArrayList<Player> Build = BuildCmd.Build;
 	
-	
 	@EventHandler
 	public void OnInteract(PlayerInteractEvent e) {
 		Player player = e.getPlayer();

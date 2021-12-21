@@ -53,7 +53,7 @@ public class ChallengesGuis implements Listener {
 		if(IridiumSkyblockAPI.getInstance().getUser(player).getIsland().isPresent()) {
 			Main.instance1.getData().set("Joueurs."+player.getName()+".Challenges.Daily."+nombre+".Progression", 0);
 			Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "is bank give " + player.getName() + " crystaux 2");
-			Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "is bank give " + player.getName() + " argent 5000");
+			Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "money " + player.getName() + " 5000");
 			CratesKeyManager.GiveCrateKey(player, 1, "Challenge");
 			
 			if(Main.instance1.getData().getInt("Joueurs."+player.getName()+".Challenges.Daily.1.Palier") >= 5) {

@@ -273,6 +273,10 @@ Shops:
       material: BAMBOO
       buy: 45
       sell: 0.5
+    3:
+      material: BEETROOT
+      buy: 55
+      sell: 3
     4:
       material: BEETROOT_SEEDS
       buy: 55
