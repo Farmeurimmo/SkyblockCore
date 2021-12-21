@@ -24,6 +24,8 @@ import fr.farmeurimmo.verymc.WineLottery.WineSpawn;
 import fr.farmeurimmo.verymc.atout.AtoutCmd;
 import fr.farmeurimmo.verymc.atout.AtoutGui;
 import fr.farmeurimmo.verymc.atout.BuyAtoutGui;
+import fr.farmeurimmo.verymc.blocks.ChestsCmd;
+import fr.farmeurimmo.verymc.blocks.ChunkCollector;
 import fr.farmeurimmo.verymc.challenges.ChallengesBlockBreak;
 import fr.farmeurimmo.verymc.challenges.ChallengesCmd;
 import fr.farmeurimmo.verymc.challenges.ChallengesGuis;
@@ -240,6 +242,7 @@ public class Main extends JavaPlugin implements Listener {
 		getServer().getPluginManager().registerEvents(new MultiStacksShopGuiManager(), this);
 		getServer().getPluginManager().registerEvents(new CountdownFly(), this);
 		getServer().getPluginManager().registerEvents(new TchatManager(), this);
+		getServer().getPluginManager().registerEvents(new ChunkCollector(), this);
 		this.getCommand("spawn").setExecutor(new SpawnCmd());
 		this.getCommand("build").setExecutor(new BuildCmd());
 		this.getCommand("farm2win").setExecutor(new Farm2WinCmd());
@@ -277,6 +280,7 @@ public class Main extends JavaPlugin implements Listener {
 		this.getCommand("baltop").setExecutor(new BaltopCmd());
 		this.getCommand("shop").setExecutor(new ShopGuiCmd());
 		this.getCommand("sellall").setExecutor(new SellAllCmd());
+		this.getCommand("chests").setExecutor(new ChestsCmd());
 		PluginManager pm = getServer().getPluginManager();
 		pm.registerEvents(this, this);
 		System.out.println("§aDémarrage du plugin réussi !");
@@ -299,14 +303,17 @@ public class Main extends JavaPlugin implements Listener {
 	public FileConfiguration data;
 	public FileConfiguration datac;
 	public FileConfiguration dataz;
+	public FileConfiguration datablc;
     public File dfile;
     public File cfile;
     public File zfile;
+    public File blcfile;
    
     public void setup() {
         dfile = new File(this.getDataFolder(), "Challenges.yml");
         cfile = new File(this.getDataFolder(), "Fly.yml");
         zfile = new File(this.getDataFolder(), "Eco.yml");
+        blcfile = new File(this.getDataFolder(), "Block.yml");
        
         if(!dfile.exists()) {
             try {
@@ -341,6 +348,17 @@ public class Main extends JavaPlugin implements Listener {
         
         dataz = YamlConfiguration.loadConfiguration(zfile);
         
+        if(!blcfile.exists()) {
+            try {
+                blcfile.createNewFile();
+            }
+            catch(IOException e) {
+                getLogger().info("§c§lErreur lors de la création de Block.yml");
+            }
+        }
+        
+        datablc = YamlConfiguration.loadConfiguration(blcfile);
+        
         
     }
    
@@ -353,6 +371,9 @@ public class Main extends JavaPlugin implements Listener {
     }
     
     public FileConfiguration getDataz() {
+    	return dataz;
+    }
+    public FileConfiguration getDatablc() {
     	return dataz;
     }
     
@@ -376,6 +397,12 @@ public class Main extends JavaPlugin implements Listener {
 				getLogger().info("§c§lErreur lors de la sauvegarde!");
 				e.printStackTrace();
         }
+            try {
+				datablc.load(blcfile);
+			} catch (InvalidConfigurationException e) {
+				getLogger().info("§c§lErreur lors de la sauvegarde!");
+				e.printStackTrace();
+        }
     }
    
     public void saveData() {
@@ -393,6 +420,12 @@ public class Main extends JavaPlugin implements Listener {
         }
         try {
             dataz.save(zfile);
+        }
+        catch(IOException e) {
+            getLogger().info("§c§lErreur lors de la sauvegarde!");
+        }
+        try {
+            dataz.save(blcfile);
         }
         catch(IOException e) {
             getLogger().info("§c§lErreur lors de la sauvegarde!");
