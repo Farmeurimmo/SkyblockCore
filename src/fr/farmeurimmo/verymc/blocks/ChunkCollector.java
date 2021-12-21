@@ -8,6 +8,7 @@ import org.bukkit.block.Hopper;
 import org.bukkit.entity.Item;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.ItemSpawnEvent;
 import org.bukkit.inventory.Inventory;
@@ -54,9 +55,21 @@ public class ChunkCollector implements Listener {
 		}
 	}
 	@EventHandler
+	public void BreakEvent(BlockBreakEvent e) {
+		if(e.getBlock().getType()==Material.HOPPER) {
+			Hopper blhopper = (Hopper) e.getBlock().getState();
+			String a = blhopper.getCustomName().replace("§6", "");
+			String numberOnly = a.replaceAll("[^0-9]", "");
+			ChunkCollectorManager.GiveChest(e.getPlayer(),Integer.parseInt(numberOnly));
+			e.setDropItems(false);
+		}
+	}
+	@EventHandler
 	public void PlaceEvent(BlockPlaceEvent e) {
 		if(e.getBlockPlaced().getType()==Material.HOPPER && e.getItemInHand().getItemMeta().getDisplayName().contains("§6Chunk Hoppeur")) {
-			ChunkCollectorManager.PlaceChest(e.getPlayer(), e.getBlock().getLocation().getChunk().getChunkKey(), e.getBlock().getLocation());
+			String str = e.getItemInHand().getDisplayName().replace("§6", "");
+			String numberOnly = str.replaceAll("[^0-9]", "");
+			ChunkCollectorManager.PlaceChest(e.getPlayer(), e.getBlock().getLocation().getChunk().getChunkKey(), e.getBlock().getLocation(), Integer.parseInt(numberOnly));
 		}
 	}
 

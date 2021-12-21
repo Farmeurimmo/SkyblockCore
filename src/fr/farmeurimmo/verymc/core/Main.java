@@ -26,6 +26,7 @@ import fr.farmeurimmo.verymc.atout.AtoutGui;
 import fr.farmeurimmo.verymc.atout.BuyAtoutGui;
 import fr.farmeurimmo.verymc.blocks.ChestsCmd;
 import fr.farmeurimmo.verymc.blocks.ChunkCollector;
+import fr.farmeurimmo.verymc.blocks.ChunkCollectorManager;
 import fr.farmeurimmo.verymc.challenges.ChallengesBlockBreak;
 import fr.farmeurimmo.verymc.challenges.ChallengesCmd;
 import fr.farmeurimmo.verymc.challenges.ChallengesGuis;
@@ -215,6 +216,7 @@ public class Main extends JavaPlugin implements Listener {
 	    GenShopPage.GenenerateShopPageStartup("Spawneurs");
 	    GenAmoutShopGui.GenAmoutShopGuiStartup();
 	    GenMultiStacksBuyGui.GenMultiShopGuiStartup();
+	    ChunkCollectorManager.ReadFromFile();
 		getServer().getPluginManager().registerEvents(new JoinLeave(), this);
 		getServer().getPluginManager().registerEvents(new ScoreBoard(), this);
 		getServer().getPluginManager().registerEvents(new Interact(), this);
@@ -374,7 +376,7 @@ public class Main extends JavaPlugin implements Listener {
     	return dataz;
     }
     public FileConfiguration getDatablc() {
-    	return dataz;
+    	return datablc;
     }
     
     
@@ -425,7 +427,7 @@ public class Main extends JavaPlugin implements Listener {
             getLogger().info("§c§lErreur lors de la sauvegarde!");
         }
         try {
-            dataz.save(blcfile);
+            datablc.save(blcfile);
         }
         catch(IOException e) {
             getLogger().info("§c§lErreur lors de la sauvegarde!");

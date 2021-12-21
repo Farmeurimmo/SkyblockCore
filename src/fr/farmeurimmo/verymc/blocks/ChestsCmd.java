@@ -22,7 +22,7 @@ public class ChestsCmd implements CommandExecutor {
         if(Bukkit.getPlayer(args[0])==null) {
         	return true;
         }
-        ChunkCollectorManager.GiveChest(Bukkit.getPlayer(args[0]));
+        ChunkCollectorManager.GiveChest(Bukkit.getPlayer(args[0]),0);
 		
 		return false;
 	}
