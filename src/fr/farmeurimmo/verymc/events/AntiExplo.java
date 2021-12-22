@@ -7,6 +7,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBurnEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.EntitySpawnEvent;
 import org.bukkit.event.entity.ExplosionPrimeEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
@@ -19,6 +20,12 @@ public class AntiExplo implements Listener {
 	public void onExplo(ExplosionPrimeEvent e) {
 		if(e.getEntity().getWorld().getName().equalsIgnoreCase("world")) {
 			e.setCancelled(true);
+		}
+	}
+	@EventHandler
+	public void Explo1(EntityExplodeEvent e) {
+		if(e.getLocation().getWorld().getName().equalsIgnoreCase("world")) {
+		e.setCancelled(true);
 		}
 	}
 	@EventHandler
