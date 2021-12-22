@@ -133,6 +133,7 @@ public class HolosSetup implements Listener {
 	public static void RemoveBoxeHolo() {
 		hologram1.clearLines();
 		hololegende.clearLines();
+		holozeus1.clearLines();
 		holodieu.clearLines();
 		holozeus.clearLines();
 	}
