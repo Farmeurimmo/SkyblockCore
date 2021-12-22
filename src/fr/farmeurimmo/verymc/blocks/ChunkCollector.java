@@ -66,6 +66,9 @@ public class ChunkCollector implements Listener {
 	public void BreakEvent(BlockBreakEvent e) {
 		if(e.getBlock().getType()==Material.HOPPER) {
 			Hopper blhopper = (Hopper) e.getBlock().getState();
+			if(!blhopper.getCustomName().contains("§6Chunk Hoppeur")) {
+				return;
+			}
 			String a = blhopper.getCustomName().replace("§6", "");
 			String numberOnly = a.replaceAll("[^0-9]", "");
 			ChunkCollectorManager.GiveChest(e.getPlayer(),Integer.parseInt(numberOnly));

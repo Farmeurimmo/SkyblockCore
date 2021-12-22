@@ -27,6 +27,7 @@ import fr.farmeurimmo.verymc.atout.BuyAtoutGui;
 import fr.farmeurimmo.verymc.blocks.ChestsCmd;
 import fr.farmeurimmo.verymc.blocks.ChunkCollector;
 import fr.farmeurimmo.verymc.blocks.ChunkCollectorManager;
+import fr.farmeurimmo.verymc.blocks.SellChest;
 import fr.farmeurimmo.verymc.challenges.ChallengesBlockBreak;
 import fr.farmeurimmo.verymc.challenges.ChallengesCmd;
 import fr.farmeurimmo.verymc.challenges.ChallengesGuis;
@@ -245,6 +246,7 @@ public class Main extends JavaPlugin implements Listener {
 		getServer().getPluginManager().registerEvents(new CountdownFly(), this);
 		getServer().getPluginManager().registerEvents(new TchatManager(), this);
 		getServer().getPluginManager().registerEvents(new ChunkCollector(), this);
+		getServer().getPluginManager().registerEvents(new SellChest(), this);
 		this.getCommand("spawn").setExecutor(new SpawnCmd());
 		this.getCommand("build").setExecutor(new BuildCmd());
 		this.getCommand("farm2win").setExecutor(new Farm2WinCmd());
