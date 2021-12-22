@@ -44,6 +44,9 @@ public class ChunkCollector implements Listener {
 		if(ChunkCollectorManager.blcchunk.containsValue(e.getLocation().getChunk().getChunkKey())) {
 			for(Entry<Location, Long> tttt : ChunkCollectorManager.blcchunk.entrySet()) {
 			Location hopper = tttt.getKey();
+			if(tttt.getValue()!=e.getLocation().getChunk().getChunkKey()){
+				continue;
+			}
 			if(hopper.getBlock().getType()==Material.HOPPER) {
 				Hopper blhopper = (Hopper) hopper.getBlock().getState();
 				if(!blhopper.getCustomName().contains("§6Chunk Hoppeur")) {
