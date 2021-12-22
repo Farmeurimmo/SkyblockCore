@@ -14,6 +14,8 @@ import org.bukkit.event.entity.ItemSpawnEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import fr.farmeurimmo.verymc.core.Main;
+
 public class ChunkCollector implements Listener {
 	
 	public static int GetAmountToFillInInv(ItemStack aa, Inventory player) {
@@ -44,6 +46,9 @@ public class ChunkCollector implements Listener {
 			Location hopper = tttt.getKey();
 			if(hopper.getBlock().getType()==Material.HOPPER) {
 				Hopper blhopper = (Hopper) hopper.getBlock().getState();
+				if(!blhopper.getCustomName().contains("§6Chunk Hoppeur")) {
+					continue;
+				}
 				ItemStack a = e.getEntity().getItemStack();
 				if(GetAmountToFillInInv(a, blhopper.getInventory())>0) {
 					e.setCancelled(true);
@@ -62,6 +67,9 @@ public class ChunkCollector implements Listener {
 			String numberOnly = a.replaceAll("[^0-9]", "");
 			ChunkCollectorManager.GiveChest(e.getPlayer(),Integer.parseInt(numberOnly));
 			e.setDropItems(false);
+			Location tda = null;
+			Main.getInstance().getDatablc().set("ChunkHoppeur."+blhopper.getLocation().getChunk().getChunkKey()+"."+numberOnly, tda);
+			Main.getInstance().saveData();
 		}
 	}
 	@EventHandler
