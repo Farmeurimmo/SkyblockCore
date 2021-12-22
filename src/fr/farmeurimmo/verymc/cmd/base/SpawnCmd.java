@@ -37,7 +37,8 @@ public class SpawnCmd implements CommandExecutor, TabCompleter {
 					if(Bukkit.getPlayer(args[0]).isOnline()) {
 					Player p = Bukkit.getPlayer(args[0]);
 					p.teleport(Spawn);
-					SendActionBar.SendActionBarMsg(player, "§aVous avez été téléporté au spawn par un membre du staff !");
+					SendActionBar.SendActionBarMsg(p, "§aVous avez été téléporté au spawn par un membre du staff !");
+					SendActionBar.SendActionBarMsg(player, "§6"+p.getName()+" §aa été envoyé au spawn avec succès !");
 					} else {
 						SendActionBar.SendActionBarMsg(player, "§cCe joueur n'est pas en ligne !");
 					}
