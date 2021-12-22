@@ -13,16 +13,25 @@ public class ChestsCmd implements CommandExecutor {
 		if(!sender.hasPermission("chests")) {
 			return true;
 		}
-		if(args.length == 0 || args.length > 1){
+		if(args.length == 0 || args.length > 2){
+			sender.sendMessage("§cErreur, utilisation /chests <joueur> <type>");
             return true;
         }
         if(args[0]==null || args[0].length() < 4){
-            return true;
-        }
-        if(Bukkit.getPlayer(args[0])==null) {
+        	sender.sendMessage("§cErreur, joueur inconnu");
         	return true;
         }
-        ChunkCollectorManager.GiveChest(Bukkit.getPlayer(args[0]),0);
+        if(Bukkit.getPlayer(args[0])==null) {
+        	sender.sendMessage("§cErreur, joueur inconnu");
+        	return true;
+        }
+        if(args[1].equalsIgnoreCase("chunkhoppeur")) {
+        	ChunkCollectorManager.GiveChest(Bukkit.getPlayer(args[0]),0);
+        } else if(args[1].equalsIgnoreCase("sellchest")) {
+        	SellChestManager.GiveSellChest(Bukkit.getPlayer(args[0]), 0);
+        } else {
+        	sender.sendMessage("§cErreur, coffre/hoppeur inconnu");
+        }
 		
 		return false;
 	}
