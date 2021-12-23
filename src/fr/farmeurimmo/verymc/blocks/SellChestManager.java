@@ -12,7 +12,7 @@ import fr.farmeurimmo.verymc.core.Main;
 
 public class SellChestManager {
 	
-	public static HashMap <String, Location> blcsellchest = new HashMap < > ();
+	public static HashMap <Location, String> blcsellchest = new HashMap < > ();
 	
 	public static void GiveSellChest(Player player, int i) {
 		int a = 0;
@@ -39,21 +39,10 @@ public class SellChestManager {
 	public static void PlaceChest(Player player, Location block, int num) {
 		Main.getInstance().getDatablc().set("SellChest."+player.getName()+"."+num, block);
 		Main.getInstance().saveData();
-		blcsellchest.put(player.getName(), block);
+		blcsellchest.put(block, player.getName());
 	}
 	public static String getOwner(Location loc) {
-		if(!Main.getInstance().getDatablc().isSet("SellChest")) {
-			return null;
-		}
-		for(String aa : Main.getInstance().getDatablc().getConfigurationSection("SellChest").getKeys(false)) {
-			for(String bb : Main.getInstance().getDatablc().getConfigurationSection("SellChest."+aa).getKeys(false)) {
-				if(Main.getInstance().getDatablc().getLocation("SellChest."+aa+"."+bb) == loc) {
-					return aa;
-				}
-			}
-		}
-		return null;
-		
+		return blcsellchest.get(loc);
 	}
 	public static void ReadFromFile() {
 		if(!Main.getInstance().getDatablc().isSet("SellChest")) {
@@ -64,7 +53,7 @@ public class SellChestManager {
 				continue;
 			}
 			for(String bb : Main.getInstance().getDatablc().getConfigurationSection("SellChest."+aa).getKeys(false)) {
-				blcsellchest.put(aa,Main.getInstance().getDatablc().getLocation("SellChest."+aa+"."+bb));
+				blcsellchest.put(Main.getInstance().getDatablc().getLocation("SellChest."+aa+"."+bb),aa);
 			}
 		}
 	}

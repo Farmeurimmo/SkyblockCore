@@ -1,9 +1,8 @@
 package fr.farmeurimmo.verymc.blocks;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.block.Hopper;
+import org.bukkit.block.Chest;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -24,22 +23,20 @@ public class SellChest implements Listener {
 	@EventHandler
 	public void SellChestBreaked(BlockBreakEvent e) {
 		if(e.getBlock().getType()==Material.CHEST) {
-			Hopper blhopper = (Hopper) e.getBlock().getState();
+			Chest blhopper = (Chest) e.getBlock().getState();
 			if(!blhopper.getCustomName().contains("§6SellChest")) {
 				return;
 			}
 			String a = blhopper.getCustomName().replace("§6", "");
 			String numberOnly = a.replaceAll("[^0-9]", "");
 			String owner = SellChestManager.getOwner(e.getBlock().getLocation());
-			Bukkit.broadcastMessage("a");
 			if(owner==null) {
 				return;
 			}
-			Bukkit.broadcastMessage("ac");
-			ChunkCollectorManager.GiveChest(e.getPlayer(),Integer.parseInt(numberOnly));
+			SellChestManager.GiveSellChest(e.getPlayer(), Integer.parseInt(numberOnly));
 			e.setDropItems(false);
 			Location tda = null;
-			Main.getInstance().getDatablc().set("ChunkHoppeur."+owner+"."+
+			Main.getInstance().getDatablc().set("SellChest."+owner+"."+
 			numberOnly, tda);
 			Main.getInstance().saveData();
 		}
