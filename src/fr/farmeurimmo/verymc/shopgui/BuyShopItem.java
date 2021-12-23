@@ -72,12 +72,26 @@ public class BuyShopItem {
             }
         }
     }
-	public static int GetAmountInInv(ItemStack aa, Player player) {
+	public static int GetAmountInInv(ItemStack aa, Player ed) {
 		int total = 0;
 		
-		int size = player.getInventory().getSize()-5;
+		int size = ed.getInventory().getSize()-5;
         for (int slot = 0; slot < size; slot++) {
-        	ItemStack is = player.getInventory().getItem(slot);
+        	ItemStack is = ed.getInventory().getItem(slot);
+        	if(is == null) continue;
+        	if(aa.getType() == is.getType()) {
+        		total+= is.getAmount();
+        	}
+        }
+		
+		return total;
+	}
+	public static int GetAmountInInvNo(ItemStack aa, Inventory ed) {
+		int total = 0;
+		
+		int size = ed.getSize();
+        for (int slot = 0; slot < size; slot++) {
+        	ItemStack is = ed.getItem(slot);
         	if(is == null) continue;
         	if(aa.getType() == is.getType()) {
         		total+= is.getAmount();

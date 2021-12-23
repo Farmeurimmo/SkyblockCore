@@ -28,6 +28,7 @@ import fr.farmeurimmo.verymc.blocks.ChestsCmd;
 import fr.farmeurimmo.verymc.blocks.ChunkCollector;
 import fr.farmeurimmo.verymc.blocks.ChunkCollectorManager;
 import fr.farmeurimmo.verymc.blocks.SellChest;
+import fr.farmeurimmo.verymc.blocks.SellChestManager;
 import fr.farmeurimmo.verymc.challenges.ChallengesBlockBreak;
 import fr.farmeurimmo.verymc.challenges.ChallengesCmd;
 import fr.farmeurimmo.verymc.challenges.ChallengesGuis;
@@ -218,6 +219,8 @@ public class Main extends JavaPlugin implements Listener {
 	    GenAmoutShopGui.GenAmoutShopGuiStartup();
 	    GenMultiStacksBuyGui.GenMultiShopGuiStartup();
 	    ChunkCollectorManager.ReadFromFile();
+	    SellChestManager.ReadFromFile();
+	    SellChestManager.AutoSellForVeryChest();
 		getServer().getPluginManager().registerEvents(new JoinLeave(), this);
 		getServer().getPluginManager().registerEvents(new ScoreBoard(), this);
 		getServer().getPluginManager().registerEvents(new Interact(), this);
