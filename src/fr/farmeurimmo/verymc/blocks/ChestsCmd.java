@@ -1,11 +1,18 @@
 package fr.farmeurimmo.verymc.blocks;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
+import org.bukkit.entity.Player;
 
-public class ChestsCmd implements CommandExecutor {
+public class ChestsCmd implements CommandExecutor, TabCompleter {
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -13,7 +20,7 @@ public class ChestsCmd implements CommandExecutor {
 		if(!sender.hasPermission("chests")) {
 			return true;
 		}
-		if(args.length == 0 || args.length > 2){
+		if(args.length > 2 || args.length < 2){
 			sender.sendMessage("§cErreur, utilisation /chests <joueur> <type>");
             return true;
         }
@@ -35,5 +42,22 @@ public class ChestsCmd implements CommandExecutor {
 		
 		return false;
 	}
+	@Override
+	 public List<String> onTabComplete(CommandSender sender, Command cmd, String commandLabel, String[] args) {
+		 ArrayList<String> subcmd = new ArrayList<String>();
+	        if (cmd.getName().equalsIgnoreCase("chests")) {
+	            if (args.length == 1){
+	            	for(Player p : Bukkit.getOnlinePlayers()) {
+	            		subcmd.add(p.getName());
+	            	}
+	            } else if(args.length == 2){
+	            	subcmd.addAll(Arrays.asList("ChunkHoppeur","SellChest"));
+	            } else {
+	            	subcmd.add("");
+	            }
+	        }
+	        Collections.sort(subcmd);
+			return subcmd;
+	 }
 
 }
