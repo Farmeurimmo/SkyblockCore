@@ -33,7 +33,6 @@ public class ScoreBoard implements Listener {
 			Grade = user.getCachedData().getMetaData().getPrefix().replace("&", "§");
 		}
 		
-		
 		obj.getScore("§6§l" + player.getName()).setScore(14);
 		obj.getScore(" §eplay.verymc.fr").setScore(1);
 		obj.getScore("§a").setScore(15);
@@ -41,7 +40,6 @@ public class ScoreBoard implements Listener {
 		obj.getScore("§6§lIle").setScore(10);
 		obj.getScore("§o").setScore(4);
 		obj.getScore("§d").setScore(2);
-
 
 		Team rank = board.registerNewTeam("rank");
 		Team money = board.registerNewTeam("money");
@@ -52,26 +50,23 @@ public class ScoreBoard implements Listener {
 		Team ismoney = board.registerNewTeam("ismoney");
 		Team online = board.registerNewTeam("online");
 		
-		
 		online.addEntry("§k");
 		ismoney.addEntry("§9");
-		iscrystaux.addEntry("");
-		ismembre.addEntry("§f");
+		iscrystaux.addEntry("§8");
+		ismembre.addEntry("§7");
 		classementis.addEntry("§6");
 		gradeis.addEntry("§5");
 		money.addEntry("§3");
 		rank.addEntry("§2");
 		
-		
 		obj.getScore("§k").setScore(3);
 		obj.getScore("§9").setScore(6);
-		obj.getScore("").setScore(7);
-		obj.getScore("§f").setScore(5);
+		obj.getScore("§8").setScore(7);
+		obj.getScore("§7").setScore(5);
 		obj.getScore("§6").setScore(8);
 		obj.getScore("§5").setScore(9);
 		obj.getScore("§3").setScore(12);
 		obj.getScore("§2").setScore(13);
-
 
 		player.setScoreboard(board);
 	}
