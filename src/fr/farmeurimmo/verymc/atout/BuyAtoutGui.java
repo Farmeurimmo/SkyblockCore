@@ -52,7 +52,7 @@ public class BuyAtoutGui implements Listener {
 	        } else if (Main.instance1.getData().getInt("Joueurs."+player.getName()+".Atout.1.Level") == 2) {
 	        	ItemStack custom10 = new ItemStack(Material.BEDROCK, 1);
 	    		ItemMeta customi = custom10.getItemMeta();
-	    		customi.setDisplayName("§eHaste 2 §c(Déjà  possédé)");
+	    		customi.setDisplayName("§eHaste 2 §c(Déjà possédé)");
 	    		custom10.setItemMeta(customi);
 	    		inv.setItem(10, custom10);
 	        }
@@ -68,7 +68,7 @@ public class BuyAtoutGui implements Listener {
 	        } else if (Main.instance1.getData().getInt("Joueurs."+player.getName()+".Atout.2.Level") == 2) {
 	        	ItemStack custom10 = new ItemStack(Material.BEDROCK, 1);
 	    		ItemMeta customi = custom10.getItemMeta();
-	    		customi.setDisplayName("§eSpeed 2 §c(Déjà  possédé)");
+	    		customi.setDisplayName("§eSpeed 2 §c(Déjà possédé)");
 	    		custom10.setItemMeta(customi);
 	    		inv.setItem(12, custom10);
 	        }
@@ -84,7 +84,7 @@ public class BuyAtoutGui implements Listener {
 	        } else if (Main.instance1.getData().getInt("Joueurs."+player.getName()+".Atout.3.Level") == 3) {
 	        	ItemStack custom10 = new ItemStack(Material.BEDROCK, 1);
 	    		ItemMeta customi = custom10.getItemMeta();
-	    		customi.setDisplayName("§eJumpboost 3 §c(Déjà  possédé)");
+	    		customi.setDisplayName("§eJumpboost 3 §c(Déjà possédé)");
 	    		custom10.setItemMeta(customi);
 	    		inv.setItem(14, custom10);
 	        }
