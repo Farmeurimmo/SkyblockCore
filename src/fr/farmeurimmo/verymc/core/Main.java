@@ -82,6 +82,8 @@ import fr.farmeurimmo.verymc.gui.Farm2WinGui;
 import fr.farmeurimmo.verymc.gui.MenuGui;
 import fr.farmeurimmo.verymc.gui.WarpGui;
 import fr.farmeurimmo.verymc.holos.HolosSetup;
+import fr.farmeurimmo.verymc.items.FarmHoeCmd;
+import fr.farmeurimmo.verymc.items.FarmHoeManager;
 import fr.farmeurimmo.verymc.items.ItemLegCmd;
 import fr.farmeurimmo.verymc.scoreboard.ScoreBoard;
 import fr.farmeurimmo.verymc.shopgui.AmountGuiManager;
@@ -221,6 +223,7 @@ public class Main extends JavaPlugin implements Listener {
 	    ChunkCollectorManager.ReadFromFile();
 	    SellChestManager.ReadFromFile();
 	    SellChestManager.AutoSellForVeryChest();
+	    FarmHoeManager.addtolist();
 		getServer().getPluginManager().registerEvents(new JoinLeave(), this);
 		getServer().getPluginManager().registerEvents(new ScoreBoard(), this);
 		getServer().getPluginManager().registerEvents(new Interact(), this);
@@ -250,6 +253,7 @@ public class Main extends JavaPlugin implements Listener {
 		getServer().getPluginManager().registerEvents(new TchatManager(), this);
 		getServer().getPluginManager().registerEvents(new ChunkCollector(), this);
 		getServer().getPluginManager().registerEvents(new SellChest(), this);
+		getServer().getPluginManager().registerEvents(new FarmHoeManager(), this);
 		this.getCommand("spawn").setExecutor(new SpawnCmd());
 		this.getCommand("build").setExecutor(new BuildCmd());
 		this.getCommand("farm2win").setExecutor(new Farm2WinCmd());
@@ -288,6 +292,7 @@ public class Main extends JavaPlugin implements Listener {
 		this.getCommand("shop").setExecutor(new ShopGuiCmd());
 		this.getCommand("sellall").setExecutor(new SellAllCmd());
 		this.getCommand("chests").setExecutor(new ChestsCmd());
+		this.getCommand("farmhoe").setExecutor(new FarmHoeCmd());
 		PluginManager pm = getServer().getPluginManager();
 		pm.registerEvents(this, this);
 		System.out.println("§aDémarrage du plugin réussi !");
