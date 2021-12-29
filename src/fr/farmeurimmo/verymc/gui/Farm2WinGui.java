@@ -24,7 +24,6 @@ public class Farm2WinGui implements Listener {
 	static boolean enchantementcmd = true;
 	static boolean legendeachat = true;
 	static boolean dieueachat = true;
-	static boolean zeusachat = true;
 	public static int hatprix = 500000;
 	public static int sellallprix = 10000000;
 	public static int flyprix = 10000000;
@@ -34,7 +33,6 @@ public class Farm2WinGui implements Listener {
 	public static int feedprix = 750000;
 	public static int legendeprix = 2500000;
 	public static int dieuprix = 5000000;
-	public static int zeusprix = 10000000;
 	
 	@EventHandler
 	public static void OnInventoryClic(InventoryClickEvent event) {
@@ -163,43 +161,6 @@ public class Farm2WinGui implements Listener {
 						Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
 						     public void run() {
 						    	 current.setType(Material.BEACON);
-						     }
-						}, 60);
-					}
-				}
-			}
-			if(current.getType() == Material.WITHER_SKELETON_SKULL) {
-				if(!player.hasPermission("zeus")){
-					if(EcoAccountsManager.Moneys.get(player.getName()) >= zeusprix) {
-						if(player.hasPermission("legende") && player.hasPermission("dieu")) {
-					player.sendMessage("§6Vérification de la disponibilité du grade...");
-					current.setType(Material.BARRIER);
-					Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
-					     public void run() {
-					    	 if(legendeachat == false) {
-					    	 player.sendMessage("§cErreur, achat indisponible !");
-					    	 } else {
-					    		 BuyRanks.BuyRank("zeus", player);
-					    	 }
-					    	 current.setType(Material.WITHER_SKELETON_SKULL);
-					     }
-					}, 60);
-				} else {
-	    			 player.sendMessage("§cErreur, vous devez posséder tous les grades précédents !");
-	    			 current.setType(Material.BARRIER);
-						Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
-						     public void run() {
-						    	 current.setType(Material.WITHER_SKELETON_SKULL);
-						     }
-						}, 60);
-	    		 }
-					}
-					else {
-						player.sendMessage("§cFonds insuffisants !");
-						current.setType(Material.BARRIER);
-						Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
-						     public void run() {
-						    	 current.setType(Material.WITHER_SKELETON_SKULL);
 						     }
 						}, 60);
 					}
