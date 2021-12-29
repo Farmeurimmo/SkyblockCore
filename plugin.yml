@@ -7,30 +7,48 @@ api-version: 1.16
 commands:
   spawn:
   build:
+    permission: build
   farm2win:
     aliases: [boutiqueig]
   bar:
+    permission: bar
   menu:
   warp:
   warps:
   featherfly:
+    permission: featherfly.give
   dailyfly:
+    permission: dailyfly
   itemleg:
+    permission: itemleg
   fly:
+    permission: fly
   feed:
+    permission: feed
   hat:
+    permission: hat
   craft:
+    permission: craft
   enchantement:
     aliases: [ench]
   gm:
+    permission: gm
   gma:
+    permission: gma
   gmc:
+    permission: gmc
   gmsp:
+    permission: gmsp
   gms:
+    permission: gms
   afkmine:
+    permission: afkmine
   checkfly:
+    permission: checkfly
   invsee:
+    permission: invsee
   redstone:
+    permission: redstone.admin
   tpa:
   tpacancel:
   tpyes:
@@ -40,11 +58,17 @@ commands:
   atout:
     aliases: [atouts]
   datafile:
+    permission: datam
   key:
+    permission: key.admin
   money:
   pay:
   baltop:
   shop:
   sellall:
+    permission: sellall
   chests:
+    permission: chests.give
+  farmhoe:
+    permission: farmhoe.give
   
