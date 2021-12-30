@@ -82,9 +82,17 @@ public class FarmHoeManager implements Listener {
 				Block bltmp = Bukkit.getWorld(world.getName()).getBlockAt(rf.getLocation());
 				final Ageable ageable = (Ageable) bltmp.getState().getBlockData();
 				int age = ageable.getAge();
+				int fd = 1;
 				if(age==7) {
 					for(ItemStack eed : bltmp.getDrops()) {
-						if(eed.getType().toString().contains("SEED")) continue;
+						if(eed.getType().toString().contains("SEED")&&fd==1) {
+							fd=0;
+							for(ItemStack redse : player.getInventory().getStorageContents()) {
+								if(redse==null) continue;
+								redse.setAmount(redse.getAmount()-1);
+								break;
+							}
+						}
 						if(BuyShopItem.GetAmountToFillInInv(eed, player)>0) {
 							player.getInventory().addItem(eed);
 							continue;
