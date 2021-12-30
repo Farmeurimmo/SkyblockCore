@@ -42,21 +42,46 @@ public class FarmHoeManager implements Listener {
         return blocks;
     }
 	
+	public static void AddBlockHaversted(Player player, ItemStack a) {
+		String tosearch = a.getLore().get(0).replace("§7", "");
+		boolean digit = false;
+		try {
+	        @SuppressWarnings("unused")
+			int intValue = Integer.parseInt(tosearch);
+	        digit = true;
+	    } catch (NumberFormatException e) {
+	        digit = false;
+	    }
+		if(!tosearch.contains(".") && digit == true) {
+			int num = Integer.parseInt(tosearch);
+			num+=1;
+			List<String> lores = a.getLore();
+			lores.set(0, "§7"+num);
+			player.getItemInHand().setLore(lores);
+		}
+	}
+	
 	@EventHandler
 	public void HoeClic(PlayerInteractEvent e) {
 		if(e.getAction() == Action.LEFT_CLICK_BLOCK) {
-			if(e.getItem()==null) {
+			ItemStack farmhoe = e.getPlayer().getItemInHand();
+			if(farmhoe==null) {
 				return;
 			}
-			if(e.getItem().getItemMeta()==null) {
+			if(farmhoe.getType()==Material.AIR) {
 				return;
 			}
-			if(e.getItem().getType()!=Material.NETHERITE_HOE) {
+			if(farmhoe.getItemMeta()==null) {
+				return;
+			}
+			if(farmhoe.getType()!=Material.NETHERITE_HOE) {
+				return;
+			}
+			if(!farmhoe.isUnbreakable()) {
 				return;
 			}
 			
 			Player player = e.getPlayer();
-			ItemStack farmhoe = e.getItem();
 			Location clicloc = e.getClickedBlock().getLocation();
 			
 			if(!farmhoe.getDisplayName().contains("I")) {
@@ -89,8 +114,10 @@ public class FarmHoeManager implements Listener {
 							fd=0;
 							for(ItemStack redse : player.getInventory().getStorageContents()) {
 								if(redse==null) continue;
-								redse.setAmount(redse.getAmount()-1);
-								break;
+								if(redse.getType()==eed.getType()) {
+									redse.setAmount(redse.getAmount()-1);
+									break;
+								}
 							}
 						}
 						if(BuyShopItem.GetAmountToFillInInv(eed, player)>0) {
@@ -102,6 +129,7 @@ public class FarmHoeManager implements Listener {
 					ageable.setAge(0);
 					bltmp.setBlockData(ageable);
 					bltmp.getState().update(true);
+					AddBlockHaversted(player, farmhoe);
 				} else {
 					continue;
 				}
