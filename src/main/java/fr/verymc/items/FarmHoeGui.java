@@ -77,11 +77,13 @@ public class FarmHoeGui implements Listener {
         if(current.getType()==Material.DIAMOND_HOE){
             if(CheckForValidity(player.getItemInHand())){
                 player.getItemInHand().setDisplayName("§6FarmHoe Tier §cII (3x3)");
+                player.closeInventory();
             }
         }
         if(current.getType()==Material.NETHERITE_HOE){
             if(CheckForValidity(player.getItemInHand())){
                 player.getItemInHand().setDisplayName("§6FarmHoe Tier §cIII (5x5)");
+                player.closeInventory();
             }
         }
         if(current.getType()==Material.IRON_DOOR){

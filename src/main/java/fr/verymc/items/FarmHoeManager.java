@@ -23,7 +23,8 @@ public class FarmHoeManager implements Listener {
     public static ArrayList<String> replantableblocks = new ArrayList<String>();
 
     public static void addtolist() {
-        replantableblocks.addAll(Arrays.asList("WHEAT"));
+        replantableblocks.addAll(Arrays.asList("WHEAT","CARROTS","POTATOES",
+          "NETHER_WART"));
     }
 
     public static List<Block> getNearbyBlocks(Location location, int radius) {
@@ -111,15 +112,18 @@ public class FarmHoeManager implements Listener {
                 final Ageable ageable = (Ageable) bltmp.getState().getBlockData();
                 int age = ageable.getAge();
                 int fd = 1;
-                if (age == 7) {
+                if (age == ageable.getMaximumAge()) {
                     for (ItemStack eed : bltmp.getDrops()) {
-                        if (eed.getType().toString().contains("SEED") && fd == 1) {
+                        if (eed.getType().toString().contains("SEED") || eed.getType() == Material.CARROT
+                          || eed.getType() == Material.POTATO || eed.getType() == Material.NETHER_WART) {
+                            if(fd == 1){
                             fd = 0;
                             for (ItemStack redse : player.getInventory().getStorageContents()) {
                                 if (redse == null) continue;
                                 if (redse.getType() == eed.getType()) {
                                     redse.setAmount(redse.getAmount() - 1);
                                     break;
+                                }
                                 }
                             }
                         }
