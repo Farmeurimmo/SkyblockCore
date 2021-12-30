@@ -76,14 +76,22 @@ public class FarmHoeGui implements Listener {
         e.setCancelled(true);
         if(current.getType()==Material.DIAMOND_HOE){
             if(CheckForValidity(player.getItemInHand())){
-                player.getItemInHand().setDisplayName("§6FarmHoe Tier §cII (3x3)");
-                player.closeInventory();
+                if(EcoAccountsManager.CheckForFounds(player, 500000.0) &&
+                  FarmHoeManager.GetBlockHaversted(player.getItemInHand()) >= 100) {
+                    EcoAccountsManager.RemoveFounds(player.getName(), 500000.0);
+                    player.getItemInHand().setDisplayName("§6FarmHoe Tier §cII (3X3)");
+                    player.closeInventory();
+                }
             }
         }
         if(current.getType()==Material.NETHERITE_HOE){
             if(CheckForValidity(player.getItemInHand())){
-                player.getItemInHand().setDisplayName("§6FarmHoe Tier §cIII (5x5)");
-                player.closeInventory();
+                if(EcoAccountsManager.CheckForFounds(player, 1000000.0) &&
+                  FarmHoeManager.GetBlockHaversted(player.getItemInHand()) >= 250) {
+                    EcoAccountsManager.RemoveFounds(player.getName(), 1000000.0);
+                    player.getItemInHand().setDisplayName("§6FarmHoe Tier §cIII (5X5)");
+                    player.closeInventory();
+                }
             }
         }
         if(current.getType()==Material.IRON_DOOR){
@@ -111,7 +119,7 @@ public class FarmHoeGui implements Listener {
 
         ItemStack custom10 = new ItemStack(Material.GOLDEN_HOE, 1);
         ItemMeta customi = custom10.getItemMeta();
-        if (tier!=0) {
+        if (tier<0) {
             customi.setDisplayName("§6Tier I");
         } else {
             customi.setDisplayName("§6Tier I §c(déjà possédé)");
@@ -123,7 +131,7 @@ public class FarmHoeGui implements Listener {
 
         ItemStack custom12 = new ItemStack(Material.DIAMOND_HOE, 1);
         ItemMeta customk = custom12.getItemMeta();
-        if (tier!=1) {
+        if (tier<1) {
             customk.setDisplayName("§6Tier II");
         } else {
             customk.setDisplayName("§6Tier II §c(déjà possédé)");
@@ -135,7 +143,7 @@ public class FarmHoeGui implements Listener {
 
         ItemStack custom13 = new ItemStack(Material.NETHERITE_HOE, 1);
         ItemMeta customl = custom13.getItemMeta();
-        if (tier!=2) {
+        if (tier<2) {
             customl.setDisplayName("§6Tier III");
         } else {
             customl.setDisplayName("§6Tier III §c(déjà possédé)");

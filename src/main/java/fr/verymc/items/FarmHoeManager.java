@@ -60,6 +60,22 @@ public class FarmHoeManager implements Listener {
             player.getItemInHand().setLore(lores);
         }
     }
+    public static Integer GetBlockHaversted(ItemStack a) {
+        String tosearch = a.getLore().get(0).replace("§7", "");
+        boolean digit = false;
+        try {
+            @SuppressWarnings("unused")
+            int intValue = Integer.parseInt(tosearch);
+            digit = true;
+        } catch (NumberFormatException e) {
+            digit = false;
+        }
+        if (!tosearch.contains(".") && digit == true) {
+            int num = Integer.parseInt(tosearch);
+            return num;
+        }
+        return 0;
+    }
 
     @EventHandler
     public void HoeClic(PlayerInteractEvent e) {
@@ -159,36 +175,36 @@ public class FarmHoeManager implements Listener {
                 digit = false;
             }
             if (!tosearch.contains(".") && digit == true) {
-                int tier = 0;
-
-                ItemStack farmhoe = e.getPlayer().getItemInHand();
-                if (farmhoe == null) {
-                    return;
-                }
-                if (farmhoe.getType() == Material.AIR) {
-                    return;
-                }
-                if (farmhoe.getItemMeta() == null) {
-                    return;
-                }
-                if (farmhoe.getType() != Material.NETHERITE_HOE) {
-                    return;
-                }
-                if (!farmhoe.isUnbreakable()) {
-                    return;
-                }
-
-                if (farmhoe.getDisplayName().contains("§cIII")) {
-                    tier = 2;
-                } else if (farmhoe.getDisplayName().contains("§cII")) {
-                    tier = 1;
-                } else if (farmhoe.getDisplayName().contains("§cI")) {
-                    tier = 0;
-                } else {
-                    return;
-                }
-                FarmHoeGui.MakeGui(e.getPlayer(), tier);
+                FarmHoeGui.MakeGui(e.getPlayer(), GetTier(e.getPlayer().getItemInHand()));
             }
+        }
+    }
+
+    public static Integer GetTier(ItemStack farmhoe){
+        if (farmhoe == null) {
+            return null;
+        }
+        if (farmhoe.getType() == Material.AIR) {
+            return null;
+        }
+        if (farmhoe.getItemMeta() == null) {
+            return null;
+        }
+        if (farmhoe.getType() != Material.NETHERITE_HOE) {
+            return null;
+        }
+        if (!farmhoe.isUnbreakable()) {
+            return null;
+        }
+
+        if (farmhoe.getDisplayName().contains("§cIII")) {
+            return 2;
+        } else if (farmhoe.getDisplayName().contains("§cII")) {
+            return 1;
+        } else if (farmhoe.getDisplayName().contains("§cI")) {
+            return 0;
+        } else {
+            return null;
         }
     }
 
