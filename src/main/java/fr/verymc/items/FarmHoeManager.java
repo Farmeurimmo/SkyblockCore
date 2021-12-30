@@ -28,7 +28,7 @@ public class FarmHoeManager implements Listener {
 
     public static List<Block> getNearbyBlocks(Location location, int radius) {
         List<Block> blocks = new ArrayList<Block>();
-        if (radius == 1) {
+        if (radius == 0) {
             blocks.add(location.getWorld().getBlockAt(location.getBlockX(), location.getBlockY(), location.getBlockZ()));
             return blocks;
         }
@@ -83,17 +83,21 @@ public class FarmHoeManager implements Listener {
             Player player = e.getPlayer();
             Location clicloc = e.getClickedBlock().getLocation();
 
-            if (!farmhoe.getDisplayName().contains("I")) {
+            int tier = 0;
+            if (farmhoe.getDisplayName().contains("§cIII")) {
+                tier = 2;
+            } else if (farmhoe.getDisplayName().contains("§cII")) {
+                tier = 1;
+            } else if (farmhoe.getDisplayName().contains("§cI")) {
+                tier = 0;
+            } else {
                 return;
             }
-
-            int tier = 0;
-            if (farmhoe.getDisplayName().contains("IV")) {
-                tier = 3;
-            } else if (farmhoe.getDisplayName().contains("III")) {
-                tier = 2;
-            } else if (farmhoe.getDisplayName().contains("II")) {
-                tier = 1;
+            if(e.getPlayer().getItemInHand().getLore()==null){
+                return;
+            }
+            if(!farmhoe.getLore().get(0).contains("§")){
+                return;
             }
 
             e.setCancelled(true);
@@ -132,6 +136,54 @@ public class FarmHoeManager implements Listener {
                 } else {
                     continue;
                 }
+            }
+        }
+        if(e.getAction()==Action.RIGHT_CLICK_AIR||e.getAction()==Action.RIGHT_CLICK_BLOCK){
+            if(e.getPlayer().getItemInHand().getLore()==null){
+                return;
+            }
+            if(!e.getPlayer().getItemInHand().getLore().get(0).contains("§")){
+                return;
+            }
+            String tosearch = e.getPlayer().getItemInHand().getLore().get(0).replace("§7", "");
+            boolean digit = false;
+            try {
+                @SuppressWarnings("unused")
+                int intValue = Integer.parseInt(tosearch);
+                digit = true;
+            } catch (NumberFormatException ede) {
+                digit = false;
+            }
+            if (!tosearch.contains(".") && digit == true) {
+                int tier = 0;
+
+                ItemStack farmhoe = e.getPlayer().getItemInHand();
+                if (farmhoe == null) {
+                    return;
+                }
+                if (farmhoe.getType() == Material.AIR) {
+                    return;
+                }
+                if (farmhoe.getItemMeta() == null) {
+                    return;
+                }
+                if (farmhoe.getType() != Material.NETHERITE_HOE) {
+                    return;
+                }
+                if (!farmhoe.isUnbreakable()) {
+                    return;
+                }
+
+                if (farmhoe.getDisplayName().contains("§cIII")) {
+                    tier = 2;
+                } else if (farmhoe.getDisplayName().contains("§cII")) {
+                    tier = 1;
+                } else if (farmhoe.getDisplayName().contains("§cI")) {
+                    tier = 0;
+                } else {
+                    return;
+                }
+                FarmHoeGui.MakeGui(e.getPlayer(), tier);
             }
         }
     }
