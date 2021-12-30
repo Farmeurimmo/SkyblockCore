@@ -28,7 +28,7 @@ public class FarmHoeCmd implements CommandExecutor {
 
         ItemStack custom6 = new ItemStack(Material.NETHERITE_HOE, 1);
         ItemMeta customf = custom6.getItemMeta();
-        customf.setDisplayName("§6FarmHoe Tier §cI (1x1)");
+        customf.setDisplayName("§6FarmHoe Tier §cI (1X1)");
         customf.setLore(Arrays.asList("§70", "§7", "§6Clic droit pour ouvrir le menu d'amélioration"));
         customf.setUnbreakable(true);
         custom6.setItemMeta(customf);
