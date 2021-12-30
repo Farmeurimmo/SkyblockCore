@@ -83,6 +83,7 @@ import fr.farmeurimmo.verymc.gui.MenuGui;
 import fr.farmeurimmo.verymc.gui.WarpGui;
 import fr.farmeurimmo.verymc.holos.HolosSetup;
 import fr.farmeurimmo.verymc.items.FarmHoeCmd;
+import fr.farmeurimmo.verymc.items.FarmHoeGui;
 import fr.farmeurimmo.verymc.items.FarmHoeManager;
 import fr.farmeurimmo.verymc.items.ItemLegCmd;
 import fr.farmeurimmo.verymc.scoreboard.ScoreBoard;
@@ -254,6 +255,7 @@ public class Main extends JavaPlugin implements Listener {
 		getServer().getPluginManager().registerEvents(new ChunkCollector(), this);
 		getServer().getPluginManager().registerEvents(new SellChest(), this);
 		getServer().getPluginManager().registerEvents(new FarmHoeManager(), this);
+		getServer().getPluginManager().registerEvents(new FarmHoeGui(), this);
 		this.getCommand("spawn").setExecutor(new SpawnCmd());
 		this.getCommand("build").setExecutor(new BuildCmd());
 		this.getCommand("farm2win").setExecutor(new Farm2WinCmd());
