@@ -7,6 +7,7 @@ import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.Ageable;
 import org.bukkit.entity.Player;
@@ -15,6 +16,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
+
+import fr.farmeurimmo.verymc.shopgui.BuyShopItem;
 
 public class FarmHoeManager implements Listener {
 	
@@ -71,14 +74,23 @@ public class FarmHoeManager implements Listener {
 			
 			e.setCancelled(true);
 			
+			World world = player.getWorld();
 			for(Block rf : getNearbyBlocks(clicloc, tier)) {
 				if(!replantableblocks.contains(rf.getType().toString())) {
 					continue;
 				}
-				Block bltmp = Bukkit.getWorld(player.getWorld().getName()).getBlockAt(rf.getLocation());
+				Block bltmp = Bukkit.getWorld(world.getName()).getBlockAt(rf.getLocation());
 				final Ageable ageable = (Ageable) bltmp.getState().getBlockData();
 				int age = ageable.getAge();
 				if(age==7) {
+					for(ItemStack eed : bltmp.getDrops()) {
+						if(eed.getType().toString().contains("SEED")) continue;
+						if(BuyShopItem.GetAmountToFillInInv(eed, player)>0) {
+							player.getInventory().addItem(eed);
+							continue;
+						}
+						world.dropItemNaturally(rf.getLocation(), eed);
+					}
 					ageable.setAge(0);
 					bltmp.setBlockData(ageable);
 					bltmp.getState().update(true);
