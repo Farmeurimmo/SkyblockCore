@@ -1,18 +1,17 @@
 package fr.farmeurimmo.verymc.WineLottery;
 
-import org.bukkit.Location;
-import org.bukkit.entity.EntityType;
-
 import net.citizensnpcs.api.CitizensAPI;
 import net.citizensnpcs.api.npc.NPC;
 import net.citizensnpcs.trait.SkinTrait;
+import org.bukkit.Location;
+import org.bukkit.entity.EntityType;
 
 public class WineSpawn {
-	
-	static NPC npc = CitizensAPI.getNPCRegistry().createNPC(EntityType.PLAYER, "ง6Barman");
 
-    
-	public static void SpawnPnj(Location loc){
+    static NPC npc = CitizensAPI.getNPCRegistry().createNPC(EntityType.PLAYER, "ยง6Barman");
+
+
+    public static void SpawnPnj(Location loc) {
         SkinTrait skin = npc.getTrait(SkinTrait.class);
         npc.setAlwaysUseNameHologram(false);
         npc.setProtected(true);
@@ -20,7 +19,8 @@ public class WineSpawn {
         skin.setSkinName("MANDOWNS");
         npc.spawn(loc);
     }
+
     public static void DestroyPnj() {
-    	npc.destroy();
+        npc.destroy();
     }
 }

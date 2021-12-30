@@ -7,14 +7,14 @@ import org.bukkit.entity.Player;
 
 public class ShopGuiCmd implements CommandExecutor {
 
-	@Override
-	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-		
-		if(sender instanceof Player) {
-			Player player = (Player) sender;
-			MainShopGui.OpenMainShopMenu(player);
-		}
-		return false;
-	}
+    @Override
+    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+
+        if (sender instanceof Player) {
+            Player player = (Player) sender;
+            MainShopGui.OpenMainShopMenu(player);
+        }
+        return false;
+    }
 
 }

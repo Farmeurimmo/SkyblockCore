@@ -1,8 +1,8 @@
 package fr.farmeurimmo.verymc.blocks;
 
-import java.util.HashMap;
-import java.util.Map.Entry;
-
+import fr.farmeurimmo.verymc.core.Main;
+import fr.farmeurimmo.verymc.eco.EcoAccountsManager;
+import fr.farmeurimmo.verymc.shopgui.BuyShopItem;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -13,93 +13,95 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import fr.farmeurimmo.verymc.core.Main;
-import fr.farmeurimmo.verymc.eco.EcoAccountsManager;
-import fr.farmeurimmo.verymc.shopgui.BuyShopItem;
+import java.util.HashMap;
+import java.util.Map.Entry;
 
 public class SellChestManager {
-	
-	public static HashMap <Location, String> blcsellchest = new HashMap < > ();
-	
-	public static void AutoSellForVeryChest() {
-		HashMap <String, Double> reward = new HashMap < > ();
-		for(Entry<Location, String> sellchest : blcsellchest.entrySet()) {
-			BlockState e = sellchest.getKey().getBlock().getState();
-			Inventory ed = ((Chest) e).getBlockInventory();
-			double total = 0;
-			for(ItemStack sd : ed) {
-				if(sd == null) continue;
-				if(sd.getType() == null) continue;
-				ItemStack searched = new ItemStack(sd.getType());
-				searched.setAmount(sd.getAmount());
-				if(BuyShopItem.pricessell.get(new ItemStack(sd.getType())) != null && BuyShopItem.pricessell.get(new ItemStack(sd.getType())) > 0) {
-					int amount = BuyShopItem.GetAmountInInvNo(searched, ed);
-					Double price = BuyShopItem.pricessell.get(new ItemStack(sd.getType()));
-					price = amount*price;
-					BuyShopItem.removeItems(ed, searched.getType(), amount);
-					total+=price;
-				}
-			}
-			((Chest) e).getBlockInventory().setContents(ed.getContents());
-			String playername = sellchest.getValue();
-			if(reward.containsKey(playername)) {
-				reward.put(playername, reward.get(playername)+total);
-			} else {
-				reward.put(playername, total);
-			}
-		}
-		for(Entry<String, Double> tosend : reward.entrySet()) {
-			EcoAccountsManager.AddFounds(tosend.getKey(), tosend.getValue(), true);
-		}
-		Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
-			public void run() {
-				SellChestManager.AutoSellForVeryChest();
-			}
-		}, 20*15);
-	}
-	
-	public static void GiveSellChest(Player player, int i) {
-		int a = 0;
-		if(Main.getInstance().getDatablc().get("SellChest.num")==null) {
-			a = 1;
-		} else {
-			a = Main.getInstance().getDatablc().getInt("SellChest.num");
-			a+=1;
-		}
-		ItemStack aa = new ItemStack(Material.CHEST);
-		ItemMeta ameta = aa.getItemMeta();
-		if(i>0) {
-			a=i;
-		} else {
-			Main.getInstance().getDatablc().set("SellChest.num", a);
-			Main.getInstance().saveData();
-		}
-		ameta.setDisplayName("ง6SellChest งc(id#"+a+")");
-		aa.setUnbreakable(true);
-		aa.setItemMeta(ameta);
-		
-		player.getInventory().addItem(aa);
-	}
-	public static void PlaceChest(Player player, Location block, int num) {
-		Main.getInstance().getDatablc().set("SellChest."+player.getName()+"."+num, block);
-		Main.getInstance().saveData();
-		blcsellchest.put(block, player.getName());
-	}
-	public static String getOwner(Location loc) {
-		return blcsellchest.get(loc);
-	}
-	public static void ReadFromFile() {
-		if(!Main.getInstance().getDatablc().isSet("SellChest")) {
-			return;
-		}
-		for(String aa : Main.getInstance().getDatablc().getConfigurationSection("SellChest").getKeys(false)) {
-			if(aa.contains("num")) {
-				continue;
-			}
-			for(String bb : Main.getInstance().getDatablc().getConfigurationSection("SellChest."+aa).getKeys(false)) {
-				blcsellchest.put(Main.getInstance().getDatablc().getLocation("SellChest."+aa+"."+bb),aa);
-			}
-		}
-	}
-	
+
+    public static HashMap<Location, String> blcsellchest = new HashMap<>();
+
+    public static void AutoSellForVeryChest() {
+        HashMap<String, Double> reward = new HashMap<>();
+        for (Entry<Location, String> sellchest : blcsellchest.entrySet()) {
+            BlockState e = sellchest.getKey().getBlock().getState();
+            Inventory ed = ((Chest) e).getBlockInventory();
+            double total = 0;
+            for (ItemStack sd : ed) {
+                if (sd == null) continue;
+                if (sd.getType() == null) continue;
+                ItemStack searched = new ItemStack(sd.getType());
+                searched.setAmount(sd.getAmount());
+                if (BuyShopItem.pricessell.get(new ItemStack(sd.getType())) != null && BuyShopItem.pricessell.get(new ItemStack(sd.getType())) > 0) {
+                    int amount = BuyShopItem.GetAmountInInvNo(searched, ed);
+                    Double price = BuyShopItem.pricessell.get(new ItemStack(sd.getType()));
+                    price = amount * price;
+                    BuyShopItem.removeItems(ed, searched.getType(), amount);
+                    total += price;
+                }
+            }
+            ((Chest) e).getBlockInventory().setContents(ed.getContents());
+            String playername = sellchest.getValue();
+            if (reward.containsKey(playername)) {
+                reward.put(playername, reward.get(playername) + total);
+            } else {
+                reward.put(playername, total);
+            }
+        }
+        for (Entry<String, Double> tosend : reward.entrySet()) {
+            EcoAccountsManager.AddFounds(tosend.getKey(), tosend.getValue(), true);
+        }
+        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
+            public void run() {
+                SellChestManager.AutoSellForVeryChest();
+            }
+        }, 20 * 15);
+    }
+
+    public static void GiveSellChest(Player player, int i) {
+        int a = 0;
+        if (Main.getInstance().getDatablc().get("SellChest.num") == null) {
+            a = 1;
+        } else {
+            a = Main.getInstance().getDatablc().getInt("SellChest.num");
+            a += 1;
+        }
+        ItemStack aa = new ItemStack(Material.CHEST);
+        ItemMeta ameta = aa.getItemMeta();
+        if (i > 0) {
+            a = i;
+        } else {
+            Main.getInstance().getDatablc().set("SellChest.num", a);
+            Main.getInstance().saveData();
+        }
+        ameta.setDisplayName("ยง6SellChest ยงc(id#" + a + ")");
+        aa.setUnbreakable(true);
+        aa.setItemMeta(ameta);
+
+        player.getInventory().addItem(aa);
+    }
+
+    public static void PlaceChest(Player player, Location block, int num) {
+        Main.getInstance().getDatablc().set("SellChest." + player.getName() + "." + num, block);
+        Main.getInstance().saveData();
+        blcsellchest.put(block, player.getName());
+    }
+
+    public static String getOwner(Location loc) {
+        return blcsellchest.get(loc);
+    }
+
+    public static void ReadFromFile() {
+        if (!Main.getInstance().getDatablc().isSet("SellChest")) {
+            return;
+        }
+        for (String aa : Main.getInstance().getDatablc().getConfigurationSection("SellChest").getKeys(false)) {
+            if (aa.contains("num")) {
+                continue;
+            }
+            for (String bb : Main.getInstance().getDatablc().getConfigurationSection("SellChest." + aa).getKeys(false)) {
+                blcsellchest.put(Main.getInstance().getDatablc().getLocation("SellChest." + aa + "." + bb), aa);
+            }
+        }
+    }
+
 }

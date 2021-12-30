@@ -1,7 +1,5 @@
 package fr.farmeurimmo.verymc.items;
 
-import java.util.Arrays;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -11,31 +9,33 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.Arrays;
+
 public class FarmHoeCmd implements CommandExecutor {
 
-	@Override
-	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-		
-		if(args.length < 1 || args.length > 1) {
-			sender.sendMessage("§cErreur, utilisation: /farmhoe <joueur>");
-			return true;
-		}
-		if(Bukkit.getPlayer(args[0]) == null) {
-			sender.sendMessage("§cErreur, joueur inconnu");
-			return true;
-		}
-		Player p = Bukkit.getPlayer(args[0]);
-		
-		ItemStack custom6 = new ItemStack(Material.NETHERITE_HOE, 1);
-		ItemMeta customf = custom6.getItemMeta();
-		customf.setDisplayName("§6FarmHoe Tier §cI (1x1)");
-		customf.setLore(Arrays.asList("§70","§7","§6Clic droit pour ouvrir le menu d'amélioration"));
-		customf.setUnbreakable(true);
-		custom6.setItemMeta(customf);
-		p.getInventory().addItem(custom6);
-		p.sendMessage("§eVous avez reçu une farm hoe !");
-		
-		return false;
-	}
+    @Override
+    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+
+        if (args.length < 1 || args.length > 1) {
+            sender.sendMessage("Â§cErreur, utilisation: /farmhoe <joueur>");
+            return true;
+        }
+        if (Bukkit.getPlayer(args[0]) == null) {
+            sender.sendMessage("Â§cErreur, joueur inconnu");
+            return true;
+        }
+        Player p = Bukkit.getPlayer(args[0]);
+
+        ItemStack custom6 = new ItemStack(Material.NETHERITE_HOE, 1);
+        ItemMeta customf = custom6.getItemMeta();
+        customf.setDisplayName("Â§6FarmHoe Tier Â§cI (1x1)");
+        customf.setLore(Arrays.asList("Â§70", "Â§7", "Â§6Clic droit pour ouvrir le menu d'amÃ©lioration"));
+        customf.setUnbreakable(true);
+        custom6.setItemMeta(customf);
+        p.getInventory().addItem(custom6);
+        p.sendMessage("Â§eVous avez reÃ§u une farm hoe !");
+
+        return false;
+    }
 
 }

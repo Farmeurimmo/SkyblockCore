@@ -1,7 +1,8 @@
 package fr.farmeurimmo.verymc.shopgui;
 
-import java.util.HashMap;
-
+import fr.farmeurimmo.verymc.core.Main;
+import fr.farmeurimmo.verymc.eco.EcoAccountsManager;
+import fr.farmeurimmo.verymc.utils.Maths;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
@@ -9,51 +10,53 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import fr.farmeurimmo.verymc.core.Main;
-import fr.farmeurimmo.verymc.eco.EcoAccountsManager;
-import fr.farmeurimmo.verymc.utils.Maths;
+import java.util.HashMap;
 
 public class BuyShopItem {
-	
-	public static HashMap <ItemStack, Double> pricesbuy = new HashMap < > ();
-	public static HashMap <ItemStack, Double> pricessell = new HashMap < > ();
-	
-	public static void GenPriceShopStartup() {
-		for(String bb : Main.instance1.getConfig().getConfigurationSection("Shops").getKeys(false)) {
-		for(String aa : Main.instance1.getConfig().getConfigurationSection("Shops."+bb).getKeys(false)) {
-			double a = (float) Main.instance1.getConfig().getDouble("Shops."+bb+"."+aa+".buy");
-			double c = (float) Main.instance1.getConfig().getDouble("Shops."+bb+"."+aa+".sell");
-			if(Material.valueOf(Main.instance1.getConfig().getString("Shops."+bb+"."+aa+".material")) == null) continue;
-			ItemStack b = new ItemStack(Material.valueOf(Main.instance1.getConfig().getString("Shops."+bb+"."+aa+".material")));
-			if(Main.instance1.getConfig().getString("Shops."+bb+"."+aa+".name") != null) {
-				b.setDisplayName(Main.instance1.getConfig().getString("Shops."+bb+"."+aa+".name"));
-			}
-			pricesbuy.put(b, (double) Maths.arrondiNDecimales(a, 2));
-			pricessell.put(b, (double) Maths.arrondiNDecimales(c, 2));
-		}
-		}
-	}
-	public static boolean isBuyable(ItemStack a) {
-		if(pricesbuy.get(a) == null) {
-			return false;
-		}
-		if(pricesbuy.get(a) > 0) {
-			return true;
-		} else {
-			return false;	
-		}
-	}
-	public static boolean isSellable(ItemStack a) {
-		if(pricessell.get(a) == null) {
-			return false;
-		}
-		if(pricessell.get(a) > 0) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-	public static void removeItems(Inventory inventory, Material type, int amount) {
+
+    public static HashMap<ItemStack, Double> pricesbuy = new HashMap<>();
+    public static HashMap<ItemStack, Double> pricessell = new HashMap<>();
+
+    public static void GenPriceShopStartup() {
+        for (String bb : Main.instance1.getConfig().getConfigurationSection("Shops").getKeys(false)) {
+            for (String aa : Main.instance1.getConfig().getConfigurationSection("Shops." + bb).getKeys(false)) {
+                double a = (float) Main.instance1.getConfig().getDouble("Shops." + bb + "." + aa + ".buy");
+                double c = (float) Main.instance1.getConfig().getDouble("Shops." + bb + "." + aa + ".sell");
+                if (Material.valueOf(Main.instance1.getConfig().getString("Shops." + bb + "." + aa + ".material")) == null)
+                    continue;
+                ItemStack b = new ItemStack(Material.valueOf(Main.instance1.getConfig().getString("Shops." + bb + "." + aa + ".material")));
+                if (Main.instance1.getConfig().getString("Shops." + bb + "." + aa + ".name") != null) {
+                    b.setDisplayName(Main.instance1.getConfig().getString("Shops." + bb + "." + aa + ".name"));
+                }
+                pricesbuy.put(b, (double) Maths.arrondiNDecimales(a, 2));
+                pricessell.put(b, (double) Maths.arrondiNDecimales(c, 2));
+            }
+        }
+    }
+
+    public static boolean isBuyable(ItemStack a) {
+        if (pricesbuy.get(a) == null) {
+            return false;
+        }
+        if (pricesbuy.get(a) > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public static boolean isSellable(ItemStack a) {
+        if (pricessell.get(a) == null) {
+            return false;
+        }
+        if (pricessell.get(a) > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public static void removeItems(Inventory inventory, Material type, int amount) {
         if (amount <= 0) return;
         int size = inventory.getSize();
         for (int slot = 0; slot < size; slot++) {
@@ -72,153 +75,157 @@ public class BuyShopItem {
             }
         }
     }
-	public static int GetAmountInInv(ItemStack aa, Player ed) {
-		int total = 0;
-		
-		int size = ed.getInventory().getSize()-5;
+
+    public static int GetAmountInInv(ItemStack aa, Player ed) {
+        int total = 0;
+
+        int size = ed.getInventory().getSize() - 5;
         for (int slot = 0; slot < size; slot++) {
-        	ItemStack is = ed.getInventory().getItem(slot);
-        	if(is == null) continue;
-        	if(aa.getType() == is.getType()) {
-        		total+= is.getAmount();
-        	}
+            ItemStack is = ed.getInventory().getItem(slot);
+            if (is == null) continue;
+            if (aa.getType() == is.getType()) {
+                total += is.getAmount();
+            }
         }
-		
-		return total;
-	}
-	public static int GetAmountInInvNo(ItemStack aa, Inventory ed) {
-		int total = 0;
-		
-		int size = ed.getSize();
+
+        return total;
+    }
+
+    public static int GetAmountInInvNo(ItemStack aa, Inventory ed) {
+        int total = 0;
+
+        int size = ed.getSize();
         for (int slot = 0; slot < size; slot++) {
-        	ItemStack is = ed.getItem(slot);
-        	if(is == null) continue;
-        	if(aa.getType() == is.getType()) {
-        		total+= is.getAmount();
-        	}
+            ItemStack is = ed.getItem(slot);
+            if (is == null) continue;
+            if (aa.getType() == is.getType()) {
+                total += is.getAmount();
+            }
         }
-		
-		return total;
-	}
-	public static int GetAmountToFillInInv(ItemStack aa, Player player) {
-		int total = 0;
-		
-		int size = player.getInventory().getSize();
+
+        return total;
+    }
+
+    public static int GetAmountToFillInInv(ItemStack aa, Player player) {
+        int total = 0;
+
+        int size = player.getInventory().getSize();
         for (int slot = 0; slot < size; slot++) {
-        	ItemStack is = player.getInventory().getItem(slot);
-        	if(is == null) {
-        		total+=64;
-        		continue;
-        	} else if(is.getType() == aa.getType()) {
-        		total+=64-is.getAmount();
-        		continue;
-        	}
+            ItemStack is = player.getInventory().getItem(slot);
+            if (is == null) {
+                total += 64;
+                continue;
+            } else if (is.getType() == aa.getType()) {
+                total += 64 - is.getAmount();
+                continue;
+            }
         }
-        	if(player.getInventory().getHelmet() == null) {
-        		total -= 64;
-        	}
-        	if(player.getInventory().getChestplate() == null) {
-        		total -= 64;
-        	}
-        	if(player.getInventory().getLeggings() == null) {
-        		total -= 64;
-        	}
-        	if(player.getInventory().getBoots() == null) {
-        		total -= 64;
-        	}
-        	if(player.getInventory().getItemInOffHand().getType() == Material.AIR) {
-        		total -= 64;
-        	}
-		
-		return total;
-	}
-	public static void BuyOSellItemNonStack(ItemStack a, Player player, boolean buy, double price, int amount) {
-		if(buy == true) {
-			if(EcoAccountsManager.CheckForFounds(player, (double) (price*amount)) == true) {
-				if(a.getType() == Material.SPAWNER) {
-					String display = a.getDisplayName();
-					if(GenShopPage.spawneurtype.containsKey(display)) {
-						String togivetype = "";
-						if(GenShopPage.spawneurtype.get(display) == EntityType.BLAZE) {
-							togivetype = "Blaze";
-						} else if(GenShopPage.spawneurtype.get(display) == EntityType.CHICKEN) {
-							togivetype = "Chicken";
-						} else if(GenShopPage.spawneurtype.get(display) == EntityType.COW) {
-							togivetype = "Cow";
-						} else if(GenShopPage.spawneurtype.get(display) == EntityType.CREEPER) {
-							togivetype = "Creeper";
-						} else if(GenShopPage.spawneurtype.get(display) == EntityType.ENDERMAN) {
-							togivetype = "Enderman";
-						} else if(GenShopPage.spawneurtype.get(display) == EntityType.IRON_GOLEM) {
-							togivetype = "ig";
-						} else if(GenShopPage.spawneurtype.get(display) == EntityType.RABBIT) {
-							togivetype = "rabbit";
-						} else if(GenShopPage.spawneurtype.get(display) == EntityType.SHEEP) {
-							togivetype = "Sheep";
-						} else if(GenShopPage.spawneurtype.get(display) == EntityType.SKELETON) {
-							togivetype = "skeleton";
-						} else if(GenShopPage.spawneurtype.get(display) == EntityType.SLIME) {
-							togivetype = "slime";
-						} else if(GenShopPage.spawneurtype.get(display) == EntityType.SPIDER) {
-							togivetype = "spider";
-						} else if(GenShopPage.spawneurtype.get(display) == EntityType.SQUID) {
-							togivetype = "squid";
-						} else if(GenShopPage.spawneurtype.get(display) == EntityType.WITCH) {
-							togivetype = "witch";
-						} else if(GenShopPage.spawneurtype.get(display) == EntityType.ZOMBIE) {
-							togivetype = "zombie";
-						} else {
-							togivetype = "error";
-						}
-						if(togivetype.equalsIgnoreCase("") || togivetype.equalsIgnoreCase("error")) {
-							return;
-						}
-						a.setLore(null);
-						player.closeInventory();
-						a.setAmount(amount);
-						int amountininv = GetAmountToFillInInv(a, player);
-						if(amountininv <= amount) {
-							player.sendMessage("§6§lShop §8» §fIl vous manque de la place dans votre inventaire.");
-							return;
-						} else {
-							EcoAccountsManager.RemoveFounds(player.getName(), price*amount);
-							Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "ss give " + player.getName() + " " + togivetype + " " + amount);
-							return;
-						}
-					}
-				}
-				a.setItemMeta(null);
-				player.closeInventory();
-				a.setAmount(amount);
-				EcoAccountsManager.RemoveFounds(player.getName(), price*amount);
-				int amountininv = GetAmountToFillInInv(new ItemStack(a.getType()), player);
-				ItemStack od = new ItemStack(a.getType());
-				if(amountininv <= amount) {
-					int reste = amount - amountininv;
-					od.setAmount(amountininv);
-					player.getInventory().addItem(od);
-					od.setAmount(1);
-					while (reste > 0){
-					    player.getWorld().dropItem(player.getLocation(), od);
-					    reste -= 1;
-					}
-				} else {
-				player.getInventory().addItem(a);
-				}
-			} else {
-				double loa=price*amount - EcoAccountsManager.GetMoney(player.getName());
-				player.sendMessage("§6§lShop §8» §fIl vous manque §6"+loa+"$§f.");
-			}
-		} else {
-			if(player.getInventory().contains(a.getType(), amount)) {
-				Double profit = (double) (pricessell.get(new ItemStack(Material.valueOf(a.getType().toString())))*amount);
-				player.closeInventory();
-				removeItems(player.getInventory(), a.getType(), amount);
-				player.sendMessage("§6§lShop §8» §fVous avez vendu §ax"+amount+" "+a.getType().toString()+"§f pour §6"+profit+"$§f.");
-				EcoAccountsManager.AddFounds(player.getName(), profit, false);
-			} else {
-				player.sendMessage("§6§lShop §8» §fVous avez besoin de plus de "+a.getType().toString()+".");
-			}
-		}
-	}
+        if (player.getInventory().getHelmet() == null) {
+            total -= 64;
+        }
+        if (player.getInventory().getChestplate() == null) {
+            total -= 64;
+        }
+        if (player.getInventory().getLeggings() == null) {
+            total -= 64;
+        }
+        if (player.getInventory().getBoots() == null) {
+            total -= 64;
+        }
+        if (player.getInventory().getItemInOffHand().getType() == Material.AIR) {
+            total -= 64;
+        }
+
+        return total;
+    }
+
+    public static void BuyOSellItemNonStack(ItemStack a, Player player, boolean buy, double price, int amount) {
+        if (buy == true) {
+            if (EcoAccountsManager.CheckForFounds(player, (double) (price * amount)) == true) {
+                if (a.getType() == Material.SPAWNER) {
+                    String display = a.getDisplayName();
+                    if (GenShopPage.spawneurtype.containsKey(display)) {
+                        String togivetype = "";
+                        if (GenShopPage.spawneurtype.get(display) == EntityType.BLAZE) {
+                            togivetype = "Blaze";
+                        } else if (GenShopPage.spawneurtype.get(display) == EntityType.CHICKEN) {
+                            togivetype = "Chicken";
+                        } else if (GenShopPage.spawneurtype.get(display) == EntityType.COW) {
+                            togivetype = "Cow";
+                        } else if (GenShopPage.spawneurtype.get(display) == EntityType.CREEPER) {
+                            togivetype = "Creeper";
+                        } else if (GenShopPage.spawneurtype.get(display) == EntityType.ENDERMAN) {
+                            togivetype = "Enderman";
+                        } else if (GenShopPage.spawneurtype.get(display) == EntityType.IRON_GOLEM) {
+                            togivetype = "ig";
+                        } else if (GenShopPage.spawneurtype.get(display) == EntityType.RABBIT) {
+                            togivetype = "rabbit";
+                        } else if (GenShopPage.spawneurtype.get(display) == EntityType.SHEEP) {
+                            togivetype = "Sheep";
+                        } else if (GenShopPage.spawneurtype.get(display) == EntityType.SKELETON) {
+                            togivetype = "skeleton";
+                        } else if (GenShopPage.spawneurtype.get(display) == EntityType.SLIME) {
+                            togivetype = "slime";
+                        } else if (GenShopPage.spawneurtype.get(display) == EntityType.SPIDER) {
+                            togivetype = "spider";
+                        } else if (GenShopPage.spawneurtype.get(display) == EntityType.SQUID) {
+                            togivetype = "squid";
+                        } else if (GenShopPage.spawneurtype.get(display) == EntityType.WITCH) {
+                            togivetype = "witch";
+                        } else if (GenShopPage.spawneurtype.get(display) == EntityType.ZOMBIE) {
+                            togivetype = "zombie";
+                        } else {
+                            togivetype = "error";
+                        }
+                        if (togivetype.equalsIgnoreCase("") || togivetype.equalsIgnoreCase("error")) {
+                            return;
+                        }
+                        a.setLore(null);
+                        player.closeInventory();
+                        a.setAmount(amount);
+                        int amountininv = GetAmountToFillInInv(a, player);
+                        if (amountininv <= amount) {
+                            player.sendMessage("Â§6Â§lShop Â§8Â» Â§fIl vous manque de la place dans votre inventaire.");
+                            return;
+                        } else {
+                            EcoAccountsManager.RemoveFounds(player.getName(), price * amount);
+                            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "ss give " + player.getName() + " " + togivetype + " " + amount);
+                            return;
+                        }
+                    }
+                }
+                a.setItemMeta(null);
+                player.closeInventory();
+                a.setAmount(amount);
+                EcoAccountsManager.RemoveFounds(player.getName(), price * amount);
+                int amountininv = GetAmountToFillInInv(new ItemStack(a.getType()), player);
+                ItemStack od = new ItemStack(a.getType());
+                if (amountininv <= amount) {
+                    int reste = amount - amountininv;
+                    od.setAmount(amountininv);
+                    player.getInventory().addItem(od);
+                    od.setAmount(1);
+                    while (reste > 0) {
+                        player.getWorld().dropItem(player.getLocation(), od);
+                        reste -= 1;
+                    }
+                } else {
+                    player.getInventory().addItem(a);
+                }
+            } else {
+                double loa = price * amount - EcoAccountsManager.GetMoney(player.getName());
+                player.sendMessage("Â§6Â§lShop Â§8Â» Â§fIl vous manque Â§6" + loa + "$Â§f.");
+            }
+        } else {
+            if (player.getInventory().contains(a.getType(), amount)) {
+                Double profit = (double) (pricessell.get(new ItemStack(Material.valueOf(a.getType().toString()))) * amount);
+                player.closeInventory();
+                removeItems(player.getInventory(), a.getType(), amount);
+                player.sendMessage("Â§6Â§lShop Â§8Â» Â§fVous avez vendu Â§ax" + amount + " " + a.getType().toString() + "Â§f pour Â§6" + profit + "$Â§f.");
+                EcoAccountsManager.AddFounds(player.getName(), profit, false);
+            } else {
+                player.sendMessage("Â§6Â§lShop Â§8Â» Â§fVous avez besoin de plus de " + a.getType().toString() + ".");
+            }
+        }
+    }
 }

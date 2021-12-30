@@ -1,9 +1,8 @@
 package fr.farmeurimmo.verymc.WineLottery;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Random;
-
+import fr.farmeurimmo.verymc.eco.EcoAccountsManager;
+import fr.farmeurimmo.verymc.utils.SendActionBar;
+import net.citizensnpcs.api.event.NPCRightClickEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -17,259 +16,256 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import fr.farmeurimmo.verymc.eco.EcoAccountsManager;
-import fr.farmeurimmo.verymc.utils.SendActionBar;
-import net.citizensnpcs.api.event.NPCRightClickEvent;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Random;
 
 public class WineGui implements Listener {
-	
-	public static ArrayList<String> WineCooldown = new ArrayList<String>();
-	
-	@EventHandler
-	public void OnInteractWithNPC(NPCRightClickEvent e) {
-		Player player = e.getClicker();
-		if(e.getNPC().getName().equalsIgnoreCase("§6Barman")) {
-			BuyWinePotion.MakeWinePotionGui(player);
-		}
-	}
-	@EventHandler
-	public void InventoryClickEvent(InventoryClickEvent e) {
-		ItemStack current = e.getCurrentItem();
-		Player player = (Player) e.getWhoClicked();
-		if(current == null) {
-			return;
-		}
-		if(current.getItemMeta() == null) {
-			return;
-		}
-		if(e.getView().getTitle().equalsIgnoreCase("§6Boutique des vins")) {
-			e.setCancelled(true);
-			if(current.getType() == Material.POTION && current.getItemMeta().getDisplayName().equalsIgnoreCase("§6Cidre")) {
-			    Double money = EcoAccountsManager.Moneys.get(player.getName());
-			    
-				
-				if(money >= BuyWinePotion.cidreprice) {
-					EcoAccountsManager.RemoveFounds(player.getName(), (double) BuyWinePotion.cidreprice);
-				player.sendMessage("§6§lBarman §8» §fMerci de m'avoir acheté du cidre.");
-				ItemStack custom1 = new ItemStack(Material.POTION, 1);
-				ItemMeta customa = custom1.getItemMeta();
-				customa.setDisplayName("§6Cidre");
-				customa.setLore(Arrays.asList("§6Gain possible 10000$","§cEn cas de défaite, vous perdez l'alcool"));
-				customa.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
-				custom1.setItemMeta(customa);
-				
-				player.getInventory().addItem(custom1);
-				} else {
-					player.sendMessage("§6§lBarman §8» §fVous n'avez pas asser d'argent.");
-				}
-			}
-			if(current.getType() == Material.POTION && current.getItemMeta().getDisplayName().equalsIgnoreCase("§6Bière")) {
 
-			    Double money = EcoAccountsManager.Moneys.get(player.getName());
-			    
-				
-				if(money >= BuyWinePotion.biereprice) {
-					EcoAccountsManager.RemoveFounds(player.getName(), (double) BuyWinePotion.biereprice);
-				player.sendMessage("§6§lBarman §8» §fMerci de m'avoir acheté de la bière.");
-				ItemStack custom1 = new ItemStack(Material.POTION, 1);
-				ItemMeta customa = custom1.getItemMeta();
-				customa.setDisplayName("§6Bière");
-				customa.setLore(Arrays.asList("§6Gain possible 20000$","§cEn cas de défaite, vous perdez l'alcool"));
-				customa.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
-				custom1.setItemMeta(customa);
-				
-				player.getInventory().addItem(custom1);
-				} else {
-					player.sendMessage("§6§lBarman §8» §fVous n'avez pas asser d'argent.");
-				}
-			}
-			if(current.getType() == Material.POTION && current.getItemMeta().getDisplayName().equalsIgnoreCase("§6Rhum")) {
-			    Double money = EcoAccountsManager.Moneys.get(player.getName());
-			    
-				
-				if(money >= BuyWinePotion.rhumprice) {
-					EcoAccountsManager.RemoveFounds(player.getName(), (double) BuyWinePotion.rhumprice);
-				player.sendMessage("§6§lBarman §8» §fMerci de m'avoir acheté du rhum.");
-				ItemStack custom1 = new ItemStack(Material.POTION, 1);
-				ItemMeta customa = custom1.getItemMeta();
-				customa.setDisplayName("§6Rhum");
-				customa.setLore(Arrays.asList("§6Gain possible 50000$","§cEn cas de défaite, vous perdez l'alcool"));
-				customa.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
-				custom1.setItemMeta(customa);
-				
-				player.getInventory().addItem(custom1);
-				} else {
-					player.sendMessage("§6§lBarman §8» §fVous n'avez pas asser d'argent.");
-				}
-			}
-			if(current.getType() == Material.POTION && current.getItemMeta().getDisplayName().equalsIgnoreCase("§6Vodka")) {
+    public static ArrayList<String> WineCooldown = new ArrayList<String>();
 
-			    Double money = EcoAccountsManager.Moneys.get(player.getName());
-			    
-				
-				if(money >= BuyWinePotion.vodkaprice) {
-					EcoAccountsManager.RemoveFounds(player.getName(), (double) BuyWinePotion.vodkaprice);
-				player.sendMessage("§6§lBarman §8» §fMerci de m'avoir acheté de la vodka.");
-				ItemStack custom1 = new ItemStack(Material.POTION, 1);
-				ItemMeta customa = custom1.getItemMeta();
-				customa.setDisplayName("§6Vodka");
-				customa.setLore(Arrays.asList("§6Gain possible 100000$","§cEn cas de défaite, vous perdez l'alcool"));
-				customa.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
-				custom1.setItemMeta(customa);
-				
-				player.getInventory().addItem(custom1);
-				} else {
-					player.sendMessage("§6§lBarman §8» §fVous n'avez pas asser d'argent.");
-				}
-			}
-		}
-	}
-	
-	@EventHandler
-	public void OnDrink(PlayerItemConsumeEvent e) {
-		Player player = e.getPlayer();
-		ItemStack aaa = e.getItem();
-		Random rand = new Random();
-		if(aaa != null) {
-			if(aaa.getType() == Material.POTION) {
-				String bbb = aaa.getItemMeta().getDisplayName();
-				if(bbb.contains("Cidre")) {
-					if(WineCooldown.contains(player.getName())) {
-						SendActionBar.SendActionBarMsg(player, "§aMerci de patienter un peut entre les boissons !");
-						e.setCancelled(true);
-					}
-					else {
-					int n = rand.nextInt(2);
-		            if (n == 0){
-		                player.sendMessage("§6§lBarman §8» §fVous avez gagné " +  BuyWinePotion.cidreprice * 2 + "$");
-		                EcoAccountsManager.AddFounds(player.getName(), (double) (BuyWinePotion.cidreprice*2), false);
-		                player.getItemInHand().setAmount(0);
-		            } else {
-		            	if(!player.hasPotionEffect(PotionEffectType.CONFUSION) && !player.hasPotionEffect(PotionEffectType.WEAKNESS) && !player.hasPotionEffect(PotionEffectType.BLINDNESS)) {
-							player.getItemInHand().setAmount(0);
-							player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 180, 0));
-							player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 180, 0));
-							player.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 180, 0));
-							} else {
-								player.getItemInHand().setAmount(0);
-								int rest = player.getPotionEffect(PotionEffectType.CONFUSION).getDuration();
-								player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, rest + 180, 0));
-								player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, rest + 180, 0));
-								player.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, rest + 180, 0));
-							}
-		            	player.sendMessage("§6§lBarman §8» §fVous avez perdu, par conséquent vous obtenez un §cmalus§7.");
-		            }
-		            WineCooldown.add(player.getName());
-		            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
-					     public void run() {
-					    	 WineCooldown.remove(player.getName());
-					     }
-					}, 50);
-				}
-				}
-				if(bbb.contains("Bière")) {
-					if(WineCooldown.contains(player.getName())) {
-						SendActionBar.SendActionBarMsg(player, "§aMerci de patienter un peut entre les boissons !");
-						e.setCancelled(true);
-					}
-					else {
-					int n = rand.nextInt(2);
-		            if (n == 0){
-		                player.sendMessage("§6§lBarman §8» §fVous avez gagné " +  BuyWinePotion.biereprice * 2 + "$");
-		                EcoAccountsManager.AddFounds(player.getName(), (double) (BuyWinePotion.biereprice*2), false);
-		                player.getItemInHand().setAmount(0);
-		            } else {
-		            	if(!player.hasPotionEffect(PotionEffectType.CONFUSION) && !player.hasPotionEffect(PotionEffectType.WEAKNESS) && !player.hasPotionEffect(PotionEffectType.BLINDNESS)) {
-							player.getItemInHand().setAmount(0);
-							player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 260, 1));
-							player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 260, 1));
-							player.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 260, 1));
-							} else {
-								player.getItemInHand().setAmount(0);
-								int rest = player.getPotionEffect(PotionEffectType.CONFUSION).getDuration();
-								player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, rest + 260, 1));
-								player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, rest + 260, 1));
-								player.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, rest + 260, 1));
-							}
-		            	player.sendMessage("§6§lBarman §8» §fVous avez perdu, par conséquent vous obtenez un §cmalus§7.");
-		            }
-		            WineCooldown.add(player.getName());
-		            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
-					     public void run() {
-					    	 WineCooldown.remove(player.getName());
-					     }
-					}, 50);
-				}
-				}
-				if(bbb.contains("Rhum")) {
-					if(WineCooldown.contains(player.getName())) {
-						SendActionBar.SendActionBarMsg(player, "§aMerci de patienter un peut entre les boissons !");
-						e.setCancelled(true);
-					}
-					else {
-					int n = rand.nextInt(3);
-		            if (n == 0){
-		                player.sendMessage("§6§lBarman §8» §fVous avez gagné " +  BuyWinePotion.rhumprice * 2 + "$");
-		                EcoAccountsManager.AddFounds(player.getName(), (double) (BuyWinePotion.rhumprice*2), false);
-		                player.getItemInHand().setAmount(0);
-		            } else {
-		            	if(!player.hasPotionEffect(PotionEffectType.CONFUSION) && !player.hasPotionEffect(PotionEffectType.WEAKNESS) && !player.hasPotionEffect(PotionEffectType.BLINDNESS)) {
-							player.getItemInHand().setAmount(0);
-							player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 320, 2));
-							player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 320, 2));
-							player.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 320, 2));
-							} else {
-								player.getItemInHand().setAmount(0);
-								int rest = player.getPotionEffect(PotionEffectType.CONFUSION).getDuration();
-								player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, rest + 320, 2));
-								player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, rest + 320, 2));
-								player.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, rest + 320, 2));
-							}
-		            	player.sendMessage("§6§lBarman §8» §fVous avez perdu, par conséquent vous obtenez un §cmalus§7.");
-		            }
-		            WineCooldown.add(player.getName());
-		            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
-					     public void run() {
-					    	 WineCooldown.remove(player.getName());
-					     }
-					}, 50);
-				}
-				}
-				if(bbb.contains("Vodka")) {
-					if(WineCooldown.contains(player.getName())) {
-						SendActionBar.SendActionBarMsg(player, "§aMerci de patienter un peut entre les boissons !");
-						e.setCancelled(true);
-					}
-					else {
-					int n = rand.nextInt(3);
-		            if (n == 0){
-		                player.sendMessage("§6§lBarman §8» §fVous avez gagné " +  BuyWinePotion.vodkaprice * 2 + "$");
-		                EcoAccountsManager.AddFounds(player.getName(), (double) (BuyWinePotion.vodkaprice*2), false);
-		                player.getItemInHand().setAmount(0);
-		            } else {
-		            	if(!player.hasPotionEffect(PotionEffectType.CONFUSION) && !player.hasPotionEffect(PotionEffectType.WEAKNESS) && !player.hasPotionEffect(PotionEffectType.BLINDNESS)) {
-							player.getItemInHand().setAmount(0);
-							player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 400, 3));
-							player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 400, 3));
-							player.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 400, 3));
-							} else {
-								player.getItemInHand().setAmount(0);
-								int rest = player.getPotionEffect(PotionEffectType.CONFUSION).getDuration();
-								player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, rest + 400, 3));
-								player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, rest + 400, 3));
-								player.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, rest + 400, 3));
-							}
-		            	player.sendMessage("§6§lBarman §8» §fVous avez perdu, par conséquent vous obtenez un §cmalus§7.");
-		            }
-		            WineCooldown.add(player.getName());
-		            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
-					     public void run() {
-					    	 WineCooldown.remove(player.getName());
-					     }
-					}, 50);
-				}
-				}
-			}
-		}
-	}
+    @EventHandler
+    public void OnInteractWithNPC(NPCRightClickEvent e) {
+        Player player = e.getClicker();
+        if (e.getNPC().getName().equalsIgnoreCase("Â§6Barman")) {
+            BuyWinePotion.MakeWinePotionGui(player);
+        }
+    }
+
+    @EventHandler
+    public void InventoryClickEvent(InventoryClickEvent e) {
+        ItemStack current = e.getCurrentItem();
+        Player player = (Player) e.getWhoClicked();
+        if (current == null) {
+            return;
+        }
+        if (current.getItemMeta() == null) {
+            return;
+        }
+        if (e.getView().getTitle().equalsIgnoreCase("Â§6Boutique des vins")) {
+            e.setCancelled(true);
+            if (current.getType() == Material.POTION && current.getItemMeta().getDisplayName().equalsIgnoreCase("Â§6Cidre")) {
+                Double money = EcoAccountsManager.Moneys.get(player.getName());
+
+
+                if (money >= BuyWinePotion.cidreprice) {
+                    EcoAccountsManager.RemoveFounds(player.getName(), (double) BuyWinePotion.cidreprice);
+                    player.sendMessage("Â§6Â§lBarman Â§8Â» Â§fMerci de m'avoir achetÂ§ du cidre.");
+                    ItemStack custom1 = new ItemStack(Material.POTION, 1);
+                    ItemMeta customa = custom1.getItemMeta();
+                    customa.setDisplayName("Â§6Cidre");
+                    customa.setLore(Arrays.asList("Â§6Gain possible 10000$", "Â§cEn cas de dÂ§faite, vous perdez l'alcool"));
+                    customa.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
+                    custom1.setItemMeta(customa);
+
+                    player.getInventory().addItem(custom1);
+                } else {
+                    player.sendMessage("Â§6Â§lBarman Â§8Â» Â§fVous n'avez pas asser d'argent.");
+                }
+            }
+            if (current.getType() == Material.POTION && current.getItemMeta().getDisplayName().equalsIgnoreCase("Â§6BiÂ§re")) {
+
+                Double money = EcoAccountsManager.Moneys.get(player.getName());
+
+
+                if (money >= BuyWinePotion.biereprice) {
+                    EcoAccountsManager.RemoveFounds(player.getName(), (double) BuyWinePotion.biereprice);
+                    player.sendMessage("Â§6Â§lBarman Â§8Â» Â§fMerci de m'avoir achetÂ§ de la biÂ§re.");
+                    ItemStack custom1 = new ItemStack(Material.POTION, 1);
+                    ItemMeta customa = custom1.getItemMeta();
+                    customa.setDisplayName("Â§6BiÂ§re");
+                    customa.setLore(Arrays.asList("Â§6Gain possible 20000$", "Â§cEn cas de dÂ§faite, vous perdez l'alcool"));
+                    customa.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
+                    custom1.setItemMeta(customa);
+
+                    player.getInventory().addItem(custom1);
+                } else {
+                    player.sendMessage("Â§6Â§lBarman Â§8Â» Â§fVous n'avez pas asser d'argent.");
+                }
+            }
+            if (current.getType() == Material.POTION && current.getItemMeta().getDisplayName().equalsIgnoreCase("Â§6Rhum")) {
+                Double money = EcoAccountsManager.Moneys.get(player.getName());
+
+
+                if (money >= BuyWinePotion.rhumprice) {
+                    EcoAccountsManager.RemoveFounds(player.getName(), (double) BuyWinePotion.rhumprice);
+                    player.sendMessage("Â§6Â§lBarman Â§8Â» Â§fMerci de m'avoir achetÂ§ du rhum.");
+                    ItemStack custom1 = new ItemStack(Material.POTION, 1);
+                    ItemMeta customa = custom1.getItemMeta();
+                    customa.setDisplayName("Â§6Rhum");
+                    customa.setLore(Arrays.asList("Â§6Gain possible 50000$", "Â§cEn cas de dÂ§faite, vous perdez l'alcool"));
+                    customa.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
+                    custom1.setItemMeta(customa);
+
+                    player.getInventory().addItem(custom1);
+                } else {
+                    player.sendMessage("Â§6Â§lBarman Â§8Â» Â§fVous n'avez pas asser d'argent.");
+                }
+            }
+            if (current.getType() == Material.POTION && current.getItemMeta().getDisplayName().equalsIgnoreCase("Â§6Vodka")) {
+
+                Double money = EcoAccountsManager.Moneys.get(player.getName());
+
+
+                if (money >= BuyWinePotion.vodkaprice) {
+                    EcoAccountsManager.RemoveFounds(player.getName(), (double) BuyWinePotion.vodkaprice);
+                    player.sendMessage("Â§6Â§lBarman Â§8Â» Â§fMerci de m'avoir achetÂ§ de la vodka.");
+                    ItemStack custom1 = new ItemStack(Material.POTION, 1);
+                    ItemMeta customa = custom1.getItemMeta();
+                    customa.setDisplayName("Â§6Vodka");
+                    customa.setLore(Arrays.asList("Â§6Gain possible 100000$", "Â§cEn cas de dÂ§faite, vous perdez l'alcool"));
+                    customa.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
+                    custom1.setItemMeta(customa);
+
+                    player.getInventory().addItem(custom1);
+                } else {
+                    player.sendMessage("Â§6Â§lBarman Â§8Â» Â§fVous n'avez pas asser d'argent.");
+                }
+            }
+        }
+    }
+
+    @EventHandler
+    public void OnDrink(PlayerItemConsumeEvent e) {
+        Player player = e.getPlayer();
+        ItemStack aaa = e.getItem();
+        Random rand = new Random();
+        if (aaa != null) {
+            if (aaa.getType() == Material.POTION) {
+                String bbb = aaa.getItemMeta().getDisplayName();
+                if (bbb.contains("Cidre")) {
+                    if (WineCooldown.contains(player.getName())) {
+                        SendActionBar.SendActionBarMsg(player, "Â§aMerci de patienter un peut entre les boissons !");
+                        e.setCancelled(true);
+                    } else {
+                        int n = rand.nextInt(2);
+                        if (n == 0) {
+                            player.sendMessage("Â§6Â§lBarman Â§8Â» Â§fVous avez gagnÂ§ " + BuyWinePotion.cidreprice * 2 + "$");
+                            EcoAccountsManager.AddFounds(player.getName(), (double) (BuyWinePotion.cidreprice * 2), false);
+                            player.getItemInHand().setAmount(0);
+                        } else {
+                            if (!player.hasPotionEffect(PotionEffectType.CONFUSION) && !player.hasPotionEffect(PotionEffectType.WEAKNESS) && !player.hasPotionEffect(PotionEffectType.BLINDNESS)) {
+                                player.getItemInHand().setAmount(0);
+                                player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 180, 0));
+                                player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 180, 0));
+                                player.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 180, 0));
+                            } else {
+                                player.getItemInHand().setAmount(0);
+                                int rest = player.getPotionEffect(PotionEffectType.CONFUSION).getDuration();
+                                player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, rest + 180, 0));
+                                player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, rest + 180, 0));
+                                player.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, rest + 180, 0));
+                            }
+                            player.sendMessage("Â§6Â§lBarman Â§8Â» Â§fVous avez perdu, par consÂ§quent vous obtenez un Â§cmalusÂ§7.");
+                        }
+                        WineCooldown.add(player.getName());
+                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
+                            public void run() {
+                                WineCooldown.remove(player.getName());
+                            }
+                        }, 50);
+                    }
+                }
+                if (bbb.contains("BiÂ§re")) {
+                    if (WineCooldown.contains(player.getName())) {
+                        SendActionBar.SendActionBarMsg(player, "Â§aMerci de patienter un peut entre les boissons !");
+                        e.setCancelled(true);
+                    } else {
+                        int n = rand.nextInt(2);
+                        if (n == 0) {
+                            player.sendMessage("Â§6Â§lBarman Â§8Â» Â§fVous avez gagnÂ§ " + BuyWinePotion.biereprice * 2 + "$");
+                            EcoAccountsManager.AddFounds(player.getName(), (double) (BuyWinePotion.biereprice * 2), false);
+                            player.getItemInHand().setAmount(0);
+                        } else {
+                            if (!player.hasPotionEffect(PotionEffectType.CONFUSION) && !player.hasPotionEffect(PotionEffectType.WEAKNESS) && !player.hasPotionEffect(PotionEffectType.BLINDNESS)) {
+                                player.getItemInHand().setAmount(0);
+                                player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 260, 1));
+                                player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 260, 1));
+                                player.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 260, 1));
+                            } else {
+                                player.getItemInHand().setAmount(0);
+                                int rest = player.getPotionEffect(PotionEffectType.CONFUSION).getDuration();
+                                player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, rest + 260, 1));
+                                player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, rest + 260, 1));
+                                player.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, rest + 260, 1));
+                            }
+                            player.sendMessage("Â§6Â§lBarman Â§8Â» Â§fVous avez perdu, par consÂ§quent vous obtenez un Â§cmalusÂ§7.");
+                        }
+                        WineCooldown.add(player.getName());
+                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
+                            public void run() {
+                                WineCooldown.remove(player.getName());
+                            }
+                        }, 50);
+                    }
+                }
+                if (bbb.contains("Rhum")) {
+                    if (WineCooldown.contains(player.getName())) {
+                        SendActionBar.SendActionBarMsg(player, "Â§aMerci de patienter un peut entre les boissons !");
+                        e.setCancelled(true);
+                    } else {
+                        int n = rand.nextInt(3);
+                        if (n == 0) {
+                            player.sendMessage("Â§6Â§lBarman Â§8Â» Â§fVous avez gagnÂ§ " + BuyWinePotion.rhumprice * 2 + "$");
+                            EcoAccountsManager.AddFounds(player.getName(), (double) (BuyWinePotion.rhumprice * 2), false);
+                            player.getItemInHand().setAmount(0);
+                        } else {
+                            if (!player.hasPotionEffect(PotionEffectType.CONFUSION) && !player.hasPotionEffect(PotionEffectType.WEAKNESS) && !player.hasPotionEffect(PotionEffectType.BLINDNESS)) {
+                                player.getItemInHand().setAmount(0);
+                                player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 320, 2));
+                                player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 320, 2));
+                                player.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 320, 2));
+                            } else {
+                                player.getItemInHand().setAmount(0);
+                                int rest = player.getPotionEffect(PotionEffectType.CONFUSION).getDuration();
+                                player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, rest + 320, 2));
+                                player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, rest + 320, 2));
+                                player.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, rest + 320, 2));
+                            }
+                            player.sendMessage("Â§6Â§lBarman Â§8Â» Â§fVous avez perdu, par consÂ§quent vous obtenez un Â§cmalusÂ§7.");
+                        }
+                        WineCooldown.add(player.getName());
+                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
+                            public void run() {
+                                WineCooldown.remove(player.getName());
+                            }
+                        }, 50);
+                    }
+                }
+                if (bbb.contains("Vodka")) {
+                    if (WineCooldown.contains(player.getName())) {
+                        SendActionBar.SendActionBarMsg(player, "Â§aMerci de patienter un peut entre les boissons !");
+                        e.setCancelled(true);
+                    } else {
+                        int n = rand.nextInt(3);
+                        if (n == 0) {
+                            player.sendMessage("Â§6Â§lBarman Â§8Â» Â§fVous avez gagnÂ§ " + BuyWinePotion.vodkaprice * 2 + "$");
+                            EcoAccountsManager.AddFounds(player.getName(), (double) (BuyWinePotion.vodkaprice * 2), false);
+                            player.getItemInHand().setAmount(0);
+                        } else {
+                            if (!player.hasPotionEffect(PotionEffectType.CONFUSION) && !player.hasPotionEffect(PotionEffectType.WEAKNESS) && !player.hasPotionEffect(PotionEffectType.BLINDNESS)) {
+                                player.getItemInHand().setAmount(0);
+                                player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 400, 3));
+                                player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 400, 3));
+                                player.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 400, 3));
+                            } else {
+                                player.getItemInHand().setAmount(0);
+                                int rest = player.getPotionEffect(PotionEffectType.CONFUSION).getDuration();
+                                player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, rest + 400, 3));
+                                player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, rest + 400, 3));
+                                player.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, rest + 400, 3));
+                            }
+                            player.sendMessage("Â§6Â§lBarman Â§8Â» Â§fVous avez perdu, par consÂ§quent vous obtenez un Â§cmalusÂ§7.");
+                        }
+                        WineCooldown.add(player.getName());
+                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
+                            public void run() {
+                                WineCooldown.remove(player.getName());
+                            }
+                        }, 50);
+                    }
+                }
+            }
+        }
+    }
 }

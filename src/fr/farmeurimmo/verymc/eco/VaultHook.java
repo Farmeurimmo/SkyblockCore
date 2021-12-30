@@ -1,15 +1,14 @@
 package fr.farmeurimmo.verymc.eco;
 
-import org.bukkit.Bukkit;
-import org.bukkit.plugin.ServicePriority;
-
 import fr.farmeurimmo.verymc.core.Main;
 import net.md_5.bungee.api.ChatColor;
 import net.milkbowl.vault.economy.Economy;
+import org.bukkit.Bukkit;
+import org.bukkit.plugin.ServicePriority;
 
 public class VaultHook {
-	
-	private Main plugin = Main.getInstance();
+
+    private Main plugin = Main.getInstance();
 
     private Economy provider;
 

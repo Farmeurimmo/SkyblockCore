@@ -1,5 +1,8 @@
 package fr.farmeurimmo.verymc.gui;
 
+import fr.farmeurimmo.verymc.atout.AtoutGui;
+import fr.farmeurimmo.verymc.challenges.ChallengesGuis;
+import fr.farmeurimmo.verymc.shopgui.MainShopGui;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -10,113 +13,109 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import fr.farmeurimmo.verymc.atout.AtoutGui;
-import fr.farmeurimmo.verymc.challenges.ChallengesGuis;
-import fr.farmeurimmo.verymc.shopgui.MainShopGui;
+public class MenuGui implements Listener {
 
-public class MenuGui implements Listener{
-	
-	@EventHandler
-	public void onInventoryClick(InventoryClickEvent e) {
-	Player player = (Player) e.getWhoClicked();
-	ItemStack current = e.getCurrentItem();
-	
-	if(e.getCurrentItem() == null) {
-		return; 
-	}
-	if(e.getCurrentItem().getItemMeta() == null) {
-		return; 
-	}
-	if(e.getView().getTitle() == "ง6Menu du Skyblock") {
-		e.setCancelled(true);
-		if(current.getType() == Material.GRASS_BLOCK) {
-			player.chat("/is");
-		}
-		if(current.getType() == Material.DIAMOND_SWORD) {
-			Farm2WinGui.MainBoutiqueGUI(player);
-		}
-		if(current.getType() == Material.ENDER_EYE) {
-			WarpGui.OpenGUi(player);
-		}
-		if(current.getType() == Material.SADDLE) {
-			player.chat("/hdv");
-		}
-		if(current.getType() == Material.VILLAGER_SPAWN_EGG) {
-			MainShopGui.OpenMainShopMenu(player);
-		}
-		if(current.getType() == Material.IRON_SWORD) {
-			ChallengesGuis.MakeMainGui(player);
-		}
-		if(current.getType() == Material.POTION) {
-			AtoutGui.MakeAtoutGui(player);
-		}
-	}
-	}
+    public static void OpenMainMenu(Player player) {
 
-	public static void OpenMainMenu(Player player) {
-		
-        Inventory inv = Bukkit.createInventory(null, 45, "ง6Menu du Skyblock");
-        
-    	ItemStack custom1 = new ItemStack(Material.GRASS_BLOCK, 1);
-		ItemMeta meta1 = custom1.getItemMeta();
-		meta1.setDisplayName("ง6Votre Ile ง8| ง7(clic gauche)");
-		custom1.setItemMeta(meta1);
-		inv.setItem(10, custom1);
-		
-		ItemStack custom2 = new ItemStack(Material.DIAMOND_SWORD, 1);
-		ItemMeta meta2 = custom2.getItemMeta();
-		meta2.setDisplayName("ง6Boutique Farm2Win ง8| ง7(clic gauche)");
-		custom2.setItemMeta(meta2);
-		inv.setItem(12, custom2);
-		
-		ItemStack custom3 = new ItemStack(Material.BEDROCK, 1);
-		ItemMeta meta3 = custom3.getItemMeta();
-		meta3.setDisplayName("งc????");
-		custom3.setItemMeta(meta3);
-		inv.setItem(34, custom3);
-		
-		ItemStack custom7 = new ItemStack(Material.ENDER_EYE, 1);
-		ItemMeta meta7 = custom7.getItemMeta();
-		meta7.setDisplayName("ง6Warps ง8| ง7(clic gauche)");
-		custom7.setItemMeta(meta7);
-		inv.setItem(28, custom7);
-		
-		ItemStack custom4 = new ItemStack(Material.POTION, 1);
-		ItemMeta meta4 = custom4.getItemMeta();
-		meta4.setDisplayName("ง6Atouts ง8| ง7(clic gauche)");
-		custom4.setItemMeta(meta4);
-		inv.setItem(32, custom4);
-		
-		ItemStack custom5 = new ItemStack(Material.SADDLE, 1);
-		ItemMeta meta5 = custom5.getItemMeta();
-		meta5.setDisplayName("ง6H๔tel des ventes ง8| ง7(clic gauche)");
-		custom5.setItemMeta(meta5);
-		inv.setItem(14, custom5);
-		
-		ItemStack custom6 = new ItemStack(Material.VILLAGER_SPAWN_EGG, 1);
-		ItemMeta meta6 = custom6.getItemMeta();
-		meta6.setDisplayName("ง6Shop ง8| ง7(clic gauche)");
-		custom6.setItemMeta(meta6);
-		inv.setItem(16, custom6);
-		
-		ItemStack custom10 = new ItemStack(Material.IRON_SWORD, 1);
-		ItemMeta meta10 = custom10.getItemMeta();
-		meta10.setDisplayName("ง6Challenges journaliers ง8| ง7(clic gauche)");
-		custom10.setItemMeta(meta10);
-		inv.setItem(30, custom10);
-		
-		ItemStack custom8 = new ItemStack(Material.WHITE_STAINED_GLASS_PANE, 1);
-		ItemMeta meta8 = custom8.getItemMeta();
-		meta8.setDisplayName("ง6");
-		custom8.setItemMeta(meta8);
-		
-		for (int i = 0; i < inv.getSize(); i++) {
+        Inventory inv = Bukkit.createInventory(null, 45, "ยง6Menu du Skyblock");
+
+        ItemStack custom1 = new ItemStack(Material.GRASS_BLOCK, 1);
+        ItemMeta meta1 = custom1.getItemMeta();
+        meta1.setDisplayName("ยง6Votre Ile ยง8| ยง7(clic gauche)");
+        custom1.setItemMeta(meta1);
+        inv.setItem(10, custom1);
+
+        ItemStack custom2 = new ItemStack(Material.DIAMOND_SWORD, 1);
+        ItemMeta meta2 = custom2.getItemMeta();
+        meta2.setDisplayName("ยง6Boutique Farm2Win ยง8| ยง7(clic gauche)");
+        custom2.setItemMeta(meta2);
+        inv.setItem(12, custom2);
+
+        ItemStack custom3 = new ItemStack(Material.BEDROCK, 1);
+        ItemMeta meta3 = custom3.getItemMeta();
+        meta3.setDisplayName("ยงc????");
+        custom3.setItemMeta(meta3);
+        inv.setItem(34, custom3);
+
+        ItemStack custom7 = new ItemStack(Material.ENDER_EYE, 1);
+        ItemMeta meta7 = custom7.getItemMeta();
+        meta7.setDisplayName("ยง6Warps ยง8| ยง7(clic gauche)");
+        custom7.setItemMeta(meta7);
+        inv.setItem(28, custom7);
+
+        ItemStack custom4 = new ItemStack(Material.POTION, 1);
+        ItemMeta meta4 = custom4.getItemMeta();
+        meta4.setDisplayName("ยง6Atouts ยง8| ยง7(clic gauche)");
+        custom4.setItemMeta(meta4);
+        inv.setItem(32, custom4);
+
+        ItemStack custom5 = new ItemStack(Material.SADDLE, 1);
+        ItemMeta meta5 = custom5.getItemMeta();
+        meta5.setDisplayName("ยง6Hยงtel des ventes ยง8| ยง7(clic gauche)");
+        custom5.setItemMeta(meta5);
+        inv.setItem(14, custom5);
+
+        ItemStack custom6 = new ItemStack(Material.VILLAGER_SPAWN_EGG, 1);
+        ItemMeta meta6 = custom6.getItemMeta();
+        meta6.setDisplayName("ยง6Shop ยง8| ยง7(clic gauche)");
+        custom6.setItemMeta(meta6);
+        inv.setItem(16, custom6);
+
+        ItemStack custom10 = new ItemStack(Material.IRON_SWORD, 1);
+        ItemMeta meta10 = custom10.getItemMeta();
+        meta10.setDisplayName("ยง6Challenges journaliers ยง8| ยง7(clic gauche)");
+        custom10.setItemMeta(meta10);
+        inv.setItem(30, custom10);
+
+        ItemStack custom8 = new ItemStack(Material.WHITE_STAINED_GLASS_PANE, 1);
+        ItemMeta meta8 = custom8.getItemMeta();
+        meta8.setDisplayName("ยง6");
+        custom8.setItemMeta(meta8);
+
+        for (int i = 0; i < inv.getSize(); i++) {
             if (inv.getItem(i) == null || inv.getItem(i).getType().equals(Material.AIR)) {
-            	inv.setItem(i, custom8);
+                inv.setItem(i, custom8);
             }
         }
-		
-		player.openInventory(inv);
-	}
-	
+
+        player.openInventory(inv);
+    }
+
+    @EventHandler
+    public void onInventoryClick(InventoryClickEvent e) {
+        Player player = (Player) e.getWhoClicked();
+        ItemStack current = e.getCurrentItem();
+
+        if (e.getCurrentItem() == null) {
+            return;
+        }
+        if (e.getCurrentItem().getItemMeta() == null) {
+            return;
+        }
+        if (e.getView().getTitle() == "ยง6Menu du Skyblock") {
+            e.setCancelled(true);
+            if (current.getType() == Material.GRASS_BLOCK) {
+                player.chat("/is");
+            }
+            if (current.getType() == Material.DIAMOND_SWORD) {
+                Farm2WinGui.MainBoutiqueGUI(player);
+            }
+            if (current.getType() == Material.ENDER_EYE) {
+                WarpGui.OpenGUi(player);
+            }
+            if (current.getType() == Material.SADDLE) {
+                player.chat("/hdv");
+            }
+            if (current.getType() == Material.VILLAGER_SPAWN_EGG) {
+                MainShopGui.OpenMainShopMenu(player);
+            }
+            if (current.getType() == Material.IRON_SWORD) {
+                ChallengesGuis.MakeMainGui(player);
+            }
+            if (current.getType() == Material.POTION) {
+                AtoutGui.MakeAtoutGui(player);
+            }
+        }
+    }
+
 }

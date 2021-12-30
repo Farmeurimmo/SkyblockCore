@@ -8,30 +8,30 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 public class CratesKeyManager {
-	
-	public static void GiveCrateKey(Player player, int nombre, String type) {
-		if(type.equalsIgnoreCase("Légendaire")) {
-			ItemStack custom1 = new ItemStack(Material.TRIPWIRE_HOOK, nombre);
-	  		ItemMeta customa = custom1.getItemMeta();
-	  		customa.addEnchant(Enchantment.DURABILITY, 10, true);
-	  		customa.setUnbreakable(true);
-	  		customa.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
-	  		customa.setDisplayName("§6§lClée légendaire");
-	  		custom1.setItemMeta(customa);
-	  		player.getInventory().addItem(custom1);
-	  		player.sendMessage("§6§lCrates §8» §fVous avez reçu x" + nombre + " clée(s) légendaire !");
-	  		
-		} else if(type.equalsIgnoreCase("challenge")) {
-			ItemStack custom1 = new ItemStack(Material.TRIPWIRE_HOOK, nombre);
-	  		ItemMeta customa = custom1.getItemMeta();
-	  		customa.addEnchant(Enchantment.DURABILITY, 10, true);
-	  		customa.setUnbreakable(true);
-	  		customa.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
-	  		customa.setDisplayName("§6§lClée challenge");
-	  		custom1.setItemMeta(customa);
-	  		player.getInventory().addItem(custom1);
-	  		player.sendMessage("§6§lCrates §8» §fVous avez reçu x" + nombre + " clée(s) challenge !");
-	  		
-		}
-	}
+
+    public static void GiveCrateKey(Player player, int nombre, String type) {
+        if (type.equalsIgnoreCase("lÃ©gendaire")) {
+            ItemStack custom1 = new ItemStack(Material.TRIPWIRE_HOOK, nombre);
+            ItemMeta customa = custom1.getItemMeta();
+            customa.addEnchant(Enchantment.DURABILITY, 10, true);
+            customa.setUnbreakable(true);
+            customa.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
+            customa.setDisplayName("Â§6Â§lClÃ©e lÃ©gendaire");
+            custom1.setItemMeta(customa);
+            player.getInventory().addItem(custom1);
+            player.sendMessage("Â§6Â§lCrates Â§8Â» Â§fVous avez reÃ§u x" + nombre + " ClÃ©e(s) lÃ©gendaire !");
+
+        } else if (type.equalsIgnoreCase("challenge")) {
+            ItemStack custom1 = new ItemStack(Material.TRIPWIRE_HOOK, nombre);
+            ItemMeta customa = custom1.getItemMeta();
+            customa.addEnchant(Enchantment.DURABILITY, 10, true);
+            customa.setUnbreakable(true);
+            customa.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
+            customa.setDisplayName("Â§6Â§lClÃ©e challenge");
+            custom1.setItemMeta(customa);
+            player.getInventory().addItem(custom1);
+            player.sendMessage("Â§6Â§lCrates Â§8Â» Â§fVous avez reÃ§u x" + nombre + " ClÃ©e(s) challenge !");
+
+        }
+    }
 }
