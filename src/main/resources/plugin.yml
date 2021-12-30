@@ -9,7 +9,7 @@ commands:
   build:
     permission: build
   farm2win:
-    aliases: [ boutiqueig ]
+    aliases: [ boutiqueig,f2w ]
   bar:
     permission: bar
   menu:
