@@ -77,7 +77,7 @@ public class FarmHoeGui implements Listener {
         if(current.getType()==Material.DIAMOND_HOE){
             if(CheckForValidity(player.getItemInHand())){
                 if(EcoAccountsManager.CheckForFounds(player, 500000.0) &&
-                  FarmHoeManager.GetBlockHaversted(player.getItemInHand()) >= 100) {
+                  FarmHoeManager.GetBlockHaversted(player.getItemInHand()) >= 250000) {
                     EcoAccountsManager.RemoveFounds(player.getName(), 500000.0);
                     player.getItemInHand().setDisplayName("§6FarmHoe Tier §cII (3X3)");
                     player.closeInventory();
@@ -87,7 +87,7 @@ public class FarmHoeGui implements Listener {
         if(current.getType()==Material.NETHERITE_HOE){
             if(CheckForValidity(player.getItemInHand())){
                 if(EcoAccountsManager.CheckForFounds(player, 1000000.0) &&
-                  FarmHoeManager.GetBlockHaversted(player.getItemInHand()) >= 250) {
+                  FarmHoeManager.GetBlockHaversted(player.getItemInHand()) >= 500000) {
                     EcoAccountsManager.RemoveFounds(player.getName(), 1000000.0);
                     player.getItemInHand().setDisplayName("§6FarmHoe Tier §cIII (5X5)");
                     player.closeInventory();
@@ -125,7 +125,8 @@ public class FarmHoeGui implements Listener {
             customi.setDisplayName("§6Tier I §c(déjà possédé)");
             custom10.setType(Material.BEDROCK);
         }
-        customi.setLore(Arrays.asList("§7Casse et replante en 1X1"));
+        customi.setLore(Arrays.asList("§7Casse et replante en 1X1","§7Coût: N/A",
+          "§7Utilisation minimales pour débloquer: N/A"));
         custom10.setItemMeta(customi);
         invboutiquefarm2win.setItem(10, custom10);
 
@@ -137,7 +138,8 @@ public class FarmHoeGui implements Listener {
             customk.setDisplayName("§6Tier II §c(déjà possédé)");
             custom12.setType(Material.BEDROCK);
         }
-        customk.setLore(Arrays.asList("§7Casse et replante en 3X3"));
+        customk.setLore(Arrays.asList("§7Casse et replante en 3X3","§7Coût: 500 000$",
+          "§7Utilisation minimales pour débloquer: 250 000"));
         custom12.setItemMeta(customk);
         invboutiquefarm2win.setItem(13, custom12);
 
@@ -149,7 +151,8 @@ public class FarmHoeGui implements Listener {
             customl.setDisplayName("§6Tier III §c(déjà possédé)");
             custom13.setType(Material.BEDROCK);
         }
-        customl.setLore(Arrays.asList("§7Casse et replante en 5X5"));
+        customl.setLore(Arrays.asList("§7Casse et replante en 5X5","§7Coût: 1 000 000$",
+          "§7Utilisation minimales pour débloquer: 500 000"));
         custom13.setItemMeta(customl);
         invboutiquefarm2win.setItem(16, custom13);
 
