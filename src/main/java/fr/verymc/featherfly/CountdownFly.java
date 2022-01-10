@@ -106,7 +106,7 @@ public class CountdownFly implements Listener {
                         p.setAllowFlight(false);
                         p.setFlying(false);
                         p.chat("/is home");
-                        p.sendMessage("§6Fin du fly, Téléportation sur votre §le..");
+                        p.sendMessage("§6Fin du fly, Téléportation sur votre île..");
                     }
                     SendActionBar.SendActionBarMsg(p, "§6Fin du fly.");
                     fly.remove(p.getName());

@@ -18,7 +18,7 @@ public class AmountGuiManager implements Listener {
         if (current == null) {
             return;
         }
-        if (e.getView().getTitle().equalsIgnoreCase("§6Choix de la quantit§ à acheter")) {
+        if (e.getView().getTitle().equalsIgnoreCase("§6Choix de la quantité à acheter")) {
             e.setCancelled(true);
             if (current.getType() == Material.LIME_STAINED_GLASS_PANE) {
                 int amount = e.getInventory().getItem(22).getAmount();
@@ -100,7 +100,7 @@ public class AmountGuiManager implements Listener {
                 GenShopPage.OpenPreGenPage(player, lastpage, pagecurrent);
             }
         }
-        if (e.getView().getTitle().equalsIgnoreCase("§6Choix de la quantit§ à vendre")) {
+        if (e.getView().getTitle().equalsIgnoreCase("§6Choix de la quantité à vendre")) {
             e.setCancelled(true);
             if (current.getType() == Material.LIME_STAINED_GLASS_PANE) {
                 int amount = e.getInventory().getItem(22).getAmount();

@@ -25,12 +25,12 @@ public class DataCmd implements CommandExecutor, TabCompleter {
                         Main.instance1.reloadData();
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
-                        sender.sendMessage("§6§lData §8» §fProbl§me lors du reload !");
+                        sender.sendMessage("§6§lData §8» §fProblème lors du reload !");
                     } catch (IOException e) {
                         e.printStackTrace();
-                        sender.sendMessage("§6§lData §8» §fProbl§me lors du reload !");
+                        sender.sendMessage("§6§lData §8» §fProblème lors du reload !");
                     }
-                    sender.sendMessage("§6§lData §8» §fReload termin§ !");
+                    sender.sendMessage("§6§lData §8» §fReload Terminé !");
                 }
             }
         }

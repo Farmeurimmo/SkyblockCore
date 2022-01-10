@@ -40,14 +40,14 @@ public class MakeCommandsGui {
             ItemStack custom3 = new ItemStack(Material.LEATHER_HELMET);
             ItemMeta customc = custom3.getItemMeta();
             customc.setDisplayName("§e/hat");
-            customc.setLore(Arrays.asList("§7Cette commande permet d'§quiper le", "§7bloc pr§sent dans votre main sur", "§7votre t§te", "§7", "§6Prix: " + Farm2WinGui.hatprix + "$"));
+            customc.setLore(Arrays.asList("§7Cette commande permet d'équiper le", "§7bloc pr§sent dans votre main sur", "§7votre tête", "§7", "§6Prix: " + Farm2WinGui.hatprix + "$"));
             custom3.setItemMeta(customc);
             inv.setItem(10, custom3);
         } else {
             ItemStack custom3 = new ItemStack(Material.BEDROCK);
             ItemMeta customc = custom3.getItemMeta();
             customc.setDisplayName("§e/hat §c(déjà poss§d§e)");
-            customc.setLore(Arrays.asList("§7Cette commande permet d'§quiper le", "§7bloc pr§sent dans votre main sur", "§7votre t§te", "§7", "§6Prix: " + Farm2WinGui.hatprix + "$"));
+            customc.setLore(Arrays.asList("§7Cette commande permet d'équiper le", "§7bloc pr§sent dans votre main sur", "§7votre tête", "§7", "§6Prix: " + Farm2WinGui.hatprix + "$"));
             custom3.setItemMeta(customc);
             inv.setItem(10, custom3);
         }
@@ -56,14 +56,14 @@ public class MakeCommandsGui {
             ItemStack custom4 = new ItemStack(Material.FEATHER, 1);
             ItemMeta customd = custom4.getItemMeta();
             customd.setDisplayName("§e/fly");
-            customd.setLore(Arrays.asList("§7Cette commande permet de voler", "§7sur votre §le ind§finiment", "§7", "§6Prix: " + Farm2WinGui.flyprix + "$"));
+            customd.setLore(Arrays.asList("§7Cette commande permet de voler", "§7sur votre île indéfiniment", "§7", "§6Prix: " + Farm2WinGui.flyprix + "$"));
             custom4.setItemMeta(customd);
             inv.setItem(12, custom4);
         } else {
             ItemStack custom4 = new ItemStack(Material.BEDROCK, 1);
             ItemMeta customd = custom4.getItemMeta();
             customd.setDisplayName("§e/fly §c(déjà poss§d§e)");
-            customd.setLore(Arrays.asList("§7Cette commande permet de voler", "§7sur votre §le ind§finiment", "§7", "§6Prix: " + Farm2WinGui.flyprix + "$"));
+            customd.setLore(Arrays.asList("§7Cette commande permet de voler", "§7sur votre île indéfiniment", "§7", "§6Prix: " + Farm2WinGui.flyprix + "$"));
             custom4.setItemMeta(customd);
             inv.setItem(12, custom4);
         }
@@ -104,14 +104,14 @@ public class MakeCommandsGui {
             ItemStack custom7 = new ItemStack(Material.NAME_TAG, 1);
             ItemMeta customg = custom7.getItemMeta();
             customg.setDisplayName("§e/is rename");
-            customg.setLore(Arrays.asList("§7Cette commande permet de", "§7de renomer votre §le", "§7", "§6Prix: " + Farm2WinGui.isrenameprix + "$"));
+            customg.setLore(Arrays.asList("§7Cette commande permet de", "§7de renomer votre île", "§7", "§6Prix: " + Farm2WinGui.isrenameprix + "$"));
             custom7.setItemMeta(customg);
             inv.setItem(20, custom7);
         } else {
             ItemStack custom7 = new ItemStack(Material.BEDROCK, 1);
             ItemMeta customg = custom7.getItemMeta();
             customg.setDisplayName("§e/is rename §c(déjà poss§d§e)");
-            customg.setLore(Arrays.asList("§7Cette commande permet de", "§7de renomer votre §le", "§7", "§6Prix: " + Farm2WinGui.isrenameprix + "$"));
+            customg.setLore(Arrays.asList("§7Cette commande permet de", "§7de renomer votre île", "§7", "§6Prix: " + Farm2WinGui.isrenameprix + "$"));
             custom7.setItemMeta(customg);
             inv.setItem(20, custom7);
         }

@@ -22,7 +22,7 @@ public class TpaCmd implements CommandExecutor, TabCompleter {
                     if (Main.instance1.getTarget(player.getName()).equalsIgnoreCase(p.getName())) {
                         Main.haverequest.remove(p);
                         Main.tpatarget.remove(player.getName());
-                        player.sendMessage("§6§lTéléportation §8» §fVotre demande de téléportation à §a" + p.getName() + " §fa expir§.");
+                        player.sendMessage("§6§lTéléportation §8» §fVotre demande de téléportation à §a" + p.getName() + " §fa expiré.");
                         if (Main.pending.contains(player)) {
                             Main.pending.remove(player);
                         }

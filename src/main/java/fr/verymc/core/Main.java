@@ -256,7 +256,7 @@ public class Main extends JavaPlugin implements Listener {
         this.getCommand("farmhoe").setExecutor(new FarmHoeCmd());
         PluginManager pm = getServer().getPluginManager();
         pm.registerEvents(this, this);
-        System.out.println("§aD§marrage du plugin r§ussi !");
+        System.out.println("§aD§marrage du plugin réussi !");
         System.out.println("-----------------------------------------------------------------------------------------------------");
     }
 

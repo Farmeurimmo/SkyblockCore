@@ -98,6 +98,6 @@ public class ChallengesReset {
             Main.instance1.getData().set("Joueurs." + aa + ".Challenges.Daily.7.Palier", 1);
         }
         Main.instance1.saveData();
-        Bukkit.broadcastMessage("§6§lChallenges §8» §fTous les challenges journaliers ont été r§initialis§ !");
+        Bukkit.broadcastMessage("§6§lChallenges §8» §fTous les challenges journaliers ont été réinitialisé !");
     }
 }

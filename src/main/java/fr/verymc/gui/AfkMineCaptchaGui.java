@@ -69,7 +69,7 @@ public class AfkMineCaptchaGui implements Listener {
                         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
                             public void run() {
                                 player.chat("/spawn");
-                                SendActionBar.SendActionBarMsg(player, "§cVous n'avez pas r§ussi le Captcha, vous avez donc été envoyé au spawn");
+                                SendActionBar.SendActionBarMsg(player, "§cVous n'avez pas réussi le Captcha, vous avez donc été envoyé au spawn");
                                 player.closeInventory();
                             }
                         }, 2L);
@@ -104,7 +104,7 @@ public class AfkMineCaptchaGui implements Listener {
                 if (Captcha.contains(player)) {
                     Captcha.remove(player);
                 }
-                SendActionBar.SendActionBarMsg(player, "§aCaptcha r§ussi !");
+                SendActionBar.SendActionBarMsg(player, "§aCaptcha réussi !");
                 player.closeInventory();
                 if (SeconTry.contains(player)) {
                     SeconTry.remove(player);
@@ -127,7 +127,7 @@ public class AfkMineCaptchaGui implements Listener {
                         }
                         player.closeInventory();
                         TeleportPlayer.TeleportPlayerFromRequest(player, SpawnCmd.Spawn, 0);
-                        SendActionBar.SendActionBarMsg(player, "§cVous n'avez pas r§ussi le Captcha, vous avez donc été envoyé au spawn");
+                        SendActionBar.SendActionBarMsg(player, "§cVous n'avez pas réussi le Captcha, vous avez donc été envoyé au spawn");
                     }
                 } else {
                     player.closeInventory();
@@ -158,7 +158,7 @@ public class AfkMineCaptchaGui implements Listener {
                     }
                     player.closeInventory();
                     TeleportPlayer.TeleportPlayerFromRequest(player, SpawnCmd.Spawn, 0);
-                    SendActionBar.SendActionBarMsg(player, "§cVous n'avez pas r§ussi le Captcha, vous avez donc été envoyé au spawn");
+                    SendActionBar.SendActionBarMsg(player, "§cVous n'avez pas réussi le Captcha, vous avez donc été envoyé au spawn");
                 }
                 return;
             }
