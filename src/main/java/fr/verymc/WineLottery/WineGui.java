@@ -45,11 +45,11 @@ public class WineGui implements Listener {
         if (e.getView().getTitle().equalsIgnoreCase("§6Boutique des vins")) {
             e.setCancelled(true);
             if (current.getType() == Material.POTION && current.getItemMeta().getDisplayName().equalsIgnoreCase("§6Cidre")) {
-                Double money = EcoAccountsManager.Moneys.get(player.getName());
+                Double money = EcoAccountsManager.instance.Moneys.get(player.getName());
 
 
                 if (money >= BuyWinePotion.cidreprice) {
-                    EcoAccountsManager.RemoveFounds(player.getName(), (double) BuyWinePotion.cidreprice);
+                    EcoAccountsManager.instance.RemoveFounds(player.getName(), (double) BuyWinePotion.cidreprice);
                     player.sendMessage("§6§lBarman §8» §fMerci de m'avoir achet§ du cidre.");
                     ItemStack custom1 = new ItemStack(Material.POTION, 1);
                     ItemMeta customa = custom1.getItemMeta();
@@ -65,12 +65,12 @@ public class WineGui implements Listener {
             }
             if (current.getType() == Material.POTION && current.getItemMeta().getDisplayName().equalsIgnoreCase("§6Bi§re")) {
 
-                Double money = EcoAccountsManager.Moneys.get(player.getName());
+                Double money = EcoAccountsManager.instance.Moneys.get(player.getName());
 
 
                 if (money >= BuyWinePotion.biereprice) {
-                    EcoAccountsManager.RemoveFounds(player.getName(), (double) BuyWinePotion.biereprice);
-                    player.sendMessage("§6§lBarman §8» §fMerci de m'avoir achet§ de la bi§re.");
+                    EcoAccountsManager.instance.RemoveFounds(player.getName(), (double) BuyWinePotion.biereprice);
+                    player.sendMessage("§6§lBarman §8» §fMerci de m'avoir achet§ de la Bière.");
                     ItemStack custom1 = new ItemStack(Material.POTION, 1);
                     ItemMeta customa = custom1.getItemMeta();
                     customa.setDisplayName("§6Bi§re");
@@ -84,11 +84,11 @@ public class WineGui implements Listener {
                 }
             }
             if (current.getType() == Material.POTION && current.getItemMeta().getDisplayName().equalsIgnoreCase("§6Rhum")) {
-                Double money = EcoAccountsManager.Moneys.get(player.getName());
+                Double money = EcoAccountsManager.instance.Moneys.get(player.getName());
 
 
                 if (money >= BuyWinePotion.rhumprice) {
-                    EcoAccountsManager.RemoveFounds(player.getName(), (double) BuyWinePotion.rhumprice);
+                    EcoAccountsManager.instance.RemoveFounds(player.getName(), (double) BuyWinePotion.rhumprice);
                     player.sendMessage("§6§lBarman §8» §fMerci de m'avoir achet§ du rhum.");
                     ItemStack custom1 = new ItemStack(Material.POTION, 1);
                     ItemMeta customa = custom1.getItemMeta();
@@ -104,11 +104,11 @@ public class WineGui implements Listener {
             }
             if (current.getType() == Material.POTION && current.getItemMeta().getDisplayName().equalsIgnoreCase("§6Vodka")) {
 
-                Double money = EcoAccountsManager.Moneys.get(player.getName());
+                Double money = EcoAccountsManager.instance.Moneys.get(player.getName());
 
 
                 if (money >= BuyWinePotion.vodkaprice) {
-                    EcoAccountsManager.RemoveFounds(player.getName(), (double) BuyWinePotion.vodkaprice);
+                    EcoAccountsManager.instance.RemoveFounds(player.getName(), (double) BuyWinePotion.vodkaprice);
                     player.sendMessage("§6§lBarman §8» §fMerci de m'avoir achet§ de la vodka.");
                     ItemStack custom1 = new ItemStack(Material.POTION, 1);
                     ItemMeta customa = custom1.getItemMeta();
@@ -140,8 +140,8 @@ public class WineGui implements Listener {
                     } else {
                         int n = rand.nextInt(2);
                         if (n == 0) {
-                            player.sendMessage("§6§lBarman §8» §fVous avez gagn§ " + BuyWinePotion.cidreprice * 2 + "$");
-                            EcoAccountsManager.AddFounds(player.getName(), (double) (BuyWinePotion.cidreprice * 2), false);
+                            player.sendMessage("§6§lBarman §8» §fVous avez gagné " + BuyWinePotion.cidreprice * 2 + "$");
+                            EcoAccountsManager.instance.AddFounds(player.getName(), (double) (BuyWinePotion.cidreprice * 2), false);
                             player.getItemInHand().setAmount(0);
                         } else {
                             if (!player.hasPotionEffect(PotionEffectType.CONFUSION) && !player.hasPotionEffect(PotionEffectType.WEAKNESS) && !player.hasPotionEffect(PotionEffectType.BLINDNESS)) {
@@ -166,15 +166,15 @@ public class WineGui implements Listener {
                         }, 50);
                     }
                 }
-                if (bbb.contains("Bi§re")) {
+                if (bbb.contains("Bière")) {
                     if (WineCooldown.contains(player.getName())) {
                         SendActionBar.SendActionBarMsg(player, "§aMerci de patienter un peut entre les boissons !");
                         e.setCancelled(true);
                     } else {
                         int n = rand.nextInt(2);
                         if (n == 0) {
-                            player.sendMessage("§6§lBarman §8» §fVous avez gagn§ " + BuyWinePotion.biereprice * 2 + "$");
-                            EcoAccountsManager.AddFounds(player.getName(), (double) (BuyWinePotion.biereprice * 2), false);
+                            player.sendMessage("§6§lBarman §8» §fVous avez gagné " + BuyWinePotion.biereprice * 2 + "$");
+                            EcoAccountsManager.instance.AddFounds(player.getName(), (double) (BuyWinePotion.biereprice * 2), false);
                             player.getItemInHand().setAmount(0);
                         } else {
                             if (!player.hasPotionEffect(PotionEffectType.CONFUSION) && !player.hasPotionEffect(PotionEffectType.WEAKNESS) && !player.hasPotionEffect(PotionEffectType.BLINDNESS)) {
@@ -206,8 +206,8 @@ public class WineGui implements Listener {
                     } else {
                         int n = rand.nextInt(3);
                         if (n == 0) {
-                            player.sendMessage("§6§lBarman §8» §fVous avez gagn§ " + BuyWinePotion.rhumprice * 2 + "$");
-                            EcoAccountsManager.AddFounds(player.getName(), (double) (BuyWinePotion.rhumprice * 2), false);
+                            player.sendMessage("§6§lBarman §8» §fVous avez gagné " + BuyWinePotion.rhumprice * 2 + "$");
+                            EcoAccountsManager.instance.AddFounds(player.getName(), (double) (BuyWinePotion.rhumprice * 2), false);
                             player.getItemInHand().setAmount(0);
                         } else {
                             if (!player.hasPotionEffect(PotionEffectType.CONFUSION) && !player.hasPotionEffect(PotionEffectType.WEAKNESS) && !player.hasPotionEffect(PotionEffectType.BLINDNESS)) {
@@ -239,8 +239,8 @@ public class WineGui implements Listener {
                     } else {
                         int n = rand.nextInt(3);
                         if (n == 0) {
-                            player.sendMessage("§6§lBarman §8» §fVous avez gagn§ " + BuyWinePotion.vodkaprice * 2 + "$");
-                            EcoAccountsManager.AddFounds(player.getName(), (double) (BuyWinePotion.vodkaprice * 2), false);
+                            player.sendMessage("§6§lBarman §8» §fVous avez gagné " + BuyWinePotion.vodkaprice * 2 + "$");
+                            EcoAccountsManager.instance.AddFounds(player.getName(), (double) (BuyWinePotion.vodkaprice * 2), false);
                             player.getItemInHand().setAmount(0);
                         } else {
                             if (!player.hasPotionEffect(PotionEffectType.CONFUSION) && !player.hasPotionEffect(PotionEffectType.WEAKNESS) && !player.hasPotionEffect(PotionEffectType.BLINDNESS)) {

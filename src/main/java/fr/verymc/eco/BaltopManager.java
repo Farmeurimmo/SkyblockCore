@@ -17,7 +17,7 @@ public class BaltopManager {
         while (current <= maxi) {
             Double bestvalue = (double) 0;
             String playerlayer = "N/A";
-            for (Entry<String, Double> aa : EcoAccountsManager.Moneys.entrySet()) {
+            for (Entry<String, Double> aa : EcoAccountsManager.instance.Moneys.entrySet()) {
                 if (alreadyin.contains(aa.getKey())) {
                     continue;
                 }
@@ -66,16 +66,16 @@ public class BaltopManager {
         //int TotalPlayers = EcoAccountsManager.Moneys.size();
         //int TotalPage = TotalPlayers/10+1;
         player.sendMessage("§6----- §f§lBaltop §6----- " +
-                "\n1. " + un + ": " + Maths.arrondiNDecimales(EcoAccountsManager.GetMoney(un), 2) +
-                "\n2. " + deux + ": " + Maths.arrondiNDecimales(EcoAccountsManager.GetMoney(deux), 2) +
-                "\n3. " + trois + ": " + Maths.arrondiNDecimales(EcoAccountsManager.GetMoney(trois), 2) +
-                "\n4. " + quatre + ": " + Maths.arrondiNDecimales(EcoAccountsManager.GetMoney(quatre), 2) +
-                "\n5. " + cinq + ": " + Maths.arrondiNDecimales(EcoAccountsManager.GetMoney(cinq), 2) +
-                "\n6. " + six + ": " + Maths.arrondiNDecimales(EcoAccountsManager.GetMoney(six), 2) +
-                "\n7. " + sept + ": " + Maths.arrondiNDecimales(EcoAccountsManager.GetMoney(sept), 2) +
-                "\n8. " + huit + ": " + Maths.arrondiNDecimales(EcoAccountsManager.GetMoney(huit), 2) +
-                "\n9. " + neuf + ": " + Maths.arrondiNDecimales(EcoAccountsManager.GetMoney(neuf), 2) +
-                "\n10. " + dix + ": " + Maths.arrondiNDecimales(EcoAccountsManager.GetMoney(dix), 2) +
+                "\n1. " + un + ": " + Maths.arrondiNDecimales(EcoAccountsManager.instance.GetMoney(un), 2) +
+                "\n2. " + deux + ": " + Maths.arrondiNDecimales(EcoAccountsManager.instance.GetMoney(deux), 2) +
+                "\n3. " + trois + ": " + Maths.arrondiNDecimales(EcoAccountsManager.instance.GetMoney(trois), 2) +
+                "\n4. " + quatre + ": " + Maths.arrondiNDecimales(EcoAccountsManager.instance.GetMoney(quatre), 2) +
+                "\n5. " + cinq + ": " + Maths.arrondiNDecimales(EcoAccountsManager.instance.GetMoney(cinq), 2) +
+                "\n6. " + six + ": " + Maths.arrondiNDecimales(EcoAccountsManager.instance.GetMoney(six), 2) +
+                "\n7. " + sept + ": " + Maths.arrondiNDecimales(EcoAccountsManager.instance.GetMoney(sept), 2) +
+                "\n8. " + huit + ": " + Maths.arrondiNDecimales(EcoAccountsManager.instance.GetMoney(huit), 2) +
+                "\n9. " + neuf + ": " + Maths.arrondiNDecimales(EcoAccountsManager.instance.GetMoney(neuf), 2) +
+                "\n10. " + dix + ": " + Maths.arrondiNDecimales(EcoAccountsManager.instance.GetMoney(dix), 2) +
                 "\n§6--- §f§lPage " + page + " §6---");
         alreadyin.clear();
     }

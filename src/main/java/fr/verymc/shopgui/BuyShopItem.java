@@ -141,7 +141,7 @@ public class BuyShopItem {
 
     public static void BuyOSellItemNonStack(ItemStack a, Player player, boolean buy, double price, int amount) {
         if (buy == true) {
-            if (EcoAccountsManager.CheckForFounds(player, (double) (price * amount)) == true) {
+            if (EcoAccountsManager.instance.instance.CheckForFounds(player, (double) (price * amount)) == true) {
                 if (a.getType() == Material.SPAWNER) {
                     String display = a.getDisplayName();
                     if (GenShopPage.spawneurtype.containsKey(display)) {
@@ -188,7 +188,7 @@ public class BuyShopItem {
                             player.sendMessage("§6§lShop §8» §fIl vous manque de la place dans votre inventaire.");
                             return;
                         } else {
-                            EcoAccountsManager.RemoveFounds(player.getName(), price * amount);
+                            EcoAccountsManager.instance.RemoveFounds(player.getName(), price * amount);
                             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "ss give " + player.getName() + " " + togivetype + " " + amount);
                             return;
                         }
@@ -197,7 +197,7 @@ public class BuyShopItem {
                 a.setItemMeta(null);
                 player.closeInventory();
                 a.setAmount(amount);
-                EcoAccountsManager.RemoveFounds(player.getName(), price * amount);
+                EcoAccountsManager.instance.RemoveFounds(player.getName(), price * amount);
                 int amountininv = GetAmountToFillInInv(new ItemStack(a.getType()), player);
                 ItemStack od = new ItemStack(a.getType());
                 if (amountininv <= amount) {
@@ -213,7 +213,7 @@ public class BuyShopItem {
                     player.getInventory().addItem(a);
                 }
             } else {
-                double loa = price * amount - EcoAccountsManager.GetMoney(player.getName());
+                double loa = price * amount - EcoAccountsManager.instance.GetMoney(player.getName());
                 player.sendMessage("§6§lShop §8» §fIl vous manque §6" + loa + "$§f.");
             }
         } else {
@@ -222,7 +222,7 @@ public class BuyShopItem {
                 player.closeInventory();
                 removeItems(player.getInventory(), a.getType(), amount);
                 player.sendMessage("§6§lShop §8» §fVous avez vendu §ax" + amount + " " + a.getType().toString() + "§f pour §6" + profit + "$§f.");
-                EcoAccountsManager.AddFounds(player.getName(), profit, false);
+                EcoAccountsManager.instance.AddFounds(player.getName(), profit, false);
             } else {
                 player.sendMessage("§6§lShop §8» §fVous avez besoin de plus de " + a.getType().toString() + ".");
             }

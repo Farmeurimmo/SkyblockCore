@@ -150,7 +150,8 @@ public class Main extends JavaPlugin implements Listener {
         economyImplementer = new EconomyImplementer();
         vaultHook = new VaultHook();
         vaultHook.hook();
-        EcoAccountsManager.UpdateHash();
+        new EcoAccountsManager();
+        EcoAccountsManager.instance.UpdateHash();
         Main.spawncooldown.clear();
         //BossBar.CreateBossBar();
         BuildCmd.Build.clear();

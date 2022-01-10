@@ -88,7 +88,7 @@ public class MainShopGui implements Listener {
         SkullMeta customi = (SkullMeta) custom10.getItemMeta();
         customi.setOwner(player.getName());
         customi.setDisplayName("§7" + player.getName());
-        customi.setLore(Arrays.asList("§7Grade: " + Grade, "§7Argent: " + EcoAccountsManager.Moneys.get(player.getName())));
+        customi.setLore(Arrays.asList("§7Grade: " + Grade, "§7Argent: " + EcoAccountsManager.instance.Moneys.get(player.getName())));
         custom10.setItemMeta(customi);
         inv.setItem(36, custom10);
 

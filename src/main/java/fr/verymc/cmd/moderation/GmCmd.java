@@ -31,7 +31,7 @@ public class GmCmd implements CommandExecutor, TabCompleter {
                         return true;
                     } else if (args[0].equalsIgnoreCase("1")) {
                         player.setGameMode(GameMode.CREATIVE);
-                        SendActionBar.SendActionBarMsg(player, "§aVous venez de passer en cr§atif");
+                        SendActionBar.SendActionBarMsg(player, "§aVous venez de passer en créatif");
                         return true;
                     } else if (args[0].equalsIgnoreCase("2")) {
                         player.setGameMode(GameMode.ADVENTURE);
@@ -55,7 +55,7 @@ public class GmCmd implements CommandExecutor, TabCompleter {
                                 return true;
                             } else if (args[0].equalsIgnoreCase("1")) {
                                 p.setGameMode(GameMode.CREATIVE);
-                                SendActionBar.SendActionBarMsg(p, "§aVous venez de passer en cr§atif");
+                                SendActionBar.SendActionBarMsg(p, "§aVous venez de passer en créatif");
                                 return true;
                             } else if (args[0].equalsIgnoreCase("2")) {
                                 p.setGameMode(GameMode.ADVENTURE);
