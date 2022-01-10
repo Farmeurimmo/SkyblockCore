@@ -27,7 +27,7 @@ public class TpNoCmd implements CommandExecutor, TabCompleter {
                             Main.pending.remove(player.getName());
                             Main.tpatarget.remove(player.getName());
                             p.sendMessage("§6§lTéléportation §8» §a" + player.getName() + " §fa refusé votre demande de Téléportation.");
-                            player.sendMessage("§6§lTéléportation §8» §fLa demande de téléportation de " + p.getName() + " §fa été refus§ avec succès.");
+                            player.sendMessage("§6§lTéléportation §8» §fLa demande de téléportation de " + p.getName() + " §fa été refusé avec succès.");
                         }
                     }
                 }

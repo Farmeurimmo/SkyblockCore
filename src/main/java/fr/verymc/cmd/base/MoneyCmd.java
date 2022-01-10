@@ -21,12 +21,13 @@ public class MoneyCmd implements CommandExecutor, TabCompleter {
         if (args.length == 0) {
             if (sender instanceof Player) {
                 Player player = (Player) sender;
-                player.sendMessage("§6§lMonnaie §8» §fVous avez §6" + Maths.arrondiNDecimales(EcoAccountsManager.instance.GetMoney(player.getName()),
-                  2));
+                player.sendMessage("§6§lMonnaie §8» §fVous avez §6" +
+                  Maths.arrondiNDecimales(EcoAccountsManager.instance.GetMoney(player.getName()), 2)+"§");
             }
         } else if (args.length == 1) {
             if (EcoAccountsManager.instance.Moneys.get(args[0]) != null) {
-                sender.sendMessage("§6§lMonnaie §8» §6" + args[0] + "§f possède §6" + Maths.arrondiNDecimales(EcoAccountsManager.instance.GetMoney(args[0]), 2) + "$");
+                sender.sendMessage("§6§lMonnaie §8» §6" + args[0] + "§f possède §6" +
+                  Maths.arrondiNDecimales(EcoAccountsManager.instance.GetMoney(args[0]), 2) + "$");
             }
         } else if (args.length == 2) {
             sender.sendMessage("§6§lMonnaie §8» §f/money <pseudo> <give/remove> <montant>");

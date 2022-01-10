@@ -43,13 +43,13 @@ public class GmLCmd implements CommandExecutor, TabCompleter {
                 } else if (cmd.getName().equalsIgnoreCase("gmc")) {
                     if (args.length == 0) {
                         player.setGameMode(GameMode.CREATIVE);
-                        SendActionBar.SendActionBarMsg(player, "§aVous venez de passer en cr§atif");
+                        SendActionBar.SendActionBarMsg(player, "§aVous venez de passer en créatif");
                     } else if (args.length == 1) {
                         if (Bukkit.getPlayer(args[0]) != null) {
                             if (Bukkit.getPlayer(args[0]).isOnline()) {
                                 Player p = Bukkit.getPlayer(args[0]);
                                 p.setGameMode(GameMode.CREATIVE);
-                                SendActionBar.SendActionBarMsg(p, "§aVous venez de passer en cr§atif");
+                                SendActionBar.SendActionBarMsg(p, "§aVous venez de passer en créatif");
                                 return true;
                             } else {
                                 SendActionBar.SendActionBarMsg(player, "§cCe joueur n'est pas en ligne !");

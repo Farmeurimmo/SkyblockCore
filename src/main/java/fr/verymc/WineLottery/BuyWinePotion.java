@@ -24,7 +24,7 @@ public class BuyWinePotion {
         ItemMeta meta1 = custom1.getItemMeta();
         meta1.setDisplayName("§6Cidre");
         meta1.setLore(Arrays.asList("§7Ce vin est parfait pour les pauvres", "§7", "§6Prix: 5000$",
-                "§7", "§6Gain possible 10000$", "§cEn cas de d§faite, vous perdez l'alcool"));
+                "§7", "§6Gain possible 10000$", "§cEn cas de défaite, vous perdez l'alcool"));
         meta1.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
         custom1.setItemMeta(meta1);
         inv.setItem(10, custom1);
@@ -32,8 +32,8 @@ public class BuyWinePotion {
         ItemStack custom2 = new ItemStack(Material.POTION, 1);
         ItemMeta meta2 = custom2.getItemMeta();
         meta2.setDisplayName("§6Bi§re");
-        meta2.setLore(Arrays.asList("§7Cette bi§re est parfait pour l'ap§ro entre pote", "§7", "§6Prix: 10000$",
-                "§7", "§6Gain possible 20000$", "§cEn cas de d§faite, vous perdez l'alcool"));
+        meta2.setLore(Arrays.asList("§7Cette bi§re est parfait pour l'apéro entre pote", "§7", "§6Prix: 10000$",
+                "§7", "§6Gain possible 20000$", "§cEn cas de défaite, vous perdez l'alcool"));
         meta2.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
         custom2.setItemMeta(meta2);
         inv.setItem(11, custom2);
@@ -42,7 +42,7 @@ public class BuyWinePotion {
         ItemMeta meta3 = custom3.getItemMeta();
         meta3.setDisplayName("§6Rhum");
         meta3.setLore(Arrays.asList("§7Ce rhum est parfait dans une glace", "§7", "§6Prix: 25000$",
-                "§7", "§6Gain possible 50000$", "§cEn cas de d§faite, vous perdez l'alcool"));
+                "§7", "§6Gain possible 50000$", "§cEn cas de défaite, vous perdez l'alcool"));
         meta3.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
         custom3.setItemMeta(meta3);
         inv.setItem(15, custom3);
@@ -50,8 +50,8 @@ public class BuyWinePotion {
         ItemStack custom4 = new ItemStack(Material.POTION, 1);
         ItemMeta meta4 = custom4.getItemMeta();
         meta4.setDisplayName("§6Vodka");
-        meta4.setLore(Arrays.asList("§7Cette vodka est parfait pour vous r§chauffer le ventre", "§7", "§6Prix: 50000$",
-                "§7", "§6Gain possible 100000$", "§cEn cas de d§faite, vous perdez l'alcool"));
+        meta4.setLore(Arrays.asList("§7Cette vodka est parfait pour vous réchauffer le ventre", "§7", "§6Prix: 50000$",
+                "§7", "§6Gain possible 100000$", "§cEn cas de défaite, vous perdez l'alcool"));
         meta4.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
         custom4.setItemMeta(meta4);
         inv.setItem(16, custom4);
@@ -60,9 +60,9 @@ public class BuyWinePotion {
         ItemMeta meta5 = custom5.getItemMeta();
         meta5.setDisplayName("§6Informations");
         meta5.setLore(Arrays.asList("§7Qui est le barman et que fait-il?", "§7Eh bien il vend des fioles d'alcool fictives.",
-                "§7Si vous buvez ces fioles, vous pouvez obtenir", "§7un §abonus §7comme un §cmalus§7.", "§7Les §abonus §7et §cmalus §7sont al§atoires",
-                "§7Vous pouvez perdre comme gagner", "§7plusieurs fois à la suite.", "§7De plus les probabilit§es de §agagner §7descendent",
-                "§7en fonction de la taille de la r§compense.", "§7", "§7(L'abus d'alcool est dangereux pour la sant§)"));
+                "§7Si vous buvez ces fioles, vous pouvez obtenir", "§7un §abonus §7comme un §cmalus§7.", "§7Les §abonus §7et §cmalus §7sont aléatoires",
+                "§7Vous pouvez perdre comme gagner", "§7plusieurs fois à la suite.", "§7De plus les probabilitées de §agagner §7descendent",
+                "§7en fonction de la taille de la récompense.", "§7", "§7(L'abus d'alcool est dangereux pour la santé)"));
         meta5.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
         custom5.setItemMeta(meta5);
         inv.setItem(13, custom5);

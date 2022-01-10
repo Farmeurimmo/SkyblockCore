@@ -35,7 +35,7 @@ public class GenMultiStacksBuyGui {
 
         ItemStack custom7 = new ItemStack(Material.ARROW, 1);
         ItemMeta customg = custom7.getItemMeta();
-        customg.setDisplayName("§6Retour en arri§re");
+        customg.setDisplayName("§6Retour en arrière");
         custom7.setItemMeta(customg);
         inv.setItem(53, custom7);
 

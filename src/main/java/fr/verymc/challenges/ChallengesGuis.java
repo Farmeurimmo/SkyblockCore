@@ -41,7 +41,7 @@ public class ChallengesGuis implements Listener {
             player.sendMessage("§6§lChallenges §8» §fVous avez reçu 2 crystaux, 5000$ et x1 Clée Challenge.");
 
         } else {
-            player.sendMessage("§6§lChallenges §8» §fVous pouvez uniquement compléter les challenges en poss§dant ou en"
+            player.sendMessage("§6§lChallenges §8» §fVous pouvez uniquement compléter les challenges en possédant ou en"
                     + " faisant partie d'une ile.");
         }
     }
@@ -98,7 +98,7 @@ public class ChallengesGuis implements Listener {
             ItemStack custom1 = new ItemStack(Material.COBBLESTONE, 1);
             ItemMeta customa = custom1.getItemMeta();
             customa.setDisplayName("§6Minage de pierre");
-            customa.setLore(Arrays.asList("§7Termin§"));
+            customa.setLore(Arrays.asList("§7Terminé"));
             customa.addEnchant(Enchantment.ARROW_FIRE, 1, true);
             customa.addItemFlags(ItemFlag.HIDE_ENCHANTS);
             custom1.setItemMeta(customa);
@@ -117,7 +117,7 @@ public class ChallengesGuis implements Listener {
             ItemStack custom1 = new ItemStack(Material.COAL, 1);
             ItemMeta customa = custom1.getItemMeta();
             customa.setDisplayName("§6Minage de charbon");
-            customa.setLore(Arrays.asList("§7Termin§"));
+            customa.setLore(Arrays.asList("§7Terminé"));
             customa.addEnchant(Enchantment.ARROW_FIRE, 1, true);
             customa.addItemFlags(ItemFlag.HIDE_ENCHANTS);
             custom1.setItemMeta(customa);
@@ -136,7 +136,7 @@ public class ChallengesGuis implements Listener {
             ItemStack custom1 = new ItemStack(Material.IRON_ORE, 1);
             ItemMeta customa = custom1.getItemMeta();
             customa.setDisplayName("§6Minage de fer");
-            customa.setLore(Arrays.asList("§7Termin§"));
+            customa.setLore(Arrays.asList("§7Terminé"));
             customa.addEnchant(Enchantment.ARROW_FIRE, 1, true);
             customa.addItemFlags(ItemFlag.HIDE_ENCHANTS);
             custom1.setItemMeta(customa);
@@ -155,7 +155,7 @@ public class ChallengesGuis implements Listener {
             ItemStack custom1 = new ItemStack(Material.GOLD_ORE, 1);
             ItemMeta customa = custom1.getItemMeta();
             customa.setDisplayName("§6Minage d'or");
-            customa.setLore(Arrays.asList("§7Termin§"));
+            customa.setLore(Arrays.asList("§7Terminé"));
             customa.addEnchant(Enchantment.ARROW_FIRE, 1, true);
             customa.addItemFlags(ItemFlag.HIDE_ENCHANTS);
             custom1.setItemMeta(customa);
@@ -174,7 +174,7 @@ public class ChallengesGuis implements Listener {
             ItemStack custom1 = new ItemStack(Material.DIAMOND_ORE, 1);
             ItemMeta customa = custom1.getItemMeta();
             customa.setDisplayName("§6Minage de diamant");
-            customa.setLore(Arrays.asList("§7Termin§"));
+            customa.setLore(Arrays.asList("§7Terminé"));
             customa.addEnchant(Enchantment.ARROW_FIRE, 1, true);
             customa.addItemFlags(ItemFlag.HIDE_ENCHANTS);
             custom1.setItemMeta(customa);
@@ -193,7 +193,7 @@ public class ChallengesGuis implements Listener {
             ItemStack custom1 = new ItemStack(Material.EMERALD_ORE, 1);
             ItemMeta customa = custom1.getItemMeta();
             customa.setDisplayName("§6Minage d'émeraude");
-            customa.setLore(Arrays.asList("§7Termin§"));
+            customa.setLore(Arrays.asList("§7Terminé"));
             customa.addEnchant(Enchantment.ARROW_FIRE, 1, true);
             customa.addItemFlags(ItemFlag.HIDE_ENCHANTS);
             custom1.setItemMeta(customa);
@@ -212,7 +212,7 @@ public class ChallengesGuis implements Listener {
             ItemStack custom1 = new ItemStack(Material.ANCIENT_DEBRIS, 1);
             ItemMeta customa = custom1.getItemMeta();
             customa.setDisplayName("§6Minage d'ancients d§bris");
-            customa.setLore(Arrays.asList("§7Termin§"));
+            customa.setLore(Arrays.asList("§7Terminé"));
             customa.addEnchant(Enchantment.ARROW_FIRE, 1, true);
             customa.addItemFlags(ItemFlag.HIDE_ENCHANTS);
             custom1.setItemMeta(customa);

@@ -32,7 +32,7 @@ public class HatCmd implements CommandExecutor, TabCompleter {
                         player.getInventory().setHelmet(aaa);
                         player.getItemInHand().setAmount(0);
                     }
-                    SendActionBar.SendActionBarMsg(player, "§aItem en main §quip§ !");
+                    SendActionBar.SendActionBarMsg(player, "§aItem en main équipé !");
                 } else {
                     player.getInventory().addItem(player.getInventory().getHelmet());
                     player.getInventory().setHelmet(null);

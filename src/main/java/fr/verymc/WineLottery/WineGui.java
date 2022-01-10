@@ -54,7 +54,7 @@ public class WineGui implements Listener {
                     ItemStack custom1 = new ItemStack(Material.POTION, 1);
                     ItemMeta customa = custom1.getItemMeta();
                     customa.setDisplayName("§6Cidre");
-                    customa.setLore(Arrays.asList("§6Gain possible 10000$", "§cEn cas de d§faite, vous perdez l'alcool"));
+                    customa.setLore(Arrays.asList("§6Gain possible 10000$", "§cEn cas de défaite, vous perdez l'alcool"));
                     customa.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
                     custom1.setItemMeta(customa);
 
@@ -74,7 +74,7 @@ public class WineGui implements Listener {
                     ItemStack custom1 = new ItemStack(Material.POTION, 1);
                     ItemMeta customa = custom1.getItemMeta();
                     customa.setDisplayName("§6Bi§re");
-                    customa.setLore(Arrays.asList("§6Gain possible 20000$", "§cEn cas de d§faite, vous perdez l'alcool"));
+                    customa.setLore(Arrays.asList("§6Gain possible 20000$", "§cEn cas de défaite, vous perdez l'alcool"));
                     customa.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
                     custom1.setItemMeta(customa);
 
@@ -93,7 +93,7 @@ public class WineGui implements Listener {
                     ItemStack custom1 = new ItemStack(Material.POTION, 1);
                     ItemMeta customa = custom1.getItemMeta();
                     customa.setDisplayName("§6Rhum");
-                    customa.setLore(Arrays.asList("§6Gain possible 50000$", "§cEn cas de d§faite, vous perdez l'alcool"));
+                    customa.setLore(Arrays.asList("§6Gain possible 50000$", "§cEn cas de défaite, vous perdez l'alcool"));
                     customa.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
                     custom1.setItemMeta(customa);
 
@@ -113,7 +113,7 @@ public class WineGui implements Listener {
                     ItemStack custom1 = new ItemStack(Material.POTION, 1);
                     ItemMeta customa = custom1.getItemMeta();
                     customa.setDisplayName("§6Vodka");
-                    customa.setLore(Arrays.asList("§6Gain possible 100000$", "§cEn cas de d§faite, vous perdez l'alcool"));
+                    customa.setLore(Arrays.asList("§6Gain possible 100000$", "§cEn cas de défaite, vous perdez l'alcool"));
                     customa.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
                     custom1.setItemMeta(customa);
 

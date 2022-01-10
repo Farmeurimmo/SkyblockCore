@@ -1,6 +1,8 @@
 name: SkyblockCore
 version: 1.0
 author: Farmeurimmo
+authors:
+  - Farmeurimmo
 main: main.java.fr.verymc.core.Main
 depend: [ Citizens, IridiumSkyblock, HolographicDisplays, Vault ]
 api-version: 1.16

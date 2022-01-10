@@ -22,9 +22,9 @@ public class GenAmoutShopGui {
     public static void OpenPregenAmoutShop(Player player, ItemStack aa, boolean a) {
         Inventory inv;
         if (a == true) {
-            inv = Bukkit.createInventory(null, 54, "§6Choix de la quantit§ à acheter");
+            inv = Bukkit.createInventory(null, 54, "§6Choix de la quantité à acheter");
         } else {
-            inv = Bukkit.createInventory(null, 54, "§6Choix de la quantit§ à vendre");
+            inv = Bukkit.createInventory(null, 54, "§6Choix de la quantité à vendre");
         }
 
         User user = LuckPermsProvider.get().getUserManager().getUser(player.getName());
@@ -43,7 +43,7 @@ public class GenAmoutShopGui {
 
         ItemStack custom7 = new ItemStack(Material.ARROW, 1);
         ItemMeta customg = custom7.getItemMeta();
-        customg.setDisplayName("§6Retour en arri§re");
+        customg.setDisplayName("§6Retour en arrière");
         custom7.setItemMeta(customg);
         inv.setItem(53, custom7);
 
