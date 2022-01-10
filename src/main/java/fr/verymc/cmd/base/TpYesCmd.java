@@ -20,15 +20,15 @@ public class TpYesCmd implements CommandExecutor, TabCompleter {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player) {
             Player player = (Player) sender;
-            if (Main.haverequest.contains(player)) {
+            if (Main.instance1.haverequest.contains(player)) {
                 for (Player p : Bukkit.getOnlinePlayers()) {
                     if (Main.instance1.getTarget(p.getName()) != null) {
                         if (Main.instance1.getTarget(p.getName()).equalsIgnoreCase(player.getName())) {
                             TeleportPlayer.TeleportPlayerFromRequestToAnotherPlayer(p, player, GetTeleportDelay.GetPlayerTeleportingdelay(p));
                             player.sendMessage("§6§lTéléportation §8» §fVous avez §aaccepté §fla demande de Téléportation de §6" + p.getName() + "§f.");
-                            Main.pending.remove(player);
-                            if (Main.haverequest.contains(player)) {
-                                Main.haverequest.remove(player);
+                            Main.instance1.pending.remove(player);
+                            if (Main.instance1.haverequest.contains(player)) {
+                                Main.instance1.haverequest.remove(player);
                             }
                         }
                     }
