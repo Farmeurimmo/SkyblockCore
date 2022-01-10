@@ -55,14 +55,14 @@ import java.util.HashMap;
 
 public class Main extends JavaPlugin implements Listener {
 
-    public static ArrayList<Player> pending = new ArrayList<Player>();
+    public ArrayList<Player> pending = new ArrayList<Player>();
 
-    public static ArrayList<Player> haverequest = new ArrayList<Player>();
+    public ArrayList<Player> haverequest = new ArrayList<Player>();
     public static Main instance1;
-    public static HashMap<String, String> tpatarget = new HashMap<>();
+    public HashMap<String, String> tpatarget = new HashMap<>();
     static LuckPerms api;
     private static Main instance;
-    private static HashMap<String, Integer> spawncooldown = new HashMap<>();
+    private HashMap<String, Integer> spawncooldown = new HashMap<>();
     public EconomyImplementer economyImplementer;
     public FileConfiguration data;
     public FileConfiguration datac;
@@ -112,62 +112,59 @@ public class Main extends JavaPlugin implements Listener {
         Bukkit.getPluginManager().isPluginEnabled("Citizens");
         RegisteredServiceProvider<LuckPerms> provider = Bukkit.getServicesManager().getRegistration(LuckPerms.class);
         if (Bukkit.getPluginManager().getPlugin("LuckPerms") != null) {
-            System.out.println("Le plugin LuckPerms a été trouv§ !");
+            System.out.println("Le plugin LuckPerms a été trouvé !");
         } else {
             getLogger().warning("Le plugin LuckPerms est manquant.");
             Bukkit.getPluginManager().disablePlugin(this);
         }
         System.out.println("-----------------------------------------------------------------------------------------------------");
-        System.out.println("Initialisation de l'api LuckPerms en cours...");
         if (provider != null) {
             api = provider.getProvider();
-            System.out.println("API initialis§e !");
-            System.out.println("-----------------------------------------------------------------------------------------------------");
+            System.out.println("API LUCKPERMS initialisée !");
+        } else {
+            getLogger().warning("Le plugin LuckPerms est manquant.");
+            Bukkit.getPluginManager().disablePlugin(this);
         }
         if (Bukkit.getPluginManager().getPlugin("Citizens") != null) {
-            System.out.println("Le plugin Citizens a été trouv§ !");
-            System.out.println("Initialisation de l'api Citizens en cours...");
-            System.out.println("API initialis§e !");
-            System.out.println("-----------------------------------------------------------------------------------------------------");
+            System.out.println("API CITIZENS initialisée !");
         } else {
             getLogger().warning("Le plugin Citizens est manquant.");
             Bukkit.getPluginManager().disablePlugin(this);
         }
         if (Bukkit.getPluginManager().getPlugin("HolographicDisplays") != null) {
-            System.out.println("Le plugin HolographicDisplays a été trouv§ !");
-            System.out.println("Initialisation de l'api HolographicDisplays en cours...");
-            System.out.println("API initialis§e !");
-            System.out.println("-----------------------------------------------------------------------------------------------------");
+            System.out.println("API HOLOGRAPHICDISPLAYS initialisée !");
         } else {
             getLogger().warning("Le plugin HolographicDisplays est manquant.");
             Bukkit.getPluginManager().disablePlugin(this);
         }
         if (IridiumSkyblockAPI.getInstance() == null) {
             Bukkit.getPluginManager().disablePlugin(this);
+            getLogger().warning("Le plugin IridiumSkyblock est manquant.");
         }
-        System.out.println("Initialisation des classes et des m§thodes en cours...");
+        System.out.println("API IRIDIUMSKYBLOCK initialisée !");
+        System.out.println("-----------------------------------------------------------------------------------------------------");
+
+        System.out.println("Initialisation des MODULES en cours...");
         setup();
+        System.out.println("Fichier yml DONE | NEXT Methods init");
+
+        BuildCmd.Build.clear();
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            ScoreBoard.setScoreBoard(player);
+        }
+        spawncooldown.clear();
+        ChatReaction.WriteWords();
+        //BossBar.CreateBossBar();
+        FeatherFlyInteract.ReadForTempFly();
+        ChunkCollectorManager.ReadFromFile();
+        SellChestManager.ReadFromFile();
+        FarmHoeManager.addtolist();
         economyImplementer = new EconomyImplementer();
         vaultHook = new VaultHook();
         vaultHook.hook();
         new EcoAccountsManager();
-        EcoAccountsManager.instance.UpdateHash();
-        Main.spawncooldown.clear();
-        //BossBar.CreateBossBar();
-        BuildCmd.Build.clear();
-        WineSpawn.SpawnPnj(new Location(Bukkit.getServer().getWorld("world"), -184.5, 70.5, -77.5, -90, 0));
-        HolosSetup.SpawnPnj2(new Location(Bukkit.getServer().getWorld("world"), -155.5, 71, -60.5, 90, 0),
-                new Location(Bukkit.getServer().getWorld("world"), -172.5, 71, -64.5, 90, 0));
-        HolosSetup.SpawnCrates();
-        for (Player player : Bukkit.getOnlinePlayers()) {
-            ScoreBoard.setScoreBoard(player);
-        }
-        ChatReaction.WriteWords();
-        ChatReaction.StartChatReaction();
-        ChallengesReset.CheckForReset();
-        CratesManager.SpawnCrates();
-        ScoreBoard.updateScoreBoard();
-        FeatherFlyInteract.ReadForTempFly();
+        System.out.println("Starting one time methods DONE | NEXT Pregen shopgui ");
+
         BuyShopItem.GenPriceShopStartup();
         GenShopPage.GetNumberOfPage();
         GenShopPage.GenenerateShopPageStartup("Blocs");
@@ -181,10 +178,22 @@ public class Main extends JavaPlugin implements Listener {
         GenShopPage.GenenerateShopPageStartup("Spawneurs");
         GenAmoutShopGui.GenAmoutShopGuiStartup();
         GenMultiStacksBuyGui.GenMultiShopGuiStartup();
-        ChunkCollectorManager.ReadFromFile();
-        SellChestManager.ReadFromFile();
+        System.out.println("PregenShopGui & price DONE | NEXT permanant loops");
+
+        ChatReaction.StartChatReaction();
+        ChallengesReset.CheckForReset();
+        EcoAccountsManager.instance.UpdateHash();
         SellChestManager.AutoSellForVeryChest();
-        FarmHoeManager.addtolist();
+        ScoreBoard.updateScoreBoard();
+        System.out.println("Starting permanant loops DONE | NEXT blocs/pnj/holos");
+
+        WineSpawn.SpawnPnj(new Location(Bukkit.getServer().getWorld("world"), -184.5, 70.5, -77.5, -90, 0));
+        HolosSetup.SpawnPnj2(new Location(Bukkit.getServer().getWorld("world"), -155.5, 71, -60.5, 90, 0),
+          new Location(Bukkit.getServer().getWorld("world"), -172.5, 71, -64.5, 90, 0));
+        HolosSetup.SpawnCrates();
+        CratesManager.SpawnCrates();
+        System.out.println("Spawn Blocs/PNJ/HOLOS DONE | NEXT listeners");
+
         getServer().getPluginManager().registerEvents(new JoinLeave(), this);
         getServer().getPluginManager().registerEvents(new ScoreBoard(), this);
         getServer().getPluginManager().registerEvents(new Interact(), this);
@@ -216,6 +225,10 @@ public class Main extends JavaPlugin implements Listener {
         getServer().getPluginManager().registerEvents(new SellChest(), this);
         getServer().getPluginManager().registerEvents(new FarmHoeManager(), this);
         getServer().getPluginManager().registerEvents(new FarmHoeGui(), this);
+        PluginManager pm = getServer().getPluginManager();
+        pm.registerEvents(this, this);
+        System.out.println("Listeners DONE | NEXT commands");
+
         this.getCommand("spawn").setExecutor(new SpawnCmd());
         this.getCommand("build").setExecutor(new BuildCmd());
         this.getCommand("farm2win").setExecutor(new Farm2WinCmd());
@@ -254,9 +267,9 @@ public class Main extends JavaPlugin implements Listener {
         this.getCommand("sellall").setExecutor(new SellAllCmd());
         this.getCommand("chests").setExecutor(new ChestsCmd());
         this.getCommand("farmhoe").setExecutor(new FarmHoeCmd());
-        PluginManager pm = getServer().getPluginManager();
-        pm.registerEvents(this, this);
-        System.out.println("§aD§marrage du plugin réussi !");
+        System.out.println("Commands DONE | NEXT end");
+
+        System.out.println("§aDémarrage du plugin TERMINE!");
         System.out.println("-----------------------------------------------------------------------------------------------------");
     }
 
@@ -270,7 +283,7 @@ public class Main extends JavaPlugin implements Listener {
         WineSpawn.DestroyPnj();
         vaultHook.unhook();
         System.out.println("-----------------------------------------------------------------------------------------------------");
-        System.out.println("Plugin stopp§ !");
+        System.out.println("Plugin stoppé !");
         System.out.println("-----------------------------------------------------------------------------------------------------");
     }
 
