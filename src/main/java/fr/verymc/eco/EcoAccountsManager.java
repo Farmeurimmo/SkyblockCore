@@ -8,9 +8,15 @@ import java.util.HashMap;
 
 public class EcoAccountsManager {
 
-    public static HashMap<String, Double> Moneys = new HashMap<>();
+    public static EcoAccountsManager instance;
 
-    public static void CheckForAccount(Player player) {
+    public EcoAccountsManager(){
+        instance = this;
+    }
+
+    public HashMap<String, Double> Moneys = new HashMap<>();
+
+    public void CheckForAccount(Player player) {
         if (Main.instance1.getDataz().get(player.getName()) == null) {
             Main.instance1.getDataz().set(player.getName(), 200);
             Main.instance1.saveData();
@@ -18,7 +24,7 @@ public class EcoAccountsManager {
         }
     }
 
-    public static boolean IsExisting(String player) {
+    public boolean IsExisting(String player) {
         boolean a = false;
         if (Main.instance1.getDataz().get(player) != null) {
             a = true;
@@ -26,7 +32,7 @@ public class EcoAccountsManager {
         return a;
     }
 
-    public static double GetMoney(String a) {
+    public double GetMoney(String a) {
         Double b = (double) 0;
         if (Moneys.containsKey(a)) {
             b = Moneys.get(a);
@@ -34,13 +40,13 @@ public class EcoAccountsManager {
         return b;
     }
 
-    public static double MoneyGetarrondiNDecimales(String playername, int n) {
-        double money = EcoAccountsManager.GetMoney(playername);
+    public double MoneyGetarrondiNDecimales(String playername, int n) {
+        double money = GetMoney(playername);
         double pow = Math.pow(10, n);
         return (Math.floor(money * pow)) / pow;
     }
 
-    public static boolean CheckForFounds(Player player, Double f) {
+    public boolean CheckForFounds(Player player, Double f) {
         boolean aa = false;
         Double moneyplayer = Moneys.get(player.getName());
         Double after = (Double) moneyplayer - f;
@@ -50,7 +56,7 @@ public class EcoAccountsManager {
         return aa;
     }
 
-    public static void RemoveFounds(String player, Double toremove) {
+    public void RemoveFounds(String player, Double toremove) {
         Double moneybefore = Moneys.get(player);
         if (moneybefore - toremove >= Double.MIN_VALUE) {
             double now = moneybefore - toremove;
@@ -67,7 +73,7 @@ public class EcoAccountsManager {
         }
     }
 
-    public static void SetFounds(String player, Double toset) {
+    public void SetFounds(String player, Double toset) {
         Moneys.put(player, toset);
         Main.instance1.getDataz().set(player, toset);
         Main.instance1.saveData();
@@ -76,7 +82,7 @@ public class EcoAccountsManager {
         }
     }
 
-    public static void AddFounds(String player, Double aaa, boolean dd) {
+    public void AddFounds(String player, Double aaa, boolean dd) {
         Double moneybefore = Moneys.get(player);
         if (moneybefore < Double.MAX_VALUE - aaa) {
             double now = Moneys.get(player) + aaa;
@@ -95,7 +101,7 @@ public class EcoAccountsManager {
         }
     }
 
-    public static void UpdateHash() {
+    public void UpdateHash() {
         for (String aa : Main.instance1.getDataz().getConfigurationSection("").getKeys(false)) {
             Moneys.put(aa, Main.instance1.getDataz().getDouble(aa));
         }

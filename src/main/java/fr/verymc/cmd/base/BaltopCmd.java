@@ -27,7 +27,7 @@ public class BaltopCmd implements CommandExecutor {
                 }
                 if (!args[0].contains("-") && digit == true) {
                     int intValue = Integer.parseInt(args[0]);
-                    int TotalPlayers = EcoAccountsManager.Moneys.size();
+                    int TotalPlayers = EcoAccountsManager.instance.Moneys.size();
                     int TotalPage = TotalPlayers / 10 + 1;
                     if (intValue >= 1) {
                         if (intValue <= TotalPage) {

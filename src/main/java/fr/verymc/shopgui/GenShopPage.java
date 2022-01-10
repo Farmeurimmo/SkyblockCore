@@ -231,7 +231,7 @@ public class GenShopPage {
         SkullMeta customb = (SkullMeta) custom2.getItemMeta();
         customb.setOwner(player.getName());
         customb.setDisplayName("§7" + player.getName());
-        customb.setLore(Arrays.asList("§7Grade: " + Grade, "§7Argent: " + EcoAccountsManager.Moneys.get(player.getName())));
+        customb.setLore(Arrays.asList("§7Grade: " + Grade, "§7Argent: " + EcoAccountsManager.instance.Moneys.get(player.getName())));
         custom2.setItemMeta(customb);
         inv.setItem(49, custom2);
 

@@ -89,7 +89,7 @@ public class ScoreBoard implements Listener {
                 }
             }
             if (board.getTeam("money") != null) {
-                Double a = EcoAccountsManager.MoneyGetarrondiNDecimales(player.getName(), 2);
+                Double a = EcoAccountsManager.instance.MoneyGetarrondiNDecimales(player.getName(), 2);
                 board.getTeam("money").setPrefix("§fArgent §8▸ §e" + a);
             }
             if (board.getTeam("online") != null) {

@@ -76,9 +76,9 @@ public class FarmHoeGui implements Listener {
         e.setCancelled(true);
         if(current.getType()==Material.DIAMOND_HOE){
             if(CheckForValidity(player.getItemInHand())){
-                if(EcoAccountsManager.CheckForFounds(player, 500000.0) &&
+                if(EcoAccountsManager.instance.CheckForFounds(player, 500000.0) &&
                   FarmHoeManager.GetBlockHaversted(player.getItemInHand()) >= 250000) {
-                    EcoAccountsManager.RemoveFounds(player.getName(), 500000.0);
+                    EcoAccountsManager.instance.RemoveFounds(player.getName(), 500000.0);
                     player.getItemInHand().setDisplayName("§6FarmHoe Tier §cII (3X3)");
                     player.closeInventory();
                 }
@@ -86,9 +86,9 @@ public class FarmHoeGui implements Listener {
         }
         if(current.getType()==Material.NETHERITE_HOE){
             if(CheckForValidity(player.getItemInHand())){
-                if(EcoAccountsManager.CheckForFounds(player, 1000000.0) &&
+                if(EcoAccountsManager.instance.CheckForFounds(player, 1000000.0) &&
                   FarmHoeManager.GetBlockHaversted(player.getItemInHand()) >= 500000) {
-                    EcoAccountsManager.RemoveFounds(player.getName(), 1000000.0);
+                    EcoAccountsManager.instance.RemoveFounds(player.getName(), 1000000.0);
                     player.getItemInHand().setDisplayName("§6FarmHoe Tier §cIII (5X5)");
                     player.closeInventory();
                 }
@@ -109,7 +109,7 @@ public class FarmHoeGui implements Listener {
         SkullMeta customb = (SkullMeta) custom2.getItemMeta();
         customb.setOwner(player.getName());
         customb.setDisplayName("§7" + player.getName());
-        customb.setLore(Arrays.asList("§7Grade: " + Grade, "§7Argent: " + EcoAccountsManager.Moneys.get(player.getName())));
+        customb.setLore(Arrays.asList("§7Grade: " + Grade, "§7Argent: " + EcoAccountsManager.instance.Moneys.get(player.getName())));
         custom2.setItemMeta(customb);
 
         ItemStack custom8 = new ItemStack(Material.IRON_DOOR, 1);
