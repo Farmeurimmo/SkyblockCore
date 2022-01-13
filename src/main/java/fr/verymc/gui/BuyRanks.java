@@ -9,7 +9,7 @@ public class BuyRanks {
     public static void BuyRank(String rank, Player player) {
         Double money = EcoAccountsManager.instance.Moneys.get(player.getName());
 
-        if (rank.contains("L§gende")) {
+        if (rank.contains("Légende")) {
             if (money >= Farm2WinGui.legendeprix) ;
             EcoAccountsManager.instance.RemoveFounds(player.getName(), (double) Farm2WinGui.legendeprix);
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lpv user " + player.getName() + " parent add legende server=skyblock");

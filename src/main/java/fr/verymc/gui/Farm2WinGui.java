@@ -75,10 +75,10 @@ public class Farm2WinGui implements Listener {
                     player.sendMessage("§cErreur, vous n'avez pas asser d'argent.");
                 }
             }
-            if (current.getType() == Material.CHEST) {
+            if (current.getType() == Material.HOPPER) {
                 if (EcoAccountsManager.instance.GetMoney(player.getName()) >= 500000) {
                     EcoAccountsManager.instance.RemoveFounds(player.getName(), (double) 500000);
-                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "chests give " + player.getName() + " Collecteur");
+                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "chests " + player.getName() + " ChunkHoppeur");
                 } else {
                     player.sendMessage("§cErreur, vous n'avez pas asser d'argent.");
                 }
@@ -86,7 +86,7 @@ public class Farm2WinGui implements Listener {
             if (current.getType() == Material.TRAPPED_CHEST) {
                 if (EcoAccountsManager.instance.GetMoney(player.getName()) >= 1000000) {
                     EcoAccountsManager.instance.RemoveFounds(player.getName(), (double) 1000000);
-                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "chests give " + player.getName() + " sell_chest");
+                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "chests " + player.getName() + " SellChest");
                 } else {
                     player.sendMessage("§cErreur, vous n'avez pas asser d'argent.");
                 }

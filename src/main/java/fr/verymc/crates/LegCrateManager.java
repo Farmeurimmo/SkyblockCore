@@ -34,7 +34,7 @@ public class LegCrateManager {
             return loot;
         }
         if (n >= 16 && n <= 20) {
-            loot = "x1 Ep§e légendaire";
+            loot = "x1 Epée légendaire";
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "itemleg give " + player.getName() + " §p§e");
             return loot;
         }
@@ -44,36 +44,32 @@ public class LegCrateManager {
             return loot;
         }
         if (n >= 32 && n <= 33) {
-            if (!player.hasPermission("dieu")) {
-                loot = "Grade §9Dieu";
-                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + player.getName() + " parent set Dieu server=skyblock");
+            if (!player.hasPermission("legende")) {
+                loot = "Grade §eLégende";
+                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + player.getName() + " parent set legende server=skyblock");
             } else {
                 loot = "reroll";
             }
             return loot;
         }
         if (n >= 34 && n <= 37) {
-            if (!player.hasPermission("legende")) {
-                loot = "Grade §eL§gende";
-                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + player.getName() + " parent set Legende server=skyblock");
-            } else {
-                loot = "reroll";
-            }
+            loot = "x1 Fly de 30 minutes";
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "featherfly give " + player.getName() + " 30min");
             return loot;
         }
-        if (n >= 38 && n <= 43) {
-            loot = "x1 Spawneur à Iron Golem";
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "silkspawners add " + player.getName() + " iron_golem");
+        if (n >= 38 && n <= 45) {
+            loot = "x1 ChunkHoppeur";
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "chests " + player.getName() + " ChunkHoppeur");
             return loot;
         }
-        if (n >= 44 && n <= 48) {
+        if (n >= 46 && n <= 49) {
+            loot = "x1 Spawneurs à Iron Golem";
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "silkspawners add " + player.getName() + " iron_golem 1");
+            return loot;
+        }
+        if (n >= 50 && n <= 52) {
             loot = "x2 Spawneurs à Iron Golem";
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "silkspawners add " + player.getName() + " iron_golem 2");
-            return loot;
-        }
-        if (n >= 49 && n <= 52) {
-            loot = "x3 Spawneurs à Iron Golem";
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "silkspawners add " + player.getName() + " iron_golem 3");
             return loot;
         }
         if (n >= 53 && n <= 64) {
@@ -83,12 +79,13 @@ public class LegCrateManager {
         }
         if (n >= 65 && n <= 68) {
             loot = "x1 SellChest";
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "chests give " + player.getName() + " sell_chest");
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "chests " + player.getName() + " SellChest");
             return loot;
         }
         if (n >= 69 && n <= 72) {
             loot = "x2 SellChest";
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "chests give " + player.getName() + " sell_chest 2");
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "chests " + player.getName() + " SellChest");
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "chests " + player.getName() + " SellChest");
             return loot;
         }
         if (n >= 73 && n <= 78) {
@@ -162,7 +159,7 @@ public class LegCrateManager {
 
         ItemStack custom4 = new ItemStack(Material.NETHERITE_SWORD, 1);
         ItemMeta meta4 = custom4.getItemMeta();
-        meta4.setDisplayName("§6Ep§e légendaire");
+        meta4.setDisplayName("§6Epée légendaire");
         meta4.setLore(Arrays.asList("§7", "§e5%"));
         meta4.addEnchant(Enchantment.DAMAGE_ALL, 7, true);
         meta4.addEnchant(Enchantment.DAMAGE_UNDEAD, 7, true);
@@ -173,24 +170,24 @@ public class LegCrateManager {
         custom4.setItemMeta(meta4);
         inv.setItem(13, custom4);
 
-        ItemStack custom5 = new ItemStack(Material.SPAWNER, 1);
+        ItemStack custom5 = new ItemStack(Material.HOPPER, 1);
         ItemMeta meta5 = custom5.getItemMeta();
-        meta5.setDisplayName("§6Spawneur à Iron Golem x1");
-        meta5.setLore(Arrays.asList("§7", "§e6%"));
+        meta5.setDisplayName("§6ChunkHoppeur");
+        meta5.setLore(Arrays.asList("§7", "§e8%"));
         custom5.setItemMeta(meta5);
         inv.setItem(14, custom5);
 
         ItemStack custom6 = new ItemStack(Material.SPAWNER, 2);
         ItemMeta meta6 = custom6.getItemMeta();
-        meta6.setDisplayName("§6Spawneur à Iron Golem x2");
-        meta6.setLore(Arrays.asList("§7", "§e5%"));
+        meta6.setDisplayName("§6Spawneur à Iron Golem x1");
+        meta6.setLore(Arrays.asList("§7", "§e4%"));
         custom6.setItemMeta(meta6);
         inv.setItem(15, custom6);
 
         ItemStack custom7 = new ItemStack(Material.SPAWNER, 3);
         ItemMeta meta7 = custom7.getItemMeta();
-        meta7.setDisplayName("§6Spawneur à Iron Golem x3");
-        meta7.setLore(Arrays.asList("§7", "§e4%"));
+        meta7.setDisplayName("§6Spawneur à Iron Golem x2");
+        meta7.setLore(Arrays.asList("§7", "§e3%"));
         custom7.setItemMeta(meta7);
         inv.setItem(16, custom7);
 
@@ -264,16 +261,16 @@ public class LegCrateManager {
         custom18.setItemMeta(meta18);
         inv.setItem(30, custom18);
 
-        ItemStack custom19 = new ItemStack(Material.PAPER, 1);
+        ItemStack custom19 = new ItemStack(Material.FEATHER, 1);
         ItemMeta meta19 = custom19.getItemMeta();
-        meta19.setDisplayName("§6Grade §eL§gende");
+        meta19.setDisplayName("§6Fly de 30 minutes");
         meta19.setLore(Arrays.asList("§7", "§e3%"));
         custom19.setItemMeta(meta19);
         inv.setItem(31, custom19);
 
         ItemStack custom20 = new ItemStack(Material.PAPER, 1);
         ItemMeta meta20 = custom20.getItemMeta();
-        meta20.setDisplayName("§6Grade §9Dieu");
+        meta20.setDisplayName("§6Grade §eLégende");
         meta20.setLore(Arrays.asList("§7", "§e1%"));
         custom20.setItemMeta(meta20);
         inv.setItem(32, custom20);

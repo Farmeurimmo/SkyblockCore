@@ -48,7 +48,7 @@ public class MakeItemGui {
         custom11.setItemMeta(customj);
         invboutiquefarm2win.setItem(16, custom11);
 
-        ItemStack custom12 = new ItemStack(Material.CHEST, 1);
+        ItemStack custom12 = new ItemStack(Material.HOPPER, 1);
         ItemMeta customk = custom12.getItemMeta();
         customk.setDisplayName("§eCollecteur de chunk (chunkhopper)");
         customk.setLore(Arrays.asList("§6Prix: 500000$"));
