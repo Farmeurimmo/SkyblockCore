@@ -13,7 +13,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 public class WarpGui implements Listener {
 
     public static void OpenGUi(Player player) {
-        Inventory inv = Bukkit.createInventory(null, 45, "§6Warps");
+        Inventory inv = Bukkit.createInventory(null, 27, "§6Warps");
 
         ItemStack custom1 = new ItemStack(Material.ENDER_CHEST, 1);
         ItemMeta meta1 = custom1.getItemMeta();
@@ -27,7 +27,7 @@ public class WarpGui implements Listener {
 
         ItemStack custom3 = new ItemStack(Material.POTION, 1);
         ItemMeta meta3 = custom3.getItemMeta();
-        meta3.setDisplayName("§6Bar §c(en d§veloppement)");
+        meta3.setDisplayName("§6Bar");
         custom3.setItemMeta(meta3);
 
         inv.setItem(10, custom1);
@@ -60,26 +60,12 @@ public class WarpGui implements Listener {
         inv.setItem(23, custom8);
         inv.setItem(24, custom8);
         inv.setItem(25, custom8);
-        inv.setItem(26, custom8);
-        inv.setItem(27, custom8);
-        inv.setItem(29, custom8);
-        inv.setItem(31, custom8);
-        inv.setItem(33, custom8);
-        inv.setItem(35, custom8);
-        inv.setItem(36, custom8);
-        inv.setItem(37, custom8);
-        inv.setItem(38, custom8);
-        inv.setItem(39, custom8);
-        inv.setItem(40, custom8);
-        inv.setItem(41, custom8);
-        inv.setItem(42, custom8);
-        inv.setItem(43, custom8);
 
         ItemStack custom9 = new ItemStack(Material.ARROW, 1);
         ItemMeta customh = custom9.getItemMeta();
         customh.setDisplayName("§6Retour §8| §7(clic gauche)");
         custom9.setItemMeta(customh);
-        inv.setItem(44, custom9);
+        inv.setItem(26, custom9);
 
         player.openInventory(inv);
     }

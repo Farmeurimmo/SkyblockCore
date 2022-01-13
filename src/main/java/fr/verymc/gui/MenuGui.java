@@ -51,7 +51,7 @@ public class MenuGui implements Listener {
 
         ItemStack custom5 = new ItemStack(Material.SADDLE, 1);
         ItemMeta meta5 = custom5.getItemMeta();
-        meta5.setDisplayName("§6H§tel des ventes §8| §7(clic gauche)");
+        meta5.setDisplayName("§6Hôtel des ventes §8| §7(clic gauche)");
         custom5.setItemMeta(meta5);
         inv.setItem(14, custom5);
 

@@ -41,11 +41,11 @@ public class FeatherFlyCmd implements CommandExecutor, TabCompleter {
                                 customf.setUnbreakable(true);
                                 customf.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
                                 customf.setDisplayName("§eFly de " + sb + " " + args[2].replace(sb, "").replace("min", "minutes").replace("sec", "secondes").replace("heur", "heures"));
-                                customf.setLore(Arrays.asList("§7Pl§me qui vous donne la possibilit§ de", "§7voler pendant un temps d§finit."));
+                                customf.setLore(Arrays.asList("§7Plûme qui vous donne la possibilité de", "§7voler pendant un temps définit."));
                                 custom6.setItemMeta(customf);
                                 Player player = Bukkit.getPlayer(args[1]);
                                 player.getInventory().addItem(custom6);
-                                player.sendMessage("§eVous avez reçu une pl§me de fly de " + sb + " " + args[2].replace(sb, "").replace("min", "minutes").replace("sec", "secondes").replace("heur", "heures"));
+                                player.sendMessage("§eVous avez reçu une plûme de fly de " + sb + " " + args[2].replace(sb, "").replace("min", "minutes").replace("sec", "secondes").replace("heur", "heures"));
                             }
                         }
                     }

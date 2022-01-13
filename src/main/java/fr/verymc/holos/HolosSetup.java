@@ -78,8 +78,8 @@ public class HolosSetup implements Listener {
         holodieu.appendTextLine("§6§lAvantages du Grade §9§lDieu");
         holodieu.appendTextLine("");
         holodieu.appendTextLine("§c§mAccès au /fly permanant");
-        holodieu.appendTextLine("§c§m§l90§f §6§l➞ §2§l180 §aminutes de fly journalier /dailyfly");
-        holodieu.appendTextLine("§aDélai de téléportation de §c§m§l3§f §6§l➞ §2§l1 §asecondes");
+        holodieu.appendTextLine("§c§m§l30§f §6§l➞ §2§l60 §aminutes de fly journalier /dailyfly");
+        holodieu.appendTextLine("§aDélai de téléportation de §c§m§l5§f §6§l➞ §2§l1 §asecondes");
         holodieu.appendTextLine("§aAccès au shop spawneurs");
         holodieu.appendTextLine("§aAccès au /craft");
         holodieu.appendTextLine("§aAccès au /feed");
@@ -96,8 +96,8 @@ public class HolosSetup implements Listener {
         holozeus.appendTextLine("§6§lAvantages du Grade §b§lZeus");
         holozeus.appendTextLine("");
         holozeus.appendTextLine("§aAccès au /fly permanant");
-        holozeus.appendTextLine("§c§m180 minutes de fly journalier /dailyfly");
-        holozeus.appendTextLine("§aDélai de téléportation de §c§m§L1§f §6§l➞ §2§linstantané");
+        holozeus.appendTextLine("§c§m60 minutes de fly journalier /dailyfly");
+        holozeus.appendTextLine("§aDélai de téléportation de §c§m§L5§f §6§l➞ §2§linstantané");
         holozeus.appendTextLine("§aAccès au shop spawneurs");
         holozeus.appendTextLine("§aAccès au /craft");
         holozeus.appendTextLine("§aAccès au /feed");
