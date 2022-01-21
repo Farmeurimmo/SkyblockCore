@@ -50,7 +50,7 @@ public class WineGui implements Listener {
 
                 if (money >= BuyWinePotion.cidreprice) {
                     EcoAccountsManager.instance.RemoveFounds(player.getName(), (double) BuyWinePotion.cidreprice);
-                    player.sendMessage("§6§lBarman §8» §fMerci de m'avoir achet§ du cidre.");
+                    player.sendMessage("§6§lBarman §8» §fMerci de m'avoir acheté du cidre.");
                     ItemStack custom1 = new ItemStack(Material.POTION, 1);
                     ItemMeta customa = custom1.getItemMeta();
                     customa.setDisplayName("§6Cidre");
@@ -63,7 +63,7 @@ public class WineGui implements Listener {
                     player.sendMessage("§6§lBarman §8» §fVous n'avez pas asser d'argent.");
                 }
             }
-            if (current.getType() == Material.POTION && current.getItemMeta().getDisplayName().equalsIgnoreCase("§6Bi§re")) {
+            if (current.getType() == Material.POTION && current.getItemMeta().getDisplayName().equalsIgnoreCase("§6Bière")) {
 
                 Double money = EcoAccountsManager.instance.Moneys.get(player.getName());
 
@@ -73,7 +73,7 @@ public class WineGui implements Listener {
                     player.sendMessage("§6§lBarman §8» §fMerci de m'avoir achet§ de la Bière.");
                     ItemStack custom1 = new ItemStack(Material.POTION, 1);
                     ItemMeta customa = custom1.getItemMeta();
-                    customa.setDisplayName("§6Bi§re");
+                    customa.setDisplayName("§6Bière");
                     customa.setLore(Arrays.asList("§6Gain possible 20000$", "§cEn cas de défaite, vous perdez l'alcool"));
                     customa.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
                     custom1.setItemMeta(customa);
@@ -89,7 +89,7 @@ public class WineGui implements Listener {
 
                 if (money >= BuyWinePotion.rhumprice) {
                     EcoAccountsManager.instance.RemoveFounds(player.getName(), (double) BuyWinePotion.rhumprice);
-                    player.sendMessage("§6§lBarman §8» §fMerci de m'avoir achet§ du rhum.");
+                    player.sendMessage("§6§lBarman §8» §fMerci de m'avoir acheté du rhum.");
                     ItemStack custom1 = new ItemStack(Material.POTION, 1);
                     ItemMeta customa = custom1.getItemMeta();
                     customa.setDisplayName("§6Rhum");
@@ -109,7 +109,7 @@ public class WineGui implements Listener {
 
                 if (money >= BuyWinePotion.vodkaprice) {
                     EcoAccountsManager.instance.RemoveFounds(player.getName(), (double) BuyWinePotion.vodkaprice);
-                    player.sendMessage("§6§lBarman §8» §fMerci de m'avoir achet§ de la vodka.");
+                    player.sendMessage("§6§lBarman §8» §fMerci de m'avoir acheté de la vodka.");
                     ItemStack custom1 = new ItemStack(Material.POTION, 1);
                     ItemMeta customa = custom1.getItemMeta();
                     customa.setDisplayName("§6Vodka");
@@ -156,7 +156,7 @@ public class WineGui implements Listener {
                                 player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, rest + 180, 0));
                                 player.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, rest + 180, 0));
                             }
-                            player.sendMessage("§6§lBarman §8» §fVous avez perdu, par cons§quent vous obtenez un §cmalus§7.");
+                            player.sendMessage("§6§lBarman §8» §fVous avez perdu, par conséquent vous obtenez un §cmalus§7.");
                         }
                         WineCooldown.add(player.getName());
                         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
@@ -189,7 +189,7 @@ public class WineGui implements Listener {
                                 player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, rest + 260, 1));
                                 player.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, rest + 260, 1));
                             }
-                            player.sendMessage("§6§lBarman §8» §fVous avez perdu, par cons§quent vous obtenez un §cmalus§7.");
+                            player.sendMessage("§6§lBarman §8» §fVous avez perdu, par conséquent vous obtenez un §cmalus§7.");
                         }
                         WineCooldown.add(player.getName());
                         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
@@ -222,7 +222,7 @@ public class WineGui implements Listener {
                                 player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, rest + 320, 2));
                                 player.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, rest + 320, 2));
                             }
-                            player.sendMessage("§6§lBarman §8» §fVous avez perdu, par cons§quent vous obtenez un §cmalus§7.");
+                            player.sendMessage("§6§lBarman §8» §fVous avez perdu, par conséquent vous obtenez un §cmalus§7.");
                         }
                         WineCooldown.add(player.getName());
                         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
@@ -255,7 +255,7 @@ public class WineGui implements Listener {
                                 player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, rest + 400, 3));
                                 player.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, rest + 400, 3));
                             }
-                            player.sendMessage("§6§lBarman §8» §fVous avez perdu, par cons§quent vous obtenez un §cmalus§7.");
+                            player.sendMessage("§6§lBarman §8» §fVous avez perdu, par conséquent vous obtenez un §cmalus§7.");
                         }
                         WineCooldown.add(player.getName());
                         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {

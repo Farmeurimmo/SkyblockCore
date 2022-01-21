@@ -31,8 +31,8 @@ public class BuyWinePotion {
 
         ItemStack custom2 = new ItemStack(Material.POTION, 1);
         ItemMeta meta2 = custom2.getItemMeta();
-        meta2.setDisplayName("§6Bi§re");
-        meta2.setLore(Arrays.asList("§7Cette bi§re est parfait pour l'apéro entre pote", "§7", "§6Prix: 10000$",
+        meta2.setDisplayName("§6Bière");
+        meta2.setLore(Arrays.asList("§7Cette Bière est parfait pour l'apéro entre pote", "§7", "§6Prix: 10000$",
                 "§7", "§6Gain possible 20000$", "§cEn cas de défaite, vous perdez l'alcool"));
         meta2.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
         custom2.setItemMeta(meta2);
