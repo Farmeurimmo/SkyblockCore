@@ -54,7 +54,7 @@ public class HolosSetup implements Listener {
     public static void SpawnCrates() {
         hololegende.appendTextLine("§c§lPREMIER GRADE");
         hololegende.appendTextLine("");
-        hololegende.appendTextLine("§6§lPRIX IG: §e§l?? ??? ???$");
+        hololegende.appendTextLine("§6§lPRIX IG: §e§l2 500 000$");
         hololegende.appendTextLine("§6§lPRIX BOUTIQUE: §e§l?€");
         hololegende.appendTextLine("");
         hololegende.appendTextLine("§6§lAvantages du Grade §e§lLégende");
@@ -72,7 +72,7 @@ public class HolosSetup implements Listener {
 
         holodieu.appendTextLine("§c§lGRADE INTERMÉDIAIRE");
         holodieu.appendTextLine("");
-        holodieu.appendTextLine("§6§lPRIX IG: §e§l?? ??? ???$");
+        holodieu.appendTextLine("§6§lPRIX IG: §e§l7 500 000$");
         holodieu.appendTextLine("§6§lPRIX BOUTIQUE: §e§l?€");
         holodieu.appendTextLine("");
         holodieu.appendTextLine("§6§lAvantages du Grade §9§lDieu");
@@ -90,7 +90,7 @@ public class HolosSetup implements Listener {
 
         holozeus.appendTextLine("§c§lMEILLEUR GRADE");
         holozeus.appendTextLine("");
-        holozeus.appendTextLine("§6§lPRIX IG: §e§l?? ??? ???$");
+        holozeus.appendTextLine("§6§lPRIX IG: §e§l14 000 000$");
         holozeus.appendTextLine("§6§lPRIX BOUTIQUE: §e§l?€");
         holozeus.appendTextLine("");
         holozeus.appendTextLine("§6§lAvantages du Grade §b§lZeus");

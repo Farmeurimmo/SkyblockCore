@@ -22,15 +22,15 @@ Shops:
       sell: 5
     2:
       material: PACKED_ICE
-      buy: 200
+      buy: 150
       sell: 6
     3:
       material: SOUL_SAND
-      buy: 45
+      buy: 40
       sell: 4
     4:
       material: STONE
-      buy: 100
+      buy: 80
       sell: 2
     5:
       material: GLOWSTONE
@@ -38,7 +38,7 @@ Shops:
       sell: 6
     6:
       material: SEA_LANTERN
-      buy: 80
+      buy: 70
       sell: 12
     7:
       material: SHROOMLIGHT
@@ -54,16 +54,16 @@ Shops:
       sell: 3
     10:
       material: BRICKS
-      buy: 130
+      buy: 90
       sell: 2
     11:
       material: BASALT
-      buy: 35
+      buy: 40
       sell: 2
     12:
       material: COBBLESTONE
-      buy: 60
-      sell: 0.5
+      buy: 40
+      sell: 1
     13:
       material: DIORITE
       buy: 60
@@ -74,11 +74,11 @@ Shops:
       sell: 0.80
     15:
       material: DIRT
-      buy: 80
+      buy: 60
       sell: 1
     16:
       material: GRASS_BLOCK
-      buy: 160
+      buy: 120
       sell: 2
     17:
       material: GRAVEL
@@ -86,20 +86,16 @@ Shops:
       sell: 2
     18:
       material: MYCELIUM
-      buy: 160
-      sell: 2.7
+      buy: 120
+      sell: 10
     19:
       material: PODZOL
-      buy: 160
-      sell: 2.5
+      buy: 120
+      sell: 10
     20:
       material: END_STONE
-      buy: 120
+      buy: 100
       sell: 2
-    21:
-      material: GLASS
-      buy: 70
-      sell: 2.5
     22:
       material: GRANITE
       buy: 40
@@ -138,7 +134,7 @@ Shops:
       sell: 2
     31:
       material: SAND
-      buy: 60
+      buy: 50
       sell: 2
     32:
       material: SANDSTONE
@@ -273,82 +269,78 @@ Shops:
       material: BAMBOO
       buy: 45
       sell: 0.5
-    3:
-      material: BEETROOT
-      buy: 55
-      sell: 3
     4:
       material: BEETROOT_SEEDS
-      buy: 55
+      buy: 45
       sell: 3
     5:
       material: BROWN_MUSHROOM
-      buy: 45
-      sell: 1.2
+      buy: 36
+      sell: 5
     6:
       material: CACTUS
-      buy: 60
+      buy: 32
       sell: 3.6
     7:
       material: CARROT
-      buy: 60
-      sell: 2
+      buy: 40
+      sell: 3
     8:
       material: CHORUS_FLOWER
-      buy: 120
+      buy: 88
       sell: 2
     9:
       material: CHORUS_FRUIT
-      buy: 75
-      sell: 1.2
+      buy: 36
+      sell: 2
     10:
       material: COCOA_BEANS
-      buy: 95
+      buy: 48
       sell: 3
     12:
       material: EGG
-      buy: 45
-      sell: 6
+      buy: 35
+      sell: 8
     13:
       material: KELP
-      buy: 40
-      sell: 0.8
+      buy: 25
+      sell: 0.5
     15:
       material: MELON
-      buy: 180
-      sell: 2.3
+      buy: 59
+      sell: 2.7
     17:
       material: MELON_SLICE
-      buy: 45
+      buy: 15
       sell: 0.5
     18:
       material: NETHER_WART
-      buy: 120
+      buy: 60
       sell: 2.8
     19:
       material: POTATO
-      buy: 60
-      sell: 2.5
+      buy: 40
+      sell: 3
     20:
       material: PUMPKIN
-      buy: 80
-      sell: 2.3
+      buy: 60
+      sell: 2.7
     22:
       material: RED_MUSHROOM
-      buy: 80
-      sell: 1.2
+      buy: 60
+      sell: 5
     23:
       material: SUGAR_CANE
-      buy: 90
-      sell: 5
+      buy: 50
+      sell: 3.2
     25:
       material: WHEAT
-      buy: 80
+      buy: 60
       sell: 3
     26:
       material: WHEAT_SEEDS
-      buy: 100
-      sell: 1.3
+      buy: 20
+      sell: 1
 
     ####################
 
@@ -433,31 +425,23 @@ Shops:
     1:
       material: ARROW
       buy: 40
-      sell: 2
-    2:
-      material: BLAZE_POWDER
-      buy: 18
-      sell: 2.6
+      sell: 8
     3:
       material: BLAZE_ROD
       buy: 55
-      sell: 6
+      sell: 7
     4:
       material: BONE
       buy: 60
-      sell: 6
+      sell: 8
     5:
       material: FEATHER
       buy: 65
-      sell: 5
-    6:
-      material: FERMENTED_SPIDER_EYE
-      buy: 85
-      sell: 8
+      sell: 9
     7:
       material: GHAST_TEAR
       buy: 65
-      sell: 10
+      sell: 20
     8:
       material: GUNPOWDER
       buy: 50
@@ -481,107 +465,71 @@ Shops:
     13:
       material: RABBIT_HIDE
       buy: 65
-      sell: 9
+      sell: 10
     14:
       material: ROTTEN_FLESH
       buy: 45
-      sell: 6
+      sell: 8
     15:
       material: SPIDER_EYE
       buy: 65
-      sell: 5
+      sell: 10
     16:
       material: STRING
       buy: 50
-      sell: 2.5
+      sell: 7
     17:
       material: SLIME_BALL
       buy: 70
-      sell: 8
+      sell: 15
     18:
       material: LEATHER
       buy: 60
-      sell: 10
+      sell: 11
 
   ###################
   Minerais:
 
-    3:
-      material: ANCIENT_DEBRIS
-      buy: 529
-      sell: 132.25
     4:
       material: COAL
-      buy: 21
-      sell: 5.25
-    5:
-      material: COAL_BLOCK
-      buy: 198.45
-      sell: 49.62
-    8:
-      material: DIAMOND
-      buy: 210
-      sell: 52.5
-    9:
-      material: DIAMOND_BLOCK
-      buy: 1984.5
-      sell: 496.13
-    10:
-      material: EMERALD
-      buy: 142.23
-      sell: 35.56
-    11:
-      material: EMERALD_BLOCK
-      buy: 1344.01
-      sell: 336.01
-    12:
-      material: GOLD_BLOCK
-      buy: 297.68
-      sell: 74.42
-    13:
-      material: GOLD_INGOT
-      buy: 31.5
-      sell: 7.88
-    14:
-      material: IRON_BLOCK
-      buy: 198.45
-      sell: 49.62
-    15:
-      material: IRON_INGOT
-      buy: 21
-      sell: 5.25
-    16:
-      material: LAPIS_BLOCK
-      buy: 136.44
-      sell: 34.11
+      buy: 15
+      sell: 4
     17:
       material: LAPIS_LAZULI
-      buy: 14.44
-      sell: 3.61
-    18:
-      material: NETHERITE_BLOCK
-      buy: 23296.05
-      sell: 5824.02
-    19:
-      material: NETHERITE_INGOT
-      buy: 2465.19
-      sell: 616.3
-    20:
-      material: QUARTZ
-      buy: 33.08
-      sell: 8.27
-    21:
-      material: QUARTZ_BLOCK
-      buy: 138.92
-      sell: 34.73
+      buy: 14
+      sell: 5
     22:
       material: REDSTONE
-      buy: 5.25
-      sell: 1.32
-    23:
-      material: REDSTONE_BLOCK
-      buy: 49.62
-      sell: 12.41
+      buy: 10
+      sell: 6
+    15:
+      material: IRON_INGOT
+      buy: 180
+      sell: 6
+    13:
+      material: GOLD_INGOT
+      buy: 230
+      sell: 8
+    8:
+      material: DIAMOND
+      buy: 620
+      sell: 25
+    10:
+      material: EMERALD
+      buy: 750
+      sell: 75
+    19:
+      material: NETHERITE_INGOT
+      buy: 2500
+      sell: 650
+    33:
+      material: ANCIENT_DEBRIS
+      buy: 500
+      sell: 250
+    20:
+      material: QUARTZ
+      buy: 15
+      sell: 6
 
     #################################
   Autres:
@@ -589,10 +537,6 @@ Shops:
     3:
       material: BELL
       buy: 1000
-      sell: -1
-    7:
-      material: ELYTRA
-      buy: -1
       sell: -1
     8:
       material: ENDER_CHEST
@@ -656,7 +600,7 @@ Shops:
       sell: -1
     49:
       material: BEACON
-      buy: 120000
+      buy: 10000
       sell: -1
     50:
       material: END_ROD
