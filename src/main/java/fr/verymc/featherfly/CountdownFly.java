@@ -1,6 +1,5 @@
 package main.java.fr.verymc.featherfly;
 
-import main.java.fr.verymc.utils.SendActionBar;
 import main.java.fr.verymc.core.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -99,7 +98,7 @@ public class CountdownFly implements Listener {
 
                     String messagetimeleft = "§aTemps restant: " + nhoursnew + ":" + nminnew + ":" + nsecnew;
                     CountdownFly.setCooldown(p.getName(), TimeLeft);
-                    SendActionBar.SendActionBarMsg(p, messagetimeleft);
+                    p.sendActionBar(messagetimeleft);
 
                 } else {
                     if (p.getGameMode() != GameMode.CREATIVE && p.getGameMode() != GameMode.SPECTATOR) {
@@ -108,7 +107,7 @@ public class CountdownFly implements Listener {
                         p.chat("/is home");
                         p.sendMessage("§6Fin du fly, Téléportation sur votre île..");
                     }
-                    SendActionBar.SendActionBarMsg(p, "§6Fin du fly.");
+                    p.sendActionBar("§6Fin du fly.");
                     fly.remove(p.getName());
                     Main.instance1.getDatac().set("Joueurs." + p.getName() + ".Fly.timeleft", 0);
                     Main.instance1.saveData();

@@ -1,6 +1,5 @@
 package main.java.fr.verymc.cmd.base;
 
-import main.java.fr.verymc.utils.SendActionBar;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -32,13 +31,13 @@ public class HatCmd implements CommandExecutor, TabCompleter {
                         player.getInventory().setHelmet(aaa);
                         player.getItemInHand().setAmount(0);
                     }
-                    SendActionBar.SendActionBarMsg(player, "§aItem en main équipé !");
+                    player.sendActionBar("§aItem en main équipé !");
                 } else {
                     player.getInventory().addItem(player.getInventory().getHelmet());
                     player.getInventory().setHelmet(null);
                 }
             } else {
-                SendActionBar.SendActionBarMsg(player, "§cPermissions insuffisantes !");
+                player.sendActionBar("§cPermissions insuffisantes !");
             }
         }
         return false;

@@ -1,7 +1,7 @@
 package main.java.fr.verymc.shopgui;
 
-import main.java.fr.verymc.eco.EcoAccountsManager;
 import main.java.fr.verymc.gui.MenuGui;
+import main.java.fr.verymc.utils.PreGenItems;
 import net.luckperms.api.LuckPermsProvider;
 import net.luckperms.api.model.user.User;
 import org.bukkit.Bukkit;
@@ -13,9 +13,6 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.SkullMeta;
-
-import java.util.Arrays;
 
 public class MainShopGui implements Listener {
 
@@ -84,23 +81,8 @@ public class MainShopGui implements Listener {
         custom12.setItemMeta(customk);
         inv.setItem(32, custom12);
 
-        ItemStack custom10 = new ItemStack(Material.PLAYER_HEAD, 1);
-        SkullMeta customi = (SkullMeta) custom10.getItemMeta();
-        customi.setOwner(player.getName());
-        customi.setDisplayName("§7" + player.getName());
-        customi.setLore(Arrays.asList("§7Grade: " + Grade, "§7Argent: " + EcoAccountsManager.instance.Moneys.get(player.getName())));
-        custom10.setItemMeta(customi);
-        inv.setItem(36, custom10);
 
-        ItemStack custom8 = new ItemStack(Material.WHITE_STAINED_GLASS_PANE, 1);
-        ItemMeta meta8 = custom8.getItemMeta();
-        meta8.setDisplayName("§6");
-        custom8.setItemMeta(meta8);
-        for (int i = 0; i < inv.getSize(); i++) {
-            if (inv.getItem(i) == null || inv.getItem(i).getType().equals(Material.AIR)) {
-                inv.setItem(i, custom8);
-            }
-        }
+        inv.setItem(36, PreGenItems.getOwnerHead(player));
 
 
         player.openInventory(inv);

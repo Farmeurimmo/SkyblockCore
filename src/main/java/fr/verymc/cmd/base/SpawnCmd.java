@@ -1,7 +1,6 @@
 package main.java.fr.verymc.cmd.base;
 
 import main.java.fr.verymc.utils.GetTeleportDelay;
-import main.java.fr.verymc.utils.SendActionBar;
 import main.java.fr.verymc.utils.TeleportPlayer;
 import main.java.fr.verymc.core.Main;
 import org.bukkit.Bukkit;
@@ -36,16 +35,16 @@ public class SpawnCmd implements CommandExecutor, TabCompleter {
                         if (Bukkit.getPlayer(args[0]).isOnline()) {
                             Player p = Bukkit.getPlayer(args[0]);
                             p.teleport(Spawn);
-                            SendActionBar.SendActionBarMsg(p, "§aVous avez été Téléporté au spawn par un membre du staff !");
-                            SendActionBar.SendActionBarMsg(player, "§6" + p.getName() + " §aa été envoyé au spawn avec succès !");
+                            p.sendActionBar("§aVous avez été Téléporté au spawn par un membre du staff !");
+                            player.sendActionBar("§6" + p.getName() + " §aa été envoyé au spawn avec succès !");
                         } else {
-                            SendActionBar.SendActionBarMsg(player, "§cCe joueur n'est pas en ligne !");
+                            player.sendActionBar("§cCe joueur n'est pas en ligne !");
                         }
                     } else {
-                        SendActionBar.SendActionBarMsg(player, "§cCe joueur n'existe pas !");
+                        player.sendActionBar("§cCe joueur n'existe pas !");
                     }
                 } else {
-                    SendActionBar.SendActionBarMsg(player, "§c/spawn [Joueur]");
+                    player.sendActionBar("§c/spawn [Joueur]");
                 }
             }
         }

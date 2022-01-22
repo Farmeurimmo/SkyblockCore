@@ -1,6 +1,5 @@
 package main.java.fr.verymc.atout;
 
-import main.java.fr.verymc.utils.SendActionBar;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -20,7 +19,7 @@ public class AtoutCmd implements CommandExecutor, TabCompleter {
             if (args.length == 0) {
                 AtoutGui.MakeAtoutGui(player);
             } else {
-                SendActionBar.SendActionBarMsg(player, "§cTrop d'arguments");
+                player.sendActionBar("§cTrop d'arguments");
             }
         }
         return false;

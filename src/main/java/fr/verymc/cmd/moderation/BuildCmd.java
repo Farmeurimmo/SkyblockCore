@@ -1,6 +1,5 @@
 package main.java.fr.verymc.cmd.moderation;
 
-import main.java.fr.verymc.utils.SendActionBar;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -24,13 +23,13 @@ public class BuildCmd implements CommandExecutor, TabCompleter {
                 if (player.hasPermission("build")) {
                     if (Build.contains(player)) {
                         Build.remove(player);
-                        SendActionBar.SendActionBarMsg(player, "§6Mode buildeur désactivé !");
+                        player.sendActionBar("§6Mode buildeur désactivé !");
                     } else {
                         Build.add(player);
-                        SendActionBar.SendActionBarMsg(player, "§6Mode buildeur activé !");
+                        player.sendActionBar("§6Mode buildeur activé !");
                     }
                 } else {
-                    SendActionBar.SendActionBarMsg(player, "§cPermissions insuffisantes !");
+                    player.sendActionBar("§cPermissions insuffisantes !");
                 }
             }
         }

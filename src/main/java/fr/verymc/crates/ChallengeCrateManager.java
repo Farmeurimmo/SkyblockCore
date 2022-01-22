@@ -201,17 +201,6 @@ public class ChallengeCrateManager {
         inv.setItem(25, custom14);
 
 
-        ItemStack custom20 = new ItemStack(Material.WHITE_STAINED_GLASS_PANE, 1);
-        ItemMeta meta20 = custom20.getItemMeta();
-        meta20.setDisplayName("§6");
-        custom20.setItemMeta(meta20);
-
-        for (int i = 0; i < inv.getSize(); i++) {
-            if (inv.getItem(i) == null || inv.getItem(i).getType().equals(Material.AIR)) {
-                inv.setItem(i, custom20);
-            }
-        }
-
         player.openInventory(inv);
     }
 

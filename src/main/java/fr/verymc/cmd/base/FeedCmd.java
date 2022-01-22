@@ -1,6 +1,5 @@
 package main.java.fr.verymc.cmd.base;
 
-import main.java.fr.verymc.utils.SendActionBar;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -34,7 +33,7 @@ public class FeedCmd implements CommandExecutor, TabCompleter {
             if (player.hasPermission("feed")) {
                 if (!cooldowns.containsKey(player.getUniqueId())) {
                     player.setFoodLevel(20);
-                    SendActionBar.SendActionBarMsg(player, "§aVous avez été rassasié.");
+                    player.sendActionBar("§aVous avez été rassasié.");
                     int timeLeft = getCooldown(player.getUniqueId());
                     if (timeLeft == 0) {
                         setCooldown(player.getUniqueId(), 20);
@@ -52,10 +51,10 @@ public class FeedCmd implements CommandExecutor, TabCompleter {
                         }.runTaskTimer(Bukkit.getPluginManager().getPlugin("SkyblockCore"), 20, 20);
                     }
                 } else {
-                    SendActionBar.SendActionBarMsg(player, "§cErreur, il reste " + getCooldown(player.getUniqueId()) + " seconde(s) avant r§utilisation");
+                    player.sendActionBar("§cErreur, il reste " + getCooldown(player.getUniqueId()) + " seconde(s) avant r§utilisation");
                 }
             } else {
-                SendActionBar.SendActionBarMsg(player, "§cPermissions insuffisantes.");
+                player.sendActionBar("§cPermissions insuffisantes.");
             }
         }
         return false;

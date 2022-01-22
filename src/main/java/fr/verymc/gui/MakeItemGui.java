@@ -1,6 +1,6 @@
 package main.java.fr.verymc.gui;
 
-import main.java.fr.verymc.eco.EcoAccountsManager;
+import main.java.fr.verymc.utils.PreGenItems;
 import net.luckperms.api.LuckPermsProvider;
 import net.luckperms.api.model.user.User;
 import org.bukkit.Bukkit;
@@ -9,7 +9,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.SkullMeta;
 
 import java.util.Arrays;
 
@@ -21,13 +20,6 @@ public class MakeItemGui {
 
 
         Inventory invboutiquefarm2win = Bukkit.createInventory(null, 27, "§6Boutique des items Farm2Win");
-
-        ItemStack custom2 = new ItemStack(Material.PLAYER_HEAD, 1);
-        SkullMeta customb = (SkullMeta) custom2.getItemMeta();
-        customb.setOwner(player.getName());
-        customb.setDisplayName("§7" + player.getName());
-        customb.setLore(Arrays.asList("§7Grade: " + Grade, "§7Argent: " + EcoAccountsManager.instance.Moneys.get(player.getName())));
-        custom2.setItemMeta(customb);
 
         ItemStack custom8 = new ItemStack(Material.ARROW, 1);
         ItemMeta customh = custom8.getItemMeta();
@@ -56,17 +48,7 @@ public class MakeItemGui {
         invboutiquefarm2win.setItem(13, custom12);
 
         invboutiquefarm2win.setItem(26, custom8);
-        invboutiquefarm2win.setItem(22, custom2);
-
-        ItemStack custom9 = new ItemStack(Material.WHITE_STAINED_GLASS_PANE, 1);
-        ItemMeta meta9 = custom9.getItemMeta();
-        meta9.setDisplayName("§6");
-        custom9.setItemMeta(meta9);
-        for (int i = 0; i < invboutiquefarm2win.getSize(); i++) {
-            if (invboutiquefarm2win.getItem(i) == null || invboutiquefarm2win.getItem(i).getType().equals(Material.AIR)) {
-                invboutiquefarm2win.setItem(i, custom9);
-            }
-        }
+        invboutiquefarm2win.setItem(22, PreGenItems.getOwnerHead(player));
 
         player.openInventory(invboutiquefarm2win);
     }

@@ -1,6 +1,5 @@
 package main.java.fr.verymc.cmd.moderation;
 
-import main.java.fr.verymc.utils.SendActionBar;
 import main.java.fr.verymc.gui.AfkMineCaptchaGui;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -22,7 +21,7 @@ public class AntiAfkMineCmd implements CommandExecutor, TabCompleter {
             Player player = (Player) sender;
             if (player.hasPermission("*")) {
                 if (args.length == 0) {
-                    SendActionBar.SendActionBarMsg(player, "§c/afkmine <Joueur>");
+                    player.sendActionBar("§c/afkmine <Joueur>");
                     return true;
                 }
                 if (args.length == 1) {
@@ -31,14 +30,14 @@ public class AntiAfkMineCmd implements CommandExecutor, TabCompleter {
                             Player p = Bukkit.getPlayer(args[0]);
                             AfkMineCaptchaGui.MakeAfkMineCaptchaGui(p);
                         } else {
-                            SendActionBar.SendActionBarMsg(player, "§cCe joueur n'est pas en ligne !");
+                            player.sendActionBar("§cCe joueur n'est pas en ligne !");
                         }
                     } else {
-                        SendActionBar.SendActionBarMsg(player, "§cCe joueur n'existe pas !");
+                        player.sendActionBar("§cCe joueur n'existe pas !");
                     }
                 }
             } else {
-                SendActionBar.SendActionBarMsg(player, "§cPermissions insuffisantes !");
+                player.sendActionBar("§cPermissions insuffisantes !");
             }
         }
 

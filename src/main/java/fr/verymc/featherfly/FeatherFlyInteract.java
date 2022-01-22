@@ -1,6 +1,5 @@
 package main.java.fr.verymc.featherfly;
 
-import main.java.fr.verymc.utils.SendActionBar;
 import main.java.fr.verymc.core.Main;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -74,7 +73,7 @@ public class FeatherFlyInteract implements Listener {
         if (player.getGameMode() != GameMode.CREATIVE && player.getGameMode() != GameMode.SPECTATOR) {
             if (player.getWorld().getName().equalsIgnoreCase("world")) {
                 e.setCancelled(true);
-                SendActionBar.SendActionBarMsg(player, "§cVous ne pouvez pas fly au spawn.");
+                player.sendActionBar("§cVous ne pouvez pas fly au spawn.");
                 player.setAllowFlight(false);
             } else {
                 e.setCancelled(false);

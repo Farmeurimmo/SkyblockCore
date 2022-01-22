@@ -275,18 +275,6 @@ public class LegCrateManager {
         custom20.setItemMeta(meta20);
         inv.setItem(32, custom20);
 
-
-        ItemStack custom8 = new ItemStack(Material.WHITE_STAINED_GLASS_PANE, 1);
-        ItemMeta meta8 = custom8.getItemMeta();
-        meta8.setDisplayName("§6");
-        custom8.setItemMeta(meta8);
-
-        for (int i = 0; i < inv.getSize(); i++) {
-            if (inv.getItem(i) == null || inv.getItem(i).getType().equals(Material.AIR)) {
-                inv.setItem(i, custom8);
-            }
-        }
-
         player.openInventory(inv);
     }
 

@@ -1,6 +1,6 @@
 package main.java.fr.verymc.shopgui;
 
-import main.java.fr.verymc.eco.EcoAccountsManager;
+import main.java.fr.verymc.utils.PreGenItems;
 import net.luckperms.api.LuckPermsProvider;
 import net.luckperms.api.model.user.User;
 import org.bukkit.Bukkit;
@@ -9,7 +9,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.SkullMeta;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -33,13 +32,7 @@ public class GenAmoutShopGui {
         for (Entry<ItemStack, Integer> cc : amountchoice.entrySet()) {
             inv.setItem(cc.getValue(), cc.getKey());
         }
-        ItemStack custom2 = new ItemStack(Material.PLAYER_HEAD, 1);
-        SkullMeta customb = (SkullMeta) custom2.getItemMeta();
-        customb.setOwner(player.getName());
-        customb.setDisplayName("§7" + player.getName());
-        customb.setLore(Arrays.asList("§7Grade: " + Grade, "§7Argent: " + EcoAccountsManager.instance.Moneys.get(player.getName())));
-        custom2.setItemMeta(customb);
-        inv.setItem(49, custom2);
+        inv.setItem(49, PreGenItems.getOwnerHead(player));
 
         ItemStack custom7 = new ItemStack(Material.ARROW, 1);
         ItemMeta customg = custom7.getItemMeta();

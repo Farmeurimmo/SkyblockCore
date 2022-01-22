@@ -34,33 +34,6 @@ public class WarpGui implements Listener {
         inv.setItem(12, custom2);
         inv.setItem(14, custom3);
 
-        ItemStack custom8 = new ItemStack(Material.WHITE_STAINED_GLASS_PANE, 1);
-        ItemMeta meta8 = custom8.getItemMeta();
-        meta8.setDisplayName("§6");
-        custom8.setItemMeta(meta8);
-        inv.setItem(0, custom8);
-        inv.setItem(1, custom8);
-        inv.setItem(2, custom8);
-        inv.setItem(3, custom8);
-        inv.setItem(4, custom8);
-        inv.setItem(5, custom8);
-        inv.setItem(6, custom8);
-        inv.setItem(7, custom8);
-        inv.setItem(8, custom8);
-        inv.setItem(9, custom8);
-        inv.setItem(11, custom8);
-        inv.setItem(13, custom8);
-        inv.setItem(15, custom8);
-        inv.setItem(17, custom8);
-        inv.setItem(18, custom8);
-        inv.setItem(19, custom8);
-        inv.setItem(20, custom8);
-        inv.setItem(21, custom8);
-        inv.setItem(22, custom8);
-        inv.setItem(23, custom8);
-        inv.setItem(24, custom8);
-        inv.setItem(25, custom8);
-
         ItemStack custom9 = new ItemStack(Material.ARROW, 1);
         ItemMeta customh = custom9.getItemMeta();
         customh.setDisplayName("§6Retour §8| §7(clic gauche)");

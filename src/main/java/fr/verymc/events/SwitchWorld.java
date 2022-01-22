@@ -1,6 +1,5 @@
 package main.java.fr.verymc.events;
 
-import main.java.fr.verymc.utils.SendActionBar;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -17,7 +16,7 @@ public class SwitchWorld implements Listener {
                 if (player.getGameMode() == GameMode.CREATIVE || player.getGameMode() == GameMode.SPECTATOR) return;
                 player.setAllowFlight(false);
                 player.setFlying(false);
-                SendActionBar.SendActionBarMsg(player, "§aFly désactivé");
+                player.sendActionBar("§aFly désactivé");
             }
         }
         if (player.getWorld().getName().equalsIgnoreCase("IlesSkyblock")) {
@@ -25,7 +24,7 @@ public class SwitchWorld implements Listener {
                 if (player.getAllowFlight() == false) {
                     player.setAllowFlight(true);
                     player.setFlying(true);
-                    SendActionBar.SendActionBarMsg(player, "§aFly activé");
+                    player.sendActionBar("§aFly activé");
                 }
             }
         }

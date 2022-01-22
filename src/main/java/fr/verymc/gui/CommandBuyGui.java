@@ -1,6 +1,7 @@
 package main.java.fr.verymc.gui;
 
 import main.java.fr.verymc.eco.EcoAccountsManager;
+import main.java.fr.verymc.utils.PreGenItems;
 import net.luckperms.api.LuckPermsProvider;
 import net.luckperms.api.model.user.User;
 import org.bukkit.Bukkit;
@@ -23,13 +24,7 @@ public class CommandBuyGui {
 
         Inventory inv = Bukkit.createInventory(null, 36, "§6Boutique des commandes Farm2Win");
 
-        ItemStack custom2 = new ItemStack(Material.PLAYER_HEAD, 1);
-        SkullMeta customb = (SkullMeta) custom2.getItemMeta();
-        customb.setOwner(player.getName());
-        customb.setDisplayName("§7" + player.getName());
-        customb.setLore(Arrays.asList("§7Grade: " + Grade, "§7Argent: " + EcoAccountsManager.instance.Moneys.get(player.getName())));
-        custom2.setItemMeta(customb);
-        inv.setItem(31, custom2);
+        inv.setItem(31, PreGenItems.getOwnerHead(player));
 
         ItemStack custom10 = new ItemStack(Material.BEDROCK, 1);
         ItemMeta customi = custom10.getItemMeta();
@@ -153,17 +148,6 @@ public class CommandBuyGui {
         customh.setDisplayName("§6Retour §8| §7(clic gauche)");
         custom8.setItemMeta(customh);
         inv.setItem(35, custom8);
-
-        ItemStack custom9 = new ItemStack(Material.WHITE_STAINED_GLASS_PANE, 1);
-        ItemMeta meta9 = custom9.getItemMeta();
-        meta9.setDisplayName("§6");
-        custom9.setItemMeta(meta9);
-
-        for (int i = 0; i < inv.getSize(); i++) {
-            if (inv.getItem(i) == null || inv.getItem(i).getType().equals(Material.AIR)) {
-                inv.setItem(i, custom9);
-            }
-        }
 
         player.openInventory(inv);
     }

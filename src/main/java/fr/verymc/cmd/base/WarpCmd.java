@@ -1,7 +1,6 @@
 package main.java.fr.verymc.cmd.base;
 
 import main.java.fr.verymc.utils.GetTeleportDelay;
-import main.java.fr.verymc.utils.SendActionBar;
 import main.java.fr.verymc.utils.TeleportPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -43,15 +42,15 @@ public class WarpCmd implements CommandExecutor, TabCompleter {
                             Player p = Bukkit.getPlayer(args[1]);
                             if (args[0].equalsIgnoreCase("boxes")) {
                                 p.teleport(Crates);
-                                SendActionBar.SendActionBarMsg(p, "§aVous avez été téléporté au warp boxes par un membre du staff !");
+                                p.sendActionBar("§aVous avez été téléporté au warp boxes par un membre du staff !");
                             }
                             if (args[0].equalsIgnoreCase("enchantement")) {
                                 p.teleport(Enchantement);
-                                SendActionBar.SendActionBarMsg(p, "§aVous avez été téléporté au warp enchantement par un membre du staff !");
+                                p.sendActionBar("§aVous avez été téléporté au warp enchantement par un membre du staff !");
                             }
                             if (args[0].equalsIgnoreCase("bar")) {
                                 p.teleport(Bar);
-                                SendActionBar.SendActionBarMsg(p, "§aVous avez été téléporté au warp bar par un membre du staff !");
+                                p.sendActionBar("§aVous avez été téléporté au warp bar par un membre du staff !");
                             }
                         }
                     }

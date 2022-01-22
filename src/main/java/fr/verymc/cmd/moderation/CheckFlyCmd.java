@@ -1,6 +1,5 @@
 package main.java.fr.verymc.cmd.moderation;
 
-import main.java.fr.verymc.utils.SendActionBar;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -20,7 +19,7 @@ public class CheckFlyCmd implements CommandExecutor, TabCompleter {
             Player player = (Player) sender;
             if (player.hasPermission("*")) {
                 if (args.length == 0) {
-                    SendActionBar.SendActionBarMsg(player, "§c/checkfly <Joueur>");
+                    player.sendActionBar("§c/checkfly <Joueur>");
                 } else if (args.length == 1) {
                     if (Bukkit.getPlayer(args[0]) != null) {
                         if (Bukkit.getPlayer(args[0]).isOnline()) {
@@ -40,16 +39,16 @@ public class CheckFlyCmd implements CommandExecutor, TabCompleter {
                             player.sendMessage("§6Gestion du fly de " + p.getName() + ": \n§6Permission de voler " + color1 + p.getAllowFlight() + " \n§6En vol: " + color2 + p.isFlying());
                             return true;
                         } else {
-                            SendActionBar.SendActionBarMsg(player, "§cCe joueur n'est pas en ligne !");
+                            player.sendActionBar("§cCe joueur n'est pas en ligne !");
                         }
                     } else {
-                        SendActionBar.SendActionBarMsg(player, "§cCe joueur n'existe pas !");
+                        player.sendActionBar("§cCe joueur n'existe pas !");
                     }
                 } else {
-                    SendActionBar.SendActionBarMsg(player, "§c/checkfly <Joueur>");
+                    player.sendActionBar("§c/checkfly <Joueur>");
                 }
             } else {
-                SendActionBar.SendActionBarMsg(player, "§cVous n'avez pas la permission !");
+                player.sendActionBar("§cVous n'avez pas la permission !");
             }
         }
         return false;

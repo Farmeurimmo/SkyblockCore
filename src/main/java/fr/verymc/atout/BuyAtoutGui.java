@@ -3,6 +3,7 @@ package main.java.fr.verymc.atout;
 import main.java.fr.verymc.core.Main;
 import main.java.fr.verymc.eco.EcoAccountsManager;
 import main.java.fr.verymc.gui.Farm2WinGui;
+import main.java.fr.verymc.utils.PreGenItems;
 import net.luckperms.api.LuckPermsProvider;
 import net.luckperms.api.model.user.User;
 import org.bukkit.Bukkit;
@@ -14,7 +15,6 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -33,13 +33,7 @@ public class BuyAtoutGui implements Listener {
 
         Inventory inv = Bukkit.createInventory(null, 27, "§6Boutique des atouts");
 
-        ItemStack custom2 = new ItemStack(Material.PLAYER_HEAD, 1);
-        SkullMeta customb = (SkullMeta) custom2.getItemMeta();
-        customb.setOwner(player.getName());
-        customb.setDisplayName("§7" + player.getName());
-        customb.setLore(Arrays.asList("§7Grade: " + Grade, "§7Argent: " + EcoAccountsManager.instance.Moneys.get(player.getName())));
-        custom2.setItemMeta(customb);
-        inv.setItem(22, custom2);
+        inv.setItem(22, PreGenItems.getOwnerHead(player));
 
         if (Main.instance1.getData().getInt("Joueurs." + player.getName() + ".Atout.1.Level") == 0) {
             ItemStack custom1 = new ItemStack(Material.GOLDEN_PICKAXE, 1);
@@ -94,16 +88,7 @@ public class BuyAtoutGui implements Listener {
         custom8.setItemMeta(customh);
         inv.setItem(26, custom8);
 
-        ItemStack custom9 = new ItemStack(Material.WHITE_STAINED_GLASS_PANE, 1);
-        ItemMeta meta9 = custom9.getItemMeta();
-        meta9.setDisplayName("§6");
-        custom9.setItemMeta(meta9);
 
-        for (int i = 0; i < inv.getSize(); i++) {
-            if (inv.getItem(i) == null || inv.getItem(i).getType().equals(Material.AIR)) {
-                inv.setItem(i, custom9);
-            }
-        }
 
         player.openInventory(inv);
     }

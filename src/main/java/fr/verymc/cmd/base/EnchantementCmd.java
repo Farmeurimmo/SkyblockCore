@@ -1,6 +1,5 @@
 package main.java.fr.verymc.cmd.base;
 
-import main.java.fr.verymc.utils.SendActionBar;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
@@ -23,7 +22,7 @@ public class EnchantementCmd implements CommandExecutor, TabCompleter {
             if (player.hasPermission("enchantement")) {
                 player.openEnchanting(new Location(Bukkit.getServer().getWorld("world"), -181, 108, -69), true);
             } else {
-                SendActionBar.SendActionBarMsg(player, "§cPermissions insuffisantes !");
+                player.sendActionBar("§cPermissions insuffisantes !");
             }
         }
 

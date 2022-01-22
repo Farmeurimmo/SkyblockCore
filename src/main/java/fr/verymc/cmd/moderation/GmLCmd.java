@@ -1,6 +1,5 @@
 package main.java.fr.verymc.cmd.moderation;
 
-import main.java.fr.verymc.utils.SendActionBar;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.command.Command;
@@ -23,86 +22,86 @@ public class GmLCmd implements CommandExecutor, TabCompleter {
                 if (cmd.getName().equalsIgnoreCase("gma")) {
                     if (args.length == 0) {
                         player.setGameMode(GameMode.ADVENTURE);
-                        SendActionBar.SendActionBarMsg(player, "§aVous venez de passer en adventure");
+                        player.sendActionBar("§aVous venez de passer en adventure");
                     } else if (args.length == 1) {
                         if (Bukkit.getPlayer(args[0]) != null) {
                             if (Bukkit.getPlayer(args[0]).isOnline()) {
                                 Player p = Bukkit.getPlayer(args[0]);
                                 p.setGameMode(GameMode.ADVENTURE);
-                                SendActionBar.SendActionBarMsg(p, "§aVous venez de passer en adventure");
+                                p.sendActionBar("§aVous venez de passer en adventure");
                                 return true;
                             } else {
-                                SendActionBar.SendActionBarMsg(player, "§cCe joueur n'est pas en ligne !");
+                                player.sendActionBar("§cCe joueur n'est pas en ligne !");
                             }
                         } else {
-                            SendActionBar.SendActionBarMsg(player, "§cCe joueur n'existe pas !");
+                            player.sendActionBar("§cCe joueur n'existe pas !");
                         }
                     } else {
-                        SendActionBar.SendActionBarMsg(player, "§c/gma [Joueur]");
+                        player.sendActionBar("§c/gma [Joueur]");
                     }
                 } else if (cmd.getName().equalsIgnoreCase("gmc")) {
                     if (args.length == 0) {
                         player.setGameMode(GameMode.CREATIVE);
-                        SendActionBar.SendActionBarMsg(player, "§aVous venez de passer en créatif");
+                        player.sendActionBar("§aVous venez de passer en créatif");
                     } else if (args.length == 1) {
                         if (Bukkit.getPlayer(args[0]) != null) {
                             if (Bukkit.getPlayer(args[0]).isOnline()) {
                                 Player p = Bukkit.getPlayer(args[0]);
                                 p.setGameMode(GameMode.CREATIVE);
-                                SendActionBar.SendActionBarMsg(p, "§aVous venez de passer en créatif");
+                                p.sendActionBar("§aVous venez de passer en créatif");
                                 return true;
                             } else {
-                                SendActionBar.SendActionBarMsg(player, "§cCe joueur n'est pas en ligne !");
+                                player.sendActionBar("§cCe joueur n'est pas en ligne !");
                             }
                         } else {
-                            SendActionBar.SendActionBarMsg(player, "§cCe joueur n'existe pas !");
+                            player.sendActionBar("§cCe joueur n'existe pas !");
                         }
                     } else {
-                        SendActionBar.SendActionBarMsg(player, "§c/gmc [Joueur]");
+                        player.sendActionBar("§c/gmc [Joueur]");
                     }
                 } else if (cmd.getName().equalsIgnoreCase("gms")) {
                     if (args.length == 0) {
                         player.setGameMode(GameMode.SURVIVAL);
-                        SendActionBar.SendActionBarMsg(player, "§aVous venez de passer en survie");
+                        player.sendActionBar("§aVous venez de passer en survie");
                     } else if (args.length == 1) {
                         if (Bukkit.getPlayer(args[0]) != null) {
                             if (Bukkit.getPlayer(args[0]).isOnline()) {
                                 Player p = Bukkit.getPlayer(args[0]);
                                 p.setGameMode(GameMode.SURVIVAL);
-                                SendActionBar.SendActionBarMsg(p, "§aVous venez de passer en survie");
+                                p.sendActionBar("§aVous venez de passer en survie");
                                 return true;
                             } else {
-                                SendActionBar.SendActionBarMsg(player, "§cCe joueur n'est pas en ligne !");
+                                player.sendActionBar("§cCe joueur n'est pas en ligne !");
                             }
                         } else {
-                            SendActionBar.SendActionBarMsg(player, "§cCe joueur n'existe pas !");
+                            player.sendActionBar("§cCe joueur n'existe pas !");
                         }
                     } else {
-                        SendActionBar.SendActionBarMsg(player, "§c/gms [Joueur]");
+                        player.sendActionBar("§c/gms [Joueur]");
                     }
                 } else if (cmd.getName().equalsIgnoreCase("gmsp")) {
                     if (args.length == 0) {
                         player.setGameMode(GameMode.SPECTATOR);
-                        SendActionBar.SendActionBarMsg(player, "§aVous venez de passer en spectateur");
+                        player.sendActionBar("§aVous venez de passer en spectateur");
                     } else if (args.length == 1) {
                         if (Bukkit.getPlayer(args[0]) != null) {
                             if (Bukkit.getPlayer(args[0]).isOnline()) {
                                 Player p = Bukkit.getPlayer(args[0]);
                                 p.setGameMode(GameMode.SPECTATOR);
-                                SendActionBar.SendActionBarMsg(p, "§aVous venez de passer en spectateur");
+                                p.sendActionBar("§aVous venez de passer en spectateur");
                                 return true;
                             } else {
-                                SendActionBar.SendActionBarMsg(player, "§cCe joueur n'est pas en ligne !");
+                                player.sendActionBar("§cCe joueur n'est pas en ligne !");
                             }
                         } else {
-                            SendActionBar.SendActionBarMsg(player, "§cCe joueur n'existe pas !");
+                            player.sendActionBar("§cCe joueur n'existe pas !");
                         }
                     } else {
-                        SendActionBar.SendActionBarMsg(player, "§c/gmsp [Joueur]");
+                        player.sendActionBar("§c/gmsp [Joueur]");
                     }
                 }
             } else {
-                SendActionBar.SendActionBarMsg(player, "§cVous n'avez pas la permission !");
+                player.sendActionBar("§cVous n'avez pas la permission !");
             }
         }
         return false;

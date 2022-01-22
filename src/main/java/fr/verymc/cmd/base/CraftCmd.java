@@ -1,6 +1,5 @@
 package main.java.fr.verymc.cmd.base;
 
-import main.java.fr.verymc.utils.SendActionBar;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -21,7 +20,7 @@ public class CraftCmd implements CommandExecutor, TabCompleter {
             if (player.hasPermission("craft")) {
                 player.openWorkbench(null, true);
             } else {
-                SendActionBar.SendActionBarMsg(player, "§cPermissions insuffisantes !");
+                player.sendActionBar("§cPermissions insuffisantes !");
             }
         }
         return false;

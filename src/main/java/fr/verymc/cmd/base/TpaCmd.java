@@ -1,6 +1,5 @@
 package main.java.fr.verymc.cmd.base;
 
-import main.java.fr.verymc.utils.SendActionBar;
 import main.java.fr.verymc.core.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -42,7 +41,7 @@ public class TpaCmd implements CommandExecutor, TabCompleter {
         if (sender instanceof Player) {
             Player player = (Player) sender;
             if (args.length == 0 || args.length >= 2) {
-                SendActionBar.SendActionBarMsg(player, "§c/tpa <Joueur>");
+                player.sendActionBar("§c/tpa <Joueur>");
             } else if (args.length == 1) {
                 if (!Main.instance1.pending.contains(player)) {
                     if (Bukkit.getPlayer(args[0]) != null) {
@@ -63,13 +62,13 @@ public class TpaCmd implements CommandExecutor, TabCompleter {
                                         + "souhaitez §cannuler §fvotre demande de téléportation, merci d'effectuer la commande §c/tpacancel \n§f");
                                 return true;
                             } else {
-                                SendActionBar.SendActionBarMsg(player, "§6§lTéléportation §8» §fVous ne pouvez pas vous téléporter à vous même.");
+                                player.sendActionBar("§6§lTéléportation §8» §fVous ne pouvez pas vous téléporter à vous même.");
                             }
                         } else {
-                            SendActionBar.SendActionBarMsg(player, "§cCe joueur n'est pas en ligne !");
+                            player.sendActionBar("§cCe joueur n'est pas en ligne !");
                         }
                     } else {
-                        SendActionBar.SendActionBarMsg(player, "§cCe joueur n'existe pas !");
+                        player.sendActionBar("§cCe joueur n'existe pas !");
                     }
                 } else {
                     player.sendMessage("§6§lTéléportation §8» §fVous avez déjà une demande en cours, §cannulez §fla avec §c/tpacancel"

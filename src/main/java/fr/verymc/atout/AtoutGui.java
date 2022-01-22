@@ -1,7 +1,6 @@
 package main.java.fr.verymc.atout;
 
 import main.java.fr.verymc.gui.MenuGui;
-import main.java.fr.verymc.utils.SendActionBar;
 import main.java.fr.verymc.core.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -98,17 +97,6 @@ public class AtoutGui implements Listener {
         custom9.setItemMeta(customh);
         inv.setItem(26, custom9);
 
-        ItemStack custom8 = new ItemStack(Material.WHITE_STAINED_GLASS_PANE, 1);
-        ItemMeta meta8 = custom8.getItemMeta();
-        meta8.setDisplayName("§6");
-        custom8.setItemMeta(meta8);
-
-        for (int i = 0; i < inv.getSize(); i++) {
-            if (inv.getItem(i) == null || inv.getItem(i).getType().equals(Material.AIR)) {
-                inv.setItem(i, custom8);
-            }
-        }
-
 
         player.openInventory(inv);
     }
@@ -179,20 +167,20 @@ public class AtoutGui implements Listener {
                 player.removePotionEffect(PotionEffectType.FAST_DIGGING);
                 Main.instance1.getData().set("Joueurs." + player.getName() + ".Atout.1.Active", false);
                 Main.instance1.saveData();
-                SendActionBar.SendActionBarMsg(player, "§6Atout haste §c§ld§sactivé !");
+                player.sendActionBar("§6Atout haste §c§ld§sactivé !");
                 AtoutGui.MakeAtoutGui(player);
                 return;
             }
             if (current.getType() == Material.GOLDEN_PICKAXE) {
                 if (Main.instance1.getData().getInt("Joueurs." + player.getName() + ".Atout.1.Level") == 2) {
                     player.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 999999999, 1));
-                    SendActionBar.SendActionBarMsg(player, "§6Atout haste §a§lactivé !");
+                    player.sendActionBar("§6Atout haste §a§lactivé !");
                     Main.instance1.getData().set("Joueurs." + player.getName() + ".Atout.1.Active", true);
                     Main.instance1.saveData();
                     AtoutGui.MakeAtoutGui(player);
                     return;
                 } else {
-                    SendActionBar.SendActionBarMsg(player, "§cAchetez cet atout dans le /farm2win");
+                    player.sendActionBar("§cAchetez cet atout dans le /farm2win");
                 }
             }
 
@@ -201,20 +189,20 @@ public class AtoutGui implements Listener {
                 player.removePotionEffect(PotionEffectType.SPEED);
                 Main.instance1.getData().set("Joueurs." + player.getName() + ".Atout.2.Active", false);
                 Main.instance1.saveData();
-                SendActionBar.SendActionBarMsg(player, "§6Atout speed §c§ld§sactivé !");
+                player.sendActionBar("§6Atout speed §c§ld§sactivé !");
                 AtoutGui.MakeAtoutGui(player);
                 return;
             }
             if (current.getType() == Material.SUGAR) {
                 if (Main.instance1.getData().getInt("Joueurs." + player.getName() + ".Atout.2.Level") == 2) {
                     player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999999, 1));
-                    SendActionBar.SendActionBarMsg(player, "§6Atout speed §a§lactivé !");
+                    player.sendActionBar("§6Atout speed §a§lactivé !");
                     Main.instance1.getData().set("Joueurs." + player.getName() + ".Atout.2.Active", true);
                     Main.instance1.saveData();
                     AtoutGui.MakeAtoutGui(player);
                     return;
                 } else {
-                    SendActionBar.SendActionBarMsg(player, "§cAchetez cet atout dans le /farm2win");
+                    player.sendActionBar("§cAchetez cet atout dans le /farm2win");
                 }
             }
 
@@ -223,20 +211,20 @@ public class AtoutGui implements Listener {
                 player.removePotionEffect(PotionEffectType.JUMP);
                 Main.instance1.getData().set("Joueurs." + player.getName() + ".Atout.3.Active", false);
                 Main.instance1.saveData();
-                SendActionBar.SendActionBarMsg(player, "§6Atout Jumpboost §c§ld§sactivé !");
+                player.sendActionBar("§6Atout Jumpboost §c§ld§sactivé !");
                 AtoutGui.MakeAtoutGui(player);
                 return;
             }
             if (current.getType() == Material.RABBIT_FOOT) {
                 if (Main.instance1.getData().getInt("Joueurs." + player.getName() + ".Atout.3.Level") == 3) {
                     player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 999999999, 2));
-                    SendActionBar.SendActionBarMsg(player, "§6Atout Jumpboost §a§lactivé !");
+                    player.sendActionBar("§6Atout Jumpboost §a§lactivé !");
                     Main.instance1.getData().set("Joueurs." + player.getName() + ".Atout.3.Active", true);
                     Main.instance1.saveData();
                     AtoutGui.MakeAtoutGui(player);
                     return;
                 } else {
-                    SendActionBar.SendActionBarMsg(player, "§cAchetez cet atout dans le /farm2win");
+                    player.sendActionBar("§cAchetez cet atout dans le /farm2win");
                 }
             }
         }

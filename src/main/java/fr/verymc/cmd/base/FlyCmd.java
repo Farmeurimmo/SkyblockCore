@@ -1,6 +1,5 @@
 package main.java.fr.verymc.cmd.base;
 
-import main.java.fr.verymc.utils.SendActionBar;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -23,17 +22,17 @@ public class FlyCmd implements CommandExecutor, TabCompleter {
                     if (player.getAllowFlight() == false) {
                         player.setAllowFlight(true);
                         player.setFlying(true);
-                        SendActionBar.SendActionBarMsg(player, "§aFly activé !");
+                        player.sendActionBar("§aFly activé !");
                     } else {
                         player.setAllowFlight(false);
                         player.setFlying(false);
-                        SendActionBar.SendActionBarMsg(player, "§aFly désactivé !");
+                        player.sendActionBar("§aFly désactivé !");
                     }
                 } else {
-                    SendActionBar.SendActionBarMsg(player, "§cImpossible de fly dans ce monde !");
+                    player.sendActionBar("§cImpossible de fly dans ce monde !");
                 }
             } else {
-                SendActionBar.SendActionBarMsg(player, "§cPermissions insuffisantes.");
+                player.sendActionBar("§cPermissions insuffisantes.");
             }
         }
         return false;

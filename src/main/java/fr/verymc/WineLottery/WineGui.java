@@ -1,6 +1,5 @@
 package main.java.fr.verymc.WineLottery;
 
-import main.java.fr.verymc.utils.SendActionBar;
 import main.java.fr.verymc.eco.EcoAccountsManager;
 import net.citizensnpcs.api.event.NPCRightClickEvent;
 import org.bukkit.Bukkit;
@@ -135,7 +134,7 @@ public class WineGui implements Listener {
                 String bbb = aaa.getItemMeta().getDisplayName();
                 if (bbb.contains("Cidre")) {
                     if (WineCooldown.contains(player.getName())) {
-                        SendActionBar.SendActionBarMsg(player, "§aMerci de patienter un peut entre les boissons !");
+                        player.sendActionBar("§aMerci de patienter un peut entre les boissons !");
                         e.setCancelled(true);
                     } else {
                         int n = rand.nextInt(2);
@@ -168,7 +167,7 @@ public class WineGui implements Listener {
                 }
                 if (bbb.contains("Bière")) {
                     if (WineCooldown.contains(player.getName())) {
-                        SendActionBar.SendActionBarMsg(player, "§aMerci de patienter un peut entre les boissons !");
+                        player.sendActionBar("§aMerci de patienter un peut entre les boissons !");
                         e.setCancelled(true);
                     } else {
                         int n = rand.nextInt(2);
@@ -201,7 +200,7 @@ public class WineGui implements Listener {
                 }
                 if (bbb.contains("Rhum")) {
                     if (WineCooldown.contains(player.getName())) {
-                        SendActionBar.SendActionBarMsg(player, "§aMerci de patienter un peut entre les boissons !");
+                        player.sendActionBar("§aMerci de patienter un peut entre les boissons !");
                         e.setCancelled(true);
                     } else {
                         int n = rand.nextInt(3);
@@ -234,7 +233,7 @@ public class WineGui implements Listener {
                 }
                 if (bbb.contains("Vodka")) {
                     if (WineCooldown.contains(player.getName())) {
-                        SendActionBar.SendActionBarMsg(player, "§aMerci de patienter un peut entre les boissons !");
+                        player.sendActionBar("§aMerci de patienter un peut entre les boissons !");
                         e.setCancelled(true);
                     } else {
                         int n = rand.nextInt(3);
