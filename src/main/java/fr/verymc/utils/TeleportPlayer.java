@@ -13,7 +13,7 @@ public class TeleportPlayer {
         final int timeLeft = Main.instance1.getCooldown(player.getName());
         if (GetTeleportDelay.GetPlayerTeleportingdelay(player) == 0) {
             player.teleport(loc);
-            player.sendActionBar("§6Téléportation effectu§e !");
+            player.sendActionBar("§6Téléportation effectuée !");
             return;
         } else {
             if (timeLeft == 0) {
@@ -22,7 +22,7 @@ public class TeleportPlayer {
                     Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
                         public void run() {
                             player.teleport(loc);
-                            player.sendActionBar("§6Téléportation effectu§e !");
+                            player.sendActionBar("§6Téléportation effectuée !");
                         }
                     }, 20);
                     return;
@@ -37,7 +37,7 @@ public class TeleportPlayer {
                         if (timeLeft == 0) {
                             Main.instance1.setCooldown(player.getName(), 0);
                             player.teleport(loc);
-                            player.sendActionBar("§6Téléportation effectu§e !");
+                            player.sendActionBar("§6Téléportation effectuée !");
                             this.cancel();
                             return;
                         }
@@ -74,7 +74,7 @@ public class TeleportPlayer {
                     Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
                         public void run() {
                             player.teleport(totp);
-                            player.sendActionBar("§fTéléportation sur §a" + p.getName() + "§f effectu§e !");
+                            player.sendActionBar("§fTéléportation sur §a" + p.getName() + "§f effectuée !");
                         }
                     }, 20);
                     return;
@@ -89,7 +89,7 @@ public class TeleportPlayer {
                         if (timeLeft == 0) {
                             Main.instance1.setCooldown(player.getName(), 0);
                             player.teleport(totp);
-                            player.sendActionBar("§fTéléportation sur §a" + p.getName() + "§f effectu§e !");
+                            player.sendActionBar("§fTéléportation sur §a" + p.getName() + "§f effectuée !");
                             this.cancel();
                             return;
                         }

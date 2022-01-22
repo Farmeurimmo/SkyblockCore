@@ -1,5 +1,6 @@
 package main.java.fr.verymc.cmd.moderation;
 
+import main.java.fr.verymc.featherfly.CountdownFly;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -36,7 +37,8 @@ public class CheckFlyCmd implements CommandExecutor, TabCompleter {
                             } else {
                                 color2 = "§a§l";
                             }
-                            player.sendMessage("§6Gestion du fly de " + p.getName() + ": \n§6Permission de voler " + color1 + p.getAllowFlight() + " \n§6En vol: " + color2 + p.isFlying());
+                            player.sendMessage("§6Gestion du fly de " + p.getName() + ": \n§6Permission de voler " + color1 + p.getAllowFlight() +
+                              " \n§6En vol: " + color2 + p.isFlying() + "\nTemp fly: " + CountdownFly.getCooldown(player));
                             return true;
                         } else {
                             player.sendActionBar("§cCe joueur n'est pas en ligne !");

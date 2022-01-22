@@ -20,7 +20,7 @@ public class EnchantementCmd implements CommandExecutor, TabCompleter {
         if (sender instanceof Player) {
             Player player = (Player) sender;
             if (player.hasPermission("enchantement")) {
-                player.openEnchanting(new Location(Bukkit.getServer().getWorld("world"), -181, 108, -69), true);
+                player.openEnchanting(new Location(Bukkit.getServer().getWorld("world"), -186, 64, -55), true);
             } else {
                 player.sendActionBar("§cPermissions insuffisantes !");
             }
