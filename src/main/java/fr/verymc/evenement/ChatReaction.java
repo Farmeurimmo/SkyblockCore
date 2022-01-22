@@ -71,8 +71,8 @@ public class ChatReaction implements Listener {
 
                 Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
                     public void run() {
-                        Bukkit.broadcastMessage("§6§lChatReaction §8» §f" + player.getName() + " vient de gagner le ChatReaction en " +
-                                secelasp + "." + milliselasp + " secondes et remporte 2 000$ !");
+                        Bukkit.broadcastMessage("§6§lChatReaction §8» §f" + player.getName() + " vient de gagner le ChatReaction en "+
+                          milliselasp*10 + " secondes et remporte 2 000$ !");
                         EcoAccountsManager.instance.AddFounds(player.getName(), (double) 2000, false);
                     }
                 }, 1);

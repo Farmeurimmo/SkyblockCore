@@ -24,7 +24,6 @@ public class JoinLeave implements Listener {
     public void OnJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
 
-
         player.setGameMode(GameMode.SURVIVAL);
 
         //BossBar.AddBossBarForPlayer(player);

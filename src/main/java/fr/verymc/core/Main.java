@@ -34,6 +34,7 @@ import main.java.fr.verymc.items.FarmHoeGui;
 import main.java.fr.verymc.items.FarmHoeManager;
 import main.java.fr.verymc.items.ItemLegCmd;
 import main.java.fr.verymc.scoreboard.ScoreBoard;
+import main.java.fr.verymc.scoreboard.TABManager;
 import main.java.fr.verymc.shopgui.*;
 import net.luckperms.api.LuckPerms;
 import org.bukkit.Bukkit;
@@ -177,6 +178,7 @@ public class Main extends JavaPlugin implements Listener {
         GenShopPage.GenenerateShopPageStartup("Spawneurs");
         GenAmoutShopGui.GenAmoutShopGuiStartup();
         GenMultiStacksBuyGui.GenMultiShopGuiStartup();
+        new TABManager();
         System.out.println("PregenShopGui & price DONE | NEXT permanant loops");
 
         ChatReaction.StartChatReaction();
@@ -267,6 +269,8 @@ public class Main extends JavaPlugin implements Listener {
         this.getCommand("chests").setExecutor(new ChestsCmd());
         this.getCommand("farmhoe").setExecutor(new FarmHoeCmd());
         System.out.println("Commands DONE | NEXT end");
+
+        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "plugman reload CrazyAuctions");
 
         System.out.println("§aDémarrage du plugin TERMINE!");
         System.out.println("-----------------------------------------------------------------------------------------------------");
