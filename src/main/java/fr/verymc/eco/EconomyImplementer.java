@@ -122,7 +122,7 @@ public class EconomyImplementer implements Economy {
     @Override
     public EconomyResponse withdrawPlayer(String playerName, double amount) {
         if (EcoAccountsManager.instance.CheckForFounds(Bukkit.getPlayer(playerName), amount)) {
-            EcoAccountsManager.instance.RemoveFounds(playerName, amount, false);
+            EcoAccountsManager.instance.RemoveFounds(playerName, amount, true);
         }
         return null;
     }
@@ -130,7 +130,7 @@ public class EconomyImplementer implements Economy {
     @Override
     public EconomyResponse withdrawPlayer(OfflinePlayer player, double amount) {
         if (EcoAccountsManager.instance.CheckForFounds(Bukkit.getPlayer(player.getName()), amount)) {
-            EcoAccountsManager.instance.RemoveFounds(player.getName(), amount, false);
+            EcoAccountsManager.instance.RemoveFounds(player.getName(), amount, true);
         }
         return null;
     }
@@ -138,7 +138,7 @@ public class EconomyImplementer implements Economy {
     @Override
     public EconomyResponse withdrawPlayer(String playerName, String worldName, double amount) {
         if (EcoAccountsManager.instance.CheckForFounds(Bukkit.getPlayer(playerName), amount)) {
-            EcoAccountsManager.instance.RemoveFounds(playerName, amount, false);
+            EcoAccountsManager.instance.RemoveFounds(playerName, amount, true);
         }
         return null;
     }
@@ -146,7 +146,7 @@ public class EconomyImplementer implements Economy {
     @Override
     public EconomyResponse withdrawPlayer(OfflinePlayer player, String worldName, double amount) {
         if (EcoAccountsManager.instance.CheckForFounds(Bukkit.getPlayer(player.getName()), amount)) {
-            EcoAccountsManager.instance.RemoveFounds(player.getName(), amount, false);
+            EcoAccountsManager.instance.RemoveFounds(player.getName(), amount, true);
         }
         return null;
     }
