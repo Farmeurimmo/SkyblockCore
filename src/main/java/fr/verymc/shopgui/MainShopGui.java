@@ -140,6 +140,7 @@ public class MainShopGui implements Listener {
                 GenShopPage.OpenPreGenPage(player, "Redstone", 1);
             }
             if (current.getType() == Material.SPAWNER) {
+                if(player.hasPermission("shop.spawneur"))
                 GenShopPage.OpenPreGenPage(player, "Spawneurs", 1);
             }
             if (current.getType() == Material.ARROW) {

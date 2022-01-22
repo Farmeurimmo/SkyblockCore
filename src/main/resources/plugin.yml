@@ -33,6 +33,7 @@ commands:
     permission: craft
   enchantement:
     aliases: [ ench ]
+    permission: enchantement
   gm:
     permission: gm
   gma:
