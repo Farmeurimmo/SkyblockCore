@@ -2,8 +2,6 @@ package main.java.fr.verymc.shopgui;
 
 import main.java.fr.verymc.gui.MenuGui;
 import main.java.fr.verymc.utils.PreGenItems;
-import net.luckperms.api.LuckPermsProvider;
-import net.luckperms.api.model.user.User;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -17,8 +15,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 public class MainShopGui implements Listener {
 
     public static void OpenMainShopMenu(Player player) {
-        User user = LuckPermsProvider.get().getUserManager().getUser(player.getName());
-        String Grade = user.getCachedData().getMetaData().getPrefix().replace("&", "§");
+
         Inventory inv = Bukkit.createInventory(null, 45, "§6Boutique");
 
         ItemStack custom1 = new ItemStack(Material.GRASS_BLOCK, 1);

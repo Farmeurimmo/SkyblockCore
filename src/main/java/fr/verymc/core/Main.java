@@ -48,7 +48,6 @@ import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -62,7 +61,7 @@ public class Main extends JavaPlugin implements Listener {
     public HashMap<String, String> tpatarget = new HashMap<>();
     static LuckPerms api;
     private static Main instance;
-    private HashMap<String, Integer> spawncooldown = new HashMap<>();
+    private final HashMap<String, Integer> spawncooldown = new HashMap<>();
     public EconomyImplementer economyImplementer;
     public FileConfiguration data;
     public FileConfiguration datac;
@@ -353,7 +352,7 @@ public class Main extends JavaPlugin implements Listener {
     }
 
 
-    public void reloadData() throws FileNotFoundException, IOException {
+    public void reloadData() throws IOException {
         try {
             data.load(dfile);
         } catch (InvalidConfigurationException e) {

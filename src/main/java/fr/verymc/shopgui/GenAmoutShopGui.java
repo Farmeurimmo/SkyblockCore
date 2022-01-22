@@ -1,8 +1,6 @@
 package main.java.fr.verymc.shopgui;
 
 import main.java.fr.verymc.utils.PreGenItems;
-import net.luckperms.api.LuckPermsProvider;
-import net.luckperms.api.model.user.User;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -26,8 +24,7 @@ public class GenAmoutShopGui {
             inv = Bukkit.createInventory(null, 54, "§6Choix de la quantité à vendre");
         }
 
-        User user = LuckPermsProvider.get().getUserManager().getUser(player.getName());
-        String Grade = user.getCachedData().getMetaData().getPrefix().replace("&", "§");
+
 
         for (Entry<ItemStack, Integer> cc : amountchoice.entrySet()) {
             inv.setItem(cc.getValue(), cc.getKey());
@@ -58,7 +55,7 @@ public class GenAmoutShopGui {
         }
         custom4.setItemMeta(customd);
 
-        Double price = (Double) 0.0;
+        Double price = 0.0;
         ItemMeta tempameta = aa.getItemMeta();
         tempameta.setLore(null);
         if (a == true) {

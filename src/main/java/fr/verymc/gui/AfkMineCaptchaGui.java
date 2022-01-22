@@ -62,9 +62,7 @@ public class AfkMineCaptchaGui implements Listener {
                 public void run() {
                     if (Captcha.contains(player)) {
                         Captcha.remove(player);
-                        if (SeconTry.contains(player)) {
-                            SeconTry.remove(player);
-                        }
+                        SeconTry.remove(player);
                         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
                             public void run() {
                                 player.chat("/spawn");
@@ -100,17 +98,11 @@ public class AfkMineCaptchaGui implements Listener {
         if (e.getView().getTitle().equalsIgnoreCase("§6Captcha AfkMine")) {
             e.setCancelled(true);
             if (current.getType() == Material.GRASS_BLOCK) {
-                if (Captcha.contains(player)) {
-                    Captcha.remove(player);
-                }
+                Captcha.remove(player);
                 player.sendActionBar("§aCaptcha réussi !");
                 player.closeInventory();
-                if (SeconTry.contains(player)) {
-                    SeconTry.remove(player);
-                }
-                if (Captcha.contains(player)) {
-                    Captcha.remove(player);
-                }
+                SeconTry.remove(player);
+                Captcha.remove(player);
             }
             if (current.getType() == Material.DIRT) {
                 if (Captcha.contains(player)) {
@@ -118,12 +110,8 @@ public class AfkMineCaptchaGui implements Listener {
                         player.sendActionBar("§cCliquez sur le bloc d'herbe !");
                         SeconTry.add(player);
                     } else {
-                        if (SeconTry.contains(player)) {
-                            SeconTry.remove(player);
-                        }
-                        if (Captcha.contains(player)) {
-                            Captcha.remove(player);
-                        }
+                        SeconTry.remove(player);
+                        Captcha.remove(player);
                         player.closeInventory();
                         TeleportPlayer.TeleportPlayerFromRequest(player, SpawnCmd.Spawn, 0);
                         player.sendActionBar("§cVous n'avez pas réussi le Captcha, vous avez donc été envoyé au spawn");
@@ -149,12 +137,8 @@ public class AfkMineCaptchaGui implements Listener {
                         }
                     }, 5);
                 } else {
-                    if (SeconTry.contains(player)) {
-                        SeconTry.remove(player);
-                    }
-                    if (Captcha.contains(player)) {
-                        Captcha.remove(player);
-                    }
+                    SeconTry.remove(player);
+                    Captcha.remove(player);
                     player.closeInventory();
                     TeleportPlayer.TeleportPlayerFromRequest(player, SpawnCmd.Spawn, 0);
                     player.sendActionBar("§cVous n'avez pas réussi le Captcha, vous avez donc été envoyé au spawn");

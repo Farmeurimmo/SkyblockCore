@@ -1,8 +1,8 @@
 package main.java.fr.verymc.shopgui;
 
-import main.java.fr.verymc.utils.Maths;
 import main.java.fr.verymc.core.Main;
 import main.java.fr.verymc.eco.EcoAccountsManager;
+import main.java.fr.verymc.utils.Maths;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
@@ -28,8 +28,8 @@ public class BuyShopItem {
                 if (Main.instance1.getConfig().getString("Shops." + bb + "." + aa + ".name") != null) {
                     b.setDisplayName(Main.instance1.getConfig().getString("Shops." + bb + "." + aa + ".name"));
                 }
-                pricesbuy.put(b, (double) Maths.arrondiNDecimales(a, 2));
-                pricessell.put(b, (double) Maths.arrondiNDecimales(c, 2));
+                pricesbuy.put(b, Maths.arrondiNDecimales(a, 2));
+                pricessell.put(b, Maths.arrondiNDecimales(c, 2));
             }
         }
     }
@@ -38,22 +38,14 @@ public class BuyShopItem {
         if (pricesbuy.get(a) == null) {
             return false;
         }
-        if (pricesbuy.get(a) > 0) {
-            return true;
-        } else {
-            return false;
-        }
+        return pricesbuy.get(a) > 0;
     }
 
     public static boolean isSellable(ItemStack a) {
         if (pricessell.get(a) == null) {
             return false;
         }
-        if (pricessell.get(a) > 0) {
-            return true;
-        } else {
-            return false;
-        }
+        return pricessell.get(a) > 0;
     }
 
     public static void removeItems(Inventory inventory, Material type, int amount) {
@@ -141,7 +133,7 @@ public class BuyShopItem {
 
     public static void BuyOSellItemNonStack(ItemStack a, Player player, boolean buy, double price, int amount) {
         if (buy == true) {
-            if (EcoAccountsManager.instance.instance.CheckForFounds(player, (double) (price * amount)) == true) {
+            if (EcoAccountsManager.instance.CheckForFounds(player, price * amount) == true) {
                 if (a.getType() == Material.SPAWNER) {
                     String display = a.getDisplayName();
                     if (GenShopPage.spawneurtype.containsKey(display)) {
@@ -188,7 +180,7 @@ public class BuyShopItem {
                             player.sendMessage("§6§lShop §8» §fIl vous manque de la place dans votre inventaire.");
                             return;
                         } else {
-                            EcoAccountsManager.instance.RemoveFounds(player.getName(), price * amount);
+                            EcoAccountsManager.instance.RemoveFounds(player.getName(), price * amount, true);
                             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "ss give " + player.getName() + " " + togivetype + " " + amount);
                             return;
                         }
@@ -197,7 +189,7 @@ public class BuyShopItem {
                 a.setItemMeta(null);
                 player.closeInventory();
                 a.setAmount(amount);
-                EcoAccountsManager.instance.RemoveFounds(player.getName(), price * amount);
+                EcoAccountsManager.instance.RemoveFounds(player.getName(), price * amount, true);
                 int amountininv = GetAmountToFillInInv(new ItemStack(a.getType()), player);
                 ItemStack od = new ItemStack(a.getType());
                 if (amountininv <= amount) {
@@ -218,13 +210,13 @@ public class BuyShopItem {
             }
         } else {
             if (player.getInventory().contains(a.getType(), amount)) {
-                Double profit = (double) (pricessell.get(new ItemStack(Material.valueOf(a.getType().toString()))) * amount);
+                Double profit = pricessell.get(new ItemStack(Material.valueOf(a.getType().toString()))) * amount;
                 player.closeInventory();
                 removeItems(player.getInventory(), a.getType(), amount);
-                player.sendMessage("§6§lShop §8» §fVous avez vendu §ax" + amount + " " + a.getType().toString() + "§f pour §6" + profit + "$§f.");
+                player.sendMessage("§6§lShop §8» §fVous avez vendu §ax" + amount + " " + a.getType() + "§f pour §6" + profit + "$§f.");
                 EcoAccountsManager.instance.AddFounds(player.getName(), profit, false);
             } else {
-                player.sendMessage("§6§lShop §8» §fVous avez besoin de plus de " + a.getType().toString() + ".");
+                player.sendMessage("§6§lShop §8» §fVous avez besoin de plus de " + a.getType() + ".");
             }
         }
     }

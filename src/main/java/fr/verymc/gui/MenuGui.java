@@ -1,8 +1,8 @@
 package main.java.fr.verymc.gui;
 
+import main.java.fr.verymc.atout.AtoutGui;
 import main.java.fr.verymc.challenges.ChallengesGuis;
 import main.java.fr.verymc.shopgui.MainShopGui;
-import main.java.fr.verymc.atout.AtoutGui;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;

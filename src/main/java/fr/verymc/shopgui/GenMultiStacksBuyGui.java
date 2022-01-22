@@ -1,8 +1,6 @@
 package main.java.fr.verymc.shopgui;
 
 import main.java.fr.verymc.utils.PreGenItems;
-import net.luckperms.api.LuckPermsProvider;
-import net.luckperms.api.model.user.User;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -21,8 +19,7 @@ public class GenMultiStacksBuyGui {
     public static void OpenStacksAmoutShop(Player player, ItemStack aa) {
         Inventory inv = Bukkit.createInventory(null, 54, "§6Choix des stacks à acheter");
 
-        User user = LuckPermsProvider.get().getUserManager().getUser(player.getName());
-        String Grade = user.getCachedData().getMetaData().getPrefix().replace("&", "§");
+
 
         inv.setItem(49, PreGenItems.getOwnerHead(player));
 
@@ -32,7 +29,7 @@ public class GenMultiStacksBuyGui {
         custom7.setItemMeta(customg);
         inv.setItem(53, custom7);
 
-        Double price = (double) 0.0;
+        Double price = 0.0;
         if (aa.getType() != Material.SPAWNER) {
             price = BuyShopItem.pricesbuy.get(new ItemStack(Material.valueOf(aa.getType().toString())));
         } else {
@@ -43,7 +40,6 @@ public class GenMultiStacksBuyGui {
         ItemMeta tempameta = aa.getItemMeta();
         tempameta.setLore(null);
         tempameta.setLore(Arrays.asList("§aPrix par stack: §c" + price * 64 + "$"));
-        ;
         aa.setItemMeta(tempameta);
         inv.setItem(45, aa);
 

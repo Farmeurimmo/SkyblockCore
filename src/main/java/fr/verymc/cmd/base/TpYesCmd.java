@@ -1,8 +1,8 @@
 package main.java.fr.verymc.cmd.base;
 
+import main.java.fr.verymc.core.Main;
 import main.java.fr.verymc.utils.GetTeleportDelay;
 import main.java.fr.verymc.utils.TeleportPlayer;
-import main.java.fr.verymc.core.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -27,9 +27,7 @@ public class TpYesCmd implements CommandExecutor, TabCompleter {
                             TeleportPlayer.TeleportPlayerFromRequestToAnotherPlayer(p, player, GetTeleportDelay.GetPlayerTeleportingdelay(p));
                             player.sendMessage("§6§lTéléportation §8» §fVous avez §aaccepté §fla demande de Téléportation de §6" + p.getName() + "§f.");
                             Main.instance1.pending.remove(player);
-                            if (Main.instance1.haverequest.contains(player)) {
-                                Main.instance1.haverequest.remove(player);
-                            }
+                            Main.instance1.haverequest.remove(player);
                         }
                     }
                 }

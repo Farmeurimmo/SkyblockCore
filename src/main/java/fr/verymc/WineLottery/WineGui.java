@@ -48,7 +48,7 @@ public class WineGui implements Listener {
 
 
                 if (money >= BuyWinePotion.cidreprice) {
-                    EcoAccountsManager.instance.RemoveFounds(player.getName(), (double) BuyWinePotion.cidreprice);
+                    EcoAccountsManager.instance.RemoveFounds(player.getName(), (double) BuyWinePotion.cidreprice, true);
                     player.sendMessage("§6§lBarman §8» §fMerci de m'avoir acheté du cidre.");
                     ItemStack custom1 = new ItemStack(Material.POTION, 1);
                     ItemMeta customa = custom1.getItemMeta();
@@ -68,7 +68,7 @@ public class WineGui implements Listener {
 
 
                 if (money >= BuyWinePotion.biereprice) {
-                    EcoAccountsManager.instance.RemoveFounds(player.getName(), (double) BuyWinePotion.biereprice);
+                    EcoAccountsManager.instance.RemoveFounds(player.getName(), (double) BuyWinePotion.biereprice, true);
                     player.sendMessage("§6§lBarman §8» §fMerci de m'avoir achet§ de la Bière.");
                     ItemStack custom1 = new ItemStack(Material.POTION, 1);
                     ItemMeta customa = custom1.getItemMeta();
@@ -87,7 +87,7 @@ public class WineGui implements Listener {
 
 
                 if (money >= BuyWinePotion.rhumprice) {
-                    EcoAccountsManager.instance.RemoveFounds(player.getName(), (double) BuyWinePotion.rhumprice);
+                    EcoAccountsManager.instance.RemoveFounds(player.getName(), (double) BuyWinePotion.rhumprice, true);
                     player.sendMessage("§6§lBarman §8» §fMerci de m'avoir acheté du rhum.");
                     ItemStack custom1 = new ItemStack(Material.POTION, 1);
                     ItemMeta customa = custom1.getItemMeta();
@@ -107,7 +107,7 @@ public class WineGui implements Listener {
 
 
                 if (money >= BuyWinePotion.vodkaprice) {
-                    EcoAccountsManager.instance.RemoveFounds(player.getName(), (double) BuyWinePotion.vodkaprice);
+                    EcoAccountsManager.instance.RemoveFounds(player.getName(), (double) BuyWinePotion.vodkaprice, true);
                     player.sendMessage("§6§lBarman §8» §fMerci de m'avoir acheté de la vodka.");
                     ItemStack custom1 = new ItemStack(Material.POTION, 1);
                     ItemMeta customa = custom1.getItemMeta();

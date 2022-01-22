@@ -1,7 +1,7 @@
 package main.java.fr.verymc.gui;
 
-import main.java.fr.verymc.eco.EcoAccountsManager;
 import main.java.fr.verymc.atout.BuyAtoutGui;
+import main.java.fr.verymc.eco.EcoAccountsManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -70,7 +70,7 @@ public class Farm2WinGui implements Listener {
             }
             if (current.getType() == Material.DRAGON_BREATH) {
                 if (EcoAccountsManager.instance.GetMoney(player.getName()) >= 25000) {
-                    EcoAccountsManager.instance.RemoveFounds(player.getName(), (double) 25000);
+                    EcoAccountsManager.instance.RemoveFounds(player.getName(), (double) 25000, true);
                     Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "aminion give " + player.getName());
                 } else {
                     player.sendMessage("§cErreur, vous n'avez pas asser d'argent.");
@@ -78,7 +78,7 @@ public class Farm2WinGui implements Listener {
             }
             if (current.getType() == Material.HOPPER) {
                 if (EcoAccountsManager.instance.GetMoney(player.getName()) >= 500000) {
-                    EcoAccountsManager.instance.RemoveFounds(player.getName(), (double) 500000);
+                    EcoAccountsManager.instance.RemoveFounds(player.getName(), (double) 500000, true);
                     Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "chests " + player.getName() + " ChunkHoppeur");
                 } else {
                     player.sendMessage("§cErreur, vous n'avez pas asser d'argent.");
@@ -86,7 +86,7 @@ public class Farm2WinGui implements Listener {
             }
             if (current.getType() == Material.TRAPPED_CHEST) {
                 if (EcoAccountsManager.instance.GetMoney(player.getName()) >= 1000000) {
-                    EcoAccountsManager.instance.RemoveFounds(player.getName(), (double) 1000000);
+                    EcoAccountsManager.instance.RemoveFounds(player.getName(), (double) 1000000, true);
                     Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "chests " + player.getName() + " SellChest");
                 } else {
                     player.sendMessage("§cErreur, vous n'avez pas asser d'argent.");

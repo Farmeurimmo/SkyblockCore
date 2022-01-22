@@ -12,7 +12,7 @@ import java.util.*;
 
 public class FeedCmd implements CommandExecutor, TabCompleter {
 
-    private HashMap<UUID, Integer> cooldowns = new HashMap<>();
+    private final HashMap<UUID, Integer> cooldowns = new HashMap<>();
 
     public void setCooldown(UUID player, Integer time) {
         if (time == null)

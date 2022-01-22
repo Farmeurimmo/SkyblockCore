@@ -34,7 +34,7 @@ public class AmountGuiManager implements Listener {
                     e.getInventory().getItem(22).setAmount(now);
                 }
                 ItemMeta temp = e.getInventory().getItem(22).getItemMeta();
-                Double price = (double) 0.0;
+                Double price = 0.0;
                 if (e.getInventory().getItem(22).getType() != Material.SPAWNER) {
                     price = BuyShopItem.pricesbuy.get(new ItemStack(Material.valueOf(e.getInventory().getItem(22).getType().toString())));
                 } else {
@@ -73,7 +73,7 @@ public class AmountGuiManager implements Listener {
             }
             if (current.getType() == Material.LIME_WOOL) {
                 if (current.getAmount() == 1) {
-                    Double price = (double) 0.0;
+                    Double price = 0.0;
                     if (e.getInventory().getItem(22).getType() != Material.SPAWNER) {
                         price = BuyShopItem.pricesbuy.get(new ItemStack(Material.valueOf(e.getInventory().getItem(22).getType().toString())));
                     } else {

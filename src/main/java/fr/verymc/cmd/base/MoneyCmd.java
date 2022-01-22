@@ -1,7 +1,7 @@
 package main.java.fr.verymc.cmd.base;
 
-import main.java.fr.verymc.utils.Maths;
 import main.java.fr.verymc.eco.EcoAccountsManager;
+import main.java.fr.verymc.utils.Maths;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -46,7 +46,7 @@ public class MoneyCmd implements CommandExecutor, TabCompleter {
                 } else if (args[1].equalsIgnoreCase("remove")) {
                     if (args[2].length() <= 9) {
                         Double aaa = Double.parseDouble(args[2]);
-                        EcoAccountsManager.instance.RemoveFounds(args[0], aaa);
+                        EcoAccountsManager.instance.RemoveFounds(args[0], aaa, true);
                         sender.sendMessage("§6§lMonnaie §8» §f" + args[0] + " a perdu §6" + aaa + "$§f sur son compte avec succès.");
                     } else {
                         sender.sendMessage("§6§lMonnaie §8» §fVeuillez choisir un nombre plus petit.");

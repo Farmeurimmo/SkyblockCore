@@ -23,9 +23,7 @@ public class BaltopManager {
                 }
                 if (aa.getValue() > bestvalue) {
                     bestvalue = aa.getValue();
-                    if (alreadyin.contains(playerlayer)) {
-                        alreadyin.remove(playerlayer);
-                    }
+                    alreadyin.remove(playerlayer);
                     playerlayer = aa.getKey();
                     alreadyin.add(aa.getKey());
                 }

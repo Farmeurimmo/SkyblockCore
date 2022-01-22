@@ -11,7 +11,7 @@ import java.util.HashMap;
 
 public class AfkMineBreakCheck implements Listener {
 
-    private HashMap<Player, Integer> numberbloc = new HashMap<>();
+    private final HashMap<Player, Integer> numberbloc = new HashMap<>();
 
     @EventHandler
     public void BlockBreakEvent(BlockBreakEvent e) {

@@ -4,8 +4,6 @@ import main.java.fr.verymc.core.Main;
 import main.java.fr.verymc.eco.EcoAccountsManager;
 import main.java.fr.verymc.gui.Farm2WinGui;
 import main.java.fr.verymc.utils.PreGenItems;
-import net.luckperms.api.LuckPermsProvider;
-import net.luckperms.api.model.user.User;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -27,8 +25,7 @@ public class BuyAtoutGui implements Listener {
     static Double jumpboost = (double) 250000;
 
     public static void MakeBuyAtoutGui(Player player) {
-        User user = LuckPermsProvider.get().getUserManager().getUser(player.getName());
-        String Grade = user.getCachedData().getMetaData().getPrefix().replace("&", "§");
+
 
 
         Inventory inv = Bukkit.createInventory(null, 27, "§6Boutique des atouts");
@@ -98,7 +95,7 @@ public class BuyAtoutGui implements Listener {
 
         if (effect == 1) {
             if (money >= haste) ;
-            EcoAccountsManager.instance.RemoveFounds(player.getName(), haste);
+            EcoAccountsManager.instance.RemoveFounds(player.getName(), haste, true);
             Main.instance1.getData().set("Joueurs." + player.getName() + ".Atout.1.Active", true);
             Main.instance1.getData().set("Joueurs." + player.getName() + ".Atout.1.Level", 2);
             Main.instance1.saveData();
@@ -112,7 +109,7 @@ public class BuyAtoutGui implements Listener {
         }
         if (effect == 2) {
             if (money >= speed) ;
-            EcoAccountsManager.instance.RemoveFounds(player.getName(), speed);
+            EcoAccountsManager.instance.RemoveFounds(player.getName(), speed, true);
             Main.instance1.getData().set("Joueurs." + player.getName() + ".Atout.2.Active", true);
             Main.instance1.getData().set("Joueurs." + player.getName() + ".Atout.2.Level", 2);
             Main.instance1.saveData();
@@ -126,7 +123,7 @@ public class BuyAtoutGui implements Listener {
         }
         if (effect == 3) {
             if (money >= jumpboost) ;
-            EcoAccountsManager.instance.RemoveFounds(player.getName(), jumpboost);
+            EcoAccountsManager.instance.RemoveFounds(player.getName(), jumpboost, true);
             Main.instance1.getData().set("Joueurs." + player.getName() + ".Atout.3.Active", true);
             Main.instance1.getData().set("Joueurs." + player.getName() + ".Atout.3.Level", 3);
             Main.instance1.saveData();

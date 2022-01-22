@@ -2,15 +2,12 @@ package main.java.fr.verymc.gui;
 
 import main.java.fr.verymc.eco.EcoAccountsManager;
 import main.java.fr.verymc.utils.PreGenItems;
-import net.luckperms.api.LuckPermsProvider;
-import net.luckperms.api.model.user.User;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.SkullMeta;
 
 import java.util.Arrays;
 
@@ -18,8 +15,7 @@ public class CommandBuyGui {
 
 
     public static void MakeCommandGui(Player player) {
-        User user = LuckPermsProvider.get().getUserManager().getUser(player.getName());
-        String Grade = user.getCachedData().getMetaData().getPrefix().replace("&", "§");
+
 
 
         Inventory inv = Bukkit.createInventory(null, 36, "§6Boutique des commandes Farm2Win");
@@ -157,7 +153,7 @@ public class CommandBuyGui {
 
         if (cmd.contains("hat")) {
             if (money >= Farm2WinGui.hatprix) ;
-            EcoAccountsManager.instance.RemoveFounds(player.getName(), (double) Farm2WinGui.hatprix);
+            EcoAccountsManager.instance.RemoveFounds(player.getName(), (double) Farm2WinGui.hatprix, true);
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lpv user " + player.getName() + " permission set hat server=skyblock");
             player.sendMessage("§6Vous avez reçu l'accès à la commande /hat !");
             Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
@@ -168,7 +164,7 @@ public class CommandBuyGui {
         }
         if (cmd.contains("fly")) {
             if (money >= Farm2WinGui.flyprix) ;
-            EcoAccountsManager.instance.RemoveFounds(player.getName(), (double) Farm2WinGui.flyprix);
+            EcoAccountsManager.instance.RemoveFounds(player.getName(), (double) Farm2WinGui.flyprix, true);
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lpv user " + player.getName() + " permission set fly server=skyblock");
             player.sendMessage("§6Vous avez reçu l'accès à la commande /fly !");
             Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
@@ -179,7 +175,7 @@ public class CommandBuyGui {
         }
         if (cmd.contains("feed")) {
             if (money >= Farm2WinGui.feedprix) ;
-            EcoAccountsManager.instance.RemoveFounds(player.getName(), (double) Farm2WinGui.feedprix);
+            EcoAccountsManager.instance.RemoveFounds(player.getName(), (double) Farm2WinGui.feedprix, true);
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lpv user " + player.getName() + " permission set feed server=skyblock");
             player.sendMessage("§6Vous avez reçu l'accès à la commande /feed !");
             Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
@@ -190,7 +186,7 @@ public class CommandBuyGui {
         }
         if (cmd.contains("craft")) {
             if (money >= Farm2WinGui.craftprix) ;
-            EcoAccountsManager.instance.RemoveFounds(player.getName(), (double) Farm2WinGui.craftprix);
+            EcoAccountsManager.instance.RemoveFounds(player.getName(), (double) Farm2WinGui.craftprix, true);
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lpv user " + player.getName() + " permission set craft server=skyblock");
             player.sendMessage("§6Vous avez reçu l'accès à la commande /craft !");
             Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
@@ -201,7 +197,7 @@ public class CommandBuyGui {
         }
         if (cmd.contains("isrename")) {
             if (money >= Farm2WinGui.isrenameprix) ;
-            EcoAccountsManager.instance.RemoveFounds(player.getName(), (double) Farm2WinGui.isrenameprix);
+            EcoAccountsManager.instance.RemoveFounds(player.getName(), (double) Farm2WinGui.isrenameprix, true);
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lpv user " + player.getName() + " permission set iridiumskyblock.rename server=skyblock");
             player.sendMessage("§6Vous avez reçu l'accès à la commande /is rename !");
             Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
@@ -212,7 +208,7 @@ public class CommandBuyGui {
         }
         if (cmd.contains("enchantement")) {
             if (money >= Farm2WinGui.enchantementprix) ;
-            EcoAccountsManager.instance.RemoveFounds(player.getName(), (double) Farm2WinGui.enchantementprix);
+            EcoAccountsManager.instance.RemoveFounds(player.getName(), (double) Farm2WinGui.enchantementprix, true);
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lpv user " + player.getName() + " permission set enchantement server=skyblock");
             player.sendMessage("§6Vous avez reçu l'accès à la commande /enchantement !");
             Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
@@ -223,7 +219,7 @@ public class CommandBuyGui {
         }
         if (cmd.contains("sellall")) {
             if (money >= Farm2WinGui.sellallprix) ;
-            EcoAccountsManager.instance.RemoveFounds(player.getName(), (double) Farm2WinGui.sellallprix);
+            EcoAccountsManager.instance.RemoveFounds(player.getName(), (double) Farm2WinGui.sellallprix, true);
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lpv user " + player.getName() + " permission set economyshopgui.sellall server=skyblock");
             player.sendMessage("§6Vous avez reçu l'accès à la commande /sellall !");
             Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {

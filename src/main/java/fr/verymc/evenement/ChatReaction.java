@@ -31,7 +31,7 @@ public class ChatReaction implements Listener {
     public static void StartChatReaction() {
         Random rand = new Random();
         int n = rand.nextInt(mots.size());
-        aaa = (String) mots.get(n);
+        aaa = mots.get(n);
         bbb = false;
         TextComponent hmessage = new TextComponent("§6§lChatReaction §8» §fPassez votre souris ici pour voir le mot à recopier !");
         hmessage.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("§fMot à recopier: §6" + aaa).create()));

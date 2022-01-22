@@ -38,7 +38,7 @@ public class PayCmd implements CommandExecutor, TabCompleter {
                                 if (EcoAccountsManager.instance.CheckForFounds(player, aaa) == true) {
                                     if (aaa >= 5) {
                                         EcoAccountsManager.instance.AddFounds(args[0], aaa, false);
-                                        EcoAccountsManager.instance.RemoveFounds(player.getName(), aaa);
+                                        EcoAccountsManager.instance.RemoveFounds(player.getName(), aaa, true);
                                         player.sendMessage("§6§lMonnaie §8» §fVous avez envoyé avec §asuccès §6" + aaa + "$§f au joueur " + args[0]);
                                         if (Bukkit.getPlayer(args[0]) != null) {
                                             Bukkit.getPlayer(args[0]).sendMessage("§6§lMonnaie §8» §fVous avez reçu avec §asuccès §6" + aaa + "$§f du joueur " + player.getName());

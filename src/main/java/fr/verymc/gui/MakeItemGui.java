@@ -1,8 +1,6 @@
 package main.java.fr.verymc.gui;
 
 import main.java.fr.verymc.utils.PreGenItems;
-import net.luckperms.api.LuckPermsProvider;
-import net.luckperms.api.model.user.User;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -15,8 +13,7 @@ import java.util.Arrays;
 public class MakeItemGui {
 
     public static void MakeRankGui(Player player) {
-        User user = LuckPermsProvider.get().getUserManager().getUser(player.getName());
-        String Grade = user.getCachedData().getMetaData().getPrefix().replace("&", "§");
+
 
 
         Inventory invboutiquefarm2win = Bukkit.createInventory(null, 27, "§6Boutique des items Farm2Win");

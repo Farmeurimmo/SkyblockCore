@@ -2,8 +2,6 @@ package main.java.fr.verymc.items;
 
 import main.java.fr.verymc.eco.EcoAccountsManager;
 import main.java.fr.verymc.utils.PreGenItems;
-import net.luckperms.api.LuckPermsProvider;
-import net.luckperms.api.model.user.User;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -55,11 +53,7 @@ public class FarmHoeGui implements Listener {
                 return true;
             } else if (farmhoe.getDisplayName().contains("§cII")) {
                 return true;
-            } else if (farmhoe.getDisplayName().contains("§cI")) {
-                return true;
-            } else {
-                return false;
-            }
+            } else return farmhoe.getDisplayName().contains("§cI");
         } else {
             return false;
         }
@@ -78,7 +72,7 @@ public class FarmHoeGui implements Listener {
             if(CheckForValidity(player.getItemInHand())){
                 if(EcoAccountsManager.instance.CheckForFounds(player, 500000.0) &&
                   FarmHoeManager.GetBlockHaversted(player.getItemInHand()) >= 250000) {
-                    EcoAccountsManager.instance.RemoveFounds(player.getName(), 500000.0);
+                    EcoAccountsManager.instance.RemoveFounds(player.getName(), 500000.0, true);
                     player.getItemInHand().setDisplayName("§6FarmHoe Tier §cII (3X3)");
                     player.closeInventory();
                 }
@@ -88,7 +82,7 @@ public class FarmHoeGui implements Listener {
             if(CheckForValidity(player.getItemInHand())){
                 if(EcoAccountsManager.instance.CheckForFounds(player, 1000000.0) &&
                   FarmHoeManager.GetBlockHaversted(player.getItemInHand()) >= 500000) {
-                    EcoAccountsManager.instance.RemoveFounds(player.getName(), 1000000.0);
+                    EcoAccountsManager.instance.RemoveFounds(player.getName(), 1000000.0, true);
                     player.getItemInHand().setDisplayName("§6FarmHoe Tier §cIII (5X5)");
                     player.closeInventory();
                 }
@@ -100,8 +94,7 @@ public class FarmHoeGui implements Listener {
     }
 
     public static void MakeGui(Player player, int tier) {
-        User user = LuckPermsProvider.get().getUserManager().getUser(player.getName());
-        String Grade = user.getCachedData().getMetaData().getPrefix().replace("&", "§");
+
 
         Inventory invboutiquefarm2win = Bukkit.createInventory(null, 27, "§6Tiers de farmhoe");
 

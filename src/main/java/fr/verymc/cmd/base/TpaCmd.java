@@ -22,9 +22,7 @@ public class TpaCmd implements CommandExecutor, TabCompleter {
                         Main.instance1.haverequest.remove(p);
                         Main.instance1.tpatarget.remove(player.getName());
                         player.sendMessage("§6§lTéléportation §8» §fVotre demande de téléportation à §a" + p.getName() + " §fa expiré.");
-                        if (Main.instance1.pending.contains(player)) {
-                            Main.instance1.pending.remove(player);
-                        }
+                        Main.instance1.pending.remove(player);
                     }
                 }
             }
@@ -48,9 +46,7 @@ public class TpaCmd implements CommandExecutor, TabCompleter {
                         if (Bukkit.getPlayer(args[0]).isOnline()) {
                             Player p = Bukkit.getPlayer(args[0]);
                             if (!p.getName().equalsIgnoreCase(player.getName())) {
-                                if (Main.instance1.haverequest.contains(p)) {
-                                    Main.instance1.haverequest.remove(p);
-                                }
+                                Main.instance1.haverequest.remove(p);
                                 Main.instance1.haverequest.add(p);
                                 Main.instance1.pending.add(player);
                                 Main.instance1.setTarget(player.getName(), p.getName());

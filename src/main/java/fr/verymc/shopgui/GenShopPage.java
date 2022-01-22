@@ -2,8 +2,6 @@ package main.java.fr.verymc.shopgui;
 
 import main.java.fr.verymc.core.Main;
 import main.java.fr.verymc.utils.PreGenItems;
-import net.luckperms.api.LuckPermsProvider;
-import net.luckperms.api.model.user.User;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
@@ -153,8 +151,7 @@ public class GenShopPage {
     }
 
     public static void OpenPreGenPage(Player player, String page, int pagenum) {
-        User user = LuckPermsProvider.get().getUserManager().getUser(player.getName());
-        String Grade = user.getCachedData().getMetaData().getPrefix().replace("&", "§");
+
 
         int numberofpage = maxpage.get(page);
 
