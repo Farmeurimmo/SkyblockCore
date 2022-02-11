@@ -7,6 +7,7 @@ import main.java.fr.verymc.eco.EcoAccountsManager;
 import main.java.fr.verymc.scoreboard.ScoreBoard;
 import net.luckperms.api.LuckPermsProvider;
 import net.luckperms.api.model.user.User;
+import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -28,7 +29,7 @@ public class JoinLeave implements Listener {
 
         //BossBar.AddBossBarForPlayer(player);
 
-        ScoreBoard.setScoreBoard(player);
+        ScoreBoard.acces.setScoreBoard(player);
 
         User user = LuckPermsProvider.get().getUserManager().getUser(player.getName());
         if (user.getCachedData().getMetaData().getPrefix() != null) {

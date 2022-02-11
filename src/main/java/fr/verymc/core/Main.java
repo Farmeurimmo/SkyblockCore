@@ -149,9 +149,6 @@ public class Main extends JavaPlugin implements Listener {
         System.out.println("Fichier yml DONE | NEXT Methods init");
 
         BuildCmd.Build.clear();
-        for (Player player : Bukkit.getOnlinePlayers()) {
-            ScoreBoard.setScoreBoard(player);
-        }
         spawncooldown.clear();
         ChatReaction.WriteWords();
         //BossBar.CreateBossBar();
@@ -185,7 +182,10 @@ public class Main extends JavaPlugin implements Listener {
         ChallengesReset.CheckForReset();
         EcoAccountsManager.instance.UpdateHash();
         SellChestManager.AutoSellForVeryChest();
-        ScoreBoard.updateScoreBoard();
+        new ScoreBoard();
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            ScoreBoard.acces.setScoreBoard(player);
+        }
         System.out.println("Starting permanant loops DONE | NEXT blocs/pnj/holos");
 
         WineSpawn.SpawnPnj(new Location(Bukkit.getServer().getWorld("world"), -184.5, 70.5, -77.5, -90, 0));

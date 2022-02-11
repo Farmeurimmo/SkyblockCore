@@ -3,7 +3,6 @@ package main.java.fr.verymc.scoreboard;
 import com.iridium.iridiumskyblock.api.IridiumSkyblockAPI;
 import main.java.fr.verymc.core.Main;
 import main.java.fr.verymc.eco.EcoAccountsManager;
-import net.luckperms.api.LuckPerms;
 import net.luckperms.api.LuckPermsProvider;
 import net.luckperms.api.model.user.User;
 import org.bukkit.Bukkit;
@@ -14,19 +13,27 @@ import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
+import java.util.ArrayList;
+
 public class ScoreBoard implements Listener {
 
     public static Main instance;
-    static LuckPerms api;
     static String Grade = "";
+    public static ScoreBoard acces;
 
-    public static void setScoreBoard(Player player) {
+
+    public ScoreBoard(){
+        updateScoreBoard();
+        acces = this;
+    }
+
+    public void setScoreBoard(Player player) {
         Scoreboard board = Bukkit.getScoreboardManager().getNewScoreboard();
         Objective obj = board.registerNewObjective("VeryMc", "dummy");
         obj.setDisplaySlot(DisplaySlot.SIDEBAR);
         obj.setDisplayName("§6§lVery§f§lMc");
 
-        User user = LuckPermsProvider.get().getUserManager().getUser(player.getName());
+        User user = LuckPermsProvider.get().getUserManager().getUser(player.getUniqueId());
         if (user.getCachedData().getMetaData().getPrefix() != null) {
             Grade = user.getCachedData().getMetaData().getPrefix().replace("&", "§");
         }
@@ -69,12 +76,20 @@ public class ScoreBoard implements Listener {
         player.setScoreboard(board);
     }
 
-    public static void updateScoreBoard() {
+    public void updateScoreBoard() {
+        ArrayList<String> Vanished = new ArrayList<String>();
+        Vanished.clear();
+        for(Player p : Bukkit.getOnlinePlayers()){
+            if(!p.getMetadata("vanished").isEmpty()){
+                Vanished.add(p.getName());
+            }
+        }
+        int online = Bukkit.getOnlinePlayers().size()-Vanished.size();
         for (Player player : Bukkit.getOnlinePlayers()) {
             Scoreboard board = player.getScoreboard();
 
             Grade = "§fN/A";
-            User user = LuckPermsProvider.get().getUserManager().getUser(player.getName());
+            User user = LuckPermsProvider.get().getUserManager().getUser(player.getUniqueId());
             if (user.getCachedData().getMetaData().getPrefix() != null) {
                 Grade = user.getCachedData().getMetaData().getPrefix().replace("&", "§");
             } else {
@@ -93,7 +108,7 @@ public class ScoreBoard implements Listener {
                 board.getTeam("money").setPrefix("§fArgent §8▸ §e" + a);
             }
             if (board.getTeam("online") != null) {
-                board.getTeam("online").setPrefix("§fSkyblock §8▸ §c" + Bukkit.getServer().getOnlinePlayers().size());
+                board.getTeam("online").setPrefix("§fSkyblock §8▸ §c" + online);
             }
 
             if (IridiumSkyblockAPI.getInstance().getUser(player).getIsland().isPresent()) {

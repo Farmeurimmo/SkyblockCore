@@ -25,7 +25,7 @@ public class TchatManager implements Listener {
         }
         e.setCancelled(true);
 
-        User user = LuckPermsProvider.get().getUserManager().getUser(player.getName());
+        User user = LuckPermsProvider.get().getUserManager().getUser(player.getUniqueId());
         if (user.getCachedData().getMetaData().getPrefix() != null) {
             Prefix = user.getCachedData().getMetaData().getPrefix();
         }
