@@ -18,11 +18,11 @@ import java.util.ArrayList;
 public class ScoreBoard implements Listener {
 
     public static Main instance;
-    static String Grade = "";
     public static ScoreBoard acces;
+    static String Grade = "";
 
 
-    public ScoreBoard(){
+    public ScoreBoard() {
         updateScoreBoard();
         acces = this;
     }
@@ -79,12 +79,12 @@ public class ScoreBoard implements Listener {
     public void updateScoreBoard() {
         ArrayList<String> Vanished = new ArrayList<String>();
         Vanished.clear();
-        for(Player p : Bukkit.getOnlinePlayers()){
-            if(!p.getMetadata("vanished").isEmpty()){
+        for (Player p : Bukkit.getOnlinePlayers()) {
+            if (!p.getMetadata("vanished").isEmpty()) {
                 Vanished.add(p.getName());
             }
         }
-        int online = Bukkit.getOnlinePlayers().size()-Vanished.size();
+        int online = Bukkit.getOnlinePlayers().size() - Vanished.size();
         for (Player player : Bukkit.getOnlinePlayers()) {
             Scoreboard board = player.getScoreboard();
 

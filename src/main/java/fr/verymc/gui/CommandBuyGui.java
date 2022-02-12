@@ -17,7 +17,6 @@ public class CommandBuyGui {
     public static void MakeCommandGui(Player player) {
 
 
-
         Inventory inv = Bukkit.createInventory(null, 36, "§6Boutique des commandes Farm2Win");
 
         inv.setItem(31, PreGenItems.getOwnerHead(player));

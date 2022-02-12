@@ -105,47 +105,56 @@ public class GenShopPage {
             case "Blocs":
                 for (Entry<ItemStack, Integer> cc : toshowtemp.entrySet()) {
                     blocspage2.put(cc.getKey(), cc.getValue());
-                }break;
+                }
+                break;
             case "Agriculture":
                 agripage.clear();
                 for (Entry<ItemStack, Integer> cc : toshowtemp.entrySet()) {
                     agripage.put(cc.getKey(), cc.getValue());
-                }break;
+                }
+                break;
             case "Nourritures":
                 foodpage.clear();
                 for (Entry<ItemStack, Integer> cc : toshowtemp.entrySet()) {
                     foodpage.put(cc.getKey(), cc.getValue());
-                }break;
+                }
+                break;
             case "Colorants":
                 colopage.clear();
                 for (Entry<ItemStack, Integer> cc : toshowtemp.entrySet()) {
                     colopage.put(cc.getKey(), cc.getValue());
-                }break;
+                }
+                break;
             case "Minerais":
                 mineraipage.clear();
                 for (Entry<ItemStack, Integer> cc : toshowtemp.entrySet()) {
                     mineraipage.put(cc.getKey(), cc.getValue());
-                }break;
+                }
+                break;
             case "Autres":
                 autrepage.clear();
                 for (Entry<ItemStack, Integer> cc : toshowtemp.entrySet()) {
                     autrepage.put(cc.getKey(), cc.getValue());
-                }break;
+                }
+                break;
             case "Drops":
                 lootmpage.clear();
                 for (Entry<ItemStack, Integer> cc : toshowtemp.entrySet()) {
                     lootmpage.put(cc.getKey(), cc.getValue());
-                }break;
+                }
+                break;
             case "Redstone":
                 redstonepage.clear();
                 for (Entry<ItemStack, Integer> cc : toshowtemp.entrySet()) {
                     redstonepage.put(cc.getKey(), cc.getValue());
-                }break;
+                }
+                break;
             case "Spawneurs":
                 spawneurpage.clear();
                 for (Entry<ItemStack, Integer> cc : toshowtemp.entrySet()) {
                     spawneurpage.put(cc.getKey(), cc.getValue());
-                }break;
+                }
+                break;
         }
         slotstofill.clear();
         toshowtemp.clear();

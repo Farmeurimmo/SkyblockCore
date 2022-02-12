@@ -1,7 +1,6 @@
 package main.java.fr.verymc.eco;
 
 import main.java.fr.verymc.utils.Maths;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;

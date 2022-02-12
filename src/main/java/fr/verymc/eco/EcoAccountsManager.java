@@ -10,12 +10,11 @@ import java.util.UUID;
 public class EcoAccountsManager {
 
     public static EcoAccountsManager instance;
+    public HashMap<UUID, Double> Moneys = new HashMap<>();
 
-    public EcoAccountsManager(){
+    public EcoAccountsManager() {
         instance = this;
     }
-
-    public HashMap<UUID, Double> Moneys = new HashMap<>();
 
     public void CheckForAccount(Player player) {
         if (Main.instance1.getDataz().get(String.valueOf(player.getUniqueId())) == null) {
@@ -62,11 +61,13 @@ public class EcoAccountsManager {
             Main.instance1.getDataz().set(String.valueOf(player), now);
             Main.instance1.saveData();
             if (Bukkit.getPlayer(player) != null) {
-                if(ase==true) Bukkit.getPlayer(player).sendMessage("§6§lMonnaie §8» §6" + toremove + "$§f ont été §cretiré §fde votre compte.");
+                if (ase == true)
+                    Bukkit.getPlayer(player).sendMessage("§6§lMonnaie §8» §6" + toremove + "$§f ont été §cretiré §fde votre compte.");
             }
         } else {
             if (Bukkit.getPlayer(player) != null) {
-                if(ase==true)Bukkit.getPlayer(player).sendMessage("§6§lMonnaie §8» §6" + toremove + "$§f n'ont pas pu être §cretiré §fde votre compte.");
+                if (ase == true)
+                    Bukkit.getPlayer(player).sendMessage("§6§lMonnaie §8» §6" + toremove + "$§f n'ont pas pu être §cretiré §fde votre compte.");
             }
         }
     }
@@ -88,11 +89,13 @@ public class EcoAccountsManager {
             Main.instance1.getDataz().set(String.valueOf(player), now);
             Main.instance1.saveData();
             if (Bukkit.getPlayer(player) != null) {
-                if(dd==true)Bukkit.getPlayer(player).sendMessage("§6§lMonnaie §8» §6" + aaa + "$§f ont été §aajouté §f§ votre compte.");
+                if (dd == true)
+                    Bukkit.getPlayer(player).sendMessage("§6§lMonnaie §8» §6" + aaa + "$§f ont été §aajouté §f§ votre compte.");
             }
         } else {
             if (Bukkit.getPlayer(player) != null) {
-                if(dd==true)Bukkit.getPlayer(player).sendMessage("§6§lMonnaie §8» §6" + aaa + "$§f n'ont pas pu être §aajouté §f§votre compte.");
+                if (dd == true)
+                    Bukkit.getPlayer(player).sendMessage("§6§lMonnaie §8» §6" + aaa + "$§f n'ont pas pu être §aajouté §f§votre compte.");
             }
         }
     }

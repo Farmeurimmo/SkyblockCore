@@ -27,7 +27,6 @@ public class BuyAtoutGui implements Listener {
     public static void MakeBuyAtoutGui(Player player) {
 
 
-
         Inventory inv = Bukkit.createInventory(null, 27, "§6Boutique des atouts");
 
         inv.setItem(22, PreGenItems.getOwnerHead(player));
@@ -84,7 +83,6 @@ public class BuyAtoutGui implements Listener {
         customh.setDisplayName("§6Retour §8| §7(clic gauche)");
         custom8.setItemMeta(customh);
         inv.setItem(26, custom8);
-
 
 
         player.openInventory(inv);

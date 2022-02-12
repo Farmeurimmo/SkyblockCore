@@ -15,7 +15,6 @@ public class MakeItemGui {
     public static void MakeRankGui(Player player) {
 
 
-
         Inventory invboutiquefarm2win = Bukkit.createInventory(null, 27, "§6Boutique des items Farm2Win");
 
         ItemStack custom8 = new ItemStack(Material.ARROW, 1);
