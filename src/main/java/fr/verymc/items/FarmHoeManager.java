@@ -23,8 +23,8 @@ public class FarmHoeManager implements Listener {
     public static ArrayList<String> replantableblocks = new ArrayList<String>();
 
     public static void addtolist() {
-        replantableblocks.addAll(Arrays.asList("WHEAT","CARROTS","POTATOES",
-          "NETHER_WART"));
+        replantableblocks.addAll(Arrays.asList("WHEAT", "CARROTS", "POTATOES",
+                "NETHER_WART"));
     }
 
     public static List<Block> getNearbyBlocks(Location location, int radius) {
@@ -60,6 +60,7 @@ public class FarmHoeManager implements Listener {
             player.getItemInHand().setLore(lores);
         }
     }
+
     public static Integer GetBlockHaversted(ItemStack a) {
         String tosearch = a.getLore().get(0).replace("§7", "");
         boolean digit = false;
@@ -75,6 +76,34 @@ public class FarmHoeManager implements Listener {
             return num;
         }
         return 0;
+    }
+
+    public static Integer GetTier(ItemStack farmhoe) {
+        if (farmhoe == null) {
+            return null;
+        }
+        if (farmhoe.getType() == Material.AIR) {
+            return null;
+        }
+        if (farmhoe.getItemMeta() == null) {
+            return null;
+        }
+        if (farmhoe.getType() != Material.NETHERITE_HOE) {
+            return null;
+        }
+        if (!farmhoe.isUnbreakable()) {
+            return null;
+        }
+
+        if (farmhoe.getDisplayName().contains("§cIII")) {
+            return 2;
+        } else if (farmhoe.getDisplayName().contains("§cII")) {
+            return 1;
+        } else if (farmhoe.getDisplayName().contains("§cI")) {
+            return 0;
+        } else {
+            return null;
+        }
     }
 
     @EventHandler
@@ -110,10 +139,10 @@ public class FarmHoeManager implements Listener {
             } else {
                 return;
             }
-            if(e.getPlayer().getItemInHand().getLore()==null){
+            if (e.getPlayer().getItemInHand().getLore() == null) {
                 return;
             }
-            if(!farmhoe.getLore().get(0).contains("§")){
+            if (!farmhoe.getLore().get(0).contains("§")) {
                 return;
             }
 
@@ -131,15 +160,15 @@ public class FarmHoeManager implements Listener {
                 if (age == ageable.getMaximumAge()) {
                     for (ItemStack eed : bltmp.getDrops()) {
                         if (eed.getType().toString().contains("SEED") || eed.getType() == Material.CARROT
-                          || eed.getType() == Material.POTATO || eed.getType() == Material.NETHER_WART) {
-                            if(fd == 1){
-                            fd = 0;
-                            for (ItemStack redse : player.getInventory().getStorageContents()) {
-                                if (redse == null) continue;
-                                if (redse.getType() == eed.getType()) {
-                                    redse.setAmount(redse.getAmount() - 1);
-                                    break;
-                                }
+                                || eed.getType() == Material.POTATO || eed.getType() == Material.NETHER_WART) {
+                            if (fd == 1) {
+                                fd = 0;
+                                for (ItemStack redse : player.getInventory().getStorageContents()) {
+                                    if (redse == null) continue;
+                                    if (redse.getType() == eed.getType()) {
+                                        redse.setAmount(redse.getAmount() - 1);
+                                        break;
+                                    }
                                 }
                             }
                         }
@@ -158,11 +187,11 @@ public class FarmHoeManager implements Listener {
                 }
             }
         }
-        if(e.getAction()==Action.RIGHT_CLICK_AIR||e.getAction()==Action.RIGHT_CLICK_BLOCK){
-            if(e.getPlayer().getItemInHand().getLore()==null){
+        if (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) {
+            if (e.getPlayer().getItemInHand().getLore() == null) {
                 return;
             }
-            if(!e.getPlayer().getItemInHand().getLore().get(0).contains("§")){
+            if (!e.getPlayer().getItemInHand().getLore().get(0).contains("§")) {
                 return;
             }
             String tosearch = e.getPlayer().getItemInHand().getLore().get(0).replace("§7", "");
@@ -177,34 +206,6 @@ public class FarmHoeManager implements Listener {
             if (!tosearch.contains(".") && digit == true) {
                 FarmHoeGui.MakeGui(e.getPlayer(), GetTier(e.getPlayer().getItemInHand()));
             }
-        }
-    }
-
-    public static Integer GetTier(ItemStack farmhoe){
-        if (farmhoe == null) {
-            return null;
-        }
-        if (farmhoe.getType() == Material.AIR) {
-            return null;
-        }
-        if (farmhoe.getItemMeta() == null) {
-            return null;
-        }
-        if (farmhoe.getType() != Material.NETHERITE_HOE) {
-            return null;
-        }
-        if (!farmhoe.isUnbreakable()) {
-            return null;
-        }
-
-        if (farmhoe.getDisplayName().contains("§cIII")) {
-            return 2;
-        } else if (farmhoe.getDisplayName().contains("§cII")) {
-            return 1;
-        } else if (farmhoe.getDisplayName().contains("§cI")) {
-            return 0;
-        } else {
-            return null;
         }
     }
 

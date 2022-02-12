@@ -167,7 +167,7 @@ public class Farm2WinGui implements Listener {
             if (current.getType() == Material.NETHERITE_BLOCK) {
                 if (!player.hasPermission("group.zeus")) {
                     if (EcoAccountsManager.instance.GetMoney(player.getUniqueId()) >= zeusprix) {
-                        if (player.hasPermission("group.legende")&&player.hasPermission("group.dieu")) {
+                        if (player.hasPermission("group.legende") && player.hasPermission("group.dieu")) {
                             player.sendMessage("§6Vérification de la disponibilité du grade...");
                             current.setType(Material.BARRIER);
                             Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
@@ -175,7 +175,7 @@ public class Farm2WinGui implements Listener {
                                     if (legendeachat == false) {
                                         player.sendMessage("§cErreur, achat indisponible !");
                                     } else {
-                                        if (player.hasPermission("legende")&&player.hasPermission("group.dieu")) {
+                                        if (player.hasPermission("legende") && player.hasPermission("group.dieu")) {
                                             RankBuyGui.BuyRank("zeus", player);
                                         } else {
                                             player.sendMessage("§cErreur, vous devez possèder tous les grades précédents !");
@@ -240,7 +240,7 @@ public class Farm2WinGui implements Listener {
             }
             if (current.getType() == Material.OAK_SIGN) {
                 if (!player.hasPermission("economyshopgui.sellall")) {
-                    if (EcoAccountsManager.instance.GetMoney(player.getUniqueId())  >= sellallprix) {
+                    if (EcoAccountsManager.instance.GetMoney(player.getUniqueId()) >= sellallprix) {
                         player.sendMessage("§6Vérification de la disponibilité de la commande...");
                         current.setType(Material.BARRIER);
                         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {

@@ -25,7 +25,6 @@ public class GenAmoutShopGui {
         }
 
 
-
         for (Entry<ItemStack, Integer> cc : amountchoice.entrySet()) {
             inv.setItem(cc.getValue(), cc.getKey());
         }

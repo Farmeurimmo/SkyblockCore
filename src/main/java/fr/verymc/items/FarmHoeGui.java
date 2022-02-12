@@ -16,11 +16,11 @@ import java.util.Arrays;
 
 public class FarmHoeGui implements Listener {
 
-    public static boolean CheckForValidity(ItemStack farmhoe){
-        if(farmhoe.getLore()==null){
+    public static boolean CheckForValidity(ItemStack farmhoe) {
+        if (farmhoe.getLore() == null) {
             return false;
         }
-        if(!farmhoe.getLore().get(0).contains("§")){
+        if (!farmhoe.getLore().get(0).contains("§")) {
             return false;
         }
         String tosearch = farmhoe.getLore().get(0).replace("§7", "");
@@ -59,40 +59,6 @@ public class FarmHoeGui implements Listener {
         }
     }
 
-    @EventHandler
-    public void InventoryClickEvent(InventoryClickEvent e){
-        Player player = (Player) e.getWhoClicked();
-        ItemStack current = e.getCurrentItem();
-        String title = e.getView().getTitle();
-        if(!title.equalsIgnoreCase("§6Tiers de farmhoe")) return;
-        if(current==null) return;
-        if(current.getType()==null);
-        e.setCancelled(true);
-        if(current.getType()==Material.DIAMOND_HOE){
-            if(CheckForValidity(player.getItemInHand())){
-                if(EcoAccountsManager.instance.CheckForFounds(player.getUniqueId(), 500000.0) &&
-                  FarmHoeManager.GetBlockHaversted(player.getItemInHand()) >= 250000) {
-                    EcoAccountsManager.instance.RemoveFounds(player.getUniqueId(), 500000.0, true);
-                    player.getItemInHand().setDisplayName("§6FarmHoe Tier §cII (3X3)");
-                    player.closeInventory();
-                }
-            }
-        }
-        if(current.getType()==Material.NETHERITE_HOE){
-            if(CheckForValidity(player.getItemInHand())){
-                if(EcoAccountsManager.instance.CheckForFounds(player.getUniqueId(), 1000000.0) &&
-                  FarmHoeManager.GetBlockHaversted(player.getItemInHand()) >= 500000) {
-                    EcoAccountsManager.instance.RemoveFounds(player.getUniqueId(), 1000000.0, true);
-                    player.getItemInHand().setDisplayName("§6FarmHoe Tier §cIII (5X5)");
-                    player.closeInventory();
-                }
-            }
-        }
-        if(current.getType()==Material.IRON_DOOR){
-            player.closeInventory();
-        }
-    }
-
     public static void MakeGui(Player player, int tier) {
 
 
@@ -105,40 +71,40 @@ public class FarmHoeGui implements Listener {
 
         ItemStack custom10 = new ItemStack(Material.GOLDEN_HOE, 1);
         ItemMeta customi = custom10.getItemMeta();
-        if (tier<0) {
+        if (tier < 0) {
             customi.setDisplayName("§6Tier I");
         } else {
             customi.setDisplayName("§6Tier I §c(déjà possédé)");
             custom10.setType(Material.BEDROCK);
         }
-        customi.setLore(Arrays.asList("§7Casse et replante en 1X1","§7Coût: N/A",
-          "§7Utilisation minimales pour débloquer: N/A"));
+        customi.setLore(Arrays.asList("§7Casse et replante en 1X1", "§7Coût: N/A",
+                "§7Utilisation minimales pour débloquer: N/A"));
         custom10.setItemMeta(customi);
         invboutiquefarm2win.setItem(10, custom10);
 
         ItemStack custom12 = new ItemStack(Material.DIAMOND_HOE, 1);
         ItemMeta customk = custom12.getItemMeta();
-        if (tier<1) {
+        if (tier < 1) {
             customk.setDisplayName("§6Tier II");
         } else {
             customk.setDisplayName("§6Tier II §c(déjà possédé)");
             custom12.setType(Material.BEDROCK);
         }
-        customk.setLore(Arrays.asList("§7Casse et replante en 3X3","§7Coût: 500 000$",
-          "§7Utilisation minimales pour débloquer: 250 000"));
+        customk.setLore(Arrays.asList("§7Casse et replante en 3X3", "§7Coût: 500 000$",
+                "§7Utilisation minimales pour débloquer: 250 000"));
         custom12.setItemMeta(customk);
         invboutiquefarm2win.setItem(13, custom12);
 
         ItemStack custom13 = new ItemStack(Material.NETHERITE_HOE, 1);
         ItemMeta customl = custom13.getItemMeta();
-        if (tier<2) {
+        if (tier < 2) {
             customl.setDisplayName("§6Tier III");
         } else {
             customl.setDisplayName("§6Tier III §c(déjà possédé)");
             custom13.setType(Material.BEDROCK);
         }
-        customl.setLore(Arrays.asList("§7Casse et replante en 5X5","§7Coût: 1 000 000$",
-          "§7Utilisation minimales pour débloquer: 500 000"));
+        customl.setLore(Arrays.asList("§7Casse et replante en 5X5", "§7Coût: 1 000 000$",
+                "§7Utilisation minimales pour débloquer: 500 000"));
         custom13.setItemMeta(customl);
         invboutiquefarm2win.setItem(16, custom13);
 
@@ -147,5 +113,39 @@ public class FarmHoeGui implements Listener {
         invboutiquefarm2win.setItem(22, PreGenItems.getOwnerHead(player));
 
         player.openInventory(invboutiquefarm2win);
+    }
+
+    @EventHandler
+    public void InventoryClickEvent(InventoryClickEvent e) {
+        Player player = (Player) e.getWhoClicked();
+        ItemStack current = e.getCurrentItem();
+        String title = e.getView().getTitle();
+        if (!title.equalsIgnoreCase("§6Tiers de farmhoe")) return;
+        if (current == null) return;
+        if (current.getType() == null) ;
+        e.setCancelled(true);
+        if (current.getType() == Material.DIAMOND_HOE) {
+            if (CheckForValidity(player.getItemInHand())) {
+                if (EcoAccountsManager.instance.CheckForFounds(player.getUniqueId(), 500000.0) &&
+                        FarmHoeManager.GetBlockHaversted(player.getItemInHand()) >= 250000) {
+                    EcoAccountsManager.instance.RemoveFounds(player.getUniqueId(), 500000.0, true);
+                    player.getItemInHand().setDisplayName("§6FarmHoe Tier §cII (3X3)");
+                    player.closeInventory();
+                }
+            }
+        }
+        if (current.getType() == Material.NETHERITE_HOE) {
+            if (CheckForValidity(player.getItemInHand())) {
+                if (EcoAccountsManager.instance.CheckForFounds(player.getUniqueId(), 1000000.0) &&
+                        FarmHoeManager.GetBlockHaversted(player.getItemInHand()) >= 500000) {
+                    EcoAccountsManager.instance.RemoveFounds(player.getUniqueId(), 1000000.0, true);
+                    player.getItemInHand().setDisplayName("§6FarmHoe Tier §cIII (5X5)");
+                    player.closeInventory();
+                }
+            }
+        }
+        if (current.getType() == Material.IRON_DOOR) {
+            player.closeInventory();
+        }
     }
 }

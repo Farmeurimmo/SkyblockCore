@@ -7,7 +7,6 @@ import main.java.fr.verymc.eco.EcoAccountsManager;
 import main.java.fr.verymc.scoreboard.ScoreBoard;
 import net.luckperms.api.LuckPermsProvider;
 import net.luckperms.api.model.user.User;
-import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

@@ -55,14 +55,13 @@ import java.util.HashMap;
 
 public class Main extends JavaPlugin implements Listener {
 
-    public ArrayList<Player> pending = new ArrayList<Player>();
-
-    public ArrayList<Player> haverequest = new ArrayList<Player>();
     public static Main instance1;
-    public HashMap<String, String> tpatarget = new HashMap<>();
     static LuckPerms api;
     private static Main instance;
     private final HashMap<String, Integer> spawncooldown = new HashMap<>();
+    public ArrayList<Player> pending = new ArrayList<Player>();
+    public ArrayList<Player> haverequest = new ArrayList<Player>();
+    public HashMap<String, String> tpatarget = new HashMap<>();
     public EconomyImplementer economyImplementer;
     public FileConfiguration data;
     public FileConfiguration datac;
@@ -190,7 +189,7 @@ public class Main extends JavaPlugin implements Listener {
 
         WineSpawn.SpawnPnj(new Location(Bukkit.getServer().getWorld("world"), -184.5, 70.5, -77.5, -90, 0));
         HolosSetup.SpawnPnj2(new Location(Bukkit.getServer().getWorld("world"), -155.5, 71, -60.5, 90, 0),
-          new Location(Bukkit.getServer().getWorld("world"), -172.5, 71, -64.5, 90, 0));
+                new Location(Bukkit.getServer().getWorld("world"), -172.5, 71, -64.5, 90, 0));
         HolosSetup.SpawnCrates();
         CratesManager.SpawnCrates();
         System.out.println("Spawn Blocs/PNJ/HOLOS DONE | NEXT listeners");
