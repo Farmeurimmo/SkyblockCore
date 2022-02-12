@@ -22,22 +22,30 @@ public class MoneyCmd implements CommandExecutor, TabCompleter {
             if (sender instanceof Player) {
                 Player player = (Player) sender;
                 player.sendMessage("§6§lMonnaie §8» §fVous avez §6" +
-                        Maths.arrondiNDecimales(EcoAccountsManager.instance.GetMoney(player.getUniqueId()), 2) + "§");
+                        Maths.arrondiNDecimales(EcoAccountsManager.instance.GetMoney(player.getName()), 2) + "$");
             }
         } else if (args.length == 1) {
-            if (EcoAccountsManager.instance.IsExisting(Bukkit.getPlayer(args[0]).getUniqueId()) == true) {
+            if (Bukkit.getPlayer(args[0]) == null) {
+                sender.sendMessage("§6§lMonnaie §8» §fErreur compte inexistant ou indisponible !");
+                return true;
+            }
+            if (EcoAccountsManager.instance.IsExisting((Player) Bukkit.getOfflinePlayer(args[0])) == true) {
                 sender.sendMessage("§6§lMonnaie §8» §6" + args[0] + "§f possède §6" +
-                        Maths.arrondiNDecimales(EcoAccountsManager.instance.GetMoney(Bukkit.getPlayer(args[0]).getUniqueId()), 2) + "$");
+                        Maths.arrondiNDecimales(EcoAccountsManager.instance.GetMoney(args[0]), 2) + "$");
             }
         } else if (args.length == 2) {
             sender.sendMessage("§6§lMonnaie §8» §f/money <pseudo> <give/remove> <montant>");
         } else if (args.length == 3) {
-            if (EcoAccountsManager.instance.IsExisting(Bukkit.getPlayer(args[0]).getUniqueId()) == true) {
+            if (Bukkit.getPlayer(args[0]) == null) {
+                sender.sendMessage("§6§lMonnaie §8» §fErreur compte inexistant ou indisponible !");
+                return true;
+            }
+            if (EcoAccountsManager.instance.IsExisting((Player) Bukkit.getOfflinePlayer(args[0])) == true) {
                 if (args[1].equalsIgnoreCase("give")) {
 
                     if (args[2].length() <= 9) {
                         Double aaa = Double.parseDouble(args[2]);
-                        EcoAccountsManager.instance.AddFounds(Bukkit.getPlayer(args[0]).getUniqueId(), aaa, false);
+                        EcoAccountsManager.instance.AddFounds((Player) Bukkit.getOfflinePlayer(args[0]), aaa, false);
                         sender.sendMessage("§6§lMonnaie §8» §f" + args[0] + " a reçu §6" + aaa + "$§f sur son compte avec succès.");
                     } else {
                         sender.sendMessage("§6§lMonnaie §8» §fVeuillez choisir un nombre plus petit.");
@@ -46,7 +54,7 @@ public class MoneyCmd implements CommandExecutor, TabCompleter {
                 } else if (args[1].equalsIgnoreCase("remove")) {
                     if (args[2].length() <= 9) {
                         Double aaa = Double.parseDouble(args[2]);
-                        EcoAccountsManager.instance.RemoveFounds(Bukkit.getPlayer(args[0]).getUniqueId(), aaa, true);
+                        EcoAccountsManager.instance.RemoveFounds((Player) Bukkit.getOfflinePlayer(args[0]), aaa, true);
                         sender.sendMessage("§6§lMonnaie §8» §f" + args[0] + " a perdu §6" + aaa + "$§f sur son compte avec succès.");
                     } else {
                         sender.sendMessage("§6§lMonnaie §8» §fVeuillez choisir un nombre plus petit.");
@@ -54,7 +62,7 @@ public class MoneyCmd implements CommandExecutor, TabCompleter {
                 } else if (args[1].equalsIgnoreCase("set")) {
                     if (args[2].length() <= 9) {
                         Double aaa = Double.parseDouble(args[2]);
-                        EcoAccountsManager.instance.SetFounds(Bukkit.getPlayer(args[0]).getUniqueId(), aaa);
+                        EcoAccountsManager.instance.SetFounds((Player) Bukkit.getOfflinePlayer(args[0]), aaa);
                         sender.sendMessage("§6§lMonnaie §8» §fL'argent de " + args[0] + " a été d§finis sur §6" + aaa + "$§f avec succès.");
                     } else {
                         sender.sendMessage("§6§lMonnaie §8» §fVeuillez choisir un nombre plus petit.");

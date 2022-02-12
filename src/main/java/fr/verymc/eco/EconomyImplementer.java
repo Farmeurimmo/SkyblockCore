@@ -4,6 +4,7 @@ import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.economy.EconomyResponse;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.entity.Player;
 
 import java.util.List;
 
@@ -53,46 +54,46 @@ public class EconomyImplementer implements Economy {
 
     @Override
     public boolean hasAccount(String playerName) {
-        EcoAccountsManager.instance.CheckForAccount(Bukkit.getPlayer(playerName));
+        EcoAccountsManager.instance.CheckForAccount((Player) Bukkit.getOfflinePlayer(playerName));
         return true;
     }
 
     @Override
     public boolean hasAccount(OfflinePlayer player) {
-        EcoAccountsManager.instance.CheckForAccount(Bukkit.getPlayer(player.getName()));
+        EcoAccountsManager.instance.CheckForAccount((Player) player);
         return true;
     }
 
     @Override
     public boolean hasAccount(String playerName, String worldName) {
-        EcoAccountsManager.instance.CheckForAccount(Bukkit.getPlayer(playerName));
+        EcoAccountsManager.instance.CheckForAccount((Player) Bukkit.getOfflinePlayer(playerName));
         return true;
     }
 
     @Override
     public boolean hasAccount(OfflinePlayer player, String worldName) {
-        EcoAccountsManager.instance.CheckForAccount(Bukkit.getPlayer(player.getName()));
+        EcoAccountsManager.instance.CheckForAccount((Player) player);
         return true;
     }
 
     @Override
     public double getBalance(String playerName) {
-        return EcoAccountsManager.instance.GetMoney(Bukkit.getPlayer(playerName).getUniqueId());
+        return EcoAccountsManager.instance.GetMoney(playerName);
     }
 
     @Override
     public double getBalance(OfflinePlayer player) {
-        return EcoAccountsManager.instance.GetMoney(player.getUniqueId());
+        return EcoAccountsManager.instance.GetMoney(player.getName());
     }
 
     @Override
     public double getBalance(String playerName, String world) {
-        return EcoAccountsManager.instance.GetMoney(Bukkit.getPlayer(playerName).getUniqueId());
+        return EcoAccountsManager.instance.GetMoney(playerName);
     }
 
     @Override
     public double getBalance(OfflinePlayer player, String world) {
-        return EcoAccountsManager.instance.GetMoney(player.getUniqueId());
+        return EcoAccountsManager.instance.GetMoney(player.getName());
     }
 
     @Override
@@ -121,57 +122,57 @@ public class EconomyImplementer implements Economy {
 
     @Override
     public EconomyResponse withdrawPlayer(String playerName, double amount) {
-        if (EcoAccountsManager.instance.CheckForFounds(Bukkit.getPlayer(playerName).getUniqueId(), amount)) {
-            EcoAccountsManager.instance.RemoveFounds(Bukkit.getPlayer(playerName).getUniqueId(), amount, true);
+        if (EcoAccountsManager.instance.CheckForFounds(Bukkit.getPlayer(playerName), amount)) {
+            EcoAccountsManager.instance.RemoveFounds(Bukkit.getPlayer(playerName), amount, true);
         }
         return null;
     }
 
     @Override
     public EconomyResponse withdrawPlayer(OfflinePlayer player, double amount) {
-        if (EcoAccountsManager.instance.CheckForFounds(player.getUniqueId(), amount)) {
-            EcoAccountsManager.instance.RemoveFounds(player.getUniqueId(), amount, true);
+        if (EcoAccountsManager.instance.CheckForFounds((Player) player, amount)) {
+            EcoAccountsManager.instance.RemoveFounds((Player) player, amount, true);
         }
         return null;
     }
 
     @Override
     public EconomyResponse withdrawPlayer(String playerName, String worldName, double amount) {
-        if (EcoAccountsManager.instance.CheckForFounds(Bukkit.getPlayer(playerName).getUniqueId(), amount)) {
-            EcoAccountsManager.instance.RemoveFounds(Bukkit.getPlayer(playerName).getUniqueId(), amount, true);
+        if (EcoAccountsManager.instance.CheckForFounds(Bukkit.getPlayer(playerName), amount)) {
+            EcoAccountsManager.instance.RemoveFounds(Bukkit.getPlayer(playerName), amount, true);
         }
         return null;
     }
 
     @Override
     public EconomyResponse withdrawPlayer(OfflinePlayer player, String worldName, double amount) {
-        if (EcoAccountsManager.instance.CheckForFounds(player.getUniqueId(), amount)) {
-            EcoAccountsManager.instance.RemoveFounds(player.getUniqueId(), amount, true);
+        if (EcoAccountsManager.instance.CheckForFounds((Player) player, amount)) {
+            EcoAccountsManager.instance.RemoveFounds((Player) player, amount, true);
         }
         return null;
     }
 
     @Override
     public EconomyResponse depositPlayer(String playerName, double amount) {
-        EcoAccountsManager.instance.AddFounds(Bukkit.getPlayer(playerName).getUniqueId(), amount, true);
+        EcoAccountsManager.instance.AddFounds(Bukkit.getPlayer(playerName), amount, true);
         return null;
     }
 
     @Override
     public EconomyResponse depositPlayer(OfflinePlayer player, double amount) {
-        EcoAccountsManager.instance.AddFounds(player.getUniqueId(), amount, true);
+        EcoAccountsManager.instance.AddFounds((Player) player, amount, true);
         return null;
     }
 
     @Override
     public EconomyResponse depositPlayer(String playerName, String worldName, double amount) {
-        EcoAccountsManager.instance.AddFounds(Bukkit.getPlayer(playerName).getUniqueId(), amount, true);
+        EcoAccountsManager.instance.AddFounds(Bukkit.getPlayer(playerName), amount, true);
         return null;
     }
 
     @Override
     public EconomyResponse depositPlayer(OfflinePlayer player, String worldName, double amount) {
-        EcoAccountsManager.instance.AddFounds(player.getUniqueId(), amount, true);
+        EcoAccountsManager.instance.AddFounds((Player) player, amount, true);
         return null;
     }
 
@@ -249,25 +250,25 @@ public class EconomyImplementer implements Economy {
 
     @Override
     public boolean createPlayerAccount(String playerName) {
-        EcoAccountsManager.instance.CheckForAccount(Bukkit.getPlayer(playerName));
+        EcoAccountsManager.instance.CheckForAccount((Player) Bukkit.getOfflinePlayer(playerName));
         return true;
     }
 
     @Override
     public boolean createPlayerAccount(OfflinePlayer player) {
-        EcoAccountsManager.instance.CheckForAccount(Bukkit.getPlayer(player.getName()));
+        EcoAccountsManager.instance.CheckForAccount((Player) player);
         return true;
     }
 
     @Override
     public boolean createPlayerAccount(String playerName, String worldName) {
-        EcoAccountsManager.instance.CheckForAccount(Bukkit.getPlayer(playerName));
+        EcoAccountsManager.instance.CheckForAccount((Player) Bukkit.getOfflinePlayer(playerName));
         return true;
     }
 
     @Override
     public boolean createPlayerAccount(OfflinePlayer player, String worldName) {
-        EcoAccountsManager.instance.CheckForAccount(Bukkit.getPlayer(player.getName()));
+        EcoAccountsManager.instance.CheckForAccount((Player) player);
         return true;
     }
 
