@@ -5,6 +5,7 @@ import org.bukkit.Bukkit;
 
 import java.util.Calendar;
 import java.util.TimeZone;
+import java.util.UUID;
 
 public class ChallengesReset {
 
@@ -22,7 +23,7 @@ public class ChallengesReset {
         }, 20);
     }
 
-    public static void CreateChallengesForPlayer(String aa) {
+    public static void CreateChallengesForPlayer(UUID aa) {
         if (Main.instance1.getData().getString("Joueurs." + aa + ".Challenges.Daily.1.Active") == null) {
             Main.instance1.getData().set("Joueurs." + aa + ".Challenges.Daily.1.Active", true);
             Main.instance1.getData().set("Joueurs." + aa + ".Challenges.Daily.1.Progression", 0);

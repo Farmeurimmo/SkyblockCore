@@ -66,13 +66,11 @@ public class ChatReaction implements Listener {
                 timeend = System.currentTimeMillis();
 
                 long timeelapsed = timeend - timestart;
-                long secelasp = TimeUnit.MILLISECONDS.toSeconds(timeelapsed);
-                long milliselasp = TimeUnit.SECONDS.toSeconds(timeelapsed);
 
                 Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
                     public void run() {
                         Bukkit.broadcastMessage("§6§lChatReaction §8» §f" + player.getName() + " vient de gagner le ChatReaction en " +
-                                milliselasp * 10 + " secondes et remporte 2 000$ !");
+                                timeelapsed / 1000 + " secondes et remporte 2 000$ !");
                         EcoAccountsManager.instance.AddFounds(player, (double) 2000, false);
                     }
                 }, 1);
