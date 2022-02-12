@@ -167,7 +167,7 @@ public class AtoutGui implements Listener {
                 player.removePotionEffect(PotionEffectType.FAST_DIGGING);
                 Main.instance1.getData().set("Joueurs." + player.getUniqueId() + ".Atout.1.Active", false);
                 Main.instance1.saveData();
-                player.sendActionBar("§6Atout haste §c§ld§sactivé !");
+                player.sendActionBar("§6Atout haste §c§ldésactivé !");
                 AtoutGui.MakeAtoutGui(player);
                 return;
             }
@@ -189,7 +189,7 @@ public class AtoutGui implements Listener {
                 player.removePotionEffect(PotionEffectType.SPEED);
                 Main.instance1.getData().set("Joueurs." + player.getUniqueId() + ".Atout.2.Active", false);
                 Main.instance1.saveData();
-                player.sendActionBar("§6Atout speed §c§ld§sactivé !");
+                player.sendActionBar("§6Atout speed §c§ldésactivé !");
                 AtoutGui.MakeAtoutGui(player);
                 return;
             }
@@ -211,7 +211,7 @@ public class AtoutGui implements Listener {
                 player.removePotionEffect(PotionEffectType.JUMP);
                 Main.instance1.getData().set("Joueurs." + player.getUniqueId() + ".Atout.3.Active", false);
                 Main.instance1.saveData();
-                player.sendActionBar("§6Atout Jumpboost §c§ld§sactivé !");
+                player.sendActionBar("§6Atout Jumpboost §c§ldésactivé !");
                 AtoutGui.MakeAtoutGui(player);
                 return;
             }

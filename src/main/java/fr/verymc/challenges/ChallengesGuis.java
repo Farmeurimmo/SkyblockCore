@@ -37,8 +37,8 @@ public class ChallengesGuis implements Listener {
             Main.instance1.saveData();
 
             player.playSound(player.getLocation(), Sound.UI_TOAST_CHALLENGE_COMPLETE, 5, 1);
-            player.sendMessage("§6§lChallenges §8» §fVous venez de compléter le challenge journalier n°§" + nombre +
-                    " au palier " + Main.instance1.getData().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily."+nombre+".Palier")
+            player.sendMessage("§6§lChallenges §8» §fVous venez de compléter le challenge journalier n°§6" + nombre +
+                    " §7au palier " + Main.instance1.getData().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily."+nombre+".Palier")
                     + "/5.");
             player.sendMessage("§6§lChallenges §8» §fVous avez reçu 2 crystaux, 5000$ et x1 Clée Challenge.");
 
