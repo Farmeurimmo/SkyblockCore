@@ -41,7 +41,7 @@ public class BuyAtoutGui implements Listener {
         } else if (Main.instance1.getData().getInt("Joueurs." + player.getUniqueId() + ".Atout.1.Level") == 2) {
             ItemStack custom10 = new ItemStack(Material.BEDROCK, 1);
             ItemMeta customi = custom10.getItemMeta();
-            customi.setDisplayName("§eHaste 2 §c(déjà poss§d§)");
+            customi.setDisplayName("§eHaste 2 §c(déjà possédé)");
             custom10.setItemMeta(customi);
             inv.setItem(10, custom10);
         }
@@ -57,7 +57,7 @@ public class BuyAtoutGui implements Listener {
         } else if (Main.instance1.getData().getInt("Joueurs." + player.getUniqueId() + ".Atout.2.Level") == 2) {
             ItemStack custom10 = new ItemStack(Material.BEDROCK, 1);
             ItemMeta customi = custom10.getItemMeta();
-            customi.setDisplayName("§eSpeed 2 §c(déjà poss§d§)");
+            customi.setDisplayName("§eSpeed 2 §c(déjà possédé)");
             custom10.setItemMeta(customi);
             inv.setItem(12, custom10);
         }
@@ -73,7 +73,7 @@ public class BuyAtoutGui implements Listener {
         } else if (Main.instance1.getData().getInt("Joueurs." + player.getUniqueId() + ".Atout.3.Level") == 3) {
             ItemStack custom10 = new ItemStack(Material.BEDROCK, 1);
             ItemMeta customi = custom10.getItemMeta();
-            customi.setDisplayName("§eJumpboost 3 §c(déjà poss§d§)");
+            customi.setDisplayName("§eJumpboost 3 §c(déjà possédé)");
             custom10.setItemMeta(customi);
             inv.setItem(14, custom10);
         }
@@ -98,7 +98,7 @@ public class BuyAtoutGui implements Listener {
             Main.instance1.getData().set("Joueurs." + player.getUniqueId() + ".Atout.1.Level", 2);
             Main.instance1.saveData();
             player.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 999999999, 1));
-            player.sendMessage("§6Vous avez reçu l'accès §l'atout haste 2 !");
+            player.sendMessage("§6Vous avez reçu l'accès à l'atout haste 2 !");
             Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
                 public void run() {
                     MakeBuyAtoutGui(player);
