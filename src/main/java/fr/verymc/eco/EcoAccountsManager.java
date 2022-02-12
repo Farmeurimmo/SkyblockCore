@@ -5,6 +5,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
+import java.util.UUID;
 
 public class EcoAccountsManager {
 
@@ -14,22 +15,22 @@ public class EcoAccountsManager {
         instance = this;
     }
 
-    public HashMap<String, Double> Moneys = new HashMap<>();
+    public HashMap<UUID, Double> Moneys = new HashMap<>();
 
     public void CheckForAccount(Player player) {
-        if (Main.instance1.getDataz().get(player.getName()) == null) {
-            Main.instance1.getDataz().set(player.getName(), 200);
+        if (Main.instance1.getDataz().get(String.valueOf(player.getUniqueId())) == null) {
+            Main.instance1.getDataz().set(String.valueOf(player.getUniqueId()), 200);
             Main.instance1.saveData();
-            Moneys.put(player.getName(), Main.instance1.getDataz().getDouble(player.getName()));
+            Moneys.put(player.getUniqueId(), Main.instance1.getDataz().getDouble(String.valueOf(player.getUniqueId())));
         }
     }
 
-    public boolean IsExisting(String player) {
-        boolean a = Main.instance1.getDataz().get(player) != null;
+    public boolean IsExisting(UUID player) {
+        boolean a = Main.instance1.getDataz().get(String.valueOf(player)) != null;
         return a;
     }
 
-    public double GetMoney(String a) {
+    public double GetMoney(UUID a) {
         Double b = (double) 0;
         if (Moneys.containsKey(a)) {
             b = Moneys.get(a);
@@ -37,15 +38,15 @@ public class EcoAccountsManager {
         return b;
     }
 
-    public double MoneyGetarrondiNDecimales(String playername, int n) {
+    public double MoneyGetarrondiNDecimales(UUID playername, int n) {
         double money = GetMoney(playername);
         double pow = Math.pow(10, n);
         return (Math.floor(money * pow)) / pow;
     }
 
-    public boolean CheckForFounds(Player player, Double f) {
+    public boolean CheckForFounds(UUID player, Double f) {
         boolean aa = false;
-        Double moneyplayer = Moneys.get(player.getName());
+        Double moneyplayer = instance.GetMoney(player);
         Double after = moneyplayer - f;
         if (after >= 0) {
             aa = true;
@@ -53,12 +54,12 @@ public class EcoAccountsManager {
         return aa;
     }
 
-    public void RemoveFounds(String player, Double toremove, boolean ase) {
-        Double moneybefore = Moneys.get(player);
+    public void RemoveFounds(UUID player, Double toremove, boolean ase) {
+        Double moneybefore = instance.GetMoney(player);
         if (moneybefore - toremove >= Double.MIN_VALUE) {
             double now = moneybefore - toremove;
             Moneys.put(player, now);
-            Main.instance1.getDataz().set(player, now);
+            Main.instance1.getDataz().set(String.valueOf(player), now);
             Main.instance1.saveData();
             if (Bukkit.getPlayer(player) != null) {
                 if(ase==true) Bukkit.getPlayer(player).sendMessage("§6§lMonnaie §8» §6" + toremove + "$§f ont été §cretiré §fde votre compte.");
@@ -70,21 +71,21 @@ public class EcoAccountsManager {
         }
     }
 
-    public void SetFounds(String player, Double toset) {
+    public void SetFounds(UUID player, Double toset) {
         Moneys.put(player, toset);
-        Main.instance1.getDataz().set(player, toset);
+        Main.instance1.getDataz().set(String.valueOf(player), toset);
         Main.instance1.saveData();
         if (Bukkit.getPlayer(player) != null) {
             Bukkit.getPlayer(player).sendMessage("§6§lMonnaie §8» §fVotre argent a été §adéfinis§f sur §6" + toset + "$§f.");
         }
     }
 
-    public void AddFounds(String player, Double aaa, boolean dd) {
-        Double moneybefore = Moneys.get(player);
+    public void AddFounds(UUID player, Double aaa, boolean dd) {
+        Double moneybefore = instance.GetMoney(player);
         if (moneybefore < Double.MAX_VALUE - aaa) {
-            double now = Moneys.get(player) + aaa;
+            double now = GetMoney(player) + aaa;
             Moneys.put(player, now);
-            Main.instance1.getDataz().set(player, now);
+            Main.instance1.getDataz().set(String.valueOf(player), now);
             Main.instance1.saveData();
             if (Bukkit.getPlayer(player) != null) {
                 if(dd==true)Bukkit.getPlayer(player).sendMessage("§6§lMonnaie §8» §6" + aaa + "$§f ont été §aajouté §f§ votre compte.");
@@ -98,7 +99,7 @@ public class EcoAccountsManager {
 
     public void UpdateHash() {
         for (String aa : Main.instance1.getDataz().getConfigurationSection("").getKeys(false)) {
-            Moneys.put(aa, Main.instance1.getDataz().getDouble(aa));
+            Moneys.put(UUID.fromString(aa), Main.instance1.getDataz().getDouble(aa));
         }
     }
 }

@@ -22,7 +22,7 @@ public class PayCmd implements CommandExecutor, TabCompleter {
             if (args.length == 0 || args.length == 1 || args.length >= 3) {
                 player.sendMessage("§6§lMonnaie §8» §fUtilisation, /pay <joueur> <montant>");
             } else {
-                if (EcoAccountsManager.instance.IsExisting(args[0]) == true) {
+                if (EcoAccountsManager.instance.IsExisting(Bukkit.getPlayer(args[0]).getUniqueId()) == true) {
                     if (!args[0].equals(player.getName())) {
                         boolean digit = false;
                         try {
@@ -35,10 +35,10 @@ public class PayCmd implements CommandExecutor, TabCompleter {
                         if (!args[1].contains("-") && !args[1].contains(",") && digit == true) {
                             if (args[1].length() <= 9) {
                                 Double aaa = Double.parseDouble(args[1]);
-                                if (EcoAccountsManager.instance.CheckForFounds(player, aaa) == true) {
+                                if (EcoAccountsManager.instance.CheckForFounds(player.getUniqueId(), aaa) == true) {
                                     if (aaa >= 5) {
-                                        EcoAccountsManager.instance.AddFounds(args[0], aaa, false);
-                                        EcoAccountsManager.instance.RemoveFounds(player.getName(), aaa, true);
+                                        EcoAccountsManager.instance.AddFounds(Bukkit.getPlayer(args[0]).getUniqueId(), aaa, false);
+                                        EcoAccountsManager.instance.RemoveFounds(player.getUniqueId(), aaa, true);
                                         player.sendMessage("§6§lMonnaie §8» §fVous avez envoyé avec §asuccès §6" + aaa + "$§f au joueur " + args[0]);
                                         if (Bukkit.getPlayer(args[0]) != null) {
                                             Bukkit.getPlayer(args[0]).sendMessage("§6§lMonnaie §8» §fVous avez reçu avec §asuccès §6" + aaa + "$§f du joueur " + player.getName());

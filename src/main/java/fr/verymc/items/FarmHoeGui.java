@@ -70,9 +70,9 @@ public class FarmHoeGui implements Listener {
         e.setCancelled(true);
         if(current.getType()==Material.DIAMOND_HOE){
             if(CheckForValidity(player.getItemInHand())){
-                if(EcoAccountsManager.instance.CheckForFounds(player, 500000.0) &&
+                if(EcoAccountsManager.instance.CheckForFounds(player.getUniqueId(), 500000.0) &&
                   FarmHoeManager.GetBlockHaversted(player.getItemInHand()) >= 250000) {
-                    EcoAccountsManager.instance.RemoveFounds(player.getName(), 500000.0, true);
+                    EcoAccountsManager.instance.RemoveFounds(player.getUniqueId(), 500000.0, true);
                     player.getItemInHand().setDisplayName("§6FarmHoe Tier §cII (3X3)");
                     player.closeInventory();
                 }
@@ -80,9 +80,9 @@ public class FarmHoeGui implements Listener {
         }
         if(current.getType()==Material.NETHERITE_HOE){
             if(CheckForValidity(player.getItemInHand())){
-                if(EcoAccountsManager.instance.CheckForFounds(player, 1000000.0) &&
+                if(EcoAccountsManager.instance.CheckForFounds(player.getUniqueId(), 1000000.0) &&
                   FarmHoeManager.GetBlockHaversted(player.getItemInHand()) >= 500000) {
-                    EcoAccountsManager.instance.RemoveFounds(player.getName(), 1000000.0, true);
+                    EcoAccountsManager.instance.RemoveFounds(player.getUniqueId(), 1000000.0, true);
                     player.getItemInHand().setDisplayName("§6FarmHoe Tier §cIII (5X5)");
                     player.closeInventory();
                 }

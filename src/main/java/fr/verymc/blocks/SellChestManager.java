@@ -15,14 +15,15 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashMap;
 import java.util.Map.Entry;
+import java.util.UUID;
 
 public class SellChestManager {
 
-    public static HashMap<Location, String> blcsellchest = new HashMap<>();
+    public static HashMap<Location, UUID> blcsellchest = new HashMap<>();
 
     public static void AutoSellForVeryChest() {
-        HashMap<String, Double> reward = new HashMap<>();
-        for (Entry<Location, String> sellchest : blcsellchest.entrySet()) {
+        HashMap<UUID, Double> reward = new HashMap<>();
+        for (Entry<Location, UUID> sellchest : blcsellchest.entrySet()) {
             BlockState e = sellchest.getKey().getBlock().getState();
             Inventory ed = ((Chest) e).getBlockInventory();
             double total = 0;
@@ -40,14 +41,14 @@ public class SellChestManager {
                 }
             }
             ((Chest) e).getBlockInventory().setContents(ed.getContents());
-            String playername = sellchest.getValue();
+            UUID playername = sellchest.getValue();
             if (reward.containsKey(playername)) {
                 reward.put(playername, reward.get(playername) + total);
             } else {
                 reward.put(playername, total);
             }
         }
-        for (Entry<String, Double> tosend : reward.entrySet()) {
+        for (Entry<UUID, Double> tosend : reward.entrySet()) {
             EcoAccountsManager.instance.AddFounds(tosend.getKey(), tosend.getValue(), false);
         }
         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
@@ -81,13 +82,13 @@ public class SellChestManager {
     }
 
     public static void PlaceChest(Player player, Location block, int num) {
-        Main.getInstance().getDatablc().set("SellChest." + player.getName() + "." + num, block);
+        Main.getInstance().getDatablc().set("SellChest." + player.getUniqueId() + "." + num, block);
         Main.getInstance().saveData();
-        blcsellchest.put(block, player.getName());
+        blcsellchest.put(block, player.getUniqueId());
     }
 
     public static String getOwner(Location loc) {
-        return blcsellchest.get(loc);
+        return String.valueOf(blcsellchest.get(loc));
     }
 
     public static void ReadFromFile() {
@@ -99,7 +100,7 @@ public class SellChestManager {
                 continue;
             }
             for (String bb : Main.getInstance().getDatablc().getConfigurationSection("SellChest." + aa).getKeys(false)) {
-                blcsellchest.put(Main.getInstance().getDatablc().getLocation("SellChest." + aa + "." + bb), aa);
+                blcsellchest.put(Main.getInstance().getDatablc().getLocation("SellChest." + aa + "." + bb), UUID.fromString(aa));
             }
         }
     }
