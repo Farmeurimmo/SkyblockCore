@@ -151,7 +151,6 @@ public class Main extends JavaPlugin implements Listener {
         spawncooldown.clear();
         ChatReaction.WriteWords();
         //BossBar.CreateBossBar();
-        FeatherFlyInteract.ReadForTempFly();
         ChunkCollectorManager.ReadFromFile();
         SellChestManager.ReadFromFile();
         FarmHoeManager.addtolist();
@@ -201,6 +200,7 @@ public class Main extends JavaPlugin implements Listener {
         getServer().getPluginManager().registerEvents(new Farm2WinGui(), this);
         getServer().getPluginManager().registerEvents(new WineGui(), this);
         getServer().getPluginManager().registerEvents(new WarpGui(), this);
+        getServer().getPluginManager().registerEvents(new CountdownFly(), this);
         getServer().getPluginManager().registerEvents(new FeatherFlyInteract(), this);
         getServer().getPluginManager().registerEvents(new SwitchWorld(), this);
         getServer().getPluginManager().registerEvents(new Tabulation(), this);
@@ -219,7 +219,6 @@ public class Main extends JavaPlugin implements Listener {
         getServer().getPluginManager().registerEvents(new CateSelectGui(), this);
         getServer().getPluginManager().registerEvents(new AmountGuiManager(), this);
         getServer().getPluginManager().registerEvents(new MultiStacksShopGuiManager(), this);
-        getServer().getPluginManager().registerEvents(new CountdownFly(), this);
         getServer().getPluginManager().registerEvents(new TchatManager(), this);
         getServer().getPluginManager().registerEvents(new ChunkCollector(), this);
         getServer().getPluginManager().registerEvents(new SellChest(), this);
@@ -277,7 +276,7 @@ public class Main extends JavaPlugin implements Listener {
 
     @Override
     public void onDisable() {
-        FeatherFlyInteract.WriteFlyLeft();
+        FeatherFlyInteract.instance.WriteFlyLeft();
         HolosSetup.RemoveBoxeHolo();
         CratesManager.RemoveBoxeHolo();
         //BossBar.RemoveBossBarForPlayers();

@@ -1,6 +1,7 @@
 package main.java.fr.verymc.featherfly;
 
 import main.java.fr.verymc.core.Main;
+import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -13,11 +14,19 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.Map.Entry;
+import java.util.UUID;
 
 public class FeatherFlyInteract implements Listener {
 
-    public static void WriteFlyLeft() {
-        for (Entry<String, Integer> aaa : CountdownFly.fly.entrySet()) {
+    public static FeatherFlyInteract instance;
+
+    public FeatherFlyInteract(){
+        instance = this;
+        instance.ReadForTempFly();
+    }
+
+    public void WriteFlyLeft() {
+        for (Entry<UUID, Integer> aaa : CountdownFly.fly.entrySet()) {
             if (aaa.getValue() >= 1) {
                 Main.instance1.getDatac().set("Joueurs." + aaa.getKey() + ".Fly.timeleft", aaa.getValue());
                 Main.instance1.saveData();
@@ -25,7 +34,7 @@ public class FeatherFlyInteract implements Listener {
         }
     }
 
-    public static void ReadForTempFly() {
+    public void ReadForTempFly() {
         if (Main.instance1.getDatac().getConfigurationSection("Joueurs") == null) {
             Main.instance1.getDatac().set("Joueurs.ini", true);
             Main.instance1.saveData();
@@ -37,8 +46,7 @@ public class FeatherFlyInteract implements Listener {
             int a = 0;
             a = Main.instance1.getDatac().getInt("Joueurs." + aa + ".Fly.timeleft");
             if (a >= 1) {
-                CountdownFly.setCooldown(aa, a);
-                CountdownFly.CountDown(aa);
+                CountdownFly.instance.setCooldown(UUID.fromString(aa), a);
                 Main.instance1.getDatac().set("Joueurs." + aa + ".Fly.timeleft", 0);
                 Main.instance1.saveData();
             }
@@ -59,7 +67,8 @@ public class FeatherFlyInteract implements Listener {
             }
             if (!sb.isEmpty()) {
                 int count = player.getInventory().getItemInHand().getAmount();
-                CountdownFly.EnableFlyForPlayer(player, sample.replace("§eFly de ", "").replace(sb, "").replace(" ", ""), sb.toString());
+                CountdownFly.instance.EnableFlyForPlayer(player, sample.replace("§eFly de ", "").
+                        replace(sb, "").replace(" ", ""), sb.toString());
                 ItemStack aaa = player.getItemInHand();
                 aaa.setAmount(count - 1);
                 player.getInventory().setItemInHand(aaa);
