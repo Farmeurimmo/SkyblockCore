@@ -22,17 +22,17 @@ public class ChallengeCrateManager {
         int n = rand.nextInt(100);
         if (n >= 0 && n <= 11) {
             loot = "5 000$";
-            EcoAccountsManager.instance.AddFounds(player.getName(), (double) 5000, false);
+            EcoAccountsManager.instance.AddFounds(player.getUniqueId(), (double) 5000, false);
             return loot;
         }
         if (n >= 12 && n <= 17) {
             loot = "10 000$";
-            EcoAccountsManager.instance.AddFounds(player.getName(), (double) 10000, false);
+            EcoAccountsManager.instance.AddFounds(player.getUniqueId(), (double) 10000, false);
             return loot;
         }
         if (n >= 18 && n <= 20) {
             loot = "15 000$";
-            EcoAccountsManager.instance.AddFounds(player.getName(), (double) 15000, false);
+            EcoAccountsManager.instance.AddFounds(player.getUniqueId(), (double) 15000, false);
             return loot;
         }
         if (n >= 21 && n <= 27) {

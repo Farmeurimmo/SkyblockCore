@@ -91,11 +91,11 @@ public class BuyAtoutGui implements Listener {
     }
 
     public static void BuyAtout(int effect, Player player) {
-        Double money = EcoAccountsManager.instance.Moneys.get(player.getName());
+        Double money = EcoAccountsManager.instance.GetMoney(player.getUniqueId());
 
         if (effect == 1) {
             if (money >= haste) ;
-            EcoAccountsManager.instance.RemoveFounds(player.getName(), haste, true);
+            EcoAccountsManager.instance.RemoveFounds(player.getUniqueId(), haste, true);
             Main.instance1.getData().set("Joueurs." + player.getName() + ".Atout.1.Active", true);
             Main.instance1.getData().set("Joueurs." + player.getName() + ".Atout.1.Level", 2);
             Main.instance1.saveData();
@@ -109,7 +109,7 @@ public class BuyAtoutGui implements Listener {
         }
         if (effect == 2) {
             if (money >= speed) ;
-            EcoAccountsManager.instance.RemoveFounds(player.getName(), speed, true);
+            EcoAccountsManager.instance.RemoveFounds(player.getUniqueId(), speed, true);
             Main.instance1.getData().set("Joueurs." + player.getName() + ".Atout.2.Active", true);
             Main.instance1.getData().set("Joueurs." + player.getName() + ".Atout.2.Level", 2);
             Main.instance1.saveData();
@@ -123,7 +123,7 @@ public class BuyAtoutGui implements Listener {
         }
         if (effect == 3) {
             if (money >= jumpboost) ;
-            EcoAccountsManager.instance.RemoveFounds(player.getName(), jumpboost, true);
+            EcoAccountsManager.instance.RemoveFounds(player.getUniqueId(), jumpboost, true);
             Main.instance1.getData().set("Joueurs." + player.getName() + ".Atout.3.Active", true);
             Main.instance1.getData().set("Joueurs." + player.getName() + ".Atout.3.Level", 3);
             Main.instance1.saveData();
