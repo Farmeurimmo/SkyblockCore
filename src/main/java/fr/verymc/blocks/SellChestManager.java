@@ -49,7 +49,7 @@ public class SellChestManager {
             }
         }
         for (Entry<UUID, Double> tosend : reward.entrySet()) {
-            EcoAccountsManager.instance.AddFounds(tosend.getKey(), tosend.getValue(), false);
+            EcoAccountsManager.instance.AddFounds((Player) Bukkit.getOfflinePlayer(tosend.getKey()), tosend.getValue(), false);
         }
         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
             public void run() {

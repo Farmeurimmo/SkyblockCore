@@ -40,7 +40,7 @@ public class LegCrateManager {
         }
         if (n >= 21 && n <= 31) {
             loot = "100 000$";
-            EcoAccountsManager.instance.AddFounds(player.getUniqueId(), (double) 100000, false);
+            EcoAccountsManager.instance.AddFounds(player, (double) 100000, false);
             return loot;
         }
         if (n >= 32 && n <= 33) {
@@ -110,12 +110,12 @@ public class LegCrateManager {
         }
         if (n >= 55 && n <= 62) {
             loot = "250 000$";
-            EcoAccountsManager.instance.AddFounds(player.getUniqueId(), (double) 250000, false);
+            EcoAccountsManager.instance.AddFounds(player, (double) 250000, false);
             return loot;
         }
         if (n >= 98 && n <= 99) {
             loot = "500 000$";
-            EcoAccountsManager.instance.AddFounds(player.getUniqueId(), (double) 500000, false);
+            EcoAccountsManager.instance.AddFounds(player, (double) 500000, false);
             return loot;
         }
         return loot;
