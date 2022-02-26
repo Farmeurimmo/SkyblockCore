@@ -43,7 +43,7 @@ public class BaltopManager {
         for (int i = 1; i <= 10; i++) {
             if (!pos.containsKey(i)) break;
             tosend = tosend + "\n§f" + i + ". §6" + Bukkit.getOfflinePlayer(pos.get(i)).getName() + ": " +
-                    Maths.arrondiNDecimales(EcoAccountsManager.instance.GetMoney(Bukkit.getOfflinePlayer(pos.get(i)).getName()), 2)+"$";
+                    Maths.arrondiNDecimales(EcoAccountsManager.instance.GetMoney(Bukkit.getOfflinePlayer(pos.get(i)).getName()), 2) + "$";
         }
         long resulttime = System.currentTimeMillis() - millisstart;
         tosend = tosend + "\n§6--- §f§lPage " + page + " §6---" + " Généré en " + TimeUnit.MILLISECONDS.toSeconds(resulttime) + "s";

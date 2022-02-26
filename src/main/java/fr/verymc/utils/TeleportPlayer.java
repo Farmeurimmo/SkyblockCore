@@ -10,7 +10,7 @@ public class TeleportPlayer {
 
     public static void TeleportPlayerFromRequest(Player player, Location loc, int temp) {
 
-        final int timeLeft = Main.instance1.getCooldown(player.getName());
+        final int timeLeft = Main.instance.getCooldown(player.getName());
         if (GetTeleportDelay.GetPlayerTeleportingdelay(player) == 0) {
             player.teleport(loc);
             player.sendActionBar("§6Téléportation effectuée !");
@@ -19,7 +19,7 @@ public class TeleportPlayer {
             if (timeLeft == 0) {
                 if (temp == 1) {
                     player.sendActionBar("§6Téléportation dans 1 seconde...");
-                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
+                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
                         public void run() {
                             player.teleport(loc);
                             player.sendActionBar("§6Téléportation effectuée !");
@@ -29,19 +29,19 @@ public class TeleportPlayer {
                 } else {
                     player.sendActionBar("§6Téléportation dans " + temp + " secondes...");
                 }
-                Main.instance1.setCooldown(player.getName(), temp - 1);
+                Main.instance.setCooldown(player.getName(), temp - 1);
                 new BukkitRunnable() {
                     @Override
                     public void run() {
-                        int timeLeft = Main.instance1.getCooldown(player.getName());
+                        int timeLeft = Main.instance.getCooldown(player.getName());
                         if (timeLeft == 0) {
-                            Main.instance1.setCooldown(player.getName(), 0);
+                            Main.instance.setCooldown(player.getName(), 0);
                             player.teleport(loc);
                             player.sendActionBar("§6Téléportation effectuée !");
                             this.cancel();
                             return;
                         }
-                        Main.instance1.setCooldown(player.getName(), timeLeft - 1);
+                        Main.instance.setCooldown(player.getName(), timeLeft - 1);
                         if (timeLeft != 0 && timeLeft != 1) {
                             player.sendActionBar("§6Téléportation dans " + timeLeft + " secondes...");
                         } else if (timeLeft == 1) {
@@ -50,7 +50,7 @@ public class TeleportPlayer {
                             return;
                         }
                     }
-                }.runTaskTimer(Bukkit.getPluginManager().getPlugin("SkyblockCore"), 20, 20);
+                }.runTaskTimer(Main.instance, 20, 20);
             }
 
         }
@@ -62,7 +62,7 @@ public class TeleportPlayer {
         Location totp = p.getLocation();
 
         player.sendMessage("§6§lTéléportation §8» §a" + p.getName() + " §fvient d'accepter votre demande de Téléportation.");
-        final int timeLeft = Main.instance1.getCooldown(player.getName());
+        final int timeLeft = Main.instance.getCooldown(player.getName());
         if (GetTeleportDelay.GetPlayerTeleportingdelay(player) == 0) {
             player.teleport(totp);
             player.sendActionBar("fTéléportation sur §a" + p.getName() + "§f effectu§e !");
@@ -71,7 +71,7 @@ public class TeleportPlayer {
             if (timeLeft == 0) {
                 if (temp == 1) {
                     player.sendActionBar("§fTéléportation sur §a" + p.getName() + "§f dans §c1 §fseconde...");
-                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
+                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
                         public void run() {
                             player.teleport(totp);
                             player.sendActionBar("§fTéléportation sur §a" + p.getName() + "§f effectuée !");
@@ -81,26 +81,26 @@ public class TeleportPlayer {
                 } else {
                     player.sendActionBar("§fTéléportation sur §a" + p.getName() + "§f dans §c" + temp + " §fsecondes...");
                 }
-                Main.instance1.setCooldown(player.getName(), temp - 1);
+                Main.instance.setCooldown(player.getName(), temp - 1);
                 new BukkitRunnable() {
                     @Override
                     public void run() {
-                        int timeLeft = Main.instance1.getCooldown(player.getName());
+                        int timeLeft = Main.instance.getCooldown(player.getName());
                         if (timeLeft == 0) {
-                            Main.instance1.setCooldown(player.getName(), 0);
+                            Main.instance.setCooldown(player.getName(), 0);
                             player.teleport(totp);
                             player.sendActionBar("§fTéléportation sur §a" + p.getName() + "§f effectuée !");
                             this.cancel();
                             return;
                         }
-                        Main.instance1.setCooldown(player.getName(), timeLeft - 1);
+                        Main.instance.setCooldown(player.getName(), timeLeft - 1);
                         if (timeLeft != 0 && timeLeft != 1) {
                             player.sendActionBar("§fTéléportation sur §a" + p.getName() + "§f dans §c" + timeLeft + " §fsecondes...");
                         } else if (timeLeft == 1) {
                             player.sendActionBar("§fTéléportation sur §a" + p.getName() + "§f dans §c" + timeLeft + " §fseconde...");
                         }
                     }
-                }.runTaskTimer(Bukkit.getPluginManager().getPlugin("SkyblockCore"), 20, 20);
+                }.runTaskTimer(Main.instance, 20, 20);
             }
 
         }

@@ -22,7 +22,7 @@ public class DataCmd implements CommandExecutor, TabCompleter {
             } else if (args.length == 1) {
                 if (args[0].equalsIgnoreCase("reload")) {
                     try {
-                        Main.instance1.reloadData();
+                        Main.instance.reloadData();
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
                         sender.sendMessage("§6§lData §8» §fProblème lors du reload !");

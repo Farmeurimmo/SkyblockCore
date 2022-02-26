@@ -1,5 +1,6 @@
 package main.java.fr.verymc.evenement;
 
+import main.java.fr.verymc.core.Main;
 import main.java.fr.verymc.eco.EcoAccountsManager;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.HoverEvent;
@@ -13,7 +14,6 @@ import org.bukkit.event.player.PlayerChatEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
-import java.util.concurrent.TimeUnit;
 
 public class ChatReaction implements Listener {
 
@@ -39,7 +39,7 @@ public class ChatReaction implements Listener {
         for (Player player : Bukkit.getOnlinePlayers()) {
             player.spigot().sendMessage(hmessage);
         }
-        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
+        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
             public void run() {
                 if (bbb == false) {
                     Bukkit.broadcastMessage("§6§lChatReaction §8» §fPersonne n'a recopié le mot à temps !");
@@ -47,7 +47,7 @@ public class ChatReaction implements Listener {
                 bbb = true;
             }
         }, 600);
-        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
+        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
             public void run() {
                 bbb = false;
                 StartChatReaction();
@@ -67,7 +67,7 @@ public class ChatReaction implements Listener {
 
                 long timeelapsed = timeend - timestart;
 
-                Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
+                Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
                     public void run() {
                         Bukkit.broadcastMessage("§6§lChatReaction §8» §f" + player.getName() + " vient de gagner le ChatReaction en " +
                                 timeelapsed / 1000 + " secondes et remporte 2 000$ !");

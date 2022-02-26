@@ -26,7 +26,7 @@ public class SpawnCmd implements CommandExecutor, TabCompleter {
             final Player player = (Player) sender;
             if (cmd.getName().equalsIgnoreCase("spawn")) {
                 if (args.length == 0) {
-                    final int timeLeft = Main.instance1.getCooldown(player.getName());
+                    final int timeLeft = Main.instance.getCooldown(player.getName());
                     if (timeLeft == 0) {
                         TeleportPlayer.TeleportPlayerFromRequest(player, Spawn, GetTeleportDelay.GetPlayerTeleportingdelay(player));
                     }

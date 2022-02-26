@@ -1,6 +1,6 @@
 package main.java.fr.verymc.cmd.base;
 
-import org.bukkit.Bukkit;
+import main.java.fr.verymc.core.Main;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -48,7 +48,7 @@ public class FeedCmd implements CommandExecutor, TabCompleter {
                                 }
                                 setCooldown(player.getUniqueId(), timeLeft - 1);
                             }
-                        }.runTaskTimer(Bukkit.getPluginManager().getPlugin("SkyblockCore"), 20, 20);
+                        }.runTaskTimer(Main.instance, 20, 20);
                     }
                 } else {
                     player.sendActionBar("§cErreur, il reste " + getCooldown(player.getUniqueId()) + " seconde(s) avant r§utilisation");

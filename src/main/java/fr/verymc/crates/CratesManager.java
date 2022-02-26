@@ -2,6 +2,7 @@ package main.java.fr.verymc.crates;
 
 import com.gmail.filoghost.holographicdisplays.api.Hologram;
 import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
+import main.java.fr.verymc.core.Main;
 import main.java.fr.verymc.utils.CheckPlayerInventory;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -17,7 +18,6 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.plugin.Plugin;
 
 public class CratesManager implements Listener {
 
@@ -25,17 +25,16 @@ public class CratesManager implements Listener {
     public static final Location BoxChallenge = new Location(Bukkit.getServer().getWorld("world"), -177, 71, -46);
     public static final Location BoxVote = new Location(Bukkit.getServer().getWorld("world"), -179, 71, -49);
 
-    static Plugin plugin = Bukkit.getPluginManager().getPlugin("SkyblockCore");
     static Location holo = new Location(Bukkit.getServer().getWorld("world"), BoxLegendaire.getX() + 0.5,
             BoxLegendaire.getY() + 2.5, BoxLegendaire.getZ() + 0.5);
-    static Hologram hologram = HologramsAPI.createHologram(plugin, holo);
+    static Hologram hologram = HologramsAPI.createHologram(Main.instance, holo);
     static Location holoc = new Location(Bukkit.getServer().getWorld("world"), BoxChallenge.getX() + 0.5,
             BoxChallenge.getY() + 2.5, BoxChallenge.getZ() + 0.5);
-    static Hologram hologramc = HologramsAPI.createHologram(plugin, holoc);
+    static Hologram hologramc = HologramsAPI.createHologram(Main.instance, holoc);
 
     static Location holod = new Location(Bukkit.getServer().getWorld("world"), BoxVote.getX() + 0.5,
             BoxVote.getY() + 2.5, BoxVote.getZ() + 0.5);
-    static Hologram hologramd = HologramsAPI.createHologram(plugin, holod);
+    static Hologram hologramd = HologramsAPI.createHologram(Main.instance, holod);
 
     public static void SpawnCrates() {
         Bukkit.getWorld("world").getBlockAt(BoxLegendaire).setType(Material.END_ROD);

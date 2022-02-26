@@ -18,12 +18,12 @@ public class TpaCancelCmd implements CommandExecutor, TabCompleter {
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (sender instanceof Player) {
             Player player = (Player) sender;
-            if (Main.instance1.pending.contains(player)) {
-                Main.instance1.pending.remove(player);
+            if (Main.instance.pending.contains(player)) {
+                Main.instance.pending.remove(player);
                 player.sendMessage("§§6§lTéléportation §8» §fVous avez §cannulé §fvotre demande de Téléportation à "
-                        + Main.instance1.getTarget(player.getName()) + ".");
-                Main.instance1.haverequest.remove(Main.instance1.getTarget(player.getName()));
-                Main.instance1.tpatarget.remove(player);
+                        + Main.instance.getTarget(player.getName()) + ".");
+                Main.instance.haverequest.remove(Main.instance.getTarget(player.getName()));
+                Main.instance.tpatarget.remove(player);
             } else {
                 player.sendMessage("§§6§lTéléportation §8» §fVous ne possèdez aucune demande de Téléportaiton de votre part.");
             }

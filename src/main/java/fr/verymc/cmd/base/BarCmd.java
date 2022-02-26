@@ -23,12 +23,12 @@ public class BarCmd implements CommandExecutor, TabCompleter {
             if (args.length == 1) {
                 if (args[0].equalsIgnoreCase("on")) {
                     Disable.remove(player);
-                    player.sendMessage(Main.getInstance().getConfig().getString("bossbar.activated"));
+                    player.sendMessage(Main.instance.getConfig().getString("bossbar.activated"));
                 } else if (args[0].equalsIgnoreCase("off")) {
                     Disable.add(player);
-                    player.sendMessage(Main.getInstance().getConfig().getString("bossbar.disabled"));
+                    player.sendMessage(Main.instance.getConfig().getString("bossbar.disabled"));
                 } else {
-                    player.sendMessage(Main.getInstance().getConfig().getString("bossbar.invalidargs"));
+                    player.sendMessage(Main.instance.getConfig().getString("bossbar.invalidargs"));
                     return true;
                 }
             } else {

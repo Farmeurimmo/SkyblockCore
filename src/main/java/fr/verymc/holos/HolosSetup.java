@@ -2,6 +2,7 @@ package main.java.fr.verymc.holos;
 
 import com.gmail.filoghost.holographicdisplays.api.Hologram;
 import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
+import main.java.fr.verymc.core.Main;
 import net.citizensnpcs.api.CitizensAPI;
 import net.citizensnpcs.api.event.NPCRightClickEvent;
 import net.citizensnpcs.api.npc.NPC;
@@ -12,23 +13,20 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.plugin.Plugin;
 
 public class HolosSetup implements Listener {
 
     static NPC npca = CitizensAPI.getNPCRegistry().createNPC(EntityType.PLAYER, "§6Shop");
     static NPC npcb = CitizensAPI.getNPCRegistry().createNPC(EntityType.PLAYER, "§6Menu du skyblock");
 
-    static Plugin plugin = Bukkit.getPluginManager().getPlugin("SkyblockCore");
-
     static Location holo1 = new Location(Bukkit.getServer().getWorld("world"), -33.5, 101, -130.5);
     static Location legende = new Location(Bukkit.getServer().getWorld("world"), -157.5, 75.5, -67.5);
     static Location dieu = new Location(Bukkit.getServer().getWorld("world"), -159.5, 75.5, -73.5);
     static Location zeus = new Location(Bukkit.getServer().getWorld("world"), -164.5, 75.5, -77.5);
-    static Hologram hologram1 = HologramsAPI.createHologram(plugin, holo1);
-    static Hologram hololegende = HologramsAPI.createHologram(plugin, legende);
-    static Hologram holodieu = HologramsAPI.createHologram(plugin, dieu);
-    static Hologram holozeus = HologramsAPI.createHologram(plugin, zeus);
+    static Hologram hologram1 = HologramsAPI.createHologram(Main.instance, holo1);
+    static Hologram hololegende = HologramsAPI.createHologram(Main.instance, legende);
+    static Hologram holodieu = HologramsAPI.createHologram(Main.instance, dieu);
+    static Hologram holozeus = HologramsAPI.createHologram(Main.instance, zeus);
 
     public static void SpawnPnj2(Location loc1, Location loc2) {
         SkinTrait skin = npca.getTrait(SkinTrait.class);

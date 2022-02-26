@@ -12,14 +12,14 @@ import java.util.ArrayList;
 
 public class BossBar {
 
-    public static int Numberofbossbar = Main.getInstance().getConfig().getInt("bossbar.number");
+    public static int Numberofbossbar = Main.instance.getConfig().getInt("bossbar.number");
     public static int CurrentBossBar = 1;
     public static int DurationProgress = 0;
     public static double BossBarSpeed = 0;
     public static int reverse = 0;
     public static int reset = 0;
     public static ArrayList<Player> Disable = BarCmd.Disable;
-    static org.bukkit.boss.BossBar aaa = Bukkit.createBossBar(Main.getInstance().getConfig().getString("bossbar.display." + CurrentBossBar), BarColor.YELLOW, BarStyle.SOLID, BarFlag.DARKEN_SKY);
+    static org.bukkit.boss.BossBar aaa = Bukkit.createBossBar(Main.instance.getConfig().getString("bossbar.display." + CurrentBossBar), BarColor.YELLOW, BarStyle.SOLID, BarFlag.DARKEN_SKY);
 
     public static void CreateBossBar() {
         BossBarForEveryone();
@@ -36,7 +36,7 @@ public class BossBar {
         } else {
             CurrentBossBar = CurrentBossBar + 1;
         }
-        aaa.setTitle(Main.getInstance().getConfig().getString("bossbar.display." + CurrentBossBar));
+        aaa.setTitle(Main.instance.getConfig().getString("bossbar.display." + CurrentBossBar));
         BossBarSpeed = 0.01;
         reverse = 0;
     }
@@ -59,11 +59,11 @@ public class BossBar {
         BossBarSpeed = 0.01;
         ChangeTitle();
         AddProgressBossbar();
-        Bukkit.getServer().getScheduler().scheduleAsyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
+        Bukkit.getServer().getScheduler().scheduleAsyncDelayedTask(Main.instance, new Runnable() {
             public void run() {
                 BossBarForEveryone();
             }
-        }, Main.getInstance().getConfig().getInt("bossbar.delay"));
+        }, Main.instance.getConfig().getInt("bossbar.delay"));
     }
 
     public static void AddProgressBossbar() {
@@ -82,16 +82,16 @@ public class BossBar {
                     reverse = 2;
                 }
             }
-            Bukkit.getServer().getScheduler().scheduleAsyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
+            Bukkit.getServer().getScheduler().scheduleAsyncDelayedTask(Main.instance, new Runnable() {
                 public void run() {
                     if (reverse != 2) {
                         if (BossBarSpeed <= 0.99 && BossBarSpeed >= 0.01) {
                             aaa.setProgress(BossBarSpeed);
-                            Bukkit.getServer().getScheduler().scheduleAsyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
+                            Bukkit.getServer().getScheduler().scheduleAsyncDelayedTask(Main.instance, new Runnable() {
                                 public void run() {
                                     AddProgressBossbar();
                                 }
-                            }, Main.getInstance().getConfig().getInt("bossbar.intraspeed") - 1);
+                            }, Main.instance.getConfig().getInt("bossbar.intraspeed") - 1);
                             return;
                         } else {
                             return;

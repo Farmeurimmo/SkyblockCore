@@ -23,9 +23,18 @@ public class SellChestManager {
 
     public static void AutoSellForVeryChest() {
         HashMap<UUID, Double> reward = new HashMap<>();
+        HashMap<Location, UUID> toremove = new HashMap<>();
         for (Entry<Location, UUID> sellchest : blcsellchest.entrySet()) {
             BlockState e = sellchest.getKey().getBlock().getState();
+            if (e.getType() != Material.CHEST) {
+                toremove.put(sellchest.getKey(),sellchest.getValue());
+                continue;
+            }
             Inventory ed = ((Chest) e).getBlockInventory();
+            if (!((Chest) e).getCustomName().contains("§6SellChest")) {
+                toremove.put(sellchest.getKey(),sellchest.getValue());
+                continue;
+            }
             double total = 0;
             for (ItemStack sd : ed) {
                 if (sd == null) continue;
@@ -49,9 +58,12 @@ public class SellChestManager {
             }
         }
         for (Entry<UUID, Double> tosend : reward.entrySet()) {
-            EcoAccountsManager.instance.AddFounds((Player) Bukkit.getOfflinePlayer(tosend.getKey()), tosend.getValue(), false);
+            EcoAccountsManager.instance.AddFoundsUUID(tosend.getKey(), tosend.getValue(), false);
         }
-        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
+        for (Entry<Location, UUID> sellchest : toremove.entrySet()) {
+            blcsellchest.remove(sellchest.getKey());
+        }
+        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
             public void run() {
                 SellChestManager.AutoSellForVeryChest();
             }
@@ -60,10 +72,10 @@ public class SellChestManager {
 
     public static void GiveSellChest(Player player, int i) {
         int a = 0;
-        if (Main.getInstance().getDatablc().get("SellChest.num") == null) {
+        if (Main.instance.getDatablc().get("SellChest.num") == null) {
             a = 1;
         } else {
-            a = Main.getInstance().getDatablc().getInt("SellChest.num");
+            a = Main.instance.getDatablc().getInt("SellChest.num");
             a += 1;
         }
         ItemStack aa = new ItemStack(Material.CHEST);
@@ -71,8 +83,8 @@ public class SellChestManager {
         if (i > 0) {
             a = i;
         } else {
-            Main.getInstance().getDatablc().set("SellChest.num", a);
-            Main.getInstance().saveData();
+            Main.instance.getDatablc().set("SellChest.num", a);
+            Main.instance.saveData();
         }
         ameta.setDisplayName("§6SellChest §c(id#" + a + ")");
         aa.setUnbreakable(true);
@@ -82,8 +94,8 @@ public class SellChestManager {
     }
 
     public static void PlaceChest(Player player, Location block, int num) {
-        Main.getInstance().getDatablc().set("SellChest." + player.getUniqueId() + "." + num, block);
-        Main.getInstance().saveData();
+        Main.instance.getDatablc().set("SellChest." + player.getUniqueId() + "." + num, block);
+        Main.instance.saveData();
         blcsellchest.put(block, player.getUniqueId());
     }
 
@@ -92,15 +104,15 @@ public class SellChestManager {
     }
 
     public static void ReadFromFile() {
-        if (!Main.getInstance().getDatablc().isSet("SellChest")) {
+        if (!Main.instance.getDatablc().isSet("SellChest")) {
             return;
         }
-        for (String aa : Main.getInstance().getDatablc().getConfigurationSection("SellChest").getKeys(false)) {
+        for (String aa : Main.instance.getDatablc().getConfigurationSection("SellChest").getKeys(false)) {
             if (aa.contains("num")) {
                 continue;
             }
-            for (String bb : Main.getInstance().getDatablc().getConfigurationSection("SellChest." + aa).getKeys(false)) {
-                blcsellchest.put(Main.getInstance().getDatablc().getLocation("SellChest." + aa + "." + bb), UUID.fromString(aa));
+            for (String bb : Main.instance.getDatablc().getConfigurationSection("SellChest." + aa).getKeys(false)) {
+                blcsellchest.put(Main.instance.getDatablc().getLocation("SellChest." + aa + "." + bb), UUID.fromString(aa));
             }
         }
     }

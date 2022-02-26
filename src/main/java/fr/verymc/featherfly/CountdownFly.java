@@ -16,8 +16,9 @@ public class CountdownFly implements Listener {
 
     public static CountdownFly instance;
 
-    public CountdownFly(){
+    public CountdownFly() {
         instance = this;
+        ReadForTempFly();
         CountDown();
     }
 
@@ -31,6 +32,35 @@ public class CountdownFly implements Listener {
     public int getCooldown(Player player) {
         return (fly.get(player.getUniqueId()) == null ? 0 : fly.get(player.getUniqueId()));
     }
+
+    public void WriteFlyLeft() {
+        for (Map.Entry<UUID, Integer> aaa : CountdownFly.fly.entrySet()) {
+            if (aaa.getValue() >= 1) {
+                Main.instance.getDatac().set("Joueurs." + aaa.getKey() + ".Fly.timeleft", aaa.getValue());
+                Main.instance.saveData();
+            }
+        }
+    }
+
+    public void ReadForTempFly() {
+        if (Main.instance.getDatac().getConfigurationSection("Joueurs") == null) {
+            Main.instance.getDatac().set("Joueurs.ini", true);
+            Main.instance.saveData();
+        }
+        for (String aa : Main.instance.getDatac().getConfigurationSection("Joueurs").getKeys(false)) {
+            if (Main.instance.getDatac().getBoolean(aa) == true) {
+                continue;
+            }
+            int a = 0;
+            a = Main.instance.getDatac().getInt("Joueurs." + aa + ".Fly.timeleft");
+            if (a >= 1) {
+                CountdownFly.instance.setCooldown(UUID.fromString(aa), a);
+                Main.instance.getDatac().set("Joueurs." + aa + ".Fly.timeleft", 0);
+                Main.instance.saveData();
+            }
+        }
+    }
+
 
     public void EnableFlyForPlayer(Player player, String dure, String sb) {
         int DurationInSec = 0;
@@ -57,7 +87,7 @@ public class CountdownFly implements Listener {
     }
 
     public void CountDown() {
-        for(Map.Entry<UUID, Integer> flymap : fly.entrySet()) {
+        for (Map.Entry<UUID, Integer> flymap : fly.entrySet()) {
             Player player = Bukkit.getPlayer(flymap.getKey());
             if (player != null) {
                 if (player.isOnline()) {
@@ -74,8 +104,8 @@ public class CountdownFly implements Listener {
                         }
                         String aaaaaa = "" + TimeLeft;
                         if (aaaaaa.contains("0")) {
-                            Main.instance1.getDatac().set("Joueurs." + player.getUniqueId() + ".Fly.timeleft", TimeLeft);
-                            Main.instance1.saveData();
+                            Main.instance.getDatac().set("Joueurs." + player.getUniqueId() + ".Fly.timeleft", TimeLeft);
+                            Main.instance.saveData();
                         }
 
                         int timeforconv = TimeLeft;
@@ -115,13 +145,13 @@ public class CountdownFly implements Listener {
                         }
                         player.sendActionBar("§6Fin du fly.");
                         fly.remove(player.getUniqueId());
-                        Main.instance1.getDatac().set("Joueurs." + player.getUniqueId() + ".Fly.timeleft", 0);
-                        Main.instance1.saveData();
+                        Main.instance.getDatac().set("Joueurs." + player.getUniqueId() + ".Fly.timeleft", 0);
+                        Main.instance.saveData();
                     }
                 }
             }
         }
-        Bukkit.getServer().getScheduler().scheduleAsyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
+        Bukkit.getServer().getScheduler().scheduleAsyncDelayedTask(Main.instance, new Runnable() {
             public void run() {
                 CountDown();
             }

@@ -1,6 +1,7 @@
 package main.java.fr.verymc.gui;
 
 import main.java.fr.verymc.cmd.base.SpawnCmd;
+import main.java.fr.verymc.core.Main;
 import main.java.fr.verymc.utils.TeleportPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -58,12 +59,12 @@ public class AfkMineCaptchaGui implements Listener {
 
     public static void CheckAfterTime(Player player) {
         if (Captcha.contains(player)) {
-            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
+            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
                 public void run() {
                     if (Captcha.contains(player)) {
                         Captcha.remove(player);
                         SeconTry.remove(player);
-                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
+                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
                             public void run() {
                                 player.chat("/spawn");
                                 player.sendActionBar("§cVous n'avez pas réussi le Captcha, vous avez donc été envoyé au spawn");
@@ -130,7 +131,7 @@ public class AfkMineCaptchaGui implements Listener {
         if (aaa.equalsIgnoreCase("§6Captcha AfkMine")) {
             if (Captcha.contains(player)) {
                 if (!SeconTry.contains(player)) {
-                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
+                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
                         public void run() {
                             MakeAfkMineCaptchaGui(player);
                             SeconTry.add(player);

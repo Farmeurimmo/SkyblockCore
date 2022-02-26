@@ -1,6 +1,7 @@
 package main.java.fr.verymc.gui;
 
 import main.java.fr.verymc.atout.BuyAtoutGui;
+import main.java.fr.verymc.core.Main;
 import main.java.fr.verymc.eco.EcoAccountsManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -103,7 +104,7 @@ public class Farm2WinGui implements Listener {
                     if (EcoAccountsManager.instance.GetMoney(player.getName()) >= legendeprix) {
                         player.sendMessage("§6Vérification de la disponibilité du grade...");
                         current.setType(Material.BARRIER);
-                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
+                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
                             public void run() {
                                 if (legendeachat == false) {
                                     player.sendMessage("§cErreur, achat indisponible !");
@@ -116,7 +117,7 @@ public class Farm2WinGui implements Listener {
                     } else {
                         player.sendMessage("§cFonds insuffisants !");
                         current.setType(Material.BARRIER);
-                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
+                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
                             public void run() {
                                 current.setType(Material.IRON_BLOCK);
                             }
@@ -130,7 +131,7 @@ public class Farm2WinGui implements Listener {
                         if (player.hasPermission("group.legende")) {
                             player.sendMessage("§6Vérification de la disponibilité du grade...");
                             current.setType(Material.BARRIER);
-                            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
+                            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
                                 public void run() {
                                     if (legendeachat == false) {
                                         player.sendMessage("§cErreur, achat indisponible !");
@@ -147,7 +148,7 @@ public class Farm2WinGui implements Listener {
                         } else {
                             player.sendMessage("§cErreur, vous devez possèder tous les grades précédents !");
                             current.setType(Material.BARRIER);
-                            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
+                            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
                                 public void run() {
                                     current.setType(Material.GOLD_BLOCK);
                                 }
@@ -156,7 +157,7 @@ public class Farm2WinGui implements Listener {
                     } else {
                         player.sendMessage("§cFonds insuffisants !");
                         current.setType(Material.BARRIER);
-                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
+                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
                             public void run() {
                                 current.setType(Material.GOLD_BLOCK);
                             }
@@ -170,7 +171,7 @@ public class Farm2WinGui implements Listener {
                         if (player.hasPermission("group.legende") && player.hasPermission("group.dieu")) {
                             player.sendMessage("§6Vérification de la disponibilité du grade...");
                             current.setType(Material.BARRIER);
-                            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
+                            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
                                 public void run() {
                                     if (legendeachat == false) {
                                         player.sendMessage("§cErreur, achat indisponible !");
@@ -187,7 +188,7 @@ public class Farm2WinGui implements Listener {
                         } else {
                             player.sendMessage("§cErreur, vous devez possèder tous les grades précédents !");
                             current.setType(Material.BARRIER);
-                            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
+                            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
                                 public void run() {
                                     current.setType(Material.NETHERITE_BLOCK);
                                 }
@@ -196,7 +197,7 @@ public class Farm2WinGui implements Listener {
                     } else {
                         player.sendMessage("§cFonds insuffisants !");
                         current.setType(Material.BARRIER);
-                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
+                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
                             public void run() {
                                 current.setType(Material.NETHERITE_BLOCK);
                             }
@@ -217,7 +218,7 @@ public class Farm2WinGui implements Listener {
                     if (EcoAccountsManager.instance.GetMoney(player.getName()) >= hatprix) {
                         player.sendMessage("§6Vérification de la disponibilité de la commande...");
                         current.setType(Material.BARRIER);
-                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
+                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
                             public void run() {
                                 if (hatcmd == false) {
                                     player.sendMessage("§cErreur, achat indisponible !");
@@ -230,7 +231,7 @@ public class Farm2WinGui implements Listener {
                     } else {
                         player.sendMessage("§cFonds insuffisants !");
                         current.setType(Material.BARRIER);
-                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
+                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
                             public void run() {
                                 current.setType(Material.LEATHER_HELMET);
                             }
@@ -243,7 +244,7 @@ public class Farm2WinGui implements Listener {
                     if (EcoAccountsManager.instance.GetMoney(player.getName()) >= sellallprix) {
                         player.sendMessage("§6Vérification de la disponibilité de la commande...");
                         current.setType(Material.BARRIER);
-                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
+                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
                             public void run() {
                                 if (hatcmd == false) {
                                     player.sendMessage("§cErreur, achat indisponible !");
@@ -256,7 +257,7 @@ public class Farm2WinGui implements Listener {
                     } else {
                         player.sendMessage("§cFonds insuffisants !");
                         current.setType(Material.BARRIER);
-                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
+                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
                             public void run() {
                                 current.setType(Material.OAK_SIGN);
                             }
@@ -269,7 +270,7 @@ public class Farm2WinGui implements Listener {
                     if (EcoAccountsManager.instance.GetMoney(player.getName()) >= flyprix) {
                         player.sendMessage("§6Vérification de la disponibilité de la commande...");
                         current.setType(Material.BARRIER);
-                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
+                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
                             public void run() {
                                 if (flycmd == false) {
                                     player.sendMessage("§cErreur, achat indisponible !");
@@ -282,7 +283,7 @@ public class Farm2WinGui implements Listener {
                     } else {
                         player.sendMessage("§cFonds insuffisants !");
                         current.setType(Material.BARRIER);
-                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
+                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
                             public void run() {
                                 current.setType(Material.FEATHER);
                             }
@@ -295,7 +296,7 @@ public class Farm2WinGui implements Listener {
                     if (EcoAccountsManager.instance.GetMoney(player.getName()) >= feedprix) {
                         player.sendMessage("§6Vérification de la disponibilité de la commande...");
                         current.setType(Material.BARRIER);
-                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
+                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
                             public void run() {
                                 if (feedcmd == false) {
                                     player.sendMessage("§cErreur, achat indisponible !");
@@ -308,7 +309,7 @@ public class Farm2WinGui implements Listener {
                     } else {
                         player.sendMessage("§cFonds insuffisants !");
                         current.setType(Material.BARRIER);
-                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
+                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
                             public void run() {
                                 current.setType(Material.COOKED_BEEF);
                             }
@@ -321,7 +322,7 @@ public class Farm2WinGui implements Listener {
                     if (EcoAccountsManager.instance.GetMoney(player.getName()) >= craftprix) {
                         player.sendMessage("§6Vérification de la disponibilité de la commande...");
                         current.setType(Material.BARRIER);
-                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
+                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
                             public void run() {
                                 if (craftcmd == false) {
                                     player.sendMessage("§cErreur, achat indisponible !");
@@ -334,7 +335,7 @@ public class Farm2WinGui implements Listener {
                     } else {
                         player.sendMessage("§cFonds insuffisants !");
                         current.setType(Material.BARRIER);
-                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
+                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
                             public void run() {
                                 current.setType(Material.CRAFTING_TABLE);
                             }
@@ -347,7 +348,7 @@ public class Farm2WinGui implements Listener {
                     if (EcoAccountsManager.instance.GetMoney(player.getName()) >= isrenameprix) {
                         player.sendMessage("§6Vérification de la disponibilité de la commande...");
                         current.setType(Material.BARRIER);
-                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
+                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
                             public void run() {
                                 if (isrenamecmd == false) {
                                     player.sendMessage("§cErreur, achat indisponible !");
@@ -360,7 +361,7 @@ public class Farm2WinGui implements Listener {
                     } else {
                         player.sendMessage("§cFonds insuffisants !");
                         current.setType(Material.BARRIER);
-                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
+                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
                             public void run() {
                                 current.setType(Material.NAME_TAG);
                             }
@@ -373,7 +374,7 @@ public class Farm2WinGui implements Listener {
                     if (EcoAccountsManager.instance.GetMoney(player.getName()) >= enchantementprix) {
                         player.sendMessage("§6Vérification de la disponibilité de la commande...");
                         current.setType(Material.BARRIER);
-                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
+                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
                             public void run() {
                                 if (enchantementcmd == false) {
                                     player.sendMessage("§cErreur, achat indisponible !");
@@ -386,7 +387,7 @@ public class Farm2WinGui implements Listener {
                     } else {
                         player.sendMessage("§cFonds insuffisants !");
                         current.setType(Material.BARRIER);
-                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
+                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
                             public void run() {
                                 current.setType(Material.ENCHANTING_TABLE);
                             }

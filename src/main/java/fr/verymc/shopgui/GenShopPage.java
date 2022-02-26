@@ -45,8 +45,8 @@ public class GenShopPage {
 
         int currentpage = 1;
         int numberofitems = 0;
-        for (String aa : Main.instance1.getConfig().getConfigurationSection("Shops." + page).getKeys(false)) {
-            ItemStack custom1 = new ItemStack(Material.valueOf(Main.instance1.getConfig().getString("Shops." + page + "." + aa + ".material")), 1);
+        for (String aa : Main.instance.getConfig().getConfigurationSection("Shops." + page).getKeys(false)) {
+            ItemStack custom1 = new ItemStack(Material.valueOf(Main.instance.getConfig().getString("Shops." + page + "." + aa + ".material")), 1);
 
             numberofitems += 1;
 
@@ -54,9 +54,9 @@ public class GenShopPage {
             ItemMeta meta1 = custom1.getItemMeta();
 
             if (custom1.getType() == Material.SPAWNER) {
-                meta1.setDisplayName(Main.instance1.getConfig().getString("Shops." + page + "." + aa + ".name"));
+                meta1.setDisplayName(Main.instance.getConfig().getString("Shops." + page + "." + aa + ".name"));
                 custom1.setItemMeta(meta1);
-                spawneurtype.put(custom1.getDisplayName(), EntityType.valueOf(Main.instance1.getConfig().getString("Shops." + page + "." + aa + ".spawnertype")));
+                spawneurtype.put(custom1.getDisplayName(), EntityType.valueOf(Main.instance.getConfig().getString("Shops." + page + "." + aa + ".spawnertype")));
             }
 
             String achat = "";
@@ -257,7 +257,7 @@ public class GenShopPage {
 
     public static void GetNumberOfPage() {
         int items = 0;
-        for (@SuppressWarnings("unused") String aa : Main.instance1.getConfig().getConfigurationSection("Shops.Blocs").getKeys(false)) {
+        for (@SuppressWarnings("unused") String aa : Main.instance.getConfig().getConfigurationSection("Shops.Blocs").getKeys(false)) {
             items += 1;
         }
         int max = items / 28;

@@ -74,8 +74,8 @@ public class ChunkCollector implements Listener {
             ChunkCollectorManager.GiveChest(e.getPlayer(), Integer.parseInt(numberOnly));
             e.setDropItems(false);
             Location tda = null;
-            Main.getInstance().getDatablc().set("ChunkHoppeur." + blhopper.getLocation().getChunk().getChunkKey() + "." + numberOnly, tda);
-            Main.getInstance().saveData();
+            Main.instance.getDatablc().set("ChunkHoppeur." + blhopper.getLocation().getChunk().getChunkKey() + "." + numberOnly, tda);
+            Main.instance.saveData();
         }
     }
 

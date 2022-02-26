@@ -15,10 +15,10 @@ public class ChunkCollectorManager {
 
     public static void GiveChest(Player player, int i) {
         int a = 0;
-        if (Main.getInstance().getDatablc().get("ChunkHoppeur.num") == null) {
+        if (Main.instance.getDatablc().get("ChunkHoppeur.num") == null) {
             a = 1;
         } else {
-            a = Main.getInstance().getDatablc().getInt("ChunkHoppeur.num");
+            a = Main.instance.getDatablc().getInt("ChunkHoppeur.num");
             a += 1;
         }
         ItemStack aa = new ItemStack(Material.HOPPER);
@@ -26,8 +26,8 @@ public class ChunkCollectorManager {
         if (i > 0) {
             a = i;
         } else {
-            Main.getInstance().getDatablc().set("ChunkHoppeur.num", a);
-            Main.getInstance().saveData();
+            Main.instance.getDatablc().set("ChunkHoppeur.num", a);
+            Main.instance.saveData();
         }
         ameta.setDisplayName("§6Chunk Hoppeur §c(id#" + a + ")");
         aa.setUnbreakable(true);
@@ -37,21 +37,21 @@ public class ChunkCollectorManager {
     }
 
     public static void PlaceChest(Player player, Long chunkkey, Location block, int num) {
-        Main.getInstance().getDatablc().set("ChunkHoppeur." + chunkkey + "." + num, block);
-        Main.getInstance().saveData();
+        Main.instance.getDatablc().set("ChunkHoppeur." + chunkkey + "." + num, block);
+        Main.instance.saveData();
         blcchunk.put(block, chunkkey);
     }
 
     public static void ReadFromFile() {
-        if (!Main.getInstance().getDatablc().isSet("ChunkHoppeur")) {
+        if (!Main.instance.getDatablc().isSet("ChunkHoppeur")) {
             return;
         }
-        for (String aa : Main.getInstance().getDatablc().getConfigurationSection("ChunkHoppeur").getKeys(false)) {
+        for (String aa : Main.instance.getDatablc().getConfigurationSection("ChunkHoppeur").getKeys(false)) {
             if (aa.contains("num")) {
                 continue;
             }
-            for (String bb : Main.getInstance().getDatablc().getConfigurationSection("ChunkHoppeur." + aa).getKeys(false)) {
-                blcchunk.put(Main.getInstance().getDatablc().getLocation("ChunkHoppeur." + aa + "." + bb), Long.parseLong(aa.replace("'", "")));
+            for (String bb : Main.instance.getDatablc().getConfigurationSection("ChunkHoppeur." + aa).getKeys(false)) {
+                blcchunk.put(Main.instance.getDatablc().getLocation("ChunkHoppeur." + aa + "." + bb), Long.parseLong(aa.replace("'", "")));
             }
         }
     }

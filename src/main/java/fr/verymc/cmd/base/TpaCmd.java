@@ -15,14 +15,14 @@ import java.util.List;
 public class TpaCmd implements CommandExecutor, TabCompleter {
 
     public static void TpaExperation(Player player, Player p) {
-        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
+        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
             public void run() {
-                if (Main.instance1.getTarget(player.getName()) != null) {
-                    if (Main.instance1.getTarget(player.getName()).equalsIgnoreCase(p.getName())) {
-                        Main.instance1.haverequest.remove(p);
-                        Main.instance1.tpatarget.remove(player.getName());
+                if (Main.instance.getTarget(player.getName()) != null) {
+                    if (Main.instance.getTarget(player.getName()).equalsIgnoreCase(p.getName())) {
+                        Main.instance.haverequest.remove(p);
+                        Main.instance.tpatarget.remove(player.getName());
                         player.sendMessage("§6§lTéléportation §8» §fVotre demande de téléportation à §a" + p.getName() + " §fa expiré.");
-                        Main.instance1.pending.remove(player);
+                        Main.instance.pending.remove(player);
                     }
                 }
             }
@@ -41,15 +41,15 @@ public class TpaCmd implements CommandExecutor, TabCompleter {
             if (args.length == 0 || args.length >= 2) {
                 player.sendActionBar("§c/tpa <Joueur>");
             } else if (args.length == 1) {
-                if (!Main.instance1.pending.contains(player)) {
+                if (!Main.instance.pending.contains(player)) {
                     if (Bukkit.getPlayer(args[0]) != null) {
                         if (Bukkit.getPlayer(args[0]).isOnline()) {
                             Player p = Bukkit.getPlayer(args[0]);
                             if (!p.getName().equalsIgnoreCase(player.getName())) {
-                                Main.instance1.haverequest.remove(p);
-                                Main.instance1.haverequest.add(p);
-                                Main.instance1.pending.add(player);
-                                Main.instance1.setTarget(player.getName(), p.getName());
+                                Main.instance.haverequest.remove(p);
+                                Main.instance.haverequest.add(p);
+                                Main.instance.pending.add(player);
+                                Main.instance.setTarget(player.getName(), p.getName());
                                 TpaCmd.TpaExperation(player, p);
                                 p.sendMessage("§6§lTéléportation §8» §f" + player.getName() + " souhaite ce téléporter à vous. \n \nVous avez 60 secondes"
                                         + " pour accepter ou refuser avec les commandes: §a/tpyes §fou §c/tpno \n§f");

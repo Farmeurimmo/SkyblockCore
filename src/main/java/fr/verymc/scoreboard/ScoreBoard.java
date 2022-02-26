@@ -17,7 +17,6 @@ import java.util.ArrayList;
 
 public class ScoreBoard implements Listener {
 
-    public static Main instance;
     public static ScoreBoard acces;
     static String Grade = "";
 
@@ -112,7 +111,7 @@ public class ScoreBoard implements Listener {
             }
 
             if (IridiumSkyblockAPI.getInstance().getUser(player).getIsland().isPresent()) {
-                String Gradeis = "N/a";
+                String Gradeis = "N/A";
                 Gradeis = IridiumSkyblockAPI.getInstance().getUser(player).getIslandRank().name();
                 int classement = 0;
                 classement = IridiumSkyblockAPI.getInstance().getUser(player).getIsland().get().getRank();
@@ -123,20 +122,23 @@ public class ScoreBoard implements Listener {
                 double ismoney = 0;
                 ismoney = IridiumSkyblockAPI.getInstance().getUser(player).getIsland().get().getMoney();
 
-                if (Gradeis.equalsIgnoreCase("OWNER")) {
-                    Gradeis = "Chef";
-                }
-                if (Gradeis.equalsIgnoreCase("CO_OWNER")) {
-                    Gradeis = "Co-Chef";
-                }
-                if (Gradeis.equalsIgnoreCase("MODERATOR")) {
-                    Gradeis = "Modérateur";
-                }
-                if (Gradeis.equalsIgnoreCase("MEMBER")) {
-                    Gradeis = "Membre";
-                }
-                if (Gradeis.equalsIgnoreCase("VISITOR")) {
-                    Gradeis = "Visiteur";
+                switch (Gradeis) {
+                    case "OWNER":
+                        Gradeis = "Chef";
+                        break;
+                    case "CO_OWNER":
+                        Gradeis = "Co-Chef";
+                        break;
+                    case "MODERATOR":
+                        Gradeis = "Modérateur";
+                        break;
+                    case "MEMBER":
+                        Gradeis = "Membre";
+                        break;
+                    case "VISITOR":
+                        Gradeis = "Visiteur";
+                        break;
+
                 }
 
                 board.getTeam("gradeis").setPrefix("§fGrade d'ile §8▸ §a" + Gradeis);
@@ -153,7 +155,7 @@ public class ScoreBoard implements Listener {
                 board.getTeam("ismoney").setPrefix("§fArgent §8▸ §aN/A");
             }
         }
-        Bukkit.getServer().getScheduler().scheduleAsyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
+        Bukkit.getServer().getScheduler().scheduleAsyncDelayedTask(Main.instance, new Runnable() {
             public void run() {
                 updateScoreBoard();
             }

@@ -48,38 +48,38 @@ public class JoinLeave implements Listener {
 
         EcoAccountsManager.instance.CheckForAccount(player);
 
-        if (Main.instance1.getData().getString("Joueurs." + player.getUniqueId() + ".Atout.1.Active") == null) {
-            Main.instance1.getData().set("Joueurs." + player.getUniqueId() + ".Atout.1.Active", false);
-            Main.instance1.getData().set("Joueurs." + player.getUniqueId() + ".Atout.1.Level", 0);
-            Main.instance1.saveData();
+        if (Main.instance.getData().getString("Joueurs." + player.getUniqueId() + ".Atout.1.Active") == null) {
+            Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Atout.1.Active", false);
+            Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Atout.1.Level", 0);
+            Main.instance.saveData();
         }
-        if (Main.instance1.getData().getString("Joueurs." + player.getUniqueId() + ".Atout.2.Active") == null) {
-            Main.instance1.getData().set("Joueurs." + player.getUniqueId() + ".Atout.2.Active", false);
-            Main.instance1.getData().set("Joueurs." + player.getUniqueId() + ".Atout.2.Level", 0);
-            Main.instance1.saveData();
+        if (Main.instance.getData().getString("Joueurs." + player.getUniqueId() + ".Atout.2.Active") == null) {
+            Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Atout.2.Active", false);
+            Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Atout.2.Level", 0);
+            Main.instance.saveData();
         }
-        if (Main.instance1.getData().getString("Joueurs." + player.getUniqueId() + ".Atout.3.Active") == null) {
-            Main.instance1.getData().set("Joueurs." + player.getUniqueId() + ".Atout.3.Active", false);
-            Main.instance1.getData().set("Joueurs." + player.getUniqueId() + ".Atout.3.Level", 0);
-            Main.instance1.saveData();
+        if (Main.instance.getData().getString("Joueurs." + player.getUniqueId() + ".Atout.3.Active") == null) {
+            Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Atout.3.Active", false);
+            Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Atout.3.Level", 0);
+            Main.instance.saveData();
         }
-        if (Main.instance1.getData().getString("Joueurs." + player.getUniqueId() + ".Atout.4.Active") == null) {
-            Main.instance1.getData().set("Joueurs." + player.getUniqueId() + ".Atout.4.Active", false);
-            Main.instance1.getData().set("Joueurs." + player.getUniqueId() + ".Atout.4.Level", 0);
-            Main.instance1.saveData();
+        if (Main.instance.getData().getString("Joueurs." + player.getUniqueId() + ".Atout.4.Active") == null) {
+            Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Atout.4.Active", false);
+            Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Atout.4.Level", 0);
+            Main.instance.saveData();
         }
-        if (Main.instance1.getData().getBoolean("Joueurs." + player.getUniqueId() + ".Atout.1.Active") == true) {
-            if (Main.instance1.getData().getInt("Joueurs." + player.getUniqueId() + ".Atout.1.Level") == 2) {
+        if (Main.instance.getData().getBoolean("Joueurs." + player.getUniqueId() + ".Atout.1.Active") == true) {
+            if (Main.instance.getData().getInt("Joueurs." + player.getUniqueId() + ".Atout.1.Level") == 2) {
                 player.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 999999999, 1));
             }
         }
-        if (Main.instance1.getData().getBoolean("Joueurs." + player.getUniqueId() + ".Atout.2.Active") == true) {
-            if (Main.instance1.getData().getInt("Joueurs." + player.getUniqueId() + ".Atout.2.Level") == 2) {
+        if (Main.instance.getData().getBoolean("Joueurs." + player.getUniqueId() + ".Atout.2.Active") == true) {
+            if (Main.instance.getData().getInt("Joueurs." + player.getUniqueId() + ".Atout.2.Level") == 2) {
                 player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999999, 1));
             }
         }
-        if (Main.instance1.getData().getBoolean("Joueurs." + player.getUniqueId() + ".Atout.3.Active") == true) {
-            if (Main.instance1.getData().getInt("Joueurs." + player.getUniqueId() + ".Atout.3.Level") == 3) {
+        if (Main.instance.getData().getBoolean("Joueurs." + player.getUniqueId() + ".Atout.3.Active") == true) {
+            if (Main.instance.getData().getInt("Joueurs." + player.getUniqueId() + ".Atout.3.Level") == 3) {
                 player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 999999999, 2));
             }
         }

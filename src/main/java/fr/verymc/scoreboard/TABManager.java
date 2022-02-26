@@ -1,5 +1,6 @@
 package main.java.fr.verymc.scoreboard;
 
+import main.java.fr.verymc.core.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -14,7 +15,7 @@ public class TABManager {
     }
 
     public void SendTab() {
-        Bukkit.getServer().getScheduler().scheduleAsyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
+        Bukkit.getServer().getScheduler().scheduleAsyncDelayedTask(Main.instance, new Runnable() {
             public void run() {
                 Vanished.clear();
                 for (Player p : Bukkit.getOnlinePlayers()) {

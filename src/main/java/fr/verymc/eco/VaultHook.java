@@ -8,7 +8,7 @@ import org.bukkit.plugin.ServicePriority;
 
 public class VaultHook {
 
-    private final Main plugin = Main.getInstance();
+    private final Main plugin = Main.instance;
 
     private Economy provider;
 

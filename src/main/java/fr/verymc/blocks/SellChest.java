@@ -36,9 +36,9 @@ public class SellChest implements Listener {
             SellChestManager.GiveSellChest(e.getPlayer(), Integer.parseInt(numberOnly));
             e.setDropItems(false);
             Location tda = null;
-            Main.getInstance().getDatablc().set("SellChest." + owner + "." +
+            Main.instance.getDatablc().set("SellChest." + owner + "." +
                     numberOnly, tda);
-            Main.getInstance().saveData();
+            Main.instance.saveData();
             SellChestManager.blcsellchest.remove(e.getBlock().getLocation());
         }
     }

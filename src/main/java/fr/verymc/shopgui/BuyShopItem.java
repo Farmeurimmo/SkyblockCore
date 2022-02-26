@@ -18,15 +18,15 @@ public class BuyShopItem {
     public static HashMap<ItemStack, Double> pricessell = new HashMap<>();
 
     public static void GenPriceShopStartup() {
-        for (String bb : Main.instance1.getConfig().getConfigurationSection("Shops").getKeys(false)) {
-            for (String aa : Main.instance1.getConfig().getConfigurationSection("Shops." + bb).getKeys(false)) {
-                double a = (float) Main.instance1.getConfig().getDouble("Shops." + bb + "." + aa + ".buy");
-                double c = (float) Main.instance1.getConfig().getDouble("Shops." + bb + "." + aa + ".sell");
-                if (Material.valueOf(Main.instance1.getConfig().getString("Shops." + bb + "." + aa + ".material")) == null)
+        for (String bb : Main.instance.getConfig().getConfigurationSection("Shops").getKeys(false)) {
+            for (String aa : Main.instance.getConfig().getConfigurationSection("Shops." + bb).getKeys(false)) {
+                double a = (float) Main.instance.getConfig().getDouble("Shops." + bb + "." + aa + ".buy");
+                double c = (float) Main.instance.getConfig().getDouble("Shops." + bb + "." + aa + ".sell");
+                if (Material.valueOf(Main.instance.getConfig().getString("Shops." + bb + "." + aa + ".material")) == null)
                     continue;
-                ItemStack b = new ItemStack(Material.valueOf(Main.instance1.getConfig().getString("Shops." + bb + "." + aa + ".material")));
-                if (Main.instance1.getConfig().getString("Shops." + bb + "." + aa + ".name") != null) {
-                    b.setDisplayName(Main.instance1.getConfig().getString("Shops." + bb + "." + aa + ".name"));
+                ItemStack b = new ItemStack(Material.valueOf(Main.instance.getConfig().getString("Shops." + bb + "." + aa + ".material")));
+                if (Main.instance.getConfig().getString("Shops." + bb + "." + aa + ".name") != null) {
+                    b.setDisplayName(Main.instance.getConfig().getString("Shops." + bb + "." + aa + ".name"));
                 }
                 pricesbuy.put(b, Maths.arrondiNDecimales(a, 2));
                 pricessell.put(b, Maths.arrondiNDecimales(c, 2));
@@ -205,7 +205,7 @@ public class BuyShopItem {
                     player.getInventory().addItem(a);
                 }
             } else {
-                double loa = price * amount - EcoAccountsManager.instance.GetMoney(player.getName());
+                double loa = price * amount - EcoAccountsManager.instance.GetMoneyUUID(player.getUniqueId());
                 player.sendMessage("§6§lShop §8» §fIl vous manque §6" + loa + "$§f.");
             }
         } else {
@@ -214,7 +214,7 @@ public class BuyShopItem {
                 player.closeInventory();
                 removeItems(player.getInventory(), a.getType(), amount);
                 player.sendMessage("§6§lShop §8» §fVous avez vendu §ax" + amount + " " + a.getType() + "§f pour §6" + profit + "$§f.");
-                EcoAccountsManager.instance.AddFounds(player, profit, false);
+                EcoAccountsManager.instance.AddFoundsUUID(player.getUniqueId(), profit, false);
             } else {
                 player.sendMessage("§6§lShop §8» §fVous avez besoin de plus de " + a.getType() + ".");
             }

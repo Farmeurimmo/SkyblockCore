@@ -25,17 +25,17 @@ public class AtoutGui implements Listener {
     public static void MakeAtoutGui(Player player) {
         Inventory inv = Bukkit.createInventory(null, 27, "§6Atouts");
 
-        if (Main.instance1.getData().getInt("Joueurs." + player.getUniqueId() + ".Atout.1.Level") == 0) {
+        if (Main.instance.getData().getInt("Joueurs." + player.getUniqueId() + ".Atout.1.Level") == 0) {
             ItemStack custom1 = new ItemStack(Material.GOLDEN_PICKAXE, 1);
             ItemMeta customa = custom1.getItemMeta();
             customa.setDisplayName("§6Haste 2");
             customa.setLore(Arrays.asList("§7", "§cAchetez cet atout dans le /farm2win"));
             custom1.setItemMeta(customa);
             inv.setItem(10, custom1);
-        } else if (Main.instance1.getData().getInt("Joueurs." + player.getUniqueId() + ".Atout.1.Level") == 2) {
+        } else if (Main.instance.getData().getInt("Joueurs." + player.getUniqueId() + ".Atout.1.Level") == 2) {
             ItemStack custom1 = new ItemStack(Material.GOLDEN_PICKAXE, 1);
             ItemMeta customa = custom1.getItemMeta();
-            if (Main.instance1.getData().getBoolean("Joueurs." + player.getUniqueId() + ".Atout.1.Active") == true) {
+            if (Main.instance.getData().getBoolean("Joueurs." + player.getUniqueId() + ".Atout.1.Active") == true) {
                 customa.addEnchant(Enchantment.ARROW_FIRE, 1, true);
                 customa.addItemFlags(ItemFlag.HIDE_ENCHANTS);
                 customa.setDisplayName("§6Haste 2 §a(Actif)");
@@ -47,17 +47,17 @@ public class AtoutGui implements Listener {
         }
 
 
-        if (Main.instance1.getData().getInt("Joueurs." + player.getUniqueId() + ".Atout.2.Level") == 0) {
+        if (Main.instance.getData().getInt("Joueurs." + player.getUniqueId() + ".Atout.2.Level") == 0) {
             ItemStack custom1 = new ItemStack(Material.SUGAR, 1);
             ItemMeta customa = custom1.getItemMeta();
             customa.setDisplayName("§6Speed 2");
             customa.setLore(Arrays.asList("§7", "§cAchetez cet atout dans le /farm2win"));
             custom1.setItemMeta(customa);
             inv.setItem(12, custom1);
-        } else if (Main.instance1.getData().getInt("Joueurs." + player.getUniqueId() + ".Atout.2.Level") == 2) {
+        } else if (Main.instance.getData().getInt("Joueurs." + player.getUniqueId() + ".Atout.2.Level") == 2) {
             ItemStack custom1 = new ItemStack(Material.SUGAR, 1);
             ItemMeta customa = custom1.getItemMeta();
-            if (Main.instance1.getData().getBoolean("Joueurs." + player.getUniqueId() + ".Atout.2.Active") == true) {
+            if (Main.instance.getData().getBoolean("Joueurs." + player.getUniqueId() + ".Atout.2.Active") == true) {
                 customa.addEnchant(Enchantment.ARROW_FIRE, 1, true);
                 customa.addItemFlags(ItemFlag.HIDE_ENCHANTS);
                 customa.setDisplayName("§6Speed 2 §a(Actif)");
@@ -69,17 +69,17 @@ public class AtoutGui implements Listener {
         }
 
 
-        if (Main.instance1.getData().getInt("Joueurs." + player.getUniqueId() + ".Atout.3.Level") == 0) {
+        if (Main.instance.getData().getInt("Joueurs." + player.getUniqueId() + ".Atout.3.Level") == 0) {
             ItemStack custom1 = new ItemStack(Material.RABBIT_FOOT, 1);
             ItemMeta customa = custom1.getItemMeta();
             customa.setDisplayName("§6Jumpboost 3");
             customa.setLore(Arrays.asList("§7", "§cAchetez cet atout dans le /farm2win"));
             custom1.setItemMeta(customa);
             inv.setItem(14, custom1);
-        } else if (Main.instance1.getData().getInt("Joueurs." + player.getUniqueId() + ".Atout.3.Level") == 3) {
+        } else if (Main.instance.getData().getInt("Joueurs." + player.getUniqueId() + ".Atout.3.Level") == 3) {
             ItemStack custom1 = new ItemStack(Material.RABBIT_FOOT, 1);
             ItemMeta customa = custom1.getItemMeta();
-            if (Main.instance1.getData().getBoolean("Joueurs." + player.getUniqueId() + ".Atout.3.Active") == true) {
+            if (Main.instance.getData().getBoolean("Joueurs." + player.getUniqueId() + ".Atout.3.Active") == true) {
                 customa.addEnchant(Enchantment.ARROW_FIRE, 1, true);
                 customa.addItemFlags(ItemFlag.HIDE_ENCHANTS);
                 customa.setDisplayName("§6Jumpboost 3 §a(Actif)");
@@ -104,20 +104,20 @@ public class AtoutGui implements Listener {
     @EventHandler
     public void onRespawn(PlayerRespawnEvent e) {
         Player player = e.getPlayer();
-        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
+        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
             public void run() {
-                if (Main.instance1.getData().getBoolean("Joueurs." + player.getUniqueId() + ".Atout.1.Active") == true) {
-                    if (Main.instance1.getData().getInt("Joueurs." + player.getUniqueId() + ".Atout.1.Level") == 2) {
+                if (Main.instance.getData().getBoolean("Joueurs." + player.getUniqueId() + ".Atout.1.Active") == true) {
+                    if (Main.instance.getData().getInt("Joueurs." + player.getUniqueId() + ".Atout.1.Level") == 2) {
                         player.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 999999999, 1));
                     }
                 }
-                if (Main.instance1.getData().getBoolean("Joueurs." + player.getUniqueId() + ".Atout.2.Active") == true) {
-                    if (Main.instance1.getData().getInt("Joueurs." + player.getUniqueId() + ".Atout.2.Level") == 2) {
+                if (Main.instance.getData().getBoolean("Joueurs." + player.getUniqueId() + ".Atout.2.Active") == true) {
+                    if (Main.instance.getData().getInt("Joueurs." + player.getUniqueId() + ".Atout.2.Level") == 2) {
                         player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999999, 1));
                     }
                 }
-                if (Main.instance1.getData().getBoolean("Joueurs." + player.getUniqueId() + ".Atout.3.Active") == true) {
-                    if (Main.instance1.getData().getInt("Joueurs." + player.getUniqueId() + ".Atout.3.Level") == 3) {
+                if (Main.instance.getData().getBoolean("Joueurs." + player.getUniqueId() + ".Atout.3.Active") == true) {
+                    if (Main.instance.getData().getInt("Joueurs." + player.getUniqueId() + ".Atout.3.Level") == 3) {
                         player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 999999999, 2));
                     }
                 }
@@ -129,20 +129,20 @@ public class AtoutGui implements Listener {
     public void MilkConsume(PlayerItemConsumeEvent e) {
         if (e.getItem().getType() == Material.MILK_BUCKET) {
             Player player = e.getPlayer();
-            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
+            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
                 public void run() {
-                    if (Main.instance1.getData().getBoolean("Joueurs." + player.getUniqueId() + ".Atout.1.Active") == true) {
-                        if (Main.instance1.getData().getInt("Joueurs." + player.getUniqueId() + ".Atout.1.Level") == 2) {
+                    if (Main.instance.getData().getBoolean("Joueurs." + player.getUniqueId() + ".Atout.1.Active") == true) {
+                        if (Main.instance.getData().getInt("Joueurs." + player.getUniqueId() + ".Atout.1.Level") == 2) {
                             player.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 999999999, 1));
                         }
                     }
-                    if (Main.instance1.getData().getBoolean("Joueurs." + player.getUniqueId() + ".Atout.2.Active") == true) {
-                        if (Main.instance1.getData().getInt("Joueurs." + player.getUniqueId() + ".Atout.2.Level") == 2) {
+                    if (Main.instance.getData().getBoolean("Joueurs." + player.getUniqueId() + ".Atout.2.Active") == true) {
+                        if (Main.instance.getData().getInt("Joueurs." + player.getUniqueId() + ".Atout.2.Level") == 2) {
                             player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999999, 1));
                         }
                     }
-                    if (Main.instance1.getData().getBoolean("Joueurs." + player.getUniqueId() + ".Atout.3.Active") == true) {
-                        if (Main.instance1.getData().getInt("Joueurs." + player.getUniqueId() + ".Atout.3.Level") == 3) {
+                    if (Main.instance.getData().getBoolean("Joueurs." + player.getUniqueId() + ".Atout.3.Active") == true) {
+                        if (Main.instance.getData().getInt("Joueurs." + player.getUniqueId() + ".Atout.3.Level") == 3) {
                             player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 999999999, 2));
                         }
                     }
@@ -165,18 +165,18 @@ public class AtoutGui implements Listener {
             }
             if (current.getType() == Material.GOLDEN_PICKAXE && current.getItemMeta().getItemFlags().contains(ItemFlag.HIDE_ENCHANTS)) {
                 player.removePotionEffect(PotionEffectType.FAST_DIGGING);
-                Main.instance1.getData().set("Joueurs." + player.getUniqueId() + ".Atout.1.Active", false);
-                Main.instance1.saveData();
+                Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Atout.1.Active", false);
+                Main.instance.saveData();
                 player.sendActionBar("§6Atout haste §c§ldésactivé !");
                 AtoutGui.MakeAtoutGui(player);
                 return;
             }
             if (current.getType() == Material.GOLDEN_PICKAXE) {
-                if (Main.instance1.getData().getInt("Joueurs." + player.getUniqueId() + ".Atout.1.Level") == 2) {
+                if (Main.instance.getData().getInt("Joueurs." + player.getUniqueId() + ".Atout.1.Level") == 2) {
                     player.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 999999999, 1));
                     player.sendActionBar("§6Atout haste §a§lactivé !");
-                    Main.instance1.getData().set("Joueurs." + player.getUniqueId() + ".Atout.1.Active", true);
-                    Main.instance1.saveData();
+                    Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Atout.1.Active", true);
+                    Main.instance.saveData();
                     AtoutGui.MakeAtoutGui(player);
                     return;
                 } else {
@@ -187,18 +187,18 @@ public class AtoutGui implements Listener {
 
             if (current.getType() == Material.SUGAR && current.getItemMeta().getItemFlags().contains(ItemFlag.HIDE_ENCHANTS)) {
                 player.removePotionEffect(PotionEffectType.SPEED);
-                Main.instance1.getData().set("Joueurs." + player.getUniqueId() + ".Atout.2.Active", false);
-                Main.instance1.saveData();
+                Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Atout.2.Active", false);
+                Main.instance.saveData();
                 player.sendActionBar("§6Atout speed §c§ldésactivé !");
                 AtoutGui.MakeAtoutGui(player);
                 return;
             }
             if (current.getType() == Material.SUGAR) {
-                if (Main.instance1.getData().getInt("Joueurs." + player.getUniqueId() + ".Atout.2.Level") == 2) {
+                if (Main.instance.getData().getInt("Joueurs." + player.getUniqueId() + ".Atout.2.Level") == 2) {
                     player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999999, 1));
                     player.sendActionBar("§6Atout speed §a§lactivé !");
-                    Main.instance1.getData().set("Joueurs." + player.getUniqueId() + ".Atout.2.Active", true);
-                    Main.instance1.saveData();
+                    Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Atout.2.Active", true);
+                    Main.instance.saveData();
                     AtoutGui.MakeAtoutGui(player);
                     return;
                 } else {
@@ -209,18 +209,18 @@ public class AtoutGui implements Listener {
 
             if (current.getType() == Material.RABBIT_FOOT && current.getItemMeta().getItemFlags().contains(ItemFlag.HIDE_ENCHANTS)) {
                 player.removePotionEffect(PotionEffectType.JUMP);
-                Main.instance1.getData().set("Joueurs." + player.getUniqueId() + ".Atout.3.Active", false);
-                Main.instance1.saveData();
+                Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Atout.3.Active", false);
+                Main.instance.saveData();
                 player.sendActionBar("§6Atout Jumpboost §c§ldésactivé !");
                 AtoutGui.MakeAtoutGui(player);
                 return;
             }
             if (current.getType() == Material.RABBIT_FOOT) {
-                if (Main.instance1.getData().getInt("Joueurs." + player.getUniqueId() + ".Atout.3.Level") == 3) {
+                if (Main.instance.getData().getInt("Joueurs." + player.getUniqueId() + ".Atout.3.Level") == 3) {
                     player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 999999999, 2));
                     player.sendActionBar("§6Atout Jumpboost §a§lactivé !");
-                    Main.instance1.getData().set("Joueurs." + player.getUniqueId() + ".Atout.3.Active", true);
-                    Main.instance1.saveData();
+                    Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Atout.3.Active", true);
+                    Main.instance.saveData();
                     AtoutGui.MakeAtoutGui(player);
                     return;
                 } else {

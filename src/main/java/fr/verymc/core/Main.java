@@ -55,9 +55,8 @@ import java.util.HashMap;
 
 public class Main extends JavaPlugin implements Listener {
 
-    public static Main instance1;
+    public static Main instance;
     static LuckPerms api;
-    private static Main instance;
     private final HashMap<String, Integer> spawncooldown = new HashMap<>();
     public ArrayList<Player> pending = new ArrayList<Player>();
     public ArrayList<Player> haverequest = new ArrayList<Player>();
@@ -72,10 +71,6 @@ public class Main extends JavaPlugin implements Listener {
     public File zfile;
     public File blcfile;
     private VaultHook vaultHook;
-
-    public static Main getInstance() {
-        return instance;
-    }
 
     public void setTarget(String uuid, String aaa) {
         if (aaa == null)
@@ -106,7 +101,6 @@ public class Main extends JavaPlugin implements Listener {
     public void onEnable() {
         saveDefaultConfig();
         instance = this;
-        instance1 = this;
         Bukkit.getPluginManager().isPluginEnabled("LuckPerms");
         Bukkit.getPluginManager().isPluginEnabled("Citizens");
         RegisteredServiceProvider<LuckPerms> provider = Bukkit.getServicesManager().getRegistration(LuckPerms.class);
@@ -276,7 +270,7 @@ public class Main extends JavaPlugin implements Listener {
 
     @Override
     public void onDisable() {
-        FeatherFlyInteract.instance.WriteFlyLeft();
+        CountdownFly.instance.WriteFlyLeft();
         HolosSetup.RemoveBoxeHolo();
         CratesManager.RemoveBoxeHolo();
         //BossBar.RemoveBossBarForPlayers();

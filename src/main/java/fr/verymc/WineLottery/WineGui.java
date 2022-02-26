@@ -1,5 +1,6 @@
 package main.java.fr.verymc.WineLottery;
 
+import main.java.fr.verymc.core.Main;
 import main.java.fr.verymc.eco.EcoAccountsManager;
 import net.citizensnpcs.api.event.NPCRightClickEvent;
 import org.bukkit.Bukkit;
@@ -158,7 +159,7 @@ public class WineGui implements Listener {
                             player.sendMessage("§6§lBarman §8» §fVous avez perdu, par conséquent vous obtenez un §cmalus§7.");
                         }
                         WineCooldown.add(player.getName());
-                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
+                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
                             public void run() {
                                 WineCooldown.remove(player.getName());
                             }
@@ -191,7 +192,7 @@ public class WineGui implements Listener {
                             player.sendMessage("§6§lBarman §8» §fVous avez perdu, par conséquent vous obtenez un §cmalus§7.");
                         }
                         WineCooldown.add(player.getName());
-                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
+                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
                             public void run() {
                                 WineCooldown.remove(player.getName());
                             }
@@ -224,7 +225,7 @@ public class WineGui implements Listener {
                             player.sendMessage("§6§lBarman §8» §fVous avez perdu, par conséquent vous obtenez un §cmalus§7.");
                         }
                         WineCooldown.add(player.getName());
-                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
+                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
                             public void run() {
                                 WineCooldown.remove(player.getName());
                             }
@@ -257,7 +258,7 @@ public class WineGui implements Listener {
                             player.sendMessage("§6§lBarman §8» §fVous avez perdu, par conséquent vous obtenez un §cmalus§7.");
                         }
                         WineCooldown.add(player.getName());
-                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Bukkit.getPluginManager().getPlugin("SkyblockCore"), new Runnable() {
+                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
                             public void run() {
                                 WineCooldown.remove(player.getName());
                             }
