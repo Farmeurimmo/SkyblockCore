@@ -23,11 +23,13 @@ public class AmountGuiManager implements Listener {
         if (current == null) {
             return;
         }
+        Material currentType = current.getType();
+
         if (e.getView().getTitle().equalsIgnoreCase("§6Choix de la quantité à acheter")) {
             e.setCancelled(true);
-            if (current.getType() == Material.LIME_STAINED_GLASS_PANE) {
+            if (currentType == Material.LIME_STAINED_GLASS_PANE) {
                 int amount = e.getInventory().getItem(22).getAmount();
-                int toadd = e.getCurrentItem().getAmount();
+                int toadd = current.getAmount();
                 int now = amount + toadd;
                 if (now > 64) {
                     e.getInventory().getItem(22).setAmount(64);
@@ -51,9 +53,9 @@ public class AmountGuiManager implements Listener {
                 e.getInventory().getItem(40).setItemMeta(temp2);
                 return;
             }
-            if (current.getType() == Material.RED_STAINED_GLASS_PANE) {
+            if (currentType == Material.RED_STAINED_GLASS_PANE) {
                 int amount = e.getInventory().getItem(22).getAmount();
-                int toremove = e.getCurrentItem().getAmount();
+                int toremove = current.getAmount();
                 int now = amount - toremove;
                 if (now < 1) {
                     e.getInventory().getItem(22).setAmount(1);
@@ -77,7 +79,7 @@ public class AmountGuiManager implements Listener {
                 e.getInventory().getItem(40).setItemMeta(temp2);
                 return;
             }
-            if (current.getType() == Material.LIME_WOOL) {
+            if (currentType == Material.LIME_WOOL) {
                 if (current.getAmount() == 1) {
                     Double price = 0.0;
                     if (e.getInventory().getItem(22).getType() != Material.SPAWNER) {
@@ -96,12 +98,12 @@ public class AmountGuiManager implements Listener {
                 return;
 
             }
-            if (current.getType() == Material.GREEN_STAINED_GLASS) {
+            if (currentType == Material.GREEN_STAINED_GLASS) {
                 ItemStack od = e.getInventory().getItem(22);
                 GenMultiStacksBuyGui.OpenStacksAmoutShop((Player) e.getWhoClicked(), od);
                 return;
             }
-            if (current.getType() == Material.ARROW) {
+            if (currentType == Material.ARROW) {
                 Player player = (Player) e.getWhoClicked();
                 String lastpage = GenShopPage.lastpage.get(player);
                 int pagecurrent = GenShopPage.lastnumpage.get(player);
@@ -111,9 +113,9 @@ public class AmountGuiManager implements Listener {
         }
         if (e.getView().getTitle().equalsIgnoreCase("§6Choix de la quantité à vendre")) {
             e.setCancelled(true);
-            if (current.getType() == Material.LIME_STAINED_GLASS_PANE) {
+            if (currentType == Material.LIME_STAINED_GLASS_PANE) {
                 int amount = e.getInventory().getItem(22).getAmount();
-                int toadd = e.getCurrentItem().getAmount();
+                int toadd = current.getAmount();
                 int now = amount + toadd;
                 if (now > 64) {
                     e.getInventory().getItem(22).setAmount(64);
@@ -130,9 +132,9 @@ public class AmountGuiManager implements Listener {
                 e.getInventory().getItem(40).setItemMeta(temp2);
                 return;
             }
-            if (current.getType() == Material.RED_STAINED_GLASS_PANE) {
+            if (currentType == Material.RED_STAINED_GLASS_PANE) {
                 int amount = e.getInventory().getItem(22).getAmount();
-                int toremove = e.getCurrentItem().getAmount();
+                int toremove = current.getAmount();
                 int now = amount - toremove;
                 if (now < 1) {
                     e.getInventory().getItem(22).setAmount(1);
@@ -149,7 +151,7 @@ public class AmountGuiManager implements Listener {
                 e.getInventory().getItem(40).setItemMeta(temp2);
                 return;
             }
-            if (current.getType() == Material.LIME_WOOL) {
+            if (currentType == Material.LIME_WOOL) {
                 if (current.getAmount() == 1) {
                     Double price = BuyShopItem.pricesbuy.get(new ItemStack(Material.valueOf(e.getInventory().getItem(22).getType().toString())));
                     Double amount = price;
@@ -159,7 +161,7 @@ public class AmountGuiManager implements Listener {
                 }
                 return;
             }
-            if (current.getType() == Material.GREEN_STAINED_GLASS) {
+            if (currentType == Material.GREEN_STAINED_GLASS) {
                 ItemStack od = e.getInventory().getItem(22);
                 int amountinvinv = BuyShopItem.GetAmountInInv(od, (Player) e.getWhoClicked());
                 Double price = BuyShopItem.pricesbuy.get(new ItemStack(Material.valueOf(e.getInventory().getItem(22).getType().toString())));
@@ -170,7 +172,7 @@ public class AmountGuiManager implements Listener {
                 }
                 return;
             }
-            if (current.getType() == Material.ARROW) {
+            if (currentType == Material.ARROW) {
                 Player player = (Player) e.getWhoClicked();
                 String lastpage = GenShopPage.lastpage.get(player);
                 int pagecurrent = GenShopPage.lastnumpage.get(player);

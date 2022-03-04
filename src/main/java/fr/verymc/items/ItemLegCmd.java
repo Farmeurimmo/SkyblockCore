@@ -77,7 +77,7 @@ public class ItemLegCmd implements CommandExecutor, TabCompleter {
                             custom6.setItemMeta(customf);
                             Player player = Bukkit.getPlayer(args[1]);
                             player.getInventory().addItem(custom6);
-                            player.sendMessage("§eVous avez reçu une §p§e légendaire");
+                            player.sendMessage("§eVous avez reçu une épée légendaire");
                         } else {
                             sender.sendMessage("§6Arg disponnible: pioche, hache, pelle, §p§e");
                         }
