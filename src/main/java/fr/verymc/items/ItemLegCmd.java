@@ -64,10 +64,10 @@ public class ItemLegCmd implements CommandExecutor, TabCompleter {
                             player.getInventory().addItem(custom6);
                             player.sendMessage("§eVous avez reçu une pelle légendaire");
 
-                        } else if (args[2].equalsIgnoreCase("§p§e")) {
+                        } else if (args[2].equalsIgnoreCase("épée")) {
                             ItemStack custom6 = new ItemStack(Material.NETHERITE_SWORD, 1);
                             ItemMeta customf = custom6.getItemMeta();
-                            customf.setDisplayName("§6Ep§e légendaire");
+                            customf.setDisplayName("§6Epée légendaire");
                             customf.addEnchant(Enchantment.DAMAGE_ALL, 7, true);
                             customf.addEnchant(Enchantment.DAMAGE_UNDEAD, 7, true);
                             customf.addEnchant(Enchantment.DAMAGE_ARTHROPODS, 7, true);
@@ -104,7 +104,7 @@ public class ItemLegCmd implements CommandExecutor, TabCompleter {
                 } else if (args.length == 3) {
                     subcmd.add("pioche");
                     subcmd.add("hache");
-                    subcmd.add("§p§e");
+                    subcmd.add("épée");
                     subcmd.add("pelle");
                 } else if (args.length >= 4) {
                     subcmd.add("");
