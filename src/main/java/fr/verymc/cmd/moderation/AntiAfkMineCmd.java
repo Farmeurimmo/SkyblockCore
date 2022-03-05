@@ -19,7 +19,6 @@ public class AntiAfkMineCmd implements CommandExecutor, TabCompleter {
 
         if (sender instanceof Player) {
             Player player = (Player) sender;
-            if (player.hasPermission("*")) {
                 if (args.length == 0) {
                     player.sendActionBar("§c/afkmine <Joueur>");
                     return true;
@@ -36,9 +35,6 @@ public class AntiAfkMineCmd implements CommandExecutor, TabCompleter {
                         player.sendActionBar("§cCe joueur n'existe pas !");
                     }
                 }
-            } else {
-                player.sendActionBar("§cPermissions insuffisantes !");
-            }
         }
 
         return false;

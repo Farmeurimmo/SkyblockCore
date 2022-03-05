@@ -3,6 +3,7 @@ package main.java.fr.verymc.challenges;
 import com.iridium.iridiumskyblock.api.IridiumSkyblockAPI;
 import main.java.fr.verymc.core.Main;
 import main.java.fr.verymc.crates.CratesKeyManager;
+import main.java.fr.verymc.eco.EcoAccountsManager;
 import main.java.fr.verymc.gui.MenuGui;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -25,7 +26,7 @@ public class ChallengesGuis implements Listener {
         if (IridiumSkyblockAPI.getInstance().getUser(player).getIsland().isPresent()) {
             Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily." + nombre + ".Progression", 0);
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "is bank give " + player.getName() + " crystaux 2");
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "money " + player.getName() + " 5000");
+            EcoAccountsManager.instance.AddFounds(player, 5000.0, false);
             CratesKeyManager.GiveCrateKey(player, 1, "Challenge");
 
             if (Main.instance.getData().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily." + nombre + ".Palier") >= 5) {

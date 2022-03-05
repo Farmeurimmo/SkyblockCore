@@ -28,7 +28,7 @@ public class CateSelectGui implements Listener {
                     if (current.getItemMeta().getDisplayName().contains("suivante")) {
                         nextpage(player, "Blocs");
                     }
-                    if (current.getItemMeta().getDisplayName().contains("pr§c§dente")) {
+                    if (current.getItemMeta().getDisplayName().contains("précédente")) {
                         backpage(player, "Blocs");
                     }
                 } else if (current.getType() != Material.PLAYER_HEAD && current.getType() != Material.ARROW) {

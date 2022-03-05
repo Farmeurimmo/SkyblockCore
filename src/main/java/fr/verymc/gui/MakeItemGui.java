@@ -34,14 +34,21 @@ public class MakeItemGui {
         customj.setDisplayName("§dSellChest");
         customj.setLore(Arrays.asList("§6Prix: 1000000$"));
         custom11.setItemMeta(customj);
-        invboutiquefarm2win.setItem(16, custom11);
+        invboutiquefarm2win.setItem(12, custom11);
 
         ItemStack custom12 = new ItemStack(Material.HOPPER, 1);
         ItemMeta customk = custom12.getItemMeta();
         customk.setDisplayName("§eCollecteur de chunk (chunkhopper)");
         customk.setLore(Arrays.asList("§6Prix: 500000$"));
         custom12.setItemMeta(customk);
-        invboutiquefarm2win.setItem(13, custom12);
+        invboutiquefarm2win.setItem(14, custom12);
+
+        ItemStack custom13 = new ItemStack(Material.NETHERITE_HOE, 1);
+        ItemMeta customl = custom13.getItemMeta();
+        customl.setDisplayName("§eFarmHoe §cTier I (1x1)");
+        customl.setLore(Arrays.asList("§6Prix: 500000$"));
+        custom13.setItemMeta(customl);
+        invboutiquefarm2win.setItem(16, custom13);
 
         invboutiquefarm2win.setItem(26, custom8);
         invboutiquefarm2win.setItem(22, PreGenItems.getOwnerHead(player));

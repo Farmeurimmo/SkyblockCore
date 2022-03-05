@@ -93,6 +93,14 @@ public class Farm2WinGui implements Listener {
                     player.sendMessage("§cErreur, vous n'avez pas asser d'argent.");
                 }
             }
+            if (current.getType() == Material.NETHERITE_HOE) {
+                if (EcoAccountsManager.instance.GetMoney(player.getName()) >= 500000) {
+                    EcoAccountsManager.instance.RemoveFounds(player, (double) 500000, true);
+                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "farmhoe " + player.getName());
+                } else {
+                    player.sendMessage("§cErreur, vous n'avez pas asser d'argent.");
+                }
+            }
         }
         if (event.getView().getTitle().equalsIgnoreCase("§6Boutique des grades Farm2Win")) {
             event.setCancelled(true);

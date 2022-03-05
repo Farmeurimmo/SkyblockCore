@@ -147,24 +147,28 @@ Shops:
     34:
       material: ACACIA_LOG
       buy: 40
-      sell: 4
+      sell: 7
     35:
       material: BIRCH_LOG
       buy: 40
-      sell: 4
+      sell: 8
     36:
       material: DARK_OAK_LOG
       buy: 40
-      sell: 4
+      sell: 6
     37:
       material: JUNGLE_LOG
       buy: 40
-      sell: 7
+      sell: 5
     38:
       material: OAK_LOG
       buy: 40
-      sell: 4
+      sell: 8
     39:
+      material: SPRUCE_LOG
+      buy: 40
+      sell: 5
+    40:
       material: TNT
       buy: 40
       sell: 4
@@ -339,6 +343,30 @@ Shops:
       sell: 3
     26:
       material: WHEAT_SEEDS
+      buy: 20
+      sell: 1
+    27:
+      material: OAK_SAPLING
+      buy: 20
+      sell: 1
+    28:
+      material: SPRUCE_SAPLING
+      buy: 20
+      sell: 1
+    29:
+      material: BIRCH_SAPLING
+      buy: 20
+      sell: 1
+    30:
+      material: JUNGLE_SAPLING
+      buy: 20
+      sell: 1
+    31:
+      material: ACACIA_SAPLING
+      buy: 20
+      sell: 1
+    32:
+      material: DARK_OAK_SAPLING
       buy: 20
       sell: 1
 

@@ -260,6 +260,7 @@ public class Main extends JavaPlugin implements Listener {
         this.getCommand("sellall").setExecutor(new SellAllCmd());
         this.getCommand("chests").setExecutor(new ChestsCmd());
         this.getCommand("farmhoe").setExecutor(new FarmHoeCmd());
+        this.getCommand("reboot").setExecutor(new RebootCmd());
         System.out.println("Commands DONE | NEXT end");
 
         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "plugman reload CrazyAuctions");

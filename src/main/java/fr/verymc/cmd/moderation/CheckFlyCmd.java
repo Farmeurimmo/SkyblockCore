@@ -18,7 +18,6 @@ public class CheckFlyCmd implements CommandExecutor, TabCompleter {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player) {
             Player player = (Player) sender;
-            if (player.hasPermission("*")) {
                 if (args.length == 0) {
                     player.sendActionBar("§c/checkfly <Joueur>");
                 } else if (args.length == 1) {
@@ -49,9 +48,6 @@ public class CheckFlyCmd implements CommandExecutor, TabCompleter {
                 } else {
                     player.sendActionBar("§c/checkfly <Joueur>");
                 }
-            } else {
-                player.sendActionBar("§cVous n'avez pas la permission !");
-            }
         }
         return false;
     }

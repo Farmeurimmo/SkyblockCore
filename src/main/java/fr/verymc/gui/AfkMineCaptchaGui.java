@@ -64,13 +64,9 @@ public class AfkMineCaptchaGui implements Listener {
                     if (Captcha.contains(player)) {
                         Captcha.remove(player);
                         SeconTry.remove(player);
-                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
-                            public void run() {
-                                player.chat("/spawn");
-                                player.sendActionBar("§cVous n'avez pas réussi le Captcha, vous avez donc été envoyé au spawn");
-                                player.closeInventory();
-                            }
-                        }, 2L);
+                        player.closeInventory();
+                        player.teleport(SpawnCmd.Spawn);
+                        player.sendActionBar("§cVous n'avez pas réussi le Captcha, vous avez donc été envoyé au spawn");
                     }
                 }
             }, 200L);
@@ -101,9 +97,9 @@ public class AfkMineCaptchaGui implements Listener {
             if (current.getType() == Material.GRASS_BLOCK) {
                 Captcha.remove(player);
                 player.sendActionBar("§aCaptcha réussi !");
-                player.closeInventory();
                 SeconTry.remove(player);
                 Captcha.remove(player);
+                player.closeInventory();
             }
             if (current.getType() == Material.DIRT) {
                 if (Captcha.contains(player)) {
@@ -113,8 +109,8 @@ public class AfkMineCaptchaGui implements Listener {
                     } else {
                         SeconTry.remove(player);
                         Captcha.remove(player);
+                        player.teleport(SpawnCmd.Spawn);
                         player.closeInventory();
-                        TeleportPlayer.TeleportPlayerFromRequest(player, SpawnCmd.Spawn, 0);
                         player.sendActionBar("§cVous n'avez pas réussi le Captcha, vous avez donc été envoyé au spawn");
                     }
                 } else {
@@ -140,8 +136,8 @@ public class AfkMineCaptchaGui implements Listener {
                 } else {
                     SeconTry.remove(player);
                     Captcha.remove(player);
+                    player.teleport(SpawnCmd.Spawn);
                     player.closeInventory();
-                    TeleportPlayer.TeleportPlayerFromRequest(player, SpawnCmd.Spawn, 0);
                     player.sendActionBar("§cVous n'avez pas réussi le Captcha, vous avez donc été envoyé au spawn");
                 }
                 return;

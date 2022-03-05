@@ -72,4 +72,5 @@ commands:
     permission: chests.give
   farmhoe:
     permission: farmhoe.give
-  
+  reboot:
+    permission: reboot
