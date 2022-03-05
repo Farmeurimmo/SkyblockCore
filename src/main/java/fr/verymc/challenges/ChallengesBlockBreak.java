@@ -11,20 +11,28 @@ import org.bukkit.event.block.BlockBreakEvent;
 
 public class ChallengesBlockBreak implements Listener {
 
-    public static int cobble = 428;
-    public static int coal = 192;
-    public static int iron = 128;
-    public static int gold = 96;
-    public static int diamond = 64;
-    public static int emerald = 32;
-    public static int debris = 16;
+    public static int cobble = 448;
+    public static int coal = 384;
+    public static int iron = 320;
+    public static int gold = 256;
+    public static int diamond = 192;
+    public static int emerald = 128;
+    public static int debris = 64;
+
+    public static int oak_log = 96;
+    public static int birch_log = 96;
+    public static int spruce_log = 96;
+    public static int dark_oak_log = 96;
+    public static int acacia_log = 96;
+    public static int jungle_log = 96;
+
 
     @EventHandler
     public void blockBreakEvent(BlockBreakEvent e) {
         Player player = e.getPlayer();
-        Block aaa = e.getBlock();
+        Material currenttype = e.getBlock().getType();
         if (!e.isCancelled() && !BuildCmd.Build.contains(player)) {
-            if (aaa.getType() == Material.COBBLESTONE && Main.instance.getData().getBoolean("Joueurs." + player.getUniqueId() + ".Challenges.Daily.1.Active") == true) {
+            if (currenttype == Material.COBBLESTONE && Main.instance.getData().getBoolean("Joueurs." + player.getUniqueId() + ".Challenges.Daily.1.Active") == true) {
                 int progress = Main.instance.getData().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.1.Progression") + 1;
                 int palier = Main.instance.getData().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.1.Palier");
                 Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily.1.Progression", progress);
@@ -35,8 +43,9 @@ public class ChallengesBlockBreak implements Listener {
                     Main.instance.saveData();
                     ChallengesGuis.CompleteChallenge(player, 1);
                 }
+                return;
             }
-            if (aaa.getType() == Material.COAL_ORE && Main.instance.getData().getBoolean("Joueurs." + player.getUniqueId() + ".Challenges.Daily.2.Active") == true) {
+            if (currenttype == Material.COAL_ORE && Main.instance.getData().getBoolean("Joueurs." + player.getUniqueId() + ".Challenges.Daily.2.Active") == true) {
                 int progress = Main.instance.getData().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.2.Progression") + 1;
                 int palier = Main.instance.getData().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.2.Palier");
                 Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily.2.Progression", progress);
@@ -47,8 +56,9 @@ public class ChallengesBlockBreak implements Listener {
                     Main.instance.saveData();
                     ChallengesGuis.CompleteChallenge(player, 2);
                 }
+                return;
             }
-            if (aaa.getType() == Material.IRON_ORE && Main.instance.getData().getBoolean("Joueurs." + player.getUniqueId() + ".Challenges.Daily.3.Active") == true) {
+            if (currenttype == Material.IRON_ORE && Main.instance.getData().getBoolean("Joueurs." + player.getUniqueId() + ".Challenges.Daily.3.Active") == true) {
                 int progress = Main.instance.getData().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.3.Progression") + 1;
                 int palier = Main.instance.getData().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.3.Palier");
                 Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily.3.Progression", progress);
@@ -59,8 +69,9 @@ public class ChallengesBlockBreak implements Listener {
                     Main.instance.saveData();
                     ChallengesGuis.CompleteChallenge(player, 3);
                 }
+                return;
             }
-            if (aaa.getType() == Material.GOLD_ORE && Main.instance.getData().getBoolean("Joueurs." + player.getUniqueId() + ".Challenges.Daily.4.Active") == true) {
+            if (currenttype == Material.GOLD_ORE && Main.instance.getData().getBoolean("Joueurs." + player.getUniqueId() + ".Challenges.Daily.4.Active") == true) {
                 int progress = Main.instance.getData().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.4.Progression") + 1;
                 int palier = Main.instance.getData().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.4.Palier");
                 Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily.4.Progression", progress);
@@ -71,8 +82,9 @@ public class ChallengesBlockBreak implements Listener {
                     Main.instance.saveData();
                     ChallengesGuis.CompleteChallenge(player, 4);
                 }
+                return;
             }
-            if (aaa.getType() == Material.DIAMOND_ORE && Main.instance.getData().getBoolean("Joueurs." + player.getUniqueId() + ".Challenges.Daily.5.Active") == true) {
+            if (currenttype == Material.DIAMOND_ORE && Main.instance.getData().getBoolean("Joueurs." + player.getUniqueId() + ".Challenges.Daily.5.Active") == true) {
                 int progress = Main.instance.getData().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.5.Progression") + 1;
                 int palier = Main.instance.getData().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.5.Palier");
                 Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily.5.Progression", progress);
@@ -83,8 +95,9 @@ public class ChallengesBlockBreak implements Listener {
                     Main.instance.saveData();
                     ChallengesGuis.CompleteChallenge(player, 5);
                 }
+                return;
             }
-            if (aaa.getType() == Material.EMERALD_ORE && Main.instance.getData().getBoolean("Joueurs." + player.getUniqueId() + ".Challenges.Daily.6.Active") == true) {
+            if (currenttype == Material.EMERALD_ORE && Main.instance.getData().getBoolean("Joueurs." + player.getUniqueId() + ".Challenges.Daily.6.Active") == true) {
                 int progress = Main.instance.getData().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.6.Progression") + 1;
                 int palier = Main.instance.getData().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.6.Palier");
                 Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily.6.Progression", progress);
@@ -95,8 +108,9 @@ public class ChallengesBlockBreak implements Listener {
                     Main.instance.saveData();
                     ChallengesGuis.CompleteChallenge(player, 6);
                 }
+                return;
             }
-            if (aaa.getType() == Material.ANCIENT_DEBRIS && Main.instance.getData().getBoolean("Joueurs." + player.getUniqueId() + ".Challenges.Daily.7.Active") == true) {
+            if (currenttype == Material.ANCIENT_DEBRIS && Main.instance.getData().getBoolean("Joueurs." + player.getUniqueId() + ".Challenges.Daily.7.Active") == true) {
                 int progress = Main.instance.getData().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.7.Progression") + 1;
                 int palier = Main.instance.getData().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.7.Palier");
                 Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily.7.Progression", progress);
@@ -107,6 +121,85 @@ public class ChallengesBlockBreak implements Listener {
                     Main.instance.saveData();
                     ChallengesGuis.CompleteChallenge(player, 7);
                 }
+                return;
+            }
+            if (currenttype == Material.OAK_LOG && Main.instance.getData().getBoolean("Joueurs." + player.getUniqueId() + ".Challenges.Daily.8.Active") == true) {
+                int progress = Main.instance.getData().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.8.Progression") + 1;
+                int palier = Main.instance.getData().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.8.Palier");
+                Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily.8.Progression", progress);
+                Main.instance.saveData();
+                if (progress >= oak_log * palier) {
+                    Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily.8.Progression", 0);
+                    Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily.8.Palier", palier + 1);
+                    Main.instance.saveData();
+                    ChallengesGuis.CompleteChallenge(player, 8);
+                }
+                return;
+            }
+            if (currenttype == Material.BIRCH_LOG && Main.instance.getData().getBoolean("Joueurs." + player.getUniqueId() + ".Challenges.Daily.9.Active") == true) {
+                int progress = Main.instance.getData().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.9.Progression") + 1;
+                int palier = Main.instance.getData().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.9.Palier");
+                Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily.9.Progression", progress);
+                Main.instance.saveData();
+                if (progress >= birch_log * palier) {
+                    Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily.9.Progression", 0);
+                    Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily.9.Palier", palier + 1);
+                    Main.instance.saveData();
+                    ChallengesGuis.CompleteChallenge(player, 9);
+                }
+                return;
+            }
+            if (currenttype == Material.SPRUCE_LOG && Main.instance.getData().getBoolean("Joueurs." + player.getUniqueId() + ".Challenges.Daily.10.Active") == true) {
+                int progress = Main.instance.getData().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.10.Progression") + 1;
+                int palier = Main.instance.getData().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.10.Palier");
+                Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily.10.Progression", progress);
+                Main.instance.saveData();
+                if (progress >= spruce_log * palier) {
+                    Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily.10.Progression", 0);
+                    Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily.10.Palier", palier + 1);
+                    Main.instance.saveData();
+                    ChallengesGuis.CompleteChallenge(player, 10);
+                }
+                return;
+            }
+            if (currenttype == Material.DARK_OAK_LOG && Main.instance.getData().getBoolean("Joueurs." + player.getUniqueId() + ".Challenges.Daily.11.Active") == true) {
+                int progress = Main.instance.getData().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.11.Progression") + 1;
+                int palier = Main.instance.getData().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.11.Palier");
+                Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily.11.Progression", progress);
+                Main.instance.saveData();
+                if (progress >= dark_oak_log * palier) {
+                    Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily.11.Progression", 0);
+                    Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily.11.Palier", palier + 1);
+                    Main.instance.saveData();
+                    ChallengesGuis.CompleteChallenge(player, 11);
+                }
+                return;
+            }
+            if (currenttype == Material.ACACIA_LOG && Main.instance.getData().getBoolean("Joueurs." + player.getUniqueId() + ".Challenges.Daily.12.Active") == true) {
+                int progress = Main.instance.getData().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.12.Progression") + 1;
+                int palier = Main.instance.getData().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.12.Palier");
+                Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily.12.Progression", progress);
+                Main.instance.saveData();
+                if (progress >= acacia_log * palier) {
+                    Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily.12.Progression", 0);
+                    Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily.12.Palier", palier + 1);
+                    Main.instance.saveData();
+                    ChallengesGuis.CompleteChallenge(player, 12);
+                }
+                return;
+            }
+            if (currenttype == Material.JUNGLE_LOG && Main.instance.getData().getBoolean("Joueurs." + player.getUniqueId() + ".Challenges.Daily.13.Active") == true) {
+                int progress = Main.instance.getData().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.13.Progression") + 1;
+                int palier = Main.instance.getData().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.13.Palier");
+                Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily.13.Progression", progress);
+                Main.instance.saveData();
+                if (progress >= jungle_log * palier) {
+                    Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily.13.Progression", 0);
+                    Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily.13.Palier", palier + 1);
+                    Main.instance.saveData();
+                    ChallengesGuis.CompleteChallenge(player, 13);
+                }
+                return;
             }
         }
     }

@@ -21,13 +21,34 @@ public class RebootCmd implements CommandExecutor {
         int num = Integer.parseInt(args[0]);
 
         for(Player p : Bukkit.getOnlinePlayers()){
-            p.sendTitle("Restart du serveur","dans "+num+"secondes");
+            p.sendTitle("Restart du serveur","Dans "+num+" secondes !");
         }
         Bukkit.broadcastMessage("\n§c§l RESTART DU SERVEUR DANS "+num+" SECONDES !\n");
 
         Bukkit.getServer().getScheduler().scheduleAsyncDelayedTask(Main.instance, new Runnable() {
             public void run() {
+                int numtoshow = num/3+num/3;
+                for(Player p : Bukkit.getOnlinePlayers()){
+                    p.sendTitle("Restart du serveur","Dans "+numtoshow+" secondes !");
+                }
+                Bukkit.broadcastMessage("\n§c§l RESTART DU SERVEUR DANS "+numtoshow+" SECONDES !\n");
+            }
+        }, 20*num/3);
+
+        Bukkit.getServer().getScheduler().scheduleAsyncDelayedTask(Main.instance, new Runnable() {
+            public void run() {
+                int numtoshow = num/3;
+                for(Player p : Bukkit.getOnlinePlayers()){
+                    p.sendTitle("Restart du serveur","Dans "+numtoshow+" secondes !");
+                }
+                Bukkit.broadcastMessage("\n§c§l RESTART DU SERVEUR DANS "+numtoshow+" SECONDES !\n");
+            }
+        }, 20*num/3);
+
+        Bukkit.getServer().getScheduler().scheduleAsyncDelayedTask(Main.instance, new Runnable() {
+            public void run() {
                 for(Player player : Bukkit.getOnlinePlayers()){
+                    player.sendTitle("Restart du serveur","Téléportation au lobby..");
                     final ByteArrayDataOutput out = ByteStreams.newDataOutput();
                     Bukkit.getServer().getMessenger().registerOutgoingPluginChannel(Main.instance, "BungeeCord");
                     out.writeUTF("Connect");
@@ -36,7 +57,7 @@ public class RebootCmd implements CommandExecutor {
                 }
                 Bukkit.shutdown();
             }
-        }, 20*num);
+        }, 20*num/3);
 
         return true;
     }

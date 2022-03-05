@@ -222,14 +222,14 @@ public class GenShopPage {
         if (pagenum >= 2) {
             ItemStack custom6 = new ItemStack(Material.ARROW, 1);
             ItemMeta customh = custom6.getItemMeta();
-            customh.setDisplayName("§6Page pr§c§dente");
+            customh.setDisplayName("§6Page précédente");
             custom6.setItemMeta(customh);
             inv.setItem(45, custom6);
         }
 
         ItemStack custom7 = new ItemStack(Material.IRON_DOOR, 1);
         ItemMeta customg = custom7.getItemMeta();
-        customg.setDisplayName("§6Retour aux Cat§gories");
+        customg.setDisplayName("§6Retour aux Catégories");
         custom7.setItemMeta(customg);
         inv.setItem(0, custom7);
 

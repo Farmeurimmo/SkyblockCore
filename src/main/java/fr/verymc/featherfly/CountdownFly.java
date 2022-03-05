@@ -55,8 +55,6 @@ public class CountdownFly implements Listener {
             a = Main.instance.getDatac().getInt("Joueurs." + aa + ".Fly.timeleft");
             if (a >= 1) {
                 CountdownFly.instance.setCooldown(UUID.fromString(aa), a);
-                Main.instance.getDatac().set("Joueurs." + aa + ".Fly.timeleft", 0);
-                Main.instance.saveData();
             }
         }
     }
@@ -79,7 +77,6 @@ public class CountdownFly implements Listener {
             setCooldown(player.getUniqueId(), newtime);
         } else {
             setCooldown(player.getUniqueId(), DurationInSec);
-            player.setAllowFlight(true);
             if (!player.getWorld().getName().equalsIgnoreCase("world")) {
                 player.setFlying(true);
             }
@@ -137,12 +134,10 @@ public class CountdownFly implements Listener {
                         player.sendActionBar(messagetimeleft);
 
                     } else {
-                        if (player.getGameMode() != GameMode.CREATIVE && player.getGameMode() != GameMode.SPECTATOR) {
-                            player.setAllowFlight(false);
-                            player.setFlying(false);
-                            player.chat("/is home");
-                            player.sendMessage("§6Fin du fly, Téléportation sur votre île..");
-                        }
+                        player.setAllowFlight(false);
+                        player.setFlying(false);
+                        player.chat("/is home");
+                        player.sendMessage("§6Fin du fly, Téléportation sur votre île..");
                         player.sendActionBar("§6Fin du fly.");
                         fly.remove(player.getUniqueId());
                         Main.instance.getDatac().set("Joueurs." + player.getUniqueId() + ".Fly.timeleft", 0);

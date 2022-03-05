@@ -71,17 +71,6 @@ public class Interact implements Listener {
     }
 
     @EventHandler
-    public void playerdrop(PlayerDropItemEvent e) {
-        if (e.getPlayer().getWorld().getName().equalsIgnoreCase("world")) {
-            if (Build.contains(e.getPlayer())) {
-                return;
-            } else {
-                e.setCancelled(true);
-            }
-        }
-    }
-
-    @EventHandler
     public void Bucketevent(PlayerItemConsumeEvent e) {
         if (e.getPlayer().getWorld().getName().equalsIgnoreCase("world")) {
             if (Build.contains(e.getPlayer())) {

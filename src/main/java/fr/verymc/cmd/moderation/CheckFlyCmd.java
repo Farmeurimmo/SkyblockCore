@@ -37,7 +37,7 @@ public class CheckFlyCmd implements CommandExecutor, TabCompleter {
                                 color2 = "§a§l";
                             }
                             player.sendMessage("§6Gestion du fly de " + p.getName() + ": \n§6Permission de voler " + color1 + p.getAllowFlight() +
-                                    " \n§6En vol: " + color2 + p.isFlying() + "\nTemp fly: " + CountdownFly.instance.getCooldown(player));
+                                    " \n§6En vol: " + color2 + p.isFlying() + "\nTemp fly: " + CountdownFly.instance.getCooldown(p));
                             return true;
                         } else {
                             player.sendActionBar("§cCe joueur n'est pas en ligne !");
