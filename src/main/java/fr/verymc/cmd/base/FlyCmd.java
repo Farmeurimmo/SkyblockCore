@@ -19,13 +19,13 @@ public class FlyCmd implements CommandExecutor, TabCompleter {
         if (sender instanceof Player) {
             Player player = (Player) sender;
             if (player.hasPermission("fly")) {
-                if(args.length==1){
-                    if(Bukkit.getPlayer(args[0])!=null){
+                if (args.length == 1) {
+                    if (Bukkit.getPlayer(args[0]) != null) {
                         Player p = Bukkit.getPlayer(args[0]);
                         if (p.getAllowFlight() == false) {
                             p.setAllowFlight(true);
                             p.setFlying(true);
-                        } else{
+                        } else {
                             p.setAllowFlight(false);
                             p.setFlying(false);
                         }

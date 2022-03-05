@@ -19,22 +19,22 @@ public class AntiAfkMineCmd implements CommandExecutor, TabCompleter {
 
         if (sender instanceof Player) {
             Player player = (Player) sender;
-                if (args.length == 0) {
-                    player.sendActionBar("§c/afkmine <Joueur>");
-                    return true;
-                }
-                if (args.length == 1) {
-                    if (Bukkit.getPlayer(args[0]) != null) {
-                        if (Bukkit.getPlayer(args[0]).isOnline()) {
-                            Player p = Bukkit.getPlayer(args[0]);
-                            AfkMineCaptchaGui.MakeAfkMineCaptchaGui(p);
-                        } else {
-                            player.sendActionBar("§cCe joueur n'est pas en ligne !");
-                        }
+            if (args.length == 0) {
+                player.sendActionBar("§c/afkmine <Joueur>");
+                return true;
+            }
+            if (args.length == 1) {
+                if (Bukkit.getPlayer(args[0]) != null) {
+                    if (Bukkit.getPlayer(args[0]).isOnline()) {
+                        Player p = Bukkit.getPlayer(args[0]);
+                        AfkMineCaptchaGui.MakeAfkMineCaptchaGui(p);
                     } else {
-                        player.sendActionBar("§cCe joueur n'existe pas !");
+                        player.sendActionBar("§cCe joueur n'est pas en ligne !");
                     }
+                } else {
+                    player.sendActionBar("§cCe joueur n'existe pas !");
                 }
+            }
         }
 
         return false;

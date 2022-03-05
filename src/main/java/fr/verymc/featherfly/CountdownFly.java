@@ -2,7 +2,6 @@ package main.java.fr.verymc.featherfly;
 
 import main.java.fr.verymc.core.Main;
 import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 

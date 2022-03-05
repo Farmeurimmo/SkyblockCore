@@ -3,7 +3,6 @@ package main.java.fr.verymc.challenges;
 import main.java.fr.verymc.cmd.moderation.BuildCmd;
 import main.java.fr.verymc.core.Main;
 import org.bukkit.Material;
-import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

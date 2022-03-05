@@ -18,36 +18,36 @@ public class CheckFlyCmd implements CommandExecutor, TabCompleter {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player) {
             Player player = (Player) sender;
-                if (args.length == 0) {
-                    player.sendActionBar("§c/checkfly <Joueur>");
-                } else if (args.length == 1) {
-                    if (Bukkit.getPlayer(args[0]) != null) {
-                        if (Bukkit.getPlayer(args[0]).isOnline()) {
-                            Player p = Bukkit.getPlayer(args[0]);
-                            String color1 = null;
-                            String color2 = null;
-                            if (p.getAllowFlight() == false) {
-                                color1 = "§c§l";
-                            } else {
-                                color1 = "§a§l";
-                            }
-                            if (p.isFlying() == false) {
-                                color2 = "§c§l";
-                            } else {
-                                color2 = "§a§l";
-                            }
-                            player.sendMessage("§6Gestion du fly de " + p.getName() + ": \n§6Permission de voler " + color1 + p.getAllowFlight() +
-                                    " \n§6En vol: " + color2 + p.isFlying() + "\nTemp fly: " + CountdownFly.instance.getCooldown(p));
-                            return true;
+            if (args.length == 0) {
+                player.sendActionBar("§c/checkfly <Joueur>");
+            } else if (args.length == 1) {
+                if (Bukkit.getPlayer(args[0]) != null) {
+                    if (Bukkit.getPlayer(args[0]).isOnline()) {
+                        Player p = Bukkit.getPlayer(args[0]);
+                        String color1 = null;
+                        String color2 = null;
+                        if (p.getAllowFlight() == false) {
+                            color1 = "§c§l";
                         } else {
-                            player.sendActionBar("§cCe joueur n'est pas en ligne !");
+                            color1 = "§a§l";
                         }
+                        if (p.isFlying() == false) {
+                            color2 = "§c§l";
+                        } else {
+                            color2 = "§a§l";
+                        }
+                        player.sendMessage("§6Gestion du fly de " + p.getName() + ": \n§6Permission de voler " + color1 + p.getAllowFlight() +
+                                " \n§6En vol: " + color2 + p.isFlying() + "\nTemp fly: " + CountdownFly.instance.getCooldown(p));
+                        return true;
                     } else {
-                        player.sendActionBar("§cCe joueur n'existe pas !");
+                        player.sendActionBar("§cCe joueur n'est pas en ligne !");
                     }
                 } else {
-                    player.sendActionBar("§c/checkfly <Joueur>");
+                    player.sendActionBar("§cCe joueur n'existe pas !");
                 }
+            } else {
+                player.sendActionBar("§c/checkfly <Joueur>");
+            }
         }
         return false;
     }

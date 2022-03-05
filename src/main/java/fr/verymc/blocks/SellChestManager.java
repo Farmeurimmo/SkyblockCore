@@ -27,12 +27,12 @@ public class SellChestManager {
         for (Entry<Location, UUID> sellchest : blcsellchest.entrySet()) {
             BlockState e = sellchest.getKey().getBlock().getState();
             if (e.getType() != Material.CHEST) {
-                toremove.put(sellchest.getKey(),sellchest.getValue());
+                toremove.put(sellchest.getKey(), sellchest.getValue());
                 continue;
             }
             Inventory ed = ((Chest) e).getBlockInventory();
             if (!((Chest) e).getCustomName().contains("§6SellChest")) {
-                toremove.put(sellchest.getKey(),sellchest.getValue());
+                toremove.put(sellchest.getKey(), sellchest.getValue());
                 continue;
             }
             double total = 0;
