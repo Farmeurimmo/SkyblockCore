@@ -20,9 +20,9 @@ import java.util.Arrays;
 
 public class BuyAtoutGui implements Listener {
 
-    static Double haste = (double) 600000;
-    static Double speed = (double) 400000;
-    static Double jumpboost = (double) 250000;
+    static Double haste = 600000.0;
+    static Double speed = 400000.0;
+    static Double jumpboost = 250000.0;
 
     public static void MakeBuyAtoutGui(Player player) {
 
@@ -92,22 +92,23 @@ public class BuyAtoutGui implements Listener {
         Double money = EcoAccountsManager.instance.GetMoney(player.getName());
 
         if (effect == 1) {
-            if (money >= haste) ;
-            EcoAccountsManager.instance.RemoveFounds(player, haste, true);
-            Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Atout.1.Active", true);
-            Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Atout.1.Level", 2);
-            Main.instance.saveData();
-            player.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 999999999, 1));
-            player.sendMessage("§6Vous avez reçu l'accès à l'atout haste 2 !");
-            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
-                public void run() {
-                    MakeBuyAtoutGui(player);
-                }
-            }, 2);
+            if (money>=haste) {
+                EcoAccountsManager.instance.RemoveFounds(player, haste, true);
+                Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Atout.1.Active", true);
+                Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Atout.1.Level", 2);
+                Main.instance.saveData();
+                player.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 999999999, 1));
+                player.sendMessage("§6Vous avez reçu l'accès à l'atout haste 2 !");
+                Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
+                    public void run() {
+                        MakeBuyAtoutGui(player);
+                    }
+                }, 2);
+            }
         }
         if (effect == 2) {
-            if (money >= speed) ;
-            EcoAccountsManager.instance.RemoveFounds(player, speed, true);
+            if (money>=speed){
+            EcoAccountsManager.instance.RemoveFounds(player, (double) speed, true);
             Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Atout.2.Active", true);
             Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Atout.2.Level", 2);
             Main.instance.saveData();
@@ -119,19 +120,21 @@ public class BuyAtoutGui implements Listener {
                 }
             }, 2);
         }
+        }
         if (effect == 3) {
-            if (money >= jumpboost) ;
-            EcoAccountsManager.instance.RemoveFounds(player, jumpboost, true);
-            Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Atout.3.Active", true);
-            Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Atout.3.Level", 3);
-            Main.instance.saveData();
-            player.sendMessage("§§6Vous avez reçu l'accès à l'atout Jumpboost 3 !");
-            player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 999999999, 2));
-            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
-                public void run() {
-                    MakeBuyAtoutGui(player);
-                }
-            }, 2);
+            if (money>=jumpboost) {
+                EcoAccountsManager.instance.RemoveFounds(player, (double) jumpboost, true);
+                Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Atout.3.Active", true);
+                Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Atout.3.Level", 3);
+                Main.instance.saveData();
+                player.sendMessage("§§6Vous avez reçu l'accès à l'atout Jumpboost 3 !");
+                player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 999999999, 2));
+                Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
+                    public void run() {
+                        MakeBuyAtoutGui(player);
+                    }
+                }, 2);
+            }
         }
     }
 

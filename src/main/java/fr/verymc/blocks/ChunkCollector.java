@@ -40,6 +40,9 @@ public class ChunkCollector implements Listener {
         if (!(e.getEntity() instanceof Item)) {
             return;
         }
+        if(e.getLocation().getWorld().getName().equalsIgnoreCase("world")){
+            return;
+        }
         if (ChunkCollectorManager.blcchunk.containsValue(e.getLocation().getChunk().getChunkKey())) {
             for (Entry<Location, Long> tttt : ChunkCollectorManager.blcchunk.entrySet()) {
                 Location hopper = tttt.getKey();

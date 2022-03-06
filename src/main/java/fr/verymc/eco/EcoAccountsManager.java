@@ -74,7 +74,7 @@ public class EcoAccountsManager {
 
     public void RemoveFounds(Player player, Double toremove, boolean ase) {
         Double moneybefore = instance.GetMoney(player.getName());
-        if (moneybefore - toremove >= 0) {
+        if (moneybefore>=toremove) {
             double now = moneybefore - toremove;
             Moneys.put(player.getUniqueId(), now);
             Main.instance.getDataz().set(String.valueOf(player.getUniqueId()), now);
@@ -84,9 +84,8 @@ public class EcoAccountsManager {
                     player.sendMessage("§6§lMonnaie §8» §6" + toremove + "$§f ont été §cretiré §fde votre compte.");
             }
         } else {
-            if (player != null) {
-                if (ase == true)
-                    player.sendMessage("§6§lMonnaie §8» §6" + toremove + "$§f n'ont pas pu être §cretiré §fde votre compte.");
+            if (ase == true) {
+                player.sendMessage("§6§lMonnaie §8» §6" + toremove + "$§f n'ont pas pu être §cretiré §fde votre compte.");
             }
         }
     }
