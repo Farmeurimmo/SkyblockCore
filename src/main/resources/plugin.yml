@@ -74,3 +74,5 @@ commands:
     permission: farmhoe.give
   reboot:
     permission: reboot
+  ah:
+    permission: admin

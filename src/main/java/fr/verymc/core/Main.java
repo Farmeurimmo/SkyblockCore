@@ -6,6 +6,9 @@ import main.java.fr.verymc.WineLottery.WineSpawn;
 import main.java.fr.verymc.atout.AtoutCmd;
 import main.java.fr.verymc.atout.AtoutGui;
 import main.java.fr.verymc.atout.BuyAtoutGui;
+import main.java.fr.verymc.auctions.AhCmd;
+import main.java.fr.verymc.auctions.AuctionGui;
+import main.java.fr.verymc.auctions.AuctionsManager;
 import main.java.fr.verymc.blocks.*;
 import main.java.fr.verymc.challenges.ChallengesBlockBreak;
 import main.java.fr.verymc.challenges.ChallengesCmd;
@@ -66,10 +69,12 @@ public class Main extends JavaPlugin implements Listener {
     public FileConfiguration datac;
     public FileConfiguration dataz;
     public FileConfiguration datablc;
+    public FileConfiguration dataah;
     public File dfile;
     public File cfile;
     public File zfile;
     public File blcfile;
+    public File ahfile;
     private VaultHook vaultHook;
 
     public void setTarget(String uuid, String aaa) {
@@ -218,6 +223,7 @@ public class Main extends JavaPlugin implements Listener {
         getServer().getPluginManager().registerEvents(new SellChest(), this);
         getServer().getPluginManager().registerEvents(new FarmHoeManager(), this);
         getServer().getPluginManager().registerEvents(new FarmHoeGui(), this);
+        getServer().getPluginManager().registerEvents(new AuctionGui(), this);
         PluginManager pm = getServer().getPluginManager();
         pm.registerEvents(this, this);
         System.out.println("Listeners DONE | NEXT commands");
@@ -261,9 +267,10 @@ public class Main extends JavaPlugin implements Listener {
         this.getCommand("chests").setExecutor(new ChestsCmd());
         this.getCommand("farmhoe").setExecutor(new FarmHoeCmd());
         this.getCommand("reboot").setExecutor(new RebootCmd());
+        this.getCommand("ah").setExecutor(new AhCmd());
         System.out.println("Commands DONE | NEXT end");
 
-        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "plugman reload CrazyAuctions");
+        new AuctionsManager();
 
         System.out.println("§aDémarrage du plugin TERMINE!");
         System.out.println("-----------------------------------------------------------------------------------------------------");
@@ -288,6 +295,7 @@ public class Main extends JavaPlugin implements Listener {
         cfile = new File(this.getDataFolder(), "Fly.yml");
         zfile = new File(this.getDataFolder(), "Eco.yml");
         blcfile = new File(this.getDataFolder(), "Block.yml");
+        ahfile = new File(this.getDataFolder(), "auctions.yml");
 
         if (!dfile.exists()) {
             try {
@@ -329,6 +337,16 @@ public class Main extends JavaPlugin implements Listener {
 
         datablc = YamlConfiguration.loadConfiguration(blcfile);
 
+        if (!ahfile.exists()) {
+            try {
+                ahfile.createNewFile();
+            } catch (IOException e) {
+                getLogger().info("§c§lErreur lors de la cr§ation de Auctions.yml");
+            }
+        }
+
+        dataah = YamlConfiguration.loadConfiguration(ahfile);
+
 
     }
 
@@ -346,6 +364,10 @@ public class Main extends JavaPlugin implements Listener {
 
     public FileConfiguration getDatablc() {
         return datablc;
+    }
+
+    public FileConfiguration getDataah() {
+        return dataah;
     }
 
 
@@ -374,6 +396,12 @@ public class Main extends JavaPlugin implements Listener {
             getLogger().info("§c§lErreur lors de la sauvegarde!");
             e.printStackTrace();
         }
+        try {
+            dataah.load(ahfile);
+        } catch (InvalidConfigurationException e) {
+            getLogger().info("§c§lErreur lors de la sauvegarde!");
+            e.printStackTrace();
+        }
     }
 
     public void saveData() {
@@ -394,6 +422,11 @@ public class Main extends JavaPlugin implements Listener {
         }
         try {
             datablc.save(blcfile);
+        } catch (IOException e) {
+            getLogger().info("§c§lErreur lors de la sauvegarde!");
+        }
+        try {
+            dataah.save(ahfile);
         } catch (IOException e) {
             getLogger().info("§c§lErreur lors de la sauvegarde!");
         }

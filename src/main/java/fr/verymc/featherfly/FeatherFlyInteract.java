@@ -6,6 +6,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerToggleFlightEvent;
 import org.bukkit.inventory.ItemFlag;
@@ -36,6 +37,14 @@ public class FeatherFlyInteract implements Listener {
             }
         }
     }
+
+    @EventHandler
+    public void OnDropFeather(PlayerDropItemEvent e) {
+        if (e.getItemDrop().getItemStack().getType() == Material.FEATHER && e.getItemDrop().getItemStack().isUnbreakable()) {
+            e.setCancelled(true);
+        }
+    }
+
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void OnToggleFly(PlayerToggleFlightEvent e) {

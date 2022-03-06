@@ -4,6 +4,7 @@ import main.java.fr.verymc.core.Main;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Hopper;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Item;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -38,6 +39,9 @@ public class ChunkCollector implements Listener {
     @EventHandler
     public void CheckForItem(ItemSpawnEvent e) {
         if (!(e.getEntity() instanceof Item)) {
+            return;
+        }
+        if (e.getEntityType() == EntityType.DROPPED_ITEM) {
             return;
         }
         if (e.getEntity().getLocation().getWorld().getName().equalsIgnoreCase("world")) {

@@ -5,6 +5,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
@@ -80,13 +81,14 @@ public class Interact implements Listener {
         }
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.MONITOR)
     public void EntitySpawnEvent(EntitySpawnEvent e) {
         if (e.getLocation().getWorld().getName().equalsIgnoreCase("world")) {
             if (!(e.getEntity() instanceof Item)) {
                 e.setCancelled(true);
             }
         }
+        return;
     }
 
     @EventHandler
