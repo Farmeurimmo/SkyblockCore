@@ -2,10 +2,13 @@ package main.java.fr.verymc.events;
 
 import main.java.fr.verymc.cmd.moderation.BuildCmd;
 import org.bukkit.Material;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.entity.EntitySpawnEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.player.PlayerBucketEmptyEvent;
 import org.bukkit.event.player.PlayerBucketFillEvent;
@@ -30,13 +33,6 @@ public class Interact implements Listener {
         if (e.getClickedBlock().getType() == Material.ENDER_CHEST || e.getClickedBlock().getType() == Material.ENCHANTING_TABLE
                 || e.getClickedBlock().getType() == Material.CRAFTING_TABLE || e.getClickedBlock().getType() == Material.ANVIL) {
             return;
-        }
-        if (player.getWorld().getName().equalsIgnoreCase("world")) {
-            if (Build.contains(player)) {
-                return;
-            } else {
-                e.setCancelled(true);
-            }
         }
     }
 
@@ -63,7 +59,7 @@ public class Interact implements Listener {
     }
 
     @EventHandler
-    public void BlockBreake(BlockBreakEvent e) {
+    public void BlockBreak(BlockBreakEvent e) {
         if (e.getBlock().getLocation().getWorld().getName().equalsIgnoreCase("world")) {
             if (Build.contains(e.getPlayer())) {
                 return;
@@ -74,8 +70,28 @@ public class Interact implements Listener {
     }
 
     @EventHandler
+    public void BlockPlace(BlockPlaceEvent e) {
+        if (e.getBlock().getLocation().getWorld().getName().equalsIgnoreCase("world")) {
+            if (Build.contains(e.getPlayer())) {
+                return;
+            } else {
+                e.setCancelled(true);
+            }
+        }
+    }
+
+    @EventHandler
+    public void EntitySpawnEvent(EntitySpawnEvent e) {
+        if (e.getLocation().getWorld().getName().equalsIgnoreCase("world")) {
+            if (!(e.getEntity() instanceof Item)) {
+                e.setCancelled(true);
+            }
+        }
+    }
+
+    @EventHandler
     public void Bucketevent(PlayerItemConsumeEvent e) {
-        if (e.getPlayer().getWorld().getName().equalsIgnoreCase("world")) {
+        if (e.getItem().getType().toString().contains("BUCKET")) {
             if (Build.contains(e.getPlayer())) {
                 return;
             } else {
@@ -88,7 +104,9 @@ public class Interact implements Listener {
     public void playerlosefood(FoodLevelChangeEvent e) {
         Player player = (Player) e.getEntity();
         if (player.getWorld().getName().equalsIgnoreCase("world")) {
-            e.setCancelled(true);
+            if (e.getItem() == null) {
+                e.setCancelled(true);
+            }
         }
     }
 }

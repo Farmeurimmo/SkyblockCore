@@ -92,7 +92,7 @@ public class BuyAtoutGui implements Listener {
         Double money = EcoAccountsManager.instance.GetMoney(player.getName());
 
         if (effect == 1) {
-            if (money>=haste) {
+            if (money >= haste) {
                 EcoAccountsManager.instance.RemoveFounds(player, haste, true);
                 Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Atout.1.Active", true);
                 Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Atout.1.Level", 2);
@@ -107,22 +107,22 @@ public class BuyAtoutGui implements Listener {
             }
         }
         if (effect == 2) {
-            if (money>=speed){
-            EcoAccountsManager.instance.RemoveFounds(player, (double) speed, true);
-            Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Atout.2.Active", true);
-            Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Atout.2.Level", 2);
-            Main.instance.saveData();
-            player.sendMessage("§6Vous avez reçu l'accès à l'atout speed 2 !");
-            player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999999, 1));
-            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
-                public void run() {
-                    MakeBuyAtoutGui(player);
-                }
-            }, 2);
-        }
+            if (money >= speed) {
+                EcoAccountsManager.instance.RemoveFounds(player, (double) speed, true);
+                Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Atout.2.Active", true);
+                Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Atout.2.Level", 2);
+                Main.instance.saveData();
+                player.sendMessage("§6Vous avez reçu l'accès à l'atout speed 2 !");
+                player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999999, 1));
+                Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
+                    public void run() {
+                        MakeBuyAtoutGui(player);
+                    }
+                }, 2);
+            }
         }
         if (effect == 3) {
-            if (money>=jumpboost) {
+            if (money >= jumpboost) {
                 EcoAccountsManager.instance.RemoveFounds(player, (double) jumpboost, true);
                 Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Atout.3.Active", true);
                 Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Atout.3.Level", 3);

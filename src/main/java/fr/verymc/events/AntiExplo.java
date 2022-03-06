@@ -8,7 +8,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBurnEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
-import org.bukkit.event.entity.EntitySpawnEvent;
 import org.bukkit.event.entity.ExplosionPrimeEvent;
 
 
@@ -39,13 +38,6 @@ public class AntiExplo implements Listener {
                 Player player = (Player) e.getEntity();
                 player.teleport(Spawn);
             }
-        }
-    }
-
-    @EventHandler
-    public void aaa(EntitySpawnEvent e) {
-        if (e.getEntity().getWorld().getName().equalsIgnoreCase("world")) {
-            e.setCancelled(true);
         }
     }
 

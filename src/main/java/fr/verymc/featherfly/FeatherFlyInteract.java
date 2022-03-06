@@ -26,6 +26,7 @@ public class FeatherFlyInteract implements Listener {
                 }
             }
             if (!sb.isEmpty()) {
+                e.setCancelled(true);
                 int count = player.getInventory().getItemInHand().getAmount();
                 CountdownFly.instance.EnableFlyForPlayer(player, sample.replace("§eFly de ", "").
                         replace(sb, "").replace(" ", ""), sb.toString());

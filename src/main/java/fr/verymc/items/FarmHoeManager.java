@@ -108,6 +108,9 @@ public class FarmHoeManager implements Listener {
 
     @EventHandler
     public void HoeClic(PlayerInteractEvent e) {
+        if (e.getPlayer().getLocation().getWorld().getName().equalsIgnoreCase("world")) {
+            return;
+        }
         if (e.getAction() == Action.LEFT_CLICK_BLOCK) {
             ItemStack farmhoe = e.getPlayer().getItemInHand();
             if (farmhoe == null) {

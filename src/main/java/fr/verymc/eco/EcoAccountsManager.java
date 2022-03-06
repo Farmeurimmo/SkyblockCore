@@ -74,7 +74,7 @@ public class EcoAccountsManager {
 
     public void RemoveFounds(Player player, Double toremove, boolean ase) {
         Double moneybefore = instance.GetMoney(player.getName());
-        if (moneybefore>=toremove) {
+        if (moneybefore >= toremove) {
             double now = moneybefore - toremove;
             Moneys.put(player.getUniqueId(), now);
             Main.instance.getDataz().set(String.valueOf(player.getUniqueId()), now);
