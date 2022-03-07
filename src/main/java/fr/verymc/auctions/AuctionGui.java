@@ -1,5 +1,8 @@
 package main.java.fr.verymc.auctions;
 
+import main.java.fr.verymc.gui.MenuGui;
+import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -14,8 +17,14 @@ public class AuctionGui implements Listener {
         if (current == null) return;
         if (current.getType() == null) return;
 
+        Player player = (Player) e.getWhoClicked();
+
         if (e.getView().getTitle().contains("§6Auctions #")) {
             e.setCancelled(true);
+            if(current.getType()== Material.IRON_DOOR){
+                MenuGui.OpenMainMenu(player);
+                return;
+            }
         }
     }
 

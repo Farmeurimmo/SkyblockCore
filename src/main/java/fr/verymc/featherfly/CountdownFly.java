@@ -128,7 +128,7 @@ public class CountdownFly implements Listener {
                             nsecnew = "" + nSec;
                         }
 
-                        String messagetimeleft = "§aTemps restant: " + nhoursnew + ":" + nminnew + ":" + nsecnew;
+                        String messagetimeleft = "§aFly restant: " + nhoursnew + ":" + nminnew + ":" + nsecnew;
                         CountdownFly.instance.setCooldown(player.getUniqueId(), TimeLeft);
                         player.sendActionBar(messagetimeleft);
 

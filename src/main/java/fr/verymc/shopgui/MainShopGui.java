@@ -119,8 +119,11 @@ public class MainShopGui implements Listener {
                 GenShopPage.OpenPreGenPage(player, "Redstone", 1);
             }
             if (current.getType() == Material.SPAWNER) {
-                if (player.hasPermission("shop.spawneur"))
+                if (player.hasPermission("shop.spawneur")) {
                     GenShopPage.OpenPreGenPage(player, "Spawneurs", 1);
+                } else{
+                    player.sendMessage("§6§lShop §8» §fVous devez posséder le grade §aLégende §fou supérieur pour accéder à ce shop.");
+                }
             }
             if (current.getType() == Material.ARROW) {
                 MenuGui.OpenMainMenu(player);
