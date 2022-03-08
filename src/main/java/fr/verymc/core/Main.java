@@ -411,11 +411,6 @@ public class Main extends JavaPlugin implements Listener {
             getLogger().info("§c§lErreur lors de la sauvegarde!");
         }
         try {
-            datac.save(cfile);
-        } catch (IOException e) {
-            getLogger().info("§c§lErreur lors de la sauvegarde!");
-        }
-        try {
             dataz.save(zfile);
         } catch (IOException e) {
             getLogger().info("§c§lErreur lors de la sauvegarde!");
@@ -427,6 +422,14 @@ public class Main extends JavaPlugin implements Listener {
         }
         try {
             dataah.save(ahfile);
+        } catch (IOException e) {
+            getLogger().info("§c§lErreur lors de la sauvegarde!");
+        }
+    }
+
+    public void saveDatac() {
+        try {
+            datac.save(cfile);
         } catch (IOException e) {
             getLogger().info("§c§lErreur lors de la sauvegarde!");
         }

@@ -1,7 +1,7 @@
 package main.java.fr.verymc.auctions;
 
-import com.iridium.iridiumskyblock.dependencies.ormlite.stmt.query.In;
 import main.java.fr.verymc.core.Main;
+import main.java.fr.verymc.utils.HiddenStringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -29,6 +29,8 @@ public class AuctionsManager {
 
     public HashMap<Long, ItemStack> alreadysaw = new HashMap<>();
 
+    public HashMap<String, Integer> open = new HashMap<>();
+
     public AuctionsManager() {
         instance = this;
         addSlots();
@@ -54,11 +56,6 @@ public class AuctionsManager {
     }
 
     public void autoUpdateInv() {
-        ItemStack custom4 = new ItemStack(Material.IRON_DOOR, 1);
-        ItemMeta customd = custom4.getItemMeta();
-        customd.setDisplayName("§6Retour §8| §7(clic gauche)");
-        custom4.setItemMeta(customd);
-
         addSlots();
         alreadysaw.clear();
         ahinv.clear();
@@ -68,11 +65,6 @@ public class AuctionsManager {
 
         while (running==true){
             Inventory inv = Bukkit.createInventory(null, 54, "§6Auctions #"+currentpage);
-            inv.setItem(49, custom4);
-            if(ahtype.size()==0){
-                running=false;
-                break;
-            }
             for (Map.Entry<Long, ItemStack> aa : ahtype.entrySet()) {
                     if (slotstofill.size() >= 1) {
                         int slot = getNextSlot();
@@ -84,6 +76,7 @@ public class AuctionsManager {
                             List<String> lore = aa.getValue().getLore();
                             lore.addAll(Arrays.asList("§f---------------","§6Prix: "+ahprice.get(aa.getKey()),
                                     "§6Vendeur: "+ahseller.get(aa.getKey()),"§f---------------"));
+                            aa.getValue().setLore(lore);
                         }
                         inv.setItem(slot, aa.getValue());
                         alreadysaw.put(aa.getKey(), aa.getValue());
@@ -98,11 +91,17 @@ public class AuctionsManager {
             }
         }
 
+        for(Map.Entry<String, Integer> plays : open.entrySet()){
+            if(Bukkit.getPlayer(plays.getKey())!=null){
+                openAuction(Bukkit.getPlayer(plays.getKey()), plays.getValue());
+            }
+        }
+
         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
             public void run() {
                 autoUpdateInv();
             }
-        }, 20);
+        }, 40);
 
 
 
@@ -119,11 +118,31 @@ public class AuctionsManager {
         }*/
     }
 
-    public void OpenAuction(Player player, int page) {
+    public void openAuction(Player player, int page) {
+
+        ItemStack custom4 = new ItemStack(Material.IRON_DOOR, 1);
+        ItemMeta customd = custom4.getItemMeta();
+        customd.setDisplayName("§6Retour §8| §7(clic gauche)");
+        custom4.setItemMeta(customd);
+
+        ItemStack custom5 = new ItemStack(Material.IRON_DOOR, 1);
+        ItemMeta customa = custom5.getItemMeta();
+        customa.setDisplayName("§6Page suivante §8| §7(clic gauche)");
+        custom5.setItemMeta(customa);
+
+        ItemStack custom3 = new ItemStack(Material.IRON_DOOR, 1);
+        ItemMeta customb = custom3.getItemMeta();
+        customb.setDisplayName("§6Page suivante §8| §7(clic gauche)");
+        custom3.setItemMeta(customb);
+
 
         for(Map.Entry<Integer, Inventory> invs : ahinv.entrySet()){
             if(invs.getKey()==page){
+                if(ahinv.size()>1)invs.getValue().setItem(53, custom5);
+                if(page>1)invs.getValue().setItem(45, custom3);
+                invs.getValue().setItem(49, custom4);
                 player.openInventory(invs.getValue());
+                open.put(player.getName(), page);
             }
         }
 
@@ -150,6 +169,12 @@ public class AuctionsManager {
         Main.instance.getDataah().set("auction."+millis+".seller", player.getName());
         Main.instance.getDataah().set("auction."+millis+".sellerUUID", player.getUniqueId());
         Main.instance.saveData();*/
+
+        if(tosell.getLore()==null){
+            tosell.setLore(Arrays.asList(HiddenStringUtils.encodeString(millis+"")));
+        } else{
+            tosell.getLore().add(HiddenStringUtils.encodeString(millis+""));
+        }
 
         ahtype.put(millis, tosell);
         ahprice.put(millis, price);

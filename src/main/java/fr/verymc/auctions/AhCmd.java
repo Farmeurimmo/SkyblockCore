@@ -15,7 +15,7 @@ public class AhCmd implements CommandExecutor {
             Player player = (Player) sender;
 
             if (args.length == 0) {
-                AuctionsManager.instance.OpenAuction(player, 1);
+                AuctionsManager.instance.openAuction(player, 1);
                 return true;
             }
             if (args.length == 2) {

@@ -1,6 +1,7 @@
 package main.java.fr.verymc.gui;
 
 import main.java.fr.verymc.atout.AtoutGui;
+import main.java.fr.verymc.auctions.AuctionsManager;
 import main.java.fr.verymc.challenges.ChallengesGuis;
 import main.java.fr.verymc.shopgui.MainShopGui;
 import org.bukkit.Bukkit;
@@ -93,7 +94,7 @@ public class MenuGui implements Listener {
                 WarpGui.OpenGUi(player);
             }
             if (current.getType() == Material.SADDLE) {
-                player.chat("/hdv");
+                AuctionsManager.instance.openAuction(player, 1);
             }
             if (current.getType() == Material.VILLAGER_SPAWN_EGG) {
                 MainShopGui.OpenMainShopMenu(player);

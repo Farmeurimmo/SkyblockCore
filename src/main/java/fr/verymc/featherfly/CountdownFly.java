@@ -36,7 +36,7 @@ public class CountdownFly implements Listener {
         for (Map.Entry<UUID, Integer> aaa : CountdownFly.fly.entrySet()) {
             if (aaa.getValue() >= 1) {
                 Main.instance.getDatac().set("Joueurs." + aaa.getKey() + ".Fly.timeleft", aaa.getValue());
-                Main.instance.saveData();
+                Main.instance.saveDatac();
             }
         }
     }
@@ -44,7 +44,7 @@ public class CountdownFly implements Listener {
     public void ReadForTempFly() {
         if (Main.instance.getDatac().getConfigurationSection("Joueurs") == null) {
             Main.instance.getDatac().set("Joueurs.ini", true);
-            Main.instance.saveData();
+            Main.instance.saveDatac();
         }
         for (String aa : Main.instance.getDatac().getConfigurationSection("Joueurs").getKeys(false)) {
             if (Main.instance.getDatac().getBoolean(aa) == true) {
@@ -77,6 +77,7 @@ public class CountdownFly implements Listener {
         } else {
             setCooldown(player.getUniqueId(), DurationInSec);
             if (!player.getWorld().getName().equalsIgnoreCase("world")) {
+                player.setAllowFlight(true);
                 player.setFlying(true);
             }
         }
@@ -101,7 +102,7 @@ public class CountdownFly implements Listener {
                         String aaaaaa = "" + TimeLeft;
                         if (aaaaaa.contains("0")) {
                             Main.instance.getDatac().set("Joueurs." + player.getUniqueId() + ".Fly.timeleft", TimeLeft);
-                            Main.instance.saveData();
+                            Main.instance.saveDatac();
                         }
 
                         int timeforconv = TimeLeft;
@@ -140,7 +141,7 @@ public class CountdownFly implements Listener {
                         player.sendActionBar("§6Fin du fly.");
                         fly.remove(player.getUniqueId());
                         Main.instance.getDatac().set("Joueurs." + player.getUniqueId() + ".Fly.timeleft", 0);
-                        Main.instance.saveData();
+                        Main.instance.saveDatac();
                     }
                 }
             }

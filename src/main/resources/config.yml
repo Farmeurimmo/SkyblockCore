@@ -272,35 +272,35 @@ Shops:
     1:
       material: BAMBOO
       buy: 45
-      sell: 0.5
+      sell: 1.8
     4:
       material: BEETROOT_SEEDS
       buy: 45
-      sell: 3
+      sell: 5
     5:
       material: BROWN_MUSHROOM
       buy: 36
-      sell: 5
+      sell: 9
     6:
       material: CACTUS
       buy: 32
-      sell: 3.6
+      sell: 3.8
     7:
       material: CARROT
       buy: 40
-      sell: 3
+      sell: 4.6
     8:
       material: CHORUS_FLOWER
       buy: 88
-      sell: 2
+      sell: 6
     9:
       material: CHORUS_FRUIT
       buy: 36
-      sell: 2
+      sell: 4
     10:
       material: COCOA_BEANS
       buy: 48
-      sell: 3
+      sell: 4
     12:
       material: EGG
       buy: 35
@@ -308,67 +308,67 @@ Shops:
     13:
       material: KELP
       buy: 25
-      sell: 0.5
+      sell: 3
     15:
       material: MELON
       buy: 59
-      sell: 2.7
+      sell: 4.2
     17:
       material: MELON_SLICE
       buy: 15
-      sell: 0.5
+      sell: 1.9
     18:
       material: NETHER_WART
       buy: 60
-      sell: 2.8
+      sell: 3.8
     19:
       material: POTATO
       buy: 40
-      sell: 3
+      sell: 4.6
     20:
       material: PUMPKIN
       buy: 60
-      sell: 2.7
+      sell: 6.2
     22:
       material: RED_MUSHROOM
       buy: 60
-      sell: 5
+      sell: 9
     23:
       material: SUGAR_CANE
       buy: 50
-      sell: 3.2
+      sell: 4.8
     25:
       material: WHEAT
       buy: 60
-      sell: 3
+      sell: 4.1
     26:
       material: WHEAT_SEEDS
       buy: 20
-      sell: 1
+      sell: 1.2
     27:
       material: OAK_SAPLING
       buy: 20
-      sell: 1
+      sell: 5
     28:
       material: SPRUCE_SAPLING
       buy: 20
-      sell: 1
+      sell: 5
     29:
       material: BIRCH_SAPLING
       buy: 20
-      sell: 1
+      sell: 5
     30:
       material: JUNGLE_SAPLING
       buy: 20
-      sell: 1
+      sell: 5
     31:
       material: ACACIA_SAPLING
       buy: 20
-      sell: 1
+      sell: 5
     32:
       material: DARK_OAK_SAPLING
       buy: 20
-      sell: 1
+      sell: 5
 
     ####################
 
