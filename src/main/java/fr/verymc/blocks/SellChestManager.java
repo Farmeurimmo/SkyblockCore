@@ -58,7 +58,7 @@ public class SellChestManager {
             }
         }
         for (Entry<UUID, Double> tosend : reward.entrySet()) {
-            EcoAccountsManager.instance.AddFoundsUUID(tosend.getKey(), tosend.getValue(), false);
+            EcoAccountsManager.instance.addFoundsUUID(tosend.getKey(), tosend.getValue(), false);
         }
         for (Entry<Location, UUID> sellchest : toremove.entrySet()) {
             blcsellchest.remove(sellchest.getKey());

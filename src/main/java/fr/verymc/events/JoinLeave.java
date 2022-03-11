@@ -46,7 +46,7 @@ public class JoinLeave implements Listener {
 
         ChallengesReset.CreateChallengesForPlayer(player.getUniqueId());
 
-        EcoAccountsManager.instance.CheckForAccount(player);
+        EcoAccountsManager.instance.checkForAccount(player);
 
         if (Main.instance.getData().getString("Joueurs." + player.getUniqueId() + ".Atout.1.Active") == null) {
             Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Atout.1.Active", false);

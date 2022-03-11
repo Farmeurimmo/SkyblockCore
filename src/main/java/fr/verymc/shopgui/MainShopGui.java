@@ -121,7 +121,7 @@ public class MainShopGui implements Listener {
             if (current.getType() == Material.SPAWNER) {
                 if (player.hasPermission("shop.spawneur")) {
                     GenShopPage.OpenPreGenPage(player, "Spawneurs", 1);
-                } else{
+                } else {
                     player.sendMessage("§6§lShop §8» §fVous devez posséder le grade §aLégende §fou supérieur pour accéder à ce shop.");
                 }
             }

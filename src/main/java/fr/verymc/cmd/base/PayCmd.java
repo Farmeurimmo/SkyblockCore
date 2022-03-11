@@ -26,7 +26,7 @@ public class PayCmd implements CommandExecutor, TabCompleter {
                     player.sendMessage("§6§lMonnaie §8» §fErreur compte inexistant ou indisponible !");
                     return true;
                 }
-                if (EcoAccountsManager.instance.IsExisting((Player) Bukkit.getOfflinePlayer(args[0])) == true) {
+                if (EcoAccountsManager.instance.isExisting((Player) Bukkit.getOfflinePlayer(args[0])) == true) {
                     if (!args[0].equals(player.getName())) {
                         boolean digit = false;
                         try {
@@ -39,10 +39,10 @@ public class PayCmd implements CommandExecutor, TabCompleter {
                         if (!args[1].contains("-") && !args[1].contains(",") && digit == true) {
                             if (args[1].length() <= 9) {
                                 Double aaa = Double.parseDouble(args[1]);
-                                if (EcoAccountsManager.instance.CheckForFounds(player, aaa) == true) {
+                                if (EcoAccountsManager.instance.checkForFounds(player, aaa) == true) {
                                     if (aaa >= 5) {
-                                        EcoAccountsManager.instance.AddFounds((Player) Bukkit.getOfflinePlayer(args[0]), aaa, false);
-                                        EcoAccountsManager.instance.RemoveFounds(player, aaa, true);
+                                        EcoAccountsManager.instance.addFounds((Player) Bukkit.getOfflinePlayer(args[0]), aaa, false);
+                                        EcoAccountsManager.instance.removeFounds(player, aaa, true);
                                         player.sendMessage("§6§lMonnaie §8» §fVous avez envoyé avec §asuccès §6" + aaa + "$§f au joueur " + args[0]);
                                         if (Bukkit.getPlayer(args[0]) != null) {
                                             Bukkit.getPlayer(args[0]).sendMessage("§6§lMonnaie §8» §fVous avez reçu avec §asuccès §6" + aaa + "$§f du joueur " + player.getName());

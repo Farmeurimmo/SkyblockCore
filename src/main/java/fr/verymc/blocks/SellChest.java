@@ -22,7 +22,7 @@ public class SellChest implements Listener {
 
     @EventHandler
     public void SellChestBreaked(BlockBreakEvent e) {
-        if(e.isCancelled()){
+        if (e.isCancelled()) {
             return;
         }
         if (e.getBlock().getType() == Material.CHEST) {

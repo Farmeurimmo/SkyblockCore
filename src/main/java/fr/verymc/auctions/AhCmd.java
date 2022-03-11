@@ -1,5 +1,6 @@
 package main.java.fr.verymc.auctions;
 
+import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -19,7 +20,7 @@ public class AhCmd implements CommandExecutor {
                 return true;
             }
             if (args.length == 2) {
-                if (player.getItemInHand() != null) {
+                if (player.getItemInHand() != null && player.getItemInHand().getType() != Material.AIR) {
                     if (args[0].equalsIgnoreCase("sell")) {
                         boolean digit = false;
                         try {
@@ -31,19 +32,37 @@ public class AhCmd implements CommandExecutor {
                         }
                         if (!args[1].contains("-") && !args[1].contains(",") && digit == true) {
                             if (args[1].length() <= 9) {
-                                ItemStack item = player.getItemInHand().clone();
-                                Double aaa = Double.parseDouble(args[1]);
-                                AuctionsManager.instance.addItemToAh(player, aaa, item);
-                                player.sendMessage("§6§lMonnaie §8» §fVous venez de mettre aux auctions §ax" + item.getAmount() + " " + item.getType()
-                                        + " §fpour §a" + aaa + "$ §f!");
-                                player.getItemInHand().setAmount(0);
+                                if (AuctionsManager.instance.numberOfSelledItems(player) <= 10) {
+                                    ItemStack item = player.getItemInHand().clone();
+                                    Double aaa = Double.parseDouble(args[1]);
+                                    AuctionsManager.instance.addItemToAh(player, aaa, item);
+                                    player.sendMessage("§6§lAuctions §8» §fVous venez de mettre aux auctions §ax" + item.getAmount() + " " + item.getType()
+                                            + " §fpour §a" + aaa + "$ §f!");
+                                    player.getItemInHand().setAmount(0);
+                                    return true;
+                                } else {
+                                    player.sendMessage("§6§lAuctions §8» §fVous avez atteint la limite d'items que vous pouvez vendre.");
+                                    return true;
+                                }
+                            } else {
+                                player.sendMessage("§6§lAuctions §8» §fPrix trop grand.");
+                                return true;
                             }
+                        } else {
+                            player.sendMessage("§6§lAuctions §8» §fCe n'est pas un nombre valide.");
+                            return true;
                         }
+                    } else {
+                        player.sendMessage("§6§lAuctions §8» §fErreur dans la commande, commandes disponibles: sell");
+                        return true;
                     }
                 } else {
-
+                    player.sendMessage("§6§lAuctions §8» §fVous n'avez pas d'item en main.");
+                    return true;
                 }
             }
+
+            player.sendMessage("§6§lAuctions §8» §fCommande inconnue, sous commandes disponible: sell");
 
         }
 

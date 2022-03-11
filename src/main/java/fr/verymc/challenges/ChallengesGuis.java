@@ -26,7 +26,7 @@ public class ChallengesGuis implements Listener {
         if (IridiumSkyblockAPI.getInstance().getUser(player).getIsland().isPresent()) {
             Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily." + nombre + ".Progression", 0);
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "is bank give " + player.getName() + " crystaux 2");
-            EcoAccountsManager.instance.AddFounds(player, 5000.0, false);
+            EcoAccountsManager.instance.addFounds(player, 5000.0, false);
             CratesKeyManager.GiveCrateKey(player, 1, "Challenge");
 
             if (Main.instance.getData().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily." + nombre + ".Palier") >= 5) {

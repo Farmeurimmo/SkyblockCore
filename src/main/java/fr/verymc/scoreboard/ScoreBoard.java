@@ -103,7 +103,7 @@ public class ScoreBoard implements Listener {
                 }
             }
             if (board.getTeam("money") != null) {
-                Double a = EcoAccountsManager.instance.MoneyGetarrondiNDecimales(player, 2);
+                Double a = EcoAccountsManager.instance.moneyGetarrondiNDecimales(player, 2);
                 board.getTeam("money").setPrefix("§fArgent §8▸ §e" + a);
             }
             if (board.getTeam("online") != null) {
@@ -111,16 +111,11 @@ public class ScoreBoard implements Listener {
             }
 
             if (IridiumSkyblockAPI.getInstance().getUser(player).getIsland().isPresent()) {
-                String Gradeis = "N/A";
-                Gradeis = IridiumSkyblockAPI.getInstance().getUser(player).getIslandRank().name();
-                int classement = 0;
-                classement = IridiumSkyblockAPI.getInstance().getUser(player).getIsland().get().getRank();
-                int ismembre = 0;
-                ismembre = IridiumSkyblockAPI.getInstance().getUser(player).getIsland().get().getMembers().size();
-                int iscristal = 0;
-                iscristal = IridiumSkyblockAPI.getInstance().getUser(player).getIsland().get().getCrystals();
-                double ismoney = 0;
-                ismoney = IridiumSkyblockAPI.getInstance().getUser(player).getIsland().get().getMoney();
+                String Gradeis = IridiumSkyblockAPI.getInstance().getUser(player).getIslandRank().name();
+                int classement = IridiumSkyblockAPI.getInstance().getUser(player).getIsland().get().getRank();
+                int ismembre = IridiumSkyblockAPI.getInstance().getUser(player).getIsland().get().getMembers().size();
+                int iscristal = IridiumSkyblockAPI.getInstance().getUser(player).getIsland().get().getCrystals();
+                double ismoney = IridiumSkyblockAPI.getInstance().getUser(player).getIsland().get().getMoney();
 
                 switch (Gradeis) {
                     case "OWNER":
@@ -140,19 +135,23 @@ public class ScoreBoard implements Listener {
                         break;
 
                 }
-
-                board.getTeam("gradeis").setPrefix("§fGrade d'ile §8▸ §a" + Gradeis);
-                board.getTeam("classementis").setPrefix("§fClassement §8▸ §a#" + classement);
-                board.getTeam("ismembre").setPrefix("§fMembres §8▸ §a" + ismembre);
-                board.getTeam("iscrystaux").setPrefix("§fCrystaux §8▸ §a" + iscristal);
-                board.getTeam("ismoney").setPrefix("§fArgent §8▸ §a" + ismoney);
+                if (board.getTeam("gradeis") != null)
+                    board.getTeam("gradeis").setPrefix("§fGrade d'ile §8▸ §a" + Gradeis);
+                if (board.getTeam("classementis") != null)
+                    board.getTeam("classementis").setPrefix("§fClassement §8▸ §a#" + classement);
+                if (board.getTeam("ismembre") != null)
+                    board.getTeam("ismembre").setPrefix("§fMembres §8▸ §a" + ismembre);
+                if (board.getTeam("iscrystaux") != null)
+                    board.getTeam("iscrystaux").setPrefix("§fCrystaux §8▸ §a" + iscristal);
+                if (board.getTeam("ismoney") != null) board.getTeam("ismoney").setPrefix("§fArgent §8▸ §a" + ismoney);
 
             } else {
-                board.getTeam("gradeis").setPrefix("§fGrade d'ile §8▸ §aN/A");
-                board.getTeam("classementis").setPrefix("§fClassement §8▸ §aN/A");
-                board.getTeam("ismembre").setPrefix("§fMembres §8▸ §aN/A");
-                board.getTeam("iscrystaux").setPrefix("§fCrystaux §8▸ §aN/A");
-                board.getTeam("ismoney").setPrefix("§fArgent §8▸ §aN/A");
+                if (board.getTeam("gradeis") != null) board.getTeam("gradeis").setPrefix("§fGrade d'ile §8▸ §aN/A");
+                if (board.getTeam("classementis") != null)
+                    board.getTeam("classementis").setPrefix("§fClassement §8▸ §aN/A");
+                if (board.getTeam("ismembre") != null) board.getTeam("ismembre").setPrefix("§fMembres §8▸ §aN/A");
+                if (board.getTeam("iscrystaux") != null) board.getTeam("iscrystaux").setPrefix("§fCrystaux §8▸ §aN/A");
+                if (board.getTeam("ismoney") != null) board.getTeam("ismoney").setPrefix("§fArgent §8▸ §aN/A");
             }
         }
         Bukkit.getServer().getScheduler().scheduleAsyncDelayedTask(Main.instance, new Runnable() {

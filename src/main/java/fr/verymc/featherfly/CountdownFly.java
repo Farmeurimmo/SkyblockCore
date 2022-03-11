@@ -84,6 +84,7 @@ public class CountdownFly implements Listener {
     }
 
     public void CountDown() {
+        HashMap<UUID, Integer> flytoremove = new HashMap<>();
         for (Map.Entry<UUID, Integer> flymap : fly.entrySet()) {
             Player player = Bukkit.getPlayer(flymap.getKey());
             if (player != null) {
@@ -139,14 +140,19 @@ public class CountdownFly implements Listener {
                         player.chat("/is home");
                         player.sendMessage("§6Fin du fly, Téléportation sur votre île..");
                         player.sendActionBar("§6Fin du fly.");
-                        fly.remove(player.getUniqueId());
+                        flytoremove.put(flymap.getKey(), flymap.getValue());
                         Main.instance.getDatac().set("Joueurs." + player.getUniqueId() + ".Fly.timeleft", 0);
                         Main.instance.saveDatac();
                     }
                 }
             }
         }
-        Bukkit.getServer().getScheduler().scheduleAsyncDelayedTask(Main.instance, new Runnable() {
+        for (Map.Entry<UUID, Integer> fl : flytoremove.entrySet()) {
+            if (fly.containsKey(fl.getKey())) {
+                fly.remove(fl.getKey());
+            }
+        }
+        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
             public void run() {
                 CountDown();
             }

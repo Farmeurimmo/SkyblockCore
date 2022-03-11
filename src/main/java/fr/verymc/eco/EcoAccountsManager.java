@@ -17,7 +17,7 @@ public class EcoAccountsManager {
         instance = this;
     }
 
-    public void CheckForAccount(Player player) {
+    public void checkForAccount(Player player) {
         if (Main.instance.getDataz().get(String.valueOf(player.getUniqueId())) == null) {
             Main.instance.getDataz().set(String.valueOf(player.getUniqueId()), 200);
             Main.instance.saveData();
@@ -25,12 +25,12 @@ public class EcoAccountsManager {
         }
     }
 
-    public boolean IsExisting(Player player) {
+    public boolean isExisting(Player player) {
         boolean a = Main.instance.getDataz().get(String.valueOf(player.getUniqueId())) != null;
         return a;
     }
 
-    public double GetMoney(String playername) {
+    public double getMoney(String playername) {
         Double b = (double) 0;
         Player onl = Bukkit.getPlayer(playername);
         OfflinePlayer off = Bukkit.getOfflinePlayer(playername);
@@ -46,7 +46,7 @@ public class EcoAccountsManager {
         return b;
     }
 
-    public double GetMoneyUUID(UUID playername) {
+    public double getMoneyUUID(UUID playername) {
         Double b = (double) 0;
         if (playername != null) {
             if (Moneys.containsKey(playername)) {
@@ -56,24 +56,23 @@ public class EcoAccountsManager {
         return b;
     }
 
-    public double MoneyGetarrondiNDecimales(Player player, int n) {
-        double money = GetMoney(player.getName());
+    public double moneyGetarrondiNDecimales(Player player, int n) {
+        double money = getMoney(player.getName());
         double pow = Math.pow(10, n);
         return (Math.floor(money * pow)) / pow;
     }
 
-    public boolean CheckForFounds(Player player, Double f) {
+    public boolean checkForFounds(Player player, Double f) {
         boolean aa = false;
-        Double moneyplayer = instance.GetMoney(player.getName());
-        Double after = moneyplayer - f;
-        if (after >= 0) {
+        Double moneyplayer = instance.getMoney(player.getName());
+        if (moneyplayer >= f) {
             aa = true;
         }
         return aa;
     }
 
-    public void RemoveFounds(Player player, Double toremove, boolean ase) {
-        Double moneybefore = instance.GetMoney(player.getName());
+    public void removeFounds(Player player, Double toremove, boolean ase) {
+        Double moneybefore = instance.getMoney(player.getName());
         if (moneybefore >= toremove) {
             double now = moneybefore - toremove;
             Moneys.put(player.getUniqueId(), now);
@@ -90,7 +89,7 @@ public class EcoAccountsManager {
         }
     }
 
-    public void SetFounds(Player player, Double toset) {
+    public void setFounds(Player player, Double toset) {
         Moneys.put(player.getUniqueId(), toset);
         Main.instance.getDataz().set(String.valueOf(player.getUniqueId()), toset);
         Main.instance.saveData();
@@ -99,10 +98,10 @@ public class EcoAccountsManager {
         }
     }
 
-    public void AddFounds(Player player, Double aaa, boolean dd) {
-        Double moneybefore = instance.GetMoney(player.getName());
+    public void addFounds(Player player, Double aaa, boolean dd) {
+        Double moneybefore = instance.getMoney(player.getName());
         if (moneybefore < Double.MAX_VALUE - aaa) {
-            double now = GetMoney(player.getName()) + aaa;
+            double now = getMoney(player.getName()) + aaa;
             Moneys.put(player.getUniqueId(), now);
             Main.instance.getDataz().set(String.valueOf(player.getUniqueId()), now);
             Main.instance.saveData();
@@ -118,10 +117,10 @@ public class EcoAccountsManager {
         }
     }
 
-    public void AddFoundsUUID(UUID player, Double aaa, boolean dd) {
-        Double moneybefore = instance.GetMoneyUUID(player);
+    public void addFoundsUUID(UUID player, Double aaa, boolean dd) {
+        Double moneybefore = instance.getMoneyUUID(player);
         if (moneybefore < Double.MAX_VALUE - aaa) {
-            double now = GetMoneyUUID(player) + aaa;
+            double now = getMoneyUUID(player) + aaa;
             Moneys.put(player, now);
             Main.instance.getDataz().set(String.valueOf(player), now);
             Main.instance.saveData();
@@ -131,7 +130,7 @@ public class EcoAccountsManager {
         }
     }
 
-    public void UpdateHash() {
+    public void updateHash() {
         for (String aa : Main.instance.getDataz().getConfigurationSection("").getKeys(false)) {
             Moneys.put(UUID.fromString(aa), Main.instance.getDataz().getDouble(aa));
         }

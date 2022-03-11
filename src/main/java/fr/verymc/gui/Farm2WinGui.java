@@ -70,32 +70,32 @@ public class Farm2WinGui implements Listener {
                 Farm2WinGui.MainBoutiqueGUI(player);
             }
             if (current.getType() == Material.DRAGON_BREATH) {
-                if (EcoAccountsManager.instance.GetMoney(player.getName()) >= 25000) {
-                    EcoAccountsManager.instance.RemoveFounds(player, (double) 25000, true);
+                if (EcoAccountsManager.instance.getMoney(player.getName()) >= 25000) {
+                    EcoAccountsManager.instance.removeFounds(player, (double) 25000, true);
                     Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "aminion give " + player.getName());
                 } else {
                     player.sendMessage("§cErreur, vous n'avez pas asser d'argent.");
                 }
             }
             if (current.getType() == Material.HOPPER) {
-                if (EcoAccountsManager.instance.GetMoney(player.getName()) >= 500000) {
-                    EcoAccountsManager.instance.RemoveFounds(player, (double) 500000, true);
+                if (EcoAccountsManager.instance.getMoney(player.getName()) >= 500000) {
+                    EcoAccountsManager.instance.removeFounds(player, (double) 500000, true);
                     Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "chests " + player.getName() + " ChunkHoppeur");
                 } else {
                     player.sendMessage("§cErreur, vous n'avez pas asser d'argent.");
                 }
             }
             if (current.getType() == Material.TRAPPED_CHEST) {
-                if (EcoAccountsManager.instance.GetMoney(player.getName()) >= 1000000) {
-                    EcoAccountsManager.instance.RemoveFounds(player, (double) 1000000, true);
+                if (EcoAccountsManager.instance.getMoney(player.getName()) >= 1000000) {
+                    EcoAccountsManager.instance.removeFounds(player, (double) 1000000, true);
                     Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "chests " + player.getName() + " SellChest");
                 } else {
                     player.sendMessage("§cErreur, vous n'avez pas asser d'argent.");
                 }
             }
             if (current.getType() == Material.NETHERITE_HOE) {
-                if (EcoAccountsManager.instance.GetMoney(player.getName()) >= 500000) {
-                    EcoAccountsManager.instance.RemoveFounds(player, (double) 500000, true);
+                if (EcoAccountsManager.instance.getMoney(player.getName()) >= 500000) {
+                    EcoAccountsManager.instance.removeFounds(player, (double) 500000, true);
                     Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "farmhoe " + player.getName());
                 } else {
                     player.sendMessage("§cErreur, vous n'avez pas asser d'argent.");
@@ -109,7 +109,7 @@ public class Farm2WinGui implements Listener {
             }
             if (current.getType() == Material.IRON_BLOCK) {
                 if (!player.hasPermission("group.legende")) {
-                    if (EcoAccountsManager.instance.GetMoney(player.getName()) >= legendeprix) {
+                    if (EcoAccountsManager.instance.getMoney(player.getName()) >= legendeprix) {
                         player.sendMessage("§6Vérification de la disponibilité du grade...");
                         current.setType(Material.BARRIER);
                         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
@@ -135,7 +135,7 @@ public class Farm2WinGui implements Listener {
             }
             if (current.getType() == Material.GOLD_BLOCK) {
                 if (!player.hasPermission("group.dieu")) {
-                    if (EcoAccountsManager.instance.GetMoney(player.getName()) >= dieuprix) {
+                    if (EcoAccountsManager.instance.getMoney(player.getName()) >= dieuprix) {
                         if (player.hasPermission("group.legende")) {
                             player.sendMessage("§6Vérification de la disponibilité du grade...");
                             current.setType(Material.BARRIER);
@@ -175,7 +175,7 @@ public class Farm2WinGui implements Listener {
             }
             if (current.getType() == Material.NETHERITE_BLOCK) {
                 if (!player.hasPermission("group.zeus")) {
-                    if (EcoAccountsManager.instance.GetMoney(player.getName()) >= zeusprix) {
+                    if (EcoAccountsManager.instance.getMoney(player.getName()) >= zeusprix) {
                         if (player.hasPermission("group.legende") && player.hasPermission("group.dieu")) {
                             player.sendMessage("§6Vérification de la disponibilité du grade...");
                             current.setType(Material.BARRIER);
@@ -223,7 +223,7 @@ public class Farm2WinGui implements Listener {
             }
             if (current.getType() == Material.LEATHER_HELMET) {
                 if (!player.hasPermission("hat")) {
-                    if (EcoAccountsManager.instance.GetMoney(player.getName()) >= hatprix) {
+                    if (EcoAccountsManager.instance.getMoney(player.getName()) >= hatprix) {
                         player.sendMessage("§6Vérification de la disponibilité de la commande...");
                         current.setType(Material.BARRIER);
                         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
@@ -249,7 +249,7 @@ public class Farm2WinGui implements Listener {
             }
             if (current.getType() == Material.OAK_SIGN) {
                 if (!player.hasPermission("economyshopgui.sellall")) {
-                    if (EcoAccountsManager.instance.GetMoney(player.getName()) >= sellallprix) {
+                    if (EcoAccountsManager.instance.getMoney(player.getName()) >= sellallprix) {
                         player.sendMessage("§6Vérification de la disponibilité de la commande...");
                         current.setType(Material.BARRIER);
                         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
@@ -275,7 +275,7 @@ public class Farm2WinGui implements Listener {
             }
             if (current.getType() == Material.FEATHER) {
                 if (!player.hasPermission("fly")) {
-                    if (EcoAccountsManager.instance.GetMoney(player.getName()) >= flyprix) {
+                    if (EcoAccountsManager.instance.getMoney(player.getName()) >= flyprix) {
                         player.sendMessage("§6Vérification de la disponibilité de la commande...");
                         current.setType(Material.BARRIER);
                         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
@@ -301,7 +301,7 @@ public class Farm2WinGui implements Listener {
             }
             if (current.getType() == Material.COOKED_BEEF) {
                 if (!player.hasPermission("feed")) {
-                    if (EcoAccountsManager.instance.GetMoney(player.getName()) >= feedprix) {
+                    if (EcoAccountsManager.instance.getMoney(player.getName()) >= feedprix) {
                         player.sendMessage("§6Vérification de la disponibilité de la commande...");
                         current.setType(Material.BARRIER);
                         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
@@ -327,7 +327,7 @@ public class Farm2WinGui implements Listener {
             }
             if (current.getType() == Material.CRAFTING_TABLE) {
                 if (!player.hasPermission("craft")) {
-                    if (EcoAccountsManager.instance.GetMoney(player.getName()) >= craftprix) {
+                    if (EcoAccountsManager.instance.getMoney(player.getName()) >= craftprix) {
                         player.sendMessage("§6Vérification de la disponibilité de la commande...");
                         current.setType(Material.BARRIER);
                         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
@@ -353,7 +353,7 @@ public class Farm2WinGui implements Listener {
             }
             if (current.getType() == Material.NAME_TAG) {
                 if (!player.hasPermission("iridiumskyblock.rename")) {
-                    if (EcoAccountsManager.instance.GetMoney(player.getName()) >= isrenameprix) {
+                    if (EcoAccountsManager.instance.getMoney(player.getName()) >= isrenameprix) {
                         player.sendMessage("§6Vérification de la disponibilité de la commande...");
                         current.setType(Material.BARRIER);
                         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
@@ -379,7 +379,7 @@ public class Farm2WinGui implements Listener {
             }
             if (current.getType() == Material.ENCHANTING_TABLE) {
                 if (!player.hasPermission("enchantement")) {
-                    if (EcoAccountsManager.instance.GetMoney(player.getName()) >= enchantementprix) {
+                    if (EcoAccountsManager.instance.getMoney(player.getName()) >= enchantementprix) {
                         player.sendMessage("§6Vérification de la disponibilité de la commande...");
                         current.setType(Material.BARRIER);
                         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {

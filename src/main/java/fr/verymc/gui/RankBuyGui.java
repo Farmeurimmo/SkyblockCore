@@ -15,11 +15,11 @@ import java.util.Arrays;
 public class RankBuyGui {
 
     public static void BuyRank(String rank, Player player) {
-        Double money = EcoAccountsManager.instance.GetMoney(player.getName());
+        Double money = EcoAccountsManager.instance.getMoney(player.getName());
 
         if (rank.contains("Légende")) {
             if (money >= Farm2WinGui.legendeprix) ;
-            EcoAccountsManager.instance.RemoveFounds(player, (double) Farm2WinGui.legendeprix, true);
+            EcoAccountsManager.instance.removeFounds(player, (double) Farm2WinGui.legendeprix, true);
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lpv user " + player.getName() + " parent add legende server=skyblock");
             player.sendMessage("§6Vous avez reçu le grade légende !");
             Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
@@ -30,7 +30,7 @@ public class RankBuyGui {
         }
         if (rank.contains("Dieu")) {
             if (money >= Farm2WinGui.dieuprix) ;
-            EcoAccountsManager.instance.RemoveFounds(player, (double) Farm2WinGui.dieuprix, true);
+            EcoAccountsManager.instance.removeFounds(player, (double) Farm2WinGui.dieuprix, true);
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lpv user " + player.getName() + " parent add dieu server=skyblock");
             player.sendMessage("§6Vous avez reçu le grade dieu !");
             Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
@@ -41,7 +41,7 @@ public class RankBuyGui {
         }
         if (rank.contains("Zeus")) {
             if (money >= Farm2WinGui.zeusprix) ;
-            EcoAccountsManager.instance.RemoveFounds(player, (double) Farm2WinGui.zeusprix, true);
+            EcoAccountsManager.instance.removeFounds(player, (double) Farm2WinGui.zeusprix, true);
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lpv user " + player.getName() + " parent add zeus server=skyblock");
             player.sendMessage("§6Vous avez reçu le grade zeus !");
             Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {

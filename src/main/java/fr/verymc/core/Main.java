@@ -177,7 +177,7 @@ public class Main extends JavaPlugin implements Listener {
 
         ChatReaction.StartChatReaction();
         ChallengesReset.CheckForReset();
-        EcoAccountsManager.instance.UpdateHash();
+        EcoAccountsManager.instance.updateHash();
         SellChestManager.AutoSellForVeryChest();
         new ScoreBoard();
         for (Player player : Bukkit.getOnlinePlayers()) {
@@ -426,6 +426,15 @@ public class Main extends JavaPlugin implements Listener {
             getLogger().info("§c§lErreur lors de la sauvegarde!");
         }
     }
+
+    public void saveDataah() {
+        try {
+            dataah.save(ahfile);
+        } catch (IOException e) {
+            getLogger().info("§c§lErreur lors de la sauvegarde!");
+        }
+    }
+
 
     public void saveDatac() {
         try {
