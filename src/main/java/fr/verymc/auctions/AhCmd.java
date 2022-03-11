@@ -35,6 +35,10 @@ public class AhCmd implements CommandExecutor {
                                 if (AuctionsManager.instance.numberOfSelledItems(player) <= 10) {
                                     ItemStack item = player.getItemInHand().clone();
                                     Double aaa = Double.parseDouble(args[1]);
+                                    if(aaa<5){
+                                        player.sendMessage("§6§lAuctions §8» §fVous devez entrer un prix supérieur ou égal à 5.");
+                                        return true;
+                                    }
                                     AuctionsManager.instance.addItemToAh(player, aaa, item);
                                     player.sendMessage("§6§lAuctions §8» §fVous venez de mettre aux auctions §ax" + item.getAmount() + " " + item.getType()
                                             + " §fpour §a" + aaa + "$ §f!");

@@ -17,8 +17,6 @@ public class AuctionsManager {
 
     public HashMap<Long, ItemStack> ahtype = new HashMap<>();
 
-    public HashMap<Long, ItemStack> ahtypewithoutlore = new HashMap<>();
-
     public HashMap<Long, Double> ahprice = new HashMap<>();
 
     public HashMap<Long, String> ahseller = new HashMap<>();
@@ -105,7 +103,6 @@ public class AuctionsManager {
         if (ahseller.containsKey(millis)) ahseller.remove(millis);
         if (ahsellerUUID.containsKey(millis)) ahsellerUUID.remove(millis);
         if (ahprice.containsKey(millis)) ahprice.remove(millis);
-        if (ahtypewithoutlore.containsKey(millis)) ahtypewithoutlore.remove(millis);
 
         Main.instance.getDataah().set("auction." + millis, null);
         Main.instance.saveDataah();
@@ -151,7 +148,7 @@ public class AuctionsManager {
             EcoAccountsManager.instance.addFoundsUUID(playeruuid, price, false);
             if (Bukkit.getPlayer(playeruuid).isOnline()) {
                 Bukkit.getPlayer(playeruuid).sendMessage("§6§lAuctions §8» §a" + player.getName() + "§f vient d'acheter un item que vous aviez mis aux auctions" +
-                        "pour §a" + price + "$§f.");
+                        " pour §a" + price + "$§f.");
             }
             deListItemFromAh(millis);
             return;
@@ -268,12 +265,12 @@ public class AuctionsManager {
                 32, 33, 34, 37, 38, 39, 40, 41, 42, 43));
 
         int slot = 0;
-        for (Map.Entry<Long, ItemStack> items : ahtypewithoutlore.entrySet()) {
+        for (Map.Entry<Long, ItemStack> items : ahtype.entrySet()) {
             ItemStack item = items.getValue().clone();
             int loresize = item.getLore().size() - 1;
             String toparse = item.getLore().get(loresize);
             long millis = Long.parseLong(toparse);
-            if (ahseller.containsKey(millis) && ahseller.get(millis) == player.getName()) {
+            if (ahseller.containsKey(millis) && ahseller.get(millis).equals(player.getName()) && ahsellerUUID.get(millis).equals(player.getUniqueId())) {
                 while (!slotstofill.contains(slot)) {
                     slot += 1;
                     if (slot > 44) break;
@@ -306,7 +303,6 @@ public class AuctionsManager {
                     }
                     tosell.setLore(lore);
                 }
-                ahtypewithoutlore.put(millis, tosell);
                 ahtype.put(millis, tosell);
                 ahprice.put(millis, price);
                 ahseller.put(millis, seller);
@@ -333,7 +329,6 @@ public class AuctionsManager {
             tosell.setLore(lore);
         }
 
-        ahtypewithoutlore.put(millis, tosell);
         ahtype.put(millis, tosell);
         ahprice.put(millis, price);
         ahseller.put(millis, player.getName());

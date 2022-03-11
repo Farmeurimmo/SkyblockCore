@@ -1,6 +1,7 @@
 package main.java.fr.verymc.auctions;
 
 import main.java.fr.verymc.gui.MenuGui;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -76,7 +77,11 @@ public class AuctionGui implements Listener {
             String toparse = item.getLore().get(loresize);
             long millis = Long.parseLong(toparse);
             if (AuctionsManager.instance.ahtype.containsKey(millis)) {
-                if (AuctionsManager.instance.ahseller.get(millis) == player.getName()) {
+                if (AuctionsManager.instance.ahsellerUUID.get(millis).equals(player.getUniqueId())) {
+                    player.sendMessage("§6§lAuctions §8» §fVous ne pouvez pas acheter vos propres items.");
+                    return;
+                }
+                if (AuctionsManager.instance.ahseller.get(millis).equals(player.getName())) {
                     player.sendMessage("§6§lAuctions §8» §fVous ne pouvez pas acheter vos propres items.");
                     return;
                 }
