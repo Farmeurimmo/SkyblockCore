@@ -295,6 +295,17 @@ public class AuctionsManager {
                 ItemStack tosell = Main.instance.getDataah().getItemStack("auction." + millis + ".itemStack");
                 String seller = Main.instance.getDataah().getString("auction." + millis + ".seller");
                 UUID sellerUUID = UUID.fromString(Main.instance.getDataah().getString("auction." + millis + ".sellerUUID"));
+
+                if (tosell.getLore() == null) {
+                    tosell.setLore(Arrays.asList(millis + ""));
+                } else {
+                    ArrayList<String> lore = new ArrayList<>();
+                    lore.addAll(tosell.getLore());
+                    if(!lore.contains(millis+"")) {
+                        lore.add(millis + "");
+                    }
+                    tosell.setLore(lore);
+                }
                 ahtypewithoutlore.put(millis, tosell);
                 ahtype.put(millis, tosell);
                 ahprice.put(millis, price);
