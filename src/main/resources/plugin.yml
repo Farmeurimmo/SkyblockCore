@@ -75,4 +75,8 @@ commands:
   reboot:
     permission: reboot
   ah:
-    permission: admin
+    permission: ah
+  boost:
+    permission: boost
+  admin:
+    permission: admin.manage

@@ -22,12 +22,14 @@ import java.util.Arrays;
 
 public class ChallengesGuis implements Listener {
 
+    public static int boost = 1;
+
     public static void CompleteChallenge(Player player, int nombre) {
         if (IridiumSkyblockAPI.getInstance().getUser(player).getIsland().isPresent()) {
             Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily." + nombre + ".Progression", 0);
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "is bank give " + player.getName() + " crystaux 2");
-            EcoAccountsManager.instance.addFounds(player, 5000.0, false);
-            CratesKeyManager.GiveCrateKey(player, 1, "Challenge");
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "is bank give " + player.getName() + " crystaux "+2*boost);
+            EcoAccountsManager.instance.addFounds(player, 5000.0*boost, false);
+            CratesKeyManager.GiveCrateKey(player, 1*boost, "Challenge");
 
             if (Main.instance.getData().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily." + nombre + ".Palier") >= 5) {
                 Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily." + nombre + ".Active", false);
@@ -39,9 +41,9 @@ public class ChallengesGuis implements Listener {
 
             player.playSound(player.getLocation(), Sound.UI_TOAST_CHALLENGE_COMPLETE, 5, 1);
             player.sendMessage("§6§lChallenges §8» §fVous venez de compléter le challenge journalier n°§6" + nombre +
-                    " §7au palier " + Main.instance.getData().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily." + nombre + ".Palier")
+                    " §fau palier " + Main.instance.getData().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily." + nombre + ".Palier")
                     + "/5.");
-            player.sendMessage("§6§lChallenges §8» §fVous avez reçu 2 crystaux, 5000$ et x1 Clée Challenge.");
+            player.sendMessage("§6§lChallenges §8» §fVous avez reçu "+2*boost +"crystaux, "+5000*boost +"$ et x"+1*boost+" Clée Challenge.");
 
         } else {
             player.sendMessage("§6§lChallenges §8» §fVous pouvez uniquement compléter les challenges en possédant ou en"

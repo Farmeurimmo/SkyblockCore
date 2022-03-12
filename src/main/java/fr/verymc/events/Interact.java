@@ -86,8 +86,10 @@ public class Interact implements Listener {
         if (e.getLocation().getWorld().getName().equalsIgnoreCase("world")) {
             if (!(e.getEntity() instanceof Item)) {
                 e.setCancelled(true);
+                return;
             }
         }
+        e.setCancelled(false);
         return;
     }
 

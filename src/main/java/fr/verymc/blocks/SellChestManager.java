@@ -67,7 +67,7 @@ public class SellChestManager {
             public void run() {
                 SellChestManager.AutoSellForVeryChest();
             }
-        }, 20 * 15);
+        }, 20 * 20);
     }
 
     public static void GiveSellChest(Player player, int i) {
