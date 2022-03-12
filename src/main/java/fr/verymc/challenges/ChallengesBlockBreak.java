@@ -29,6 +29,8 @@ public class ChallengesBlockBreak implements Listener {
     public static int acacia_log = 96;
     public static int jungle_log = 96;
 
+    //test test test test test
+
 
     @EventHandler
     public void blockPlaceEvent(BlockPlaceEvent e) {
