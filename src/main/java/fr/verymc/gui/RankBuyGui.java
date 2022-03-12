@@ -20,7 +20,7 @@ public class RankBuyGui {
         if (rank.contains("Légende")) {
             if (money >= Farm2WinGui.legendeprix) ;
             EcoAccountsManager.instance.removeFounds(player, (double) Farm2WinGui.legendeprix, true);
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lpv user " + player.getName() + " parent add legende server=skyblock");
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + player.getName() + " parent add legende server=skyblock");
             player.sendMessage("§6Vous avez reçu le grade légende !");
             Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
                 public void run() {
@@ -31,7 +31,7 @@ public class RankBuyGui {
         if (rank.contains("Dieu")) {
             if (money >= Farm2WinGui.dieuprix) ;
             EcoAccountsManager.instance.removeFounds(player, (double) Farm2WinGui.dieuprix, true);
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lpv user " + player.getName() + " parent add dieu server=skyblock");
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + player.getName() + " parent add dieu server=skyblock");
             player.sendMessage("§6Vous avez reçu le grade dieu !");
             Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
                 public void run() {
@@ -42,7 +42,7 @@ public class RankBuyGui {
         if (rank.contains("Zeus")) {
             if (money >= Farm2WinGui.zeusprix) ;
             EcoAccountsManager.instance.removeFounds(player, (double) Farm2WinGui.zeusprix, true);
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lpv user " + player.getName() + " parent add zeus server=skyblock");
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + player.getName() + " parent add zeus server=skyblock");
             player.sendMessage("§6Vous avez reçu le grade zeus !");
             Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
                 public void run() {

@@ -80,7 +80,9 @@ public class AuctionsManager {
             currentpage += 1;
         }
 
-        for (Map.Entry<String, Integer> plays : open.entrySet()) {
+        HashMap<String, Integer> open2 = new HashMap<>();
+        open2 = (HashMap<String, Integer>) open.clone();
+        for (Map.Entry<String, Integer> plays : open2.entrySet()) {
             if (Bukkit.getPlayer(plays.getKey()) != null) {
                 openAuction(Bukkit.getPlayer(plays.getKey()), plays.getValue());
             }

