@@ -40,15 +40,17 @@ public class AntiAfk implements Listener {
 
             playerCountTimesAfkAsAResult.put(p, playerCountTimesAfkAsAResult.get(p) + 1);
 
-            if(playerCountTimesAfkAsAResult.get(p) == 30){
+            if(playerCountTimesAfkAsAResult.get(p) == 50){
 
-                p.sendMessage("§cAnti-Afk §7>> §fAttention, nous avons détecté que tu étais peut être afk, si tu ne l'es pas merci de bouger ton curseur de temps en temps.");
+                p.sendTitle("§CAfk-Mine détecté !", "§fMerci de déplacer votre curseur.");
+                p.sendMessage("§cAnti-Afk §7§l>> §fAttention, nous avons détecté que tu étais peut être afk, si tu ne l'es pas merci de bouger ton curseur de temps en temps.");
 
-            }else if(playerCountTimesAfkAsAResult.get(p) == 40){
+            }else if(playerCountTimesAfkAsAResult.get(p) == 60){
 
                 p.sendMessage("§cAnti-Afk §7>> §fAttention, dernier avertissement, merci de bouger ton curseur.");
+                p.sendTitle("§CAfk-Mine détecté !", "§fMerci de déplacer votre curseur.");
 
-            }else if(playerCountTimesAfkAsAResult.get(p) == 50){
+            }else if(playerCountTimesAfkAsAResult.get(p) == 70){
 
                 AfkMineCaptchaGui.MakeAfkMineCaptchaGui(p);
 
