@@ -17,16 +17,6 @@ public class AntiAfk implements Listener {
     public Map<Player, Vector> playerLastDirection = new HashMap<>();
     public Map<Player, Integer> playerCountTimesAfkAsAResult = new HashMap<>();
 
-
-    @EventHandler
-    public void onPlayerJoin(PlayerJoinEvent e){
-
-        Player p = e.getPlayer();
-        playerLastDirection.put(p, p.getLocation().getDirection());
-        playerCountTimesAfkAsAResult.put(p, 0);
-
-    }
-
     @EventHandler
     public void onPlayerInterractEvent(PlayerInteractEvent e){
 
@@ -34,26 +24,32 @@ public class AntiAfk implements Listener {
 
         Vector pDirection = p.getLocation().getDirection();
 
+        if(!playerLastDirection.containsKey(p)){
+            playerCountTimesAfkAsAResult.put(p, 0);
+            playerLastDirection.put(p, pDirection);
+        }
 
         if( playerLastDirection.get(p).equals(pDirection)){
 
 
             playerCountTimesAfkAsAResult.put(p, playerCountTimesAfkAsAResult.get(p) + 1);
 
-            if(playerCountTimesAfkAsAResult.get(p) == 50){
+            int result = playerCountTimesAfkAsAResult.get(p);
 
-                p.sendTitle("§CAfk-Mine détecté !", "§fMerci de déplacer votre curseur.");
-                p.sendMessage("§cAnti-Afk §7§l>> §fAttention, nous avons détecté que tu étais peut être afk, si tu ne l'es pas merci de bouger ton curseur de temps en temps.");
+            if(result == 160){
 
-            }else if(playerCountTimesAfkAsAResult.get(p) == 60){
+                p.sendTitle("§CAfk-Farm détecté !", "§fMerci de déplacer votre curseur.");
+                p.sendMessage("§6§lAntiAFK §8» §fAttention, nous avons détecté que tu étais peut être en afk farm, si tu ne l'es pas merci de bouger ton curseur de temps en temps.");
 
-                p.sendMessage("§cAnti-Afk §7>> §fAttention, dernier avertissement, merci de bouger ton curseur.");
-                p.sendTitle("§CAfk-Mine détecté !", "§fMerci de déplacer votre curseur.");
+            }else if(result == 200){
 
-            }else if(playerCountTimesAfkAsAResult.get(p) == 70){
+                p.sendMessage("§6§lAntiAFK §8» §fAttention, dernier avertissement, merci de bouger ton curseur.");
+                p.sendTitle("§CAfk-Farm détecté !", "§fMerci de déplacer votre curseur.");
+
+            }else if(result == 230){
 
                 AfkMineCaptchaGui.MakeAfkMineCaptchaGui(p);
-
+                playerCountTimesAfkAsAResult.put(p, 0);
             }
 
         }else{

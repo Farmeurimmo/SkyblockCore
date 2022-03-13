@@ -56,7 +56,7 @@ public class ChunkCollector implements Listener {
                     }
                     ItemStack a = e.getEntity().getItemStack();
                     if (GetAmountToFillInInv(a, blhopper.getInventory()) > 0) {
-                        e.setCancelled(true);
+                        e.getEntity().remove();
                         blhopper.getInventory().addItem(a);
                         break;
                     }

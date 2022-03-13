@@ -205,7 +205,6 @@ public class Main extends JavaPlugin implements Listener {
         getServer().getPluginManager().registerEvents(new SwitchWorld(), this);
         getServer().getPluginManager().registerEvents(new Tabulation(), this);
         getServer().getPluginManager().registerEvents(new AfkMineCaptchaGui(), this);
-        getServer().getPluginManager().registerEvents(new AfkMineBreakCheck(), this);
         getServer().getPluginManager().registerEvents(new ChatReaction(), this);
         getServer().getPluginManager().registerEvents(new RedstoneCheck(), this);
         getServer().getPluginManager().registerEvents(new ChallengesGuis(), this);
