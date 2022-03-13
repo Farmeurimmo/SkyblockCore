@@ -91,7 +91,7 @@ public class FarmHoeGui implements Listener {
             custom12.setType(Material.BEDROCK);
         }
         customk.setLore(Arrays.asList("§7Casse et replante en 3X3", "§7Coût: 500 000$",
-                "§7Utilisation minimales pour débloquer: 250 000"));
+                "§7Utilisation minimales pour débloquer: 50 000"));
         custom12.setItemMeta(customk);
         invboutiquefarm2win.setItem(13, custom12);
 
@@ -127,7 +127,7 @@ public class FarmHoeGui implements Listener {
         if (current.getType() == Material.DIAMOND_HOE) {
             if (CheckForValidity(player.getItemInHand())) {
                 if (EcoAccountsManager.instance.checkForFounds(player, 500000.0) &&
-                        FarmHoeManager.GetBlockHaversted(player.getItemInHand()) >= 250000) {
+                        FarmHoeManager.GetBlockHaversted(player.getItemInHand()) >= 50000) {
                     EcoAccountsManager.instance.removeFounds(player, 500000.0, true);
                     player.getItemInHand().setDisplayName("§6FarmHoe Tier §cII (3X3)");
                     player.closeInventory();
