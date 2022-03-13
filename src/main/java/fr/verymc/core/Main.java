@@ -3,6 +3,7 @@ package main.java.fr.verymc.core;
 import com.iridium.iridiumskyblock.api.IridiumSkyblockAPI;
 import main.java.fr.verymc.WineLottery.WineGui;
 import main.java.fr.verymc.WineLottery.WineSpawn;
+import main.java.fr.verymc.antiafk.AntiAfk;
 import main.java.fr.verymc.atout.AtoutCmd;
 import main.java.fr.verymc.atout.AtoutGui;
 import main.java.fr.verymc.atout.BuyAtoutGui;
@@ -224,6 +225,7 @@ public class Main extends JavaPlugin implements Listener {
         getServer().getPluginManager().registerEvents(new FarmHoeManager(), this);
         getServer().getPluginManager().registerEvents(new FarmHoeGui(), this);
         getServer().getPluginManager().registerEvents(new AuctionGui(), this);
+        getServer().getPluginManager().registerEvents(new AntiAfk(), this);
         PluginManager pm = getServer().getPluginManager();
         pm.registerEvents(this, this);
         System.out.println("Listeners DONE | NEXT commands");
