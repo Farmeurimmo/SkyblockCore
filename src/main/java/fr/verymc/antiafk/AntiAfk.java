@@ -1,8 +1,10 @@
 package main.java.fr.verymc.antiafk;
 
 import main.java.fr.verymc.gui.AfkMineCaptchaGui;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.util.Vector;
@@ -10,10 +12,10 @@ import org.bukkit.util.Vector;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AntiAfk {
+public class AntiAfk implements Listener {
 
-    public static Map<Player, Vector> playerLastDirection = new HashMap<>();
-    public static Map<Player, Integer> playerCountTimesAfkAsAResult = new HashMap<>();
+    public Map<Player, Vector> playerLastDirection = new HashMap<>();
+    public Map<Player, Integer> playerCountTimesAfkAsAResult = new HashMap<>();
 
 
     @EventHandler
@@ -32,19 +34,21 @@ public class AntiAfk {
 
         Vector pDirection = p.getLocation().getDirection();
 
-        if( playerLastDirection.get(p) == pDirection){
+
+        if( playerLastDirection.get(p).equals(pDirection)){
+
 
             playerCountTimesAfkAsAResult.put(p, playerCountTimesAfkAsAResult.get(p) + 1);
 
-            if(playerCountTimesAfkAsAResult.get(p) == 40){
+            if(playerCountTimesAfkAsAResult.get(p) == 30){
 
                 p.sendMessage("§cAnti-Afk §7>> §fAttention, nous avons détecté que tu étais peut être afk, si tu ne l'es pas merci de bouger ton curseur de temps en temps.");
 
-            }else if(playerCountTimesAfkAsAResult.get(p) == 50){
+            }else if(playerCountTimesAfkAsAResult.get(p) == 40){
 
                 p.sendMessage("§cAnti-Afk §7>> §fAttention, dernier avertissement, merci de bouger ton curseur.");
 
-            }else if(playerCountTimesAfkAsAResult.get(p) == 60){
+            }else if(playerCountTimesAfkAsAResult.get(p) == 50){
 
                 AfkMineCaptchaGui.MakeAfkMineCaptchaGui(p);
 
@@ -52,8 +56,10 @@ public class AntiAfk {
 
         }else{
             playerCountTimesAfkAsAResult.put(p, 0);
+
         }
         playerLastDirection.put(p, pDirection);
+
 
 
 
