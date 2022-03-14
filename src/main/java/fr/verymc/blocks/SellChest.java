@@ -22,12 +22,19 @@ public class SellChest implements Listener {
 
     @EventHandler
     public void SellChestBreaked(BlockBreakEvent e) {
+        if(e.getBlock()==null){
+            return;
+        }
         if (e.isCancelled()) {
             return;
         }
         if (e.getBlock().getType() == Material.CHEST) {
             Chest blhopper = (Chest) e.getBlock().getState();
             if (!blhopper.getCustomName().contains("§6SellChest")) {
+                return;
+            }
+            if(e.getPlayer().isSneaking()){
+                e.setCancelled(true);
                 return;
             }
             String a = blhopper.getCustomName().replace("§6", "");

@@ -25,8 +25,12 @@ public class Interact implements Listener {
     @EventHandler
     public void OnInteract(PlayerInteractEvent e) {
         Player player = e.getPlayer();
-        if (player.getItemInHand().getType() == Material.FLINT_AND_STEEL && player.getWorld().getName().equalsIgnoreCase("world")) {
+        if(!player.getWorld().getName().equalsIgnoreCase("world")){
+            return;
+        }
+        if (player.getItemInHand().getType() == Material.FLINT_AND_STEEL) {
             e.setCancelled(true);
+            return;
         }
         if (e.getClickedBlock() == null) {
             return;
@@ -35,6 +39,7 @@ public class Interact implements Listener {
                 || e.getClickedBlock().getType() == Material.CRAFTING_TABLE || e.getClickedBlock().getType() == Material.ANVIL) {
             return;
         }
+        e.setCancelled(true);
     }
 
     @EventHandler

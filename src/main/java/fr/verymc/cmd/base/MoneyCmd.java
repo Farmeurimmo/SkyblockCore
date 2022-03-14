@@ -23,6 +23,7 @@ public class MoneyCmd implements CommandExecutor, TabCompleter {
                 Player player = (Player) sender;
                 player.sendMessage("§6§lMonnaie §8» §fVous avez §6" +
                         Maths.arrondiNDecimales(EcoAccountsManager.instance.getMoney(player.getName()), 2) + "$");
+                return true;
             }
         } else if (args.length == 1) {
             if (Bukkit.getPlayer(args[0]) == null) {
@@ -32,10 +33,20 @@ public class MoneyCmd implements CommandExecutor, TabCompleter {
             if (EcoAccountsManager.instance.isExisting((Player) Bukkit.getOfflinePlayer(args[0])) == true) {
                 sender.sendMessage("§6§lMonnaie §8» §6" + args[0] + "§f possède §6" +
                         Maths.arrondiNDecimales(EcoAccountsManager.instance.getMoney(args[0]), 2) + "$");
+                return true;
             }
         } else if (args.length == 2) {
             sender.sendMessage("§6§lMonnaie §8» §f/money <pseudo> <give/remove> <montant>");
+            return true;
         } else if (args.length == 3) {
+            if(args[0].equalsIgnoreCase("@a")){
+                Double aaa = Double.parseDouble(args[2]);
+                for(Player p : Bukkit.getOnlinePlayers()){
+                    EcoAccountsManager.instance.addFounds(p, aaa, true);
+                    sender.sendMessage("§6§lMonnaie §8» §f" + p.getName() + " a reçu §6" + aaa + "$§f sur son compte avec succès.");
+                }
+                return true;
+            }
             if (Bukkit.getPlayer(args[0]) == null) {
                 sender.sendMessage("§6§lMonnaie §8» §fErreur compte inexistant ou indisponible !");
                 return true;
@@ -45,10 +56,12 @@ public class MoneyCmd implements CommandExecutor, TabCompleter {
 
                     if (args[2].length() <= 9) {
                         Double aaa = Double.parseDouble(args[2]);
-                        EcoAccountsManager.instance.addFounds((Player) Bukkit.getOfflinePlayer(args[0]), aaa, false);
+                        EcoAccountsManager.instance.addFounds((Player) Bukkit.getOfflinePlayer(args[0]), aaa, true);
                         sender.sendMessage("§6§lMonnaie §8» §f" + args[0] + " a reçu §6" + aaa + "$§f sur son compte avec succès.");
+                        return true;
                     } else {
                         sender.sendMessage("§6§lMonnaie §8» §fVeuillez choisir un nombre plus petit.");
+                        return true;
                     }
 
                 } else if (args[1].equalsIgnoreCase("remove")) {
@@ -56,22 +69,28 @@ public class MoneyCmd implements CommandExecutor, TabCompleter {
                         Double aaa = Double.parseDouble(args[2]);
                         EcoAccountsManager.instance.removeFounds((Player) Bukkit.getOfflinePlayer(args[0]), aaa, true);
                         sender.sendMessage("§6§lMonnaie §8» §f" + args[0] + " a perdu §6" + aaa + "$§f sur son compte avec succès.");
+                        return true;
                     } else {
                         sender.sendMessage("§6§lMonnaie §8» §fVeuillez choisir un nombre plus petit.");
+                        return true;
                     }
                 } else if (args[1].equalsIgnoreCase("set")) {
                     if (args[2].length() <= 9) {
                         Double aaa = Double.parseDouble(args[2]);
                         EcoAccountsManager.instance.setFounds((Player) Bukkit.getOfflinePlayer(args[0]), aaa);
                         sender.sendMessage("§6§lMonnaie §8» §fL'argent de " + args[0] + " a été d§finis sur §6" + aaa + "$§f avec succès.");
+                        return true;
                     } else {
                         sender.sendMessage("§6§lMonnaie §8» §fVeuillez choisir un nombre plus petit.");
+                        return true;
                     }
                 } else {
                     sender.sendMessage("§6§lMonnaie §8» §f/money <pseudo> <give/remove> <montant>");
+                    return true;
                 }
             } else {
                 sender.sendMessage("§6§lMonnaie §8» §fCe compte n'existe pas !");
+                return true;
             }
         }
 
@@ -86,6 +105,7 @@ public class MoneyCmd implements CommandExecutor, TabCompleter {
                 for (Player p : Bukkit.getOnlinePlayers()) {
                     subcmd.add(p.getName());
                 }
+                subcmd.add("@a");
             } else if (args.length == 2) {
                 if (sender.hasPermission("give")) {
                     subcmd.add("give");
