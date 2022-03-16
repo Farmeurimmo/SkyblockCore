@@ -10,10 +10,10 @@ public class BoostCmd implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 
-        if(args.length==2){
-            if(args[0].equalsIgnoreCase("challenges")){
+        if (args.length == 2) {
+            if (args[0].equalsIgnoreCase("challenges")) {
                 int boost = Integer.parseInt(args[1]);
-                sender.sendMessage("Boost challenges = x"+boost);
+                sender.sendMessage("Boost challenges = x" + boost);
                 ChallengesGuis.boost = boost;
                 return true;
             }

@@ -22,7 +22,7 @@ public class SellChest implements Listener {
 
     @EventHandler
     public void SellChestBreaked(BlockBreakEvent e) {
-        if(e.getBlock()==null){
+        if (e.getBlock() == null) {
             return;
         }
         if (e.isCancelled()) {
@@ -33,7 +33,7 @@ public class SellChest implements Listener {
             if (!blhopper.getCustomName().contains("§6SellChest")) {
                 return;
             }
-            if(e.getPlayer().isSneaking()){
+            if (e.getPlayer().isSneaking()) {
                 e.setCancelled(true);
                 return;
             }

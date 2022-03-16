@@ -80,3 +80,5 @@ commands:
     permission: boost
   admin:
     permission: admin.manage
+  minions:
+    permission: minions.manage

@@ -300,7 +300,7 @@ public class AuctionsManager {
                 } else {
                     ArrayList<String> lore = new ArrayList<>();
                     lore.addAll(tosell.getLore());
-                    if(!lore.contains(millis+"")) {
+                    if (!lore.contains(millis + "")) {
                         lore.add(millis + "");
                     }
                     tosell.setLore(lore);

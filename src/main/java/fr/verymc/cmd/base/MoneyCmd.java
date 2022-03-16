@@ -39,9 +39,9 @@ public class MoneyCmd implements CommandExecutor, TabCompleter {
             sender.sendMessage("§6§lMonnaie §8» §f/money <pseudo> <give/remove> <montant>");
             return true;
         } else if (args.length == 3) {
-            if(args[0].equalsIgnoreCase("@a")){
+            if (args[0].equalsIgnoreCase("@a")) {
                 Double aaa = Double.parseDouble(args[2]);
-                for(Player p : Bukkit.getOnlinePlayers()){
+                for (Player p : Bukkit.getOnlinePlayers()) {
                     EcoAccountsManager.instance.addFounds(p, aaa, true);
                     sender.sendMessage("§6§lMonnaie §8» §f" + p.getName() + " a reçu §6" + aaa + "$§f sur son compte avec succès.");
                 }

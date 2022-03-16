@@ -25,7 +25,7 @@ public class Interact implements Listener {
     @EventHandler
     public void OnInteract(PlayerInteractEvent e) {
         Player player = e.getPlayer();
-        if(!player.getWorld().getName().equalsIgnoreCase("world")){
+        if (!player.getWorld().getName().equalsIgnoreCase("world")) {
             return;
         }
         if (player.getItemInHand().getType() == Material.FLINT_AND_STEEL) {

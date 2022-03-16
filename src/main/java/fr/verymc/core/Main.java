@@ -37,6 +37,10 @@ import main.java.fr.verymc.items.FarmHoeCmd;
 import main.java.fr.verymc.items.FarmHoeGui;
 import main.java.fr.verymc.items.FarmHoeManager;
 import main.java.fr.verymc.items.ItemLegCmd;
+import main.java.fr.verymc.minions.MinionManager;
+import main.java.fr.verymc.minions.MinionsCmd;
+import main.java.fr.verymc.minions.MinionsGui;
+import main.java.fr.verymc.minions.MinionsListener;
 import main.java.fr.verymc.scoreboard.ScoreBoard;
 import main.java.fr.verymc.scoreboard.TABManager;
 import main.java.fr.verymc.shopgui.*;
@@ -71,11 +75,13 @@ public class Main extends JavaPlugin implements Listener {
     public FileConfiguration dataz;
     public FileConfiguration datablc;
     public FileConfiguration dataah;
+    public FileConfiguration dataMinion;
     public File dfile;
     public File cfile;
     public File zfile;
     public File blcfile;
     public File ahfile;
+    public File minionFile;
     private VaultHook vaultHook;
 
     public void setTarget(String uuid, String aaa) {
@@ -225,6 +231,7 @@ public class Main extends JavaPlugin implements Listener {
         getServer().getPluginManager().registerEvents(new FarmHoeGui(), this);
         getServer().getPluginManager().registerEvents(new AuctionGui(), this);
         getServer().getPluginManager().registerEvents(new AntiAfk(), this);
+        getServer().getPluginManager().registerEvents(new MinionsListener(), this);
         PluginManager pm = getServer().getPluginManager();
         pm.registerEvents(this, this);
         System.out.println("Listeners DONE | NEXT commands");
@@ -271,9 +278,12 @@ public class Main extends JavaPlugin implements Listener {
         this.getCommand("ah").setExecutor(new AhCmd());
         this.getCommand("boost").setExecutor(new BoostCmd());
         this.getCommand("admin").setExecutor(new AdminCmd());
+        this.getCommand("minions").setExecutor(new MinionsCmd());
         System.out.println("Commands DONE | NEXT end");
 
         new AuctionsManager();
+        new MinionManager();
+        new MinionsGui();
 
         System.out.println("§aDémarrage du plugin TERMINE!");
         System.out.println("-----------------------------------------------------------------------------------------------------");
@@ -299,12 +309,13 @@ public class Main extends JavaPlugin implements Listener {
         zfile = new File(this.getDataFolder(), "Eco.yml");
         blcfile = new File(this.getDataFolder(), "Block.yml");
         ahfile = new File(this.getDataFolder(), "auctions.yml");
+        minionFile = new File(this.getDataFolder(), "minions.yml");
 
         if (!dfile.exists()) {
             try {
                 dfile.createNewFile();
             } catch (IOException e) {
-                getLogger().info("§c§lErreur lors de la cr§ation de Challenges.yml");
+                getLogger().info("§c§lErreur lors de la création de challenges.yml");
             }
         }
 
@@ -314,7 +325,7 @@ public class Main extends JavaPlugin implements Listener {
             try {
                 cfile.createNewFile();
             } catch (IOException e) {
-                getLogger().info("§c§lErreur lors de la cr§ation de Fly.yml");
+                getLogger().info("§c§lErreur lors de la création de fly.yml");
             }
         }
 
@@ -324,7 +335,7 @@ public class Main extends JavaPlugin implements Listener {
             try {
                 zfile.createNewFile();
             } catch (IOException e) {
-                getLogger().info("§c§lErreur lors de la cr§ation de Eco.yml");
+                getLogger().info("§c§lErreur lors de la création de eco.yml");
             }
         }
 
@@ -334,7 +345,7 @@ public class Main extends JavaPlugin implements Listener {
             try {
                 blcfile.createNewFile();
             } catch (IOException e) {
-                getLogger().info("§c§lErreur lors de la cr§ation de Block.yml");
+                getLogger().info("§c§lErreur lors de la création de block.yml");
             }
         }
 
@@ -344,11 +355,21 @@ public class Main extends JavaPlugin implements Listener {
             try {
                 ahfile.createNewFile();
             } catch (IOException e) {
-                getLogger().info("§c§lErreur lors de la cr§ation de Auctions.yml");
+                getLogger().info("§c§lErreur lors de la création de auctions.yml");
             }
         }
 
         dataah = YamlConfiguration.loadConfiguration(ahfile);
+
+        if (!minionFile.exists()) {
+            try {
+                minionFile.createNewFile();
+            } catch (IOException e) {
+                getLogger().info("§c§lErreur lors de la création de minions.yml");
+            }
+        }
+
+        dataMinion = YamlConfiguration.loadConfiguration(minionFile);
 
 
     }
@@ -371,6 +392,10 @@ public class Main extends JavaPlugin implements Listener {
 
     public FileConfiguration getDataah() {
         return dataah;
+    }
+
+    public FileConfiguration getDataMinion() {
+        return dataMinion;
     }
 
 
@@ -405,6 +430,12 @@ public class Main extends JavaPlugin implements Listener {
             getLogger().info("§c§lErreur lors de la sauvegarde!");
             e.printStackTrace();
         }
+        try {
+            dataMinion.load(minionFile);
+        } catch (InvalidConfigurationException e) {
+            getLogger().info("§c§lErreur lors de la sauvegarde!");
+            e.printStackTrace();
+        }
     }
 
     public void saveData() {
@@ -433,6 +464,14 @@ public class Main extends JavaPlugin implements Listener {
     public void saveDataah() {
         try {
             dataah.save(ahfile);
+        } catch (IOException e) {
+            getLogger().info("§c§lErreur lors de la sauvegarde!");
+        }
+    }
+
+    public void saveDataMinions() {
+        try {
+            dataMinion.save(minionFile);
         } catch (IOException e) {
             getLogger().info("§c§lErreur lors de la sauvegarde!");
         }

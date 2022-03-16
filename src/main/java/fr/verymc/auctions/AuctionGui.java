@@ -1,7 +1,6 @@
 package main.java.fr.verymc.auctions;
 
 import main.java.fr.verymc.gui.MenuGui;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

@@ -21,7 +21,7 @@ public class HatCmd implements CommandExecutor, TabCompleter {
             Player player = (Player) sender;
             if (player.hasPermission("hat")) {
                 ItemStack aaa = player.getItemInHand();
-                if (aaa!=null && aaa.getType() != null && aaa.getType() != Material.AIR) {
+                if (aaa != null && aaa.getType() != null && aaa.getType() != Material.AIR) {
                     if (player.getInventory().getHelmet() != null) {
                         ItemStack bbb = player.getInventory().getHelmet();
                         player.getInventory().setHelmet(aaa);
