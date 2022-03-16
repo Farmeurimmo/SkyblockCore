@@ -37,10 +37,7 @@ import main.java.fr.verymc.items.FarmHoeCmd;
 import main.java.fr.verymc.items.FarmHoeGui;
 import main.java.fr.verymc.items.FarmHoeManager;
 import main.java.fr.verymc.items.ItemLegCmd;
-import main.java.fr.verymc.minions.MinionManager;
-import main.java.fr.verymc.minions.MinionsCmd;
-import main.java.fr.verymc.minions.MinionsGui;
-import main.java.fr.verymc.minions.MinionsListener;
+import main.java.fr.verymc.minions.*;
 import main.java.fr.verymc.scoreboard.ScoreBoard;
 import main.java.fr.verymc.scoreboard.TABManager;
 import main.java.fr.verymc.shopgui.*;
@@ -284,6 +281,7 @@ public class Main extends JavaPlugin implements Listener {
         new AuctionsManager();
         new MinionManager();
         new MinionsGui();
+        new MinionHarvest();
 
         System.out.println("§aDémarrage du plugin TERMINE!");
         System.out.println("-----------------------------------------------------------------------------------------------------");

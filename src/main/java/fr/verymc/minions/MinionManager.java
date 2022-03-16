@@ -3,6 +3,7 @@ package main.java.fr.verymc.minions;
 import main.java.fr.verymc.core.Main;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -31,11 +32,13 @@ public class MinionManager {
             Long idMinion = Long.parseLong(id);
             String ownerS = Main.instance.getDataMinion().getString("Minions.mineur." + id + ".ownerS");
             UUID ownerUUID = UUID.fromString(Main.instance.getDataMinion().getString("Minions.mineur." + id + ".ownerUUID"));
-            int levelInt = Main.instance.getDataMinion().getInt("Minions.mineur." + id + ".levelint");
+            Integer levelInt = Main.instance.getDataMinion().getInt("Minions.mineur." + id + ".levelint");
+            Integer delay = Main.instance.getDataMinion().getInt("Minions.mineur." + id + ".delay");
             Location blocLoc = Main.instance.getDataMinion().getLocation("Minions.mineur." + id + ".blocLoc");
             MinionType minionType = MinionType.valueOf(Main.instance.getDataMinion().getString("Minions.mineur." + id + ".minionType"));
+            BlockFace blockFace = BlockFace.valueOf(Main.instance.getDataMinion().getString("Minions.mineur." + id + ".blocFace"));
 
-            minions.add(new Minion(idMinion, ownerS, ownerUUID, levelInt, blocLoc, minionType));
+            minions.add(new Minion(idMinion, ownerS, ownerUUID, levelInt, blocLoc, minionType, delay, blockFace));
         }
     }
 
@@ -49,15 +52,26 @@ public class MinionManager {
         player.getInventory().addItem(custom1);
     }
 
-    public void addMinion(Player player, Location blocLoc, MinionType minionType) {
+    public Integer getMinerDelay(Integer level) {
+        Integer toReturn = 100;
+        if (level == 0) {
+            toReturn = 5;
+        }
+        return toReturn;
+    }
+
+    public void addMinion(Player player, Location blocLoc, MinionType minionType, BlockFace blockFace) {
         Long id = System.currentTimeMillis();
+        Integer delay = getMinerDelay(0);
         Main.instance.getDataMinion().set("Minions.mineur." + id + ".ownerS", player.getName());
         Main.instance.getDataMinion().set("Minions.mineur." + id + ".ownerUUID", player.getUniqueId().toString());
         Main.instance.getDataMinion().set("Minions.mineur." + id + ".levelInt", 0);
         Main.instance.getDataMinion().set("Minions.mineur." + id + ".blocLoc", blocLoc);
         Main.instance.getDataMinion().set("Minions.mineur." + id + ".minionType", minionType.getName(minionType));
+        Main.instance.getDataMinion().set("Minions.mineur." + id + ".delay", delay);
+        Main.instance.getDataMinion().set("Minions.mineur." + id + ".blocFace", blockFace.toString());
         Main.instance.saveDataMinions();
-        minions.add(new Minion(id, player.getName(), player.getUniqueId(), 0, blocLoc, minionType));
+        minions.add(new Minion(id, player.getName(), player.getUniqueId(), 0, blocLoc, minionType, delay, blockFace));
     }
 
     public void removeMinion(Location blocLocMinion) {

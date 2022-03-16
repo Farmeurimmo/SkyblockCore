@@ -51,7 +51,8 @@ public class MinionsListener implements Listener {
         if (e.getItem().getType() == Material.DRAGON_BREATH) {
             if (e.getItem().getDisplayName().contains(MinionType.PIOCHEUR.getName(MinionType.PIOCHEUR))) {
                 Player player = e.getPlayer();
-                MinionManager.instance.addMinion(player, e.getClickedBlock().getLocation(), MinionType.PIOCHEUR);
+                MinionManager.instance.addMinion(player, e.getClickedBlock().getLocation(),
+                        MinionType.PIOCHEUR, e.getPlayer().getFacing());
                 e.setCancelled(true);
                 player.getItemInHand().setAmount(player.getItemInHand().getAmount() - 1);
                 return;
