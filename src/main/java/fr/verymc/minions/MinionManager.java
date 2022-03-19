@@ -117,7 +117,7 @@ public class MinionManager {
         final EntityEquipment equipment = stand.getEquipment();
         stand.setMetadata("minion", new FixedMetadataValue(Main.instance, true));
         stand.setVisible(true);
-        stand.setCustomName("§eMinion "+minionType.getName(minionType));
+        stand.setCustomName("§eMinion " + minionType.getName(minionType));
         stand.setCustomNameVisible(true);
         stand.setGravity(false);
         stand.setArms(true);
@@ -152,10 +152,10 @@ public class MinionManager {
 
     public void removeMinion(Minion minion) {
 
-        for(Entity entity : Bukkit.getWorld(minion.getBlocLocation().getWorld().getName()).getEntities()){
-            if(!(entity instanceof ArmorStand)) continue;
-            if(entity.getLocation().getBlock().getLocation().equals(minion.getBlocLocation().getBlock().getLocation())
-            && !entity.hasGravity()){
+        for (Entity entity : Bukkit.getWorld(minion.getBlocLocation().getWorld().getName()).getEntities()) {
+            if (!(entity instanceof ArmorStand)) continue;
+            if (entity.getLocation().getBlock().getLocation().equals(minion.getBlocLocation().getBlock().getLocation())
+                    && !entity.hasGravity()) {
                 entity.remove();
             }
         }
