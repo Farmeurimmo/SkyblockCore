@@ -7,9 +7,16 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 public class MinionsGui {
 
     public static MinionsGui instance;
+
+    public ArrayList<Player> linking = new ArrayList<>();
+    public HashMap<String, Minion> minionOpened = new HashMap<>();
+
 
     public MinionsGui() {
         instance = this;
@@ -26,7 +33,7 @@ public class MinionsGui {
 
         ItemStack custom2 = new ItemStack(Material.CHEST, 1);
         ItemMeta meta2 = custom2.getItemMeta();
-        meta2.setDisplayName("§6Coffre lié");
+        meta2.setDisplayName("§6Coffre");
         custom2.setItemMeta(meta2);
 
         ItemStack custom3 = new ItemStack(Material.BLAZE_POWDER, 1);
@@ -39,6 +46,7 @@ public class MinionsGui {
         inv.setItem(13, custom3);
         inv.setItem(16, custom1);
 
+        minionOpened.put(player.getName(), minion);
         player.openInventory(inv);
 
     }

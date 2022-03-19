@@ -1,12 +1,17 @@
 package main.java.fr.verymc.minions;
 
+import main.java.fr.verymc.blocks.ChunkCollector;
 import main.java.fr.verymc.core.Main;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.block.Chest;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 
 public class MinionHarvest {
@@ -14,8 +19,6 @@ public class MinionHarvest {
     public static MinionHarvest instance;
     public HashMap<Minion, Long> lastAction = new HashMap<>();
     public ArrayList<Block> blocksToBreak = new ArrayList<>();
-
-    public boolean running = false;
 
     public MinionHarvest() {
         instance = this;
@@ -27,44 +30,64 @@ public class MinionHarvest {
         blocksToBreak.clear();
         Bukkit.getScheduler().scheduleAsyncRepeatingTask(Main.instance, new Runnable() {
             public void run() {
-                running=true;
                 ArrayList<Minion> minions = new ArrayList<>();
                 minions.addAll(MinionManager.instance.minions);
                 Long millis = System.currentTimeMillis();
                 for (Minion minion : minions) {
-                    Integer delay = minion.getDelay();
+                    Location blocLoc = minion.getBlocLocation();
+                    if (!Bukkit.getWorld(blocLoc.getWorld().getName()).
+                            getChunkAt(blocLoc.getBlock()).isLoaded()) continue;
+                    if (!minion.isChestLinked()) return;
+                    if (minion.getChestBloc() == null) return;
+                    Integer delay = MinionManager.instance.getMinerDelay(minion.getLevelInt());
                     if (!lastAction.containsKey(minion)) {
                         makeAction(minion);
-                        lastAction.put(minion, millis+delay*1000);
+                        lastAction.put(minion, millis + delay * 1000);
                         continue;
                     }
                     if (lastAction.get(minion) <= millis) {
-                        lastAction.put(minion, millis+delay*1000);
+                        lastAction.put(minion, millis + delay * 1000);
                         makeAction(minion);
                         continue;
                     }
                     continue;
                 }
-                running=false;
-                Bukkit.getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
-                    public void run() {
-                        if(running==false) {
-                            for (Block block : blocksToBreak) {
-                                if(block.getType()!=null&&block.getType()!=Material.AIR){
-                                    block.setType(Material.AIR);
-                                }
-                            }
-                            blocksToBreak.clear();
-                        }
-                    }
-                }, 0);
             }
         }, 20, 20);
     }
 
     public void makeAction(Minion minion) {
-        if(minion.getBlockFace() == BlockFace.NORTH){
-            blocksToBreak.add(Bukkit.getWorld(minion.getBlocLocation().getWorld().getName()).getBlockAt(minion.getBlocLocation().clone().add(0,1,-1)));
+        Location blocLoc = minion.getBlocLocation().clone();
+        if (minion.getBlockFace() == BlockFace.NORTH) {
+            blocksToBreak.add(Bukkit.getWorld(blocLoc.getWorld().getName()).getBlockAt(blocLoc.add(0, 0, -1)));
         }
+        if (minion.getBlockFace() == BlockFace.SOUTH) {
+            blocksToBreak.add(Bukkit.getWorld(blocLoc.getWorld().getName()).getBlockAt(blocLoc.add(0, 0, 1)));
+        }
+        if (minion.getBlockFace() == BlockFace.WEST) {
+            blocksToBreak.add(Bukkit.getWorld(blocLoc.getWorld().getName()).getBlockAt(blocLoc.add(1, 0, 0)));
+        }
+        if (minion.getBlockFace() == BlockFace.EAST) {
+            blocksToBreak.add(Bukkit.getWorld(blocLoc.getWorld().getName()).getBlockAt(blocLoc.add(-1, 0, 0)));
+        }
+        Bukkit.getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
+            public void run() {
+                for (Block block : blocksToBreak) {
+                    if (block.getType() != null && block.getType() != Material.AIR) {
+                        if (minion.getChestBloc().getType() != Material.CHEST) return;
+                        Chest blhopper = (Chest) minion.getChestBloc().getState();
+                        Collection<ItemStack> a = block.getDrops();
+                        for (ItemStack fda : a) {
+                            if (ChunkCollector.GetAmountToFillInInv(fda, blhopper.getInventory()) > 0) {
+                                blhopper.getInventory().addItem(fda);
+                                continue;
+                            }
+                        }
+                        block.setType(Material.AIR);
+                    }
+                }
+                blocksToBreak.clear();
+            }
+        }, 0);
     }
 }
