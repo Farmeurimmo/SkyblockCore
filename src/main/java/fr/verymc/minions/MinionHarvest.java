@@ -65,10 +65,10 @@ public class MinionHarvest {
             blocksToBreak.add(Bukkit.getWorld(blocLoc.getWorld().getName()).getBlockAt(blocLoc.add(0, 0, 1)));
         }
         if (minion.getBlockFace() == BlockFace.WEST) {
-            blocksToBreak.add(Bukkit.getWorld(blocLoc.getWorld().getName()).getBlockAt(blocLoc.add(1, 0, 0)));
+            blocksToBreak.add(Bukkit.getWorld(blocLoc.getWorld().getName()).getBlockAt(blocLoc.add(-1, 0, 0)));
         }
         if (minion.getBlockFace() == BlockFace.EAST) {
-            blocksToBreak.add(Bukkit.getWorld(blocLoc.getWorld().getName()).getBlockAt(blocLoc.add(-1, 0, 0)));
+            blocksToBreak.add(Bukkit.getWorld(blocLoc.getWorld().getName()).getBlockAt(blocLoc.add(1, 0, 0)));
         }
         Bukkit.getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
             public void run() {

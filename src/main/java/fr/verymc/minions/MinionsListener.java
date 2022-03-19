@@ -1,18 +1,28 @@
 package main.java.fr.verymc.minions;
 
+import io.papermc.paper.event.entity.EntityMoveEvent;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
+import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockPistonEvent;
+import org.bukkit.event.block.BlockPistonExtendEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.player.PlayerArmorStandManipulateEvent;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.ArrayList;
 
 public class MinionsListener implements Listener {
 
@@ -104,17 +114,17 @@ public class MinionsListener implements Listener {
     @EventHandler
     public void exploOnMinion(EntityDamageEvent e) {
         if (e.isCancelled()) return;
-        if (e.getEntity().getType().equals(EntityType.ARMOR_STAND)) {
+        if (e.getEntity().getType().equals(EntityType.ARMOR_STAND)&&!e.getEntity().hasGravity()) {
             e.setCancelled(true);
         }
     }
 
     @EventHandler
-    public void onPlayerClick(final PlayerInteractAtEntityEvent e) {
-        final Player player = e.getPlayer();
+    public void onPlayerClick(PlayerInteractAtEntityEvent e) {
+        Player player = e.getPlayer();
         if (e.getRightClicked().getType().equals((Object) EntityType.ARMOR_STAND)) {
             Entity clicked = e.getRightClicked();
-            if (clicked.getMetadata("minion") != null) {
+            if (!clicked.hasGravity()) {
                 Minion minion = null;
                 for (Minion minions : MinionManager.instance.minions) {
                     if (!e.getRightClicked().getLocation().equals(minions.getBlocLocation())) {
@@ -126,7 +136,24 @@ public class MinionsListener implements Listener {
                 if (minion == null) return;
                 MinionsGui.instance.minionMainGui(player, minion);
                 e.setCancelled(true);
-                return;
+            }
+        }
+    }
+
+    @EventHandler
+    public void pistonExtend(BlockPistonExtendEvent e) {
+        int sticky = 0;
+        for(Block block : e.getBlocks()){
+            if(block.getType()==Material.SLIME_BLOCK||block.getType()==Material.HONEY_BLOCK){
+                sticky+=1;
+            }
+        }
+        if(sticky==0) return;
+        for(Entity entity : e.getBlock().getWorld().getNearbyEntities(e.getBlock().getLocation(), 13, 13,13)){
+            if(entity instanceof ArmorStand){
+                if(!entity.hasGravity()){
+                    e.setCancelled(true);
+                }
             }
         }
     }
@@ -143,4 +170,5 @@ public class MinionsListener implements Listener {
             }
         }
     }
+
 }

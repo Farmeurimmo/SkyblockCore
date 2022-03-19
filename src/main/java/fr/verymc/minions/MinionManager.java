@@ -2,12 +2,14 @@ package main.java.fr.verymc.minions;
 
 import main.java.fr.verymc.core.Main;
 import main.java.fr.verymc.utils.PreGenItems;
+import org.bukkit.Bukkit;
 import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.ArmorStand;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.EntityEquipment;
@@ -105,7 +107,7 @@ public class MinionManager {
         Main.instance.getDataMinion().set("Minions.mineur." + id + ".minionType", minionType.getName(minionType));
         Main.instance.getDataMinion().set("Minions.mineur." + id + ".blocFace", blockFace.toString());
         Main.instance.getDataMinion().set("Minions.mineur." + id + ".isChestLinked", false);
-        Main.instance.getDataMinion().set("Minions.mineur." + id + ".blocChest", "null");
+        Main.instance.getDataMinion().set("Minions.mineur." + id + ".blocChest", null);
         Main.instance.saveDataMinions();
 
         Minion minion = new Minion(id, player.getName(), player.getUniqueId(), 0, blocLoc, minionType,
@@ -115,7 +117,7 @@ public class MinionManager {
         final EntityEquipment equipment = stand.getEquipment();
         stand.setMetadata("minion", new FixedMetadataValue(Main.instance, true));
         stand.setVisible(true);
-        stand.setCustomName("aa");
+        stand.setCustomName("§eMinion "+minionType.getName(minionType));
         stand.setCustomNameVisible(true);
         stand.setGravity(false);
         stand.setArms(true);
@@ -149,6 +151,15 @@ public class MinionManager {
     }
 
     public void removeMinion(Minion minion) {
+
+        for(Entity entity : Bukkit.getWorld(minion.getBlocLocation().getWorld().getName()).getEntities()){
+            if(!(entity instanceof ArmorStand)) continue;
+            if(entity.getLocation().getBlock().getLocation().equals(minion.getBlocLocation().getBlock().getLocation())
+            && !entity.hasGravity()){
+                entity.remove();
+            }
+        }
+
         Main.instance.getDataMinion().set("Minions.mineur." + minion.getID(), null);
         Main.instance.saveDataMinions();
 
