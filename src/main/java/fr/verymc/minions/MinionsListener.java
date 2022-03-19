@@ -10,6 +10,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPistonExtendEvent;
+import org.bukkit.event.block.BlockPistonRetractEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
@@ -135,13 +136,31 @@ public class MinionsListener implements Listener {
 
     @EventHandler
     public void pistonExtend(BlockPistonExtendEvent e) {
-        int sticky = 0;
+        /*int sticky = 0;
         for (Block block : e.getBlocks()) {
             if (block.getType() == Material.SLIME_BLOCK || block.getType() == Material.HONEY_BLOCK) {
                 sticky += 1;
             }
         }
-        if (sticky == 0) return;
+        if (sticky == 0) return;*/
+        for (Entity entity : e.getBlock().getWorld().getNearbyEntities(e.getBlock().getLocation(), 13, 13, 13)) {
+            if (entity instanceof ArmorStand) {
+                if (!entity.hasGravity()) {
+                    e.setCancelled(true);
+                }
+            }
+        }
+    }
+
+    @EventHandler
+    public void pistonRetract(BlockPistonRetractEvent e) {
+        /*int sticky = 0;
+        for (Block block : e.getBlocks()) {
+            if (block.getType() == Material.SLIME_BLOCK || block.getType() == Material.HONEY_BLOCK) {
+                sticky += 1;
+            }
+        }
+        if (sticky == 0) return;*/
         for (Entity entity : e.getBlock().getWorld().getNearbyEntities(e.getBlock().getLocation(), 13, 13, 13)) {
             if (entity instanceof ArmorStand) {
                 if (!entity.hasGravity()) {
