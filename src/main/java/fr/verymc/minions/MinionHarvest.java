@@ -3,12 +3,16 @@ package main.java.fr.verymc.minions;
 import main.java.fr.verymc.blocks.ChunkCollector;
 import main.java.fr.verymc.core.Main;
 import org.bukkit.Bukkit;
+import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.Chest;
+import org.bukkit.entity.ArmorStand;
+import org.bukkit.entity.Entity;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.util.EulerAngle;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -71,6 +75,7 @@ public class MinionHarvest {
             blocksToBreak.add(Bukkit.getWorld(blocLoc.getWorld().getName()).getBlockAt(blocLoc.add(1, 0, 0)));
         }
         Bukkit.getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
+            @Override
             public void run() {
                 for (Block block : blocksToBreak) {
                     if (block.getType() != null && block.getType() != Material.AIR) {
@@ -90,4 +95,5 @@ public class MinionHarvest {
             }
         }, 0);
     }
+
 }

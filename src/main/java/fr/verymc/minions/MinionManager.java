@@ -52,10 +52,10 @@ public class MinionManager {
             MinionType minionType = MinionType.valueOf(Main.instance.getDataMinion().getString("Minions.mineur." + id + ".minionType"));
             BlockFace blockFace = BlockFace.valueOf(Main.instance.getDataMinion().getString("Minions.mineur." + id + ".blocFace"));
             Block blocChest = null;
-            if (Main.instance.getDataMinion().getLocation("Minions.mineur." + id + ".chestBloc") != null) {
-                blocChest = Main.instance.getDataMinion().getLocation("Minions.mineur." + id + ".chestBloc").getBlock();
-            }
             Boolean isChestLinked = Main.instance.getDataMinion().getBoolean("Minions.mineur." + id + ".isChestLinked");
+            if (Main.instance.getDataMinion().getLocation("Minions.mineur." + id + ".chestBloc") != null && isChestLinked) {
+                blocChest = Main.instance.getDataMinion().getLocation("Minions.mineur." + id + ".blocChest").getBlock();
+            }
 
             minions.add(new Minion(idMinion, ownerS, ownerUUID, levelInt, blocLoc, minionType
                     , blockFace, isChestLinked, blocChest));
@@ -85,10 +85,10 @@ public class MinionManager {
 
     public Integer getMinerDelay(Integer level) {
         Integer toReturn = 100;
-        if (level == 0) toReturn = 16;
-        if (level == 1) toReturn = 14;
-        if (level == 2) toReturn = 12;
-        if (level == 3) toReturn = 10;
+        if (level == 0) toReturn = 12;
+        if (level == 1) toReturn = 11;
+        if (level == 2) toReturn = 10;
+        if (level == 3) toReturn = 9;
         if (level == 4) toReturn = 8;
         if (level == 5) toReturn = 7;
         if (level == 6) toReturn = 6;

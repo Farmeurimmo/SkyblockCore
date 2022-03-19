@@ -67,7 +67,7 @@ public class Minion {
     public void setChestLinked(Block blocChest) {
         this.chestBloc = blocChest;
         this.chestLinked = true;
-        Main.instance.getDataMinion().set("Minions.mineur." + id + ".isChestLinked", false);
+        Main.instance.getDataMinion().set("Minions.mineur." + id + ".isChestLinked", true);
         Main.instance.getDataMinion().set("Minions.mineur." + id + ".blocChest", blocChest.getLocation());
         Main.instance.saveDataMinions();
     }
