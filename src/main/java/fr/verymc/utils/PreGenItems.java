@@ -25,4 +25,12 @@ public class PreGenItems {
         return custom10;
     }
 
+    public static ItemStack getHead(Player player) {
+        ItemStack custom10 = new ItemStack(Material.PLAYER_HEAD, 1);
+        SkullMeta customi = (SkullMeta) custom10.getItemMeta();
+        customi.setOwner(player.getName());
+        custom10.setItemMeta(customi);
+        return custom10;
+    }
+
 }

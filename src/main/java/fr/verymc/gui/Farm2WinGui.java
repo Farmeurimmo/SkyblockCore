@@ -144,10 +144,10 @@ public class Farm2WinGui implements Listener {
                                     if (legendeachat == false) {
                                         player.sendMessage("§cErreur, achat indisponible !");
                                     } else {
-                                        if (player.hasPermission("legende")) {
+                                        if (player.hasPermission("group.legende")) {
                                             RankBuyGui.BuyRank("Dieu", player);
                                         } else {
-                                            player.sendMessage("§cErreur, vous devez possèder tous les grades précédents !");
+                                            player.sendMessage("§cErreur, vous devez posséder tous les grades précédents !");
                                         }
                                     }
                                     current.setType(Material.GOLD_BLOCK);
@@ -184,17 +184,17 @@ public class Farm2WinGui implements Listener {
                                     if (legendeachat == false) {
                                         player.sendMessage("§cErreur, achat indisponible !");
                                     } else {
-                                        if (player.hasPermission("legende") && player.hasPermission("group.dieu")) {
+                                        if (player.hasPermission("group.legende") && player.hasPermission("group.dieu")) {
                                             RankBuyGui.BuyRank("zeus", player);
                                         } else {
-                                            player.sendMessage("§cErreur, vous devez possèder tous les grades précédents !");
+                                            player.sendMessage("§cErreur, vous devez posséder tous les grades précédents !");
                                         }
                                     }
                                     current.setType(Material.NETHERITE_BLOCK);
                                 }
                             }, 60);
                         } else {
-                            player.sendMessage("§cErreur, vous devez possèder tous les grades précédents !");
+                            player.sendMessage("§cErreur, vous devez posséder tous les grades précédents !");
                             current.setType(Material.BARRIER);
                             Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
                                 public void run() {
