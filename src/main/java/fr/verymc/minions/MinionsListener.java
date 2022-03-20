@@ -86,9 +86,14 @@ public class MinionsListener implements Listener {
 
     @EventHandler
     public void interactMinion(PlayerInteractEvent e) {
+        if(e.getClickedBlock()==null) return;
+        if(e.getClickedBlock().getLocation()==null) return;
         Location locBloc = e.getClickedBlock().getLocation();
         Player player = e.getPlayer();
         if (MinionsGui.instance.linking.contains(player) && MinionsGui.instance.minionOpened.containsKey(player.getName()) && player.isSneaking()) {
+            if(e.getPlayer().getLocation().getWorld().getName().equalsIgnoreCase("world")){
+                return;
+            }
             if (locBloc.getBlock().getType() == Material.CHEST) {
                 MinionsGui.instance.minionOpened.get(player.getName()).setChestLinked(locBloc.getBlock());
                 MinionsGui.instance.minionOpened.remove(player.getName());
@@ -110,6 +115,9 @@ public class MinionsListener implements Listener {
             return;
         }
         if (e.getItem().getType() == Material.DRAGON_BREATH && e.getPlayer().isSneaking()) {
+            if(e.getPlayer().getLocation().getWorld().getName().equalsIgnoreCase("world")){
+                return;
+            }
             if (e.getItem().getDisplayName().contains(MinionType.PIOCHEUR.getName(MinionType.PIOCHEUR))
                     && e.getItem().getDisplayName().contains("§6Minion")) {
                 Player player = e.getPlayer();
