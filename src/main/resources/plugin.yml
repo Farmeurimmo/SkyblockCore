@@ -3,7 +3,7 @@ version: 1.0
 author: Farmeurimmo
 authors:
   - Farmeurimmo
-main: main.java.fr.verymc.core.Main
+main: main.java.fr.verymc.Main
 depend: [ Citizens, IridiumSkyblock, HolographicDisplays, Vault ]
 api-version: 1.16
 commands:

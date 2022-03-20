@@ -2,7 +2,7 @@ package main.java.fr.verymc.holos;
 
 import com.gmail.filoghost.holographicdisplays.api.Hologram;
 import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
-import main.java.fr.verymc.core.Main;
+import main.java.fr.verymc.Main;
 import net.citizensnpcs.api.CitizensAPI;
 import net.citizensnpcs.api.event.NPCRightClickEvent;
 import net.citizensnpcs.api.npc.NPC;

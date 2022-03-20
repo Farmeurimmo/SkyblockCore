@@ -1,6 +1,6 @@
 package main.java.fr.verymc.cmd.base;
 
-import main.java.fr.verymc.core.Main;
+import main.java.fr.verymc.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

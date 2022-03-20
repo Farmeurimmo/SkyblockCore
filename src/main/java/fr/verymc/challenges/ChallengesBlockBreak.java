@@ -1,7 +1,7 @@
 package main.java.fr.verymc.challenges;
 
 import main.java.fr.verymc.cmd.moderation.BuildCmd;
-import main.java.fr.verymc.core.Main;
+import main.java.fr.verymc.Main;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;

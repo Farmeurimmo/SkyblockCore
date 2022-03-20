@@ -1,4 +1,4 @@
-package main.java.fr.verymc.WineLottery;
+package main.java.fr.verymc.winelottery;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;

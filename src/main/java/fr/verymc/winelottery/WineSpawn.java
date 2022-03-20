@@ -1,4 +1,4 @@
-package main.java.fr.verymc.WineLottery;
+package main.java.fr.verymc.winelottery;
 
 import net.citizensnpcs.api.CitizensAPI;
 import net.citizensnpcs.api.npc.NPC;

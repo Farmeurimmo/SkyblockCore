@@ -1,6 +1,6 @@
 package main.java.fr.verymc.shopgui;
 
-import main.java.fr.verymc.core.Main;
+import main.java.fr.verymc.Main;
 import main.java.fr.verymc.eco.EcoAccountsManager;
 import main.java.fr.verymc.utils.Maths;
 import org.bukkit.Bukkit;

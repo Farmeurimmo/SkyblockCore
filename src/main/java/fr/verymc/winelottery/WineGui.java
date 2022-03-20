@@ -1,6 +1,6 @@
-package main.java.fr.verymc.WineLottery;
+package main.java.fr.verymc.winelottery;
 
-import main.java.fr.verymc.core.Main;
+import main.java.fr.verymc.Main;
 import main.java.fr.verymc.eco.EcoAccountsManager;
 import net.citizensnpcs.api.event.NPCRightClickEvent;
 import org.bukkit.Bukkit;

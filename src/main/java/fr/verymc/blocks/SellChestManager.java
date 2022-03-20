@@ -1,6 +1,6 @@
 package main.java.fr.verymc.blocks;
 
-import main.java.fr.verymc.core.Main;
+import main.java.fr.verymc.Main;
 import main.java.fr.verymc.eco.EcoAccountsManager;
 import main.java.fr.verymc.shopgui.BuyShopItem;
 import org.bukkit.Bukkit;

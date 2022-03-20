@@ -1,6 +1,6 @@
 package main.java.fr.verymc.eco;
 
-import main.java.fr.verymc.core.Main;
+import main.java.fr.verymc.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;

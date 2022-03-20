@@ -1,7 +1,7 @@
 package main.java.fr.verymc.gui;
 
 import main.java.fr.verymc.cmd.base.SpawnCmd;
-import main.java.fr.verymc.core.Main;
+import main.java.fr.verymc.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;

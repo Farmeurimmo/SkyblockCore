@@ -1,7 +1,7 @@
 package main.java.fr.verymc.gui;
 
 import main.java.fr.verymc.atout.BuyAtoutGui;
-import main.java.fr.verymc.core.Main;
+import main.java.fr.verymc.Main;
 import main.java.fr.verymc.eco.EcoAccountsManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;

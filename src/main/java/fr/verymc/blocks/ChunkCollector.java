@@ -1,6 +1,6 @@
 package main.java.fr.verymc.blocks;
 
-import main.java.fr.verymc.core.Main;
+import main.java.fr.verymc.Main;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Hopper;

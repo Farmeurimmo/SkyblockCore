@@ -1,8 +1,8 @@
-package main.java.fr.verymc.core;
+package main.java.fr.verymc;
 
 import com.iridium.iridiumskyblock.api.IridiumSkyblockAPI;
-import main.java.fr.verymc.WineLottery.WineGui;
-import main.java.fr.verymc.WineLottery.WineSpawn;
+import main.java.fr.verymc.winelottery.WineGui;
+import main.java.fr.verymc.winelottery.WineSpawn;
 import main.java.fr.verymc.antiafk.AntiAfk;
 import main.java.fr.verymc.atout.AtoutCmd;
 import main.java.fr.verymc.atout.AtoutGui;

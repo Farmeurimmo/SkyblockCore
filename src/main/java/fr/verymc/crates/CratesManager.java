@@ -2,7 +2,7 @@ package main.java.fr.verymc.crates;
 
 import com.gmail.filoghost.holographicdisplays.api.Hologram;
 import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
-import main.java.fr.verymc.core.Main;
+import main.java.fr.verymc.Main;
 import main.java.fr.verymc.utils.CheckPlayerInventory;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;

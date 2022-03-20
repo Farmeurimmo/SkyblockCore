@@ -1,7 +1,7 @@
 package main.java.fr.verymc.challenges;
 
 import com.iridium.iridiumskyblock.api.IridiumSkyblockAPI;
-import main.java.fr.verymc.core.Main;
+import main.java.fr.verymc.Main;
 import main.java.fr.verymc.crates.CratesKeyManager;
 import main.java.fr.verymc.eco.EcoAccountsManager;
 import main.java.fr.verymc.gui.MenuGui;

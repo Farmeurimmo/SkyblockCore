@@ -1,6 +1,6 @@
 package main.java.fr.verymc.eco;
 
-import main.java.fr.verymc.core.Main;
+import main.java.fr.verymc.Main;
 import net.md_5.bungee.api.ChatColor;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;

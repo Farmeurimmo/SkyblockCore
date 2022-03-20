@@ -1,6 +1,6 @@
 package main.java.fr.verymc.challenges;
 
-import main.java.fr.verymc.core.Main;
+import main.java.fr.verymc.Main;
 import org.bukkit.Bukkit;
 
 import java.util.Calendar;

@@ -1,6 +1,6 @@
 package main.java.fr.verymc.atout;
 
-import main.java.fr.verymc.core.Main;
+import main.java.fr.verymc.Main;
 import main.java.fr.verymc.gui.MenuGui;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;

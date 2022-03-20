@@ -1,7 +1,7 @@
 package main.java.fr.verymc.scoreboard;
 
 import com.iridium.iridiumskyblock.api.IridiumSkyblockAPI;
-import main.java.fr.verymc.core.Main;
+import main.java.fr.verymc.Main;
 import main.java.fr.verymc.eco.EcoAccountsManager;
 import net.luckperms.api.LuckPermsProvider;
 import net.luckperms.api.model.user.User;

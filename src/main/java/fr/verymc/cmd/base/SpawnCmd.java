@@ -1,6 +1,6 @@
 package main.java.fr.verymc.cmd.base;
 
-import main.java.fr.verymc.core.Main;
+import main.java.fr.verymc.Main;
 import main.java.fr.verymc.utils.GetTeleportDelay;
 import main.java.fr.verymc.utils.TeleportPlayer;
 import org.bukkit.Bukkit;
