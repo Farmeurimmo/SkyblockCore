@@ -45,6 +45,9 @@ public class MinionsListener implements Listener {
                 return;
             }
             if (currentType == Material.DRAGON_BREATH) {
+                if(MinionsGui.instance.minionOpened.get(player.getName()).getOwnerUUID()!=player.getUniqueId()){
+                    return;
+                }
                 MinionManager.instance.giveMinionItemForExistingMinion(player, MinionsGui.instance.minionOpened.get(player.getName()));
                 MinionManager.instance.removeMinion(MinionsGui.instance.minionOpened.get(player.getName()));
                 if (MinionsGui.instance.linking.contains(player)) MinionsGui.instance.linking.remove(player);
@@ -116,6 +119,15 @@ public class MinionsListener implements Listener {
         }
         if (e.getItem().getType() == Material.DRAGON_BREATH && e.getPlayer().isSneaking()) {
             if (e.getPlayer().getLocation().getWorld().getName().equalsIgnoreCase("world")) {
+                return;
+            }
+            int plcount = 0;
+            for(Minion minion : MinionManager.instance.minions){
+                if(minion.getOwnerUUID()==e.getPlayer().getUniqueId()){
+                    plcount+=1;
+                }
+            }
+            if(plcount>=3){
                 return;
             }
             if (e.getItem().getDisplayName().contains(MinionType.PIOCHEUR.getName(MinionType.PIOCHEUR))

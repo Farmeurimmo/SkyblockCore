@@ -3,6 +3,8 @@ package main.java.fr.verymc.gui;
 import main.java.fr.verymc.Main;
 import main.java.fr.verymc.atout.BuyAtoutGui;
 import main.java.fr.verymc.eco.EcoAccountsManager;
+import main.java.fr.verymc.minions.MinionManager;
+import main.java.fr.verymc.minions.MinionType;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -72,7 +74,7 @@ public class Farm2WinGui implements Listener {
             if (current.getType() == Material.DRAGON_BREATH) {
                 if (EcoAccountsManager.instance.getMoney(player.getName()) >= 25000) {
                     EcoAccountsManager.instance.removeFounds(player, (double) 25000, true);
-                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "aminion give " + player.getName());
+                    MinionManager.instance.giveMinionItem(player, MinionType.PIOCHEUR.name());
                 } else {
                     player.sendMessage("§cErreur, vous n'avez pas asser d'argent.");
                 }
