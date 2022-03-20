@@ -1,7 +1,7 @@
 package main.java.fr.verymc.minions;
 
-import main.java.fr.verymc.blocks.ChunkCollector;
 import main.java.fr.verymc.Main;
+import main.java.fr.verymc.blocks.ChunkCollector;
 import org.bukkit.Bukkit;
 import org.bukkit.Effect;
 import org.bukkit.Location;

@@ -1,8 +1,6 @@
 package main.java.fr.verymc;
 
 import com.iridium.iridiumskyblock.api.IridiumSkyblockAPI;
-import main.java.fr.verymc.winelottery.WineGui;
-import main.java.fr.verymc.winelottery.WineSpawn;
 import main.java.fr.verymc.antiafk.AntiAfk;
 import main.java.fr.verymc.atout.AtoutCmd;
 import main.java.fr.verymc.atout.AtoutGui;
@@ -41,6 +39,8 @@ import main.java.fr.verymc.minions.*;
 import main.java.fr.verymc.scoreboard.ScoreBoard;
 import main.java.fr.verymc.scoreboard.TABManager;
 import main.java.fr.verymc.shopgui.*;
+import main.java.fr.verymc.winelottery.WineGui;
+import main.java.fr.verymc.winelottery.WineSpawn;
 import net.luckperms.api.LuckPerms;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;

@@ -1,8 +1,8 @@
 package main.java.fr.verymc.events;
 
 import com.iridium.iridiumskyblock.api.IridiumSkyblockAPI;
-import main.java.fr.verymc.challenges.ChallengesReset;
 import main.java.fr.verymc.Main;
+import main.java.fr.verymc.challenges.ChallengesReset;
 import main.java.fr.verymc.eco.EcoAccountsManager;
 import main.java.fr.verymc.scoreboard.ScoreBoard;
 import net.luckperms.api.LuckPermsProvider;

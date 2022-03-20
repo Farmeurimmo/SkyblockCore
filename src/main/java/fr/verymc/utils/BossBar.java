@@ -1,7 +1,7 @@
 package main.java.fr.verymc.utils;
 
-import main.java.fr.verymc.cmd.base.BarCmd;
 import main.java.fr.verymc.Main;
+import main.java.fr.verymc.cmd.base.BarCmd;
 import org.bukkit.Bukkit;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarFlag;
