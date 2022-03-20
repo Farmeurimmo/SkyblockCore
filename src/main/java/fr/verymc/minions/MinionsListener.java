@@ -1,6 +1,7 @@
 package main.java.fr.verymc.minions;
 
 import main.java.fr.verymc.eco.EcoAccountsManager;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.ArmorStand;
@@ -32,6 +33,9 @@ public class MinionsListener implements Listener {
             if (!MinionsGui.instance.minionOpened.containsKey(player.getName())) {
                 return;
             }
+            if(MinionsGui.instance.minionOpened.get(player.getName()).getOwnerUUID()!=player.getUniqueId()){
+                return;
+            }
             if (currentType == Material.CHEST) {
                 if (MinionsGui.instance.linking.contains(player)) {
                     MinionsGui.instance.linking.remove(player);
@@ -45,9 +49,6 @@ public class MinionsListener implements Listener {
                 return;
             }
             if (currentType == Material.DRAGON_BREATH) {
-                if(MinionsGui.instance.minionOpened.get(player.getName()).getOwnerUUID()!=player.getUniqueId()){
-                    return;
-                }
                 MinionManager.instance.giveMinionItemForExistingMinion(player, MinionsGui.instance.minionOpened.get(player.getName()));
                 MinionManager.instance.removeMinion(MinionsGui.instance.minionOpened.get(player.getName()));
                 if (MinionsGui.instance.linking.contains(player)) MinionsGui.instance.linking.remove(player);
@@ -176,8 +177,13 @@ public class MinionsListener implements Listener {
                     break;
                 }
                 if (minion == null) return;
-                MinionsGui.instance.minionMainGui(player, minion);
                 e.setCancelled(true);
+                player.sendMessage(player.getUniqueId()+"\n"+minion.getOwnerUUID());
+                if(player.getUniqueId()!=minion.getOwnerUUID()){
+                    player.sendMessage("§6§lMinions §8» §fCe minion ne vous appartient pas !");
+                    return;
+                }
+                MinionsGui.instance.minionMainGui(player, minion);
             }
         }
     }

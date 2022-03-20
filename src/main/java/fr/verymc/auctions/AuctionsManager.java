@@ -148,11 +148,14 @@ public class AuctionsManager {
                 return;
             }
             EcoAccountsManager.instance.addFoundsUUID(playeruuid, price, false);
+            deListItemFromAh(millis);
+            if(Bukkit.getPlayer(playeruuid)==null){
+                return;
+            }
             if (Bukkit.getPlayer(playeruuid).isOnline()) {
                 Bukkit.getPlayer(playeruuid).sendMessage("§6§lAuctions §8» §a" + player.getName() + "§f vient d'acheter un item que vous aviez mis aux auctions" +
                         " pour §a" + price + "$§f.");
             }
-            deListItemFromAh(millis);
             return;
         } else {
             double loa = price - EcoAccountsManager.instance.getMoneyUUID(player.getUniqueId());

@@ -77,7 +77,7 @@ public class MinionsGui {
             }
             customi.setLore(Arrays.asList("§6Délai de minage: §e" + MinionManager.instance.getMinerDelay(i) + "s", "§6Possédé: " +
                     MinionManager.instance.getBeforeBooleanUpgrade(i, minion).toString().replace("true", "§aoui")
-                            .replace("false", "§cnon")));
+                            .replace("false", "§cnon"), "§6Prix: "+MinionManager.instance.getNextUpgradeCost(i,i)));
             customi.setOwner("Farmeurimmo");
             custom10.setItemMeta(customi);
 

@@ -79,7 +79,7 @@ public class MinionHarvest {
             } else {
                 lastWarn.put(player.getName(), lastWarn.get(player.getName()) + 1);
             }
-            if (lastWarn.get(player.getName()) >= 10) {
+            if (lastWarn.get(player.getName()) >= 20) {
                 player.sendMessage("§6§lMinions §8» §cLe minion en x: " + minion.getBlocLocation().getX() +
                         " y: " + minion.getBlocLocation().getY() + " z: " + minion.getBlocLocation().getZ() +
                         " possède un §lcoffre invalide/non définit§c.");
