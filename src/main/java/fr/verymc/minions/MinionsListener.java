@@ -1,5 +1,8 @@
 package main.java.fr.verymc.minions;
 
+import com.google.common.base.CharMatcher;
+import main.java.fr.verymc.eco.EcoAccountsManager;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -52,7 +55,33 @@ public class MinionsListener implements Listener {
                 player.closeInventory();
                 return;
             }
+            if (currentType == Material.BLAZE_POWDER) {
+                MinionsGui.instance.openUpgradeShop(player, MinionsGui.instance.minionOpened.get(player.getName()));
+                return;
+            }
             return;
+        }
+        if (e.getView().getTitle().contains("§6Améliorations du minion")) {
+            e.setCancelled(true);
+            if (!MinionsGui.instance.minionOpened.containsKey(player.getName())) {
+                return;
+            }
+            if(currentType==Material.ARROW){
+                MinionsGui.instance.minionMainGui(player, MinionsGui.instance.minionOpened.get(player.getName()));
+            }
+            if(currentType==Material.PLAYER_HEAD){
+                int level = current.getAmount()-1;
+                if(!MinionManager.instance.getBeforeBooleanUpgrade(level, MinionsGui.instance.minionOpened.get(player.getName()))){
+                    double cost = MinionManager.instance.getNextUpgradeCost(level, MinionsGui.instance.minionOpened.get(player.getName()).getLevelInt());
+                    if(cost>0){
+                        if(EcoAccountsManager.instance.getMoneyUUID(player.getUniqueId())>=cost){
+                            EcoAccountsManager.instance.removeFounds(player, cost, true);
+                            MinionsGui.instance.minionOpened.get(player.getName()).setLevelInt(level);
+                            MinionsGui.instance.openUpgradeShop(player, MinionsGui.instance.minionOpened.get(player.getName()));
+                        }
+                    }
+                }
+            }
         }
     }
 
@@ -86,9 +115,9 @@ public class MinionsListener implements Listener {
                     && e.getItem().getDisplayName().contains("§6Minion")) {
                 Player player = e.getPlayer();
                 Integer levelInt = 0;
-                if (e.getItem().getLore() != null) {
+                if (e.getItem().getLore().size()>=1) {
                     String lore1 = e.getItem().getLore().get(0);
-                    lore1 = lore1.replace("§6Niveau: §f", "");
+                    lore1 = lore1.replace("§6Niveau §e", "");
                     levelInt = Integer.parseInt(lore1);
                 }
                 e.setCancelled(true);
@@ -169,18 +198,4 @@ public class MinionsListener implements Listener {
             }
         }
     }
-
-    @EventHandler
-    public void innventoryCloseEvent(InventoryCloseEvent e) {
-        if (e.getView().getTitle().contains("§6Menu du minion ")) {
-            Player player = (Player) e.getPlayer();
-            if (MinionsGui.instance.minionOpened.containsKey(player.getName())) {
-                if (MinionsGui.instance.linking.contains(player)) {
-                    return;
-                }
-                MinionsGui.instance.minionOpened.remove(player.getName());
-            }
-        }
-    }
-
 }

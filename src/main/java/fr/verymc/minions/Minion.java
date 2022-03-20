@@ -60,6 +60,12 @@ public class Minion {
         return blockFace;
     }
 
+    public void setLevelInt(Integer newlevel){
+        levelInt=newlevel;
+        Main.instance.getDataMinion().set("Minions.mineur." + id + ".levelint", newlevel);
+        Main.instance.saveDataMinions();
+    }
+
     public boolean isChestLinked() {
         return chestLinked;
     }

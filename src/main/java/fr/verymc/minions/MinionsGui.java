@@ -6,6 +6,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.SkullMeta;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -57,5 +58,33 @@ public class MinionsGui {
         minionOpened.put(player.getName(), minion);
         player.openInventory(inv);
 
+    }
+
+    public void openUpgradeShop(Player player, Minion minion){
+        Inventory inv = Bukkit.createInventory(null, 27, "§6Améliorations du minion");
+
+        for(int i=0; i<=6; i++) {
+            ItemStack custom10 = new ItemStack(Material.PLAYER_HEAD, i+1);
+            SkullMeta customi = (SkullMeta) custom10.getItemMeta();
+            customi.setDisplayName("§6Niveau §e"+i);
+            customi.setLore(Arrays.asList("§6Délai de minage: §e"+MinionManager.instance.getMinerDelay(i)+"s","§6Possédé: "+
+                    MinionManager.instance.getBeforeBooleanUpgrade(i, minion).toString().replace("true", "§aoui")
+                            .replace("false", "§cnon")));
+            customi.setOwner("Farmeurimmo");
+            custom10.setItemMeta(customi);
+
+            inv.setItem(10+i, custom10);
+        }
+
+
+        ItemStack custom3 = new ItemStack(Material.ARROW, 1);
+        ItemMeta meta3 = custom3.getItemMeta();
+        meta3.setDisplayName("§6Retour §8| §7(clic gauche)");
+        custom3.setItemMeta(meta3);
+
+        inv.setItem(26, custom3);
+
+        minionOpened.put(player.getName(), minion);
+        player.openInventory(inv);
     }
 }

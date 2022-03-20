@@ -33,6 +33,15 @@ public class MinionManager {
 
     public HashMap<Player, Minion> openedMinion = new HashMap<>();
 
+    public static Integer level1 = 50000;
+    public static Integer level2 = 75000;
+    public static Integer level3 = 100000;
+    public static Integer level4 = 150000;
+    public static Integer level5 = 250000;
+    public static Integer level6 = 500000;
+
+
+
     public MinionManager() {
         instance = this;
         readForMinions();
@@ -53,7 +62,7 @@ public class MinionManager {
             BlockFace blockFace = BlockFace.valueOf(Main.instance.getDataMinion().getString("Minions.mineur." + id + ".blocFace"));
             Block blocChest = null;
             Boolean isChestLinked = Main.instance.getDataMinion().getBoolean("Minions.mineur." + id + ".isChestLinked");
-            if (Main.instance.getDataMinion().getLocation("Minions.mineur." + id + ".chestBloc") != null && isChestLinked) {
+            if (isChestLinked) {
                 blocChest = Main.instance.getDataMinion().getLocation("Minions.mineur." + id + ".blocChest").getBlock();
             }
 
@@ -67,6 +76,7 @@ public class MinionManager {
         custom1.setUnbreakable(true);
         ItemMeta meta1 = custom1.getItemMeta();
         meta1.setDisplayName("§6Minion " + type);
+        meta1.setLore(Arrays.asList("§6Niveau §e0"));
         custom1.setItemMeta(meta1);
 
         player.getInventory().addItem(custom1);
@@ -77,22 +87,52 @@ public class MinionManager {
         custom1.setUnbreakable(true);
         ItemMeta meta1 = custom1.getItemMeta();
         meta1.setDisplayName("§6Minion " + minion.getMinionType().getName(minion.getMinionType()));
-        meta1.setLore(Arrays.asList("§6Niveau: §f" + minion.getLevelInt()));
+        meta1.setLore(Arrays.asList("§6Niveau §e" + minion.getLevelInt()));
         custom1.setItemMeta(meta1);
 
         player.getInventory().addItem(custom1);
     }
 
+    public Boolean getBeforeBooleanUpgrade(Integer level, Minion minion){
+        if(level>minion.getLevelInt()){
+            return false;
+        } else{
+            return true;
+        }
+    }
+
     public Integer getMinerDelay(Integer level) {
-        Integer toReturn = 100;
-        if (level == 0) toReturn = 12;
-        if (level == 1) toReturn = 11;
-        if (level == 2) toReturn = 10;
-        if (level == 3) toReturn = 9;
-        if (level == 4) toReturn = 8;
-        if (level == 5) toReturn = 7;
-        if (level == 6) toReturn = 6;
-        if (level == 7) toReturn = 5;
+        Integer toReturn = 12;
+        if (level == 0) toReturn = 10;
+        if (level == 1) toReturn = 9;
+        if (level == 2) toReturn = 8;
+        if (level == 3) toReturn = 7;
+        if (level == 4) toReturn = 6;
+        if (level == 5) toReturn = 5;
+        if (level == 6) toReturn = 4;
+        return toReturn;
+    }
+
+    public Integer getNextUpgradeCost(Integer level, Integer currentLevel){
+        Integer toReturn = 0;
+        if(currentLevel+1==level) {
+            if (level == 1) toReturn = level1;
+            if (level == 2) toReturn = level2;
+            if (level == 3) toReturn = level3;
+            if (level == 4) toReturn = level4;
+            if (level == 5) toReturn = level5;
+            if (level == 6) toReturn = level6;
+        } else {
+            for(int i=1; i<=level;i++){
+                currentLevel+=1;
+                if (currentLevel == 1) toReturn += level1;
+                if (currentLevel == 2) toReturn += level2;
+                if (currentLevel == 3) toReturn += level3;
+                if (currentLevel == 4) toReturn += level4;
+                if (currentLevel == 5) toReturn += level5;
+                if (currentLevel == 6) toReturn += level6;
+            }
+        }
         return toReturn;
     }
 
@@ -102,7 +142,7 @@ public class MinionManager {
         blocLoc.setDirection(player.getLocation().getDirection());
         Main.instance.getDataMinion().set("Minions.mineur." + id + ".ownerS", player.getName());
         Main.instance.getDataMinion().set("Minions.mineur." + id + ".ownerUUID", player.getUniqueId().toString());
-        Main.instance.getDataMinion().set("Minions.mineur." + id + ".levelInt", levelInt);
+        Main.instance.getDataMinion().set("Minions.mineur." + id + ".levelint", levelInt);
         Main.instance.getDataMinion().set("Minions.mineur." + id + ".blocLoc", blocLoc);
         Main.instance.getDataMinion().set("Minions.mineur." + id + ".minionType", minionType.getName(minionType));
         Main.instance.getDataMinion().set("Minions.mineur." + id + ".blocFace", blockFace.toString());
@@ -110,7 +150,7 @@ public class MinionManager {
         Main.instance.getDataMinion().set("Minions.mineur." + id + ".blocChest", null);
         Main.instance.saveDataMinions();
 
-        Minion minion = new Minion(id, player.getName(), player.getUniqueId(), 0, blocLoc, minionType,
+        Minion minion = new Minion(id, player.getName(), player.getUniqueId(), levelInt, blocLoc, minionType,
                 blockFace, false, null);
 
         final ArmorStand stand = (ArmorStand) minion.getBlocLocation().getWorld().spawnEntity(minion.getBlocLocation(), EntityType.ARMOR_STAND);
