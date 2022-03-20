@@ -16,7 +16,7 @@ public class Minion {
     private Location blocLocation;
     private MinionType minionType;
     private BlockFace blockFace;
-    private boolean chestLinked;
+    private Boolean chestLinked;
     private Block chestBloc;
 
     public Minion(Long id, String ownerS, UUID ownerUUID, Integer levelInt, Location blocLocation, MinionType minionType,
@@ -40,6 +40,12 @@ public class Minion {
         return levelInt;
     }
 
+    public void setLevelInt(Integer newlevel) {
+        levelInt = newlevel;
+        Main.instance.getDataMinion().set("Minions.mineur." + id + ".levelint", newlevel);
+        Main.instance.saveDataMinions();
+    }
+
     public String getOwnerName() {
         return ownerName;
     }
@@ -58,12 +64,6 @@ public class Minion {
 
     public BlockFace getBlockFace() {
         return blockFace;
-    }
-
-    public void setLevelInt(Integer newlevel){
-        levelInt=newlevel;
-        Main.instance.getDataMinion().set("Minions.mineur." + id + ".levelint", newlevel);
-        Main.instance.saveDataMinions();
     }
 
     public boolean isChestLinked() {

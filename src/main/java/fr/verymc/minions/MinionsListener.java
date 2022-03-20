@@ -1,11 +1,8 @@
 package main.java.fr.verymc.minions;
 
-import com.google.common.base.CharMatcher;
 import main.java.fr.verymc.eco.EcoAccountsManager;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.block.Block;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -16,7 +13,6 @@ import org.bukkit.event.block.BlockPistonExtendEvent;
 import org.bukkit.event.block.BlockPistonRetractEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
@@ -42,7 +38,9 @@ public class MinionsListener implements Listener {
                     player.sendMessage("§6§lMinions §8» §fMode édition du coffre du minion §cdésactivé§f.");
                 } else {
                     MinionsGui.instance.linking.add(player);
-                    player.sendMessage("§6§lMinions §8» §fMode édition du coffre du minion §aactivé§f.");
+                    player.sendMessage("§6§lMinions §8» §fMode édition du coffre du minion §aactivé§f. (Pour lier un coffre, " +
+                            "faites sneak + clic droit ou gauche)");
+                    player.closeInventory();
                 }
                 return;
             }
@@ -52,6 +50,7 @@ public class MinionsListener implements Listener {
                 if (MinionsGui.instance.linking.contains(player)) MinionsGui.instance.linking.remove(player);
                 if (MinionsGui.instance.minionOpened.containsKey(player.getName()))
                     MinionsGui.instance.minionOpened.remove(player.getName());
+                player.sendMessage("§6§lMinions §8» §fMinion §arécupéré§f, les niveau de celuix ont été sauvegardés.");
                 player.closeInventory();
                 return;
             }
@@ -66,15 +65,15 @@ public class MinionsListener implements Listener {
             if (!MinionsGui.instance.minionOpened.containsKey(player.getName())) {
                 return;
             }
-            if(currentType==Material.ARROW){
+            if (currentType == Material.ARROW) {
                 MinionsGui.instance.minionMainGui(player, MinionsGui.instance.minionOpened.get(player.getName()));
             }
-            if(currentType==Material.PLAYER_HEAD){
-                int level = current.getAmount()-1;
-                if(!MinionManager.instance.getBeforeBooleanUpgrade(level, MinionsGui.instance.minionOpened.get(player.getName()))){
+            if (currentType == Material.PLAYER_HEAD) {
+                int level = current.getAmount() - 1;
+                if (!MinionManager.instance.getBeforeBooleanUpgrade(level, MinionsGui.instance.minionOpened.get(player.getName()))) {
                     double cost = MinionManager.instance.getNextUpgradeCost(level, MinionsGui.instance.minionOpened.get(player.getName()).getLevelInt());
-                    if(cost>0){
-                        if(EcoAccountsManager.instance.getMoneyUUID(player.getUniqueId())>=cost){
+                    if (cost > 0) {
+                        if (EcoAccountsManager.instance.getMoneyUUID(player.getUniqueId()) >= cost) {
                             EcoAccountsManager.instance.removeFounds(player, cost, true);
                             MinionsGui.instance.minionOpened.get(player.getName()).setLevelInt(level);
                             MinionsGui.instance.openUpgradeShop(player, MinionsGui.instance.minionOpened.get(player.getName()));
@@ -115,7 +114,7 @@ public class MinionsListener implements Listener {
                     && e.getItem().getDisplayName().contains("§6Minion")) {
                 Player player = e.getPlayer();
                 Integer levelInt = 0;
-                if (e.getItem().getLore().size()>=1) {
+                if (e.getItem().getLore().size() >= 1) {
                     String lore1 = e.getItem().getLore().get(0);
                     lore1 = lore1.replace("§6Niveau §e", "");
                     levelInt = Integer.parseInt(lore1);

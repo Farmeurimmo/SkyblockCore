@@ -27,19 +27,15 @@ import java.util.UUID;
 public class MinionManager {
 
     public static MinionManager instance;
-    public ArrayList<Minion> minions = new ArrayList<>();
-
-    public ArrayList<BlockFace> faceBloc = new ArrayList<>();
-
-    public HashMap<Player, Minion> openedMinion = new HashMap<>();
-
     public static Integer level1 = 50000;
     public static Integer level2 = 75000;
     public static Integer level3 = 100000;
     public static Integer level4 = 150000;
     public static Integer level5 = 250000;
     public static Integer level6 = 500000;
-
+    public ArrayList<Minion> minions = new ArrayList<>();
+    public ArrayList<BlockFace> faceBloc = new ArrayList<>();
+    public HashMap<Player, Minion> openedMinion = new HashMap<>();
 
 
     public MinionManager() {
@@ -93,10 +89,10 @@ public class MinionManager {
         player.getInventory().addItem(custom1);
     }
 
-    public Boolean getBeforeBooleanUpgrade(Integer level, Minion minion){
-        if(level>minion.getLevelInt()){
+    public Boolean getBeforeBooleanUpgrade(Integer level, Minion minion) {
+        if (level > minion.getLevelInt()) {
             return false;
-        } else{
+        } else {
             return true;
         }
     }
@@ -113,9 +109,9 @@ public class MinionManager {
         return toReturn;
     }
 
-    public Integer getNextUpgradeCost(Integer level, Integer currentLevel){
+    public Integer getNextUpgradeCost(Integer level, Integer currentLevel) {
         Integer toReturn = 0;
-        if(currentLevel+1==level) {
+        if (currentLevel + 1 == level) {
             if (level == 1) toReturn = level1;
             if (level == 2) toReturn = level2;
             if (level == 3) toReturn = level3;
@@ -123,8 +119,8 @@ public class MinionManager {
             if (level == 5) toReturn = level5;
             if (level == 6) toReturn = level6;
         } else {
-            for(int i=1; i<=level;i++){
-                currentLevel+=1;
+            for (int i = 1; i <= level; i++) {
+                currentLevel += 1;
                 if (currentLevel == 1) toReturn += level1;
                 if (currentLevel == 2) toReturn += level2;
                 if (currentLevel == 3) toReturn += level3;
@@ -179,7 +175,7 @@ public class MinionManager {
         lam5.setColor(Color.fromRGB(249, 128, 29));
         boots.setItemMeta((ItemMeta) lam5);
         equipment.setBoots(boots);
-        equipment.setItemInMainHand(new ItemStack(Material.NETHERITE_PICKAXE));
+        equipment.setItemInMainHand(new ItemStack(Material.DIAMOND_PICKAXE));
 
         equipment.setHelmet(PreGenItems.getHead(player));
 
@@ -188,6 +184,9 @@ public class MinionManager {
         stand.setRightArmPose(new EulerAngle(206.0, 0.0, 0.0));
 
         minions.add(minion);
+
+        player.sendMessage("§6§lMinions §8» §fMinion §aplacé§f, pour qu'il fonctionne, il faut lier un coffre au minion. " +
+                "(Aller dans l'inventaire du minion puis cliquer le coffre)");
     }
 
     public void removeMinion(Minion minion) {

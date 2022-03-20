@@ -36,11 +36,13 @@ public class MinionsGui {
 
         ItemStack custom2 = new ItemStack(Material.CHEST, 1);
         ItemMeta meta2 = custom2.getItemMeta();
-        meta2.setDisplayName("§6Coffre");
-        meta2.setLore(Arrays.asList("§6Coffre lié: "+minion.isChestLinked()));
-        if(minion.isChestLinked() && minion.getChestBloc()!=null){
+        meta2.setDisplayName("§6Coffre du minion");
+        String linked = minion.isChestLinked() + "";
+        meta2.setLore(Arrays.asList("§6Coffre lié: " + linked.replace("true", "§aoui")
+                .replace("false", "§cnon")));
+        if (minion.isChestLinked() && minion.getChestBloc() != null) {
             List<String> lore = meta2.getLore();
-            lore.add("§6Coordonnées x:"+minion.getChestBloc().getX()+" y:"+minion.getChestBloc().getY()+" z:"+minion.getChestBloc().getZ());
+            lore.add("§6Coordonnées §ex:" + minion.getChestBloc().getX() + " y:" + minion.getChestBloc().getY() + " z:" + minion.getChestBloc().getZ());
             meta2.setLore(lore);
         }
         custom2.setItemMeta(meta2);
@@ -48,6 +50,8 @@ public class MinionsGui {
         ItemStack custom3 = new ItemStack(Material.BLAZE_POWDER, 1);
         ItemMeta meta3 = custom3.getItemMeta();
         meta3.setDisplayName("§6Améliorations");
+        meta3.setLore(Arrays.asList("§6Niveau actuel: §e" + minion.getLevelInt(), "§6Délai entre les actions: §e" +
+                MinionManager.instance.getMinerDelay(minion.getLevelInt()) + "s"));
         custom3.setItemMeta(meta3);
 
 
@@ -60,20 +64,24 @@ public class MinionsGui {
 
     }
 
-    public void openUpgradeShop(Player player, Minion minion){
+    public void openUpgradeShop(Player player, Minion minion) {
         Inventory inv = Bukkit.createInventory(null, 27, "§6Améliorations du minion");
 
-        for(int i=0; i<=6; i++) {
-            ItemStack custom10 = new ItemStack(Material.PLAYER_HEAD, i+1);
+        for (int i = 0; i <= 6; i++) {
+            ItemStack custom10 = new ItemStack(Material.PLAYER_HEAD, i + 1);
             SkullMeta customi = (SkullMeta) custom10.getItemMeta();
-            customi.setDisplayName("§6Niveau §e"+i);
-            customi.setLore(Arrays.asList("§6Délai de minage: §e"+MinionManager.instance.getMinerDelay(i)+"s","§6Possédé: "+
+            if (i == 0) {
+                customi.setDisplayName("§6Niveau §e" + i + " (Gratuit)");
+            } else {
+                customi.setDisplayName("§6Niveau §e" + i);
+            }
+            customi.setLore(Arrays.asList("§6Délai de minage: §e" + MinionManager.instance.getMinerDelay(i) + "s", "§6Possédé: " +
                     MinionManager.instance.getBeforeBooleanUpgrade(i, minion).toString().replace("true", "§aoui")
                             .replace("false", "§cnon")));
             customi.setOwner("Farmeurimmo");
             custom10.setItemMeta(customi);
 
-            inv.setItem(10+i, custom10);
+            inv.setItem(10 + i, custom10);
         }
 
 
