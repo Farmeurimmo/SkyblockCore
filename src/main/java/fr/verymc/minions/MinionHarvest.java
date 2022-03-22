@@ -21,7 +21,7 @@ public class MinionHarvest {
 
     public static MinionHarvest instance;
     public HashMap<Minion, Long> lastAction = new HashMap<>();
-    public HashMap<String, Integer> lastWarn = new HashMap<>();
+    public HashMap<Minion, Integer> lastWarn = new HashMap<>();
     public ArrayList<Block> blocksToBreak = new ArrayList<>();
 
     public ArrayList<Material> blockBreakable = new ArrayList<>();
@@ -74,12 +74,12 @@ public class MinionHarvest {
 
     public void invalidChestProcess(Player player, Minion minion) {
         if (player != null && player.isOnline()) {
-            if (!lastWarn.containsKey(player.getName())) {
-                lastWarn.put(player.getName(), 1);
+            if (!lastWarn.containsKey(minion)) {
+                lastWarn.put(minion, 1);
             } else {
-                lastWarn.put(player.getName(), lastWarn.get(player.getName()) + 1);
+                lastWarn.put(minion, lastWarn.get(player.getName()) + 1);
             }
-            if (lastWarn.get(player.getName()) >= 20) {
+            if (lastWarn.get(player.getName()) >= 30) {
                 player.sendMessage("§6§lMinions §8» §cLe minion en x: " + minion.getBlocLocation().getX() +
                         " y: " + minion.getBlocLocation().getY() + " z: " + minion.getBlocLocation().getZ() +
                         " possède un §lcoffre invalide/non définit§c.");
@@ -129,6 +129,10 @@ public class MinionHarvest {
                         Collection<ItemStack> a = block.getDrops();
                         for (ItemStack fda : a) {
                             if (ChunkCollector.GetAmountToFillInInv(fda, blhopper.getInventory()) > 0) {
+                                if (minion.isAutoSmelt()) {
+                                    blhopper.getInventory().addItem(returnCookedItem(fda));
+                                    continue;
+                                }
                                 blhopper.getInventory().addItem(fda);
                                 continue;
                             }
@@ -141,4 +145,24 @@ public class MinionHarvest {
         }, 0);
     }
 
+    public ItemStack returnCookedItem(ItemStack itemStack) {
+        ItemStack toReturnItemStack = null;
+        if (itemStack.getType() == Material.COBBLESTONE) {
+            toReturnItemStack = new ItemStack(Material.STONE, itemStack.getAmount());
+        } else if (itemStack.getType() == Material.COAL_ORE) {
+            toReturnItemStack = new ItemStack(Material.COAL, itemStack.getAmount());
+        } else if (itemStack.getType() == Material.IRON_ORE) {
+            toReturnItemStack = new ItemStack(Material.IRON_INGOT, itemStack.getAmount());
+        } else if (itemStack.getType() == Material.GOLD_ORE) {
+            toReturnItemStack = new ItemStack(Material.STONE, itemStack.getAmount());
+        } else if (itemStack.getType() == Material.DIAMOND_ORE) {
+            toReturnItemStack = new ItemStack(Material.DIAMOND, itemStack.getAmount());
+        } else if (itemStack.getType() == Material.EMERALD_ORE) {
+            toReturnItemStack = new ItemStack(Material.EMERALD, itemStack.getAmount());
+        } else {
+            toReturnItemStack = itemStack;
+        }
+
+        return toReturnItemStack;
+    }
 }

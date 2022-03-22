@@ -1,7 +1,6 @@
 package main.java.fr.verymc.minions;
 
 import main.java.fr.verymc.eco.EcoAccountsManager;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.ArmorStand;
@@ -33,7 +32,8 @@ public class MinionsListener implements Listener {
             if (!MinionsGui.instance.minionOpened.containsKey(player.getName())) {
                 return;
             }
-            if(MinionsGui.instance.minionOpened.get(player.getName()).getOwnerUUID()!=player.getUniqueId()){
+            if (!MinionsGui.instance.minionOpened.get(player.getName()).getOwnerUUID().equals(player.getUniqueId())) {
+                player.closeInventory();
                 return;
             }
             if (currentType == Material.CHEST) {
@@ -62,6 +62,10 @@ public class MinionsListener implements Listener {
                 MinionsGui.instance.openUpgradeShop(player, MinionsGui.instance.minionOpened.get(player.getName()));
                 return;
             }
+            if (currentType == Material.PAPER) {
+                MinionsGui.instance.minionParamGui(player, MinionsGui.instance.minionOpened.get(player.getName()));
+                return;
+            }
             return;
         }
         if (e.getView().getTitle().contains("§6Améliorations du minion")) {
@@ -71,6 +75,7 @@ public class MinionsListener implements Listener {
             }
             if (currentType == Material.ARROW) {
                 MinionsGui.instance.minionMainGui(player, MinionsGui.instance.minionOpened.get(player.getName()));
+                return;
             }
             if (currentType == Material.PLAYER_HEAD) {
                 int level = current.getAmount() - 1;
@@ -81,11 +86,32 @@ public class MinionsListener implements Listener {
                             EcoAccountsManager.instance.removeFounds(player, cost, true);
                             MinionsGui.instance.minionOpened.get(player.getName()).setLevelInt(level);
                             MinionsGui.instance.openUpgradeShop(player, MinionsGui.instance.minionOpened.get(player.getName()));
+                            return;
                         }
                     }
                 }
             }
         }
+        if (e.getView().getTitle().contains("§6Paramètres du minion ")) {
+            e.setCancelled(true);
+            if (!MinionsGui.instance.minionOpened.containsKey(player.getName())) {
+                return;
+            }
+            if (currentType == Material.ARROW) {
+                MinionsGui.instance.minionMainGui(player, MinionsGui.instance.minionOpened.get(player.getName()));
+                return;
+            }
+            if (currentType == Material.FURNACE) {
+                if (MinionsGui.instance.minionOpened.get(player.getName()).isAutoSmelt()) {
+                    MinionsGui.instance.minionOpened.get(player.getName()).setAutoSmelt(false);
+                } else {
+                    MinionsGui.instance.minionOpened.get(player.getName()).setAutoSmelt(true);
+                }
+                MinionsGui.instance.minionParamGui(player, MinionsGui.instance.minionOpened.get(player.getName()));
+                return;
+            }
+        }
+
     }
 
     @EventHandler
@@ -123,13 +149,19 @@ public class MinionsListener implements Listener {
                 return;
             }
             int plcount = 0;
-            for(Minion minion : MinionManager.instance.minions){
-                if(minion.getOwnerUUID()==e.getPlayer().getUniqueId()){
-                    plcount+=1;
+            for (Minion minion : MinionManager.instance.minions) {
+                if (minion.getOwnerUUID() == e.getPlayer().getUniqueId()) {
+                    plcount += 1;
                 }
             }
-            if(plcount>=3){
+            if (plcount >= 3) {
                 return;
+            }
+            for (Minion minions : MinionManager.instance.minions) {
+                if (e.getClickedBlock().getLocation().getBlock().getLocation().add(0, 1, 0).equals(minions.getBlocLocation().getBlock().getLocation())) {
+                    e.setCancelled(true);
+                    return;
+                }
             }
             if (e.getItem().getDisplayName().contains(MinionType.PIOCHEUR.getName(MinionType.PIOCHEUR))
                     && e.getItem().getDisplayName().contains("§6Minion")) {
@@ -165,7 +197,7 @@ public class MinionsListener implements Listener {
     @EventHandler
     public void onPlayerClick(PlayerInteractAtEntityEvent e) {
         Player player = e.getPlayer();
-        if (e.getRightClicked().getType().equals((Object) EntityType.ARMOR_STAND)) {
+        if (e.getRightClicked().getType().equals(EntityType.ARMOR_STAND)) {
             Entity clicked = e.getRightClicked();
             if (!clicked.hasGravity()) {
                 Minion minion = null;
@@ -178,9 +210,8 @@ public class MinionsListener implements Listener {
                 }
                 if (minion == null) return;
                 e.setCancelled(true);
-                player.sendMessage(player.getUniqueId()+"\n"+minion.getOwnerUUID());
-                if(player.getUniqueId()!=minion.getOwnerUUID()){
-                    player.sendMessage("§6§lMinions §8» §fCe minion ne vous appartient pas !");
+                if (!minion.getOwnerUUID().equals(e.getPlayer().getUniqueId())) {
+                    player.sendMessage("§6§lMinions §8» §fCe minion ne vous appartient pas.");
                     return;
                 }
                 MinionsGui.instance.minionMainGui(player, minion);

@@ -61,9 +61,13 @@ public class MinionManager {
             if (isChestLinked) {
                 blocChest = Main.instance.getDataMinion().getLocation("Minions.mineur." + id + ".blocChest").getBlock();
             }
+            Boolean isAutoSmelt = false;
+            if (Main.instance.getDataMinion().get("Minions.mineur." + id + ".isAutoSmelt") != null) {
+                isAutoSmelt = Main.instance.getDataMinion().getBoolean("Minions.mineur." + id + ".isAutoSmelt");
+            }
 
             minions.add(new Minion(idMinion, ownerS, ownerUUID, levelInt, blocLoc, minionType
-                    , blockFace, isChestLinked, blocChest));
+                    , blockFace, isChestLinked, blocChest, isAutoSmelt));
         }
     }
 
@@ -111,7 +115,14 @@ public class MinionManager {
 
     public Integer getNextUpgradeCost(Integer level, Integer currentLevel) {
         Integer toReturn = 0;
-        if (currentLevel + 1 == level) {
+        if (currentLevel == level) {
+            if (level == 1) toReturn = level1;
+            if (level == 2) toReturn = level2;
+            if (level == 3) toReturn = level3;
+            if (level == 4) toReturn = level4;
+            if (level == 5) toReturn = level5;
+            if (level == 6) toReturn = level6;
+        } else if (currentLevel + 1 == level) {
             if (level == 1) toReturn = level1;
             if (level == 2) toReturn = level2;
             if (level == 3) toReturn = level3;
@@ -144,10 +155,11 @@ public class MinionManager {
         Main.instance.getDataMinion().set("Minions.mineur." + id + ".blocFace", blockFace.toString());
         Main.instance.getDataMinion().set("Minions.mineur." + id + ".isChestLinked", false);
         Main.instance.getDataMinion().set("Minions.mineur." + id + ".blocChest", null);
+        Main.instance.getDataMinion().set("Minions.mineur." + id + ".isAutoSmelt", false);
         Main.instance.saveDataMinions();
 
         Minion minion = new Minion(id, player.getName(), player.getUniqueId(), levelInt, blocLoc, minionType,
-                blockFace, false, null);
+                blockFace, false, null, false);
 
         final ArmorStand stand = (ArmorStand) minion.getBlocLocation().getWorld().spawnEntity(minion.getBlocLocation(), EntityType.ARMOR_STAND);
         final EntityEquipment equipment = stand.getEquipment();

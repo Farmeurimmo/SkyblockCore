@@ -29,6 +29,7 @@ public class MinionsCmd implements CommandExecutor {
         if (args[1].equalsIgnoreCase("piocheur")) {
             MinionManager.instance.giveMinionItem(ptarget, MinionType.PIOCHEUR.name());
             ptarget.sendMessage("§6§lMinions §8» §fVous avez reçu §ax1 Minion Piocheur §fdans votre inventaire.");
+            sender.sendMessage("§6§lMinions §8» §fLa cible vient de recevoir §ax1 Minion Piocheur§f.");
             return true;
         }
 

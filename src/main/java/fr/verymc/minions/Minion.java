@@ -18,9 +18,10 @@ public class Minion {
     private BlockFace blockFace;
     private Boolean chestLinked;
     private Block chestBloc;
+    private Boolean isAutoSmelt;
 
     public Minion(Long id, String ownerS, UUID ownerUUID, Integer levelInt, Location blocLocation, MinionType minionType,
-                  BlockFace blockFace, Boolean chestLinked, Block chestBloc) {
+                  BlockFace blockFace, Boolean chestLinked, Block chestBloc, Boolean isAutoSmelt) {
         this.id = id;
         this.ownerName = ownerS;
         this.ownerUUID = ownerUUID;
@@ -30,6 +31,7 @@ public class Minion {
         this.blockFace = blockFace;
         this.chestLinked = chestLinked;
         this.chestBloc = chestBloc;
+        this.isAutoSmelt = isAutoSmelt;
     }
 
     public Long getID() {
@@ -81,4 +83,15 @@ public class Minion {
     public Block getChestBloc() {
         return chestBloc;
     }
+
+    public Boolean isAutoSmelt() {
+        return isAutoSmelt;
+    }
+
+    public void setAutoSmelt(Boolean autoSmelt) {
+        isAutoSmelt = autoSmelt;
+        Main.instance.getDataMinion().set("Minions.mineur." + id + ".isAutoSmelt", autoSmelt);
+        Main.instance.saveDataMinions();
+    }
+
 }

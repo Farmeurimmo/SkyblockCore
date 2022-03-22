@@ -149,7 +149,7 @@ public class AuctionsManager {
             }
             EcoAccountsManager.instance.addFoundsUUID(playeruuid, price, false);
             deListItemFromAh(millis);
-            if(Bukkit.getPlayer(playeruuid)==null){
+            if (Bukkit.getPlayer(playeruuid) == null) {
                 return;
             }
             if (Bukkit.getPlayer(playeruuid).isOnline()) {

@@ -54,9 +54,17 @@ public class MinionsGui {
                 MinionManager.instance.getMinerDelay(minion.getLevelInt()) + "s"));
         custom3.setItemMeta(meta3);
 
+        ItemStack custom4 = new ItemStack(Material.PAPER, 1);
+        ItemMeta meta4 = custom4.getItemMeta();
+        meta4.setDisplayName("§6Paramètres");
+        meta4.setLore(Arrays.asList("§6AutoSmelt: §e" + minion.isAutoSmelt().toString().replace("true", "§aoui")
+                .replace("false", "§cnon")));
+        custom4.setItemMeta(meta4);
+
 
         inv.setItem(10, custom2);
-        inv.setItem(13, custom3);
+        inv.setItem(12, custom3);
+        inv.setItem(14, custom4);
         inv.setItem(16, custom1);
 
         minionOpened.put(player.getName(), minion);
@@ -77,7 +85,7 @@ public class MinionsGui {
             }
             customi.setLore(Arrays.asList("§6Délai de minage: §e" + MinionManager.instance.getMinerDelay(i) + "s", "§6Possédé: " +
                     MinionManager.instance.getBeforeBooleanUpgrade(i, minion).toString().replace("true", "§aoui")
-                            .replace("false", "§cnon"), "§6Prix: "+MinionManager.instance.getNextUpgradeCost(i,i)));
+                            .replace("false", "§cnon"), "§6Prix: §e" + MinionManager.instance.getNextUpgradeCost(i, i)));
             customi.setOwner("Farmeurimmo");
             custom10.setItemMeta(customi);
 
@@ -95,4 +103,31 @@ public class MinionsGui {
         minionOpened.put(player.getName(), minion);
         player.openInventory(inv);
     }
+
+    public void minionParamGui(Player player, Minion minion) {
+
+        Inventory inv = Bukkit.createInventory(null, 27, "§6Paramètres du minion " + minion.getMinionType().getName(minion.getMinionType()));
+
+        ItemStack custom1 = new ItemStack(Material.FURNACE, 1);
+        ItemMeta meta1 = custom1.getItemMeta();
+        meta1.setDisplayName("§6AutoSmelt");
+        meta1.setLore(Arrays.asList("§6Actif: " + minion.isAutoSmelt().toString().replace("true", "§aoui")
+                .replace("false", "§cnon")));
+        custom1.setItemMeta(meta1);
+
+        ItemStack custom3 = new ItemStack(Material.ARROW, 1);
+        ItemMeta meta3 = custom3.getItemMeta();
+        meta3.setDisplayName("§6Retour §8| §7(clic gauche)");
+        custom3.setItemMeta(meta3);
+
+        inv.setItem(26, custom3);
+
+        inv.setItem(10, custom1);
+
+        minionOpened.put(player.getName(), minion);
+        player.openInventory(inv);
+
+    }
+
+
 }
