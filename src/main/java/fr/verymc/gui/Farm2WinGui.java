@@ -187,7 +187,7 @@ public class Farm2WinGui implements Listener {
                                         player.sendMessage("§cErreur, achat indisponible !");
                                     } else {
                                         if (player.hasPermission("group.legende") && player.hasPermission("group.dieu")) {
-                                            RankBuyGui.BuyRank("zeus", player);
+                                            RankBuyGui.BuyRank("Zeus", player);
                                         } else {
                                             player.sendMessage("§cErreur, vous devez posséder tous les grades précédents !");
                                         }

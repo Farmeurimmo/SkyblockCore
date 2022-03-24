@@ -457,7 +457,7 @@ Shops:
     1:
       material: ARROW
       buy: 40
-      sell: 8
+      sell: 7
     3:
       material: BLAZE_ROD
       buy: 55
@@ -465,19 +465,19 @@ Shops:
     4:
       material: BONE
       buy: 60
-      sell: 8
+      sell: 6
     5:
       material: FEATHER
       buy: 65
-      sell: 9
+      sell: 7
     7:
       material: GHAST_TEAR
       buy: 65
-      sell: 20
+      sell: 10
     8:
       material: GUNPOWDER
       buy: 50
-      sell: 8
+      sell: 7
     9:
       material: MAGMA_CREAM
       buy: 40
@@ -493,15 +493,15 @@ Shops:
     12:
       material: RABBIT_FOOT
       buy: 250
-      sell: 55
+      sell: 40
     13:
       material: RABBIT_HIDE
       buy: 65
-      sell: 10
+      sell: 9
     14:
       material: ROTTEN_FLESH
       buy: 45
-      sell: 8
+      sell: 7
     15:
       material: SPIDER_EYE
       buy: 65
@@ -513,7 +513,7 @@ Shops:
     17:
       material: SLIME_BALL
       buy: 70
-      sell: 12
+      sell: 10
     18:
       material: LEATHER
       buy: 60
@@ -521,7 +521,7 @@ Shops:
     19:
       material: ENDER_PEARL
       buy: 60
-      sell: 13
+      sell: 11
 
   ###################
   Minerais:

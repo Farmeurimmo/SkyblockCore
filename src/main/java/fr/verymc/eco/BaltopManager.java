@@ -43,7 +43,7 @@ public class BaltopManager {
                 for (int i = 1; i <= 10; i++) {
                     int toAdd = 10 * (page - 1);
                     if (!pos.containsKey((i + toAdd))) break;
-                    Double aa = Maths.arrondiNDecimales(EcoAccountsManager.instance.getMoney(Bukkit.getOfflinePlayer(pos.get((i + toAdd))).getName()), 2);
+                    String aa = Maths.reducedNumberWithLetter(Maths.arrondiNDecimales(EcoAccountsManager.instance.getMoney(Bukkit.getOfflinePlayer(pos.get((i + toAdd))).getName()), 2));
                     tosend = tosend + "\n§f" + (i + toAdd) + ". §6" + Bukkit.getOfflinePlayer(pos.get((i + toAdd))).getName() + ": " +
                             aa + "$";
                 }

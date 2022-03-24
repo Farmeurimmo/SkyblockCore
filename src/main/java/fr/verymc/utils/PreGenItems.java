@@ -20,7 +20,8 @@ public class PreGenItems {
         SkullMeta customi = (SkullMeta) custom10.getItemMeta();
         customi.setOwner(player.getName());
         customi.setDisplayName("§7" + player.getName());
-        customi.setLore(Arrays.asList("§7Grade: " + Grade, "§7Argent: " + EcoAccountsManager.instance.moneyGetarrondiNDecimales(player, 2)));
+        customi.setLore(Arrays.asList("§7Grade: " + Grade, "§7Argent: " + Maths.reducedNumberWithLetter(EcoAccountsManager.
+                instance.moneyGetarrondiNDecimales(player, 1))));
         custom10.setItemMeta(customi);
         return custom10;
     }

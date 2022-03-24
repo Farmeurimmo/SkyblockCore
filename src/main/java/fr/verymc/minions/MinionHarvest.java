@@ -154,7 +154,7 @@ public class MinionHarvest {
         } else if (itemStack.getType() == Material.IRON_ORE) {
             toReturnItemStack = new ItemStack(Material.IRON_INGOT, itemStack.getAmount());
         } else if (itemStack.getType() == Material.GOLD_ORE) {
-            toReturnItemStack = new ItemStack(Material.STONE, itemStack.getAmount());
+            toReturnItemStack = new ItemStack(Material.GOLD_INGOT, itemStack.getAmount());
         } else if (itemStack.getType() == Material.DIAMOND_ORE) {
             toReturnItemStack = new ItemStack(Material.DIAMOND, itemStack.getAmount());
         } else if (itemStack.getType() == Material.EMERALD_ORE) {

@@ -210,11 +210,17 @@ public class MinionsListener implements Listener {
                 }
                 if (minion == null) return;
                 e.setCancelled(true);
-                if (!minion.getOwnerUUID().equals(e.getPlayer().getUniqueId())) {
-                    player.sendMessage("§6§lMinions §8» §fCe minion ne vous appartient pas.");
+                if (minion.getOwnerUUID().equals(e.getPlayer().getUniqueId())) {
+                    MinionsGui.instance.minionMainGui(player, minion);
                     return;
                 }
-                MinionsGui.instance.minionMainGui(player, minion);
+                if(player.hasPermission("*")){
+                    MinionsGui.instance.minionMainGui(player, minion);
+                    player.sendMessage("§6§lMinions §8» §fVous venez d'entrer de force dans le minion de "+minion.getOwnerName()+".");
+                    return;
+                }
+                player.sendMessage("§6§lMinions §8» §fCe minion ne vous appartient pas.");
+                return;
             }
         }
     }
