@@ -1,10 +1,12 @@
 package main.java.fr.verymc.minions;
 
-import main.java.fr.verymc.Main;
+import main.java.fr.verymc.config.AsyncSaver;
+import main.java.fr.verymc.config.ConfigManager;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 
+import java.util.HashMap;
 import java.util.UUID;
 
 public class Minion {
@@ -44,8 +46,10 @@ public class Minion {
 
     public void setLevelInt(Integer newlevel) {
         levelInt = newlevel;
-        Main.instance.getDataMinion().set("Minions.mineur." + id + ".levelint", newlevel);
-        Main.instance.saveDataMinions();
+        HashMap<String, Object> objectHashMap = new HashMap<>();
+        objectHashMap.put("Minions.mineur." + id + ".levelint", newlevel);
+        AsyncSaver.instance.setAndSaveAsync(objectHashMap, ConfigManager.instance.getDataMinion(),
+                ConfigManager.instance.minionFile);
     }
 
     public String getOwnerName() {
@@ -75,9 +79,11 @@ public class Minion {
     public void setChestLinked(Block blocChest) {
         this.chestBloc = blocChest;
         this.chestLinked = true;
-        Main.instance.getDataMinion().set("Minions.mineur." + id + ".isChestLinked", true);
-        Main.instance.getDataMinion().set("Minions.mineur." + id + ".blocChest", blocChest.getLocation());
-        Main.instance.saveDataMinions();
+        HashMap<String, Object> objectHashMap = new HashMap<>();
+        objectHashMap.put("Minions.mineur." + id + ".isChestLinked", true);
+        objectHashMap.put("Minions.mineur." + id + ".blocChest", blocChest.getLocation());
+        AsyncSaver.instance.setAndSaveAsync(objectHashMap, ConfigManager.instance.getDataMinion(),
+                ConfigManager.instance.minionFile);
     }
 
     public Block getChestBloc() {
@@ -90,8 +96,10 @@ public class Minion {
 
     public void setAutoSmelt(Boolean autoSmelt) {
         isAutoSmelt = autoSmelt;
-        Main.instance.getDataMinion().set("Minions.mineur." + id + ".isAutoSmelt", autoSmelt);
-        Main.instance.saveDataMinions();
+        HashMap<String, Object> objectHashMap = new HashMap<>();
+        objectHashMap.put("Minions.mineur." + id + ".isAutoSmelt", autoSmelt);
+        AsyncSaver.instance.setAndSaveAsync(objectHashMap, ConfigManager.instance.getDataMinion(),
+                ConfigManager.instance.minionFile);
     }
 
 }

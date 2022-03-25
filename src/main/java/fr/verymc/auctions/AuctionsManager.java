@@ -1,6 +1,8 @@
 package main.java.fr.verymc.auctions;
 
 import main.java.fr.verymc.Main;
+import main.java.fr.verymc.config.AsyncSaver;
+import main.java.fr.verymc.config.ConfigManager;
 import main.java.fr.verymc.eco.EcoAccountsManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -106,8 +108,10 @@ public class AuctionsManager {
         if (ahsellerUUID.containsKey(millis)) ahsellerUUID.remove(millis);
         if (ahprice.containsKey(millis)) ahprice.remove(millis);
 
-        Main.instance.getDataah().set("auction." + millis, null);
-        Main.instance.saveDataah();
+        HashMap<String, Object> objectHashMap = new HashMap<>();
+        objectHashMap.put("auction." + millis, null);
+        AsyncSaver.instance.setAndSaveAsync(objectHashMap, ConfigManager.instance.getDataah(),
+                ConfigManager.instance.ahFile);
     }
 
     public void buyItemFromAh(Player player, long millis) {
@@ -290,13 +294,13 @@ public class AuctionsManager {
     }
 
     public void readForAuctions() {
-        if (Main.instance.getDataah().getConfigurationSection("auction") != null) {
-            for (String aa : Main.instance.getDataah().getConfigurationSection("auction").getKeys(false)) {
+        if (ConfigManager.instance.getDataah().getConfigurationSection("auction") != null) {
+            for (String aa : ConfigManager.instance.getDataah().getConfigurationSection("auction").getKeys(false)) {
                 long millis = Long.parseLong(aa);
-                double price = Main.instance.getDataah().getDouble("auction." + millis + ".price");
-                ItemStack tosell = Main.instance.getDataah().getItemStack("auction." + millis + ".itemStack");
-                String seller = Main.instance.getDataah().getString("auction." + millis + ".seller");
-                UUID sellerUUID = UUID.fromString(Main.instance.getDataah().getString("auction." + millis + ".sellerUUID"));
+                double price = ConfigManager.instance.getDataah().getDouble("auction." + millis + ".price");
+                ItemStack tosell = ConfigManager.instance.getDataah().getItemStack("auction." + millis + ".itemStack");
+                String seller = ConfigManager.instance.getDataah().getString("auction." + millis + ".seller");
+                UUID sellerUUID = UUID.fromString(ConfigManager.instance.getDataah().getString("auction." + millis + ".sellerUUID"));
 
                 if (tosell.getLore() == null) {
                     tosell.setLore(Arrays.asList(millis + ""));
@@ -319,11 +323,13 @@ public class AuctionsManager {
     public void addItemToAh(Player player, Double price, ItemStack tosell) {
         Long millis = System.currentTimeMillis();
 
-        Main.instance.getDataah().set("auction." + millis + ".price", price);
-        Main.instance.getDataah().set("auction." + millis + ".itemStack", tosell);
-        Main.instance.getDataah().set("auction." + millis + ".seller", player.getName());
-        Main.instance.getDataah().set("auction." + millis + ".sellerUUID", player.getUniqueId().toString());
-        Main.instance.saveDataah();
+        HashMap<String, Object> objectHashMap = new HashMap<>();
+        objectHashMap.put("auction." + millis + ".price", price);
+        objectHashMap.put("auction." + millis + ".itemStack", tosell);
+        objectHashMap.put("auction." + millis + ".seller", player.getName());
+        objectHashMap.put("auction." + millis + ".sellerUUID", player.getUniqueId().toString());
+        AsyncSaver.instance.setAndSaveAsync(objectHashMap, ConfigManager.instance.getDataah(),
+                ConfigManager.instance.ahFile);
 
         if (tosell.getLore() == null) {
             tosell.setLore(Arrays.asList(millis + ""));

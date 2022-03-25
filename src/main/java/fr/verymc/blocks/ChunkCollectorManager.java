@@ -1,6 +1,6 @@
 package main.java.fr.verymc.blocks;
 
-import main.java.fr.verymc.Main;
+import main.java.fr.verymc.config.ConfigManager;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -15,10 +15,10 @@ public class ChunkCollectorManager {
 
     public static void GiveChest(Player player, int i) {
         int a = 0;
-        if (Main.instance.getDatablc().get("ChunkHoppeur.num") == null) {
+        if (ConfigManager.instance.getDataBloc().get("ChunkHoppeur.num") == null) {
             a = 1;
         } else {
-            a = Main.instance.getDatablc().getInt("ChunkHoppeur.num");
+            a = ConfigManager.instance.getDataBloc().getInt("ChunkHoppeur.num");
             a += 1;
         }
         ItemStack aa = new ItemStack(Material.HOPPER);
@@ -26,8 +26,8 @@ public class ChunkCollectorManager {
         if (i > 0) {
             a = i;
         } else {
-            Main.instance.getDatablc().set("ChunkHoppeur.num", a);
-            Main.instance.saveData();
+            ConfigManager.instance.getDataBloc().set("ChunkHoppeur.num", a);
+            ConfigManager.instance.saveData();
         }
         ameta.setDisplayName("§6Chunk Hoppeur §c(id#" + a + ")");
         aa.setUnbreakable(true);
@@ -37,21 +37,21 @@ public class ChunkCollectorManager {
     }
 
     public static void PlaceChest(Player player, Long chunkkey, Location block, int num) {
-        Main.instance.getDatablc().set("ChunkHoppeur." + chunkkey + "." + num, block);
-        Main.instance.saveData();
+        ConfigManager.instance.getDataBloc().set("ChunkHoppeur." + chunkkey + "." + num, block);
+        ConfigManager.instance.saveData();
         blcchunk.put(block, chunkkey);
     }
 
     public static void ReadFromFile() {
-        if (!Main.instance.getDatablc().isSet("ChunkHoppeur")) {
+        if (!ConfigManager.instance.getDataBloc().isSet("ChunkHoppeur")) {
             return;
         }
-        for (String aa : Main.instance.getDatablc().getConfigurationSection("ChunkHoppeur").getKeys(false)) {
+        for (String aa : ConfigManager.instance.getDataBloc().getConfigurationSection("ChunkHoppeur").getKeys(false)) {
             if (aa.contains("num")) {
                 continue;
             }
-            for (String bb : Main.instance.getDatablc().getConfigurationSection("ChunkHoppeur." + aa).getKeys(false)) {
-                blcchunk.put(Main.instance.getDatablc().getLocation("ChunkHoppeur." + aa + "." + bb), Long.parseLong(aa.replace("'", "")));
+            for (String bb : ConfigManager.instance.getDataBloc().getConfigurationSection("ChunkHoppeur." + aa).getKeys(false)) {
+                blcchunk.put(ConfigManager.instance.getDataBloc().getLocation("ChunkHoppeur." + aa + "." + bb), Long.parseLong(aa.replace("'", "")));
             }
         }
     }

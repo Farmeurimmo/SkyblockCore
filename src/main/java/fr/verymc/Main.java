@@ -15,6 +15,7 @@ import main.java.fr.verymc.challenges.ChallengesGuis;
 import main.java.fr.verymc.challenges.ChallengesReset;
 import main.java.fr.verymc.cmd.base.*;
 import main.java.fr.verymc.cmd.moderation.*;
+import main.java.fr.verymc.config.ConfigManager;
 import main.java.fr.verymc.crates.CratesManager;
 import main.java.fr.verymc.crates.KeyCmd;
 import main.java.fr.verymc.eco.EcoAccountsManager;
@@ -44,17 +45,12 @@ import main.java.fr.verymc.winelottery.WineSpawn;
 import net.luckperms.api.LuckPerms;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.configuration.InvalidConfigurationException;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -67,18 +63,6 @@ public class Main extends JavaPlugin implements Listener {
     public ArrayList<Player> haverequest = new ArrayList<Player>();
     public HashMap<String, String> tpatarget = new HashMap<>();
     public EconomyImplementer economyImplementer;
-    public FileConfiguration data;
-    public FileConfiguration datac;
-    public FileConfiguration dataz;
-    public FileConfiguration datablc;
-    public FileConfiguration dataah;
-    public FileConfiguration dataMinion;
-    public File dfile;
-    public File cfile;
-    public File zfile;
-    public File blcfile;
-    public File ahfile;
-    public File minionFile;
     private VaultHook vaultHook;
 
     public void setTarget(String uuid, String aaa) {
@@ -147,7 +131,7 @@ public class Main extends JavaPlugin implements Listener {
         System.out.println("-----------------------------------------------------------------------------------------------------");
 
         System.out.println("Initialisation des MODULES en cours...");
-        setup();
+        new ConfigManager();
         System.out.println("Fichier yml DONE | NEXT Methods init");
 
         BuildCmd.Build.clear();
@@ -301,189 +285,6 @@ public class Main extends JavaPlugin implements Listener {
         System.out.println("-----------------------------------------------------------------------------------------------------");
     }
 
-    public void setup() {
-        dfile = new File(this.getDataFolder(), "Challenges.yml");
-        cfile = new File(this.getDataFolder(), "Fly.yml");
-        zfile = new File(this.getDataFolder(), "Eco.yml");
-        blcfile = new File(this.getDataFolder(), "Block.yml");
-        ahfile = new File(this.getDataFolder(), "auctions.yml");
-        minionFile = new File(this.getDataFolder(), "minions.yml");
-
-        if (!dfile.exists()) {
-            try {
-                dfile.createNewFile();
-            } catch (IOException e) {
-                getLogger().info("§c§lErreur lors de la création de challenges.yml");
-            }
-        }
-
-        data = YamlConfiguration.loadConfiguration(dfile);
-
-        if (!cfile.exists()) {
-            try {
-                cfile.createNewFile();
-            } catch (IOException e) {
-                getLogger().info("§c§lErreur lors de la création de fly.yml");
-            }
-        }
-
-        datac = YamlConfiguration.loadConfiguration(cfile);
-
-        if (!zfile.exists()) {
-            try {
-                zfile.createNewFile();
-            } catch (IOException e) {
-                getLogger().info("§c§lErreur lors de la création de eco.yml");
-            }
-        }
-
-        dataz = YamlConfiguration.loadConfiguration(zfile);
-
-        if (!blcfile.exists()) {
-            try {
-                blcfile.createNewFile();
-            } catch (IOException e) {
-                getLogger().info("§c§lErreur lors de la création de block.yml");
-            }
-        }
-
-        datablc = YamlConfiguration.loadConfiguration(blcfile);
-
-        if (!ahfile.exists()) {
-            try {
-                ahfile.createNewFile();
-            } catch (IOException e) {
-                getLogger().info("§c§lErreur lors de la création de auctions.yml");
-            }
-        }
-
-        dataah = YamlConfiguration.loadConfiguration(ahfile);
-
-        if (!minionFile.exists()) {
-            try {
-                minionFile.createNewFile();
-            } catch (IOException e) {
-                getLogger().info("§c§lErreur lors de la création de minions.yml");
-            }
-        }
-
-        dataMinion = YamlConfiguration.loadConfiguration(minionFile);
-
-
-    }
-
-    public FileConfiguration getDatac() {
-        return datac;
-    }
-
-    public FileConfiguration getData() {
-        return data;
-    }
-
-    public FileConfiguration getDataz() {
-        return dataz;
-    }
-
-    public FileConfiguration getDatablc() {
-        return datablc;
-    }
-
-    public FileConfiguration getDataah() {
-        return dataah;
-    }
-
-    public FileConfiguration getDataMinion() {
-        return dataMinion;
-    }
-
-
-    public void reloadData() throws IOException {
-        try {
-            data.load(dfile);
-        } catch (InvalidConfigurationException e) {
-            getLogger().info("§c§lErreur lors de la sauvegarde!");
-            e.printStackTrace();
-        }
-        try {
-            datac.load(cfile);
-        } catch (InvalidConfigurationException e) {
-            getLogger().info("§c§lErreur lors de la sauvegarde!");
-            e.printStackTrace();
-        }
-        try {
-            dataz.load(zfile);
-        } catch (InvalidConfigurationException e) {
-            getLogger().info("§c§lErreur lors de la sauvegarde!");
-            e.printStackTrace();
-        }
-        try {
-            datablc.load(blcfile);
-        } catch (InvalidConfigurationException e) {
-            getLogger().info("§c§lErreur lors de la sauvegarde!");
-            e.printStackTrace();
-        }
-        try {
-            dataah.load(ahfile);
-        } catch (InvalidConfigurationException e) {
-            getLogger().info("§c§lErreur lors de la sauvegarde!");
-            e.printStackTrace();
-        }
-        try {
-            dataMinion.load(minionFile);
-        } catch (InvalidConfigurationException e) {
-            getLogger().info("§c§lErreur lors de la sauvegarde!");
-            e.printStackTrace();
-        }
-    }
-
-    public void saveData() {
-        try {
-            datablc.save(blcfile);
-        } catch (IOException e) {
-            getLogger().info("§c§lErreur lors de la sauvegarde!");
-        }
-    }
-
-    public void saveDataChallenges() {
-        try {
-            data.save(dfile);
-        } catch (IOException e) {
-            getLogger().info("§c§lErreur lors de la sauvegarde!");
-        }
-    }
-
-    public void saveDataEco() {
-        try {
-            dataz.save(zfile);
-        } catch (IOException e) {
-            getLogger().info("§c§lErreur lors de la sauvegarde!");
-        }
-    }
-
-    public void saveDataah() {
-        try {
-            dataah.save(ahfile);
-        } catch (IOException e) {
-            getLogger().info("§c§lErreur lors de la sauvegarde!");
-        }
-    }
-
-    public void saveDataMinions() {
-        try {
-            dataMinion.save(minionFile);
-        } catch (IOException e) {
-            getLogger().info("§c§lErreur lors de la sauvegarde!");
-        }
-    }
-
-
-    public void saveDatac() {
-        try {
-            datac.save(cfile);
-        } catch (IOException e) {
-            getLogger().info("§c§lErreur lors de la sauvegarde!");
-        }
-    }
 }
 
 

@@ -1,6 +1,7 @@
 package main.java.fr.verymc.eco;
 
-import main.java.fr.verymc.Main;
+import main.java.fr.verymc.config.AsyncSaver;
+import main.java.fr.verymc.config.ConfigManager;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
@@ -18,15 +19,17 @@ public class EcoAccountsManager {
     }
 
     public void checkForAccount(Player player) {
-        if (Main.instance.getDataz().get(String.valueOf(player.getUniqueId())) == null) {
-            Main.instance.getDataz().set(String.valueOf(player.getUniqueId()), 200);
-            Main.instance.saveDataEco();
-            Moneys.put(player.getUniqueId(), Main.instance.getDataz().getDouble(String.valueOf(player.getUniqueId())));
+        if (ConfigManager.instance.getDataEco().get(String.valueOf(player.getUniqueId())) == null) {
+            HashMap<String, Object> objectHashMap = new HashMap<>();
+            objectHashMap.put(String.valueOf(player.getUniqueId()), 200);
+            AsyncSaver.instance.setAndSaveAsync(objectHashMap, ConfigManager.instance.getDataEco(),
+                    ConfigManager.instance.ecoFile);
+            Moneys.put(player.getUniqueId(), ConfigManager.instance.getDataEco().getDouble(String.valueOf(player.getUniqueId())));
         }
     }
 
     public boolean isExisting(Player player) {
-        boolean a = Main.instance.getDataz().get(String.valueOf(player.getUniqueId())) != null;
+        boolean a = ConfigManager.instance.getDataEco().get(String.valueOf(player.getUniqueId())) != null;
         return a;
     }
 
@@ -76,8 +79,10 @@ public class EcoAccountsManager {
         if (moneybefore >= toremove) {
             double now = moneybefore - toremove;
             Moneys.put(player.getUniqueId(), now);
-            Main.instance.getDataz().set(String.valueOf(player.getUniqueId()), now);
-            Main.instance.saveDataEco();
+            HashMap<String, Object> objectHashMap = new HashMap<>();
+            objectHashMap.put(String.valueOf(player.getUniqueId()), now);
+            AsyncSaver.instance.setAndSaveAsync(objectHashMap, ConfigManager.instance.getDataEco(),
+                    ConfigManager.instance.ecoFile);
             if (player != null) {
                 if (ase == true)
                     player.sendMessage("§6§lMonnaie §8» §6" + toremove + "$§f ont été §cretiré §fde votre compte.");
@@ -91,8 +96,10 @@ public class EcoAccountsManager {
 
     public void setFounds(Player player, Double toset) {
         Moneys.put(player.getUniqueId(), toset);
-        Main.instance.getDataz().set(String.valueOf(player.getUniqueId()), toset);
-        Main.instance.saveDataEco();
+        HashMap<String, Object> objectHashMap = new HashMap<>();
+        objectHashMap.put(String.valueOf(player.getUniqueId()), toset);
+        AsyncSaver.instance.setAndSaveAsync(objectHashMap, ConfigManager.instance.getDataEco(),
+                ConfigManager.instance.ecoFile);
         if (player != null) {
             player.sendMessage("§6§lMonnaie §8» §fVotre argent a été §adéfinis§f sur §6" + toset + "$§f.");
         }
@@ -103,8 +110,10 @@ public class EcoAccountsManager {
         if (moneybefore < Double.MAX_VALUE - aaa) {
             double now = getMoney(player.getName()) + aaa;
             Moneys.put(player.getUniqueId(), now);
-            Main.instance.getDataz().set(String.valueOf(player.getUniqueId()), now);
-            Main.instance.saveDataEco();
+            HashMap<String, Object> objectHashMap = new HashMap<>();
+            objectHashMap.put(String.valueOf(player.getUniqueId()), now);
+            AsyncSaver.instance.setAndSaveAsync(objectHashMap, ConfigManager.instance.getDataEco(),
+                    ConfigManager.instance.ecoFile);
             if (player != null) {
                 if (dd == true)
                     player.sendMessage("§6§lMonnaie §8» §6" + aaa + "$§f ont été §aajouté §f§ votre compte.");
@@ -122,8 +131,10 @@ public class EcoAccountsManager {
         if (moneybefore < Double.MAX_VALUE - aaa) {
             double now = getMoneyUUID(player) + aaa;
             Moneys.put(player, now);
-            Main.instance.getDataz().set(String.valueOf(player), now);
-            Main.instance.saveDataEco();
+            HashMap<String, Object> objectHashMap = new HashMap<>();
+            objectHashMap.put(String.valueOf(player), now);
+            AsyncSaver.instance.setAndSaveAsync(objectHashMap, ConfigManager.instance.getDataEco(),
+                    ConfigManager.instance.ecoFile);
             if (dd == true && Bukkit.getPlayer(player) != null) {
                 Bukkit.getPlayer(player).sendMessage("§6§lMonnaie §8» §6" + aaa + "$§f ont été §aajouté §f§ votre compte.");
             }
@@ -131,8 +142,8 @@ public class EcoAccountsManager {
     }
 
     public void updateHash() {
-        for (String aa : Main.instance.getDataz().getConfigurationSection("").getKeys(false)) {
-            Moneys.put(UUID.fromString(aa), Main.instance.getDataz().getDouble(aa));
+        for (String aa : ConfigManager.instance.getDataEco().getConfigurationSection("").getKeys(false)) {
+            Moneys.put(UUID.fromString(aa), ConfigManager.instance.getDataEco().getDouble(aa));
         }
     }
 }

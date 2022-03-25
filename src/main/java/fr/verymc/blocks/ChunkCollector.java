@@ -1,6 +1,6 @@
 package main.java.fr.verymc.blocks;
 
-import main.java.fr.verymc.Main;
+import main.java.fr.verymc.config.ConfigManager;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Hopper;
@@ -77,8 +77,8 @@ public class ChunkCollector implements Listener {
             ChunkCollectorManager.GiveChest(e.getPlayer(), Integer.parseInt(numberOnly));
             e.setDropItems(false);
             Location tda = null;
-            Main.instance.getDatablc().set("ChunkHoppeur." + blhopper.getLocation().getChunk().getChunkKey() + "." + numberOnly, tda);
-            Main.instance.saveData();
+            ConfigManager.instance.getDataBloc().set("ChunkHoppeur." + blhopper.getLocation().getChunk().getChunkKey() + "." + numberOnly, tda);
+            ConfigManager.instance.saveData();
         }
     }
 

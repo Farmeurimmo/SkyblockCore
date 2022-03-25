@@ -1,6 +1,8 @@
 package main.java.fr.verymc.minions;
 
 import main.java.fr.verymc.Main;
+import main.java.fr.verymc.config.AsyncSaver;
+import main.java.fr.verymc.config.ConfigManager;
 import main.java.fr.verymc.utils.PreGenItems;
 import org.bukkit.Bukkit;
 import org.bukkit.Color;
@@ -19,10 +21,8 @@ import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.util.EulerAngle;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.UUID;
+import java.io.IOException;
+import java.util.*;
 
 public class MinionManager {
 
@@ -45,30 +45,34 @@ public class MinionManager {
     }
 
     public void readForMinions() {
-        if (Main.instance.getDataMinion().getConfigurationSection("Minions.mineur") == null) {
+        if (ConfigManager.instance.getDataMinion().getConfigurationSection("Minions.mineur") == null) {
             return;
         }
-        for (String id : Main.instance.getDataMinion().getConfigurationSection("Minions.mineur").getKeys(false)) {
-            Long idMinion = Long.parseLong(id);
-            String ownerS = Main.instance.getDataMinion().getString("Minions.mineur." + id + ".ownerS");
-            UUID ownerUUID = UUID.fromString(Main.instance.getDataMinion().getString("Minions.mineur." + id + ".ownerUUID"));
-            Integer levelInt = Main.instance.getDataMinion().getInt("Minions.mineur." + id + ".levelint");
-            Location blocLoc = Main.instance.getDataMinion().getLocation("Minions.mineur." + id + ".blocLoc");
-            MinionType minionType = MinionType.valueOf(Main.instance.getDataMinion().getString("Minions.mineur." + id + ".minionType"));
-            BlockFace blockFace = BlockFace.valueOf(Main.instance.getDataMinion().getString("Minions.mineur." + id + ".blocFace"));
-            Block blocChest = null;
-            Boolean isChestLinked = Main.instance.getDataMinion().getBoolean("Minions.mineur." + id + ".isChestLinked");
-            if (isChestLinked) {
-                blocChest = Main.instance.getDataMinion().getLocation("Minions.mineur." + id + ".blocChest").getBlock();
-            }
-            Boolean isAutoSmelt = false;
-            if (Main.instance.getDataMinion().get("Minions.mineur." + id + ".isAutoSmelt") != null) {
-                isAutoSmelt = Main.instance.getDataMinion().getBoolean("Minions.mineur." + id + ".isAutoSmelt");
-            }
+        Bukkit.getServer().getScheduler().scheduleAsyncDelayedTask(Main.instance, new Runnable() {
+            public void run() {
+                for (String id : ConfigManager.instance.getDataMinion().getConfigurationSection("Minions.mineur").getKeys(false)) {
+                    Long idMinion = Long.parseLong(id);
+                    String ownerS = ConfigManager.instance.getDataMinion().getString("Minions.mineur." + id + ".ownerS");
+                    UUID ownerUUID = UUID.fromString(ConfigManager.instance.getDataMinion().getString("Minions.mineur." + id + ".ownerUUID"));
+                    Integer levelInt = ConfigManager.instance.getDataMinion().getInt("Minions.mineur." + id + ".levelint");
+                    Location blocLoc = ConfigManager.instance.getDataMinion().getLocation("Minions.mineur." + id + ".blocLoc");
+                    MinionType minionType = MinionType.valueOf(ConfigManager.instance.getDataMinion().getString("Minions.mineur." + id + ".minionType"));
+                    BlockFace blockFace = BlockFace.valueOf(ConfigManager.instance.getDataMinion().getString("Minions.mineur." + id + ".blocFace"));
+                    Block blocChest = null;
+                    Boolean isChestLinked = ConfigManager.instance.getDataMinion().getBoolean("Minions.mineur." + id + ".isChestLinked");
+                    if (isChestLinked) {
+                        blocChest = ConfigManager.instance.getDataMinion().getLocation("Minions.mineur." + id + ".blocChest").getBlock();
+                    }
+                    Boolean isAutoSmelt = false;
+                    if (ConfigManager.instance.getDataMinion().get("Minions.mineur." + id + ".isAutoSmelt") != null) {
+                        isAutoSmelt = ConfigManager.instance.getDataMinion().getBoolean("Minions.mineur." + id + ".isAutoSmelt");
+                    }
 
-            minions.add(new Minion(idMinion, ownerS, ownerUUID, levelInt, blocLoc, minionType
-                    , blockFace, isChestLinked, blocChest, isAutoSmelt));
-        }
+                    minions.add(new Minion(idMinion, ownerS, ownerUUID, levelInt, blocLoc, minionType
+                            , blockFace, isChestLinked, blocChest, isAutoSmelt));
+                }
+            }
+        }, 0);
     }
 
     public void giveMinionItem(Player player, String type) {
@@ -147,16 +151,19 @@ public class MinionManager {
         Long id = System.currentTimeMillis();
         blocLoc.add(0.5, 1, 0.5);
         blocLoc.setDirection(player.getLocation().getDirection());
-        Main.instance.getDataMinion().set("Minions.mineur." + id + ".ownerS", player.getName());
-        Main.instance.getDataMinion().set("Minions.mineur." + id + ".ownerUUID", player.getUniqueId().toString());
-        Main.instance.getDataMinion().set("Minions.mineur." + id + ".levelint", levelInt);
-        Main.instance.getDataMinion().set("Minions.mineur." + id + ".blocLoc", blocLoc);
-        Main.instance.getDataMinion().set("Minions.mineur." + id + ".minionType", minionType.getName(minionType));
-        Main.instance.getDataMinion().set("Minions.mineur." + id + ".blocFace", blockFace.toString());
-        Main.instance.getDataMinion().set("Minions.mineur." + id + ".isChestLinked", false);
-        Main.instance.getDataMinion().set("Minions.mineur." + id + ".blocChest", null);
-        Main.instance.getDataMinion().set("Minions.mineur." + id + ".isAutoSmelt", false);
-        Main.instance.saveDataMinions();
+
+        HashMap<String, Object> objectHashMap = new HashMap<>();
+        objectHashMap.put("Minions.mineur." + id + ".ownerS", player.getName());
+        objectHashMap.put("Minions.mineur." + id + ".ownerUUID", player.getUniqueId().toString());
+        objectHashMap.put("Minions.mineur." + id + ".levelint", levelInt);
+        objectHashMap.put("Minions.mineur." + id + ".blocLoc", blocLoc);
+        objectHashMap.put("Minions.mineur." + id + ".minionType", minionType.getName(minionType));
+        objectHashMap.put("Minions.mineur." + id + ".blocFace", blockFace.toString());
+        objectHashMap.put("Minions.mineur." + id + ".isChestLinked", false);
+        objectHashMap.put("Minions.mineur." + id + ".blocChest", null);
+        objectHashMap.put("Minions.mineur." + id + ".isAutoSmelt", false);
+        AsyncSaver.instance.setAndSaveAsync(objectHashMap, ConfigManager.instance.getDataMinion(),
+                ConfigManager.instance.minionFile);
 
         Minion minion = new Minion(id, player.getName(), player.getUniqueId(), levelInt, blocLoc, minionType,
                 blockFace, false, null, false);
@@ -211,8 +218,10 @@ public class MinionManager {
             }
         }
 
-        Main.instance.getDataMinion().set("Minions.mineur." + minion.getID(), null);
-        Main.instance.saveDataMinions();
+        HashMap<String, Object> objectHashMap = new HashMap<>();
+        objectHashMap.put("Minions.mineur." + minion.getID(), null);
+        AsyncSaver.instance.setAndSaveAsync(objectHashMap, ConfigManager.instance.getDataMinion(),
+                ConfigManager.instance.minionFile);
 
         minions.remove(minion);
     }

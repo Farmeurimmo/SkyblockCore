@@ -1,6 +1,7 @@
 package main.java.fr.verymc.blocks;
 
 import main.java.fr.verymc.Main;
+import main.java.fr.verymc.config.ConfigManager;
 import main.java.fr.verymc.eco.EcoAccountsManager;
 import main.java.fr.verymc.shopgui.BuyShopItem;
 import org.bukkit.Bukkit;
@@ -72,10 +73,10 @@ public class SellChestManager {
 
     public static void GiveSellChest(Player player, int i) {
         int a = 0;
-        if (Main.instance.getDatablc().get("SellChest.num") == null) {
+        if (ConfigManager.instance.getDataBloc().get("SellChest.num") == null) {
             a = 1;
         } else {
-            a = Main.instance.getDatablc().getInt("SellChest.num");
+            a = ConfigManager.instance.getDataBloc().getInt("SellChest.num");
             a += 1;
         }
         ItemStack aa = new ItemStack(Material.CHEST);
@@ -83,8 +84,8 @@ public class SellChestManager {
         if (i > 0) {
             a = i;
         } else {
-            Main.instance.getDatablc().set("SellChest.num", a);
-            Main.instance.saveData();
+            ConfigManager.instance.getDataBloc().set("SellChest.num", a);
+            ConfigManager.instance.saveData();
         }
         ameta.setDisplayName("§6SellChest §c(id#" + a + ")");
         aa.setUnbreakable(true);
@@ -94,8 +95,8 @@ public class SellChestManager {
     }
 
     public static void PlaceChest(Player player, Location block, int num) {
-        Main.instance.getDatablc().set("SellChest." + player.getUniqueId() + "." + num, block);
-        Main.instance.saveData();
+        ConfigManager.instance.getDataBloc().set("SellChest." + player.getUniqueId() + "." + num, block);
+        ConfigManager.instance.saveData();
         blcsellchest.put(block, player.getUniqueId());
     }
 
@@ -104,15 +105,15 @@ public class SellChestManager {
     }
 
     public static void ReadFromFile() {
-        if (!Main.instance.getDatablc().isSet("SellChest")) {
+        if (!ConfigManager.instance.getDataBloc().isSet("SellChest")) {
             return;
         }
-        for (String aa : Main.instance.getDatablc().getConfigurationSection("SellChest").getKeys(false)) {
+        for (String aa : ConfigManager.instance.getDataBloc().getConfigurationSection("SellChest").getKeys(false)) {
             if (aa.contains("num")) {
                 continue;
             }
-            for (String bb : Main.instance.getDatablc().getConfigurationSection("SellChest." + aa).getKeys(false)) {
-                blcsellchest.put(Main.instance.getDatablc().getLocation("SellChest." + aa + "." + bb), UUID.fromString(aa));
+            for (String bb : ConfigManager.instance.getDataBloc().getConfigurationSection("SellChest." + aa).getKeys(false)) {
+                blcsellchest.put(ConfigManager.instance.getDataBloc().getLocation("SellChest." + aa + "." + bb), UUID.fromString(aa));
             }
         }
     }
