@@ -30,6 +30,7 @@ public class SellChest implements Listener {
         }
         if (e.getBlock().getType() == Material.CHEST) {
             Chest blhopper = (Chest) e.getBlock().getState();
+            if (blhopper.getCustomName() == null) return;
             if (!blhopper.getCustomName().contains("§6SellChest")) {
                 return;
             }

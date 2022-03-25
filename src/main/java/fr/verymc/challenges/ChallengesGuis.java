@@ -37,7 +37,7 @@ public class ChallengesGuis implements Listener {
             } else {
                 Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily." + nombre + ".Active", true);
             }
-            Main.instance.saveData();
+            Main.instance.saveDataChallenges();
 
             player.playSound(player.getLocation(), Sound.UI_TOAST_CHALLENGE_COMPLETE, 5, 1);
             player.sendMessage("§6§lChallenges §8» §fVous venez de compléter le challenge journalier n°§6" + nombre +

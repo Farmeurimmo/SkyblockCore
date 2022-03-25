@@ -28,79 +28,79 @@ public class ChallengesReset {
             Main.instance.getData().set("Joueurs." + aa + ".Challenges.Daily.1.Active", true);
             Main.instance.getData().set("Joueurs." + aa + ".Challenges.Daily.1.Progression", 0);
             Main.instance.getData().set("Joueurs." + aa + ".Challenges.Daily.1.Palier", 1);
-            Main.instance.saveData();
+            Main.instance.saveDataChallenges();
         }
         if (Main.instance.getData().getString("Joueurs." + aa + ".Challenges.Daily.2.Active") == null) {
             Main.instance.getData().set("Joueurs." + aa + ".Challenges.Daily.2.Active", true);
             Main.instance.getData().set("Joueurs." + aa + ".Challenges.Daily.2.Progression", 0);
             Main.instance.getData().set("Joueurs." + aa + ".Challenges.Daily.2.Palier", 1);
-            Main.instance.saveData();
+            Main.instance.saveDataChallenges();
         }
         if (Main.instance.getData().getString("Joueurs." + aa + ".Challenges.Daily.3.Active") == null) {
             Main.instance.getData().set("Joueurs." + aa + ".Challenges.Daily.3.Active", true);
             Main.instance.getData().set("Joueurs." + aa + ".Challenges.Daily.3.Progression", 0);
             Main.instance.getData().set("Joueurs." + aa + ".Challenges.Daily.3.Palier", 1);
-            Main.instance.saveData();
+            Main.instance.saveDataChallenges();
         }
         if (Main.instance.getData().getString("Joueurs." + aa + ".Challenges.Daily.4.Active") == null) {
             Main.instance.getData().set("Joueurs." + aa + ".Challenges.Daily.4.Active", true);
             Main.instance.getData().set("Joueurs." + aa + ".Challenges.Daily.4.Progression", 0);
             Main.instance.getData().set("Joueurs." + aa + ".Challenges.Daily.4.Palier", 1);
-            Main.instance.saveData();
+            Main.instance.saveDataChallenges();
         }
         if (Main.instance.getData().getString("Joueurs." + aa + ".Challenges.Daily.5.Active") == null) {
             Main.instance.getData().set("Joueurs." + aa + ".Challenges.Daily.5.Active", true);
             Main.instance.getData().set("Joueurs." + aa + ".Challenges.Daily.5.Progression", 0);
             Main.instance.getData().set("Joueurs." + aa + ".Challenges.Daily.5.Palier", 1);
-            Main.instance.saveData();
+            Main.instance.saveDataChallenges();
         }
         if (Main.instance.getData().getString("Joueurs." + aa + ".Challenges.Daily.6.Active") == null) {
             Main.instance.getData().set("Joueurs." + aa + ".Challenges.Daily.6.Active", true);
             Main.instance.getData().set("Joueurs." + aa + ".Challenges.Daily.6.Progression", 0);
             Main.instance.getData().set("Joueurs." + aa + ".Challenges.Daily.6.Palier", 1);
-            Main.instance.saveData();
+            Main.instance.saveDataChallenges();
         }
         if (Main.instance.getData().getString("Joueurs." + aa + ".Challenges.Daily.7.Active") == null) {
             Main.instance.getData().set("Joueurs." + aa + ".Challenges.Daily.7.Active", true);
             Main.instance.getData().set("Joueurs." + aa + ".Challenges.Daily.7.Progression", 0);
             Main.instance.getData().set("Joueurs." + aa + ".Challenges.Daily.7.Palier", 1);
-            Main.instance.saveData();
+            Main.instance.saveDataChallenges();
         }
         if (Main.instance.getData().getString("Joueurs." + aa + ".Challenges.Daily.8.Active") == null) {
             Main.instance.getData().set("Joueurs." + aa + ".Challenges.Daily.8.Active", true);
             Main.instance.getData().set("Joueurs." + aa + ".Challenges.Daily.8.Progression", 0);
             Main.instance.getData().set("Joueurs." + aa + ".Challenges.Daily.8.Palier", 1);
-            Main.instance.saveData();
+            Main.instance.saveDataChallenges();
         }
         if (Main.instance.getData().getString("Joueurs." + aa + ".Challenges.Daily.9.Active") == null) {
             Main.instance.getData().set("Joueurs." + aa + ".Challenges.Daily.9.Active", true);
             Main.instance.getData().set("Joueurs." + aa + ".Challenges.Daily.9.Progression", 0);
             Main.instance.getData().set("Joueurs." + aa + ".Challenges.Daily.9.Palier", 1);
-            Main.instance.saveData();
+            Main.instance.saveDataChallenges();
         }
         if (Main.instance.getData().getString("Joueurs." + aa + ".Challenges.Daily.10.Active") == null) {
             Main.instance.getData().set("Joueurs." + aa + ".Challenges.Daily.10.Active", true);
             Main.instance.getData().set("Joueurs." + aa + ".Challenges.Daily.10.Progression", 0);
             Main.instance.getData().set("Joueurs." + aa + ".Challenges.Daily.10.Palier", 1);
-            Main.instance.saveData();
+            Main.instance.saveDataChallenges();
         }
         if (Main.instance.getData().getString("Joueurs." + aa + ".Challenges.Daily.11.Active") == null) {
             Main.instance.getData().set("Joueurs." + aa + ".Challenges.Daily.11.Active", true);
             Main.instance.getData().set("Joueurs." + aa + ".Challenges.Daily.11.Progression", 0);
             Main.instance.getData().set("Joueurs." + aa + ".Challenges.Daily.11.Palier", 1);
-            Main.instance.saveData();
+            Main.instance.saveDataChallenges();
         }
         if (Main.instance.getData().getString("Joueurs." + aa + ".Challenges.Daily.12.Active") == null) {
             Main.instance.getData().set("Joueurs." + aa + ".Challenges.Daily.12.Active", true);
             Main.instance.getData().set("Joueurs." + aa + ".Challenges.Daily.12.Progression", 0);
             Main.instance.getData().set("Joueurs." + aa + ".Challenges.Daily.12.Palier", 1);
-            Main.instance.saveData();
+            Main.instance.saveDataChallenges();
         }
         if (Main.instance.getData().getString("Joueurs." + aa + ".Challenges.Daily.13.Active") == null) {
             Main.instance.getData().set("Joueurs." + aa + ".Challenges.Daily.13.Active", true);
             Main.instance.getData().set("Joueurs." + aa + ".Challenges.Daily.13.Progression", 0);
             Main.instance.getData().set("Joueurs." + aa + ".Challenges.Daily.13.Palier", 1);
-            Main.instance.saveData();
+            Main.instance.saveDataChallenges();
         }
     }
 
@@ -159,7 +159,7 @@ public class ChallengesReset {
             Main.instance.getData().set("Joueurs." + aa + ".Challenges.Daily.13.Palier", 1);
 
         }
-        Main.instance.saveData();
+        Main.instance.saveDataChallenges();
         Bukkit.broadcastMessage("§6§lChallenges §8» §fTous les challenges journaliers ont été réinitialisé !");
     }
 }

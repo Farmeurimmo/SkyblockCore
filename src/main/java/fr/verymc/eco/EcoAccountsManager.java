@@ -20,7 +20,7 @@ public class EcoAccountsManager {
     public void checkForAccount(Player player) {
         if (Main.instance.getDataz().get(String.valueOf(player.getUniqueId())) == null) {
             Main.instance.getDataz().set(String.valueOf(player.getUniqueId()), 200);
-            Main.instance.saveData();
+            Main.instance.saveDataEco();
             Moneys.put(player.getUniqueId(), Main.instance.getDataz().getDouble(String.valueOf(player.getUniqueId())));
         }
     }
@@ -77,7 +77,7 @@ public class EcoAccountsManager {
             double now = moneybefore - toremove;
             Moneys.put(player.getUniqueId(), now);
             Main.instance.getDataz().set(String.valueOf(player.getUniqueId()), now);
-            Main.instance.saveData();
+            Main.instance.saveDataEco();
             if (player != null) {
                 if (ase == true)
                     player.sendMessage("§6§lMonnaie §8» §6" + toremove + "$§f ont été §cretiré §fde votre compte.");
@@ -92,7 +92,7 @@ public class EcoAccountsManager {
     public void setFounds(Player player, Double toset) {
         Moneys.put(player.getUniqueId(), toset);
         Main.instance.getDataz().set(String.valueOf(player.getUniqueId()), toset);
-        Main.instance.saveData();
+        Main.instance.saveDataEco();
         if (player != null) {
             player.sendMessage("§6§lMonnaie §8» §fVotre argent a été §adéfinis§f sur §6" + toset + "$§f.");
         }
@@ -104,7 +104,7 @@ public class EcoAccountsManager {
             double now = getMoney(player.getName()) + aaa;
             Moneys.put(player.getUniqueId(), now);
             Main.instance.getDataz().set(String.valueOf(player.getUniqueId()), now);
-            Main.instance.saveData();
+            Main.instance.saveDataEco();
             if (player != null) {
                 if (dd == true)
                     player.sendMessage("§6§lMonnaie §8» §6" + aaa + "$§f ont été §aajouté §f§ votre compte.");
@@ -123,7 +123,7 @@ public class EcoAccountsManager {
             double now = getMoneyUUID(player) + aaa;
             Moneys.put(player, now);
             Main.instance.getDataz().set(String.valueOf(player), now);
-            Main.instance.saveData();
+            Main.instance.saveDataEco();
             if (dd == true && Bukkit.getPlayer(player) != null) {
                 Bukkit.getPlayer(player).sendMessage("§6§lMonnaie §8» §6" + aaa + "$§f ont été §aajouté §f§ votre compte.");
             }

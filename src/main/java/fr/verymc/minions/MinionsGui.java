@@ -1,5 +1,6 @@
 package main.java.fr.verymc.minions;
 
+import main.java.fr.verymc.Main;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -67,8 +68,17 @@ public class MinionsGui {
         inv.setItem(14, custom4);
         inv.setItem(16, custom1);
 
+        if (minionOpened.containsKey(player.getName())) {
+            minionOpened.remove(player.getName());
+        }
         minionOpened.put(player.getName(), minion);
-        player.openInventory(inv);
+
+        Bukkit.getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
+            @Override
+            public void run() {
+                player.openInventory(inv);
+            }
+        }, 1);
 
     }
 
@@ -100,8 +110,16 @@ public class MinionsGui {
 
         inv.setItem(26, custom3);
 
+        if (minionOpened.containsKey(player.getName())) {
+            minionOpened.remove(player.getName());
+        }
         minionOpened.put(player.getName(), minion);
-        player.openInventory(inv);
+        Bukkit.getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
+            @Override
+            public void run() {
+                player.openInventory(inv);
+            }
+        }, 1);
     }
 
     public void minionParamGui(Player player, Minion minion) {
@@ -124,8 +142,16 @@ public class MinionsGui {
 
         inv.setItem(10, custom1);
 
+        if (minionOpened.containsKey(player.getName())) {
+            minionOpened.remove(player.getName());
+        }
         minionOpened.put(player.getName(), minion);
-        player.openInventory(inv);
+        Bukkit.getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
+            @Override
+            public void run() {
+                player.openInventory(inv);
+            }
+        }, 1);
 
     }
 

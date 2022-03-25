@@ -39,7 +39,7 @@ public class Interact implements Listener {
                 || e.getClickedBlock().getType() == Material.CRAFTING_TABLE || e.getClickedBlock().getType() == Material.ANVIL) {
             return;
         }
-        e.setCancelled(true);
+        if (!Build.contains(player)) e.setCancelled(true);
     }
 
     @EventHandler

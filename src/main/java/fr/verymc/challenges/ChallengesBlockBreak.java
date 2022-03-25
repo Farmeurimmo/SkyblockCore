@@ -57,11 +57,11 @@ public class ChallengesBlockBreak implements Listener {
                 int progress = Main.instance.getData().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.1.Progression") + 1;
                 int palier = Main.instance.getData().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.1.Palier");
                 Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily.1.Progression", progress);
-                Main.instance.saveData();
+                Main.instance.saveDataChallenges();
                 if (progress >= cobble * palier) {
                     Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily.1.Progression", progress - cobble * palier);
                     Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily.1.Palier", palier + 1);
-                    Main.instance.saveData();
+                    Main.instance.saveDataChallenges();
                     ChallengesGuis.CompleteChallenge(player, 1);
                 }
                 return;
@@ -70,11 +70,11 @@ public class ChallengesBlockBreak implements Listener {
                 int progress = Main.instance.getData().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.2.Progression") + 1;
                 int palier = Main.instance.getData().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.2.Palier");
                 Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily.2.Progression", progress);
-                Main.instance.saveData();
+                Main.instance.saveDataChallenges();
                 if (progress >= coal * palier) {
                     Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily.2.Progression", progress - coal * palier);
                     Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily.2.Palier", palier + 1);
-                    Main.instance.saveData();
+                    Main.instance.saveDataChallenges();
                     ChallengesGuis.CompleteChallenge(player, 2);
                 }
                 return;
@@ -83,11 +83,11 @@ public class ChallengesBlockBreak implements Listener {
                 int progress = Main.instance.getData().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.3.Progression") + 1;
                 int palier = Main.instance.getData().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.3.Palier");
                 Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily.3.Progression", progress);
-                Main.instance.saveData();
+                Main.instance.saveDataChallenges();
                 if (progress >= iron * palier) {
                     Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily.3.Progression", progress - iron * palier);
                     Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily.3.Palier", palier + 1);
-                    Main.instance.saveData();
+                    Main.instance.saveDataChallenges();
                     ChallengesGuis.CompleteChallenge(player, 3);
                 }
                 return;
@@ -96,11 +96,11 @@ public class ChallengesBlockBreak implements Listener {
                 int progress = Main.instance.getData().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.4.Progression") + 1;
                 int palier = Main.instance.getData().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.4.Palier");
                 Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily.4.Progression", progress);
-                Main.instance.saveData();
+                Main.instance.saveDataChallenges();
                 if (progress >= gold * palier) {
                     Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily.4.Progression", progress - gold * palier);
                     Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily.4.Palier", palier + 1);
-                    Main.instance.saveData();
+                    Main.instance.saveDataChallenges();
                     ChallengesGuis.CompleteChallenge(player, 4);
                 }
                 return;
@@ -109,11 +109,11 @@ public class ChallengesBlockBreak implements Listener {
                 int progress = Main.instance.getData().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.5.Progression") + 1;
                 int palier = Main.instance.getData().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.5.Palier");
                 Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily.5.Progression", progress);
-                Main.instance.saveData();
+                Main.instance.saveDataChallenges();
                 if (progress >= diamond * palier) {
                     Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily.5.Progression", progress - diamond * palier);
                     Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily.5.Palier", palier + 1);
-                    Main.instance.saveData();
+                    Main.instance.saveDataChallenges();
                     ChallengesGuis.CompleteChallenge(player, 5);
                 }
                 return;
@@ -122,11 +122,11 @@ public class ChallengesBlockBreak implements Listener {
                 int progress = Main.instance.getData().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.6.Progression") + 1;
                 int palier = Main.instance.getData().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.6.Palier");
                 Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily.6.Progression", progress);
-                Main.instance.saveData();
+                Main.instance.saveDataChallenges();
                 if (progress >= emerald * palier) {
                     Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily.6.Progression", progress - emerald * palier);
                     Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily.6.Palier", palier + 1);
-                    Main.instance.saveData();
+                    Main.instance.saveDataChallenges();
                     ChallengesGuis.CompleteChallenge(player, 6);
                 }
                 return;
@@ -135,11 +135,11 @@ public class ChallengesBlockBreak implements Listener {
                 int progress = Main.instance.getData().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.7.Progression") + 1;
                 int palier = Main.instance.getData().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.7.Palier");
                 Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily.7.Progression", progress);
-                Main.instance.saveData();
+                Main.instance.saveDataChallenges();
                 if (progress >= debris * palier) {
                     Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily.7.Progression", progress - debris * palier);
                     Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily.7.Palier", palier + 1);
-                    Main.instance.saveData();
+                    Main.instance.saveDataChallenges();
                     ChallengesGuis.CompleteChallenge(player, 7);
                 }
                 return;
@@ -148,11 +148,11 @@ public class ChallengesBlockBreak implements Listener {
                 int progress = Main.instance.getData().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.8.Progression") + 1;
                 int palier = Main.instance.getData().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.8.Palier");
                 Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily.8.Progression", progress);
-                Main.instance.saveData();
+                Main.instance.saveDataChallenges();
                 if (progress >= oak_log * palier) {
                     Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily.8.Progression", progress - oak_log * palier);
                     Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily.8.Palier", palier + 1);
-                    Main.instance.saveData();
+                    Main.instance.saveDataChallenges();
                     ChallengesGuis.CompleteChallenge(player, 8);
                 }
                 return;
@@ -161,11 +161,11 @@ public class ChallengesBlockBreak implements Listener {
                 int progress = Main.instance.getData().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.9.Progression") + 1;
                 int palier = Main.instance.getData().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.9.Palier");
                 Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily.9.Progression", progress);
-                Main.instance.saveData();
+                Main.instance.saveDataChallenges();
                 if (progress >= birch_log * palier) {
                     Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily.9.Progression", progress - birch_log * palier);
                     Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily.9.Palier", palier + 1);
-                    Main.instance.saveData();
+                    Main.instance.saveDataChallenges();
                     ChallengesGuis.CompleteChallenge(player, 9);
                 }
                 return;
@@ -174,11 +174,11 @@ public class ChallengesBlockBreak implements Listener {
                 int progress = Main.instance.getData().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.10.Progression") + 1;
                 int palier = Main.instance.getData().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.10.Palier");
                 Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily.10.Progression", progress);
-                Main.instance.saveData();
+                Main.instance.saveDataChallenges();
                 if (progress >= spruce_log * palier) {
                     Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily.10.Progression", progress - spruce_log * palier);
                     Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily.10.Palier", palier + 1);
-                    Main.instance.saveData();
+                    Main.instance.saveDataChallenges();
                     ChallengesGuis.CompleteChallenge(player, 10);
                 }
                 return;
@@ -187,11 +187,11 @@ public class ChallengesBlockBreak implements Listener {
                 int progress = Main.instance.getData().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.11.Progression") + 1;
                 int palier = Main.instance.getData().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.11.Palier");
                 Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily.11.Progression", progress);
-                Main.instance.saveData();
+                Main.instance.saveDataChallenges();
                 if (progress >= dark_oak_log * palier) {
                     Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily.11.Progression", progress - dark_oak_log * palier);
                     Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily.11.Palier", palier + 1);
-                    Main.instance.saveData();
+                    Main.instance.saveDataChallenges();
                     ChallengesGuis.CompleteChallenge(player, 11);
                 }
                 return;
@@ -200,11 +200,11 @@ public class ChallengesBlockBreak implements Listener {
                 int progress = Main.instance.getData().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.12.Progression") + 1;
                 int palier = Main.instance.getData().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.12.Palier");
                 Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily.12.Progression", progress);
-                Main.instance.saveData();
+                Main.instance.saveDataChallenges();
                 if (progress >= acacia_log * palier) {
                     Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily.12.Progression", progress - acacia_log * palier);
                     Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily.12.Palier", palier + 1);
-                    Main.instance.saveData();
+                    Main.instance.saveDataChallenges();
                     ChallengesGuis.CompleteChallenge(player, 12);
                 }
                 return;
@@ -213,11 +213,11 @@ public class ChallengesBlockBreak implements Listener {
                 int progress = Main.instance.getData().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.13.Progression") + 1;
                 int palier = Main.instance.getData().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.13.Palier");
                 Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily.13.Progression", progress);
-                Main.instance.saveData();
+                Main.instance.saveDataChallenges();
                 if (progress >= jungle_log * palier) {
                     Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily.13.Progression", progress - jungle_log * palier);
                     Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily.13.Palier", palier + 1);
-                    Main.instance.saveData();
+                    Main.instance.saveDataChallenges();
                     ChallengesGuis.CompleteChallenge(player, 13);
                 }
                 return;

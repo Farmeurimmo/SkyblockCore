@@ -1,6 +1,8 @@
 package main.java.fr.verymc.minions;
 
+import main.java.fr.verymc.Main;
 import main.java.fr.verymc.eco.EcoAccountsManager;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.ArmorStand;
@@ -32,10 +34,6 @@ public class MinionsListener implements Listener {
             if (!MinionsGui.instance.minionOpened.containsKey(player.getName())) {
                 return;
             }
-            if (!MinionsGui.instance.minionOpened.get(player.getName()).getOwnerUUID().equals(player.getUniqueId())) {
-                player.closeInventory();
-                return;
-            }
             if (currentType == Material.CHEST) {
                 if (MinionsGui.instance.linking.contains(player)) {
                     MinionsGui.instance.linking.remove(player);
@@ -51,10 +49,15 @@ public class MinionsListener implements Listener {
             if (currentType == Material.DRAGON_BREATH) {
                 MinionManager.instance.giveMinionItemForExistingMinion(player, MinionsGui.instance.minionOpened.get(player.getName()));
                 MinionManager.instance.removeMinion(MinionsGui.instance.minionOpened.get(player.getName()));
-                if (MinionsGui.instance.linking.contains(player)) MinionsGui.instance.linking.remove(player);
-                if (MinionsGui.instance.minionOpened.containsKey(player.getName()))
-                    MinionsGui.instance.minionOpened.remove(player.getName());
-                player.sendMessage("§6§lMinions §8» §fMinion §arécupéré§f, les niveau de celuix ont été sauvegardés.");
+                Bukkit.getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
+                    @Override
+                    public void run() {
+                        if (MinionsGui.instance.linking.contains(player)) MinionsGui.instance.linking.remove(player);
+                        if (MinionsGui.instance.minionOpened.containsKey(player.getName()))
+                            MinionsGui.instance.minionOpened.remove(player.getName());
+                    }
+                }, 1);
+                player.sendMessage("§6§lMinions §8» §fMinion §arécupéré§f, les niveau de celui ci ont été sauvegardés.");
                 player.closeInventory();
                 return;
             }
@@ -214,9 +217,9 @@ public class MinionsListener implements Listener {
                     MinionsGui.instance.minionMainGui(player, minion);
                     return;
                 }
-                if(player.hasPermission("*")){
+                if (player.hasPermission("*")) {
                     MinionsGui.instance.minionMainGui(player, minion);
-                    player.sendMessage("§6§lMinions §8» §fVous venez d'entrer de force dans le minion de "+minion.getOwnerName()+".");
+                    player.sendMessage("§6§lMinions §8» §fVous venez d'entrer de force dans le minion de " + minion.getOwnerName() + ".");
                     return;
                 }
                 player.sendMessage("§6§lMinions §8» §fCe minion ne vous appartient pas.");
