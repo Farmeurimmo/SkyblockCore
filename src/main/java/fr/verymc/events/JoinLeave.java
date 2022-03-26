@@ -1,6 +1,5 @@
 package main.java.fr.verymc.events;
 
-import com.iridium.iridiumskyblock.api.IridiumSkyblockAPI;
 import main.java.fr.verymc.challenges.ChallengesReset;
 import main.java.fr.verymc.config.ConfigManager;
 import main.java.fr.verymc.eco.EcoAccountsManager;
@@ -34,7 +33,7 @@ public class JoinLeave implements Listener {
         if (user.getCachedData().getMetaData().getPrefix() != null) {
             Grade = user.getCachedData().getMetaData().getPrefix();
         }
-        String JoinMessage = null;
+        /*String JoinMessage = null;
         if (!IridiumSkyblockAPI.getInstance().getUser(player).getIsland().isPresent()) {
             JoinMessage = "§7[§a+§7] " + Grade.replace("&", "§") + " " + player.getName();
         } else {
@@ -42,7 +41,7 @@ public class JoinLeave implements Listener {
             classement = IridiumSkyblockAPI.getInstance().getUser(player).getIsland().get().getRank();
             JoinMessage = "§7[§a+§7] [#" + classement + "] " + Grade.replace("&", "§") + " " + player.getName();
         }
-        event.setJoinMessage(JoinMessage);
+        event.setJoinMessage(JoinMessage);*/
 
         ChallengesReset.CreateChallengesForPlayer(player.getUniqueId());
 
@@ -92,7 +91,7 @@ public class JoinLeave implements Listener {
         if (user.getCachedData().getMetaData().getPrefix() != null) {
             Grade = user.getCachedData().getMetaData().getPrefix();
         }
-        String LeaveMessage = null;
+        /*String LeaveMessage = null;
         if (!IridiumSkyblockAPI.getInstance().getUser(player).getIsland().isPresent()) {
             LeaveMessage = "§7[§c-§7] " + Grade.replace("&", "§").replace("&", "§") + " " + player.getName();
         } else {
@@ -100,6 +99,6 @@ public class JoinLeave implements Listener {
             classement = IridiumSkyblockAPI.getInstance().getUser(player).getIsland().get().getRank();
             LeaveMessage = "§7[§c-§7] [#" + classement + "] " + Grade.replace("&", "§").replace("&", "§") + " " + player.getName();
         }
-        event.setQuitMessage(LeaveMessage);
+        event.setQuitMessage(LeaveMessage);*/
     }
 }

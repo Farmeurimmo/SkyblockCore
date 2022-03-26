@@ -1,6 +1,5 @@
 package main.java.fr.verymc.scoreboard;
 
-import com.iridium.iridiumskyblock.api.IridiumSkyblockAPI;
 import main.java.fr.verymc.Main;
 import main.java.fr.verymc.eco.EcoAccountsManager;
 import main.java.fr.verymc.utils.Maths;
@@ -111,7 +110,7 @@ public class ScoreBoard implements Listener {
                 board.getTeam("online").setPrefix("§fSkyblock §8▸ §c" + online);
             }
 
-            if (IridiumSkyblockAPI.getInstance().getUser(player).getIsland().isPresent()) {
+            /*if (IridiumSkyblockAPI.getInstance().getUser(player).getIsland().isPresent()) {
                 String Gradeis = IridiumSkyblockAPI.getInstance().getUser(player).getIslandRank().name();
                 int classement = IridiumSkyblockAPI.getInstance().getUser(player).getIsland().get().getRank();
                 int ismembre = IridiumSkyblockAPI.getInstance().getUser(player).getIsland().get().getMembers().size();
@@ -146,14 +145,14 @@ public class ScoreBoard implements Listener {
                     board.getTeam("iscrystaux").setPrefix("§fCrystaux §8▸ §a" + iscristal);
                 if (board.getTeam("ismoney") != null) board.getTeam("ismoney").setPrefix("§fArgent §8▸ §a" + ismoney);
 
-            } else {
-                if (board.getTeam("gradeis") != null) board.getTeam("gradeis").setPrefix("§fGrade d'ile §8▸ §aN/A");
-                if (board.getTeam("classementis") != null)
-                    board.getTeam("classementis").setPrefix("§fClassement §8▸ §aN/A");
-                if (board.getTeam("ismembre") != null) board.getTeam("ismembre").setPrefix("§fMembres §8▸ §aN/A");
-                if (board.getTeam("iscrystaux") != null) board.getTeam("iscrystaux").setPrefix("§fCrystaux §8▸ §aN/A");
-                if (board.getTeam("ismoney") != null) board.getTeam("ismoney").setPrefix("§fArgent §8▸ §aN/A");
-            }
+            } else {*/
+            if (board.getTeam("gradeis") != null) board.getTeam("gradeis").setPrefix("§fGrade d'ile §8▸ §aN/A");
+            if (board.getTeam("classementis") != null)
+                board.getTeam("classementis").setPrefix("§fClassement §8▸ §aN/A");
+            if (board.getTeam("ismembre") != null) board.getTeam("ismembre").setPrefix("§fMembres §8▸ §aN/A");
+            if (board.getTeam("iscrystaux") != null) board.getTeam("iscrystaux").setPrefix("§fCrystaux §8▸ §aN/A");
+            if (board.getTeam("ismoney") != null) board.getTeam("ismoney").setPrefix("§fArgent §8▸ §aN/A");
+            //}
         }
         Bukkit.getServer().getScheduler().scheduleAsyncDelayedTask(Main.instance, new Runnable() {
             public void run() {

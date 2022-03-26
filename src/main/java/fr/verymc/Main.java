@@ -1,6 +1,5 @@
 package main.java.fr.verymc;
 
-import com.iridium.iridiumskyblock.api.IridiumSkyblockAPI;
 import main.java.fr.verymc.antiafk.AntiAfk;
 import main.java.fr.verymc.atout.AtoutCmd;
 import main.java.fr.verymc.atout.AtoutGui;
@@ -32,6 +31,8 @@ import main.java.fr.verymc.gui.Farm2WinGui;
 import main.java.fr.verymc.gui.MenuGui;
 import main.java.fr.verymc.gui.WarpGui;
 import main.java.fr.verymc.holos.HolosSetup;
+import main.java.fr.verymc.island.IslandManager;
+import main.java.fr.verymc.island.cmds.IslandCmd;
 import main.java.fr.verymc.items.FarmHoeCmd;
 import main.java.fr.verymc.items.FarmHoeGui;
 import main.java.fr.verymc.items.FarmHoeManager;
@@ -123,12 +124,10 @@ public class Main extends JavaPlugin implements Listener {
             getLogger().warning("Le plugin HolographicDisplays est manquant.");
             Bukkit.getPluginManager().disablePlugin(this);
         }
-        if (IridiumSkyblockAPI.getInstance() == null) {
-            Bukkit.getPluginManager().disablePlugin(this);
-            getLogger().warning("Le plugin IridiumSkyblock est manquant.");
-        }
-        System.out.println("API IRIDIUMSKYBLOCK initialisée !");
         System.out.println("-----------------------------------------------------------------------------------------------------");
+
+        System.out.println("Island startup...");
+        new IslandManager();
 
         System.out.println("Initialisation des MODULES en cours...");
         new ConfigManager();
@@ -260,6 +259,7 @@ public class Main extends JavaPlugin implements Listener {
         this.getCommand("boost").setExecutor(new BoostCmd());
         this.getCommand("admin").setExecutor(new AdminCmd());
         this.getCommand("minions").setExecutor(new MinionsCmd());
+        this.getCommand("is").setExecutor(new IslandCmd());
         System.out.println("Commands DONE | NEXT end");
 
         new AuctionsManager();

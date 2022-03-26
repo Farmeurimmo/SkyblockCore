@@ -20,10 +20,6 @@
             <url>https://repo.purpurmc.org/snapshots</url>
         </repository>
         <repository>
-            <id>iridiumdevelopment</id>
-            <url>https://nexus.iridiumdevelopment.net/repository/maven-releases/</url>
-        </repository>
-        <repository>
             <id>savagelabs</id>
             <url>https://nexus.savagelabs.net/repository/maven-releases/</url>
         </repository>
@@ -54,12 +50,6 @@
             <groupId>org.purpurmc.purpur</groupId>
             <artifactId>purpur-api</artifactId>
             <version>1.16.5-R0.1-SNAPSHOT</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.iridium</groupId>
-            <artifactId>IridiumSkyblock</artifactId>
-            <version>LATEST</version>
             <scope>provided</scope>
         </dependency>
         <dependency>

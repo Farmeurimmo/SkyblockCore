@@ -1,6 +1,5 @@
 package main.java.fr.verymc.events;
 
-import com.iridium.iridiumskyblock.api.IridiumSkyblockAPI;
 import net.luckperms.api.LuckPermsProvider;
 import net.luckperms.api.model.user.User;
 import net.md_5.bungee.api.chat.ComponentBuilder;
@@ -34,13 +33,13 @@ public class TchatManager implements Listener {
         }
         TextComponent message = new TextComponent();
         TextComponent symbole = new TextComponent();
-        if (!IridiumSkyblockAPI.getInstance().getUser(player).getIsland().isPresent()) {
-            message.setText(Prefix + " " + player.getName() + Suffix + "§7: " + e.getMessage());
-        } else {
+        //if (!IridiumSkyblockAPI.getInstance().getUser(player).getIsland().isPresent()) {
+        message.setText(Prefix + " " + player.getName() + Suffix + "§7: " + e.getMessage());
+        /*} else {
             int classement = 0;
             classement = IridiumSkyblockAPI.getInstance().getUser(player).getIsland().get().getRank();
             message.setText("§7[#" + classement + "] " + Prefix + " " + player.getName() + Suffix + "§7: " + e.getMessage());
-        }
+        }*/
         symbole.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("§cCliquez ici pour report le message de " +
                 player.getName()).create()));
         message.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("").create()));
