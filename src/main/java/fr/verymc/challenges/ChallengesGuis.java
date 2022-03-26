@@ -1,7 +1,7 @@
 package main.java.fr.verymc.challenges;
 
 import com.iridium.iridiumskyblock.api.IridiumSkyblockAPI;
-import main.java.fr.verymc.Main;
+import main.java.fr.verymc.config.ConfigManager;
 import main.java.fr.verymc.crates.CratesKeyManager;
 import main.java.fr.verymc.eco.EcoAccountsManager;
 import main.java.fr.verymc.gui.MenuGui;
@@ -26,22 +26,22 @@ public class ChallengesGuis implements Listener {
 
     public static void CompleteChallenge(Player player, int nombre) {
         if (IridiumSkyblockAPI.getInstance().getUser(player).getIsland().isPresent()) {
-            Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily." + nombre + ".Progression", 0);
+            ConfigManager.instance.getDataAtoutsChallenges().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily." + nombre + ".Progression", 0);
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "is bank give " + player.getName() + " crystaux " + 2 * boost);
             EcoAccountsManager.instance.addFounds(player, 5000.0 * boost, false);
             CratesKeyManager.GiveCrateKey(player, 1 * boost, "Challenge");
 
-            if (Main.instance.getData().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily." + nombre + ".Palier") >= 5) {
-                Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily." + nombre + ".Active", false);
-                Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily." + nombre + ".Palier", 5);
+            if (ConfigManager.instance.getDataAtoutsChallenges().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily." + nombre + ".Palier") >= 5) {
+                ConfigManager.instance.getDataAtoutsChallenges().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily." + nombre + ".Active", false);
+                ConfigManager.instance.getDataAtoutsChallenges().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily." + nombre + ".Palier", 5);
             } else {
-                Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily." + nombre + ".Active", true);
+                ConfigManager.instance.getDataAtoutsChallenges().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily." + nombre + ".Active", true);
             }
-            Main.instance.saveDataChallenges();
+            ConfigManager.instance.saveDataAtoutsChallenges();
 
             player.playSound(player.getLocation(), Sound.UI_TOAST_CHALLENGE_COMPLETE, 5, 1);
             player.sendMessage("§6§lChallenges §8» §fVous venez de compléter le challenge journalier n°§6" + nombre +
-                    " §fau palier " + Main.instance.getData().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily." + nombre + ".Palier")
+                    " §fau palier " + ConfigManager.instance.getDataAtoutsChallenges().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily." + nombre + ".Palier")
                     + "/5.");
             player.sendMessage("§6§lChallenges §8» §fVous avez reçu " + 2 * boost + "crystaux, " + 5000 * boost + "$ et x" + 1 * boost + " Clée Challenge.");
 
@@ -79,12 +79,12 @@ public class ChallengesGuis implements Listener {
     public static void MakeDailyGui(Player player) {
         Inventory inv = Bukkit.createInventory(null, 36, "§6Challenges journaliers");
 
-        if (Main.instance.getData().getBoolean("Joueurs." + player.getUniqueId() + ".Challenges.Daily.1.Active") == true) {
+        if (ConfigManager.instance.getDataAtoutsChallenges().getBoolean("Joueurs." + player.getUniqueId() + ".Challenges.Daily.1.Active") == true) {
             ItemStack custom1 = new ItemStack(Material.COBBLESTONE, 1);
             ItemMeta customa = custom1.getItemMeta();
-            int palier = Main.instance.getData().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.1.Palier");
+            int palier = ConfigManager.instance.getDataAtoutsChallenges().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.1.Palier");
             customa.setDisplayName("§6Miner " + ChallengesBlockBreak.cobble * palier + " de pierre");
-            customa.setLore(Arrays.asList("§7" + Main.instance.getData().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.1.Progression") + "/"
+            customa.setLore(Arrays.asList("§7" + ConfigManager.instance.getDataAtoutsChallenges().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.1.Progression") + "/"
                     + ChallengesBlockBreak.cobble * palier, "§7Palier: " + palier + "/5"));
             custom1.setItemMeta(customa);
             inv.setItem(10, custom1);
@@ -98,12 +98,12 @@ public class ChallengesGuis implements Listener {
             custom1.setItemMeta(customa);
             inv.setItem(10, custom1);
         }
-        if (Main.instance.getData().getBoolean("Joueurs." + player.getUniqueId() + ".Challenges.Daily.2.Active") == true) {
+        if (ConfigManager.instance.getDataAtoutsChallenges().getBoolean("Joueurs." + player.getUniqueId() + ".Challenges.Daily.2.Active") == true) {
             ItemStack custom1 = new ItemStack(Material.COAL_ORE, 1);
             ItemMeta customa = custom1.getItemMeta();
-            int palier = Main.instance.getData().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.2.Palier");
+            int palier = ConfigManager.instance.getDataAtoutsChallenges().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.2.Palier");
             customa.setDisplayName("§6Miner " + ChallengesBlockBreak.coal * palier + " minerais de charbon");
-            customa.setLore(Arrays.asList("§7" + Main.instance.getData().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.2.Progression") + "/"
+            customa.setLore(Arrays.asList("§7" + ConfigManager.instance.getDataAtoutsChallenges().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.2.Progression") + "/"
                     + ChallengesBlockBreak.coal * palier, "§7Palier: " + palier + "/5"));
             custom1.setItemMeta(customa);
             inv.setItem(11, custom1);
@@ -117,12 +117,12 @@ public class ChallengesGuis implements Listener {
             custom1.setItemMeta(customa);
             inv.setItem(11, custom1);
         }
-        if (Main.instance.getData().getBoolean("Joueurs." + player.getUniqueId() + ".Challenges.Daily.3.Active") == true) {
+        if (ConfigManager.instance.getDataAtoutsChallenges().getBoolean("Joueurs." + player.getUniqueId() + ".Challenges.Daily.3.Active") == true) {
             ItemStack custom1 = new ItemStack(Material.IRON_ORE, 1);
             ItemMeta customa = custom1.getItemMeta();
-            int palier = Main.instance.getData().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.3.Palier");
+            int palier = ConfigManager.instance.getDataAtoutsChallenges().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.3.Palier");
             customa.setDisplayName("§6Miner " + ChallengesBlockBreak.iron * palier + " minerais de fer");
-            customa.setLore(Arrays.asList("§7" + Main.instance.getData().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.3.Progression") + "/"
+            customa.setLore(Arrays.asList("§7" + ConfigManager.instance.getDataAtoutsChallenges().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.3.Progression") + "/"
                     + ChallengesBlockBreak.iron * palier, "§7Palier: " + palier + "/5"));
             custom1.setItemMeta(customa);
             inv.setItem(12, custom1);
@@ -136,12 +136,12 @@ public class ChallengesGuis implements Listener {
             custom1.setItemMeta(customa);
             inv.setItem(12, custom1);
         }
-        if (Main.instance.getData().getBoolean("Joueurs." + player.getUniqueId() + ".Challenges.Daily.4.Active") == true) {
+        if (ConfigManager.instance.getDataAtoutsChallenges().getBoolean("Joueurs." + player.getUniqueId() + ".Challenges.Daily.4.Active") == true) {
             ItemStack custom1 = new ItemStack(Material.GOLD_ORE, 1);
             ItemMeta customa = custom1.getItemMeta();
-            int palier = Main.instance.getData().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.4.Palier");
+            int palier = ConfigManager.instance.getDataAtoutsChallenges().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.4.Palier");
             customa.setDisplayName("§6Miner " + ChallengesBlockBreak.gold * palier + " minerais d'or");
-            customa.setLore(Arrays.asList("§7" + Main.instance.getData().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.4.Progression") + "/"
+            customa.setLore(Arrays.asList("§7" + ConfigManager.instance.getDataAtoutsChallenges().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.4.Progression") + "/"
                     + ChallengesBlockBreak.gold * palier, "§7Palier: " + palier + "/5"));
             custom1.setItemMeta(customa);
             inv.setItem(13, custom1);
@@ -155,12 +155,12 @@ public class ChallengesGuis implements Listener {
             custom1.setItemMeta(customa);
             inv.setItem(13, custom1);
         }
-        if (Main.instance.getData().getBoolean("Joueurs." + player.getUniqueId() + ".Challenges.Daily.5.Active") == true) {
+        if (ConfigManager.instance.getDataAtoutsChallenges().getBoolean("Joueurs." + player.getUniqueId() + ".Challenges.Daily.5.Active") == true) {
             ItemStack custom1 = new ItemStack(Material.DIAMOND_ORE, 1);
             ItemMeta customa = custom1.getItemMeta();
-            int palier = Main.instance.getData().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.5.Palier");
+            int palier = ConfigManager.instance.getDataAtoutsChallenges().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.5.Palier");
             customa.setDisplayName("§6Miner " + ChallengesBlockBreak.diamond * palier + " minerais de diamant");
-            customa.setLore(Arrays.asList("§7" + Main.instance.getData().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.5.Progression") + "/"
+            customa.setLore(Arrays.asList("§7" + ConfigManager.instance.getDataAtoutsChallenges().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.5.Progression") + "/"
                     + ChallengesBlockBreak.diamond * palier, "§7Palier: " + palier + "/5"));
             custom1.setItemMeta(customa);
             inv.setItem(14, custom1);
@@ -174,12 +174,12 @@ public class ChallengesGuis implements Listener {
             custom1.setItemMeta(customa);
             inv.setItem(14, custom1);
         }
-        if (Main.instance.getData().getBoolean("Joueurs." + player.getUniqueId() + ".Challenges.Daily.6.Active") == true) {
+        if (ConfigManager.instance.getDataAtoutsChallenges().getBoolean("Joueurs." + player.getUniqueId() + ".Challenges.Daily.6.Active") == true) {
             ItemStack custom1 = new ItemStack(Material.EMERALD_ORE, 1);
             ItemMeta customa = custom1.getItemMeta();
-            int palier = Main.instance.getData().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.6.Palier");
+            int palier = ConfigManager.instance.getDataAtoutsChallenges().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.6.Palier");
             customa.setDisplayName("§6Miner " + ChallengesBlockBreak.emerald * palier + " émeraudes");
-            customa.setLore(Arrays.asList("§7" + Main.instance.getData().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.6.Progression") + "/"
+            customa.setLore(Arrays.asList("§7" + ConfigManager.instance.getDataAtoutsChallenges().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.6.Progression") + "/"
                     + ChallengesBlockBreak.emerald * palier, "§7Palier: " + palier + "/5"));
             custom1.setItemMeta(customa);
             inv.setItem(15, custom1);
@@ -193,12 +193,12 @@ public class ChallengesGuis implements Listener {
             custom1.setItemMeta(customa);
             inv.setItem(15, custom1);
         }
-        if (Main.instance.getData().getBoolean("Joueurs." + player.getUniqueId() + ".Challenges.Daily.7.Active") == true) {
+        if (ConfigManager.instance.getDataAtoutsChallenges().getBoolean("Joueurs." + player.getUniqueId() + ".Challenges.Daily.7.Active") == true) {
             ItemStack custom1 = new ItemStack(Material.ANCIENT_DEBRIS, 1);
             ItemMeta customa = custom1.getItemMeta();
-            int palier = Main.instance.getData().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.7.Palier");
+            int palier = ConfigManager.instance.getDataAtoutsChallenges().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.7.Palier");
             customa.setDisplayName("§6Miner " + ChallengesBlockBreak.debris * palier + " ancients débris");
-            customa.setLore(Arrays.asList("§7" + Main.instance.getData().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.7.Progression") + "/"
+            customa.setLore(Arrays.asList("§7" + ConfigManager.instance.getDataAtoutsChallenges().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.7.Progression") + "/"
                     + ChallengesBlockBreak.debris * palier, "§7Palier: " + palier + "/5"));
             custom1.setItemMeta(customa);
             inv.setItem(16, custom1);
@@ -212,12 +212,12 @@ public class ChallengesGuis implements Listener {
             custom1.setItemMeta(customa);
             inv.setItem(16, custom1);
         }
-        if (Main.instance.getData().getBoolean("Joueurs." + player.getUniqueId() + ".Challenges.Daily.8.Active") == true) {
+        if (ConfigManager.instance.getDataAtoutsChallenges().getBoolean("Joueurs." + player.getUniqueId() + ".Challenges.Daily.8.Active") == true) {
             ItemStack custom1 = new ItemStack(Material.OAK_LOG, 1);
             ItemMeta customa = custom1.getItemMeta();
-            int palier = Main.instance.getData().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.8.Palier");
+            int palier = ConfigManager.instance.getDataAtoutsChallenges().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.8.Palier");
             customa.setDisplayName("§6Casser " + ChallengesBlockBreak.oak_log * palier + " bûches d'oak");
-            customa.setLore(Arrays.asList("§7" + Main.instance.getData().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.8.Progression") + "/"
+            customa.setLore(Arrays.asList("§7" + ConfigManager.instance.getDataAtoutsChallenges().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.8.Progression") + "/"
                     + ChallengesBlockBreak.oak_log * palier, "§7Palier: " + palier + "/5"));
             custom1.setItemMeta(customa);
             inv.setItem(19, custom1);
@@ -231,12 +231,12 @@ public class ChallengesGuis implements Listener {
             custom1.setItemMeta(customa);
             inv.setItem(19, custom1);
         }
-        if (Main.instance.getData().getBoolean("Joueurs." + player.getUniqueId() + ".Challenges.Daily.9.Active") == true) {
+        if (ConfigManager.instance.getDataAtoutsChallenges().getBoolean("Joueurs." + player.getUniqueId() + ".Challenges.Daily.9.Active") == true) {
             ItemStack custom1 = new ItemStack(Material.BIRCH_LOG, 1);
             ItemMeta customa = custom1.getItemMeta();
-            int palier = Main.instance.getData().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.9.Palier");
+            int palier = ConfigManager.instance.getDataAtoutsChallenges().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.9.Palier");
             customa.setDisplayName("§6Casser " + ChallengesBlockBreak.birch_log * palier + " bûches de birch");
-            customa.setLore(Arrays.asList("§7" + Main.instance.getData().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.9.Progression") + "/"
+            customa.setLore(Arrays.asList("§7" + ConfigManager.instance.getDataAtoutsChallenges().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.9.Progression") + "/"
                     + ChallengesBlockBreak.birch_log * palier, "§7Palier: " + palier + "/5"));
             custom1.setItemMeta(customa);
             inv.setItem(20, custom1);
@@ -250,12 +250,12 @@ public class ChallengesGuis implements Listener {
             custom1.setItemMeta(customa);
             inv.setItem(20, custom1);
         }
-        if (Main.instance.getData().getBoolean("Joueurs." + player.getUniqueId() + ".Challenges.Daily.10.Active") == true) {
+        if (ConfigManager.instance.getDataAtoutsChallenges().getBoolean("Joueurs." + player.getUniqueId() + ".Challenges.Daily.10.Active") == true) {
             ItemStack custom1 = new ItemStack(Material.SPRUCE_LOG, 1);
             ItemMeta customa = custom1.getItemMeta();
-            int palier = Main.instance.getData().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.10.Palier");
+            int palier = ConfigManager.instance.getDataAtoutsChallenges().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.10.Palier");
             customa.setDisplayName("§6Casser " + ChallengesBlockBreak.spruce_log * palier + " bûches de spruce");
-            customa.setLore(Arrays.asList("§7" + Main.instance.getData().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.10.Progression") + "/"
+            customa.setLore(Arrays.asList("§7" + ConfigManager.instance.getDataAtoutsChallenges().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.10.Progression") + "/"
                     + ChallengesBlockBreak.spruce_log * palier, "§7Palier: " + palier + "/5"));
             custom1.setItemMeta(customa);
             inv.setItem(21, custom1);
@@ -269,12 +269,12 @@ public class ChallengesGuis implements Listener {
             custom1.setItemMeta(customa);
             inv.setItem(21, custom1);
         }
-        if (Main.instance.getData().getBoolean("Joueurs." + player.getUniqueId() + ".Challenges.Daily.11.Active") == true) {
+        if (ConfigManager.instance.getDataAtoutsChallenges().getBoolean("Joueurs." + player.getUniqueId() + ".Challenges.Daily.11.Active") == true) {
             ItemStack custom1 = new ItemStack(Material.DARK_OAK_LOG, 1);
             ItemMeta customa = custom1.getItemMeta();
-            int palier = Main.instance.getData().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.11.Palier");
+            int palier = ConfigManager.instance.getDataAtoutsChallenges().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.11.Palier");
             customa.setDisplayName("§6Casser " + ChallengesBlockBreak.dark_oak_log * palier + " bûches de dark oak");
-            customa.setLore(Arrays.asList("§7" + Main.instance.getData().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.11.Progression") + "/"
+            customa.setLore(Arrays.asList("§7" + ConfigManager.instance.getDataAtoutsChallenges().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.11.Progression") + "/"
                     + ChallengesBlockBreak.dark_oak_log * palier, "§7Palier: " + palier + "/5"));
             custom1.setItemMeta(customa);
             inv.setItem(22, custom1);
@@ -289,12 +289,12 @@ public class ChallengesGuis implements Listener {
             inv.setItem(22, custom1);
         }
 
-        if (Main.instance.getData().getBoolean("Joueurs." + player.getUniqueId() + ".Challenges.Daily.12.Active") == true) {
+        if (ConfigManager.instance.getDataAtoutsChallenges().getBoolean("Joueurs." + player.getUniqueId() + ".Challenges.Daily.12.Active") == true) {
             ItemStack custom1 = new ItemStack(Material.ACACIA_LOG, 1);
             ItemMeta customa = custom1.getItemMeta();
-            int palier = Main.instance.getData().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.12.Palier");
+            int palier = ConfigManager.instance.getDataAtoutsChallenges().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.12.Palier");
             customa.setDisplayName("§6Casser " + ChallengesBlockBreak.acacia_log * palier + " bûches d'acacia");
-            customa.setLore(Arrays.asList("§7" + Main.instance.getData().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.12.Progression") + "/"
+            customa.setLore(Arrays.asList("§7" + ConfigManager.instance.getDataAtoutsChallenges().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.12.Progression") + "/"
                     + ChallengesBlockBreak.acacia_log * palier, "§7Palier: " + palier + "/5"));
             custom1.setItemMeta(customa);
             inv.setItem(23, custom1);
@@ -308,12 +308,12 @@ public class ChallengesGuis implements Listener {
             custom1.setItemMeta(customa);
             inv.setItem(23, custom1);
         }
-        if (Main.instance.getData().getBoolean("Joueurs." + player.getUniqueId() + ".Challenges.Daily.13.Active") == true) {
+        if (ConfigManager.instance.getDataAtoutsChallenges().getBoolean("Joueurs." + player.getUniqueId() + ".Challenges.Daily.13.Active") == true) {
             ItemStack custom1 = new ItemStack(Material.JUNGLE_LOG, 1);
             ItemMeta customa = custom1.getItemMeta();
-            int palier = Main.instance.getData().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.13.Palier");
+            int palier = ConfigManager.instance.getDataAtoutsChallenges().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.13.Palier");
             customa.setDisplayName("§6Casser " + ChallengesBlockBreak.jungle_log * palier + " bûches de jungle");
-            customa.setLore(Arrays.asList("§7" + Main.instance.getData().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.13.Progression") + "/"
+            customa.setLore(Arrays.asList("§7" + ConfigManager.instance.getDataAtoutsChallenges().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.13.Progression") + "/"
                     + ChallengesBlockBreak.jungle_log * palier, "§7Palier: " + palier + "/5"));
             custom1.setItemMeta(customa);
             inv.setItem(24, custom1);

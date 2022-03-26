@@ -1,8 +1,8 @@
 package main.java.fr.verymc.events;
 
 import com.iridium.iridiumskyblock.api.IridiumSkyblockAPI;
-import main.java.fr.verymc.Main;
 import main.java.fr.verymc.challenges.ChallengesReset;
+import main.java.fr.verymc.config.ConfigManager;
 import main.java.fr.verymc.eco.EcoAccountsManager;
 import main.java.fr.verymc.scoreboard.ScoreBoard;
 import net.luckperms.api.LuckPermsProvider;
@@ -48,38 +48,38 @@ public class JoinLeave implements Listener {
 
         EcoAccountsManager.instance.checkForAccount(player);
 
-        if (Main.instance.getData().getString("Joueurs." + player.getUniqueId() + ".Atout.1.Active") == null) {
-            Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Atout.1.Active", false);
-            Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Atout.1.Level", 0);
-            Main.instance.saveData();
+        if (ConfigManager.instance.getDataAtoutsChallenges().getString("Joueurs." + player.getUniqueId() + ".Atout.1.Active") == null) {
+            ConfigManager.instance.getDataAtoutsChallenges().set("Joueurs." + player.getUniqueId() + ".Atout.1.Active", false);
+            ConfigManager.instance.getDataAtoutsChallenges().set("Joueurs." + player.getUniqueId() + ".Atout.1.Level", 0);
+            ConfigManager.instance.saveData();
         }
-        if (Main.instance.getData().getString("Joueurs." + player.getUniqueId() + ".Atout.2.Active") == null) {
-            Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Atout.2.Active", false);
-            Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Atout.2.Level", 0);
-            Main.instance.saveData();
+        if (ConfigManager.instance.getDataAtoutsChallenges().getString("Joueurs." + player.getUniqueId() + ".Atout.2.Active") == null) {
+            ConfigManager.instance.getDataAtoutsChallenges().set("Joueurs." + player.getUniqueId() + ".Atout.2.Active", false);
+            ConfigManager.instance.getDataAtoutsChallenges().set("Joueurs." + player.getUniqueId() + ".Atout.2.Level", 0);
+            ConfigManager.instance.saveData();
         }
-        if (Main.instance.getData().getString("Joueurs." + player.getUniqueId() + ".Atout.3.Active") == null) {
-            Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Atout.3.Active", false);
-            Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Atout.3.Level", 0);
-            Main.instance.saveData();
+        if (ConfigManager.instance.getDataAtoutsChallenges().getString("Joueurs." + player.getUniqueId() + ".Atout.3.Active") == null) {
+            ConfigManager.instance.getDataAtoutsChallenges().set("Joueurs." + player.getUniqueId() + ".Atout.3.Active", false);
+            ConfigManager.instance.getDataAtoutsChallenges().set("Joueurs." + player.getUniqueId() + ".Atout.3.Level", 0);
+            ConfigManager.instance.saveData();
         }
-        if (Main.instance.getData().getString("Joueurs." + player.getUniqueId() + ".Atout.4.Active") == null) {
-            Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Atout.4.Active", false);
-            Main.instance.getData().set("Joueurs." + player.getUniqueId() + ".Atout.4.Level", 0);
-            Main.instance.saveData();
+        if (ConfigManager.instance.getDataAtoutsChallenges().getString("Joueurs." + player.getUniqueId() + ".Atout.4.Active") == null) {
+            ConfigManager.instance.getDataAtoutsChallenges().set("Joueurs." + player.getUniqueId() + ".Atout.4.Active", false);
+            ConfigManager.instance.getDataAtoutsChallenges().set("Joueurs." + player.getUniqueId() + ".Atout.4.Level", 0);
+            ConfigManager.instance.saveData();
         }
-        if (Main.instance.getData().getBoolean("Joueurs." + player.getUniqueId() + ".Atout.1.Active") == true) {
-            if (Main.instance.getData().getInt("Joueurs." + player.getUniqueId() + ".Atout.1.Level") == 2) {
+        if (ConfigManager.instance.getDataAtoutsChallenges().getBoolean("Joueurs." + player.getUniqueId() + ".Atout.1.Active") == true) {
+            if (ConfigManager.instance.getDataAtoutsChallenges().getInt("Joueurs." + player.getUniqueId() + ".Atout.1.Level") == 2) {
                 player.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 999999999, 1));
             }
         }
-        if (Main.instance.getData().getBoolean("Joueurs." + player.getUniqueId() + ".Atout.2.Active") == true) {
-            if (Main.instance.getData().getInt("Joueurs." + player.getUniqueId() + ".Atout.2.Level") == 2) {
+        if (ConfigManager.instance.getDataAtoutsChallenges().getBoolean("Joueurs." + player.getUniqueId() + ".Atout.2.Active") == true) {
+            if (ConfigManager.instance.getDataAtoutsChallenges().getInt("Joueurs." + player.getUniqueId() + ".Atout.2.Level") == 2) {
                 player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999999, 1));
             }
         }
-        if (Main.instance.getData().getBoolean("Joueurs." + player.getUniqueId() + ".Atout.3.Active") == true) {
-            if (Main.instance.getData().getInt("Joueurs." + player.getUniqueId() + ".Atout.3.Level") == 3) {
+        if (ConfigManager.instance.getDataAtoutsChallenges().getBoolean("Joueurs." + player.getUniqueId() + ".Atout.3.Active") == true) {
+            if (ConfigManager.instance.getDataAtoutsChallenges().getInt("Joueurs." + player.getUniqueId() + ".Atout.3.Level") == 3) {
                 player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 999999999, 2));
             }
         }

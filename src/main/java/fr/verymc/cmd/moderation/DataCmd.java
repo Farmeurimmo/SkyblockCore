@@ -1,6 +1,6 @@
 package main.java.fr.verymc.cmd.moderation;
 
-import main.java.fr.verymc.Main;
+import main.java.fr.verymc.config.ConfigManager;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -22,7 +22,7 @@ public class DataCmd implements CommandExecutor, TabCompleter {
             } else if (args.length == 1) {
                 if (args[0].equalsIgnoreCase("reload")) {
                     try {
-                        Main.instance.reloadData();
+                        ConfigManager.instance.reloadData();
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
                         sender.sendMessage("§6§lData §8» §fProblème lors du reload !");

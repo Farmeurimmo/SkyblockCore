@@ -1,6 +1,8 @@
 package main.java.fr.verymc.featherfly;
 
 import main.java.fr.verymc.Main;
+import main.java.fr.verymc.config.AsyncSaver;
+import main.java.fr.verymc.config.ConfigManager;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
@@ -35,23 +37,27 @@ public class CountdownFly implements Listener {
     public void WriteFlyLeft() {
         for (Map.Entry<UUID, Integer> aaa : CountdownFly.fly.entrySet()) {
             if (aaa.getValue() >= 1) {
-                Main.instance.getDatac().set("Joueurs." + aaa.getKey() + ".Fly.timeleft", aaa.getValue());
-                Main.instance.saveDatac();
+                HashMap<String, Object> objectHashMap = new HashMap<>();
+                objectHashMap.put("Joueurs." + aaa.getKey() + ".Fly.timeleft", aaa.getValue());
+                AsyncSaver.instance.setAndSaveAsync(objectHashMap, ConfigManager.instance.getDataFly(),
+                        ConfigManager.instance.flyFile);
             }
         }
     }
 
     public void ReadForTempFly() {
-        if (Main.instance.getDatac().getConfigurationSection("Joueurs") == null) {
-            Main.instance.getDatac().set("Joueurs.ini", true);
-            Main.instance.saveDatac();
+        if (ConfigManager.instance.getDataFly().getConfigurationSection("Joueurs") == null) {
+            HashMap<String, Object> objectHashMap = new HashMap<>();
+            objectHashMap.put("Joueurs.ini", true);
+            AsyncSaver.instance.setAndSaveAsync(objectHashMap, ConfigManager.instance.getDataFly(),
+                    ConfigManager.instance.flyFile);
         }
-        for (String aa : Main.instance.getDatac().getConfigurationSection("Joueurs").getKeys(false)) {
-            if (Main.instance.getDatac().getBoolean(aa) == true) {
+        for (String aa : ConfigManager.instance.getDataFly().getConfigurationSection("Joueurs").getKeys(false)) {
+            if (ConfigManager.instance.getDataFly().getBoolean(aa) == true) {
                 continue;
             }
             int a = 0;
-            a = Main.instance.getDatac().getInt("Joueurs." + aa + ".Fly.timeleft");
+            a = ConfigManager.instance.getDataFly().getInt("Joueurs." + aa + ".Fly.timeleft");
             if (a >= 1) {
                 CountdownFly.instance.setCooldown(UUID.fromString(aa), a);
             }
@@ -102,8 +108,10 @@ public class CountdownFly implements Listener {
                         }
                         String aaaaaa = "" + TimeLeft;
                         if (aaaaaa.contains("0")) {
-                            Main.instance.getDatac().set("Joueurs." + player.getUniqueId() + ".Fly.timeleft", TimeLeft);
-                            Main.instance.saveDatac();
+                            HashMap<String, Object> objectHashMap = new HashMap<>();
+                            objectHashMap.put("Joueurs." + player.getUniqueId() + ".Fly.timeleft", TimeLeft);
+                            AsyncSaver.instance.setAndSaveAsync(objectHashMap, ConfigManager.instance.getDataFly(),
+                                    ConfigManager.instance.flyFile);
                         }
 
                         int timeforconv = TimeLeft;
@@ -141,8 +149,10 @@ public class CountdownFly implements Listener {
                         player.sendMessage("§6Fin du fly, Téléportation sur votre île..");
                         player.sendActionBar("§6Fin du fly.");
                         flytoremove.put(flymap.getKey(), flymap.getValue());
-                        Main.instance.getDatac().set("Joueurs." + player.getUniqueId() + ".Fly.timeleft", 0);
-                        Main.instance.saveDatac();
+                        HashMap<String, Object> objectHashMap = new HashMap<>();
+                        objectHashMap.put("Joueurs." + player.getUniqueId() + ".Fly.timeleft", 0);
+                        AsyncSaver.instance.setAndSaveAsync(objectHashMap, ConfigManager.instance.getDataFly(),
+                                ConfigManager.instance.flyFile);
                     }
                 }
             }

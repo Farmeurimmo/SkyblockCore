@@ -1,6 +1,6 @@
 package main.java.fr.verymc.blocks;
 
-import main.java.fr.verymc.Main;
+import main.java.fr.verymc.config.ConfigManager;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Chest;
@@ -47,9 +47,9 @@ public class SellChest implements Listener {
             SellChestManager.GiveSellChest(e.getPlayer(), Integer.parseInt(numberOnly));
             e.setDropItems(false);
             Location tda = null;
-            Main.instance.getDatablc().set("SellChest." + owner + "." +
+            ConfigManager.instance.getDataBloc().set("SellChest." + owner + "." +
                     numberOnly, tda);
-            Main.instance.saveData();
+            ConfigManager.instance.saveData();
             SellChestManager.blcsellchest.remove(e.getBlock().getLocation());
         }
     }
