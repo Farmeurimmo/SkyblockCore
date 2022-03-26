@@ -173,7 +173,7 @@ public class ConfigManager {
         }
     }
 
-    public void saveDataChallenges() {
+    public void saveDataAtoutsChallenges() {
         try {
             dataAtoutsChallenges.save(fileChallengesAtouts);
         } catch (IOException e) {

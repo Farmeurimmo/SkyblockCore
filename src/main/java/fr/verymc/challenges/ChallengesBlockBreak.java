@@ -75,11 +75,11 @@ public class ChallengesBlockBreak implements Listener {
                 int progress = ConfigManager.instance.getDataAtoutsChallenges().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.2.Progression") + 1;
                 int palier = ConfigManager.instance.getDataAtoutsChallenges().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.2.Palier");
                 ConfigManager.instance.getDataAtoutsChallenges().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily.2.Progression", progress);
-                ConfigManager.instance.saveDataChallenges();
+                ConfigManager.instance.saveDataAtoutsChallenges();
                 if (progress >= coal * palier) {
                     ConfigManager.instance.getDataAtoutsChallenges().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily.2.Progression", progress - coal * palier);
                     ConfigManager.instance.getDataAtoutsChallenges().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily.2.Palier", palier + 1);
-                    ConfigManager.instance.saveDataChallenges();
+                    ConfigManager.instance.saveDataAtoutsChallenges();
                     ChallengesGuis.CompleteChallenge(player, 2);
                 }
                 return;
@@ -88,11 +88,11 @@ public class ChallengesBlockBreak implements Listener {
                 int progress = ConfigManager.instance.getDataAtoutsChallenges().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.3.Progression") + 1;
                 int palier = ConfigManager.instance.getDataAtoutsChallenges().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.3.Palier");
                 ConfigManager.instance.getDataAtoutsChallenges().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily.3.Progression", progress);
-                ConfigManager.instance.saveDataChallenges();
+                ConfigManager.instance.saveDataAtoutsChallenges();
                 if (progress >= iron * palier) {
                     ConfigManager.instance.getDataAtoutsChallenges().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily.3.Progression", progress - iron * palier);
                     ConfigManager.instance.getDataAtoutsChallenges().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily.3.Palier", palier + 1);
-                    ConfigManager.instance.saveDataChallenges();
+                    ConfigManager.instance.saveDataAtoutsChallenges();
                     ChallengesGuis.CompleteChallenge(player, 3);
                 }
                 return;
@@ -101,11 +101,11 @@ public class ChallengesBlockBreak implements Listener {
                 int progress = ConfigManager.instance.getDataAtoutsChallenges().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.4.Progression") + 1;
                 int palier = ConfigManager.instance.getDataAtoutsChallenges().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.4.Palier");
                 ConfigManager.instance.getDataAtoutsChallenges().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily.4.Progression", progress);
-                ConfigManager.instance.saveDataChallenges();
+                ConfigManager.instance.saveDataAtoutsChallenges();
                 if (progress >= gold * palier) {
                     ConfigManager.instance.getDataAtoutsChallenges().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily.4.Progression", progress - gold * palier);
                     ConfigManager.instance.getDataAtoutsChallenges().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily.4.Palier", palier + 1);
-                    ConfigManager.instance.saveDataChallenges();
+                    ConfigManager.instance.saveDataAtoutsChallenges();
                     ChallengesGuis.CompleteChallenge(player, 4);
                 }
                 return;
@@ -114,11 +114,11 @@ public class ChallengesBlockBreak implements Listener {
                 int progress = ConfigManager.instance.getDataAtoutsChallenges().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.5.Progression") + 1;
                 int palier = ConfigManager.instance.getDataAtoutsChallenges().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.5.Palier");
                 ConfigManager.instance.getDataAtoutsChallenges().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily.5.Progression", progress);
-                ConfigManager.instance.saveDataChallenges();
+                ConfigManager.instance.saveDataAtoutsChallenges();
                 if (progress >= diamond * palier) {
                     ConfigManager.instance.getDataAtoutsChallenges().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily.5.Progression", progress - diamond * palier);
                     ConfigManager.instance.getDataAtoutsChallenges().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily.5.Palier", palier + 1);
-                    ConfigManager.instance.saveDataChallenges();
+                    ConfigManager.instance.saveDataAtoutsChallenges();
                     ChallengesGuis.CompleteChallenge(player, 5);
                 }
                 return;
@@ -127,11 +127,11 @@ public class ChallengesBlockBreak implements Listener {
                 int progress = ConfigManager.instance.getDataAtoutsChallenges().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.6.Progression") + 1;
                 int palier = ConfigManager.instance.getDataAtoutsChallenges().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.6.Palier");
                 ConfigManager.instance.getDataAtoutsChallenges().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily.6.Progression", progress);
-                ConfigManager.instance.saveDataChallenges();
+                ConfigManager.instance.saveDataAtoutsChallenges();
                 if (progress >= emerald * palier) {
                     ConfigManager.instance.getDataAtoutsChallenges().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily.6.Progression", progress - emerald * palier);
                     ConfigManager.instance.getDataAtoutsChallenges().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily.6.Palier", palier + 1);
-                    ConfigManager.instance.saveDataChallenges();
+                    ConfigManager.instance.saveDataAtoutsChallenges();
                     ChallengesGuis.CompleteChallenge(player, 6);
                 }
                 return;
@@ -140,11 +140,11 @@ public class ChallengesBlockBreak implements Listener {
                 int progress = ConfigManager.instance.getDataAtoutsChallenges().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.7.Progression") + 1;
                 int palier = ConfigManager.instance.getDataAtoutsChallenges().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.7.Palier");
                 ConfigManager.instance.getDataAtoutsChallenges().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily.7.Progression", progress);
-                ConfigManager.instance.saveDataChallenges();
+                ConfigManager.instance.saveDataAtoutsChallenges();
                 if (progress >= debris * palier) {
                     ConfigManager.instance.getDataAtoutsChallenges().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily.7.Progression", progress - debris * palier);
                     ConfigManager.instance.getDataAtoutsChallenges().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily.7.Palier", palier + 1);
-                    ConfigManager.instance.saveDataChallenges();
+                    ConfigManager.instance.saveDataAtoutsChallenges();
                     ChallengesGuis.CompleteChallenge(player, 7);
                 }
                 return;
@@ -153,11 +153,11 @@ public class ChallengesBlockBreak implements Listener {
                 int progress = ConfigManager.instance.getDataAtoutsChallenges().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.8.Progression") + 1;
                 int palier = ConfigManager.instance.getDataAtoutsChallenges().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.8.Palier");
                 ConfigManager.instance.getDataAtoutsChallenges().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily.8.Progression", progress);
-                ConfigManager.instance.saveDataChallenges();
+                ConfigManager.instance.saveDataAtoutsChallenges();
                 if (progress >= oak_log * palier) {
                     ConfigManager.instance.getDataAtoutsChallenges().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily.8.Progression", progress - oak_log * palier);
                     ConfigManager.instance.getDataAtoutsChallenges().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily.8.Palier", palier + 1);
-                    ConfigManager.instance.saveDataChallenges();
+                    ConfigManager.instance.saveDataAtoutsChallenges();
                     ChallengesGuis.CompleteChallenge(player, 8);
                 }
                 return;
@@ -166,11 +166,11 @@ public class ChallengesBlockBreak implements Listener {
                 int progress = ConfigManager.instance.getDataAtoutsChallenges().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.9.Progression") + 1;
                 int palier = ConfigManager.instance.getDataAtoutsChallenges().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.9.Palier");
                 ConfigManager.instance.getDataAtoutsChallenges().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily.9.Progression", progress);
-                ConfigManager.instance.saveDataChallenges();
+                ConfigManager.instance.saveDataAtoutsChallenges();
                 if (progress >= birch_log * palier) {
                     ConfigManager.instance.getDataAtoutsChallenges().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily.9.Progression", progress - birch_log * palier);
                     ConfigManager.instance.getDataAtoutsChallenges().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily.9.Palier", palier + 1);
-                    ConfigManager.instance.saveDataChallenges();
+                    ConfigManager.instance.saveDataAtoutsChallenges();
                     ChallengesGuis.CompleteChallenge(player, 9);
                 }
                 return;
@@ -179,11 +179,11 @@ public class ChallengesBlockBreak implements Listener {
                 int progress = ConfigManager.instance.getDataAtoutsChallenges().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.10.Progression") + 1;
                 int palier = ConfigManager.instance.getDataAtoutsChallenges().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.10.Palier");
                 ConfigManager.instance.getDataAtoutsChallenges().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily.10.Progression", progress);
-                ConfigManager.instance.saveDataChallenges();
+                ConfigManager.instance.saveDataAtoutsChallenges();
                 if (progress >= spruce_log * palier) {
                     ConfigManager.instance.getDataAtoutsChallenges().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily.10.Progression", progress - spruce_log * palier);
                     ConfigManager.instance.getDataAtoutsChallenges().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily.10.Palier", palier + 1);
-                    ConfigManager.instance.saveDataChallenges();
+                    ConfigManager.instance.saveDataAtoutsChallenges();
                     ChallengesGuis.CompleteChallenge(player, 10);
                 }
                 return;
@@ -192,11 +192,11 @@ public class ChallengesBlockBreak implements Listener {
                 int progress = ConfigManager.instance.getDataAtoutsChallenges().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.11.Progression") + 1;
                 int palier = ConfigManager.instance.getDataAtoutsChallenges().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.11.Palier");
                 ConfigManager.instance.getDataAtoutsChallenges().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily.11.Progression", progress);
-                ConfigManager.instance.saveDataChallenges();
+                ConfigManager.instance.saveDataAtoutsChallenges();
                 if (progress >= dark_oak_log * palier) {
                     ConfigManager.instance.getDataAtoutsChallenges().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily.11.Progression", progress - dark_oak_log * palier);
                     ConfigManager.instance.getDataAtoutsChallenges().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily.11.Palier", palier + 1);
-                    ConfigManager.instance.saveDataChallenges();
+                    ConfigManager.instance.saveDataAtoutsChallenges();
                     ChallengesGuis.CompleteChallenge(player, 11);
                 }
                 return;
@@ -205,11 +205,11 @@ public class ChallengesBlockBreak implements Listener {
                 int progress = ConfigManager.instance.getDataAtoutsChallenges().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.12.Progression") + 1;
                 int palier = ConfigManager.instance.getDataAtoutsChallenges().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.12.Palier");
                 ConfigManager.instance.getDataAtoutsChallenges().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily.12.Progression", progress);
-                ConfigManager.instance.saveDataChallenges();
+                ConfigManager.instance.saveDataAtoutsChallenges();
                 if (progress >= acacia_log * palier) {
                     ConfigManager.instance.getDataAtoutsChallenges().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily.12.Progression", progress - acacia_log * palier);
                     ConfigManager.instance.getDataAtoutsChallenges().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily.12.Palier", palier + 1);
-                    ConfigManager.instance.saveDataChallenges();
+                    ConfigManager.instance.saveDataAtoutsChallenges();
                     ChallengesGuis.CompleteChallenge(player, 12);
                 }
                 return;
@@ -218,11 +218,11 @@ public class ChallengesBlockBreak implements Listener {
                 int progress = ConfigManager.instance.getDataAtoutsChallenges().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.13.Progression") + 1;
                 int palier = ConfigManager.instance.getDataAtoutsChallenges().getInt("Joueurs." + player.getUniqueId() + ".Challenges.Daily.13.Palier");
                 ConfigManager.instance.getDataAtoutsChallenges().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily.13.Progression", progress);
-                ConfigManager.instance.saveDataChallenges();
+                ConfigManager.instance.saveDataAtoutsChallenges();
                 if (progress >= jungle_log * palier) {
                     ConfigManager.instance.getDataAtoutsChallenges().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily.13.Progression", progress - jungle_log * palier);
                     ConfigManager.instance.getDataAtoutsChallenges().set("Joueurs." + player.getUniqueId() + ".Challenges.Daily.13.Palier", palier + 1);
-                    ConfigManager.instance.saveDataChallenges();
+                    ConfigManager.instance.saveDataAtoutsChallenges();
                     ChallengesGuis.CompleteChallenge(player, 13);
                 }
                 return;

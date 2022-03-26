@@ -1,6 +1,7 @@
 package main.java.fr.verymc.atout;
 
 import main.java.fr.verymc.Main;
+import main.java.fr.verymc.config.AsyncSaver;
 import main.java.fr.verymc.config.ConfigManager;
 import main.java.fr.verymc.eco.EcoAccountsManager;
 import main.java.fr.verymc.gui.Farm2WinGui;
@@ -18,6 +19,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import java.util.Arrays;
+import java.util.HashMap;
 
 public class BuyAtoutGui implements Listener {
 
@@ -95,9 +97,11 @@ public class BuyAtoutGui implements Listener {
         if (effect == 1) {
             if (money >= haste) {
                 EcoAccountsManager.instance.removeFounds(player, haste, true);
-                ConfigManager.instance.getDataAtoutsChallenges().set("Joueurs." + player.getUniqueId() + ".Atout.1.Active", true);
-                ConfigManager.instance.getDataAtoutsChallenges().set("Joueurs." + player.getUniqueId() + ".Atout.1.Level", 2);
-                ConfigManager.instance.saveData();
+                HashMap<String, Object> objectHashMap = new HashMap<>();
+                objectHashMap.put("Joueurs." + player.getUniqueId() + ".Atout.1.Active", true);
+                objectHashMap.put("Joueurs." + player.getUniqueId() + ".Atout.1.Level", 2);
+                AsyncSaver.instance.setAndSaveAsync(objectHashMap, ConfigManager.instance.getDataAtoutsChallenges(),
+                        ConfigManager.instance.fileChallengesAtouts);
                 player.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 999999999, 1));
                 player.sendMessage("§6Vous avez reçu l'accès à l'atout haste 2 !");
                 Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
@@ -110,9 +114,11 @@ public class BuyAtoutGui implements Listener {
         if (effect == 2) {
             if (money >= speed) {
                 EcoAccountsManager.instance.removeFounds(player, (double) speed, true);
-                ConfigManager.instance.getDataAtoutsChallenges().set("Joueurs." + player.getUniqueId() + ".Atout.2.Active", true);
-                ConfigManager.instance.getDataAtoutsChallenges().set("Joueurs." + player.getUniqueId() + ".Atout.2.Level", 2);
-                ConfigManager.instance.saveData();
+                HashMap<String, Object> objectHashMap = new HashMap<>();
+                objectHashMap.put("Joueurs." + player.getUniqueId() + ".Atout.2.Active", true);
+                objectHashMap.put("Joueurs." + player.getUniqueId() + ".Atout.2.Level", 2);
+                AsyncSaver.instance.setAndSaveAsync(objectHashMap, ConfigManager.instance.getDataAtoutsChallenges(),
+                        ConfigManager.instance.fileChallengesAtouts);
                 player.sendMessage("§6Vous avez reçu l'accès à l'atout speed 2 !");
                 player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999999, 1));
                 Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
@@ -125,9 +131,11 @@ public class BuyAtoutGui implements Listener {
         if (effect == 3) {
             if (money >= jumpboost) {
                 EcoAccountsManager.instance.removeFounds(player, (double) jumpboost, true);
-                ConfigManager.instance.getDataAtoutsChallenges().set("Joueurs." + player.getUniqueId() + ".Atout.3.Active", true);
-                ConfigManager.instance.getDataAtoutsChallenges().set("Joueurs." + player.getUniqueId() + ".Atout.3.Level", 3);
-                ConfigManager.instance.saveData();
+                HashMap<String, Object> objectHashMap = new HashMap<>();
+                objectHashMap.put("Joueurs." + player.getUniqueId() + ".Atout.3.Active", true);
+                objectHashMap.put("Joueurs." + player.getUniqueId() + ".Atout.3.Level", 3);
+                AsyncSaver.instance.setAndSaveAsync(objectHashMap, ConfigManager.instance.getDataAtoutsChallenges(),
+                        ConfigManager.instance.fileChallengesAtouts);
                 player.sendMessage("§§6Vous avez reçu l'accès à l'atout Jumpboost 3 !");
                 player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 999999999, 2));
                 Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
