@@ -128,6 +128,17 @@ public class Main extends JavaPlugin implements Listener {
 
         System.out.println("Island startup...");
         new IslandManager();
+        saveResource("ileworld.schem", false);
+
+        while (!IslandManager.instance.worldLoaded) {
+            Bukkit.getServer().getScheduler().scheduleAsyncDelayedTask(Main.instance, new Runnable() {
+                public void run() {
+                    if (IslandManager.instance.worldLoaded) {
+                        System.out.println("World loaded !");
+                    }
+                }
+            }, 1);
+        }
 
         System.out.println("Initialisation des MODULES en cours...");
         new ConfigManager();

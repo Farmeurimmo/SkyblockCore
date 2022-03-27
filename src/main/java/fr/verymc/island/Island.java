@@ -1,7 +1,10 @@
 package main.java.fr.verymc.island;
 
-import org.bukkit.Bukkit;
+import main.java.fr.verymc.island.perms.IslandRank;
 import org.bukkit.Location;
+
+import java.util.HashMap;
+import java.util.UUID;
 
 public class Island {
 
@@ -10,15 +13,15 @@ public class Island {
     private Location home;
     private int size;
     private int id;
+    private HashMap<UUID, IslandRank> members = new HashMap<>();
 
-    public Island(String name, String owner, Location home, int size, int id) {
+    public Island(String name, String owner, Location home, int size, int id, HashMap<UUID, IslandRank> members) {
         this.name = name;
         this.owner = owner;
         this.home = home;
         this.size = size;
         this.id = id;
-        Bukkit.broadcastMessage("[Island] " + name + " has been created by " + owner);
-        Bukkit.broadcastMessage("[Island] " + name + " is at " + home.getBlockX() + " " + home.getBlockY() + " " + home.getBlockZ());
+        this.members = members;
     }
 
     public String getName() {
@@ -59,5 +62,13 @@ public class Island {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public HashMap<UUID, IslandRank> getMembers() {
+        return members;
+    }
+
+    public void setMembers(HashMap<UUID, IslandRank> members) {
+        this.members = members;
     }
 }

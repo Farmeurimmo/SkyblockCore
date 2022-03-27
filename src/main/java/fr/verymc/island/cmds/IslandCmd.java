@@ -16,9 +16,11 @@ public class IslandCmd implements CommandExecutor {
             Player p = (Player) sender;
             if (IslandManager.instance.mainWorld != null) {
                 if (args.length == 0) {
-                    p.teleport(IslandManager.instance.mainWorld.getSpawnLocation());
-                    p.sendMessage("§aVous avez été téléporté à l'île.");
-                    IslandManager.instance.genIsland(p);
+                    if (IslandManager.instance.asAnIsland(p)) {
+                        IslandManager.instance.teleportPlayerToIslandSafe(p);
+                    } else {
+                        IslandManager.instance.genIsland(p);
+                    }
                 }
             }
         }

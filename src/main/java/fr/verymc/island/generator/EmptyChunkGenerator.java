@@ -1,4 +1,4 @@
-package main.java.fr.verymc.island;
+package main.java.fr.verymc.island.generator;
 
 import org.bukkit.World;
 import org.bukkit.generator.ChunkGenerator;
