@@ -14,6 +14,8 @@ import com.sk89q.worldedit.math.BlockVector3;
 import com.sk89q.worldedit.session.ClipboardHolder;
 import main.java.fr.verymc.Main;
 import main.java.fr.verymc.island.generator.EmptyChunkGenerator;
+import main.java.fr.verymc.island.guis.IslandMainGui;
+import main.java.fr.verymc.island.guis.IslandMemberGui;
 import main.java.fr.verymc.island.perms.IslandRank;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -37,7 +39,6 @@ public class IslandManager {
     public ArrayList<Player> isInIsland = new ArrayList<>();
     public ArrayList<Island> islands = new ArrayList<>();
     public File fileSchematic;
-    public boolean worldLoaded = false;
 
     public IslandManager() {
         instance = this;
@@ -47,6 +48,8 @@ public class IslandManager {
                 fileSchematic = file;
             }
         }
+        new IslandMainGui();
+        new IslandMemberGui();
     }
 
     public boolean isAnIslandByLoc(Location loc) {
@@ -69,11 +72,28 @@ public class IslandManager {
         }
     }
 
+    public boolean isOwner(Player p) {
+        for (Island i : islands) {
+            if (i.getOwnerUUID().equals(p.getUniqueId())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Island getPlayerIsland(Player p) {
+        for (Island i : islands) {
+            if (i.getMembers().containsKey(p.getUniqueId())) {
+                return i;
+            }
+        }
+        return null;
+    }
+
     public void createMainWorld() {
         WorldCreator wc = new WorldCreator("Island_world");
         wc.generator(new EmptyChunkGenerator());
         mainWorld = wc.createWorld();
-        worldLoaded = true;
     }
 
     public boolean asAnIsland(Player p) {
@@ -192,7 +212,7 @@ public class IslandManager {
 
         HashMap<UUID, IslandRank> members = new HashMap<>();
         members.put(p.getUniqueId(), IslandRank.CHEF);
-        islands.add(new Island("Ile de " + p.getName(), p.getName(), toReturn, 50, id + 1, members));
+        islands.add(new Island("Ile de " + p.getName(), p.getName(), p.getUniqueId(), toReturn, 50, id + 1, members));
         addPlayerAsAnIsland(p);
         p.sendMessage("§6§lIles §8» §aVous avez généré une nouvelle île avec succès (en " + (System.currentTimeMillis() - start) + "ms).");
         p.teleport(toReturn.add(0.5, 0.1, 0.5));

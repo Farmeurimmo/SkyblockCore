@@ -33,6 +33,7 @@ import main.java.fr.verymc.gui.WarpGui;
 import main.java.fr.verymc.holos.HolosSetup;
 import main.java.fr.verymc.island.IslandManager;
 import main.java.fr.verymc.island.cmds.IslandCmd;
+import main.java.fr.verymc.island.guis.IslandGuiManager;
 import main.java.fr.verymc.items.FarmHoeCmd;
 import main.java.fr.verymc.items.FarmHoeGui;
 import main.java.fr.verymc.items.FarmHoeManager;
@@ -130,16 +131,6 @@ public class Main extends JavaPlugin implements Listener {
         new IslandManager();
         saveResource("ileworld.schem", false);
 
-        while (!IslandManager.instance.worldLoaded) {
-            Bukkit.getServer().getScheduler().scheduleAsyncDelayedTask(Main.instance, new Runnable() {
-                public void run() {
-                    if (IslandManager.instance.worldLoaded) {
-                        System.out.println("World loaded !");
-                    }
-                }
-            }, 1);
-        }
-
         System.out.println("Initialisation des MODULES en cours...");
         new ConfigManager();
         System.out.println("Fichier yml DONE | NEXT Methods init");
@@ -223,6 +214,7 @@ public class Main extends JavaPlugin implements Listener {
         getServer().getPluginManager().registerEvents(new AuctionGui(), this);
         getServer().getPluginManager().registerEvents(new AntiAfk(), this);
         getServer().getPluginManager().registerEvents(new MinionsListener(), this);
+        getServer().getPluginManager().registerEvents(new IslandGuiManager(), this);
         PluginManager pm = getServer().getPluginManager();
         pm.registerEvents(this, this);
         System.out.println("Listeners DONE | NEXT commands");

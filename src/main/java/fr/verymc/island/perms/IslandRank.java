@@ -13,6 +13,42 @@ public enum IslandRank {
         this.name = name;
     }
 
+    public static boolean isUp(IslandRank rank, IslandRank otherRank) {
+        if (rank == COCHEF && otherRank == MODERATEUR || otherRank == MEMBRE) {
+            return true;
+        } else if (rank == MODERATEUR && otherRank == MEMBRE) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public static IslandRank getNextRank(IslandRank rank) {
+        switch (rank) {
+            case COCHEF:
+                return CHEF;
+            case MODERATEUR:
+                return COCHEF;
+            case MEMBRE:
+                return MODERATEUR;
+            default:
+                return null;
+        }
+    }
+
+    public static IslandRank getPreviousRank(IslandRank rank) {
+        switch (rank) {
+            case CHEF:
+                return COCHEF;
+            case COCHEF:
+                return MODERATEUR;
+            case MODERATEUR:
+                return MEMBRE;
+            default:
+                return null;
+        }
+    }
+
     public String getName(IslandRank rank) {
         return rank.name();
     }
