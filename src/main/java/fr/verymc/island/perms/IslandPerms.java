@@ -14,7 +14,8 @@ public enum IslandPerms {
     PRIVATE("Définir la visibilité de l'île sur privée"),
     PUBLIC("Définir la visibilité de l'île sur publique"),
     CHANGE_BORDER_COLOR("Changer la couleur de la bordure"),
-    CHANGE_ISLAND_BIOME("Changer le biome de l'île");
+    CHANGE_ISLAND_BIOME("Changer le biome de l'île"),
+    ALL_PERMS("Toutes les permissions");
 
     private String description;
 

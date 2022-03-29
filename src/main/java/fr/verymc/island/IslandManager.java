@@ -16,6 +16,7 @@ import main.java.fr.verymc.Main;
 import main.java.fr.verymc.island.generator.EmptyChunkGenerator;
 import main.java.fr.verymc.island.guis.IslandMainGui;
 import main.java.fr.verymc.island.guis.IslandMemberGui;
+import main.java.fr.verymc.island.perms.IslandPerms;
 import main.java.fr.verymc.island.perms.IslandRank;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -39,6 +40,7 @@ public class IslandManager {
     public ArrayList<Player> isInIsland = new ArrayList<>();
     public ArrayList<Island> islands = new ArrayList<>();
     public File fileSchematic;
+    private HashMap<Player, ArrayList<Player>> pendingInvites = new HashMap<>();
 
     public IslandManager() {
         instance = this;
@@ -94,6 +96,60 @@ public class IslandManager {
         WorldCreator wc = new WorldCreator("Island_world");
         wc.generator(new EmptyChunkGenerator());
         mainWorld = wc.createWorld();
+    }
+
+    public boolean acceptInvite(Player p, Player target) {
+        if (pendingInvites.containsKey(p)) {
+            if (pendingInvites.get(p).contains(target)) {
+                pendingInvites.get(p).remove(target);
+                if (pendingInvites.get(p).isEmpty()) {
+                    pendingInvites.remove(p);
+                }
+                IslandManager.instance.addPlayerAsAnIsland(target);
+                getPlayerIsland(p).addMembers(target.getUniqueId(), IslandRank.MEMBRE);
+                teleportPlayerToIslandSafe(target);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean invitePlayer(Player p, Player target) {
+        Island currentIsland = getPlayerIsland(p);
+        if (currentIsland.getPerms(currentIsland.getIslandRankFromUUID(p.getUniqueId())).contains(IslandPerms.INVITE)) {
+            ArrayList<Player> pending;
+            if (pendingInvites.containsKey(p)) {
+                pending = pendingInvites.get(p);
+                if (pending.contains(target)) {
+                    return false;
+                }
+            } else {
+                pending = new ArrayList<>();
+            }
+            pending.add(target);
+            pendingInvites.put(p, pending);
+            target.sendMessage("§6§lIles §8» §fVous avez été invité à rejoindre l'île de §e" + p.getName() + "§f. Faites /is accept " +
+                    p.getName() + " pour accepter.");
+            Bukkit.getScheduler().scheduleAsyncDelayedTask(Main.instance, new Runnable() {
+                @Override
+                public void run() {
+                    Bukkit.getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
+                        @Override
+                        public void run() {
+                            if (pendingInvites.containsKey(p)) {
+                                if (pendingInvites.get(p).contains(target)) {
+                                    pendingInvites.get(p).remove(target);
+                                    target.sendMessage("§6§lIles §8» §fL'invitation de " + p.getName() + " a expiré.");
+                                    p.sendMessage("§6§lIles §8» §fL'invitation pour " + target.getName() + " a expiré.");
+                                }
+                            }
+                        }
+                    }, 0);
+                }
+            }, 20 * 60);
+            return true;
+        }
+        return false;
     }
 
     public boolean asAnIsland(Player p) {
@@ -212,7 +268,7 @@ public class IslandManager {
 
         HashMap<UUID, IslandRank> members = new HashMap<>();
         members.put(p.getUniqueId(), IslandRank.CHEF);
-        islands.add(new Island("Ile de " + p.getName(), p.getName(), p.getUniqueId(), toReturn, 50, id + 1, members));
+        islands.add(new Island("Ile de " + p.getName(), p.getName(), p.getUniqueId(), toReturn, 50, id + 1, members, true));
         addPlayerAsAnIsland(p);
         p.sendMessage("§6§lIles §8» §aVous avez généré une nouvelle île avec succès (en " + (System.currentTimeMillis() - start) + "ms).");
         p.teleport(toReturn.add(0.5, 0.1, 0.5));

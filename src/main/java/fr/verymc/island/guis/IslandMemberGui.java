@@ -24,6 +24,9 @@ public class IslandMemberGui {
 
     public void openMemberIslandMenu(Player player) {
 
+        if (!IslandManager.instance.asAnIsland(player)) {
+            return;
+        }
         Inventory inv = Bukkit.createInventory(null, 27, "§6Membres de l'île");
 
         ItemStack custom8 = new ItemStack(Material.ARROW, 1);
@@ -44,8 +47,8 @@ public class IslandMemberGui {
                 customi.setOwner("");
             }
             customi.setDisplayName("§6" + customi.getOwner());
-            customi.setLore(Arrays.asList("§7Rang: §6" + playerEntry.getValue().getName(), "§6Clic droit pour rétrograder", "Clic gauche pour promouvoir",
-                    "§6Clic molette pour exclure"));
+            customi.setLore(Arrays.asList("§7Rang: §6" + playerEntry.getValue().getName(), "§7Clic droit pour rétrograder", "§7Clic gauche pour promouvoir",
+                    "§7Clic molette pour exclure"));
             custom10.setItemMeta(customi);
             inv.setItem(current, custom10);
             current += 1;

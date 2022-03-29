@@ -31,6 +31,10 @@ public class IslandGuiManager implements Listener {
         }
         if (e.getView().getTitle().equalsIgnoreCase("§6Menu d'île")) {
             e.setCancelled(true);
+            if (!IslandManager.instance.asAnIsland(player)) {
+                player.closeInventory();
+                return;
+            }
             if (current.getType() == Material.PLAYER_HEAD) {
                 IslandMemberGui.instance.openMemberIslandMenu(player);
                 return;
@@ -46,6 +50,10 @@ public class IslandGuiManager implements Listener {
         }
         if (e.getView().getTitle().equalsIgnoreCase("§6Membres de l'île")) {
             e.setCancelled(true);
+            if (!IslandManager.instance.asAnIsland(player)) {
+                player.closeInventory();
+                return;
+            }
             if (current.getType() == Material.ARROW) {
                 IslandMainGui.instance.openMainIslandMenu(player);
                 return;
@@ -57,32 +65,33 @@ public class IslandGuiManager implements Listener {
                 if (Bukkit.getPlayer(playerName) != null) {
                     targetUUID = Bukkit.getPlayer(playerName).getUniqueId();
                 } else {
-                    targetUUID = Bukkit.getPlayer(playerName).getUniqueId();
+                    targetUUID = Bukkit.getOfflinePlayer(playerName).getUniqueId();
                 }
                 if (IslandManager.instance.isOwner(player)) {
-                    if (!currentIsland.getOwner().equals(targetUUID)) {
-                        if (e.isLeftClick()) {
-                            if (currentIsland.promote(targetUUID)) {
-                                player.sendMessage("§6§6§lIles §8» §fVous avez promu §6" + playerName + " §fau grade §6" +
-                                        currentIsland.getIslandRankFromUUID(targetUUID).getName());
-                            }
-                            return;
-                        }
-                        if (e.isRightClick()) {
-                            if (currentIsland.demote(targetUUID)) {
-                                player.sendMessage("§6§6§lIles §8» §fVous avez rétrogradé §6" + playerName + " §fau grade §6" +
-                                        currentIsland.getIslandRankFromUUID(targetUUID).getName());
-                            }
-                            return;
-                        }
-                        if (e.getClick() == ClickType.MIDDLE) {
-                            if (currentIsland.kickFromIsland(targetUUID)) {
-                                player.sendMessage("§6§6§lIles §8» §fVous avez exclu §6" + playerName + " §fde l'île");
-                            }
-                            return;
+                    if (e.isLeftClick()) {
+                        if (currentIsland.promote(targetUUID)) {
+                            player.sendMessage("§6§6§lIles §8» §fVous avez promu §6" + playerName + " §fau grade §6" +
+                                    currentIsland.getIslandRankFromUUID(targetUUID).getName());
+                            IslandMemberGui.instance.openMemberIslandMenu(player);
                         }
                         return;
                     }
+                    if (e.isRightClick()) {
+                        if (currentIsland.demote(targetUUID)) {
+                            player.sendMessage("§6§6§lIles §8» §fVous avez rétrogradé §6" + playerName + " §fau grade §6" +
+                                    currentIsland.getIslandRankFromUUID(targetUUID).getName());
+                            IslandMemberGui.instance.openMemberIslandMenu(player);
+                        }
+                        return;
+                    }
+                    if (e.getClick() == ClickType.MIDDLE) {
+                        if (currentIsland.kickFromIsland(targetUUID)) {
+                            player.sendMessage("§6§6§lIles §8» §fVous avez exclu §6" + playerName + " §fde l'île");
+                            IslandMemberGui.instance.openMemberIslandMenu(player);
+                        }
+                        return;
+                    }
+                    return;
                 }
                 if (currentIsland.getPerms(currentIsland.getIslandRankFromUUID(player.getUniqueId())).contains(IslandPerms.PROMOTE)) {
                     if (e.isLeftClick()) {
@@ -90,6 +99,7 @@ public class IslandGuiManager implements Listener {
                             if (currentIsland.promote(targetUUID)) {
                                 player.sendMessage("§6§6§lIles §8» §fVous avez promu §6" + playerName + " §fau grade §6" +
                                         currentIsland.getIslandRankFromUUID(targetUUID).getName());
+                                IslandMemberGui.instance.openMemberIslandMenu(player);
                             }
                         }
                         return;
@@ -101,6 +111,7 @@ public class IslandGuiManager implements Listener {
                             if (currentIsland.demote(targetUUID)) {
                                 player.sendMessage("§6§6§lIles §8» §fVous avez rétrogradé §6" + playerName + " §fau grade §6" +
                                         currentIsland.getIslandRankFromUUID(targetUUID).getName());
+                                IslandMemberGui.instance.openMemberIslandMenu(player);
                             }
                         }
                         return;
@@ -109,8 +120,9 @@ public class IslandGuiManager implements Listener {
                 if (currentIsland.getPerms(currentIsland.getIslandRankFromUUID(player.getUniqueId())).contains(IslandPerms.KICK)) {
                     if (e.getClick() == ClickType.MIDDLE) {
                         if (IslandRank.isUp(currentIsland.getIslandRankFromUUID(player.getUniqueId()), currentIsland.getIslandRankFromUUID(targetUUID))) {
-                            if (currentIsland.demote(targetUUID)) {
+                            if (currentIsland.kickFromIsland(targetUUID)) {
                                 player.sendMessage("§6§6§lIles §8» §fVous avez exclu §6" + playerName + " §fde l'île");
+                                IslandMemberGui.instance.openMemberIslandMenu(player);
                             }
                         }
                         return;

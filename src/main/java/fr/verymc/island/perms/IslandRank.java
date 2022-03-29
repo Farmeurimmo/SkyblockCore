@@ -25,14 +25,12 @@ public enum IslandRank {
 
     public static IslandRank getNextRank(IslandRank rank) {
         switch (rank) {
-            case COCHEF:
-                return CHEF;
             case MODERATEUR:
                 return COCHEF;
             case MEMBRE:
                 return MODERATEUR;
             default:
-                return null;
+                return rank;
         }
     }
 
@@ -45,7 +43,7 @@ public enum IslandRank {
             case MODERATEUR:
                 return MEMBRE;
             default:
-                return null;
+                return rank;
         }
     }
 
