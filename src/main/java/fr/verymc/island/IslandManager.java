@@ -16,13 +16,18 @@ import main.java.fr.verymc.Main;
 import main.java.fr.verymc.island.generator.EmptyChunkGenerator;
 import main.java.fr.verymc.island.guis.IslandMainGui;
 import main.java.fr.verymc.island.guis.IslandMemberGui;
+import main.java.fr.verymc.island.guis.IslandUpgradeGui;
 import main.java.fr.verymc.island.perms.IslandPerms;
 import main.java.fr.verymc.island.perms.IslandRank;
+import main.java.fr.verymc.island.upgrade.IslandUpgrade;
+import main.java.fr.verymc.island.upgrade.IslandUpgrades;
+import main.java.fr.verymc.utils.WorldBorderUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.WorldCreator;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -37,7 +42,7 @@ public class IslandManager {
     public static IslandManager instance;
     public static int distanceBetweenIslands = 400;
     public World mainWorld;
-    public ArrayList<Player> isInIsland = new ArrayList<>();
+    public ArrayList<UUID> isInIsland = new ArrayList<>();
     public ArrayList<Island> islands = new ArrayList<>();
     public File fileSchematic;
     private HashMap<Player, ArrayList<Player>> pendingInvites = new HashMap<>();
@@ -52,16 +57,38 @@ public class IslandManager {
         }
         new IslandMainGui();
         new IslandMemberGui();
+        new IslandUpgradeGui();
     }
 
     public boolean isAnIslandByLoc(Location loc) {
         for (Island i : islands) {
-            if (i.getHome().getBlockX() + i.getSizeLevel() >= loc.getBlockX() && i.getHome().getBlockX() - i.getSizeLevel() <= loc.getBlockX()
-                    && i.getHome().getBlockZ() + i.getSizeLevel() >= loc.getBlockZ() && i.getHome().getBlockZ() - i.getSizeLevel() <= loc.getBlockZ()) {
+            if (i.getHome().getBlockX() + i.getSizeUpgrade().getSize() >= loc.getBlockX() && i.getHome().getBlockX() - i.getSizeUpgrade().getSize() <= loc.getBlockX()
+                    && i.getHome().getBlockZ() + i.getSizeUpgrade().getSize() >= loc.getBlockZ() && i.getHome().getBlockZ() - i.getSizeUpgrade().getSize() <= loc.getBlockZ()) {
                 return true;
             }
         }
         return false;
+    }
+
+    public Island getIslandByLoc(Location loc) {
+        for (Island i : islands) {
+            if (i.getHome().getBlockX() + i.getSizeUpgrade().getSize() >= loc.getBlockX() && i.getHome().getBlockX() - i.getSizeUpgrade().getSize() <= loc.getBlockX()
+                    && i.getHome().getBlockZ() + i.getSizeUpgrade().getSize() >= loc.getBlockZ() && i.getHome().getBlockZ() - i.getSizeUpgrade().getSize() <= loc.getBlockZ()) {
+                return i;
+            }
+        }
+        return null;
+    }
+
+    public void setWorldBorder(Player p) {
+        Island i = getIslandByLoc(p.getLocation());
+        if (p.getWorld().getName().equalsIgnoreCase("world")) {
+            return;
+        }
+        if (i != null) {
+            WorldBorderUtil.instanceClass.sendWorldBorder(p, i.getBorderColor(),
+                    i.getSizeUpgrade().getSize(), i.getCenter());
+        }
     }
 
     public void teleportPlayerToIslandSafe(Player p) {
@@ -69,6 +96,7 @@ public class IslandManager {
             if (i.getMembers().containsKey(p.getUniqueId())) {
                 p.teleport(i.getHome());
                 p.sendMessage("§6§lIles §8» §fTéléportation sur votre île.");
+                IslandManager.instance.setWorldBorder(p);
                 return;
             }
         }
@@ -105,10 +133,78 @@ public class IslandManager {
                 if (pendingInvites.get(p).isEmpty()) {
                     pendingInvites.remove(p);
                 }
+                p.sendMessage("§6§lIles §8» §fL'invitation envoyée à " + target.getName() + " a été accepté.");
+                target.sendMessage("§6§lIles §8» §fVous avez rejoin l'île de " + p.getName() + ".");
                 IslandManager.instance.addPlayerAsAnIsland(target);
                 getPlayerIsland(p).addMembers(target.getUniqueId(), IslandRank.MEMBRE);
                 teleportPlayerToIslandSafe(target);
                 return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean promoteAndDemoteAction(Player player, UUID targetUUID, String playerName,
+                                          ClickType clickType, Island currentIsland) {
+        if (IslandManager.instance.isOwner(player)) {
+            if (clickType.isLeftClick()) {
+                if (currentIsland.promote(targetUUID)) {
+                    player.sendMessage("§6§6§lIles §8» §fVous avez promu §6" + playerName + " §fau grade §6" +
+                            currentIsland.getIslandRankFromUUID(targetUUID).getName());
+                    IslandMemberGui.instance.openMemberIslandMenu(player);
+                    return true;
+                }
+            }
+            if (clickType.isRightClick()) {
+                if (currentIsland.demote(targetUUID)) {
+                    player.sendMessage("§6§6§lIles §8» §fVous avez rétrogradé §6" + playerName + " §fau grade §6" +
+                            currentIsland.getIslandRankFromUUID(targetUUID).getName());
+                    IslandMemberGui.instance.openMemberIslandMenu(player);
+                    return true;
+                }
+            }
+            if (clickType == ClickType.MIDDLE) {
+                if (currentIsland.kickFromIsland(targetUUID)) {
+                    player.sendMessage("§6§6§lIles §8» §fVous avez exclu §6" + playerName + " §fde l'île");
+                    IslandMemberGui.instance.openMemberIslandMenu(player);
+                    return true;
+                }
+            }
+            return false;
+        }
+        if (currentIsland.getPerms(currentIsland.getIslandRankFromUUID(player.getUniqueId())).contains(IslandPerms.PROMOTE)) {
+            if (clickType.isLeftClick()) {
+                if (IslandRank.isUp(currentIsland.getIslandRankFromUUID(player.getUniqueId()), currentIsland.getIslandRankFromUUID(targetUUID))) {
+                    if (currentIsland.promote(targetUUID)) {
+                        player.sendMessage("§6§6§lIles §8» §fVous avez promu §6" + playerName + " §fau grade §6" +
+                                currentIsland.getIslandRankFromUUID(targetUUID).getName());
+                        IslandMemberGui.instance.openMemberIslandMenu(player);
+                        return true;
+                    }
+                }
+            }
+        }
+        if (currentIsland.getPerms(currentIsland.getIslandRankFromUUID(player.getUniqueId())).contains(IslandPerms.DEMOTE)) {
+            if (clickType.isRightClick()) {
+                if (IslandRank.isUp(currentIsland.getIslandRankFromUUID(player.getUniqueId()), currentIsland.getIslandRankFromUUID(targetUUID))) {
+                    if (currentIsland.demote(targetUUID)) {
+                        player.sendMessage("§6§6§lIles §8» §fVous avez rétrogradé §6" + playerName + " §fau grade §6" +
+                                currentIsland.getIslandRankFromUUID(targetUUID).getName());
+                        IslandMemberGui.instance.openMemberIslandMenu(player);
+                        return true;
+                    }
+                }
+            }
+        }
+        if (currentIsland.getPerms(currentIsland.getIslandRankFromUUID(player.getUniqueId())).contains(IslandPerms.KICK)) {
+            if (clickType == ClickType.MIDDLE) {
+                if (IslandRank.isUp(currentIsland.getIslandRankFromUUID(player.getUniqueId()), currentIsland.getIslandRankFromUUID(targetUUID))) {
+                    if (currentIsland.kickFromIsland(targetUUID)) {
+                        player.sendMessage("§6§6§lIles §8» §fVous avez exclu §6" + playerName + " §fde l'île");
+                        IslandMemberGui.instance.openMemberIslandMenu(player);
+                        return true;
+                    }
+                }
             }
         }
         return false;
@@ -153,15 +249,15 @@ public class IslandManager {
     }
 
     public boolean asAnIsland(Player p) {
-        return isInIsland.contains(p);
+        return isInIsland.contains(p.getUniqueId());
     }
 
     public void addPlayerAsAnIsland(Player p) {
-        isInIsland.add(p);
+        isInIsland.add(p.getUniqueId());
     }
 
     public void removePlayerAsAnIsland(Player p) {
-        isInIsland.remove(p);
+        isInIsland.remove(p.getUniqueId());
     }
 
     public World getMainWorld() {
@@ -268,10 +364,12 @@ public class IslandManager {
 
         HashMap<UUID, IslandRank> members = new HashMap<>();
         members.put(p.getUniqueId(), IslandRank.CHEF);
-        islands.add(new Island("Ile de " + p.getName(), p.getName(), p.getUniqueId(), toReturn, 50, id + 1, members, true));
+        IslandUpgrade islandUpgradeSize = new IslandUpgrade(0, 0, IslandUpgrades.SIZE_0);
+        islands.add(new Island("Ile de " + p.getName(), p.getName(), p.getUniqueId(), toReturn, id + 1, members, true,
+                islandUpgradeSize, WorldBorderUtil.Color.BLUE));
         addPlayerAsAnIsland(p);
         p.sendMessage("§6§lIles §8» §aVous avez généré une nouvelle île avec succès (en " + (System.currentTimeMillis() - start) + "ms).");
-        p.teleport(toReturn.add(0.5, 0.1, 0.5));
+        teleportPlayerToIslandSafe(p);
 
     }
 

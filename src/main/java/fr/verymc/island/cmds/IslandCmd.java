@@ -6,9 +6,16 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
 
-public class IslandCmd implements CommandExecutor {
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
+public class IslandCmd implements CommandExecutor, TabCompleter {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -43,6 +50,10 @@ public class IslandCmd implements CommandExecutor {
                         p.sendMessage("§6§6§lIles §8» §fTu ne peux pas effectuer d'action à toi même.");
                         return true;
                     }
+                    if (!IslandManager.instance.asAnIsland(p)) {
+                        p.sendMessage("§6§6§lIles §8» §fTu n'es pas dans une ile.");
+                        return true;
+                    }
                     if (args[0].equalsIgnoreCase("invite")) {
                         if (!IslandManager.instance.asAnIsland(target)) {
                             if (IslandManager.instance.invitePlayer(p, target)) {
@@ -55,8 +66,7 @@ public class IslandCmd implements CommandExecutor {
                             p.sendMessage("§6§6§lIles §8» §f" + target.getName() + " est déjà dans une île.");
                         }
                         return true;
-                    }
-                    if (args[0].equalsIgnoreCase("accept")) {
+                    } else if (args[0].equalsIgnoreCase("accept")) {
                         if (!IslandManager.instance.asAnIsland(p)) {
                             if (IslandManager.instance.acceptInvite(target, p)) {
                                 p.sendMessage("§6§6§lIles §8» §fVous avez accepté l'invitation de §e" + target.getName());
@@ -67,10 +77,49 @@ public class IslandCmd implements CommandExecutor {
                             p.sendMessage("§6§6§lIles §8» §fTu es déjà dans une île.");
                         }
                         return true;
+                    } else if (args[0].equalsIgnoreCase("kick")) {
+                        if (IslandManager.instance.promoteAndDemoteAction(p, target.getUniqueId(), target.getName(),
+                                ClickType.MIDDLE, IslandManager.instance.getPlayerIsland(p))) {
+                        } else {
+                            p.sendMessage("§6§6§lIles §8» §fTu ne peux pas faire cette action.");
+                        }
+                        return true;
+                    } else if (args[0].equalsIgnoreCase("promote")) {
+                        if (IslandManager.instance.promoteAndDemoteAction(p, target.getUniqueId(), target.getName(),
+                                ClickType.MIDDLE, IslandManager.instance.getPlayerIsland(p))) {
+
+                        } else {
+                            p.sendMessage("§6§6§lIles §8» §fTu ne peux pas faire cette action.");
+                        }
+                        return true;
+                    } else if (args[0].equalsIgnoreCase("demote")) {
+                        if (IslandManager.instance.promoteAndDemoteAction(p, target.getUniqueId(), target.getName(),
+                                ClickType.MIDDLE, IslandManager.instance.getPlayerIsland(p))) {
+
+                        } else {
+                            p.sendMessage("§6§6§lIles §8» §fTu ne peux pas faire cette action.");
+                        }
+                        return true;
                     }
                 }
             }
         }
         return true;
+    }
+
+    @Override
+    public List<String> onTabComplete(CommandSender sender, Command cmd, String commandLabel, String[] args) {
+        ArrayList<String> subcmd = new ArrayList<String>();
+        if (cmd.getName().equalsIgnoreCase("is")) {
+            if (args.length == 1) {
+                subcmd.addAll(Arrays.asList("go", "home", "invite", "accept", "kick", "promote", "demote"));
+            } else if (args.length == 2) {
+                subcmd.add("");
+            } else {
+                subcmd.add("");
+            }
+        }
+        Collections.sort(subcmd);
+        return subcmd;
     }
 }

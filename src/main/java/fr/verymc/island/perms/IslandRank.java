@@ -1,5 +1,7 @@
 package main.java.fr.verymc.island.perms;
 
+import java.util.HashMap;
+
 public enum IslandRank {
 
     CHEF("Chef"),
@@ -14,6 +16,9 @@ public enum IslandRank {
     }
 
     public static boolean isUp(IslandRank rank, IslandRank otherRank) {
+        if (rank == CHEF) {
+            return true;
+        }
         if (rank == COCHEF && otherRank == MODERATEUR || otherRank == MEMBRE) {
             return true;
         } else if (rank == MODERATEUR && otherRank == MEMBRE) {
@@ -36,8 +41,6 @@ public enum IslandRank {
 
     public static IslandRank getPreviousRank(IslandRank rank) {
         switch (rank) {
-            case CHEF:
-                return COCHEF;
             case COCHEF:
                 return MODERATEUR;
             case MODERATEUR:
@@ -45,6 +48,25 @@ public enum IslandRank {
             default:
                 return rank;
         }
+    }
+
+    public static HashMap<IslandRank, Integer> getIslandRankPos() {
+        HashMap<IslandRank, Integer> pos = new HashMap<>();
+        for (IslandRank rank : IslandRank.values()) {
+            if (rank == CHEF) {
+                pos.put(rank, 0);
+            }
+            if (rank == COCHEF) {
+                pos.put(rank, 1);
+            }
+            if (rank == MODERATEUR) {
+                pos.put(rank, 2);
+            }
+            if (rank == MEMBRE) {
+                pos.put(rank, 3);
+            }
+        }
+        return pos;
     }
 
     public String getName(IslandRank rank) {

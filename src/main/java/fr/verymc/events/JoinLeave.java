@@ -3,6 +3,7 @@ package main.java.fr.verymc.events;
 import main.java.fr.verymc.challenges.ChallengesReset;
 import main.java.fr.verymc.config.ConfigManager;
 import main.java.fr.verymc.eco.EcoAccountsManager;
+import main.java.fr.verymc.island.IslandManager;
 import main.java.fr.verymc.scoreboard.ScoreBoard;
 import net.luckperms.api.LuckPermsProvider;
 import net.luckperms.api.model.user.User;
@@ -82,6 +83,7 @@ public class JoinLeave implements Listener {
                 player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 999999999, 2));
             }
         }
+        IslandManager.instance.setWorldBorder(player);
     }
 
     @EventHandler

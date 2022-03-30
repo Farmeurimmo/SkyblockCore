@@ -20,17 +20,11 @@ public class IslandMainGui {
 
         Inventory inv = Bukkit.createInventory(null, 45, "§6Menu d'île");
 
-        ItemStack custom1 = new ItemStack(Material.GRASS_BLOCK, 1);
+        ItemStack custom1 = new ItemStack(Material.ENDER_EYE, 1);
         ItemMeta meta1 = custom1.getItemMeta();
         meta1.setDisplayName("§6Téléportation §8| §7(clic gauche)");
         custom1.setItemMeta(meta1);
         inv.setItem(10, custom1);
-
-        ItemStack custom8 = new ItemStack(Material.ARROW, 1);
-        ItemMeta customh = custom8.getItemMeta();
-        customh.setDisplayName("§6Retour §8| §7(clic gauche)");
-        custom8.setItemMeta(customh);
-        inv.setItem(44, custom8);
 
         ItemStack custom10 = new ItemStack(Material.PLAYER_HEAD, 1);
         SkullMeta customi = (SkullMeta) custom10.getItemMeta();
@@ -38,6 +32,19 @@ public class IslandMainGui {
         customi.setDisplayName("§6Membres §8| §7(clic gauche)");
         custom10.setItemMeta(customi);
         inv.setItem(11, custom10);
+
+        ItemStack custom2 = new ItemStack(Material.BLAST_FURNACE, 1);
+        ItemMeta meta2 = custom2.getItemMeta();
+        meta2.setDisplayName("§6Améliorations d'île §8| §7(clic gauche)");
+        custom1.setItemMeta(meta2);
+        inv.setItem(12, custom2);
+
+
+        ItemStack custom8 = new ItemStack(Material.ARROW, 1);
+        ItemMeta customh = custom8.getItemMeta();
+        customh.setDisplayName("§6Retour §8| §7(clic gauche)");
+        custom8.setItemMeta(customh);
+        inv.setItem(44, custom8);
 
         player.openInventory(inv);
     }

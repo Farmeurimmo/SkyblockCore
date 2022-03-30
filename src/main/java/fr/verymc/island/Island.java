@@ -2,6 +2,8 @@ package main.java.fr.verymc.island;
 
 import main.java.fr.verymc.island.perms.IslandPerms;
 import main.java.fr.verymc.island.perms.IslandRank;
+import main.java.fr.verymc.island.upgrade.IslandUpgrade;
+import main.java.fr.verymc.utils.WorldBorderUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -17,22 +19,27 @@ public class Island {
     private String owner;
     private UUID ownerUUID;
     private Location home;
-    private int size;
+    private Location center;
     private int id;
     private HashMap<UUID, IslandRank> members = new HashMap<>();
     private HashMap<IslandRank, ArrayList<IslandPerms>> permsPerRanks = new HashMap<>();
+    private IslandUpgrade sizeUpgrade;
+    private WorldBorderUtil.Color borderColor;
 
-    public Island(String name, String owner, UUID ownerUUID, Location home, int size, int id, HashMap<UUID, IslandRank> members, boolean defaultPerms) {
+    public Island(String name, String owner, UUID ownerUUID, Location home, int id, HashMap<UUID, IslandRank> members, boolean defaultPerms,
+                  IslandUpgrade upgradeSize, WorldBorderUtil.Color borderColor) {
         this.name = name;
         this.owner = owner;
         this.ownerUUID = ownerUUID;
         this.home = home;
-        this.size = size;
+        this.center = home;
         this.id = id;
         this.members = members;
         if (defaultPerms) {
             setDefaultPerms();
         }
+        this.sizeUpgrade = upgradeSize;
+        this.borderColor = borderColor;
     }
 
     public void setDefaultPerms() {
@@ -48,6 +55,18 @@ public class Island {
         permsPerRanks.put(IslandRank.COCHEF, perms);
         perms.add(IslandPerms.ALL_PERMS);
         permsPerRanks.put(IslandRank.CHEF, perms);
+    }
+
+    public IslandUpgrade getSizeUpgrade() {
+        return sizeUpgrade;
+    }
+
+    public WorldBorderUtil.Color getBorderColor() {
+        return borderColor;
+    }
+
+    public Location getCenter() {
+        return center;
     }
 
     public String getName() {
@@ -74,14 +93,6 @@ public class Island {
         this.home = home;
     }
 
-    public int getSizeLevel() {
-        return size;
-    }
-
-    public void setSizeLevel(int size) {
-        this.size = size;
-    }
-
     public int getId() {
         return id;
     }
@@ -92,7 +103,12 @@ public class Island {
 
     public boolean promote(UUID uuid) {
         if (members.containsKey(uuid)) {
-            members.put(uuid, IslandRank.getNextRank(getIslandRankFromUUID(uuid)));
+            IslandRank currentRank = getIslandRankFromUUID(uuid);
+            IslandRank nextRank = IslandRank.getNextRank(currentRank);
+            if (currentRank == nextRank) {
+                return false;
+            }
+            members.put(uuid, nextRank);
             return true;
         }
         return false;
@@ -100,6 +116,11 @@ public class Island {
 
     public boolean demote(UUID uuid) {
         if (members.containsKey(uuid)) {
+            IslandRank currentRank = getIslandRankFromUUID(uuid);
+            IslandRank previousRank = IslandRank.getPreviousRank(currentRank);
+            if (currentRank == previousRank) {
+                return false;
+            }
             members.put(uuid, IslandRank.getPreviousRank(getIslandRankFromUUID(uuid)));
             return true;
         }
@@ -107,6 +128,9 @@ public class Island {
     }
 
     public boolean kickFromIsland(UUID uuid) {
+        if (uuid.equals(ownerUUID)) {
+            return false;
+        }
         if (members.containsKey(uuid)) {
             members.remove(uuid);
         }

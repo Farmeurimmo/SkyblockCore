@@ -6,7 +6,7 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
-public class TeleportPlayer {
+public class PlayerUtils {
 
     public static void TeleportPlayerFromRequest(Player player, Location loc, int temp) {
 

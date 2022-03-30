@@ -42,6 +42,7 @@ import main.java.fr.verymc.minions.*;
 import main.java.fr.verymc.scoreboard.ScoreBoard;
 import main.java.fr.verymc.scoreboard.TABManager;
 import main.java.fr.verymc.shopgui.*;
+import main.java.fr.verymc.utils.WorldBorderUtil;
 import main.java.fr.verymc.winelottery.WineGui;
 import main.java.fr.verymc.winelottery.WineSpawn;
 import net.luckperms.api.LuckPerms;
@@ -129,6 +130,7 @@ public class Main extends JavaPlugin implements Listener {
 
         System.out.println("Island startup...");
         new IslandManager();
+        new WorldBorderUtil(this);
         saveResource("ileworld.schem", false);
 
         System.out.println("Initialisation des MODULES en cours...");

@@ -3,14 +3,11 @@ package main.java.fr.verymc.island.guis;
 import main.java.fr.verymc.gui.MenuGui;
 import main.java.fr.verymc.island.Island;
 import main.java.fr.verymc.island.IslandManager;
-import main.java.fr.verymc.island.perms.IslandPerms;
-import main.java.fr.verymc.island.perms.IslandRank;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
@@ -39,7 +36,7 @@ public class IslandGuiManager implements Listener {
                 IslandMemberGui.instance.openMemberIslandMenu(player);
                 return;
             }
-            if (current.getType() == Material.GRASS_BLOCK) {
+            if (current.getType() == Material.ENDER_EYE) {
                 IslandManager.instance.teleportPlayerToIslandSafe(player);
                 return;
             }
@@ -47,6 +44,11 @@ public class IslandGuiManager implements Listener {
                 MenuGui.OpenMainMenu(player);
                 return;
             }
+            if (current.getType() == Material.BLAST_FURNACE) {
+                IslandUpgradeGui.instance.openUpgradeIslandMenu(player);
+                return;
+            }
+            return;
         }
         if (e.getView().getTitle().equalsIgnoreCase("§6Membres de l'île")) {
             e.setCancelled(true);
@@ -67,68 +69,26 @@ public class IslandGuiManager implements Listener {
                 } else {
                     targetUUID = Bukkit.getOfflinePlayer(playerName).getUniqueId();
                 }
-                if (IslandManager.instance.isOwner(player)) {
-                    if (e.isLeftClick()) {
-                        if (currentIsland.promote(targetUUID)) {
-                            player.sendMessage("§6§6§lIles §8» §fVous avez promu §6" + playerName + " §fau grade §6" +
-                                    currentIsland.getIslandRankFromUUID(targetUUID).getName());
-                            IslandMemberGui.instance.openMemberIslandMenu(player);
-                        }
-                        return;
-                    }
-                    if (e.isRightClick()) {
-                        if (currentIsland.demote(targetUUID)) {
-                            player.sendMessage("§6§6§lIles §8» §fVous avez rétrogradé §6" + playerName + " §fau grade §6" +
-                                    currentIsland.getIslandRankFromUUID(targetUUID).getName());
-                            IslandMemberGui.instance.openMemberIslandMenu(player);
-                        }
-                        return;
-                    }
-                    if (e.getClick() == ClickType.MIDDLE) {
-                        if (currentIsland.kickFromIsland(targetUUID)) {
-                            player.sendMessage("§6§6§lIles §8» §fVous avez exclu §6" + playerName + " §fde l'île");
-                            IslandMemberGui.instance.openMemberIslandMenu(player);
-                        }
-                        return;
-                    }
+                if (IslandManager.instance.promoteAndDemoteAction(player, targetUUID, playerName, e.getClick(),
+                        currentIsland)) {
+                    IslandMemberGui.instance.openMemberIslandMenu(player);
                     return;
-                }
-                if (currentIsland.getPerms(currentIsland.getIslandRankFromUUID(player.getUniqueId())).contains(IslandPerms.PROMOTE)) {
-                    if (e.isLeftClick()) {
-                        if (IslandRank.isUp(currentIsland.getIslandRankFromUUID(player.getUniqueId()), currentIsland.getIslandRankFromUUID(targetUUID))) {
-                            if (currentIsland.promote(targetUUID)) {
-                                player.sendMessage("§6§6§lIles §8» §fVous avez promu §6" + playerName + " §fau grade §6" +
-                                        currentIsland.getIslandRankFromUUID(targetUUID).getName());
-                                IslandMemberGui.instance.openMemberIslandMenu(player);
-                            }
-                        }
-                        return;
-                    }
-                }
-                if (currentIsland.getPerms(currentIsland.getIslandRankFromUUID(player.getUniqueId())).contains(IslandPerms.DEMOTE)) {
-                    if (e.isRightClick()) {
-                        if (IslandRank.isUp(currentIsland.getIslandRankFromUUID(player.getUniqueId()), currentIsland.getIslandRankFromUUID(targetUUID))) {
-                            if (currentIsland.demote(targetUUID)) {
-                                player.sendMessage("§6§6§lIles §8» §fVous avez rétrogradé §6" + playerName + " §fau grade §6" +
-                                        currentIsland.getIslandRankFromUUID(targetUUID).getName());
-                                IslandMemberGui.instance.openMemberIslandMenu(player);
-                            }
-                        }
-                        return;
-                    }
-                }
-                if (currentIsland.getPerms(currentIsland.getIslandRankFromUUID(player.getUniqueId())).contains(IslandPerms.KICK)) {
-                    if (e.getClick() == ClickType.MIDDLE) {
-                        if (IslandRank.isUp(currentIsland.getIslandRankFromUUID(player.getUniqueId()), currentIsland.getIslandRankFromUUID(targetUUID))) {
-                            if (currentIsland.kickFromIsland(targetUUID)) {
-                                player.sendMessage("§6§6§lIles §8» §fVous avez exclu §6" + playerName + " §fde l'île");
-                                IslandMemberGui.instance.openMemberIslandMenu(player);
-                            }
-                        }
-                        return;
-                    }
+                } else {
+                    player.sendMessage("§6§6§lIles §8» §fTu ne peux pas faire cette action.");
                 }
             }
+            return;
+        }
+        if (e.getView().getTitle().equalsIgnoreCase("§6Améliorations de l'île")) {
+            e.setCancelled(true);
+            if (!IslandManager.instance.asAnIsland(player)) {
+                return;
+            }
+            if (current.getType() == Material.ARROW) {
+                IslandMainGui.instance.openMainIslandMenu(player);
+                return;
+            }
+            return;
         }
     }
 }

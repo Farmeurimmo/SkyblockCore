@@ -10,9 +10,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 
-import java.util.Arrays;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class IslandMemberGui {
 
@@ -36,24 +34,40 @@ public class IslandMemberGui {
         inv.setItem(26, custom8);
 
         int current = 0;
-        for (Map.Entry<UUID, IslandRank> playerEntry : IslandManager.instance.getPlayerIsland(player).getMembers().entrySet()) {
-            ItemStack custom10 = new ItemStack(Material.PLAYER_HEAD, 1);
-            SkullMeta customi = (SkullMeta) custom10.getItemMeta();
-            if (Bukkit.getPlayer(playerEntry.getKey()) != null) {
-                customi.setOwner(Bukkit.getPlayer(playerEntry.getKey()).getName());
-            } else if (Bukkit.getOfflinePlayer(playerEntry.getKey()) != null) {
-                customi.setOwner(Bukkit.getOfflinePlayer(playerEntry.getKey()).getName());
-            } else {
-                customi.setOwner("");
+        ArrayList<UUID> members = new ArrayList<>();
+        int currentLevelRank = 0;
+        HashMap<UUID, IslandRank> levelRank = IslandManager.instance.getPlayerIsland(player).getMembers();
+        HashMap<IslandRank, Integer> rankPos = IslandRank.getIslandRankPos();
+        while (members.size() != levelRank.size()) {
+            if (currentLevelRank > 3) {
+                break;
             }
-            customi.setDisplayName("§6" + customi.getOwner());
-            customi.setLore(Arrays.asList("§7Rang: §6" + playerEntry.getValue().getName(), "§7Clic droit pour rétrograder", "§7Clic gauche pour promouvoir",
-                    "§7Clic molette pour exclure"));
-            custom10.setItemMeta(customi);
-            inv.setItem(current, custom10);
-            current += 1;
+            for (Map.Entry<UUID, IslandRank> playerEntry : levelRank.entrySet()) {
+                if (members.contains(playerEntry.getKey())) {
+                    continue;
+                }
+                if (rankPos.get(playerEntry.getValue()) != currentLevelRank) {
+                    continue;
+                }
+                ItemStack custom10 = new ItemStack(Material.PLAYER_HEAD, 1);
+                SkullMeta customi = (SkullMeta) custom10.getItemMeta();
+                if (Bukkit.getPlayer(playerEntry.getKey()) != null) {
+                    customi.setOwner(Bukkit.getPlayer(playerEntry.getKey()).getName());
+                } else if (Bukkit.getOfflinePlayer(playerEntry.getKey()) != null) {
+                    customi.setOwner(Bukkit.getOfflinePlayer(playerEntry.getKey()).getName());
+                } else {
+                    customi.setOwner("");
+                }
+                customi.setDisplayName("§6" + customi.getOwner());
+                customi.setLore(Arrays.asList("§7Rang: §6" + playerEntry.getValue().getName(), "§7Clic droit pour rétrograder", "§7Clic gauche pour promouvoir",
+                        "§7Clic molette pour exclure"));
+                custom10.setItemMeta(customi);
+                inv.setItem(current, custom10);
+                members.add(playerEntry.getKey());
+                current += 1;
+            }
+            currentLevelRank += 1;
         }
-
 
         player.openInventory(inv);
     }

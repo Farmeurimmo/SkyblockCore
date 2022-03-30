@@ -1,5 +1,7 @@
 package main.java.fr.verymc.island.perms;
 
+import java.util.ArrayList;
+
 public enum IslandPerms {
 
     PROMOTE("Promouvoir un membre inférieur à lui"),
@@ -21,6 +23,14 @@ public enum IslandPerms {
 
     IslandPerms(String description) {
         this.description = description;
+    }
+
+    public static ArrayList<IslandPerms> getAllRanks() {
+        ArrayList<IslandPerms> perms = new ArrayList<>();
+        for (IslandPerms perm : IslandPerms.values()) {
+            perms.add(perm);
+        }
+        return perms;
     }
 
     public String getDescription() {
