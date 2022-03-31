@@ -65,7 +65,7 @@ public class PlayerUtils {
         final int timeLeft = Main.instance.getCooldown(player.getName());
         if (GetTeleportDelay.GetPlayerTeleportingdelay(player) == 0) {
             player.teleport(totp);
-            player.sendActionBar("fTéléportation sur §a" + p.getName() + "§f effectu§e !");
+            player.sendActionBar("fTéléportation sur §a" + p.getName() + "§f effectuée !");
             return;
         } else {
             if (timeLeft == 0) {

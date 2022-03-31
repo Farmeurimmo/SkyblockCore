@@ -30,7 +30,7 @@ public class IslandUpgradeGui {
         ItemStack custom1 = new ItemStack(Material.GRASS_BLOCK);
         ItemMeta custom1Meta = custom1.getItemMeta();
         custom1Meta.setDisplayName("§6Taille de l'île");
-        custom1Meta.setLore(Arrays.asList("§7Taille actuelle : §e" + sizeIsland + "§7x§e" + sizeIsland));
+        custom1Meta.setLore(Arrays.asList("§7Taille actuelle : §6" + sizeIsland + "§7x§6" + sizeIsland));
         custom1.setItemMeta(custom1Meta);
         inv.setItem(10, custom1);
 

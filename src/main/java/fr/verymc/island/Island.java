@@ -1,8 +1,9 @@
 package main.java.fr.verymc.island;
 
+import main.java.fr.verymc.island.bank.IslandBank;
 import main.java.fr.verymc.island.perms.IslandPerms;
 import main.java.fr.verymc.island.perms.IslandRank;
-import main.java.fr.verymc.island.upgrade.IslandUpgrade;
+import main.java.fr.verymc.island.upgrade.IslandUpgradeSize;
 import main.java.fr.verymc.utils.WorldBorderUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -23,15 +24,16 @@ public class Island {
     private int id;
     private HashMap<UUID, IslandRank> members = new HashMap<>();
     private HashMap<IslandRank, ArrayList<IslandPerms>> permsPerRanks = new HashMap<>();
-    private IslandUpgrade sizeUpgrade;
+    private IslandUpgradeSize sizeUpgrade;
     private WorldBorderUtil.Color borderColor;
+    private IslandBank bank;
 
     public Island(String name, String owner, UUID ownerUUID, Location home, int id, HashMap<UUID, IslandRank> members, boolean defaultPerms,
-                  IslandUpgrade upgradeSize, WorldBorderUtil.Color borderColor) {
+                  IslandUpgradeSize upgradeSize, WorldBorderUtil.Color borderColor, IslandBank bank) {
         this.name = name;
         this.owner = owner;
         this.ownerUUID = ownerUUID;
-        this.home = home;
+        this.home = home.clone().add(0.5, 0.1, 0.5);
         this.center = home;
         this.id = id;
         this.members = members;
@@ -40,6 +42,7 @@ public class Island {
         }
         this.sizeUpgrade = upgradeSize;
         this.borderColor = borderColor;
+        this.bank = bank;
     }
 
     public void setDefaultPerms() {
@@ -57,7 +60,15 @@ public class Island {
         permsPerRanks.put(IslandRank.CHEF, perms);
     }
 
-    public IslandUpgrade getSizeUpgrade() {
+    public IslandBank getBank() {
+        return bank;
+    }
+
+    public void setBank(IslandBank bank) {
+        this.bank = bank;
+    }
+
+    public IslandUpgradeSize getSizeUpgrade() {
         return sizeUpgrade;
     }
 

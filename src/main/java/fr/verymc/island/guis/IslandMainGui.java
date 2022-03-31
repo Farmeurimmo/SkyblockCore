@@ -1,5 +1,6 @@
 package main.java.fr.verymc.island.guis;
 
+import main.java.fr.verymc.island.IslandManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -18,6 +19,10 @@ public class IslandMainGui {
 
     public void openMainIslandMenu(Player player) {
 
+        if (!IslandManager.instance.asAnIsland(player)) {
+            return;
+        }
+
         Inventory inv = Bukkit.createInventory(null, 45, "§6Menu d'île");
 
         ItemStack custom1 = new ItemStack(Material.ENDER_EYE, 1);
@@ -35,9 +40,15 @@ public class IslandMainGui {
 
         ItemStack custom2 = new ItemStack(Material.BLAST_FURNACE, 1);
         ItemMeta meta2 = custom2.getItemMeta();
-        meta2.setDisplayName("§6Améliorations d'île §8| §7(clic gauche)");
-        custom1.setItemMeta(meta2);
+        meta2.setDisplayName("§6Améliorations §8| §7(clic gauche)");
+        custom2.setItemMeta(meta2);
         inv.setItem(12, custom2);
+
+        ItemStack custom3 = new ItemStack(Material.CHEST, 1);
+        ItemMeta meta3 = custom3.getItemMeta();
+        meta3.setDisplayName("§6Banque §8| §7(clic gauche)");
+        custom3.setItemMeta(meta3);
+        inv.setItem(13, custom3);
 
 
         ItemStack custom8 = new ItemStack(Material.ARROW, 1);

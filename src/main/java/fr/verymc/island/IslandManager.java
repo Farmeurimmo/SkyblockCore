@@ -13,14 +13,16 @@ import com.sk89q.worldedit.function.operation.Operations;
 import com.sk89q.worldedit.math.BlockVector3;
 import com.sk89q.worldedit.session.ClipboardHolder;
 import main.java.fr.verymc.Main;
+import main.java.fr.verymc.island.bank.IslandBank;
 import main.java.fr.verymc.island.generator.EmptyChunkGenerator;
+import main.java.fr.verymc.island.guis.IslandBankGui;
 import main.java.fr.verymc.island.guis.IslandMainGui;
 import main.java.fr.verymc.island.guis.IslandMemberGui;
 import main.java.fr.verymc.island.guis.IslandUpgradeGui;
 import main.java.fr.verymc.island.perms.IslandPerms;
 import main.java.fr.verymc.island.perms.IslandRank;
-import main.java.fr.verymc.island.upgrade.IslandUpgrade;
-import main.java.fr.verymc.island.upgrade.IslandUpgrades;
+import main.java.fr.verymc.island.upgrade.IslandUpgradeSize;
+import main.java.fr.verymc.island.upgrade.IslandUpgradesType;
 import main.java.fr.verymc.utils.WorldBorderUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -58,6 +60,7 @@ public class IslandManager {
         new IslandMainGui();
         new IslandMemberGui();
         new IslandUpgradeGui();
+        new IslandBankGui();
     }
 
     public boolean isAnIslandByLoc(Location loc) {
@@ -224,7 +227,7 @@ public class IslandManager {
             }
             pending.add(target);
             pendingInvites.put(p, pending);
-            target.sendMessage("§6§lIles §8» §fVous avez été invité à rejoindre l'île de §e" + p.getName() + "§f. Faites /is accept " +
+            target.sendMessage("§6§lIles §8» §fVous avez été invité à rejoindre l'île de §6" + p.getName() + "§f. Faites /is accept " +
                     p.getName() + " pour accepter.");
             Bukkit.getScheduler().scheduleAsyncDelayedTask(Main.instance, new Runnable() {
                 @Override
@@ -364,9 +367,10 @@ public class IslandManager {
 
         HashMap<UUID, IslandRank> members = new HashMap<>();
         members.put(p.getUniqueId(), IslandRank.CHEF);
-        IslandUpgrade islandUpgradeSize = new IslandUpgrade(0, 0, IslandUpgrades.SIZE_0);
+        IslandBank islandBank = new IslandBank(0, 0, 0, 0);
+        IslandUpgradeSize islandUpgradeSize = new IslandUpgradeSize(50, 0, 0, IslandUpgradesType.SIZE);
         islands.add(new Island("Ile de " + p.getName(), p.getName(), p.getUniqueId(), toReturn, id + 1, members, true,
-                islandUpgradeSize, WorldBorderUtil.Color.BLUE));
+                islandUpgradeSize, WorldBorderUtil.Color.BLUE, islandBank));
         addPlayerAsAnIsland(p);
         p.sendMessage("§6§lIles §8» §aVous avez généré une nouvelle île avec succès (en " + (System.currentTimeMillis() - start) + "ms).");
         teleportPlayerToIslandSafe(p);

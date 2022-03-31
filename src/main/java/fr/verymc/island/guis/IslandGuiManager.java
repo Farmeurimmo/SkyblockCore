@@ -48,6 +48,10 @@ public class IslandGuiManager implements Listener {
                 IslandUpgradeGui.instance.openUpgradeIslandMenu(player);
                 return;
             }
+            if (current.getType() == Material.CHEST) {
+                IslandBankGui.instance.openBankIslandMenu(player);
+                return;
+            }
             return;
         }
         if (e.getView().getTitle().equalsIgnoreCase("§6Membres de l'île")) {
@@ -88,7 +92,23 @@ public class IslandGuiManager implements Listener {
                 IslandMainGui.instance.openMainIslandMenu(player);
                 return;
             }
-            return;
+            if (current.getType() == Material.GRASS_BLOCK) {
+                if (IslandManager.instance.getPlayerIsland(player).getSizeUpgrade().upOfOneLevel(player)) {
+                    IslandManager.instance.setWorldBorder(player);
+                    IslandUpgradeGui.instance.openUpgradeIslandMenu(player);
+                    return;
+                }
+            }
+        }
+        if (e.getView().getTitle().equalsIgnoreCase("§6Banque de l'île")) {
+            e.setCancelled(true);
+            if (!IslandManager.instance.asAnIsland(player)) {
+                return;
+            }
+            if (current.getType() == Material.ARROW) {
+                IslandMainGui.instance.openMainIslandMenu(player);
+                return;
+            }
         }
     }
 }
