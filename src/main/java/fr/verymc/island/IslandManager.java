@@ -368,7 +368,7 @@ public class IslandManager {
         HashMap<UUID, IslandRank> members = new HashMap<>();
         members.put(p.getUniqueId(), IslandRank.CHEF);
         IslandBank islandBank = new IslandBank(0, 0, 0, 0);
-        IslandUpgradeSize islandUpgradeSize = new IslandUpgradeSize(50, 0, 0, IslandUpgradesType.SIZE);
+        IslandUpgradeSize islandUpgradeSize = new IslandUpgradeSize(50, 0, 0, 0, IslandUpgradesType.SIZE);
         islands.add(new Island("Ile de " + p.getName(), p.getName(), p.getUniqueId(), toReturn, id + 1, members, true,
                 islandUpgradeSize, WorldBorderUtil.Color.BLUE, islandBank));
         addPlayerAsAnIsland(p);

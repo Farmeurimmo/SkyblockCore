@@ -31,6 +31,7 @@ import main.java.fr.verymc.gui.Farm2WinGui;
 import main.java.fr.verymc.gui.MenuGui;
 import main.java.fr.verymc.gui.WarpGui;
 import main.java.fr.verymc.holos.HolosSetup;
+import main.java.fr.verymc.island.IslandInteractManager;
 import main.java.fr.verymc.island.IslandManager;
 import main.java.fr.verymc.island.cmds.IslandCmd;
 import main.java.fr.verymc.island.guis.IslandGuiManager;
@@ -217,6 +218,7 @@ public class Main extends JavaPlugin implements Listener {
         getServer().getPluginManager().registerEvents(new AntiAfk(), this);
         getServer().getPluginManager().registerEvents(new MinionsListener(), this);
         getServer().getPluginManager().registerEvents(new IslandGuiManager(), this);
+        getServer().getPluginManager().registerEvents(new IslandInteractManager(), this);
         PluginManager pm = getServer().getPluginManager();
         pm.registerEvents(this, this);
         System.out.println("Listeners DONE | NEXT commands");

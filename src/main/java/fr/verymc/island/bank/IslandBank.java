@@ -4,10 +4,10 @@ public class IslandBank {
 
     private double crystaux;
     private double money;
-    private double xp;
+    private int xp;
     private double level;
 
-    public IslandBank(double crystaux, double money, double xp, double level) {
+    public IslandBank(double crystaux, double money, int xp, double level) {
         this.crystaux = crystaux;
         this.money = money;
         this.xp = xp;
@@ -30,11 +30,11 @@ public class IslandBank {
         this.money = money;
     }
 
-    public double getXp() {
+    public int getXp() {
         return this.xp;
     }
 
-    public void setXp(double xp) {
+    public void setXp(int xp) {
         this.xp = xp;
     }
 
@@ -54,7 +54,7 @@ public class IslandBank {
         this.money += money;
     }
 
-    public void addXp(double xp) {
+    public void addXp(int xp) {
         this.xp += xp;
     }
 
@@ -70,7 +70,7 @@ public class IslandBank {
         this.money -= money;
     }
 
-    public void removeXp(double xp) {
+    public void removeXp(int xp) {
         this.xp -= xp;
     }
 

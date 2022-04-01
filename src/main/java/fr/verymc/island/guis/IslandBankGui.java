@@ -31,22 +31,25 @@ public class IslandBankGui {
 
         ItemStack custom1 = new ItemStack(Material.SUNFLOWER, 1);
         ItemMeta meta1 = custom1.getItemMeta();
-        meta1.setDisplayName("§6Argent §8| §7(clic gauche)");
-        meta1.setLore(Arrays.asList("§7Argent en banque: §6" + playerIsland.getBank().getMoney() + "$"));
+        meta1.setDisplayName("§6Argent");
+        meta1.setLore(Arrays.asList("§7Argent en banque: §6" + playerIsland.getBank().getMoney() + "$",
+                "§7Clic gauche pour retirer", "§7Clic droit pour ajouter"));
         custom1.setItemMeta(meta1);
         inv.setItem(10, custom1);
 
         ItemStack custom2 = new ItemStack(Material.NETHER_STAR, 1);
         ItemMeta meta2 = custom2.getItemMeta();
-        meta2.setDisplayName("§6Crystaux §8| §7(clic gauche)");
-        meta2.setLore(Arrays.asList("§7Crystaux en banque: §6" + playerIsland.getBank().getCrystaux()));
+        meta2.setDisplayName("§6Crystaux");
+        meta2.setLore(Arrays.asList("§7Crystaux en banque: §6" + playerIsland.getBank().getCrystaux(),
+                "§7Clic gauche pour retirer", "§7Clic droit pour ajouter"));
         custom2.setItemMeta(meta2);
         inv.setItem(13, custom2);
 
         ItemStack custom3 = new ItemStack(Material.EXPERIENCE_BOTTLE, 1);
         ItemMeta meta3 = custom3.getItemMeta();
-        meta3.setDisplayName("§6Expérience §8| §7(clic gauche)");
-        meta3.setLore(Arrays.asList("§7Expérience en banque: §6" + playerIsland.getBank().getXp()));
+        meta3.setDisplayName("§6Expérience");
+        meta3.setLore(Arrays.asList("§7Expérience en banque: §6" + playerIsland.getBank().getXp(),
+                "§7Clic gauche pour retirer", "§7Clic droit pour ajouter"));
         custom3.setItemMeta(meta3);
         inv.setItem(16, custom3);
 

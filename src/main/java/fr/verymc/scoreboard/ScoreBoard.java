@@ -2,6 +2,8 @@ package main.java.fr.verymc.scoreboard;
 
 import main.java.fr.verymc.Main;
 import main.java.fr.verymc.eco.EcoAccountsManager;
+import main.java.fr.verymc.island.Island;
+import main.java.fr.verymc.island.IslandManager;
 import main.java.fr.verymc.utils.Maths;
 import net.luckperms.api.LuckPermsProvider;
 import net.luckperms.api.model.user.User;
@@ -110,31 +112,14 @@ public class ScoreBoard implements Listener {
                 board.getTeam("online").setPrefix("§fSkyblock §8▸ §c" + online);
             }
 
-            /*if (IridiumSkyblockAPI.getInstance().getUser(player).getIsland().isPresent()) {
-                String Gradeis = IridiumSkyblockAPI.getInstance().getUser(player).getIslandRank().name();
-                int classement = IridiumSkyblockAPI.getInstance().getUser(player).getIsland().get().getRank();
-                int ismembre = IridiumSkyblockAPI.getInstance().getUser(player).getIsland().get().getMembers().size();
-                int iscristal = IridiumSkyblockAPI.getInstance().getUser(player).getIsland().get().getCrystals();
-                double ismoney = IridiumSkyblockAPI.getInstance().getUser(player).getIsland().get().getMoney();
+            Island island = IslandManager.instance.getPlayerIsland(player);
+            if (island != null) {
+                String Gradeis = island.getMembers().get(player.getUniqueId()).getName();
+                int classement = 0;
+                int ismembre = island.getMembers().size();
+                double iscristal = island.getBank().getCrystaux();
+                double ismoney = island.getBank().getMoney();
 
-                switch (Gradeis) {
-                    case "OWNER":
-                        Gradeis = "Chef";
-                        break;
-                    case "CO_OWNER":
-                        Gradeis = "Co-Chef";
-                        break;
-                    case "MODERATOR":
-                        Gradeis = "Modérateur";
-                        break;
-                    case "MEMBER":
-                        Gradeis = "Membre";
-                        break;
-                    case "VISITOR":
-                        Gradeis = "Visiteur";
-                        break;
-
-                }
                 if (board.getTeam("gradeis") != null)
                     board.getTeam("gradeis").setPrefix("§fGrade d'ile §8▸ §a" + Gradeis);
                 if (board.getTeam("classementis") != null)
@@ -145,14 +130,14 @@ public class ScoreBoard implements Listener {
                     board.getTeam("iscrystaux").setPrefix("§fCrystaux §8▸ §a" + iscristal);
                 if (board.getTeam("ismoney") != null) board.getTeam("ismoney").setPrefix("§fArgent §8▸ §a" + ismoney);
 
-            } else {*/
-            if (board.getTeam("gradeis") != null) board.getTeam("gradeis").setPrefix("§fGrade d'ile §8▸ §aN/A");
-            if (board.getTeam("classementis") != null)
-                board.getTeam("classementis").setPrefix("§fClassement §8▸ §aN/A");
-            if (board.getTeam("ismembre") != null) board.getTeam("ismembre").setPrefix("§fMembres §8▸ §aN/A");
-            if (board.getTeam("iscrystaux") != null) board.getTeam("iscrystaux").setPrefix("§fCrystaux §8▸ §aN/A");
-            if (board.getTeam("ismoney") != null) board.getTeam("ismoney").setPrefix("§fArgent §8▸ §aN/A");
-            //}
+            } else {
+                if (board.getTeam("gradeis") != null) board.getTeam("gradeis").setPrefix("§fGrade d'ile §8▸ §aN/A");
+                if (board.getTeam("classementis") != null)
+                    board.getTeam("classementis").setPrefix("§fClassement §8▸ §aN/A");
+                if (board.getTeam("ismembre") != null) board.getTeam("ismembre").setPrefix("§fMembres §8▸ §aN/A");
+                if (board.getTeam("iscrystaux") != null) board.getTeam("iscrystaux").setPrefix("§fCrystaux §8▸ §aN/A");
+                if (board.getTeam("ismoney") != null) board.getTeam("ismoney").setPrefix("§fArgent §8▸ §aN/A");
+            }
         }
         Bukkit.getServer().getScheduler().scheduleAsyncDelayedTask(Main.instance, new Runnable() {
             public void run() {

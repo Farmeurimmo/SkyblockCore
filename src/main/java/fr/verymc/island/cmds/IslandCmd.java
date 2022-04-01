@@ -163,7 +163,7 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
                         }
                         if (args[2].equalsIgnoreCase("xpadd")) {
                             try {
-                                double amount = Double.parseDouble(args[3]);
+                                Integer amount = Integer.parseInt(args[3]);
                                 IslandManager.instance.getPlayerIsland(target).getBank().addXp(amount);
                                 p.sendMessage("§6§6§lIles §8» §fTu as give §6" + amount + "§f à §6" + target.getName() + "§f.");
                                 target.sendMessage("§6§6§lIles §8» §fTu as reçu §6" + amount + "§f de la part de §6CONSOLE§f.");
