@@ -47,7 +47,7 @@ public class WorldBorderUtil {
             Object craftWorld = craftWorldClass.cast(centerLocation.getWorld());
             setField(worldBorder, "world", craftWorld.getClass().getMethod("getHandle").invoke(craftWorld), false);
 
-            setCenter.invoke(worldBorder, centerLocation.getBlockX() + 0.5, centerLocation.getBlockZ() + 0.5);
+            setCenter.invoke(worldBorder, centerLocation.getBlockX(), centerLocation.getBlockZ());
 
             if (color == Color.NONE) {
                 setSize.invoke(worldBorder, Integer.MAX_VALUE);

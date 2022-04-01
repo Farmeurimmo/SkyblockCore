@@ -1,5 +1,7 @@
 package main.java.fr.verymc;
 
+import com.gmail.filoghost.holographicdisplays.api.Hologram;
+import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
 import main.java.fr.verymc.antiafk.AntiAfk;
 import main.java.fr.verymc.atout.AtoutCmd;
 import main.java.fr.verymc.atout.AtoutGui;
@@ -46,6 +48,8 @@ import main.java.fr.verymc.shopgui.*;
 import main.java.fr.verymc.utils.WorldBorderUtil;
 import main.java.fr.verymc.winelottery.WineGui;
 import main.java.fr.verymc.winelottery.WineSpawn;
+import net.citizensnpcs.api.CitizensAPI;
+import net.citizensnpcs.api.npc.NPC;
 import net.luckperms.api.LuckPerms;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -130,9 +134,9 @@ public class Main extends JavaPlugin implements Listener {
         System.out.println("-----------------------------------------------------------------------------------------------------");
 
         System.out.println("Island startup...");
+        saveResource("ileworld.schem", false);
         new IslandManager();
         new WorldBorderUtil(this);
-        saveResource("ileworld.schem", false);
 
         System.out.println("Initialisation des MODULES en cours...");
         new ConfigManager();
@@ -287,6 +291,12 @@ public class Main extends JavaPlugin implements Listener {
         HolosSetup.RemoveNpc();
         WineSpawn.DestroyPnj();
         vaultHook.unhook();
+        for (Hologram hologram : HologramsAPI.getHolograms(this)) {
+            hologram.delete();
+        }
+        for (NPC npc : CitizensAPI.getNPCRegistry().sorted()) {
+            npc.destroy();
+        }
         System.out.println("-----------------------------------------------------------------------------------------------------");
         System.out.println("Plugin stoppé !");
         System.out.println("-----------------------------------------------------------------------------------------------------");
