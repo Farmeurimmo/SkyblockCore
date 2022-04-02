@@ -134,7 +134,8 @@ public class Main extends JavaPlugin implements Listener {
         System.out.println("-----------------------------------------------------------------------------------------------------");
 
         System.out.println("Island startup...");
-        saveResource("ileworld.schem", false);
+        saveResource("ileworld.schem", true);
+        saveResource("clear.schem", true);
         new IslandManager();
         new WorldBorderUtil(this);
 

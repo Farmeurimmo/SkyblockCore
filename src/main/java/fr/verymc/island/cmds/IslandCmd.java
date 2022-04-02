@@ -71,6 +71,13 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
                         }
                         IslandManager.instance.leaveIsland(p);
                         return true;
+                    } else if (args[0].equalsIgnoreCase("delete")) {
+                        if (IslandManager.instance.getPlayerIsland(p).getOwnerUUID().equals(p.getUniqueId())) {
+                            IslandManager.instance.deleteIsland(p);
+                        } else {
+                            p.sendMessage("§6§6§lIles §8» §fTu ne peux pas détruire cette île, tu n'es pas le propriétaire.");
+                        }
+                        return true;
                     }
 
 
@@ -143,6 +150,14 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
                             p.sendMessage("§6§6§lIles §8» §fTu ne peux pas faire cette action.");
                         }
                         return true;
+                    } else if (args[0].equalsIgnoreCase("transfer")) {
+                        Island playerIsland = IslandManager.instance.getPlayerIsland(p);
+                        if (playerIsland.getOwnerUUID().equals(p.getUniqueId())) {
+                            IslandManager.instance.setIslandNewOwner(target);
+                        } else {
+                            p.sendMessage("§6§6§lIles §8» §fTu n'es pas le propriétaire de cette île.");
+                        }
+                        return true;
                     }
                 } else if (args.length == 3) {
 
@@ -207,7 +222,7 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
         if (cmd.getName().equalsIgnoreCase("is")) {
             if (args.length == 1) {
                 subcmd.addAll(Arrays.asList("go", "home", "invite", "accept", "kick", "promote", "demote", "sethome", "upgrade", "bank",
-                        "border", "bordure", "leave"));
+                        "border", "bordure", "leave", "delete"));
             } else {
                 subcmd.add("");
             }

@@ -34,10 +34,7 @@ import org.bukkit.event.inventory.ClickType;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Random;
-import java.util.UUID;
+import java.util.*;
 
 public class IslandManager {
 
@@ -47,14 +44,18 @@ public class IslandManager {
     public ArrayList<UUID> isInIsland = new ArrayList<>();
     public ArrayList<Island> islands = new ArrayList<>();
     public File fileSchematic;
+    public File fileEmptyIsland;
     private HashMap<Player, ArrayList<Player>> pendingInvites = new HashMap<>();
 
     public IslandManager() {
         instance = this;
         createMainWorld();
         for (File file : Main.instance.getDataFolder().listFiles()) {
-            if (file.getName().endsWith(".schem")) {
+            if (file.getName().endsWith("world.schem")) {
                 fileSchematic = file;
+            }
+            if (file.getName().endsWith("clear.schem")) {
+                fileEmptyIsland = file;
             }
         }
         new IslandMainGui();
@@ -114,6 +115,17 @@ public class IslandManager {
         }
     }
 
+    public void setIslandNewOwner(Player p) {
+        Island playerIsland = getIslandByLoc(p.getLocation());
+        String oldOwner = playerIsland.getOwner();
+        playerIsland.getMembers().put(playerIsland.getOwnerUUID(), IslandRank.COCHEF);
+        playerIsland.setOwnerUUID(p.getUniqueId());
+        playerIsland.setOwner(p.getName());
+        playerIsland.getMembers().put(p.getUniqueId(), IslandRank.CHEF);
+        playerIsland.sendMessageToEveryMember("§6§lIles §8» §f" + p.getName() + " vient de devenir le chef de l'île, transféré par " +
+                oldOwner + ".");
+    }
+
     public boolean isOwner(Player p) {
         for (Island i : islands) {
             if (i.getOwnerUUID().equals(p.getUniqueId())) {
@@ -121,6 +133,63 @@ public class IslandManager {
             }
         }
         return false;
+    }
+
+    public void deleteIsland(Player p) {
+        Long start = System.currentTimeMillis();
+        Island playerIsland = getIslandByLoc(p.getLocation());
+
+        playerIsland.sendMessageToEveryMember("§6§lIles §8» §4L'île a commencé à être supprimée...");
+
+        Bukkit.getScheduler().scheduleAsyncDelayedTask(Main.instance, new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    com.sk89q.worldedit.world.World adaptedWorld = BukkitAdapter.adapt(mainWorld);
+                    ClipboardFormat format = ClipboardFormats.findByFile(fileEmptyIsland);
+                    ClipboardReader reader = format.getReader(new FileInputStream(fileEmptyIsland));
+
+                    Clipboard clipboard = reader.read();
+                    EditSession editSession = WorldEdit.getInstance().getEditSessionFactory().getEditSession(adaptedWorld,
+                            -1);
+
+                    Operation operation = new ClipboardHolder(clipboard).createPaste(editSession)
+                            .to(BlockVector3.at(playerIsland.getCenter().getBlockX(), playerIsland.getCenter().getBlockY(),
+                                    playerIsland.getCenter().getBlockZ())).build();
+
+                    try {
+                        Operations.complete(operation);
+                        editSession.flushSession();
+
+                    } catch (WorldEditException e) {
+                        p.sendMessage("§6§lIles §8» §cUne erreur est survenue lors de la suppression de l'île. Merci de réessayer.");
+                        return;
+                    }
+                } catch (IOException e) {
+                    p.sendMessage("§6§lIles §8» §cUne erreur est survenue lors de la lecture du schématic. Merci de contacter un administrateur.");
+                    return;
+                }
+                Bukkit.getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
+                    @Override
+                    public void run() {
+                        if (islands.contains(playerIsland)) {
+                            islands.remove(playerIsland);
+                        }
+                        Long currentMills = System.currentTimeMillis();
+                        playerIsland.sendMessageToEveryMember("§6§lIles §8» §4L'île a été §lsupprimée §4par le chef. §f(en " + (currentMills - start) + "ms)");
+                        for (Map.Entry<UUID, IslandRank> entry : playerIsland.getMembers().entrySet()) {
+                            Player member = Bukkit.getPlayer(entry.getKey());
+                            if (member == null) {
+                                member = Bukkit.getOfflinePlayer(entry.getKey()).getPlayer();
+                            }
+                            PlayerUtils.TeleportPlayerFromRequest(member, SpawnCmd.Spawn, 0);
+                            removePlayerAsAnIsland(member);
+                        }
+                        playerIsland.getMembers().clear();
+                    }
+                }, 0);
+            }
+        }, 0);
     }
 
     public void leaveIsland(Player p) {
