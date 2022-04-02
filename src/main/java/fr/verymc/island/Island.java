@@ -202,5 +202,13 @@ public class Island {
         return memberUpgrade;
     }
 
+    public void sendMessageToEveryMember(String message) {
+        for (UUID uuid : members.keySet()) {
+            Player p = Bukkit.getPlayer(uuid);
+            if (p != null) {
+                p.sendMessage(message);
+            }
+        }
+    }
 
 }

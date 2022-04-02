@@ -104,17 +104,25 @@ public class IslandGuiManager implements Listener {
                 return;
             }
             if (current.getType() == Material.GRASS_BLOCK) {
-                if (IslandManager.instance.getPlayerIsland(player).getSizeUpgrade().upOfOneLevel(player)) {
+                Island playerIsland = IslandManager.instance.getPlayerIsland(player);
+                if (playerIsland.getSizeUpgrade().upOfOneLevel(player)) {
                     IslandUpgradeGui.instance.openUpgradeIslandMenu(player);
+                    playerIsland.sendMessageToEveryMember(
+                            "§6§6§lIles §8» §f" + player.getName() + " a amélioré la taille de l'île au niveau §6" + playerIsland.getSizeUpgrade().getLevel() +
+                                    "§f, la taille de l'île est maintenant de §6" + playerIsland.getSizeUpgrade().getSize() + "x" +
+                                    playerIsland.getSizeUpgrade().getSize() + "§f.");
                     return;
                 }
             }
             if (current.getType() == Material.PAPER) {
-                if (!IslandManager.instance.getPlayerIsland(player).getMemberUpgrade().isMaxLevel()) {
-                    if (IslandManager.instance.getPlayerIsland(player).getMemberUpgrade().upOfOneLevel(player)) {
-                        IslandUpgradeGui.instance.openUpgradeIslandMenu(player);
-                        return;
-                    }
+                if (IslandManager.instance.getPlayerIsland(player).getMemberUpgrade().upOfOneLevel(player)) {
+                    IslandUpgradeGui.instance.openUpgradeIslandMenu(player);
+                    IslandManager.instance.getPlayerIsland(player).sendMessageToEveryMember("§6§6§lIles §8» §f" + player.getName() +
+                            " a amélioré le nombre de membres max de l'île au niveau §6" +
+                            IslandManager.instance.getPlayerIsland(player).getMemberUpgrade().getLevel() +
+                            "§f, le nombre de membres max de l'île est maintenant de §6" +
+                            IslandManager.instance.getPlayerIsland(player).getMemberUpgrade().getMaxMembers() + "§f.");
+                    return;
                 }
             }
         }

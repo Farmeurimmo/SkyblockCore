@@ -32,7 +32,7 @@ public class IslandUpgradeGui {
         ItemStack custom1 = new ItemStack(Material.GRASS_BLOCK);
         ItemMeta custom1Meta = custom1.getItemMeta();
         custom1Meta.setDisplayName("§6Taille de l'île");
-        custom1Meta.setLore(Arrays.asList("§7Taille actuelle : §6" + sizeIsland + "§7x§6" + sizeIsland));
+        custom1Meta.setLore(Arrays.asList("§7Taille actuelle : §6" + sizeIsland + "§7x§6" + sizeIsland, "", "§7Clic pour améliorer"));
         custom1.setItemMeta(custom1Meta);
         inv.setItem(10, custom1);
 
@@ -46,7 +46,7 @@ public class IslandUpgradeGui {
         ItemMeta custom3Meta = custom3.getItemMeta();
         custom3Meta.setDisplayName("§6Nombre de membres");
         custom3Meta.setLore(Arrays.asList("§7Nombre de membre actuel: §6" + playerIsland.getMembers().size(),
-                "§7Nombre de membre max : §6" + playerIsland.getMaxMembers()));
+                "§7Nombre de membre max : §6" + playerIsland.getMaxMembers(), "", "§7Clic pour améliorer"));
         custom3.setItemMeta(custom3Meta);
         inv.setItem(14, custom3);
 

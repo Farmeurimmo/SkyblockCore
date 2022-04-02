@@ -75,10 +75,6 @@ public class IslandUpgradeMember {
         return true;
     }
 
-    public boolean isMaxLevel() {
-        return level == getMaxLevel();
-    }
-
     public int getMaxMembers() {
         return maxMembers;
     }
