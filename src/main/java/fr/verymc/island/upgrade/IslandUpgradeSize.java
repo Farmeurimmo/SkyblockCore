@@ -90,6 +90,7 @@ public class IslandUpgradeSize {
             EcoAccountsManager.instance.removeFounds(player, getPriceMoneyFromLevel(this.level), true);
         }
         playerIsland.getBank().removeCrystaux(getPriceCrytauxFromLevel(this.level));
+        IslandManager.instance.setWorldBorderForAllPlayerOnIsland(playerIsland);
         return true;
     }
 

@@ -4,7 +4,9 @@ import main.java.fr.verymc.eco.EcoAccountsManager;
 import main.java.fr.verymc.gui.MenuGui;
 import main.java.fr.verymc.island.Island;
 import main.java.fr.verymc.island.IslandManager;
+import main.java.fr.verymc.island.perms.IslandPerms;
 import main.java.fr.verymc.utils.PlayerUtils;
+import main.java.fr.verymc.utils.WorldBorderUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -57,6 +59,10 @@ public class IslandGuiManager implements Listener {
                 IslandBankGui.instance.openBankIslandMenu(player);
                 return;
             }
+            if (current.getType() == Material.BARRIER) {
+                IslandBorderGui.instance.openBorderIslandMenu(player);
+                return;
+            }
             return;
         }
         if (e.getView().getTitle().equalsIgnoreCase("§6Membres de l'île")) {
@@ -99,7 +105,6 @@ public class IslandGuiManager implements Listener {
             }
             if (current.getType() == Material.GRASS_BLOCK) {
                 if (IslandManager.instance.getPlayerIsland(player).getSizeUpgrade().upOfOneLevel(player)) {
-                    IslandManager.instance.setWorldBorder(player);
                     IslandUpgradeGui.instance.openUpgradeIslandMenu(player);
                     return;
                 }
@@ -175,6 +180,35 @@ public class IslandGuiManager implements Listener {
             }
             if (current.getType() == Material.ARROW) {
                 IslandMainGui.instance.openMainIslandMenu(player);
+                return;
+            }
+        }
+        if (e.getView().getTitle().equalsIgnoreCase("§6Bordure de l'île")) {
+            e.setCancelled(true);
+            if (current.getType() == Material.ARROW) {
+                IslandMainGui.instance.openMainIslandMenu(player);
+                return;
+            }
+            Island playerIsland = IslandManager.instance.getPlayerIsland(player);
+            if (!playerIsland.getPerms(playerIsland.getIslandRankFromUUID(player.getUniqueId())).contains(IslandPerms.CHANGE_BORDER_COLOR)) {
+                return;
+            }
+            if (current.getType() == Material.GREEN_STAINED_GLASS_PANE) {
+                playerIsland.setBorderColor(WorldBorderUtil.Color.GREEN);
+                IslandManager.instance.setWorldBorderForAllPlayerOnIsland(playerIsland);
+                IslandBorderGui.instance.openBorderIslandMenu(player);
+                return;
+            }
+            if (current.getType() == Material.RED_STAINED_GLASS_PANE) {
+                playerIsland.setBorderColor(WorldBorderUtil.Color.RED);
+                IslandManager.instance.setWorldBorderForAllPlayerOnIsland(playerIsland);
+                IslandBorderGui.instance.openBorderIslandMenu(player);
+                return;
+            }
+            if (current.getType() == Material.BLUE_STAINED_GLASS_PANE) {
+                playerIsland.setBorderColor(WorldBorderUtil.Color.BLUE);
+                IslandManager.instance.setWorldBorderForAllPlayerOnIsland(playerIsland);
+                IslandBorderGui.instance.openBorderIslandMenu(player);
                 return;
             }
         }

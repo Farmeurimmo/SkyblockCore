@@ -50,6 +50,12 @@ public class IslandMainGui {
         custom3.setItemMeta(meta3);
         inv.setItem(13, custom3);
 
+        ItemStack custom4 = new ItemStack(Material.BARRIER, 1);
+        ItemMeta meta4 = custom4.getItemMeta();
+        meta4.setDisplayName("§6Couleur de la bordure §8| §7(clic gauche)");
+        custom4.setItemMeta(meta4);
+        inv.setItem(14, custom4);
+
 
         ItemStack custom8 = new ItemStack(Material.ARROW, 1);
         ItemMeta customh = custom8.getItemMeta();

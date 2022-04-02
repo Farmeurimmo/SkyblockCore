@@ -15,10 +15,7 @@ import com.sk89q.worldedit.session.ClipboardHolder;
 import main.java.fr.verymc.Main;
 import main.java.fr.verymc.island.bank.IslandBank;
 import main.java.fr.verymc.island.generator.EmptyChunkGenerator;
-import main.java.fr.verymc.island.guis.IslandBankGui;
-import main.java.fr.verymc.island.guis.IslandMainGui;
-import main.java.fr.verymc.island.guis.IslandMemberGui;
-import main.java.fr.verymc.island.guis.IslandUpgradeGui;
+import main.java.fr.verymc.island.guis.*;
 import main.java.fr.verymc.island.perms.IslandPerms;
 import main.java.fr.verymc.island.perms.IslandRank;
 import main.java.fr.verymc.island.upgrade.IslandUpgradeSize;
@@ -61,6 +58,7 @@ public class IslandManager {
         new IslandMemberGui();
         new IslandUpgradeGui();
         new IslandBankGui();
+        new IslandBorderGui();
     }
 
     public boolean isAnIslandByLoc(Location loc) {
@@ -81,6 +79,14 @@ public class IslandManager {
             }
         }
         return null;
+    }
+
+    public void setWorldBorderForAllPlayerOnIsland(Island island) {
+        for (Player p : Bukkit.getOnlinePlayers()) {
+            if (getIslandByLoc(p.getLocation()) == island) {
+                setWorldBorder(p);
+            }
+        }
     }
 
     public void setWorldBorder(Player p) {

@@ -49,11 +49,7 @@ public class WorldBorderUtil {
 
             setCenter.invoke(worldBorder, centerLocation.getBlockX(), centerLocation.getBlockZ());
 
-            if (color == Color.NONE) {
-                setSize.invoke(worldBorder, Integer.MAX_VALUE);
-            } else {
-                setSize.invoke(worldBorder, size);
-            }
+            setSize.invoke(worldBorder, size);
 
             setWarningTime.invoke(worldBorder, 0);
             setWarningDistance.invoke(worldBorder, 0);

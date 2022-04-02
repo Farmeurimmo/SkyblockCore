@@ -3,6 +3,7 @@ package main.java.fr.verymc.island.cmds;
 import main.java.fr.verymc.island.Island;
 import main.java.fr.verymc.island.IslandManager;
 import main.java.fr.verymc.island.guis.IslandBankGui;
+import main.java.fr.verymc.island.guis.IslandBorderGui;
 import main.java.fr.verymc.island.guis.IslandMainGui;
 import main.java.fr.verymc.island.guis.IslandUpgradeGui;
 import main.java.fr.verymc.island.perms.IslandPerms;
@@ -58,6 +59,9 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
                         return true;
                     } else if (args[0].equalsIgnoreCase("bank")) {
                         IslandBankGui.instance.openBankIslandMenu(p);
+                        return true;
+                    } else if (args[0].equalsIgnoreCase("border") || args[0].equalsIgnoreCase("bordure")) {
+                        IslandBorderGui.instance.openBorderIslandMenu(p);
                         return true;
                     }
 
@@ -186,7 +190,8 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
         ArrayList<String> subcmd = new ArrayList<String>();
         if (cmd.getName().equalsIgnoreCase("is")) {
             if (args.length == 1) {
-                subcmd.addAll(Arrays.asList("go", "home", "invite", "accept", "kick", "promote", "demote", "sethome", "upgrade", "bank"));
+                subcmd.addAll(Arrays.asList("go", "home", "invite", "accept", "kick", "promote", "demote", "sethome", "upgrade", "bank",
+                        "border", "bordure"));
             } else {
                 subcmd.add("");
             }

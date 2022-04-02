@@ -76,6 +76,10 @@ public class Island {
         return borderColor;
     }
 
+    public WorldBorderUtil.Color setBorderColor(WorldBorderUtil.Color color) {
+        return borderColor = color;
+    }
+
     public Location getCenter() {
         return center;
     }
