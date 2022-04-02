@@ -18,6 +18,7 @@ import main.java.fr.verymc.island.generator.EmptyChunkGenerator;
 import main.java.fr.verymc.island.guis.*;
 import main.java.fr.verymc.island.perms.IslandPerms;
 import main.java.fr.verymc.island.perms.IslandRank;
+import main.java.fr.verymc.island.upgrade.IslandUpgradeMember;
 import main.java.fr.verymc.island.upgrade.IslandUpgradeSize;
 import main.java.fr.verymc.island.upgrade.IslandUpgradesType;
 import main.java.fr.verymc.utils.WorldBorderUtil;
@@ -374,9 +375,10 @@ public class IslandManager {
         HashMap<UUID, IslandRank> members = new HashMap<>();
         members.put(p.getUniqueId(), IslandRank.CHEF);
         IslandBank islandBank = new IslandBank(0, 0, 0, 0);
-        IslandUpgradeSize islandUpgradeSize = new IslandUpgradeSize(50, 0, 0, 0, IslandUpgradesType.SIZE);
+        IslandUpgradeSize islandUpgradeSize = new IslandUpgradeSize(50, 0, IslandUpgradesType.SIZE);
+        IslandUpgradeMember islandUpgradeMember = new IslandUpgradeMember(0, IslandUpgradesType.MEMBER);
         islands.add(new Island("Ile de " + p.getName(), p.getName(), p.getUniqueId(), toReturn, id + 1, members, true,
-                islandUpgradeSize, WorldBorderUtil.Color.BLUE, islandBank));
+                islandUpgradeSize, islandUpgradeMember, WorldBorderUtil.Color.BLUE, islandBank));
         addPlayerAsAnIsland(p);
         p.sendMessage("§6§lIles §8» §aVous avez généré une nouvelle île avec succès (en " + (System.currentTimeMillis() - start) + "ms).");
         teleportPlayerToIslandSafe(p);

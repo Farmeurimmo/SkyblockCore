@@ -78,10 +78,14 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
                     }
                     if (args[0].equalsIgnoreCase("accept")) {
                         if (!IslandManager.instance.asAnIsland(p)) {
-                            if (IslandManager.instance.acceptInvite(target, p)) {
-                                p.sendMessage("§6§6§lIles §8» §fVous avez accepté l'invitation de §6" + target.getName());
+                            if (IslandManager.instance.getPlayerIsland(target).getMaxMembers() > IslandManager.instance.getPlayerIsland(target).getMembers().size()) {
+                                if (IslandManager.instance.acceptInvite(target, p)) {
+                                    p.sendMessage("§6§6§lIles §8» §fVous avez accepté l'invitation de §6" + target.getName());
+                                } else {
+                                    p.sendMessage("§6§6§lIles §8» §fVous n'avez pas reçu d'invitation de §6" + target.getName());
+                                }
                             } else {
-                                p.sendMessage("§6§6§lIles §8» §fVous n'avez pas reçu d'invitation de §6" + target.getName());
+                                p.sendMessage("§6§6§lIles §8» §fL'île de §6" + target.getName() + " §fest pleine.");
                             }
                         } else {
                             p.sendMessage("§6§6§lIles §8» §fTu es déjà dans une île.");
@@ -94,11 +98,15 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
                     }
                     if (args[0].equalsIgnoreCase("invite")) {
                         if (!IslandManager.instance.asAnIsland(target)) {
-                            if (IslandManager.instance.invitePlayer(p, target)) {
-                                p.sendMessage("§6§6§lIles §8» §fVous avez envoyé une invitation à §6" + target.getName()
-                                        + " §favec succès.");
+                            if (IslandManager.instance.getPlayerIsland(p).getMaxMembers() > IslandManager.instance.getPlayerIsland(p).getMembers().size()) {
+                                if (IslandManager.instance.invitePlayer(p, target)) {
+                                    p.sendMessage("§6§6§lIles §8» §fVous avez envoyé une invitation à §6" + target.getName()
+                                            + " §favec succès.");
+                                } else {
+                                    p.sendMessage("§6§6§lIles §8» §fVous avez déjà envoyé une invitation à §6" + target.getName());
+                                }
                             } else {
-                                p.sendMessage("§6§6§lIles §8» §fVous avez déjà envoyé une invitation à §6" + target.getName());
+                                p.sendMessage("§6§6§lIles §8» §fTu ne peux pas inviter plus de §6" + IslandManager.instance.getPlayerIsland(p).getMaxMembers() + "§f joueurs.");
                             }
                         } else {
                             p.sendMessage("§6§6§lIles §8» §f" + target.getName() + " est déjà dans une île.");
@@ -113,7 +121,7 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
                         return true;
                     } else if (args[0].equalsIgnoreCase("promote")) {
                         if (IslandManager.instance.promoteAndDemoteAction(p, target.getUniqueId(), target.getName(),
-                                ClickType.MIDDLE, IslandManager.instance.getPlayerIsland(p))) {
+                                ClickType.LEFT, IslandManager.instance.getPlayerIsland(p))) {
 
                         } else {
                             p.sendMessage("§6§6§lIles §8» §fTu ne peux pas faire cette action.");
@@ -121,7 +129,7 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
                         return true;
                     } else if (args[0].equalsIgnoreCase("demote")) {
                         if (IslandManager.instance.promoteAndDemoteAction(p, target.getUniqueId(), target.getName(),
-                                ClickType.MIDDLE, IslandManager.instance.getPlayerIsland(p))) {
+                                ClickType.RIGHT, IslandManager.instance.getPlayerIsland(p))) {
 
                         } else {
                             p.sendMessage("§6§6§lIles §8» §fTu ne peux pas faire cette action.");

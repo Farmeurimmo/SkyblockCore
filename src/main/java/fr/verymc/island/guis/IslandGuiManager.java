@@ -109,6 +109,14 @@ public class IslandGuiManager implements Listener {
                     return;
                 }
             }
+            if (current.getType() == Material.PAPER) {
+                if (!IslandManager.instance.getPlayerIsland(player).getMemberUpgrade().isMaxLevel()) {
+                    if (IslandManager.instance.getPlayerIsland(player).getMemberUpgrade().upOfOneLevel(player)) {
+                        IslandUpgradeGui.instance.openUpgradeIslandMenu(player);
+                        return;
+                    }
+                }
+            }
         }
         if (e.getView().getTitle().equalsIgnoreCase("§6Banque de l'île")) {
             e.setCancelled(true);

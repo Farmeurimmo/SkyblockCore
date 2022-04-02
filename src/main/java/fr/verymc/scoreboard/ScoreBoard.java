@@ -119,13 +119,14 @@ public class ScoreBoard implements Listener {
                 int ismembre = island.getMembers().size();
                 double iscristal = island.getBank().getCrystaux();
                 double ismoney = island.getBank().getMoney();
+                int maxMembers = island.getMaxMembers();
 
                 if (board.getTeam("gradeis") != null)
                     board.getTeam("gradeis").setPrefix("§fGrade d'ile §8▸ §a" + Gradeis);
                 if (board.getTeam("classementis") != null)
                     board.getTeam("classementis").setPrefix("§fClassement §8▸ §a#" + classement);
                 if (board.getTeam("ismembre") != null)
-                    board.getTeam("ismembre").setPrefix("§fMembres §8▸ §a" + ismembre);
+                    board.getTeam("ismembre").setPrefix("§fMembres §8▸ §a" + ismembre + "/" + maxMembers);
                 if (board.getTeam("iscrystaux") != null)
                     board.getTeam("iscrystaux").setPrefix("§fCrystaux §8▸ §a" + iscristal);
                 if (board.getTeam("ismoney") != null) board.getTeam("ismoney").setPrefix("§fArgent §8▸ §a" + ismoney);

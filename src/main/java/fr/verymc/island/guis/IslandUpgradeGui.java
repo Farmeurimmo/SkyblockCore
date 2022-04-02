@@ -1,5 +1,6 @@
 package main.java.fr.verymc.island.guis;
 
+import main.java.fr.verymc.island.Island;
 import main.java.fr.verymc.island.IslandManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -25,7 +26,8 @@ public class IslandUpgradeGui {
         }
         Inventory inv = Bukkit.createInventory(null, 27, "§6Améliorations de l'île");
 
-        int sizeIsland = IslandManager.instance.getPlayerIsland(player).getSizeUpgrade().getSize();
+        Island playerIsland = IslandManager.instance.getPlayerIsland(player);
+        int sizeIsland = playerIsland.getSizeUpgrade().getSize();
 
         ItemStack custom1 = new ItemStack(Material.GRASS_BLOCK);
         ItemMeta custom1Meta = custom1.getItemMeta();
@@ -43,6 +45,8 @@ public class IslandUpgradeGui {
         ItemStack custom3 = new ItemStack(Material.PAPER);
         ItemMeta custom3Meta = custom3.getItemMeta();
         custom3Meta.setDisplayName("§6Nombre de membres");
+        custom3Meta.setLore(Arrays.asList("§7Nombre de membre actuel: §6" + playerIsland.getMembers().size(),
+                "§7Nombre de membre max : §6" + playerIsland.getMaxMembers()));
         custom3.setItemMeta(custom3Meta);
         inv.setItem(14, custom3);
 

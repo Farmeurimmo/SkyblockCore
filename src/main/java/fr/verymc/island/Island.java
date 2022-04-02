@@ -3,6 +3,7 @@ package main.java.fr.verymc.island;
 import main.java.fr.verymc.island.bank.IslandBank;
 import main.java.fr.verymc.island.perms.IslandPerms;
 import main.java.fr.verymc.island.perms.IslandRank;
+import main.java.fr.verymc.island.upgrade.IslandUpgradeMember;
 import main.java.fr.verymc.island.upgrade.IslandUpgradeSize;
 import main.java.fr.verymc.utils.WorldBorderUtil;
 import org.bukkit.Bukkit;
@@ -25,11 +26,12 @@ public class Island {
     private HashMap<UUID, IslandRank> members = new HashMap<>();
     private HashMap<IslandRank, ArrayList<IslandPerms>> permsPerRanks = new HashMap<>();
     private IslandUpgradeSize sizeUpgrade;
+    private IslandUpgradeMember memberUpgrade;
     private WorldBorderUtil.Color borderColor;
     private IslandBank bank;
 
     public Island(String name, String owner, UUID ownerUUID, Location home, int id, HashMap<UUID, IslandRank> members, boolean defaultPerms,
-                  IslandUpgradeSize upgradeSize, WorldBorderUtil.Color borderColor, IslandBank bank) {
+                  IslandUpgradeSize upgradeSize, IslandUpgradeMember upgradeMember, WorldBorderUtil.Color borderColor, IslandBank bank) {
         this.name = name;
         this.owner = owner;
         this.ownerUUID = ownerUUID;
@@ -41,6 +43,7 @@ public class Island {
             setDefaultPerms();
         }
         this.sizeUpgrade = upgradeSize;
+        this.memberUpgrade = upgradeMember;
         this.borderColor = borderColor;
         this.bank = bank;
     }
@@ -186,4 +189,18 @@ public class Island {
     public void setOwnerUUID(UUID ownerUUID) {
         this.ownerUUID = ownerUUID;
     }
+
+    public Integer getMaxMembers() {
+        return memberUpgrade.getMaxMembers();
+    }
+
+    public void setMaxMembers(Integer maxMembers) {
+        memberUpgrade.setMaxMembers(maxMembers);
+    }
+
+    public IslandUpgradeMember getMemberUpgrade() {
+        return memberUpgrade;
+    }
+
+
 }
