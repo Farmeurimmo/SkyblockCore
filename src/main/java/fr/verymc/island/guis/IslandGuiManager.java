@@ -63,6 +63,10 @@ public class IslandGuiManager implements Listener {
                 IslandBorderGui.instance.openBorderIslandMenu(player);
                 return;
             }
+            if (current.getType() == Material.BEACON) {
+                IslandTopGui.instance.openTopIslandMenu(player);
+                return;
+            }
             return;
         }
         if (e.getView().getTitle().equalsIgnoreCase("§6Membres de l'île")) {
@@ -225,6 +229,13 @@ public class IslandGuiManager implements Listener {
                 playerIsland.setBorderColor(WorldBorderUtil.Color.BLUE);
                 IslandManager.instance.setWorldBorderForAllPlayerOnIsland(playerIsland);
                 IslandBorderGui.instance.openBorderIslandMenu(player);
+                return;
+            }
+        }
+        if (e.getView().getTitle().equalsIgnoreCase("§6Classement des îles")) {
+            e.setCancelled(true);
+            if (current.getType() == Material.ARROW) {
+                IslandMainGui.instance.openMainIslandMenu(player);
                 return;
             }
         }

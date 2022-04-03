@@ -2,10 +2,8 @@ package main.java.fr.verymc.island.cmds;
 
 import main.java.fr.verymc.island.Island;
 import main.java.fr.verymc.island.IslandManager;
-import main.java.fr.verymc.island.guis.IslandBankGui;
-import main.java.fr.verymc.island.guis.IslandBorderGui;
-import main.java.fr.verymc.island.guis.IslandMainGui;
-import main.java.fr.verymc.island.guis.IslandUpgradeGui;
+import main.java.fr.verymc.island.IslandValueCalcManager;
+import main.java.fr.verymc.island.guis.*;
 import main.java.fr.verymc.island.perms.IslandPerms;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -76,6 +74,16 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
                             IslandManager.instance.deleteIsland(p);
                         } else {
                             p.sendMessage("§6§6§lIles §8» §fTu ne peux pas détruire cette île, tu n'es pas le propriétaire.");
+                        }
+                        return true;
+                    } else if (args[0].equalsIgnoreCase("top")) {
+                        IslandTopGui.instance.openTopIslandMenu(p);
+                        return true;
+                    } else if (args[0].equalsIgnoreCase("recalc")) {
+                        if (p.hasPermission("*")) {
+                            IslandValueCalcManager.instance.makeCountForAllIsland();
+                        } else {
+                            p.sendMessage("§6§6§lIles §8» §fTu n'as pas la permission de faire ceci !");
                         }
                         return true;
                     }
@@ -222,7 +230,7 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
         if (cmd.getName().equalsIgnoreCase("is")) {
             if (args.length == 1) {
                 subcmd.addAll(Arrays.asList("go", "home", "invite", "accept", "kick", "promote", "demote", "sethome", "upgrade", "bank",
-                        "border", "bordure", "leave", "delete"));
+                        "border", "bordure", "leave", "delete", "top"));
             } else {
                 subcmd.add("");
             }

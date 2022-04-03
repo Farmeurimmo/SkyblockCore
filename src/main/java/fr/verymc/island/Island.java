@@ -29,6 +29,7 @@ public class Island {
     private IslandUpgradeMember memberUpgrade;
     private WorldBorderUtil.Color borderColor;
     private IslandBank bank;
+    private Double value;
 
     public Island(String name, String owner, UUID ownerUUID, Location home, int id, HashMap<UUID, IslandRank> members, boolean defaultPerms,
                   IslandUpgradeSize upgradeSize, IslandUpgradeMember upgradeMember, WorldBorderUtil.Color borderColor, IslandBank bank) {
@@ -46,6 +47,7 @@ public class Island {
         this.memberUpgrade = upgradeMember;
         this.borderColor = borderColor;
         this.bank = bank;
+        this.value = 0.0;
     }
 
     public void setDefaultPerms() {
@@ -209,6 +211,14 @@ public class Island {
                 p.sendMessage(message);
             }
         }
+    }
+
+    public Double getValue() {
+        return value;
+    }
+
+    public void setValue(Double value) {
+        this.value = value;
     }
 
 }

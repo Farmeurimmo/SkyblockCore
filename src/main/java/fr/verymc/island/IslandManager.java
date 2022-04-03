@@ -24,10 +24,7 @@ import main.java.fr.verymc.island.upgrade.IslandUpgradeSize;
 import main.java.fr.verymc.island.upgrade.IslandUpgradesType;
 import main.java.fr.verymc.utils.PlayerUtils;
 import main.java.fr.verymc.utils.WorldBorderUtil;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.World;
-import org.bukkit.WorldCreator;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 
@@ -40,6 +37,7 @@ public class IslandManager {
 
     public static IslandManager instance;
     public static int distanceBetweenIslands = 400;
+    public static IslandBlockValues islandBockValues;
     public World mainWorld;
     public ArrayList<UUID> isInIsland = new ArrayList<>();
     public ArrayList<Island> islands = new ArrayList<>();
@@ -63,6 +61,11 @@ public class IslandManager {
         new IslandUpgradeGui();
         new IslandBankGui();
         new IslandBorderGui();
+        new IslandTopGui();
+        HashMap<Material, Double> blocks = new HashMap<>();
+        blocks.put(Material.IRON_BLOCK, 10.0);
+        islandBockValues = new IslandBlockValues(blocks);
+        new IslandValueCalcManager();
     }
 
     public boolean isAnIslandByLoc(Location loc) {

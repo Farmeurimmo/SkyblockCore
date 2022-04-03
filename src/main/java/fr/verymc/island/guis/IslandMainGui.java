@@ -56,6 +56,12 @@ public class IslandMainGui {
         custom4.setItemMeta(meta4);
         inv.setItem(14, custom4);
 
+        ItemStack custom5 = new ItemStack(Material.BEACON, 1);
+        ItemMeta meta5 = custom5.getItemMeta();
+        meta5.setDisplayName("§6Classement §8| §7(clic gauche)");
+        custom5.setItemMeta(meta5);
+        inv.setItem(15, custom5);
+
 
         ItemStack custom8 = new ItemStack(Material.ARROW, 1);
         ItemMeta customh = custom8.getItemMeta();
