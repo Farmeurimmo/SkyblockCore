@@ -26,13 +26,7 @@ public class IslandValueCalcManager {
                 final ArrayList<Material> keys = new ArrayList<>(IslandBlockValues.instance.getMaterials());
                 Long startmills = System.currentTimeMillis();
 
-                Double total = 0.0;
-
                 for (Island island : IslandManager.instance.islands) {
-                    Double blocs = Double.valueOf(island.getSizeUpgrade().getSize() * island.getSizeUpgrade().getSize());
-                    blocs = blocs * 256;
-
-                    total += blocs;
 
                     Bukkit.getScheduler().scheduleAsyncDelayedTask(Main.instance, new Runnable() {
                         @Override
@@ -75,10 +69,8 @@ public class IslandValueCalcManager {
                         }
                     }, 0);
                 }
-
-                Bukkit.broadcastMessage("§6§lIles §8» §fRecalcul des îles lancé. Vitesse moyenne " +
-                        IslandManager.instance.islands.size() * 95000 + " blocs/s pour une durée de moyenne de "
-                        + total / (IslandManager.instance.islands.size() * 95000) + " seconde(s) par île (non cumulé).");
+                Bukkit.broadcastMessage("§6§lIles §8» §fRecalcul de toutes les îles lancé. Cette opération peut prendre plusieurs minutes" +
+                        " mais n'affectera pas votre expérience de jeu.");
             }
         }, 0);
     }
