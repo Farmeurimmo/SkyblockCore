@@ -32,8 +32,6 @@ public class IslandValueCalcManager {
                     Double blocs = Double.valueOf(island.getSizeUpgrade().getSize() * island.getSizeUpgrade().getSize());
                     blocs = blocs * 256;
 
-                    final Double blocs2 = blocs;
-
                     total += blocs;
 
                     Bukkit.getScheduler().scheduleAsyncDelayedTask(Main.instance, new Runnable() {
@@ -72,16 +70,11 @@ public class IslandValueCalcManager {
 
                             island.setValue(value);
                             Long elasped = (System.currentTimeMillis() - startmills);
-                            Long elapsedInSec = elasped / 1000 + elasped % 1000;
-                            if (elapsedInSec == 0) {
-                                elapsedInSec = 1L;
-                            }
-                            island.sendMessageToEveryMember("§6§lIles §8» §fRecalcul des îles terminé. (en " + elasped + " ms)" +
-                                    " (vitesse ~" + ((blocs2 / elapsedInSec) + (blocs2 % elapsedInSec)) + " blocs/s)");
+
+                            island.sendMessageToEveryMember("§6§lIles §8» §fRecalcul de votre île terminé. (en " + elasped + " ms)");
                         }
                     }, 0);
                 }
-                Long elasped = (System.currentTimeMillis() - startmills);
 
                 Bukkit.broadcastMessage("§6§lIles §8» §fRecalcul des îles lancé. Vitesse moyenne " +
                         IslandManager.instance.islands.size() * 95000 + " blocs/s pour une durée de moyenne de "
