@@ -4,6 +4,8 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
@@ -31,6 +33,32 @@ public class IslandInteractManager implements Listener {
             } else {
                 island.getBank().addCrystaux(1 * 5);
                 currentItem.setAmount(currentItem.getAmount() - 1);
+            }
+        }
+    }
+
+    @EventHandler
+    public void blockBreakEvent(BlockBreakEvent e) {
+        Player player = e.getPlayer();
+        Island island = IslandManager.instance.getIslandByLoc(e.getBlock().getLocation());
+        if (island != null) {
+            if (island.getMembers().containsKey(player.getUniqueId())) {
+                if (IslandBlockValues.instance.hasBlockValue(e.getBlock().getType())) {
+                    island.removeValue(IslandBlockValues.instance.getBlockValue(e.getBlock().getType()));
+                }
+            }
+        }
+    }
+
+    @EventHandler
+    public void blockPlaceEvent(BlockPlaceEvent e) {
+        Player player = e.getPlayer();
+        Island island = IslandManager.instance.getIslandByLoc(e.getBlock().getLocation());
+        if (island != null) {
+            if (island.getMembers().containsKey(player.getUniqueId())) {
+                if (IslandBlockValues.instance.hasBlockValue(e.getBlock().getType())) {
+                    island.addValue(IslandBlockValues.instance.getBlockValue(e.getBlock().getType()));
+                }
             }
         }
     }

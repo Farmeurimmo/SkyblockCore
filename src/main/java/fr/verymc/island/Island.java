@@ -221,4 +221,12 @@ public class Island {
         this.value = value;
     }
 
+    public void addValue(Double value) {
+        this.value += value;
+    }
+
+    public void removeValue(Double value) {
+        this.value -= value;
+    }
+
 }

@@ -4,6 +4,7 @@ import main.java.fr.verymc.Main;
 import main.java.fr.verymc.eco.EcoAccountsManager;
 import main.java.fr.verymc.island.Island;
 import main.java.fr.verymc.island.IslandManager;
+import main.java.fr.verymc.island.guis.IslandTopGui;
 import main.java.fr.verymc.utils.Maths;
 import net.luckperms.api.LuckPermsProvider;
 import net.luckperms.api.model.user.User;
@@ -115,7 +116,10 @@ public class ScoreBoard implements Listener {
             Island island = IslandManager.instance.getPlayerIsland(player);
             if (island != null) {
                 String Gradeis = island.getMembers().get(player.getUniqueId()).getName();
-                int classement = 0;
+                String classement = "#N/A";
+                if (IslandTopGui.instance.getTopIsland().containsKey(island)) {
+                    classement = "#" + IslandTopGui.instance.getTopIsland().get(island);
+                }
                 int ismembre = island.getMembers().size();
                 double iscristal = island.getBank().getCrystaux();
                 double ismoney = island.getBank().getMoney();
@@ -124,7 +128,7 @@ public class ScoreBoard implements Listener {
                 if (board.getTeam("gradeis") != null)
                     board.getTeam("gradeis").setPrefix("§fGrade d'ile §8▸ §a" + Gradeis);
                 if (board.getTeam("classementis") != null)
-                    board.getTeam("classementis").setPrefix("§fClassement §8▸ §a#" + classement);
+                    board.getTeam("classementis").setPrefix("§fClassement §8▸ §a" + classement);
                 if (board.getTeam("ismembre") != null)
                     board.getTeam("ismembre").setPrefix("§fMembres §8▸ §a" + ismembre + "/" + maxMembers);
                 if (board.getTeam("iscrystaux") != null)
