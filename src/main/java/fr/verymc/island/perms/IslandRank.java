@@ -3,6 +3,7 @@ package main.java.fr.verymc.island.perms;
 import main.java.fr.verymc.island.Island;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class IslandRank {
 
@@ -34,12 +35,12 @@ public class IslandRank {
     public static boolean isUp(IslandRanks rank, IslandRanks otherRank) {
         if (rank == IslandRanks.CHEF) {
             return true;
-        } else if (rank == IslandRanks.COCHEF && otherRank != IslandRanks.CHEF) {
+        } else if (rank == IslandRanks.COCHEF && otherRank != IslandRanks.COCHEF && otherRank != IslandRanks.CHEF) {
             return true;
-        } else if (rank == IslandRanks.MODERATEUR && otherRank != IslandRanks.COCHEF &&
+        } else if (rank == IslandRanks.MODERATEUR && otherRank != IslandRanks.MODERATEUR  && otherRank != IslandRanks.COCHEF &&
                 otherRank != IslandRanks.CHEF) {
             return true;
-        } else if (rank == IslandRanks.MEMBRE && otherRank != IslandRanks.MODERATEUR &&
+        } else if (rank == IslandRanks.MEMBRE && otherRank != IslandRanks.MEMBRE  && otherRank != IslandRanks.MODERATEUR &&
                 otherRank != IslandRanks.COCHEF && otherRank != IslandRanks.CHEF) {
             return true;
         } else {
@@ -92,27 +93,27 @@ public class IslandRank {
     }
 
     public IslandRanks getNextRankForPerm(IslandPerms perms, Island playerIsland) {
-        if (!playerIsland.hasPerms(IslandRanks.COOP, perms)) {
-            return IslandRanks.COOP;
-        } else if (!playerIsland.hasPerms(IslandRanks.MEMBRE, perms)) {
-            return IslandRanks.MEMBRE;
-        } else if (!playerIsland.hasPerms(IslandRanks.MODERATEUR, perms)) {
-            return IslandRanks.MODERATEUR;
-        } else if (!playerIsland.hasPerms(IslandRanks.COCHEF, perms)) {
+        if(!playerIsland.hasPerms(IslandRanks.COCHEF, perms)) {
             return IslandRanks.COCHEF;
+        } else if(!playerIsland.hasPerms(IslandRanks.MODERATEUR, perms)) {
+            return IslandRanks.MODERATEUR;
+        } else if(!playerIsland.hasPerms(IslandRanks.MEMBRE, perms)) {
+            return IslandRanks.MEMBRE;
+        } else if(!playerIsland.hasPerms(IslandRanks.COOP, perms)) {
+            return IslandRanks.COOP;
         } else {
             return IslandRanks.COOP;
         }
     }
 
     public IslandRanks getPreviousRankForPerm(IslandPerms perms, Island playerIsland) {
-        if (playerIsland.hasPerms(IslandRanks.COOP, perms)) {
+        if(playerIsland.hasPerms(IslandRanks.COOP, perms)) {
             return IslandRanks.COOP;
-        } else if (playerIsland.hasPerms(IslandRanks.MEMBRE, perms)) {
+        } else if(playerIsland.hasPerms(IslandRanks.MEMBRE, perms)) {
             return IslandRanks.MEMBRE;
-        } else if (playerIsland.hasPerms(IslandRanks.MODERATEUR, perms)) {
+        } else if(playerIsland.hasPerms(IslandRanks.MODERATEUR, perms)) {
             return IslandRanks.MODERATEUR;
-        } else if (playerIsland.hasPerms(IslandRanks.COCHEF, perms)) {
+        } else if(playerIsland.hasPerms(IslandRanks.COCHEF, perms)) {
             return IslandRanks.COCHEF;
         } else {
             return IslandRanks.COOP;

@@ -19,7 +19,9 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Map;
 import java.util.UUID;
 
 public class IslandGuiManager implements Listener {
@@ -69,7 +71,7 @@ public class IslandGuiManager implements Listener {
                 IslandTopGui.instance.openTopIslandMenu(player);
                 return;
             }
-            if (current.getType() == Material.BOOKSHELF) {
+            if(current.getType() == Material.BOOKSHELF){
                 IslandRankEditGui.instance.openEditRankIslandMenu(player);
                 return;
             }
@@ -255,26 +257,24 @@ public class IslandGuiManager implements Listener {
                 return;
             }
             Island playerIsland = IslandManager.instance.getPlayerIsland(player);
-            if (!playerIsland.hasPerms(playerIsland.getIslandRankFromUUID(player.getUniqueId()), IslandPerms.CHANGE_PERMS)) {
-                if (!playerIsland.hasPerms(playerIsland.getIslandRankFromUUID(player.getUniqueId()), IslandPerms.ALL_PERMS)) {
+            if(!playerIsland.hasPerms(playerIsland.getIslandRankFromUUID(player.getUniqueId()), IslandPerms.CHANGE_PERMS)) {
+                if(!playerIsland.hasPerms(playerIsland.getIslandRankFromUUID(player.getUniqueId()), IslandPerms.ALL_PERMS)) {
                     return;
                 }
             }
             for (IslandPerms perm : IslandPerms.values()) {
                 if (current.getType() == IslandPerms.getItemStackForPerm(perm).getType()) {
                     if (e.getClick() == ClickType.LEFT) {
-                        if (playerIsland.downPerms(player, playerIsland, perm, IslandRank.instance.getNextRankForPerm(
+                        if (playerIsland.downPerms(player, playerIsland, perm, IslandRank.instance.getPreviousRankForPerm(
                                 perm, playerIsland))) {
                             IslandRankEditGui.instance.openEditRankIslandMenu(player);
-                            Bukkit.broadcastMessage(playerIsland.getPerms(IslandRanks.COOP).toString());
                             return;
                         }
                     }
                     if (e.getClick() == ClickType.RIGHT) {
-                        if (playerIsland.upPerms(player, playerIsland, perm, IslandRank.instance.getPreviousRankForPerm(
+                        if (playerIsland.upPerms(player, playerIsland, perm, IslandRank.instance.getNextRankForPerm(
                                 perm, playerIsland))) {
                             IslandRankEditGui.instance.openEditRankIslandMenu(player);
-                            Bukkit.broadcastMessage("bb");
                             return;
                         }
                     }

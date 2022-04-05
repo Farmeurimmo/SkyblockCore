@@ -3,6 +3,7 @@ package main.java.fr.verymc.island.guis;
 import main.java.fr.verymc.island.Island;
 import main.java.fr.verymc.island.IslandManager;
 import main.java.fr.verymc.island.perms.IslandPerms;
+import main.java.fr.verymc.island.perms.IslandRank;
 import main.java.fr.verymc.island.perms.IslandRanks;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -40,14 +41,14 @@ public class IslandRankEditGui {
 
         for (IslandPerms perm : IslandPerms.getAllPerms()) {
             ItemStack custom = IslandPerms.getItemStackForPerm(perm);
-            if (custom == null) continue;
-            if (custom.getType() == Material.AIR) continue;
+            if(custom == null) continue;
+            if(custom.getType() == Material.AIR) continue;
             ItemMeta customh1 = custom.getItemMeta();
             customh1.setDisplayName("§6" + perm.getDescription());
             ArrayList<String> lore = new ArrayList<>();
-            lore.addAll(Arrays.asList("§7Clic droit pour augmenter", "§7Clic gauche pour diminuer", "", "§7Grades :", ""));
+            lore.addAll(Arrays.asList("§7Clic droit pour augmenter", "§7Clic gauche pour diminuer", "","§7Grades :",""));
             for (IslandRanks rank : IslandRanks.values()) {
-                if (rank == IslandRanks.CHEF) continue;
+                if(rank == IslandRanks.CHEF) continue;
                 if (playerIsland.hasPerms(rank, perm)) {
                     lore.add("§a" + rank.name());
                 } else {

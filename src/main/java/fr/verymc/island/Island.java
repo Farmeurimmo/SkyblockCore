@@ -53,15 +53,22 @@ public class Island {
         ArrayList<IslandPerms> perms = new ArrayList<>();
         perms.addAll(Arrays.asList(IslandPerms.BUILD, IslandPerms.BREAK));
         permsPerRanks.put(IslandRanks.COOP, perms);
-        perms.add(IslandPerms.CHANGE_BORDER_COLOR);
-        permsPerRanks.put(IslandRanks.MEMBRE, perms);
-        perms.addAll(Arrays.asList(IslandPerms.CHANGE_BORDER_COLOR, IslandPerms.KICK, IslandPerms.PROMOTE, IslandPerms.DEMOTE));
-        permsPerRanks.put(IslandRanks.MODERATEUR, perms);
-        perms.addAll(Arrays.asList(IslandPerms.CHANGE_BORDER_COLOR, IslandPerms.KICK, IslandPerms.PROMOTE, IslandPerms.DEMOTE,
+        ArrayList<IslandPerms> permsMembre = new ArrayList<>();
+        permsMembre.addAll(perms);
+        permsMembre.add(IslandPerms.CHANGE_BORDER_COLOR);
+        permsPerRanks.put(IslandRanks.MEMBRE, permsMembre);
+        ArrayList<IslandPerms> permsMod = new ArrayList<>();
+        permsMod.addAll(permsMembre);
+        permsMod.addAll(Arrays.asList(IslandPerms.CHANGE_BORDER_COLOR, IslandPerms.KICK, IslandPerms.PROMOTE, IslandPerms.DEMOTE));
+        permsPerRanks.put(IslandRanks.MODERATEUR, permsMod);
+        ArrayList<IslandPerms> permsCoChef = new ArrayList<>();
+        permsCoChef.addAll(permsMod);
+        permsCoChef.addAll(Arrays.asList(IslandPerms.CHANGE_BORDER_COLOR, IslandPerms.KICK, IslandPerms.PROMOTE, IslandPerms.DEMOTE,
                 IslandPerms.INVITE, IslandPerms.BAN));
-        permsPerRanks.put(IslandRanks.COCHEF, perms);
-        perms.addAll(Arrays.asList(IslandPerms.ALL_PERMS, IslandPerms.PROMOTE));
-        permsPerRanks.put(IslandRanks.CHEF, perms);
+        permsPerRanks.put(IslandRanks.COCHEF, permsCoChef);
+        ArrayList<IslandPerms> permsChef = new ArrayList<>();
+        permsChef.add(IslandPerms.ALL_PERMS);
+        permsPerRanks.put(IslandRanks.CHEF, permsChef);
     }
 
     public IslandBank getBank() {
@@ -198,8 +205,8 @@ public class Island {
 
     public boolean upPerms(Player player, Island island, IslandPerms islandPerms, IslandRanks islandRank) {
         IslandRanks playerRank = island.getIslandRankFromUUID(player.getUniqueId());
-        if (!island.getOwnerUUID().equals(player.getUniqueId())) {
-            if (!IslandRank.isUp(playerRank, IslandRank.getNextRank(playerRank))) {
+        if(!island.getOwnerUUID().equals(player.getUniqueId())) {
+            if (!IslandRank.isUp(playerRank, IslandRank.instance.getNextRankForPerm(islandPerms, island))) {
                 return false;
             }
         }
@@ -225,7 +232,7 @@ public class Island {
 
     public boolean downPerms(Player player, Island island, IslandPerms islandPerms, IslandRanks islandRank) {
         IslandRanks playerRank = island.getIslandRankFromUUID(player.getUniqueId());
-        if (!island.getOwnerUUID().equals(player.getUniqueId())) {
+        if(!island.getOwnerUUID().equals(player.getUniqueId())) {
             if (!IslandRank.isUp(playerRank, IslandRank.getNextRank(playerRank))) {
                 return false;
             }
