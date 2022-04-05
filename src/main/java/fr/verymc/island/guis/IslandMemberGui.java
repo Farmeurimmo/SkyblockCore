@@ -2,6 +2,7 @@ package main.java.fr.verymc.island.guis;
 
 import main.java.fr.verymc.island.IslandManager;
 import main.java.fr.verymc.island.perms.IslandRank;
+import main.java.fr.verymc.island.perms.IslandRanks;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -36,13 +37,13 @@ public class IslandMemberGui {
         int current = 0;
         ArrayList<UUID> members = new ArrayList<>();
         int currentLevelRank = 0;
-        HashMap<UUID, IslandRank> levelRank = IslandManager.instance.getPlayerIsland(player).getMembers();
-        HashMap<IslandRank, Integer> rankPos = IslandRank.getIslandRankPos();
+        HashMap<UUID, IslandRanks> levelRank = IslandManager.instance.getPlayerIsland(player).getMembers();
+        HashMap<IslandRanks, Integer> rankPos = IslandRank.getIslandRankPos();
         while (members.size() != levelRank.size()) {
             if (currentLevelRank > 3) {
                 break;
             }
-            for (Map.Entry<UUID, IslandRank> playerEntry : levelRank.entrySet()) {
+            for (Map.Entry<UUID, IslandRanks> playerEntry : levelRank.entrySet()) {
                 if (members.contains(playerEntry.getKey())) {
                     continue;
                 }
@@ -59,7 +60,7 @@ public class IslandMemberGui {
                     customi.setOwner("");
                 }
                 customi.setDisplayName("§6" + customi.getOwner());
-                customi.setLore(Arrays.asList("§7Rang: §6" + playerEntry.getValue().getName(), "§7Clic droit pour rétrograder", "§7Clic gauche pour promouvoir",
+                customi.setLore(Arrays.asList("§7Rang: §6" + playerEntry.getValue().name(), "§7Clic droit pour rétrograder", "§7Clic gauche pour promouvoir",
                         "§7Clic molette pour exclure"));
                 custom10.setItemMeta(customi);
                 inv.setItem(current, custom10);

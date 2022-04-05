@@ -115,7 +115,7 @@ public class ScoreBoard implements Listener {
 
             Island island = IslandManager.instance.getPlayerIsland(player);
             if (island != null) {
-                String Gradeis = island.getMembers().get(player.getUniqueId()).getName();
+                String Gradeis = island.getIslandRankFromUUID(player.getUniqueId()).getName();
                 String classement = "#N/A";
                 if (IslandTopGui.instance.getTopIsland().containsKey(island)) {
                     classement = "#" + IslandTopGui.instance.getTopIsland().get(island);

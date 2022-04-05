@@ -62,6 +62,12 @@ public class IslandMainGui {
         custom5.setItemMeta(meta5);
         inv.setItem(15, custom5);
 
+        ItemStack custom6 = new ItemStack(Material.BOOKSHELF, 1);
+        ItemMeta meta6 = custom6.getItemMeta();
+        meta6.setDisplayName("§6Permissions §8| §7(clic gauche)");
+        custom6.setItemMeta(meta6);
+        inv.setItem(16, custom6);
+
 
         ItemStack custom8 = new ItemStack(Material.ARROW, 1);
         ItemMeta customh = custom8.getItemMeta();

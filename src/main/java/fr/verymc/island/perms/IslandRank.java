@@ -1,83 +1,121 @@
 package main.java.fr.verymc.island.perms;
 
+import main.java.fr.verymc.island.Island;
+
 import java.util.HashMap;
 
-public enum IslandRank {
+public class IslandRank {
 
-    CHEF("Chef"),
-    COCHEF("Co-Chef"),
-    MODERATEUR("Modérateur"),
-    MEMBRE("Membre");
+    public static IslandRank instance;
 
-    private String name;
+    private HashMap<IslandRanks, Integer> islandRankPos = new HashMap<>();
 
-    IslandRank(String name) {
-        this.name = name;
+    public IslandRank() {
+        instance = this;
+        for (IslandRanks rank : IslandRanks.values()) {
+            if (rank == rank.CHEF) {
+                this.islandRankPos.put(rank, 0);
+            }
+            if (rank == IslandRanks.COCHEF) {
+                this.islandRankPos.put(rank, 1);
+            }
+            if (rank == IslandRanks.MODERATEUR) {
+                this.islandRankPos.put(rank, 2);
+            }
+            if (rank == IslandRanks.MEMBRE) {
+                this.islandRankPos.put(rank, 3);
+            }
+            if (rank == IslandRanks.COOP) {
+                this.islandRankPos.put(rank, 4);
+            }
+        }
     }
 
-    public static boolean isUp(IslandRank rank, IslandRank otherRank) {
-        if (rank == CHEF) {
+    public static boolean isUp(IslandRanks rank, IslandRanks otherRank) {
+        if (rank == IslandRanks.CHEF) {
             return true;
-        }
-        if (rank == COCHEF && otherRank == MODERATEUR || otherRank == MEMBRE) {
+        } else if (rank == IslandRanks.COCHEF && otherRank != IslandRanks.CHEF) {
             return true;
-        } else if (rank == MODERATEUR && otherRank == MEMBRE) {
+        } else if (rank == IslandRanks.MODERATEUR && otherRank != IslandRanks.COCHEF &&
+                otherRank != IslandRanks.CHEF) {
+            return true;
+        } else if (rank == IslandRanks.MEMBRE && otherRank != IslandRanks.MODERATEUR &&
+                otherRank != IslandRanks.COCHEF && otherRank != IslandRanks.CHEF) {
             return true;
         } else {
             return false;
         }
     }
 
-    public static IslandRank getNextRank(IslandRank rank) {
+    public static IslandRanks getNextRank(IslandRanks rank) {
         switch (rank) {
             case MODERATEUR:
-                return COCHEF;
+                return IslandRanks.COCHEF;
             case MEMBRE:
-                return MODERATEUR;
+                return IslandRanks.MODERATEUR;
             default:
                 return rank;
         }
     }
 
-    public static IslandRank getPreviousRank(IslandRank rank) {
+    public static IslandRanks getPreviousRank(IslandRanks rank) {
         switch (rank) {
             case COCHEF:
-                return MODERATEUR;
+                return IslandRanks.MODERATEUR;
             case MODERATEUR:
-                return MEMBRE;
+                return IslandRanks.MEMBRE;
             default:
                 return rank;
         }
     }
 
-    public static HashMap<IslandRank, Integer> getIslandRankPos() {
-        HashMap<IslandRank, Integer> pos = new HashMap<>();
-        for (IslandRank rank : IslandRank.values()) {
-            if (rank == CHEF) {
+    public static HashMap<IslandRanks, Integer> getIslandRankPos() {
+        HashMap<IslandRanks, Integer> pos = new HashMap<>();
+        for (IslandRanks rank : IslandRanks.values()) {
+            if (rank == IslandRanks.CHEF) {
                 pos.put(rank, 0);
             }
-            if (rank == COCHEF) {
+            if (rank == IslandRanks.COCHEF) {
                 pos.put(rank, 1);
             }
-            if (rank == MODERATEUR) {
+            if (rank == IslandRanks.MODERATEUR) {
                 pos.put(rank, 2);
             }
-            if (rank == MEMBRE) {
+            if (rank == IslandRanks.MEMBRE) {
                 pos.put(rank, 3);
+            }
+            if (rank == IslandRanks.COOP) {
+                pos.put(rank, 4);
             }
         }
         return pos;
     }
 
-    public String getName(IslandRank rank) {
-        return rank.name();
+    public IslandRanks getNextRankForPerm(IslandPerms perms, Island playerIsland) {
+        if (!playerIsland.hasPerms(IslandRanks.COOP, perms)) {
+            return IslandRanks.COOP;
+        } else if (!playerIsland.hasPerms(IslandRanks.MEMBRE, perms)) {
+            return IslandRanks.MEMBRE;
+        } else if (!playerIsland.hasPerms(IslandRanks.MODERATEUR, perms)) {
+            return IslandRanks.MODERATEUR;
+        } else if (!playerIsland.hasPerms(IslandRanks.COCHEF, perms)) {
+            return IslandRanks.COCHEF;
+        } else {
+            return IslandRanks.COOP;
+        }
     }
 
-    public IslandRank fromString(String rank) {
-        return valueOf(rank);
-    }
-
-    public String getName() {
-        return name;
+    public IslandRanks getPreviousRankForPerm(IslandPerms perms, Island playerIsland) {
+        if (playerIsland.hasPerms(IslandRanks.COOP, perms)) {
+            return IslandRanks.COOP;
+        } else if (playerIsland.hasPerms(IslandRanks.MEMBRE, perms)) {
+            return IslandRanks.MEMBRE;
+        } else if (playerIsland.hasPerms(IslandRanks.MODERATEUR, perms)) {
+            return IslandRanks.MODERATEUR;
+        } else if (playerIsland.hasPerms(IslandRanks.COCHEF, perms)) {
+            return IslandRanks.COCHEF;
+        } else {
+            return IslandRanks.COOP;
+        }
     }
 }

@@ -3,6 +3,7 @@ package main.java.fr.verymc.island;
 import main.java.fr.verymc.island.bank.IslandBank;
 import main.java.fr.verymc.island.perms.IslandPerms;
 import main.java.fr.verymc.island.perms.IslandRank;
+import main.java.fr.verymc.island.perms.IslandRanks;
 import main.java.fr.verymc.island.upgrade.IslandUpgradeMember;
 import main.java.fr.verymc.island.upgrade.IslandUpgradeSize;
 import main.java.fr.verymc.utils.WorldBorderUtil;
@@ -10,10 +11,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.UUID;
+import java.util.*;
 
 public class Island {
 
@@ -23,16 +21,17 @@ public class Island {
     private Location home;
     private Location center;
     private int id;
-    private HashMap<UUID, IslandRank> members = new HashMap<>();
-    private HashMap<IslandRank, ArrayList<IslandPerms>> permsPerRanks = new HashMap<>();
+    private HashMap<UUID, IslandRanks> members = new HashMap<>();
+    private HashMap<IslandRanks, ArrayList<IslandPerms>> permsPerRanks = new HashMap<>();
     private IslandUpgradeSize sizeUpgrade;
     private IslandUpgradeMember memberUpgrade;
     private WorldBorderUtil.Color borderColor;
     private IslandBank bank;
     private Double value;
 
-    public Island(String name, String owner, UUID ownerUUID, Location home, int id, HashMap<UUID, IslandRank> members, boolean defaultPerms,
-                  IslandUpgradeSize upgradeSize, IslandUpgradeMember upgradeMember, WorldBorderUtil.Color borderColor, IslandBank bank) {
+    public Island(String name, String owner, UUID ownerUUID, Location home, int id, HashMap<UUID, IslandRanks> members, boolean defaultPerms,
+                  IslandUpgradeSize upgradeSize, IslandUpgradeMember upgradeMember, WorldBorderUtil.Color borderColor,
+                  IslandBank bank) {
         this.name = name;
         this.owner = owner;
         this.ownerUUID = ownerUUID;
@@ -52,17 +51,17 @@ public class Island {
 
     public void setDefaultPerms() {
         ArrayList<IslandPerms> perms = new ArrayList<>();
+        perms.addAll(Arrays.asList(IslandPerms.BUILD, IslandPerms.BREAK));
+        permsPerRanks.put(IslandRanks.COOP, perms);
         perms.add(IslandPerms.CHANGE_BORDER_COLOR);
-        permsPerRanks.put(IslandRank.MEMBRE, perms);
-        perms.clear();
+        permsPerRanks.put(IslandRanks.MEMBRE, perms);
         perms.addAll(Arrays.asList(IslandPerms.CHANGE_BORDER_COLOR, IslandPerms.KICK, IslandPerms.PROMOTE, IslandPerms.DEMOTE));
-        permsPerRanks.put(IslandRank.MODERATEUR, perms);
-        perms.clear();
+        permsPerRanks.put(IslandRanks.MODERATEUR, perms);
         perms.addAll(Arrays.asList(IslandPerms.CHANGE_BORDER_COLOR, IslandPerms.KICK, IslandPerms.PROMOTE, IslandPerms.DEMOTE,
                 IslandPerms.INVITE, IslandPerms.BAN));
-        permsPerRanks.put(IslandRank.COCHEF, perms);
-        perms.add(IslandPerms.ALL_PERMS);
-        permsPerRanks.put(IslandRank.CHEF, perms);
+        permsPerRanks.put(IslandRanks.COCHEF, perms);
+        perms.addAll(Arrays.asList(IslandPerms.ALL_PERMS, IslandPerms.PROMOTE));
+        permsPerRanks.put(IslandRanks.CHEF, perms);
     }
 
     public IslandBank getBank() {
@@ -123,8 +122,8 @@ public class Island {
 
     public boolean promote(UUID uuid) {
         if (members.containsKey(uuid)) {
-            IslandRank currentRank = getIslandRankFromUUID(uuid);
-            IslandRank nextRank = IslandRank.getNextRank(currentRank);
+            IslandRanks currentRank = getIslandRankFromUUID(uuid);
+            IslandRanks nextRank = IslandRank.getNextRank(currentRank);
             if (currentRank == nextRank) {
                 return false;
             }
@@ -136,8 +135,8 @@ public class Island {
 
     public boolean demote(UUID uuid) {
         if (members.containsKey(uuid)) {
-            IslandRank currentRank = getIslandRankFromUUID(uuid);
-            IslandRank previousRank = IslandRank.getPreviousRank(currentRank);
+            IslandRanks currentRank = getIslandRankFromUUID(uuid);
+            IslandRanks previousRank = IslandRank.getPreviousRank(currentRank);
             if (currentRank == previousRank) {
                 return false;
             }
@@ -164,23 +163,128 @@ public class Island {
         return true;
     }
 
-    public ArrayList<IslandPerms> getPerms(IslandRank rank) {
+    public ArrayList<IslandPerms> getPerms(IslandRanks rank) {
         return permsPerRanks.get(rank);
     }
 
-    public IslandRank getIslandRankFromUUID(UUID uuid) {
+    public void setPerms(IslandRanks rankTo, ArrayList<IslandPerms> perms) {
+        permsPerRanks.put(rankTo, perms);
+    }
+
+    public void addPerms(IslandRanks rankTo, IslandPerms perm) {
+        permsPerRanks.get(rankTo).add(perm);
+    }
+
+    public boolean hasPerms(IslandRanks rank, IslandPerms perm) {
+        if (getPerms(rank) != null) {
+            if (getPerms(rank).contains(perm)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public HashMap<IslandRanks, ArrayList<IslandPerms>> getMapPerms() {
+        return permsPerRanks;
+    }
+
+    public ArrayList<IslandRanks> getRanks() {
+        ArrayList<IslandRanks> ranks = new ArrayList<>();
+        for (Map.Entry<IslandRanks, ArrayList<IslandPerms>> entry : permsPerRanks.entrySet()) {
+            ranks.add(entry.getKey());
+        }
+        return ranks;
+    }
+
+    public boolean upPerms(Player player, Island island, IslandPerms islandPerms, IslandRanks islandRank) {
+        IslandRanks playerRank = island.getIslandRankFromUUID(player.getUniqueId());
+        if (!island.getOwnerUUID().equals(player.getUniqueId())) {
+            if (!IslandRank.isUp(playerRank, IslandRank.getNextRank(playerRank))) {
+                return false;
+            }
+        }
+        if (islandRank == IslandRanks.MODERATEUR) {
+            if (addPermsToRank(IslandRanks.COCHEF, islandPerms)) {
+                return true;
+            }
+        } else if (islandRank == IslandRanks.MEMBRE) {
+            if (addPermsToRank(IslandRanks.MODERATEUR, islandPerms)) {
+                return true;
+            }
+        } else if (islandRank == IslandRanks.COOP) {
+            if (addPermsToRank(IslandRanks.MEMBRE, islandPerms)) {
+                return true;
+            }
+        } else {
+            if (addPermsToRank(IslandRanks.COOP, islandPerms)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean downPerms(Player player, Island island, IslandPerms islandPerms, IslandRanks islandRank) {
+        IslandRanks playerRank = island.getIslandRankFromUUID(player.getUniqueId());
+        if (!island.getOwnerUUID().equals(player.getUniqueId())) {
+            if (!IslandRank.isUp(playerRank, IslandRank.getNextRank(playerRank))) {
+                return false;
+            }
+        }
+        if (islandRank == IslandRanks.COCHEF) {
+            if (removePermsToRank(IslandRanks.COCHEF, islandPerms)) {
+                return true;
+            }
+        } else if (islandRank == IslandRanks.MODERATEUR) {
+            if (removePermsToRank(IslandRanks.MODERATEUR, islandPerms)) {
+                return true;
+            }
+        } else if (islandRank == IslandRanks.MEMBRE) {
+            if (removePermsToRank(IslandRanks.MEMBRE, islandPerms)) {
+                return true;
+            }
+        } else if (islandRank == IslandRanks.COOP) {
+            if (removePermsToRank(IslandRanks.COOP, islandPerms)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public IslandRanks getIslandRankFromUUID(UUID uuid) {
         return members.get(uuid);
     }
 
-    public HashMap<UUID, IslandRank> getMembers() {
+    public HashMap<UUID, IslandRanks> getMembers() {
         return members;
     }
 
-    public void setMembers(HashMap<UUID, IslandRank> members) {
+    public void setMembers(HashMap<UUID, IslandRanks> members) {
         this.members = members;
     }
 
-    public void addMembers(UUID member, IslandRank rank) {
+    public boolean addPermsToRank(IslandRanks islandRank, IslandPerms islandPerms) {
+        if (getPerms(islandRank) == null) {
+            return false;
+        }
+        if (getPerms(islandRank).contains(islandPerms)) {
+            return false;
+        }
+        addPerms(islandRank, islandPerms);
+        return true;
+    }
+
+    public boolean removePermsToRank(IslandRanks islandRank, IslandPerms islandPerms) {
+        if (getPerms(islandRank) == null) {
+            return false;
+        }
+        if (!getPerms(islandRank).contains(islandPerms)) {
+            return false;
+        }
+        getPerms(islandRank).remove(islandPerms);
+        return true;
+    }
+
+    public void addMembers(UUID member, IslandRanks rank) {
         this.members.put(member, rank);
     }
 
