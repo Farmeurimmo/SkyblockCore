@@ -3,7 +3,6 @@ package main.java.fr.verymc.island.perms;
 import main.java.fr.verymc.island.Island;
 
 import java.util.HashMap;
-import java.util.Map;
 
 public class IslandRank {
 
@@ -29,6 +28,9 @@ public class IslandRank {
             if (rank == IslandRanks.COOP) {
                 this.islandRankPos.put(rank, 4);
             }
+            if (rank == IslandRanks.VISITEUR) {
+                this.islandRankPos.put(rank, 5);
+            }
         }
     }
 
@@ -37,10 +39,10 @@ public class IslandRank {
             return true;
         } else if (rank == IslandRanks.COCHEF && otherRank != IslandRanks.COCHEF && otherRank != IslandRanks.CHEF) {
             return true;
-        } else if (rank == IslandRanks.MODERATEUR && otherRank != IslandRanks.MODERATEUR  && otherRank != IslandRanks.COCHEF &&
+        } else if (rank == IslandRanks.MODERATEUR && otherRank != IslandRanks.MODERATEUR && otherRank != IslandRanks.COCHEF &&
                 otherRank != IslandRanks.CHEF) {
             return true;
-        } else if (rank == IslandRanks.MEMBRE && otherRank != IslandRanks.MEMBRE  && otherRank != IslandRanks.MODERATEUR &&
+        } else if (rank == IslandRanks.MEMBRE && otherRank != IslandRanks.MEMBRE && otherRank != IslandRanks.MODERATEUR &&
                 otherRank != IslandRanks.COCHEF && otherRank != IslandRanks.CHEF) {
             return true;
         } else {
@@ -71,49 +73,35 @@ public class IslandRank {
     }
 
     public static HashMap<IslandRanks, Integer> getIslandRankPos() {
-        HashMap<IslandRanks, Integer> pos = new HashMap<>();
-        for (IslandRanks rank : IslandRanks.values()) {
-            if (rank == IslandRanks.CHEF) {
-                pos.put(rank, 0);
-            }
-            if (rank == IslandRanks.COCHEF) {
-                pos.put(rank, 1);
-            }
-            if (rank == IslandRanks.MODERATEUR) {
-                pos.put(rank, 2);
-            }
-            if (rank == IslandRanks.MEMBRE) {
-                pos.put(rank, 3);
-            }
-            if (rank == IslandRanks.COOP) {
-                pos.put(rank, 4);
-            }
-        }
-        return pos;
+        return instance.islandRankPos;
     }
 
     public IslandRanks getNextRankForPerm(IslandPerms perms, Island playerIsland) {
-        if(!playerIsland.hasPerms(IslandRanks.COCHEF, perms)) {
+        if (!playerIsland.hasPerms(IslandRanks.COCHEF, perms)) {
             return IslandRanks.COCHEF;
-        } else if(!playerIsland.hasPerms(IslandRanks.MODERATEUR, perms)) {
+        } else if (!playerIsland.hasPerms(IslandRanks.MODERATEUR, perms)) {
             return IslandRanks.MODERATEUR;
-        } else if(!playerIsland.hasPerms(IslandRanks.MEMBRE, perms)) {
+        } else if (!playerIsland.hasPerms(IslandRanks.MEMBRE, perms)) {
             return IslandRanks.MEMBRE;
-        } else if(!playerIsland.hasPerms(IslandRanks.COOP, perms)) {
+        } else if (!playerIsland.hasPerms(IslandRanks.COOP, perms)) {
             return IslandRanks.COOP;
+        } else if (!playerIsland.hasPerms(IslandRanks.VISITEUR, perms)) {
+            return IslandRanks.VISITEUR;
         } else {
-            return IslandRanks.COOP;
+            return IslandRanks.COCHEF;
         }
     }
 
     public IslandRanks getPreviousRankForPerm(IslandPerms perms, Island playerIsland) {
-        if(playerIsland.hasPerms(IslandRanks.COOP, perms)) {
+        if (playerIsland.hasPerms(IslandRanks.VISITEUR, perms)) {
+            return IslandRanks.VISITEUR;
+        } else if (playerIsland.hasPerms(IslandRanks.COOP, perms)) {
             return IslandRanks.COOP;
-        } else if(playerIsland.hasPerms(IslandRanks.MEMBRE, perms)) {
+        } else if (playerIsland.hasPerms(IslandRanks.MEMBRE, perms)) {
             return IslandRanks.MEMBRE;
-        } else if(playerIsland.hasPerms(IslandRanks.MODERATEUR, perms)) {
+        } else if (playerIsland.hasPerms(IslandRanks.MODERATEUR, perms)) {
             return IslandRanks.MODERATEUR;
-        } else if(playerIsland.hasPerms(IslandRanks.COCHEF, perms)) {
+        } else if (playerIsland.hasPerms(IslandRanks.COCHEF, perms)) {
             return IslandRanks.COCHEF;
         } else {
             return IslandRanks.COOP;

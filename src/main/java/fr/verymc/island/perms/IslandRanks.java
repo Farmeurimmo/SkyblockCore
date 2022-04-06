@@ -6,7 +6,8 @@ public enum IslandRanks {
     COCHEF("Cochef"),
     MODERATEUR("Modérateur"),
     MEMBRE("Membre"),
-    COOP("Membre temporaire");
+    COOP("Membre temporaire"),
+    VISITEUR("Visiteur");
 
     private String name;
 

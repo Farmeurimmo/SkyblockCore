@@ -24,6 +24,8 @@ public enum IslandPerms {
     CHANGE_PERMS("Définir les permissions jusqu'à son niveau de grade"),
     BUILD("Définir les permissions de construction"),
     BREAK("Définir les permissions de destruction"),
+    INTERACT("Définir les permissions d'interaction"),
+    CONTAINER("Définir les permissions des conteneurs"),
     ALL_PERMS("Toutes les permissions");
 
     private String description;
@@ -46,7 +48,7 @@ public enum IslandPerms {
                 return new ItemStack(Material.ANVIL);
             }
             case CANCEL_INVITE -> {
-                return new ItemStack(Material.LEGACY_BOOK_AND_QUILL);
+                return new ItemStack(Material.KNOWLEDGE_BOOK);
             }
             case CHANGE_BORDER_COLOR -> {
                 return new ItemStack(Material.BARRIER);
@@ -83,6 +85,24 @@ public enum IslandPerms {
             }
             case SET_ISLAND_WARP -> {
                 return new ItemStack(Material.COMPASS);
+            }
+            case CHANGE_PERMS -> {
+                return new ItemStack(Material.EMERALD_BLOCK);
+            }
+            case BUILD -> {
+                return new ItemStack(Material.DIAMOND_PICKAXE);
+            }
+            case BREAK -> {
+                return new ItemStack(Material.DIAMOND_AXE);
+            }
+            case INTERACT -> {
+                return new ItemStack(Material.IRON_HOE);
+            }
+            case CONTAINER -> {
+                return new ItemStack(Material.CHEST);
+            }
+            case ALL_PERMS -> {
+                return new ItemStack(Material.BEACON);
             }
             default -> {
                 return new ItemStack(Material.AIR);

@@ -50,7 +50,11 @@ public class Island {
     }
 
     public void setDefaultPerms() {
+        ArrayList<IslandPerms> permsVisit = new ArrayList<>();
+        permsVisit.add(IslandPerms.INTERACT);
+        permsPerRanks.put(IslandRanks.VISITEUR, permsVisit);
         ArrayList<IslandPerms> perms = new ArrayList<>();
+        perms.addAll(permsVisit);
         perms.addAll(Arrays.asList(IslandPerms.BUILD, IslandPerms.BREAK));
         permsPerRanks.put(IslandRanks.COOP, perms);
         ArrayList<IslandPerms> permsMembre = new ArrayList<>();
@@ -183,8 +187,8 @@ public class Island {
     }
 
     public boolean hasPerms(IslandRanks rank, IslandPerms perm) {
-        if (getPerms(rank) != null) {
-            if (getPerms(rank).contains(perm)) {
+        if (getMapPerms().get(rank) != null) {
+            if (getMapPerms().get(rank).contains(perm)) {
                 return true;
             }
         }
@@ -205,25 +209,29 @@ public class Island {
 
     public boolean upPerms(Player player, Island island, IslandPerms islandPerms, IslandRanks islandRank) {
         IslandRanks playerRank = island.getIslandRankFromUUID(player.getUniqueId());
-        if(!island.getOwnerUUID().equals(player.getUniqueId())) {
+        if (!island.getOwnerUUID().equals(player.getUniqueId())) {
             if (!IslandRank.isUp(playerRank, IslandRank.instance.getNextRankForPerm(islandPerms, island))) {
                 return false;
             }
         }
-        if (islandRank == IslandRanks.MODERATEUR) {
+        if (islandRank == IslandRanks.COCHEF) {
             if (addPermsToRank(IslandRanks.COCHEF, islandPerms)) {
                 return true;
             }
-        } else if (islandRank == IslandRanks.MEMBRE) {
+        } else if (islandRank == IslandRanks.MODERATEUR) {
             if (addPermsToRank(IslandRanks.MODERATEUR, islandPerms)) {
                 return true;
             }
-        } else if (islandRank == IslandRanks.COOP) {
+        } else if (islandRank == IslandRanks.MEMBRE) {
             if (addPermsToRank(IslandRanks.MEMBRE, islandPerms)) {
                 return true;
             }
-        } else {
+        } else if (islandRank == IslandRanks.COOP) {
             if (addPermsToRank(IslandRanks.COOP, islandPerms)) {
+                return true;
+            }
+        } else if (islandRank == IslandRanks.VISITEUR) {
+            if (addPermsToRank(IslandRanks.VISITEUR, islandPerms)) {
                 return true;
             }
         }
@@ -232,7 +240,7 @@ public class Island {
 
     public boolean downPerms(Player player, Island island, IslandPerms islandPerms, IslandRanks islandRank) {
         IslandRanks playerRank = island.getIslandRankFromUUID(player.getUniqueId());
-        if(!island.getOwnerUUID().equals(player.getUniqueId())) {
+        if (!island.getOwnerUUID().equals(player.getUniqueId())) {
             if (!IslandRank.isUp(playerRank, IslandRank.getNextRank(playerRank))) {
                 return false;
             }
@@ -251,6 +259,10 @@ public class Island {
             }
         } else if (islandRank == IslandRanks.COOP) {
             if (removePermsToRank(IslandRanks.COOP, islandPerms)) {
+                return true;
+            }
+        } else if (islandRank == IslandRanks.VISITEUR) {
+            if (removePermsToRank(IslandRanks.VISITEUR, islandPerms)) {
                 return true;
             }
         }

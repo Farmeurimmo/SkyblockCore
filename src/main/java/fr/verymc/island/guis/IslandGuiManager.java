@@ -6,7 +6,6 @@ import main.java.fr.verymc.island.Island;
 import main.java.fr.verymc.island.IslandManager;
 import main.java.fr.verymc.island.perms.IslandPerms;
 import main.java.fr.verymc.island.perms.IslandRank;
-import main.java.fr.verymc.island.perms.IslandRanks;
 import main.java.fr.verymc.utils.PlayerUtils;
 import main.java.fr.verymc.utils.WorldBorderUtil;
 import org.bukkit.Bukkit;
@@ -19,9 +18,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Map;
 import java.util.UUID;
 
 public class IslandGuiManager implements Listener {
@@ -71,7 +68,7 @@ public class IslandGuiManager implements Listener {
                 IslandTopGui.instance.openTopIslandMenu(player);
                 return;
             }
-            if(current.getType() == Material.BOOKSHELF){
+            if (current.getType() == Material.BOOKSHELF) {
                 IslandRankEditGui.instance.openEditRankIslandMenu(player);
                 return;
             }
@@ -257,8 +254,8 @@ public class IslandGuiManager implements Listener {
                 return;
             }
             Island playerIsland = IslandManager.instance.getPlayerIsland(player);
-            if(!playerIsland.hasPerms(playerIsland.getIslandRankFromUUID(player.getUniqueId()), IslandPerms.CHANGE_PERMS)) {
-                if(!playerIsland.hasPerms(playerIsland.getIslandRankFromUUID(player.getUniqueId()), IslandPerms.ALL_PERMS)) {
+            if (!playerIsland.hasPerms(playerIsland.getIslandRankFromUUID(player.getUniqueId()), IslandPerms.CHANGE_PERMS)) {
+                if (!playerIsland.hasPerms(playerIsland.getIslandRankFromUUID(player.getUniqueId()), IslandPerms.ALL_PERMS)) {
                     return;
                 }
             }
