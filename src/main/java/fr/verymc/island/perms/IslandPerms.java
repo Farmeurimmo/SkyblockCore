@@ -7,26 +7,26 @@ import java.util.ArrayList;
 
 public enum IslandPerms {
 
-    PROMOTE("Promouvoir un membre inférieur à lui"),
-    DEMOTE("Rétrograder un membre inférieur à lui"),
-    INVITE("Inviter un membre"),
-    CANCEL_INVITE("Annuler l'invitation d'un membre"),
-    KICK("Expulser un membre inférieur à lui"),
-    BAN("Bannir un visiteur"),
-    UNBAN("Débannir un visiteur"),
-    SET_ISLAND_NAME("Définir le nom de l'île"),
-    SET_ISLAND_WARP("Définir le warp de l'île"),
-    PRIVATE("Définir la visibilité de l'île sur privée"),
-    PUBLIC("Définir la visibilité de l'île sur publique"),
-    CHANGE_BORDER_COLOR("Changer la couleur de la bordure"),
-    CHANGE_ISLAND_BIOME("Changer le biome de l'île"),
-    SET_HOME("Définir le home de l'île"),
-    CHANGE_PERMS("Définir les permissions jusqu'à son niveau de grade"),
-    BUILD("Définir les permissions de construction"),
-    BREAK("Définir les permissions de destruction"),
-    INTERACT("Définir les permissions d'interaction"),
-    CONTAINER("Définir les permissions des conteneurs"),
-    ALL_PERMS("Toutes les permissions");
+    PROMOTE("§6Promouvoir un membre inférieur à lui"),
+    DEMOTE("§6Rétrograder un membre inférieur à lui"),
+    INVITE("§6Inviter un membre"),
+    CANCEL_INVITE("§6Annuler l'invitation d'un membre"),
+    KICK("§6Expulser un membre inférieur à lui"),
+    BAN("§6Bannir un visiteur"),
+    UNBAN("§6Débannir un visiteur"),
+    SET_ISLAND_NAME("§6Définir le nom de l'île"),
+    SET_ISLAND_WARP("§6Définir le warp de l'île"),
+    PRIVATE("§6Définir la visibilité de l'île sur privée"),
+    PUBLIC("§6Définir la visibilité de l'île sur publique"),
+    CHANGE_BORDER_COLOR("§6Changer la couleur de la bordure"),
+    CHANGE_ISLAND_BIOME("§6Changer le biome de l'île"),
+    SET_HOME("§6Définir le home de l'île"),
+    CHANGE_PERMS("§6Définir les permissions jusqu'à son niveau de grade"),
+    ALL_PERMS("§6Toutes les permissions (Bypass les autres permissions)"),
+    BUILD("§fConstruire"),
+    BREAK("§fCasser"),
+    INTERACT("§fIntéragir avec les blocs"),
+    CONTAINER("§fOuvrir les conteneurs");
 
     private String description;
 

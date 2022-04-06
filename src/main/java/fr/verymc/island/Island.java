@@ -28,6 +28,7 @@ public class Island {
     private WorldBorderUtil.Color borderColor;
     private IslandBank bank;
     private Double value;
+    private ArrayList<UUID> coops = new ArrayList<>();
 
     public Island(String name, String owner, UUID ownerUUID, Location home, int id, HashMap<UUID, IslandRanks> members, boolean defaultPerms,
                   IslandUpgradeSize upgradeSize, IslandUpgradeMember upgradeMember, WorldBorderUtil.Color borderColor,
@@ -188,6 +189,9 @@ public class Island {
 
     public boolean hasPerms(IslandRanks rank, IslandPerms perm) {
         if (getMapPerms().get(rank) != null) {
+            if (getMapPerms().get(rank).contains(IslandPerms.ALL_PERMS)) {
+                return true;
+            }
             if (getMapPerms().get(rank).contains(perm)) {
                 return true;
             }
@@ -270,7 +274,15 @@ public class Island {
     }
 
     public IslandRanks getIslandRankFromUUID(UUID uuid) {
-        return members.get(uuid);
+        if (members.containsKey(uuid)) {
+            return members.get(uuid);
+        } else {
+            if (coops.contains(uuid)) {
+                return IslandRanks.COOP;
+            } else {
+                return IslandRanks.VISITEUR;
+            }
+        }
     }
 
     public HashMap<UUID, IslandRanks> getMembers() {
@@ -350,6 +362,26 @@ public class Island {
 
     public void removeValue(Double value) {
         this.value -= value;
+    }
+
+    public boolean isCoop(UUID uuid) {
+        return coops.contains(uuid);
+    }
+
+    public boolean addCoop(UUID uuid) {
+        if (!coops.contains(uuid)) {
+            coops.add(uuid);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean removeCoop(UUID uuid) {
+        if (coops.contains(uuid)) {
+            coops.remove(uuid);
+            return true;
+        }
+        return false;
     }
 
 }

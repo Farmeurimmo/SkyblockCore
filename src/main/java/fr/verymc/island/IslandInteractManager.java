@@ -1,5 +1,6 @@
 package main.java.fr.verymc.island;
 
+import main.java.fr.verymc.island.perms.IslandPerms;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -42,12 +43,14 @@ public class IslandInteractManager implements Listener {
         Player player = e.getPlayer();
         Island island = IslandManager.instance.getIslandByLoc(e.getBlock().getLocation());
         if (island != null) {
-            if (island.getMembers().containsKey(player.getUniqueId())) {
+            if (island.hasPerms(island.getIslandRankFromUUID(player.getUniqueId()), IslandPerms.BREAK)) {
                 if (IslandBlockValues.instance.hasBlockValue(e.getBlock().getType())) {
                     island.removeValue(IslandBlockValues.instance.getBlockValue(e.getBlock().getType()));
                 }
+                return;
             }
         }
+        e.setCancelled(true);
     }
 
     @EventHandler
@@ -55,11 +58,13 @@ public class IslandInteractManager implements Listener {
         Player player = e.getPlayer();
         Island island = IslandManager.instance.getIslandByLoc(e.getBlock().getLocation());
         if (island != null) {
-            if (island.getMembers().containsKey(player.getUniqueId())) {
+            if (island.hasPerms(island.getIslandRankFromUUID(player.getUniqueId()), IslandPerms.BUILD)) {
                 if (IslandBlockValues.instance.hasBlockValue(e.getBlock().getType())) {
                     island.addValue(IslandBlockValues.instance.getBlockValue(e.getBlock().getType()));
                 }
+                return;
             }
         }
+        e.setCancelled(true);
     }
 }
