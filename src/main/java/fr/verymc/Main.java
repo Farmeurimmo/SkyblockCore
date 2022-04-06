@@ -20,8 +20,6 @@ import main.java.fr.verymc.config.ConfigManager;
 import main.java.fr.verymc.crates.CratesManager;
 import main.java.fr.verymc.crates.KeyCmd;
 import main.java.fr.verymc.eco.EcoAccountsManager;
-import main.java.fr.verymc.eco.EconomyImplementer;
-import main.java.fr.verymc.eco.VaultHook;
 import main.java.fr.verymc.evenement.ChatReaction;
 import main.java.fr.verymc.events.*;
 import main.java.fr.verymc.featherfly.CountdownFly;
@@ -70,8 +68,6 @@ public class Main extends JavaPlugin implements Listener {
     public ArrayList<Player> pending = new ArrayList<Player>();
     public ArrayList<Player> haverequest = new ArrayList<Player>();
     public HashMap<String, String> tpatarget = new HashMap<>();
-    public EconomyImplementer economyImplementer;
-    private VaultHook vaultHook;
 
     public void setTarget(String uuid, String aaa) {
         if (aaa == null)
@@ -150,9 +146,6 @@ public class Main extends JavaPlugin implements Listener {
         ChunkCollectorManager.ReadFromFile();
         SellChestManager.ReadFromFile();
         FarmHoeManager.addtolist();
-        economyImplementer = new EconomyImplementer();
-        vaultHook = new VaultHook();
-        vaultHook.hook();
         new EcoAccountsManager();
         System.out.println("Starting one time methods DONE | NEXT Pregen shopgui ");
 
@@ -291,7 +284,6 @@ public class Main extends JavaPlugin implements Listener {
         //BossBar.RemoveBossBarForPlayers();
         HolosSetup.RemoveNpc();
         WineSpawn.DestroyPnj();
-        vaultHook.unhook();
         for (Hologram hologram : HologramsAPI.getHolograms(this)) {
             hologram.delete();
         }
