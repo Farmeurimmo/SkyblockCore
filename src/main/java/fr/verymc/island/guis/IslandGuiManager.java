@@ -256,10 +256,8 @@ public class IslandGuiManager implements Listener {
                 return;
             }
             Island playerIsland = IslandManager.instance.getPlayerIsland(player);
-            if (!playerIsland.hasPerms(playerIsland.getIslandRankFromUUID(player.getUniqueId()), IslandPerms.CHANGE_PERMS)) {
-                if (!playerIsland.hasPerms(playerIsland.getIslandRankFromUUID(player.getUniqueId()), IslandPerms.ALL_PERMS)) {
-                    return;
-                }
+            if (!playerIsland.hasPerms(playerIsland.getIslandRankFromUUID(player.getUniqueId()), IslandPerms.CHANGE_PERMS, player.getUniqueId())) {
+                return;
             }
             for (IslandPerms perm : IslandPerms.values()) {
                 if (current.getType() == IslandPerms.getItemStackForPerm(perm).getType()) {

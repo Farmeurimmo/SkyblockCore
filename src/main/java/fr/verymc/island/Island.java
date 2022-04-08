@@ -190,10 +190,18 @@ public class Island {
         permsPerRanks.get(rankTo).add(perm);
     }
 
-    public boolean hasPerms(IslandRanks rank, IslandPerms perm) {
+    public boolean hasPerms(IslandRanks rank, IslandPerms perm, UUID uuid) {
         if (getMapPerms().get(rank) != null) {
+            if (uuid != null) {
+                if (IslandManager.instance.isBypassing(uuid)) {
+                    return true;
+                }
+            }
             if (getMapPerms().get(rank).contains(IslandPerms.ALL_PERMS)) {
                 return true;
+            }
+            if (perm == null) {
+                return false;
             }
             if (getMapPerms().get(rank).contains(perm)) {
                 return true;
@@ -218,6 +226,11 @@ public class Island {
         IslandRanks playerRank = island.getIslandRankFromUUID(player.getUniqueId());
         if (!island.getOwnerUUID().equals(player.getUniqueId())) {
             if (!IslandRank.isUp(playerRank, IslandRank.instance.getNextRankForPerm(islandPerms, island))) {
+                return false;
+            }
+        }
+        if (playerRank == islandRank) {
+            if (!island.hasPerms(islandRank, null, player.getUniqueId())) {
                 return false;
             }
         }
@@ -248,7 +261,12 @@ public class Island {
     public boolean downPerms(Player player, Island island, IslandPerms islandPerms, IslandRanks islandRank) {
         IslandRanks playerRank = island.getIslandRankFromUUID(player.getUniqueId());
         if (!island.getOwnerUUID().equals(player.getUniqueId())) {
-            if (!IslandRank.isUp(playerRank, IslandRank.getNextRank(playerRank))) {
+            if (!IslandRank.isUp(playerRank, IslandRank.instance.getNextRankForPerm(islandPerms, island))) {
+                return false;
+            }
+        }
+        if (playerRank == islandRank) {
+            if (!island.hasPerms(islandRank, null, player.getUniqueId())) {
                 return false;
             }
         }

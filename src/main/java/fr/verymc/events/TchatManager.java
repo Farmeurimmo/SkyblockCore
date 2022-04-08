@@ -67,8 +67,13 @@ public class TchatManager implements Listener {
             symbole.setText("§cx ");
             symbole.addExtra(message);
             for (Player p : Bukkit.getOnlinePlayers()) {
+                if (IslandManager.instance.isSpying(player.getUniqueId())) {
+                    p.sendMessage(symbole);
+                    continue;
+                }
                 if (playerIsland.isInIsland(p.getUniqueId())) {
                     p.sendMessage(symbole);
+                    continue;
                 }
             }
         }

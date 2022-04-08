@@ -77,34 +77,34 @@ public class IslandRank {
     }
 
     public IslandRanks getNextRankForPerm(IslandPerms perms, Island playerIsland) {
-        if (!playerIsland.hasPerms(IslandRanks.COCHEF, perms)) {
+        if (!playerIsland.hasPerms(IslandRanks.COCHEF, perms, null)) {
             return IslandRanks.COCHEF;
-        } else if (!playerIsland.hasPerms(IslandRanks.MODERATEUR, perms)) {
+        } else if (!playerIsland.hasPerms(IslandRanks.MODERATEUR, perms, null)) {
             return IslandRanks.MODERATEUR;
-        } else if (!playerIsland.hasPerms(IslandRanks.MEMBRE, perms)) {
+        } else if (!playerIsland.hasPerms(IslandRanks.MEMBRE, perms, null)) {
             return IslandRanks.MEMBRE;
-        } else if (!playerIsland.hasPerms(IslandRanks.COOP, perms)) {
+        } else if (!playerIsland.hasPerms(IslandRanks.COOP, perms, null)) {
             return IslandRanks.COOP;
-        } else if (!playerIsland.hasPerms(IslandRanks.VISITEUR, perms)) {
+        } else if (!playerIsland.hasPerms(IslandRanks.VISITEUR, perms, null)) {
             return IslandRanks.VISITEUR;
         } else {
-            return IslandRanks.COCHEF;
+            return IslandRanks.VISITEUR;
         }
     }
 
     public IslandRanks getPreviousRankForPerm(IslandPerms perms, Island playerIsland) {
-        if (playerIsland.hasPerms(IslandRanks.VISITEUR, perms)) {
+        if (playerIsland.hasPerms(IslandRanks.VISITEUR, perms, null)) {
             return IslandRanks.VISITEUR;
-        } else if (playerIsland.hasPerms(IslandRanks.COOP, perms)) {
+        } else if (playerIsland.hasPerms(IslandRanks.COOP, perms, null)) {
             return IslandRanks.COOP;
-        } else if (playerIsland.hasPerms(IslandRanks.MEMBRE, perms)) {
+        } else if (playerIsland.hasPerms(IslandRanks.MEMBRE, perms, null)) {
             return IslandRanks.MEMBRE;
-        } else if (playerIsland.hasPerms(IslandRanks.MODERATEUR, perms)) {
+        } else if (playerIsland.hasPerms(IslandRanks.MODERATEUR, perms, null)) {
             return IslandRanks.MODERATEUR;
-        } else if (playerIsland.hasPerms(IslandRanks.COCHEF, perms)) {
+        } else if (playerIsland.hasPerms(IslandRanks.COCHEF, perms, null)) {
             return IslandRanks.COCHEF;
         } else {
-            return IslandRanks.COOP;
+            return IslandRanks.VISITEUR;
         }
     }
 }

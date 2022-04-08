@@ -17,6 +17,11 @@ public class PlayerUtils {
             return;
         } else {
             if (timeLeft == 0) {
+                if (temp == 0) {
+                    player.teleport(loc);
+                    player.sendActionBar("§6Téléportation effectuée !");
+                    return;
+                }
                 if (temp == 1) {
                     player.sendActionBar("§6Téléportation dans 1 seconde...");
                     Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
@@ -34,7 +39,7 @@ public class PlayerUtils {
                     @Override
                     public void run() {
                         int timeLeft = Main.instance.getCooldown(player.getName());
-                        if (timeLeft == 0) {
+                        if (timeLeft <= 0) {
                             Main.instance.setCooldown(player.getName(), 0);
                             player.teleport(loc);
                             player.sendActionBar("§6Téléportation effectuée !");
@@ -47,6 +52,7 @@ public class PlayerUtils {
                         } else if (timeLeft == 1) {
                             player.sendActionBar("§6Téléportation dans " + timeLeft + " seconde...");
                         } else if (timeLeft <= 0) {
+                            this.cancel();
                             return;
                         }
                     }
@@ -86,7 +92,7 @@ public class PlayerUtils {
                     @Override
                     public void run() {
                         int timeLeft = Main.instance.getCooldown(player.getName());
-                        if (timeLeft == 0) {
+                        if (timeLeft <= 0) {
                             Main.instance.setCooldown(player.getName(), 0);
                             player.teleport(totp);
                             player.sendActionBar("§fTéléportation sur §a" + p.getName() + "§f effectuée !");
@@ -98,6 +104,9 @@ public class PlayerUtils {
                             player.sendActionBar("§fTéléportation sur §a" + p.getName() + "§f dans §c" + timeLeft + " §fsecondes...");
                         } else if (timeLeft == 1) {
                             player.sendActionBar("§fTéléportation sur §a" + p.getName() + "§f dans §c" + timeLeft + " §fseconde...");
+                        } else if (timeLeft <= 0) {
+                            this.cancel();
+                            return;
                         }
                     }
                 }.runTaskTimer(Main.instance, 20, 20);

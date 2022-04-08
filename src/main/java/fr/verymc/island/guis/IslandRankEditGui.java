@@ -39,8 +39,8 @@ public class IslandRankEditGui {
         ItemStack custom9 = new ItemStack(Material.KNOWLEDGE_BOOK, 1);
         ItemMeta customi = custom9.getItemMeta();
         customi.setDisplayName("§6Informations complémentaires");
-        customi.setLore(Arrays.asList("§7Les permissions s'appliquent à tous les membres", "§7de l'île §let §7les permissions de §lcouleur blanche",
-                "§7sont §luniquement §7applicables au(x)", "§7§lCOOP(S) §7de l'île"));
+        customi.setLore(Arrays.asList("§7Les permissions (oranges & blanches) s'appliquent à", "§7tous les membres de l'île.", "",
+                "§7Les COOP(s) bénéficient uniquement des permissions", "§7de couleur blanche."));
         custom9.setItemMeta(customi);
         inv.setItem(45, custom9);
 
@@ -56,7 +56,7 @@ public class IslandRankEditGui {
             lore.addAll(Arrays.asList("§7Clic droit pour augmenter", "§7Clic gauche pour diminuer", "", "§7Grades :", ""));
             for (IslandRanks rank : IslandRanks.values()) {
                 if (rank == IslandRanks.CHEF) continue;
-                if (playerIsland.hasPerms(rank, perm)) {
+                if (playerIsland.hasPerms(rank, perm, null)) {
                     lore.add("§a" + rank.name());
                 } else {
                     lore.add("§c" + rank.name());

@@ -37,6 +37,44 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
 
 
                 } else if (args.length == 1) {
+                    if (args[0].equalsIgnoreCase("bypass")) {
+                        if (p.hasPermission("bypass")) {
+                            if (IslandManager.instance.isBypassing(p.getUniqueId())) {
+                                IslandManager.instance.removeBypassing(p.getUniqueId());
+                                p.sendMessage("§6§lIles §8» §fTu ne peux plus bypasser les îles !");
+                            } else {
+                                IslandManager.instance.addBypassing(p.getUniqueId());
+                                p.sendMessage("§6§lIles §8» §fTu peux maintenant bypasser les îles !");
+                            }
+                        } else {
+                            p.sendMessage("§6§lIles §8» §fTu n'as pas la permission de faire ceci !");
+                            if (IslandManager.instance.isBypassing(p.getUniqueId())) {
+                                IslandManager.instance.removeBypassing(p.getUniqueId());
+                            }
+                        }
+                        return true;
+                    } else if (args[0].equalsIgnoreCase("spy")) {
+                        if (p.hasPermission("spy")) {
+                            if (IslandManager.instance.isSpying(p.getUniqueId())) {
+                                IslandManager.instance.removeSpying(p.getUniqueId());
+                                p.sendMessage("§6§lIles §8» §fTu ne peux plus spy les îles !");
+                            } else {
+                                IslandManager.instance.addSpying(p.getUniqueId());
+                                p.sendMessage("§6§lIles §8» §fTu peux maintenant spy les îles !");
+                            }
+                        } else {
+                            p.sendMessage("§6§lIles §8» §fTu n'as pas la permission de faire ceci !");
+                            if (IslandManager.instance.isSpying(p.getUniqueId())) {
+                                IslandManager.instance.removeSpying(p.getUniqueId());
+                            }
+                        }
+                        return true;
+                    }
+                    if (IslandManager.instance.getPlayerIsland(p) == null) {
+                        p.sendMessage("§6§lIles §8» §fTu n'es pas dans une île !");
+                        return true;
+                    }
+
                     if (args[0].equalsIgnoreCase("go") || args[0].equalsIgnoreCase("home")) {
                         IslandManager.instance.teleportPlayerToIslandSafe(p);
                         return true;
@@ -46,12 +84,13 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
                             p.sendMessage("§6§lIles §8» §fTu dois être sur ton île pour définir le home de ton île.");
                             return true;
                         }
-                        if (playerIsland.getPerms(playerIsland.getIslandRankFromUUID(p.getUniqueId())).contains(IslandPerms.SET_HOME)
-                                || playerIsland.getPerms(playerIsland.getIslandRankFromUUID(p.getUniqueId())).contains(IslandPerms.ALL_PERMS)) {
+                        if (playerIsland.getPerms(playerIsland.getIslandRankFromUUID(p.getUniqueId())).contains(IslandPerms.SET_HOME)) {
                             playerIsland.setHome(p.getLocation());
                             p.sendMessage("§6§lIles §8» §fNouveau home d'île définit !");
-                            return true;
+                        } else {
+                            p.sendMessage("§6§lIles §8» §fTu n'as pas la permission de faire ceci !");
                         }
+                        return true;
                     } else if (args[0].equalsIgnoreCase("upgrade")) {
                         IslandUpgradeGui.instance.openUpgradeIslandMenu(p);
                         return true;
@@ -200,7 +239,7 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
                             p.sendMessage("§6§lIles §8» §f" + target.getName() + " est déjà en coop.");
                             return true;
                         }
-                        if (playerIsland.hasPerms(playerIsland.getIslandRankFromUUID(p.getUniqueId()), IslandPerms.ADD_COOP)) {
+                        if (playerIsland.hasPerms(playerIsland.getIslandRankFromUUID(p.getUniqueId()), IslandPerms.ADD_COOP, p.getUniqueId())) {
                             playerIsland.addCoop(target.getUniqueId());
                             playerIsland.sendMessageToEveryMember("§6§lIles §8» §f" + target.getName() +
                                     " vient de rejoindre l'île en tant que membre temporaire par " + p.getName() + ", son status expirera quand" +
@@ -215,7 +254,7 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
                             p.sendMessage("§6§lIles §8» §f" + target.getName() + " n'est pas en coop.");
                             return true;
                         }
-                        if (playerIsland.hasPerms(playerIsland.getIslandRankFromUUID(p.getUniqueId()), IslandPerms.REMOVE_COOP)) {
+                        if (playerIsland.hasPerms(playerIsland.getIslandRankFromUUID(p.getUniqueId()), IslandPerms.REMOVE_COOP, p.getUniqueId())) {
                             playerIsland.removeCoop(target.getUniqueId());
                             playerIsland.sendMessageToEveryMember("§6§lIles §8» §f" + target.getName() +
                                     " vient de perdre le status de membre temporaire par  " + p.getName() + ".");
@@ -287,7 +326,8 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
         if (cmd.getName().equalsIgnoreCase("is")) {
             if (args.length == 1) {
                 subcmd.addAll(Arrays.asList("go", "home", "invite", "accept", "kick", "promote", "demote", "sethome", "upgrade", "bank",
-                        "border", "bordure", "leave", "delete", "top", "coop", "uncoop", "chat", "public", "private"));
+                        "border", "bordure", "leave", "delete", "top", "coop", "uncoop", "chat", "public", "private", "bypass", "spy",
+                        "transfer"));
             } else {
                 subcmd.add("");
             }
