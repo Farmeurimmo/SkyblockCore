@@ -23,11 +23,11 @@ public enum IslandPerms {
     SET_HOME("§6Définir le home de l'île"),
     CHANGE_PERMS("§6Définir les permissions jusqu'à son niveau de grade"),
     ALL_PERMS("§6Toutes les permissions (Bypass les autres permissions)"),
+    ADD_COOP("§6Ajouter un membre temporaire"),
+    REMOVE_COOP("§6Retirer un membre temporaire"),
     BUILD("§fConstruire"),
     BREAK("§fCasser"),
     INTERACT("§fIntéragir avec les blocs"),
-    ADD_COOP("§fAjouter un membre temporaire"),
-    REMOVE_COOP("§fRetirer un membre temporaire"),
     CONTAINER("§fOuvrir les conteneurs");
 
     private String description;
@@ -104,7 +104,13 @@ public enum IslandPerms {
                 return new ItemStack(Material.CHEST);
             }
             case ALL_PERMS -> {
-                return new ItemStack(Material.BEACON);
+                return new ItemStack(Material.BEDROCK);
+            }
+            case ADD_COOP -> {
+                return new ItemStack(Material.BONE_BLOCK);
+            }
+            case REMOVE_COOP -> {
+                return new ItemStack(Material.BONE_MEAL);
             }
             default -> {
                 return new ItemStack(Material.AIR);

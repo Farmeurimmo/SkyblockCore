@@ -1,5 +1,8 @@
-package main.java.fr.verymc.island;
+package main.java.fr.verymc.island.interacts;
 
+import main.java.fr.verymc.island.Island;
+import main.java.fr.verymc.island.IslandBlockValues;
+import main.java.fr.verymc.island.IslandManager;
 import main.java.fr.verymc.island.perms.IslandPerms;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;

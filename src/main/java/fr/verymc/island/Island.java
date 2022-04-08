@@ -30,6 +30,7 @@ public class Island {
     private Double value;
     private ArrayList<UUID> coops = new ArrayList<>();
     private ArrayList<UUID> chatToggled = new ArrayList<>();
+    private boolean isPublic;
 
     public Island(String name, String owner, UUID ownerUUID, Location home, int id, HashMap<UUID, IslandRanks> members, boolean defaultPerms,
                   IslandUpgradeSize upgradeSize, IslandUpgradeMember upgradeMember, WorldBorderUtil.Color borderColor,
@@ -49,6 +50,7 @@ public class Island {
         this.borderColor = borderColor;
         this.bank = bank;
         this.value = 0.0;
+        this.isPublic = true;
     }
 
     public void setDefaultPerms() {
@@ -413,5 +415,12 @@ public class Island {
         return members.containsKey(uuid);
     }
 
+    public boolean isPublic() {
+        return this.isPublic;
+    }
+
+    public void setPublic(boolean isPublic) {
+        this.isPublic = isPublic;
+    }
 
 }

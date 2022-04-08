@@ -215,8 +215,10 @@ public class IslandGuiManager implements Listener {
                 return;
             }
             Island playerIsland = IslandManager.instance.getPlayerIsland(player);
-            if (!playerIsland.getPerms(playerIsland.getIslandRankFromUUID(player.getUniqueId())).contains(IslandPerms.CHANGE_BORDER_COLOR)) {
-                return;
+            if (!playerIsland.getPerms(playerIsland.getIslandRankFromUUID(player.getUniqueId())).contains(IslandPerms.ALL_PERMS)) {
+                if (!playerIsland.getPerms(playerIsland.getIslandRankFromUUID(player.getUniqueId())).contains(IslandPerms.CHANGE_BORDER_COLOR)) {
+                    return;
+                }
             }
             if (current.getType() == Material.GREEN_STAINED_GLASS_PANE) {
                 playerIsland.setBorderColor(WorldBorderUtil.Color.GREEN);

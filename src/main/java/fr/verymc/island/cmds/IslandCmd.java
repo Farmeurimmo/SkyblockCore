@@ -96,6 +96,24 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
                         p.sendMessage("§6§lIles §8» §fChat d'île " + (playerIsland.isIslandChatToggled(p.getUniqueId()) ? "§aactivé" : "§cdésactivé") +
                                 " §f!");
                         return true;
+                    } else if (args[0].equalsIgnoreCase("public")) {
+                        Island playerIsland = IslandManager.instance.getPlayerIsland(p);
+                        if (!playerIsland.isPublic()) {
+                            playerIsland.setPublic(true);
+                            playerIsland.sendMessageToEveryMember("§6§lIles §8» §fL'île est maintenant publique ! (Action de " + p.getName() + ")");
+                        } else {
+                            p.sendMessage("§6§lIles §8» §fL'île est déjà publique !");
+                        }
+                        return true;
+                    } else if (args[0].equalsIgnoreCase("private")) {
+                        Island playerIsland = IslandManager.instance.getPlayerIsland(p);
+                        if (playerIsland.isPublic()) {
+                            playerIsland.setPublic(false);
+                            playerIsland.sendMessageToEveryMember("§6§lIles §8» §fL'île est maintenant privée ! (Action de " + p.getName() + ")");
+                        } else {
+                            p.sendMessage("§6§lIles §8» §fL'île est déjà privée !");
+                        }
+                        return true;
                     }
 
 
@@ -269,7 +287,7 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
         if (cmd.getName().equalsIgnoreCase("is")) {
             if (args.length == 1) {
                 subcmd.addAll(Arrays.asList("go", "home", "invite", "accept", "kick", "promote", "demote", "sethome", "upgrade", "bank",
-                        "border", "bordure", "leave", "delete", "top", "coop", "uncoop", "chat"));
+                        "border", "bordure", "leave", "delete", "top", "coop", "uncoop", "chat", "public", "private"));
             } else {
                 subcmd.add("");
             }
