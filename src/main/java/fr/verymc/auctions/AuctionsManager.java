@@ -206,8 +206,8 @@ public class AuctionsManager {
                     } else {
                         ArrayList<String> lore = new ArrayList<>();
                         lore.addAll(ae.getLore());
-                        lore.addAll(Arrays.asList("§f§6§f---------------", "§f§6§6Prix: " + ahprice.get(millis),
-                                "§f§6§6Vendeur: " + ahseller.get(millis), "§f§6§f---------------"));
+                        lore.addAll(Arrays.asList("§f§6§f---------------", "§f§6Prix: " + ahprice.get(millis),
+                                "§f§6Vendeur: " + ahseller.get(millis), "§f§6§f---------------"));
                         ae.setLore(lore);
                     }
                 }
@@ -238,8 +238,8 @@ public class AuctionsManager {
                     } else {
                         ArrayList<String> lore = new ArrayList<>();
                         lore.addAll(ae.getLore());
-                        lore.addAll(Arrays.asList("§f§6§f---------------", "§f§6§6Prix: " + ahprice.get(millis),
-                                "§f§6§6Vendeur: " + ahseller.get(millis), "§f§6§f---------------"));
+                        lore.addAll(Arrays.asList("§f§6§f---------------", "§f§6Prix: " + ahprice.get(millis),
+                                "§f§6Vendeur: " + ahseller.get(millis), "§f§6§f---------------"));
                         ae.setLore(lore);
                     }
                 }

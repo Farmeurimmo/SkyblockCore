@@ -98,7 +98,7 @@ public class IslandGuiManager implements Listener {
                     IslandMemberGui.instance.openMemberIslandMenu(player);
                     return;
                 } else {
-                    player.sendMessage("§6§6§lIles §8» §fTu ne peux pas faire cette action.");
+                    player.sendMessage("§6§lIles §8» §fTu ne peux pas faire cette action.");
                 }
             }
             return;
@@ -117,7 +117,7 @@ public class IslandGuiManager implements Listener {
                 if (playerIsland.getSizeUpgrade().upOfOneLevel(player)) {
                     IslandUpgradeGui.instance.openUpgradeIslandMenu(player);
                     playerIsland.sendMessageToEveryMember(
-                            "§6§6§lIles §8» §f" + player.getName() + " a amélioré la taille de l'île au niveau §6" + playerIsland.getSizeUpgrade().getLevel() +
+                            "§6§lIles §8» §f" + player.getName() + " a amélioré la taille de l'île au niveau §6" + playerIsland.getSizeUpgrade().getLevel() +
                                     "§f, la taille de l'île est maintenant de §6" + playerIsland.getSizeUpgrade().getSize() + "x" +
                                     playerIsland.getSizeUpgrade().getSize() + "§f.");
                     return;
@@ -126,7 +126,7 @@ public class IslandGuiManager implements Listener {
             if (current.getType() == Material.PAPER) {
                 if (IslandManager.instance.getPlayerIsland(player).getMemberUpgrade().upOfOneLevel(player)) {
                     IslandUpgradeGui.instance.openUpgradeIslandMenu(player);
-                    IslandManager.instance.getPlayerIsland(player).sendMessageToEveryMember("§6§6§lIles §8» §f" + player.getName() +
+                    IslandManager.instance.getPlayerIsland(player).sendMessageToEveryMember("§6§lIles §8» §f" + player.getName() +
                             " a amélioré le nombre de membres max de l'île au niveau §6" +
                             IslandManager.instance.getPlayerIsland(player).getMemberUpgrade().getLevel() +
                             "§f, le nombre de membres max de l'île est maintenant de §6" +
@@ -146,7 +146,7 @@ public class IslandGuiManager implements Listener {
                         EcoAccountsManager.instance.removeFounds(player, 1000.0, true);
                         IslandManager.instance.getPlayerIsland(player).getBank().addMoney(1000.0);
                     } else {
-                        player.sendMessage("§6§6§lIles §8» §fTu n'as pas asser d'argent en banque.");
+                        player.sendMessage("§6§lIles §8» §fTu n'as pas asser d'argent en banque.");
                     }
                     IslandBankGui.instance.openBankIslandMenu(player);
                     return;
@@ -155,7 +155,7 @@ public class IslandGuiManager implements Listener {
                         EcoAccountsManager.instance.addFounds(player, 1000.0, true);
                         IslandManager.instance.getPlayerIsland(player).getBank().removeMoney(1000.0);
                     } else {
-                        player.sendMessage("§6§6§lIles §8» §fTu n'as pas asser d'argent en banque.");
+                        player.sendMessage("§6§lIles §8» §fTu n'as pas asser d'argent en banque.");
                     }
                     IslandBankGui.instance.openBankIslandMenu(player);
                     return;
@@ -164,7 +164,7 @@ public class IslandGuiManager implements Listener {
             }
             if (current.getType() == Material.NETHER_STAR) {
                 if (IslandManager.instance.getPlayerIsland(player).getBank().getCrystaux() < 5.0) {
-                    player.sendMessage("§6§6§lIles §8» §fTu n'as pas asser de crystaux en banque.");
+                    player.sendMessage("§6§lIles §8» §fTu n'as pas asser de crystaux en banque.");
                     return;
                 }
                 if (e.getClick() == ClickType.LEFT) {

@@ -438,6 +438,8 @@ public class IslandManager {
         }
 
         Location finalToReturn = toReturn;
+        Location finalToReturn1 = toReturn;
+        int finalId = id;
         Bukkit.getScheduler().scheduleAsyncDelayedTask(Main.instance, new Runnable() {
             @Override
             public void run() {
@@ -461,23 +463,28 @@ public class IslandManager {
                         p.sendMessage("§6§lIles §8» §cUne erreur est survenue lors de la génération de l'île. Merci de réessayer.");
                         return;
                     }
+                    Bukkit.getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
+                        @Override
+                        public void run() {
+                            HashMap<UUID, IslandRanks> members = new HashMap<>();
+                            members.put(p.getUniqueId(), IslandRanks.CHEF);
+                            IslandBank islandBank = new IslandBank(0, 0, 0, 0);
+                            IslandUpgradeSize islandUpgradeSize = new IslandUpgradeSize(50, 0, IslandUpgradesType.SIZE);
+                            IslandUpgradeMember islandUpgradeMember = new IslandUpgradeMember(0, IslandUpgradesType.MEMBER);
+                            islands.add(new Island("Ile de " + p.getName(), p.getName(), p.getUniqueId(), finalToReturn1, finalId + 1, members, true,
+                                    islandUpgradeSize, islandUpgradeMember, WorldBorderUtil.Color.BLUE, islandBank));
+                            addPlayerAsAnIsland(p);
+                            p.sendMessage("§6§lIles §8» §aVous avez généré une nouvelle île avec succès (en " + (System.currentTimeMillis() - start) + "ms).");
+                            teleportPlayerToIslandSafe(p);
+                            return;
+                        }
+                    }, 0);
                 } catch (IOException e) {
                     p.sendMessage("§6§lIles §8» §cUne erreur est survenue lors de la lecture du schématic. Merci de contacter un administrateur.");
                     return;
                 }
             }
         }, 0);
-
-        HashMap<UUID, IslandRanks> members = new HashMap<>();
-        members.put(p.getUniqueId(), IslandRanks.CHEF);
-        IslandBank islandBank = new IslandBank(0, 0, 0, 0);
-        IslandUpgradeSize islandUpgradeSize = new IslandUpgradeSize(50, 0, IslandUpgradesType.SIZE);
-        IslandUpgradeMember islandUpgradeMember = new IslandUpgradeMember(0, IslandUpgradesType.MEMBER);
-        islands.add(new Island("Ile de " + p.getName(), p.getName(), p.getUniqueId(), toReturn, id + 1, members, true,
-                islandUpgradeSize, islandUpgradeMember, WorldBorderUtil.Color.BLUE, islandBank));
-        addPlayerAsAnIsland(p);
-        p.sendMessage("§6§lIles §8» §aVous avez généré une nouvelle île avec succès (en " + (System.currentTimeMillis() - start) + "ms).");
-        teleportPlayerToIslandSafe(p);
 
     }
 
