@@ -86,6 +86,16 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
                             p.sendMessage("§6§6§lIles §8» §fTu n'as pas la permission de faire ceci !");
                         }
                         return true;
+                    } else if (args[0].equalsIgnoreCase("chat")) {
+                        Island playerIsland = IslandManager.instance.getPlayerIsland(p);
+                        if (playerIsland.isIslandChatToggled(p.getUniqueId())) {
+                            playerIsland.removeIslandChatToggled(p.getUniqueId());
+                        } else {
+                            playerIsland.addIslandChatToggled(p.getUniqueId());
+                        }
+                        p.sendMessage("§6§6§lIles §8» §fChat d'île " + (playerIsland.isIslandChatToggled(p.getUniqueId()) ? "§aactivé" : "§cdésactivé") +
+                                " §f!");
+                        return true;
                     }
 
 
@@ -166,6 +176,35 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
                             p.sendMessage("§6§6§lIles §8» §fTu n'es pas le propriétaire de cette île.");
                         }
                         return true;
+                    } else if (args[0].equalsIgnoreCase("coop")) {
+                        Island playerIsland = IslandManager.instance.getPlayerIsland(p);
+                        if (playerIsland.isCoop(target.getUniqueId())) {
+                            p.sendMessage("§6§6§lIles §8» §f" + target.getName() + " est déjà en coop.");
+                            return true;
+                        }
+                        if (playerIsland.hasPerms(playerIsland.getIslandRankFromUUID(p.getUniqueId()), IslandPerms.ADD_COOP)) {
+                            playerIsland.addCoop(target.getUniqueId());
+                            playerIsland.sendMessageToEveryMember("§6§6§lIles §8» §f" + target.getName() +
+                                    " vient de rejoindre l'île en tant que membre temporaire par " + p.getName() + ", son status expirera quand" +
+                                    " il se déconnectera ou que tous les membres de l'îles soient déconnectés.");
+                        } else {
+                            p.sendMessage("§6§6§lIles §8» §fTu n'as pas la permission de faire cette action.");
+                        }
+                        return true;
+                    } else if (args[0].equalsIgnoreCase("uncoop")) {
+                        Island playerIsland = IslandManager.instance.getPlayerIsland(p);
+                        if (!playerIsland.isCoop(target.getUniqueId())) {
+                            p.sendMessage("§6§6§lIles §8» §f" + target.getName() + " n'est pas en coop.");
+                            return true;
+                        }
+                        if (playerIsland.hasPerms(playerIsland.getIslandRankFromUUID(p.getUniqueId()), IslandPerms.REMOVE_COOP)) {
+                            playerIsland.removeCoop(target.getUniqueId());
+                            playerIsland.sendMessageToEveryMember("§6§6§lIles §8» §f" + target.getName() +
+                                    " vient de perdre le status de membre temporaire par  " + p.getName() + ".");
+                        } else {
+                            p.sendMessage("§6§6§lIles §8» §fTu n'as pas la permission de faire cette action.");
+                        }
+                        return true;
                     }
                 } else if (args.length == 3) {
 
@@ -208,11 +247,11 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
                             try {
                                 Integer amount = Integer.parseInt(args[3]);
                                 IslandManager.instance.getPlayerIsland(target).getBank().addXp(amount);
-                                p.sendMessage("§6§6§lIles §8» §fTu as give §6" + amount + "§f à §6" + target.getName() + "§f.");
+                                p.sendMessage("§6§lIles §8» §fTu as give §6" + amount + "§f à §6" + target.getName() + "§f.");
                                 target.sendMessage("§6§6§lIles §8» §fTu as reçu §6" + amount + "§f de la part de §6CONSOLE§f.");
                                 return true;
                             } catch (NumberFormatException e) {
-                                p.sendMessage("§6§6§lIles §8» §fTu dois mettre un nombre valide.");
+                                p.sendMessage("§6§lIles §8» §fTu dois mettre un nombre valide.");
                                 return true;
                             }
                         }
@@ -230,7 +269,7 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
         if (cmd.getName().equalsIgnoreCase("is")) {
             if (args.length == 1) {
                 subcmd.addAll(Arrays.asList("go", "home", "invite", "accept", "kick", "promote", "demote", "sethome", "upgrade", "bank",
-                        "border", "bordure", "leave", "delete", "top"));
+                        "border", "bordure", "leave", "delete", "top", "coop", "uncoop", "chat"));
             } else {
                 subcmd.add("");
             }

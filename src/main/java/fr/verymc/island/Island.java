@@ -29,6 +29,7 @@ public class Island {
     private IslandBank bank;
     private Double value;
     private ArrayList<UUID> coops = new ArrayList<>();
+    private ArrayList<UUID> chatToggled = new ArrayList<>();
 
     public Island(String name, String owner, UUID ownerUUID, Location home, int id, HashMap<UUID, IslandRanks> members, boolean defaultPerms,
                   IslandUpgradeSize upgradeSize, IslandUpgradeMember upgradeMember, WorldBorderUtil.Color borderColor,
@@ -383,5 +384,34 @@ public class Island {
         }
         return false;
     }
+
+    public ArrayList<UUID> getCoops() {
+        return coops;
+    }
+
+    public void setCoops(ArrayList<UUID> coops) {
+        this.coops = coops;
+    }
+
+    public void clearCoops() {
+        this.coops.clear();
+    }
+
+    public void addIslandChatToggled(UUID uuid) {
+        this.chatToggled.add(uuid);
+    }
+
+    public void removeIslandChatToggled(UUID uuid) {
+        this.chatToggled.remove(uuid);
+    }
+
+    public boolean isIslandChatToggled(UUID uuid) {
+        return chatToggled.contains(uuid);
+    }
+
+    public boolean isInIsland(UUID uuid) {
+        return members.containsKey(uuid);
+    }
+
 
 }

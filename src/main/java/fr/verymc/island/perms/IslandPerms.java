@@ -26,6 +26,8 @@ public enum IslandPerms {
     BUILD("§fConstruire"),
     BREAK("§fCasser"),
     INTERACT("§fIntéragir avec les blocs"),
+    ADD_COOP("§fAjouter un membre temporaire"),
+    REMOVE_COOP("§fRetirer un membre temporaire"),
     CONTAINER("§fOuvrir les conteneurs");
 
     private String description;
