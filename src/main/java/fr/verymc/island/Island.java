@@ -4,6 +4,7 @@ import main.java.fr.verymc.island.bank.IslandBank;
 import main.java.fr.verymc.island.perms.IslandPerms;
 import main.java.fr.verymc.island.perms.IslandRank;
 import main.java.fr.verymc.island.perms.IslandRanks;
+import main.java.fr.verymc.island.upgrade.IslandUpgradeGenerator;
 import main.java.fr.verymc.island.upgrade.IslandUpgradeMember;
 import main.java.fr.verymc.island.upgrade.IslandUpgradeSize;
 import main.java.fr.verymc.utils.WorldBorderUtil;
@@ -31,10 +32,11 @@ public class Island {
     private ArrayList<UUID> coops = new ArrayList<>();
     private ArrayList<UUID> chatToggled = new ArrayList<>();
     private boolean isPublic;
+    private IslandUpgradeGenerator generatorUpgrade;
 
     public Island(String name, String owner, UUID ownerUUID, Location home, int id, HashMap<UUID, IslandRanks> members, boolean defaultPerms,
                   IslandUpgradeSize upgradeSize, IslandUpgradeMember upgradeMember, WorldBorderUtil.Color borderColor,
-                  IslandBank bank) {
+                  IslandBank bank, IslandUpgradeGenerator generatorUpgrade) {
         this.name = name;
         this.owner = owner;
         this.ownerUUID = ownerUUID;
@@ -51,6 +53,7 @@ public class Island {
         this.bank = bank;
         this.value = 0.0;
         this.isPublic = true;
+        this.generatorUpgrade = generatorUpgrade;
     }
 
     public void setDefaultPerms() {
@@ -439,6 +442,14 @@ public class Island {
 
     public void setPublic(boolean isPublic) {
         this.isPublic = isPublic;
+    }
+
+    public IslandUpgradeGenerator getGeneratorUpgrade() {
+        return generatorUpgrade;
+    }
+
+    public void setGeneratorUpgrade(IslandUpgradeGenerator generatorUpgrade) {
+        this.generatorUpgrade = generatorUpgrade;
     }
 
 }

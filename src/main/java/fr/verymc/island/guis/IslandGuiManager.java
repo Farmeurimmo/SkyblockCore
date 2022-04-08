@@ -121,6 +121,8 @@ public class IslandGuiManager implements Listener {
                                     "§f, la taille de l'île est maintenant de §6" + playerIsland.getSizeUpgrade().getSize() + "x" +
                                     playerIsland.getSizeUpgrade().getSize() + "§f.");
                     return;
+                } else {
+                    player.sendMessage("§6§lIles §8» §fFonds insuffisants ou niveau maximum atteint.");
                 }
             }
             if (current.getType() == Material.PAPER) {
@@ -132,6 +134,8 @@ public class IslandGuiManager implements Listener {
                             "§f, le nombre de membres max de l'île est maintenant de §6" +
                             IslandManager.instance.getPlayerIsland(player).getMemberUpgrade().getMaxMembers() + "§f.");
                     return;
+                } else {
+                    player.sendMessage("§6§lIles §8» §fFonds insuffisants ou niveau maximum atteint.");
                 }
             }
         }

@@ -1,4 +1,4 @@
-package main.java.fr.verymc.island.interacts;
+package main.java.fr.verymc.island.events;
 
 import main.java.fr.verymc.island.Island;
 import main.java.fr.verymc.island.IslandBlockValues;
@@ -74,6 +74,8 @@ public class IslandInteractManager implements Listener {
     @EventHandler
     public void interactEvent(PlayerInteractEvent e) {
         Player player = e.getPlayer();
+        if (e.getClickedBlock() == null) return;
+        if (e.getClickedBlock().getLocation() == null) return;
         Island island = IslandManager.instance.getIslandByLoc(e.getClickedBlock().getLocation());
         if (island != null) {
             if (island.hasPerms(island.getIslandRankFromUUID(player.getUniqueId()), IslandPerms.INTERACT, player.getUniqueId())) {

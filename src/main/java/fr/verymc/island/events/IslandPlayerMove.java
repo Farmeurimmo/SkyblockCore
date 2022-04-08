@@ -1,4 +1,4 @@
-package main.java.fr.verymc.island.interacts;
+package main.java.fr.verymc.island.events;
 
 import main.java.fr.verymc.cmd.base.SpawnCmd;
 import main.java.fr.verymc.island.IslandManager;
