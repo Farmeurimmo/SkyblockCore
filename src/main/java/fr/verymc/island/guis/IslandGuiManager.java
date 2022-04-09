@@ -133,10 +133,21 @@ public class IslandGuiManager implements Listener {
                             IslandManager.instance.getPlayerIsland(player).getMemberUpgrade().getLevel() +
                             "§f, le nombre de membres max de l'île est maintenant de §6" +
                             IslandManager.instance.getPlayerIsland(player).getMemberUpgrade().getMaxMembers() + "§f.");
-                    return;
                 } else {
                     player.sendMessage("§6§lIles §8» §fFonds insuffisants ou niveau maximum atteint.");
                 }
+                return;
+            }
+            if (current.getType() == Material.COBBLESTONE) {
+                if (IslandManager.instance.getPlayerIsland(player).getGeneratorUpgrade().upOfOneLevel(player)) {
+                    IslandManager.instance.getPlayerIsland(player).sendMessageToEveryMember("§6§lIles §8» §f" + player.getName() +
+                            " a amélioré le générateur de l'île au niveau §6" +
+                            IslandManager.instance.getPlayerIsland(player).getGeneratorUpgrade().getLevel() + ". ");
+                    IslandUpgradeGui.instance.openUpgradeIslandMenu(player);
+                } else {
+                    player.sendMessage("§6§lIles §8» §fFonds insuffisants ou niveau maximum atteint.");
+                }
+                return;
             }
         }
         if (e.getView().getTitle().equalsIgnoreCase("§6Banque de l'île")) {

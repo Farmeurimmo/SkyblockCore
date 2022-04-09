@@ -40,8 +40,9 @@ public class IslandUpgradeGui {
         ItemStack custom2 = new ItemStack(Material.COBBLESTONE);
         ItemMeta custom2Meta = custom2.getItemMeta();
         custom2Meta.setDisplayName("§6Générateur de l'île");
-        custom2Meta.setLore(Arrays.asList("§7Générateur actuel : §6" + playerIsland.getGeneratorUpgrade().getLevel() + "", "§7Niveaux:",
-                "§70: §688% COBB, 9% IRON, 3% DIAMS"));
+        custom2Meta.setLore(Arrays.asList("§7Générateur actuel : §6" + playerIsland.getGeneratorUpgrade().getLevel(), "", "§7Niveaux:",
+                "§70: §688% COBB, 9% IRON, 3% DIAMS", "§71: §683% COBB, 11% IRON, 2% GOLD, 5% DIAMS",
+                "§72: §678% COBB, 10% IRON, 5% GOLD, 2% LAPIS, 5% DIAMS"));
         custom2.setItemMeta(custom2Meta);
         inv.setItem(12, custom2);
 

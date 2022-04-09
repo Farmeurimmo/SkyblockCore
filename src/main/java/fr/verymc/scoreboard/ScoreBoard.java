@@ -5,7 +5,6 @@ import main.java.fr.verymc.eco.EcoAccountsManager;
 import main.java.fr.verymc.island.Island;
 import main.java.fr.verymc.island.IslandManager;
 import main.java.fr.verymc.island.guis.IslandTopGui;
-import main.java.fr.verymc.utils.Maths;
 import net.luckperms.api.LuckPermsProvider;
 import net.luckperms.api.model.user.User;
 import org.bukkit.Bukkit;
@@ -106,7 +105,7 @@ public class ScoreBoard implements Listener {
                 }
             }
             if (board.getTeam("money") != null) {
-                String a = Maths.reducedNumberWithLetter(EcoAccountsManager.instance.moneyGetarrondiNDecimales(player, 1));
+                String a = EcoAccountsManager.instance.moneyGetarrondiNDecimales(player);
                 board.getTeam("money").setPrefix(" §fArgent §8▸ §e" + a);
             }
             if (board.getTeam("online") != null) {

@@ -2,7 +2,6 @@ package main.java.fr.verymc.shopgui;
 
 import main.java.fr.verymc.Main;
 import main.java.fr.verymc.eco.EcoAccountsManager;
-import main.java.fr.verymc.utils.Maths;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
@@ -28,8 +27,8 @@ public class BuyShopItem {
                 if (Main.instance.getConfig().getString("Shops." + bb + "." + aa + ".name") != null) {
                     b.setDisplayName(Main.instance.getConfig().getString("Shops." + bb + "." + aa + ".name"));
                 }
-                pricesbuy.put(b, Maths.arrondiNDecimales(a, 2));
-                pricessell.put(b, Maths.arrondiNDecimales(c, 2));
+                pricesbuy.put(b, a);
+                pricessell.put(b, c);
             }
         }
     }
