@@ -505,7 +505,7 @@ public class IslandManager {
                             IslandBank islandBank = new IslandBank(0, 0, 0, 0);
                             IslandUpgradeSize islandUpgradeSize = new IslandUpgradeSize(50, 0, IslandUpgradesType.SIZE);
                             IslandUpgradeMember islandUpgradeMember = new IslandUpgradeMember(0, IslandUpgradesType.MEMBER);
-                            IslandUpgradeGenerator islandUpgradeGenerator = new IslandUpgradeGenerator(0, IslandUpgradesType.GENERATOR, true);
+                            IslandUpgradeGenerator islandUpgradeGenerator = new IslandUpgradeGenerator(0, IslandUpgradesType.GENERATOR);
                             islands.add(new Island("Ile de " + p.getName(), p.getName(), p.getUniqueId(), finalToReturn1, finalId + 1, members, true,
                                     islandUpgradeSize, islandUpgradeMember, WorldBorderUtil.Color.BLUE, islandBank, islandUpgradeGenerator));
                             addPlayerAsAnIsland(p);

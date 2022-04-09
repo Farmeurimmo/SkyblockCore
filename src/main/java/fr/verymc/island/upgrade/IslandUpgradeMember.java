@@ -40,6 +40,7 @@ public class IslandUpgradeMember {
         if (level == 2) return 30000;
         if (level == 3) return 40000;
         if (level == 4) return 50000;
+        if (level == 5) return 60000;
         return 0;
     }
 
@@ -49,6 +50,7 @@ public class IslandUpgradeMember {
         if (level == 2) return 80;
         if (level == 3) return 120;
         if (level == 4) return 180;
+        if (level == 5) return 250;
         return 0;
     }
 

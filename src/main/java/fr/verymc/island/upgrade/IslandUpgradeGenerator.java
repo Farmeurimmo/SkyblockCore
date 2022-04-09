@@ -15,7 +15,7 @@ public class IslandUpgradeGenerator {
 
     private LinkedHashMap<Material, Integer> materials = new LinkedHashMap<>();
 
-    public IslandUpgradeGenerator(int level, IslandUpgradesType type, boolean defaultGen) {
+    public IslandUpgradeGenerator(int level, IslandUpgradesType type) {
         this.level = level;
         this.type = type;
         setGenValues(level);
@@ -110,7 +110,7 @@ public class IslandUpgradeGenerator {
 
     }
 
-    public double getMoneyCostFromLevel(int level) {
+    public static double getMoneyCostFromLevel(int level) {
         if (level == 0) {
             return 0;
         } else if (level == 1) {
@@ -127,7 +127,7 @@ public class IslandUpgradeGenerator {
         return 0;
     }
 
-    public double getCrystalCostFromLevel(int level) {
+    public static double getCrystalCostFromLevel(int level) {
         if (level == 0) {
             return 0;
         } else if (level == 1) {

@@ -3,6 +3,8 @@ package main.java.fr.verymc.island.guis;
 import main.java.fr.verymc.island.Island;
 import main.java.fr.verymc.island.IslandManager;
 import main.java.fr.verymc.island.upgrade.IslandUpgradeGenerator;
+import main.java.fr.verymc.island.upgrade.IslandUpgradeMember;
+import main.java.fr.verymc.island.upgrade.IslandUpgradeSize;
 import main.java.fr.verymc.island.upgrade.IslandUpgradesType;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -36,8 +38,17 @@ public class IslandUpgradeGui {
         ItemStack custom1 = new ItemStack(Material.GRASS_BLOCK);
         ItemMeta custom1Meta = custom1.getItemMeta();
         custom1Meta.setDisplayName("§6Taille de l'île");
-        custom1Meta.setLore(Arrays.asList("§7Taille actuelle : §6" + sizeIsland + "§7x§6" + sizeIsland, "", "§7Niveaux:", "§70: §650§7x§650"
-                , "§71: §6100§7x§6100", "§72: §6150§7x§6150", "§73: §6200§7x§6200", "§74: §6250§7x§6250", "", "§7Clic pour améliorer"));
+        ArrayList<String> custom1Lore = new ArrayList<>();
+        custom1Lore.add("§7Taille actuelle : §6" + sizeIsland+"§7x§6"+sizeIsland);
+        custom1Lore.add("");
+        custom1Lore.add("§7Niveaux:");
+        for (int i = 0; i <= 4; i++) {
+            custom1Lore.add("§7"+i+": §6"+IslandUpgradeSize.getSizeFromLevel(i)+"§7x§6"+IslandUpgradeSize.getSizeFromLevel(i));
+            custom1Lore.add("  §7Prix : §e"+IslandUpgradeSize.getPriceMoneyFromLevel(i)+"$§7, §e"+IslandUpgradeSize.getPriceCrytauxFromLevel(i)+" crystaux");
+        }
+        custom1Lore.add("");
+        custom1Lore.add("§7Clic pour améliorer");
+        custom1Meta.setLore(custom1Lore);
         custom1.setItemMeta(custom1Meta);
         inv.setItem(10, custom1);
 
@@ -49,12 +60,13 @@ public class IslandUpgradeGui {
         custom2Lore.add("");
         custom2Lore.add("§7Niveaux: ");
         for (int i = 0; i <= 5; i++) {
-            IslandUpgradeGenerator generator = new IslandUpgradeGenerator(i, IslandUpgradesType.GENERATOR, true);
+            IslandUpgradeGenerator generator = new IslandUpgradeGenerator(i, IslandUpgradesType.GENERATOR);
             generator.setLevel(i);
             String str = "§7" + i + ": ";
             String str2 = "";
+            String str3 = "  §7Prix: §e"+IslandUpgradeGenerator.getMoneyCostFromLevel(i)+"$§7, §e"+IslandUpgradeGenerator.getCrystalCostFromLevel(i)+" crystaux";
             for (Map.Entry<Material, Integer> entry : generator.getMaterials().entrySet()) {
-                if (str.length() <= 70) {
+                if (str.length() <= 80) {
                     str += "§6" + entry.getKey().name() + " §7" + entry.getValue() + "% §6";
                 } else {
                     if (str2.isEmpty()) {
@@ -67,12 +79,15 @@ public class IslandUpgradeGui {
             if (str2 != null && !str2.isEmpty()) {
                 custom2Lore.add(str2);
             }
+            custom2Lore.add(str3);
         }
         custom2Lore.replaceAll(s -> s.replace("_ORE", ""));
         custom2Lore.replaceAll(s -> s.replace("COBBLESTONE", "COBB"));
         custom2Lore.replaceAll(s -> s.replace("DIAMOND", "DIAMS"));
         custom2Lore.replaceAll(s -> s.replace("EMERALD", "EMER"));
         custom2Lore.replaceAll(s -> s.replace("ANCIENT_", ""));
+        custom2Lore.add("");
+        custom2Lore.add("§7Clic pour améliorer");
         custom2Meta.setLore(custom2Lore);
         custom2.setItemMeta(custom2Meta);
         inv.setItem(14, custom2);
@@ -80,9 +95,18 @@ public class IslandUpgradeGui {
         ItemStack custom3 = new ItemStack(Material.PAPER);
         ItemMeta custom3Meta = custom3.getItemMeta();
         custom3Meta.setDisplayName("§6Nombre de membres");
-        custom3Meta.setLore(Arrays.asList("§7Nombre de membre actuel: §6" + playerIsland.getMembers().size() + "/" + playerIsland.getMaxMembers(),
-                "", "§7Niveau", "§70: §66 §7Membres", "§71: §68 §7Membres", "§72: §610 §7Membres", "§73: §612 §7Membres", "§74: §614 §7Membres",
-                "§75: §616 §7Membres", "", "§7Clic pour améliorer"));
+        ArrayList<String> custom3Lore = new ArrayList<>();
+        custom3Lore.add("§7Nombre de membre actuel: §6" + playerIsland.getMembers().size() + "/" + playerIsland.getMaxMembers());
+        custom3Lore.add("");
+        custom3Lore.add("§7Niveaux: ");
+        for (int i = 0; i <= 5; i++) {
+            custom3Lore.add("§7" + i + ": §6" + IslandUpgradeMember.getMaxMembers(i) + " §7membres");
+            custom3Lore.add("  §7Prix : §e" + IslandUpgradeMember.getPriceMoneyFromLevel(i) + "$§7, §e" +
+                    IslandUpgradeMember.getPriceCrytauxFromLevel(i) + " crystaux");
+        }
+        custom3Lore.add("");
+        custom3Lore.add("§7Clic pour améliorer");
+        custom3Meta.setLore(custom3Lore);
         custom3.setItemMeta(custom3Meta);
         inv.setItem(12, custom3);
 
