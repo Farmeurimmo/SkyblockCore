@@ -15,6 +15,7 @@ import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class ScoreBoard implements Listener {
@@ -131,8 +132,9 @@ public class ScoreBoard implements Listener {
                 if (board.getTeam("ismembre") != null)
                     board.getTeam("ismembre").setPrefix(" §fMembres §8▸ §a" + ismembre + "/" + maxMembers);
                 if (board.getTeam("iscrystaux") != null)
-                    board.getTeam("iscrystaux").setPrefix("§f Crystaux §8▸ §a" + iscristal);
-                if (board.getTeam("ismoney") != null) board.getTeam("ismoney").setPrefix(" §fArgent §8▸ §a" + ismoney);
+                    board.getTeam("iscrystaux").setPrefix("§f Crystaux §8▸ §a" + DecimalFormat.getNumberInstance().format(iscristal));
+                if (board.getTeam("ismoney") != null) board.getTeam("ismoney").setPrefix(" §fArgent §8▸ §a" +
+                        DecimalFormat.getNumberInstance().format(ismoney));
 
             } else {
                 if (board.getTeam("gradeis") != null) board.getTeam("gradeis").setPrefix(" §fGrade d'ile §8▸ §aN/A");
