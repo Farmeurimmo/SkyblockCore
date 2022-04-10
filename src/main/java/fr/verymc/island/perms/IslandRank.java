@@ -83,19 +83,23 @@ public class IslandRank {
             return IslandRanks.MODERATEUR;
         } else if (!playerIsland.hasPerms(IslandRanks.MEMBRE, perms, null)) {
             return IslandRanks.MEMBRE;
-        } else if (!playerIsland.hasPerms(IslandRanks.COOP, perms, null)) {
+        } else if (!playerIsland.hasPerms(IslandRanks.COOP, perms, null) && perms.getDescription().startsWith("§f")) {
             return IslandRanks.COOP;
-        } else if (!playerIsland.hasPerms(IslandRanks.VISITEUR, perms, null)) {
+        } else if (!playerIsland.hasPerms(IslandRanks.VISITEUR, perms, null) && perms.getDescription().startsWith("§f")) {
             return IslandRanks.VISITEUR;
         } else {
-            return IslandRanks.VISITEUR;
+            if (perms.getDescription().startsWith("§f")) {
+                return IslandRanks.VISITEUR;
+            } else {
+                return IslandRanks.MEMBRE;
+            }
         }
     }
 
     public IslandRanks getPreviousRankForPerm(IslandPerms perms, Island playerIsland) {
-        if (playerIsland.hasPerms(IslandRanks.VISITEUR, perms, null)) {
+        if (playerIsland.hasPerms(IslandRanks.VISITEUR, perms, null) && perms.getDescription().startsWith("§f")) {
             return IslandRanks.VISITEUR;
-        } else if (playerIsland.hasPerms(IslandRanks.COOP, perms, null)) {
+        } else if (playerIsland.hasPerms(IslandRanks.COOP, perms, null) && perms.getDescription().startsWith("§f")) {
             return IslandRanks.COOP;
         } else if (playerIsland.hasPerms(IslandRanks.MEMBRE, perms, null)) {
             return IslandRanks.MEMBRE;
@@ -104,7 +108,7 @@ public class IslandRank {
         } else if (playerIsland.hasPerms(IslandRanks.COCHEF, perms, null)) {
             return IslandRanks.COCHEF;
         } else {
-            return IslandRanks.VISITEUR;
+            return IslandRanks.COCHEF;
         }
     }
 }

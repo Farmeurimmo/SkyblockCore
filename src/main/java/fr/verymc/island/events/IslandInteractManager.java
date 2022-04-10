@@ -31,6 +31,9 @@ public class IslandInteractManager implements Listener {
 
         Island island = IslandManager.instance.getPlayerIsland(player);
         if (island != null) {
+            if (!island.hasPerms(island.getIslandRankFromUUID(player.getUniqueId()), IslandPerms.BANK_ADD, player.getUniqueId())) {
+                return;
+            }
             if (player.isSneaking()) {
                 island.getBank().addCrystaux(currentItem.getAmount() * 5);
                 currentItem.setAmount(0);

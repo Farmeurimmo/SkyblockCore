@@ -25,6 +25,8 @@ public enum IslandPerms {
     ALL_PERMS("§6Toutes les permissions (Bypass les autres permissions)"),
     ADD_COOP("§6Ajouter un membre temporaire"),
     REMOVE_COOP("§6Retirer un membre temporaire"),
+    BANK_ADD("§6Ajouter de l'argent/crystaux/exp à la banque"),
+    BANK_REMOVE("§6Retirer de l'argent/crystaux/exp à la banque"),
     BUILD("§fConstruire"),
     BREAK("§fCasser"),
     INTERACT("§fIntéragir avec les blocs"),
@@ -111,6 +113,12 @@ public enum IslandPerms {
             }
             case REMOVE_COOP -> {
                 return new ItemStack(Material.BONE_MEAL);
+            }
+            case BANK_ADD -> {
+                return new ItemStack(Material.GOLD_BLOCK);
+            }
+            case BANK_REMOVE -> {
+                return new ItemStack(Material.GOLD_NUGGET);
             }
             default -> {
                 return new ItemStack(Material.AIR);

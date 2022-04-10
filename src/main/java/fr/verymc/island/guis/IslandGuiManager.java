@@ -34,6 +34,7 @@ public class IslandGuiManager implements Listener {
         if (current.getType() == null) {
             return;
         }
+        Island playerIsland = IslandManager.instance.getPlayerIsland(player);
         if (e.getView().getTitle().equalsIgnoreCase("§6Menu d'île")) {
             e.setCancelled(true);
             if (!IslandManager.instance.asAnIsland(player)) {
@@ -89,7 +90,7 @@ public class IslandGuiManager implements Listener {
                 return;
             }
             if (current.getType() == Material.PLAYER_HEAD) {
-                Island currentIsland = IslandManager.instance.getPlayerIsland(player);
+                Island currentIsland = playerIsland;
                 String playerName = current.getItemMeta().getDisplayName().replace("§6", "");
                 UUID targetUUID;
                 if (Bukkit.getPlayer(playerName) != null) {
@@ -117,7 +118,6 @@ public class IslandGuiManager implements Listener {
                 return;
             }
             if (current.getType() == Material.GRASS_BLOCK) {
-                Island playerIsland = IslandManager.instance.getPlayerIsland(player);
                 if (playerIsland.getSizeUpgrade().upOfOneLevel(player)) {
                     IslandUpgradeGui.instance.openUpgradeIslandMenu(player);
                     playerIsland.sendMessageToEveryMember(
@@ -130,23 +130,23 @@ public class IslandGuiManager implements Listener {
                 }
             }
             if (current.getType() == Material.PAPER) {
-                if (IslandManager.instance.getPlayerIsland(player).getMemberUpgrade().upOfOneLevel(player)) {
+                if (playerIsland.getMemberUpgrade().upOfOneLevel(player)) {
                     IslandUpgradeGui.instance.openUpgradeIslandMenu(player);
-                    IslandManager.instance.getPlayerIsland(player).sendMessageToEveryMember("§6§lIles §8» §f" + player.getName() +
+                    playerIsland.sendMessageToEveryMember("§6§lIles §8» §f" + player.getName() +
                             " a amélioré le nombre de membres max de l'île au niveau §6" +
-                            IslandManager.instance.getPlayerIsland(player).getMemberUpgrade().getLevel() +
+                            playerIsland.getMemberUpgrade().getLevel() +
                             "§f, le nombre de membres max de l'île est maintenant de §6" +
-                            IslandManager.instance.getPlayerIsland(player).getMemberUpgrade().getMaxMembers() + "§f.");
+                            playerIsland.getMemberUpgrade().getMaxMembers() + "§f.");
                 } else {
                     player.sendMessage("§6§lIles §8» §fFonds insuffisants ou niveau maximum atteint.");
                 }
                 return;
             }
             if (current.getType() == Material.COBBLESTONE) {
-                if (IslandManager.instance.getPlayerIsland(player).getGeneratorUpgrade().upOfOneLevel(player)) {
-                    IslandManager.instance.getPlayerIsland(player).sendMessageToEveryMember("§6§lIles §8» §f" + player.getName() +
+                if (playerIsland.getGeneratorUpgrade().upOfOneLevel(player)) {
+                    playerIsland.sendMessageToEveryMember("§6§lIles §8» §f" + player.getName() +
                             " a amélioré le générateur de l'île au niveau §6" +
-                            IslandManager.instance.getPlayerIsland(player).getGeneratorUpgrade().getLevel() + ". ");
+                            playerIsland.getGeneratorUpgrade().getLevel() + ". ");
                     IslandUpgradeGui.instance.openUpgradeIslandMenu(player);
                 } else {
                     player.sendMessage("§6§lIles §8» §fFonds insuffisants ou niveau maximum atteint.");
@@ -160,19 +160,21 @@ public class IslandGuiManager implements Listener {
                 return;
             }
             if (current.getType() == Material.SUNFLOWER) {
-                if (e.getClick() == ClickType.RIGHT) {
+                if (e.getClick() == ClickType.RIGHT &&
+                        playerIsland.hasPerms(playerIsland.getIslandRankFromUUID(player.getUniqueId()), IslandPerms.BANK_ADD, player.getUniqueId())) {
                     if (EcoAccountsManager.instance.checkForFounds(player, 1000.0)) {
                         EcoAccountsManager.instance.removeFounds(player, 1000.0, true);
-                        IslandManager.instance.getPlayerIsland(player).getBank().addMoney(1000.0);
+                        playerIsland.getBank().addMoney(1000.0);
                     } else {
                         player.sendMessage("§6§lIles §8» §fTu n'as pas asser d'argent en banque.");
                     }
                     IslandBankGui.instance.openBankIslandMenu(player);
                     return;
-                } else if (e.getClick() == ClickType.LEFT) {
-                    if (IslandManager.instance.getPlayerIsland(player).getBank().getMoney() >= 1000.0) {
+                } else if (e.getClick() == ClickType.LEFT &&
+                        playerIsland.hasPerms(playerIsland.getIslandRankFromUUID(player.getUniqueId()), IslandPerms.BANK_REMOVE, player.getUniqueId())) {
+                    if (playerIsland.getBank().getMoney() >= 1000.0) {
                         EcoAccountsManager.instance.addFounds(player, 1000.0, true);
-                        IslandManager.instance.getPlayerIsland(player).getBank().removeMoney(1000.0);
+                        playerIsland.getBank().removeMoney(1000.0);
                     } else {
                         player.sendMessage("§6§lIles §8» §fTu n'as pas asser d'argent en banque.");
                     }
@@ -182,11 +184,12 @@ public class IslandGuiManager implements Listener {
                 return;
             }
             if (current.getType() == Material.NETHER_STAR) {
-                if (IslandManager.instance.getPlayerIsland(player).getBank().getCrystaux() < 5.0) {
+                if (playerIsland.getBank().getCrystaux() < 5.0) {
                     player.sendMessage("§6§lIles §8» §fTu n'as pas asser de crystaux en banque.");
                     return;
                 }
-                if (e.getClick() == ClickType.LEFT) {
+                if (e.getClick() == ClickType.LEFT &&
+                        playerIsland.hasPerms(playerIsland.getIslandRankFromUUID(player.getUniqueId()), IslandPerms.BANK_REMOVE, player.getUniqueId())) {
                     ItemStack item = new ItemStack(Material.NETHER_STAR);
                     ItemMeta meta = item.getItemMeta();
                     meta.setDisplayName("§65 crystaux");
@@ -195,28 +198,30 @@ public class IslandGuiManager implements Listener {
                     meta.setUnbreakable(true);
                     item.setItemMeta(meta);
                     player.getInventory().addItem(item);
-                    IslandManager.instance.getPlayerIsland(player).getBank().removeCrystaux(5.0);
+                    playerIsland.getBank().removeCrystaux(5.0);
                     IslandBankGui.instance.openBankIslandMenu(player);
                     return;
                 }
             }
             if (current.getType() == Material.EXPERIENCE_BOTTLE) {
-                if (e.getClick() == ClickType.LEFT) {
-                    Integer exp = IslandManager.instance.getPlayerIsland(player).getBank().getXp();
+                if (e.getClick() == ClickType.LEFT &&
+                        playerIsland.hasPerms(playerIsland.getIslandRankFromUUID(player.getUniqueId()), IslandPerms.BANK_ADD, player.getUniqueId())) {
+                    Integer exp = playerIsland.getBank().getXp();
                     if (exp <= 0) {
                         return;
                     }
                     PlayerUtils.setTotalExperience(player, exp + PlayerUtils.getTotalExperience(player));
-                    IslandManager.instance.getPlayerIsland(player).getBank().removeXp(exp);
+                    playerIsland.getBank().removeXp(exp);
                     IslandBankGui.instance.openBankIslandMenu(player);
                     return;
                 }
-                if (e.getClick() == ClickType.RIGHT) {
+                if (e.getClick() == ClickType.RIGHT &&
+                        playerIsland.hasPerms(playerIsland.getIslandRankFromUUID(player.getUniqueId()), IslandPerms.BANK_REMOVE, player.getUniqueId())) {
                     Integer exp = PlayerUtils.getTotalExperience(player);
                     if (exp <= 0) {
                         return;
                     }
-                    IslandManager.instance.getPlayerIsland(player).getBank().addXp(exp);
+                    playerIsland.getBank().addXp(exp);
                     PlayerUtils.setTotalExperience(player, 0);
                     IslandBankGui.instance.openBankIslandMenu(player);
                     return;
@@ -233,7 +238,6 @@ public class IslandGuiManager implements Listener {
                 IslandMainGui.instance.openMainIslandMenu(player);
                 return;
             }
-            Island playerIsland = IslandManager.instance.getPlayerIsland(player);
             if (!playerIsland.getPerms(playerIsland.getIslandRankFromUUID(player.getUniqueId())).contains(IslandPerms.ALL_PERMS)) {
                 if (!playerIsland.getPerms(playerIsland.getIslandRankFromUUID(player.getUniqueId())).contains(IslandPerms.CHANGE_BORDER_COLOR)) {
                     return;
@@ -274,7 +278,6 @@ public class IslandGuiManager implements Listener {
             if (e.getClick() != ClickType.LEFT && e.getClick() != ClickType.RIGHT) {
                 return;
             }
-            Island playerIsland = IslandManager.instance.getPlayerIsland(player);
             if (!playerIsland.hasPerms(playerIsland.getIslandRankFromUUID(player.getUniqueId()), IslandPerms.CHANGE_PERMS, player.getUniqueId())) {
                 return;
             }
@@ -304,8 +307,6 @@ public class IslandGuiManager implements Listener {
                 IslandMainGui.instance.openMainIslandMenu(player);
                 return;
             }
-
-            Island playerIsland = IslandManager.instance.getPlayerIsland(player);
 
             if (current.getType() == Material.PLAYER_HEAD) {
                 for (UUID uuid : playerIsland.getCoops()) {
