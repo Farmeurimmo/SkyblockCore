@@ -161,7 +161,7 @@ public class IslandGuiManager implements Listener {
             }
             if (current.getType() == Material.SUNFLOWER) {
                 if (e.getClick() == ClickType.RIGHT &&
-                        playerIsland.hasPerms(playerIsland.getIslandRankFromUUID(player.getUniqueId()), IslandPerms.BANK_ADD, player.getUniqueId())) {
+                        playerIsland.hasPerms(playerIsland.getIslandRankFromUUID(player.getUniqueId()), IslandPerms.BANK_ADD, player)) {
                     if (EcoAccountsManager.instance.checkForFounds(player, 1000.0)) {
                         EcoAccountsManager.instance.removeFounds(player, 1000.0, true);
                         playerIsland.getBank().addMoney(1000.0);
@@ -171,7 +171,7 @@ public class IslandGuiManager implements Listener {
                     IslandBankGui.instance.openBankIslandMenu(player);
                     return;
                 } else if (e.getClick() == ClickType.LEFT &&
-                        playerIsland.hasPerms(playerIsland.getIslandRankFromUUID(player.getUniqueId()), IslandPerms.BANK_REMOVE, player.getUniqueId())) {
+                        playerIsland.hasPerms(playerIsland.getIslandRankFromUUID(player.getUniqueId()), IslandPerms.BANK_REMOVE, player)) {
                     if (playerIsland.getBank().getMoney() >= 1000.0) {
                         EcoAccountsManager.instance.addFounds(player, 1000.0, true);
                         playerIsland.getBank().removeMoney(1000.0);
@@ -189,7 +189,7 @@ public class IslandGuiManager implements Listener {
                     return;
                 }
                 if (e.getClick() == ClickType.LEFT &&
-                        playerIsland.hasPerms(playerIsland.getIslandRankFromUUID(player.getUniqueId()), IslandPerms.BANK_REMOVE, player.getUniqueId())) {
+                        playerIsland.hasPerms(playerIsland.getIslandRankFromUUID(player.getUniqueId()), IslandPerms.BANK_REMOVE, player)) {
                     ItemStack item = new ItemStack(Material.NETHER_STAR);
                     ItemMeta meta = item.getItemMeta();
                     meta.setDisplayName("§65 crystaux");
@@ -205,7 +205,7 @@ public class IslandGuiManager implements Listener {
             }
             if (current.getType() == Material.EXPERIENCE_BOTTLE) {
                 if (e.getClick() == ClickType.LEFT &&
-                        playerIsland.hasPerms(playerIsland.getIslandRankFromUUID(player.getUniqueId()), IslandPerms.BANK_ADD, player.getUniqueId())) {
+                        playerIsland.hasPerms(playerIsland.getIslandRankFromUUID(player.getUniqueId()), IslandPerms.BANK_ADD, player)) {
                     Integer exp = playerIsland.getBank().getXp();
                     if (exp <= 0) {
                         return;
@@ -216,7 +216,7 @@ public class IslandGuiManager implements Listener {
                     return;
                 }
                 if (e.getClick() == ClickType.RIGHT &&
-                        playerIsland.hasPerms(playerIsland.getIslandRankFromUUID(player.getUniqueId()), IslandPerms.BANK_REMOVE, player.getUniqueId())) {
+                        playerIsland.hasPerms(playerIsland.getIslandRankFromUUID(player.getUniqueId()), IslandPerms.BANK_REMOVE, player)) {
                     Integer exp = PlayerUtils.getTotalExperience(player);
                     if (exp <= 0) {
                         return;
@@ -278,7 +278,7 @@ public class IslandGuiManager implements Listener {
             if (e.getClick() != ClickType.LEFT && e.getClick() != ClickType.RIGHT) {
                 return;
             }
-            if (!playerIsland.hasPerms(playerIsland.getIslandRankFromUUID(player.getUniqueId()), IslandPerms.CHANGE_PERMS, player.getUniqueId())) {
+            if (!playerIsland.hasPerms(playerIsland.getIslandRankFromUUID(player.getUniqueId()), IslandPerms.CHANGE_PERMS, player)) {
                 return;
             }
             for (IslandPerms perm : IslandPerms.values()) {

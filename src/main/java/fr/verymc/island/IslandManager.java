@@ -350,7 +350,7 @@ public class IslandManager {
 
     public boolean invitePlayer(Player p, Player target) {
         Island currentIsland = getPlayerIsland(p);
-        if (currentIsland.hasPerms(currentIsland.getIslandRankFromUUID(p.getUniqueId()), IslandPerms.INVITE, p.getUniqueId())) {
+        if (currentIsland.hasPerms(currentIsland.getIslandRankFromUUID(p.getUniqueId()), IslandPerms.INVITE, p)) {
             ArrayList<Player> pending;
             if (pendingInvites.containsKey(p)) {
                 pending = pendingInvites.get(p);

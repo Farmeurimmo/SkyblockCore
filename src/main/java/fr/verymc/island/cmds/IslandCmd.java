@@ -47,7 +47,7 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
                                 p.sendMessage("§6§lIles §8» §fTu peux maintenant bypasser les îles !");
                             }
                         } else {
-                            p.sendMessage("§6§lIles §8» §fTu n'as pas la permission de faire ceci !");
+                            p.sendMessage("§6§lIles §8» §f§6mission de faire ceci !");
                             if (IslandManager.instance.isBypassing(p.getUniqueId())) {
                                 IslandManager.instance.removeBypassing(p.getUniqueId());
                             }
@@ -239,7 +239,7 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
                             p.sendMessage("§6§lIles §8» §f" + target.getName() + " est déjà en coop.");
                             return true;
                         }
-                        if (playerIsland.hasPerms(playerIsland.getIslandRankFromUUID(p.getUniqueId()), IslandPerms.ADD_COOP, p.getUniqueId())) {
+                        if (playerIsland.hasPerms(playerIsland.getIslandRankFromUUID(p.getUniqueId()), IslandPerms.ADD_COOP, p)) {
                             playerIsland.addCoop(target.getUniqueId());
                             playerIsland.sendMessageToEveryMember("§6§lIles §8» §f" + target.getName() +
                                     " vient de rejoindre l'île en tant que membre temporaire par " + p.getName() + ", son status expirera quand" +
@@ -256,7 +256,7 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
                             p.sendMessage("§6§lIles §8» §f" + target.getName() + " n'est pas en coop.");
                             return true;
                         }
-                        if (playerIsland.hasPerms(playerIsland.getIslandRankFromUUID(p.getUniqueId()), IslandPerms.REMOVE_COOP, p.getUniqueId())) {
+                        if (playerIsland.hasPerms(playerIsland.getIslandRankFromUUID(p.getUniqueId()), IslandPerms.REMOVE_COOP, p)) {
                             playerIsland.removeCoop(target.getUniqueId());
                             playerIsland.sendMessageToEveryMember("§6§lIles §8» §f" + target.getName() +
                                     " vient de perdre le status de membre temporaire par  " + p.getName() + ".");

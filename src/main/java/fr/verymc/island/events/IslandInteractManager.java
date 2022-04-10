@@ -31,7 +31,7 @@ public class IslandInteractManager implements Listener {
 
         Island island = IslandManager.instance.getPlayerIsland(player);
         if (island != null) {
-            if (!island.hasPerms(island.getIslandRankFromUUID(player.getUniqueId()), IslandPerms.BANK_ADD, player.getUniqueId())) {
+            if (!island.hasPerms(island.getIslandRankFromUUID(player.getUniqueId()), IslandPerms.BANK_ADD, player)) {
                 return;
             }
             if (player.isSneaking()) {
@@ -49,7 +49,7 @@ public class IslandInteractManager implements Listener {
         Player player = e.getPlayer();
         Island island = IslandManager.instance.getIslandByLoc(e.getBlock().getLocation());
         if (island != null) {
-            if (island.hasPerms(island.getIslandRankFromUUID(player.getUniqueId()), IslandPerms.BREAK, player.getUniqueId())) {
+            if (island.hasPerms(island.getIslandRankFromUUID(player.getUniqueId()), IslandPerms.BREAK, player)) {
                 if (IslandBlockValues.instance.hasBlockValue(e.getBlock().getType())) {
                     island.removeValue(IslandBlockValues.instance.getBlockValue(e.getBlock().getType()));
                 }
@@ -64,7 +64,7 @@ public class IslandInteractManager implements Listener {
         Player player = e.getPlayer();
         Island island = IslandManager.instance.getIslandByLoc(e.getBlock().getLocation());
         if (island != null) {
-            if (island.hasPerms(island.getIslandRankFromUUID(player.getUniqueId()), IslandPerms.BUILD, player.getUniqueId())) {
+            if (island.hasPerms(island.getIslandRankFromUUID(player.getUniqueId()), IslandPerms.BUILD, player)) {
                 if (IslandBlockValues.instance.hasBlockValue(e.getBlock().getType())) {
                     island.addValue(IslandBlockValues.instance.getBlockValue(e.getBlock().getType()));
                 }
@@ -81,7 +81,7 @@ public class IslandInteractManager implements Listener {
         if (e.getClickedBlock().getLocation() == null) return;
         Island island = IslandManager.instance.getIslandByLoc(e.getClickedBlock().getLocation());
         if (island != null) {
-            if (island.hasPerms(island.getIslandRankFromUUID(player.getUniqueId()), IslandPerms.INTERACT, player.getUniqueId())) {
+            if (island.hasPerms(island.getIslandRankFromUUID(player.getUniqueId()), IslandPerms.INTERACT, player)) {
                 return;
             }
         }

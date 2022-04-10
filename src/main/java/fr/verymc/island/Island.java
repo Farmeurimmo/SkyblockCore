@@ -193,10 +193,10 @@ public class Island {
         permsPerRanks.get(rankTo).add(perm);
     }
 
-    public boolean hasPerms(IslandRanks rank, IslandPerms perm, UUID uuid) {
+    public boolean hasPerms(IslandRanks rank, IslandPerms perm, Player p) {
         if (getMapPerms().get(rank) != null) {
-            if (uuid != null) {
-                if (IslandManager.instance.isBypassing(uuid)) {
+            if (p != null) {
+                if (IslandManager.instance.isBypassing(p.getUniqueId())) {
                     return true;
                 }
             }
@@ -204,12 +204,15 @@ public class Island {
                 return true;
             }
             if (perm == null) {
+                if (p != null)
+                    p.sendMessage("§6§lIles §8» §fErreur interne lors de la vérification des permissions (erreur perm inexistante).");
                 return false;
             }
             if (getMapPerms().get(rank).contains(perm)) {
                 return true;
             }
         }
+        if (p != null) p.sendMessage("§6§lIles §8» §fVous n'avez pas la permission de faire cela.");
         return false;
     }
 
@@ -233,7 +236,7 @@ public class Island {
             }
         }
         if (playerRank == islandRank) {
-            if (!island.hasPerms(islandRank, null, player.getUniqueId())) {
+            if (!island.hasPerms(islandRank, null, player)) {
                 return false;
             }
         }
@@ -269,7 +272,7 @@ public class Island {
             }
         }
         if (playerRank == islandRank) {
-            if (!island.hasPerms(islandRank, null, player.getUniqueId())) {
+            if (!island.hasPerms(islandRank, null, player)) {
                 return false;
             }
         }
