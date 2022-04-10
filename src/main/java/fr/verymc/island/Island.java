@@ -26,13 +26,13 @@ public class Island {
     private HashMap<IslandRanks, ArrayList<IslandPerms>> permsPerRanks = new HashMap<>();
     private IslandUpgradeSize sizeUpgrade;
     private IslandUpgradeMember memberUpgrade;
+    private IslandUpgradeGenerator generatorUpgrade;
     private WorldBorderUtil.Color borderColor;
     private IslandBank bank;
     private Double value;
     private ArrayList<UUID> coops = new ArrayList<>();
     private ArrayList<UUID> chatToggled = new ArrayList<>();
     private boolean isPublic;
-    private IslandUpgradeGenerator generatorUpgrade;
 
     public Island(String name, String owner, UUID ownerUUID, Location home, int id, HashMap<UUID, IslandRanks> members, boolean defaultPerms,
                   IslandUpgradeSize upgradeSize, IslandUpgradeMember upgradeMember, WorldBorderUtil.Color borderColor,
@@ -393,6 +393,9 @@ public class Island {
     }
 
     public boolean addCoop(UUID uuid) {
+        if (coops.size() > 14) {
+            return false;
+        }
         if (!coops.contains(uuid)) {
             coops.add(uuid);
             return true;

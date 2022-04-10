@@ -243,7 +243,9 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
                             playerIsland.addCoop(target.getUniqueId());
                             playerIsland.sendMessageToEveryMember("§6§lIles §8» §f" + target.getName() +
                                     " vient de rejoindre l'île en tant que membre temporaire par " + p.getName() + ", son status expirera quand" +
-                                    " il se déconnectera ou que tous les membres de l'îles soient déconnectés.");
+                                    " il se déconnectera ou que tous les membres de l'îles seront déconnectés.");
+                            target.sendMessage("§6§lIles §8» §fTu viens d'être ajouté à l'île de " + p.getName() + " en tant que membre temporaire " +
+                                    ", ton statut expirera quand tu déconnecteras ou quand tous les membres de l'îles seront déconnectés.");
                         } else {
                             p.sendMessage("§6§lIles §8» §fTu n'as pas la permission de faire cette action.");
                         }
@@ -258,6 +260,8 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
                             playerIsland.removeCoop(target.getUniqueId());
                             playerIsland.sendMessageToEveryMember("§6§lIles §8» §f" + target.getName() +
                                     " vient de perdre le status de membre temporaire par  " + p.getName() + ".");
+                            target.sendMessage("§6§lIles §8» §fVous avez été retiré du statut de coop par "
+                                    + p.getName() + ".");
                         } else {
                             p.sendMessage("§6§lIles §8» §fTu n'as pas la permission de faire cette action.");
                         }

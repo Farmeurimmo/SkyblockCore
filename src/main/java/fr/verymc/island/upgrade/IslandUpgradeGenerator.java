@@ -11,14 +11,46 @@ import java.util.LinkedHashMap;
 public class IslandUpgradeGenerator {
 
     private int level;
-    private IslandUpgradesType type;
 
     private LinkedHashMap<Material, Integer> materials = new LinkedHashMap<>();
 
-    public IslandUpgradeGenerator(int level, IslandUpgradesType type) {
+    public IslandUpgradeGenerator(int level) {
         this.level = level;
-        this.type = type;
         setGenValues(level);
+    }
+
+    public static double getMoneyCostFromLevel(int level) {
+        if (level == 0) {
+            return 0;
+        } else if (level == 1) {
+            return 50000;
+        } else if (level == 2) {
+            return 100000;
+        } else if (level == 3) {
+            return 150000;
+        } else if (level == 4) {
+            return 200000;
+        } else if (level == 5) {
+            return 250000;
+        }
+        return 0;
+    }
+
+    public static double getCrystalCostFromLevel(int level) {
+        if (level == 0) {
+            return 0;
+        } else if (level == 1) {
+            return 40;
+        } else if (level == 2) {
+            return 80;
+        } else if (level == 3) {
+            return 120;
+        } else if (level == 4) {
+            return 160;
+        } else if (level == 5) {
+            return 200;
+        }
+        return 0;
     }
 
     public boolean upOfOneLevel(Player player) {
@@ -52,14 +84,6 @@ public class IslandUpgradeGenerator {
 
     public void addLevel() {
         level++;
-    }
-
-    public IslandUpgradesType getType() {
-        return type;
-    }
-
-    public void setType(IslandUpgradesType type) {
-        this.type = type;
     }
 
     public void setGenValues(int level) {
@@ -108,40 +132,6 @@ public class IslandUpgradeGenerator {
             materials.put(Material.ANCIENT_DEBRIS, 2); // 2%
         }
 
-    }
-
-    public static double getMoneyCostFromLevel(int level) {
-        if (level == 0) {
-            return 0;
-        } else if (level == 1) {
-            return 50000;
-        } else if (level == 2) {
-            return 100000;
-        } else if (level == 3) {
-            return 150000;
-        } else if (level == 4) {
-            return 200000;
-        } else if (level == 5) {
-            return 250000;
-        }
-        return 0;
-    }
-
-    public static double getCrystalCostFromLevel(int level) {
-        if (level == 0) {
-            return 0;
-        } else if (level == 1) {
-            return 40;
-        } else if (level == 2) {
-            return 80;
-        } else if (level == 3) {
-            return 120;
-        } else if (level == 4) {
-            return 160;
-        } else if (level == 5) {
-            return 200;
-        }
-        return 0;
     }
 
     public LinkedHashMap<Material, Integer> getMaterials() {

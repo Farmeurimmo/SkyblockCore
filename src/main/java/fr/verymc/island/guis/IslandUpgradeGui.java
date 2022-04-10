@@ -5,7 +5,6 @@ import main.java.fr.verymc.island.IslandManager;
 import main.java.fr.verymc.island.upgrade.IslandUpgradeGenerator;
 import main.java.fr.verymc.island.upgrade.IslandUpgradeMember;
 import main.java.fr.verymc.island.upgrade.IslandUpgradeSize;
-import main.java.fr.verymc.island.upgrade.IslandUpgradesType;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -39,12 +38,12 @@ public class IslandUpgradeGui {
         ItemMeta custom1Meta = custom1.getItemMeta();
         custom1Meta.setDisplayName("§6Taille de l'île");
         ArrayList<String> custom1Lore = new ArrayList<>();
-        custom1Lore.add("§7Taille actuelle : §6" + sizeIsland+"§7x§6"+sizeIsland);
+        custom1Lore.add("§7Taille actuelle : §6" + sizeIsland + "§7x§6" + sizeIsland);
         custom1Lore.add("");
         custom1Lore.add("§7Niveaux:");
         for (int i = 0; i <= 4; i++) {
-            custom1Lore.add("§7"+i+": §6"+IslandUpgradeSize.getSizeFromLevel(i)+"§7x§6"+IslandUpgradeSize.getSizeFromLevel(i));
-            custom1Lore.add("  §7Prix : §e"+IslandUpgradeSize.getPriceMoneyFromLevel(i)+"$§7, §e"+IslandUpgradeSize.getPriceCrytauxFromLevel(i)+" crystaux");
+            custom1Lore.add("§7" + i + ": §6" + IslandUpgradeSize.getSizeFromLevel(i) + "§7x§6" + IslandUpgradeSize.getSizeFromLevel(i));
+            custom1Lore.add("  §7Prix : §e" + IslandUpgradeSize.getPriceMoneyFromLevel(i) + "$§7, §e" + IslandUpgradeSize.getPriceCrytauxFromLevel(i) + " crystaux");
         }
         custom1Lore.add("");
         custom1Lore.add("§7Clic pour améliorer");
@@ -60,11 +59,11 @@ public class IslandUpgradeGui {
         custom2Lore.add("");
         custom2Lore.add("§7Niveaux: ");
         for (int i = 0; i <= 5; i++) {
-            IslandUpgradeGenerator generator = new IslandUpgradeGenerator(i, IslandUpgradesType.GENERATOR);
+            IslandUpgradeGenerator generator = new IslandUpgradeGenerator(i);
             generator.setLevel(i);
             String str = "§7" + i + ": ";
             String str2 = "";
-            String str3 = "  §7Prix: §e"+IslandUpgradeGenerator.getMoneyCostFromLevel(i)+"$§7, §e"+IslandUpgradeGenerator.getCrystalCostFromLevel(i)+" crystaux";
+            String str3 = "  §7Prix: §e" + IslandUpgradeGenerator.getMoneyCostFromLevel(i) + "$§7, §e" + IslandUpgradeGenerator.getCrystalCostFromLevel(i) + " crystaux";
             for (Map.Entry<Material, Integer> entry : generator.getMaterials().entrySet()) {
                 if (str.length() <= 80) {
                     str += "§6" + entry.getKey().name() + " §7" + entry.getValue() + "% §6";

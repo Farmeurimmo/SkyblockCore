@@ -68,6 +68,12 @@ public class IslandMainGui {
         custom6.setItemMeta(meta6);
         inv.setItem(16, custom6);
 
+        ItemStack custom7 = new ItemStack(Material.WOODEN_HOE, 1);
+        ItemMeta meta7 = custom7.getItemMeta();
+        meta7.setDisplayName("§6Coops §8| §7(clic gauche)");
+        custom7.setItemMeta(meta7);
+        inv.setItem(19, custom7);
+
 
         ItemStack custom8 = new ItemStack(Material.ARROW, 1);
         ItemMeta customh = custom8.getItemMeta();

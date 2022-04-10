@@ -23,7 +23,6 @@ import main.java.fr.verymc.island.perms.IslandRanks;
 import main.java.fr.verymc.island.upgrade.IslandUpgradeGenerator;
 import main.java.fr.verymc.island.upgrade.IslandUpgradeMember;
 import main.java.fr.verymc.island.upgrade.IslandUpgradeSize;
-import main.java.fr.verymc.island.upgrade.IslandUpgradesType;
 import main.java.fr.verymc.utils.PlayerUtils;
 import main.java.fr.verymc.utils.WorldBorderUtil;
 import org.bukkit.*;
@@ -68,6 +67,7 @@ public class IslandManager {
         new IslandBorderGui();
         new IslandTopGui();
         new IslandRankEditGui();
+        new IslandCoopGui();
         HashMap<Material, Double> blocks = new HashMap<>();
         blocks.put(Material.IRON_BLOCK, 10.0);
         islandBockValues = new IslandBlockValues(blocks);
@@ -503,9 +503,9 @@ public class IslandManager {
                             HashMap<UUID, IslandRanks> members = new HashMap<>();
                             members.put(p.getUniqueId(), IslandRanks.CHEF);
                             IslandBank islandBank = new IslandBank(0, 0, 0, 0);
-                            IslandUpgradeSize islandUpgradeSize = new IslandUpgradeSize(50, 0, IslandUpgradesType.SIZE);
-                            IslandUpgradeMember islandUpgradeMember = new IslandUpgradeMember(0, IslandUpgradesType.MEMBER);
-                            IslandUpgradeGenerator islandUpgradeGenerator = new IslandUpgradeGenerator(0, IslandUpgradesType.GENERATOR);
+                            IslandUpgradeSize islandUpgradeSize = new IslandUpgradeSize(50, 0);
+                            IslandUpgradeMember islandUpgradeMember = new IslandUpgradeMember(0);
+                            IslandUpgradeGenerator islandUpgradeGenerator = new IslandUpgradeGenerator(0);
                             islands.add(new Island("Ile de " + p.getName(), p.getName(), p.getUniqueId(), finalToReturn1, finalId + 1, members, true,
                                     islandUpgradeSize, islandUpgradeMember, WorldBorderUtil.Color.BLUE, islandBank, islandUpgradeGenerator));
                             addPlayerAsAnIsland(p);

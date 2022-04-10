@@ -72,6 +72,10 @@ public class IslandGuiManager implements Listener {
                 IslandRankEditGui.instance.openEditRankIslandMenu(player);
                 return;
             }
+            if (current.getType() == Material.WOODEN_HOE) {
+                IslandCoopGui.instance.openCoopIslandMenu(player);
+                return;
+            }
             return;
         }
         if (e.getView().getTitle().equalsIgnoreCase("§6Membres de l'île")) {
@@ -293,6 +297,37 @@ public class IslandGuiManager implements Listener {
                     break;
                 }
             }
+        }
+        if (e.getView().getTitle().equalsIgnoreCase("§6Membres temporaires (coops)")) {
+            e.setCancelled(true);
+            if (current.getType() == Material.ARROW) {
+                IslandMainGui.instance.openMainIslandMenu(player);
+                return;
+            }
+
+            Island playerIsland = IslandManager.instance.getPlayerIsland(player);
+
+            if (current.getType() == Material.PLAYER_HEAD) {
+                for (UUID uuid : playerIsland.getCoops()) {
+                    Player target = Bukkit.getPlayer(uuid);
+                    if (target == null) {
+                        target = Bukkit.getOfflinePlayer(uuid).getPlayer();
+                    }
+                    if (target == null) {
+                        continue;
+                    }
+                    if (current.getDisplayName().equalsIgnoreCase("§6" + target.getName())) {
+                        playerIsland.removeCoop(target.getUniqueId());
+                        IslandCoopGui.instance.openCoopIslandMenu(player);
+                        playerIsland.sendMessageToEveryMember("§6§lIles §8» §f" + target.getName() + " a été retiré du statut de coop par "
+                                + player.getName() + ".");
+                        target.sendMessage("§6§lIles §8» §fVous avez été retiré du statut de coop par "
+                                + player.getName() + ".");
+                        return;
+                    }
+                }
+            }
+
         }
     }
 }

@@ -9,12 +9,10 @@ public class IslandUpgradeSize {
 
     private int size;
     private int level;
-    private IslandUpgradesType type;
 
-    public IslandUpgradeSize(int size, int level, IslandUpgradesType type) {
+    public IslandUpgradeSize(int size, int level) {
         this.size = size;
         this.level = level;
-        this.type = type;
     }
 
     public static int getSizeFromLevel(int level) {
@@ -50,14 +48,6 @@ public class IslandUpgradeSize {
 
     public int getLevel() {
         return level;
-    }
-
-    public IslandUpgradesType getType() {
-        return type;
-    }
-
-    public void setType(IslandUpgradesType type) {
-        this.type = type;
     }
 
     public boolean upOfOneLevel(Player player) {

@@ -9,12 +9,10 @@ public class IslandUpgradeMember {
 
     private int maxMembers;
     private int level;
-    private IslandUpgradesType type;
 
-    public IslandUpgradeMember(int level, IslandUpgradesType type) {
+    public IslandUpgradeMember(int level) {
         this.maxMembers = getMaxMembers(level);
         this.level = level;
-        this.type = type;
     }
 
     public static Integer getMaxMembers(int level) {
@@ -91,13 +89,5 @@ public class IslandUpgradeMember {
 
     public void setLevel(int level) {
         this.level = level;
-    }
-
-    public IslandUpgradesType getType() {
-        return type;
-    }
-
-    public void setType(IslandUpgradesType type) {
-        this.type = type;
     }
 }
