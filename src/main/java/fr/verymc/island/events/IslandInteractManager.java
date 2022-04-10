@@ -11,6 +11,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 
 public class IslandInteractManager implements Listener {
@@ -81,10 +82,18 @@ public class IslandInteractManager implements Listener {
         if (e.getClickedBlock().getLocation() == null) return;
         Island island = IslandManager.instance.getIslandByLoc(e.getClickedBlock().getLocation());
         if (island != null) {
+            if (e.getClickedBlock().getState() instanceof InventoryHolder) {
+                if (island.hasPerms(island.getIslandRankFromUUID(player.getUniqueId()), IslandPerms.CONTAINER, player)) {
+                    return;
+                }
+                e.setCancelled(true);
+                return;
+            }
             if (island.hasPerms(island.getIslandRankFromUUID(player.getUniqueId()), IslandPerms.INTERACT, player)) {
                 return;
             }
+            e.setCancelled(true);
+            return;
         }
-        e.setCancelled(true);
     }
 }

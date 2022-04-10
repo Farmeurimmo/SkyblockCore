@@ -46,7 +46,7 @@ public class IslandManager {
     public ArrayList<UUID> spying = new ArrayList<>();
     public File fileSchematic;
     public File fileEmptyIsland;
-    private HashMap<Player, ArrayList<Player>> pendingInvites = new HashMap<>();
+    public HashMap<Player, ArrayList<Player>> pendingInvites = new HashMap<>();
 
     public IslandManager() {
         instance = this;
@@ -346,6 +346,23 @@ public class IslandManager {
             }
         }
         return false;
+    }
+
+    public void cancelInvite(Player player, Player target) {
+        Island currentIsland = IslandManager.instance.getPlayerIsland(player);
+        if (pendingInvites.containsKey(target)) {
+            if (pendingInvites.get(target) != null) {
+                for (Player p : pendingInvites.get(target)) {
+                    if (p.isOnline()) {
+                        p.sendMessage("§6§lIles §8» §f" + player.getName() + " §7a annulé votre invitation.");
+                    }
+                }
+                pendingInvites.get(target).clear();
+                target.sendMessage("§6§lIles §8» §f" + player.getName() + " a annulé vos invitations.");
+                currentIsland.sendMessageToEveryMember("§6§lIles §8» §f" + player.getName() + " a annulé l'/les invitations de " + target.getName() + ".");
+            }
+        }
+
     }
 
     public boolean invitePlayer(Player p, Player target) {

@@ -10,7 +10,7 @@ public enum IslandPerms {
     PROMOTE("§6Promouvoir un membre inférieur à lui"),
     DEMOTE("§6Rétrograder un membre inférieur à lui"),
     INVITE("§6Inviter un membre"),
-    CANCEL_INVITE("§6Annuler l'invitation d'un membre"),
+    CANCEL_INVITE("§6Annuler les invitations d'un membre"),
     KICK("§6Expulser un membre inférieur à lui"),
     BAN("§6Bannir un visiteur"),
     UNBAN("§6Débannir un visiteur"),

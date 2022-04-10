@@ -152,6 +152,15 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
                             p.sendMessage("§6§lIles §8» §fL'île est déjà privée !");
                         }
                         return true;
+                    } else if (args[0].equalsIgnoreCase("cancelinvites")) {
+                        Island playerIsland = IslandManager.instance.getPlayerIsland(p);
+                        if (playerIsland.hasPerms(playerIsland.getIslandRankFromUUID(p.getUniqueId()), IslandPerms.CANCEL_INVITE, p)) {
+                            if (IslandManager.instance.pendingInvites.containsKey(p)) {
+                                IslandManager.instance.cancelInvite(p, p);
+                            } else {
+                                p.sendMessage("§6§lIles §8» §fVous n'avez pas d'invitations en cours.");
+                            }
+                        }
                     }
 
 
@@ -318,6 +327,15 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
                             }
                         }
                         return true;
+                    } else if (args[0].equalsIgnoreCase("cancelinvites")) {
+                        Island playerIsland = IslandManager.instance.getPlayerIsland(p);
+                        if (playerIsland.hasPerms(playerIsland.getIslandRankFromUUID(p.getUniqueId()), IslandPerms.CANCEL_INVITE, p)) {
+                            if (IslandManager.instance.pendingInvites.containsKey(target)) {
+                                IslandManager.instance.cancelInvite(p, target);
+                            } else {
+                                p.sendMessage("§6§lIles §8» §f" + target.getName() + " n'a pas d'invitation en cours.");
+                            }
+                        }
                     }
                 } else if (args.length == 3) {
 
@@ -383,7 +401,7 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
             if (args.length == 1) {
                 subcmd.addAll(Arrays.asList("go", "home", "invite", "accept", "kick", "promote", "demote", "sethome", "upgrade", "bank",
                         "border", "bordure", "leave", "delete", "top", "coop", "uncoop", "chat", "public", "private", "bypass", "spy",
-                        "transfer", "ban", "unban", "expel"));
+                        "transfer", "ban", "unban", "expel", "cancelinvites"));
             } else {
                 if (IslandManager.instance.asAnIsland((Player) sender)) {
                     Island playerIsland = IslandManager.instance.getPlayerIsland((Player) sender);
@@ -417,6 +435,27 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
                         }
                     }
                     if (args[0].equalsIgnoreCase("kick")) {
+                        for (Player p : Bukkit.getOnlinePlayers()) {
+                            if (playerIsland.getMembers().containsKey(p.getUniqueId())) {
+                                subcmd.add(p.getName());
+                            }
+                        }
+                    }
+                    if (args[0].equalsIgnoreCase("cancelinvites")) {
+                        for (Player p : Bukkit.getOnlinePlayers()) {
+                            if (playerIsland.getMembers().containsKey(p.getUniqueId())) {
+                                subcmd.add(p.getName());
+                            }
+                        }
+                    }
+                    if (args[0].equalsIgnoreCase("promote")) {
+                        for (Player p : Bukkit.getOnlinePlayers()) {
+                            if (playerIsland.getMembers().containsKey(p.getUniqueId())) {
+                                subcmd.add(p.getName());
+                            }
+                        }
+                    }
+                    if (args[0].equalsIgnoreCase("demote")) {
                         for (Player p : Bukkit.getOnlinePlayers()) {
                             if (playerIsland.getMembers().containsKey(p.getUniqueId())) {
                                 subcmd.add(p.getName());
