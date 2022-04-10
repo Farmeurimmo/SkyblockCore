@@ -1,10 +1,12 @@
 package main.java.fr.verymc.island.cmds;
 
+import main.java.fr.verymc.cmd.base.SpawnCmd;
 import main.java.fr.verymc.island.Island;
 import main.java.fr.verymc.island.IslandManager;
 import main.java.fr.verymc.island.IslandValueCalcManager;
 import main.java.fr.verymc.island.guis.*;
 import main.java.fr.verymc.island.perms.IslandPerms;
+import main.java.fr.verymc.utils.PlayerUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -13,10 +15,7 @@ import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class IslandCmd implements CommandExecutor, TabCompleter {
 
@@ -190,8 +189,7 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
                         if (!IslandManager.instance.asAnIsland(target)) {
                             if (IslandManager.instance.getPlayerIsland(p).getMaxMembers() > IslandManager.instance.getPlayerIsland(p).getMembers().size()) {
                                 if (IslandManager.instance.invitePlayer(p, target)) {
-                                    p.sendMessage("§6§lIles §8» §fVous avez envoyé une invitation à §6" + target.getName()
-                                            + " §favec succès.");
+
                                 } else {
                                     p.sendMessage("§6§lIles §8» §fVous avez déjà envoyé une invitation à §6" + target.getName());
                                 }
@@ -266,6 +264,60 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
                             p.sendMessage("§6§lIles §8» §fTu n'as pas la permission de faire cette action.");
                         }
                         return true;
+                    } else if (args[0].equalsIgnoreCase("ban")) {
+                        Island playerIsland = IslandManager.instance.getPlayerIsland(p);
+                        if (playerIsland.hasPerms(playerIsland.getIslandRankFromUUID(p.getUniqueId()), IslandPerms.BAN, p)) {
+                            if (playerIsland.getMembers().containsKey(target.getUniqueId())) {
+                                p.sendMessage("§6§lIles §8» §f" + target.getName() + " est un membre de l'île.");
+                                return true;
+                            }
+                            if (!playerIsland.isBanned(target.getUniqueId())) {
+                                if (playerIsland.addBanned(target.getUniqueId())) {
+                                    if (IslandManager.instance.getIslandByLoc(target.getLocation()) == playerIsland) {
+                                        PlayerUtils.TeleportPlayerFromRequest(target, SpawnCmd.Spawn, 0);
+                                    }
+                                    playerIsland.sendMessageToEveryMember("§6§lIles §8» §f" + target.getName() +
+                                            " vient d'être banni de l'île par " + p.getName() + ".");
+                                    target.sendMessage("§6§lIles §8» §fVous avez été banni de l'île par " + p.getName() + ".");
+                                } else {
+                                    p.sendMessage("§6§lIles §8» §fImpossible de bannir " + target.getName() + ".");
+                                }
+                            } else {
+                                p.sendMessage("§6§lIles §8» §f" + target.getName() + " est déjà banni de l'île.");
+                            }
+                        }
+                        return true;
+                    } else if (args[0].equalsIgnoreCase("unban")) {
+                        Island playerIsland = IslandManager.instance.getPlayerIsland(p);
+                        if (playerIsland.hasPerms(playerIsland.getIslandRankFromUUID(p.getUniqueId()), IslandPerms.UNBAN, p)) {
+                            if (playerIsland.isBanned(target.getUniqueId())) {
+                                if (playerIsland.removeBanned(target.getUniqueId())) {
+                                    playerIsland.sendMessageToEveryMember("§6§lIles §8» §f" + target.getName() +
+                                            " vient de être débanni de l'île par " + p.getName() + ".");
+                                } else {
+                                    p.sendMessage("§6§lIles §8» §fImpossible de débannir " + target.getName() + ".");
+                                }
+                            } else {
+                                p.sendMessage("§6§lIles §8» §f" + target.getName() + " n'est pas banni de l'île.");
+                            }
+                        }
+                    } else if (args[0].equalsIgnoreCase("expel")) {
+                        Island playerIsland = IslandManager.instance.getPlayerIsland(p);
+                        if (playerIsland.hasPerms(playerIsland.getIslandRankFromUUID(p.getUniqueId()), IslandPerms.EXPEL, p)) {
+                            if (playerIsland.getMembers().containsKey(target.getUniqueId())) {
+                                p.sendMessage("§6§lIles §8» §f" + target.getName() + " est un membre de l'île.");
+                                return true;
+                            }
+                            if (IslandManager.instance.getIslandByLoc(target.getLocation()) == playerIsland) {
+                                PlayerUtils.TeleportPlayerFromRequest(target, SpawnCmd.Spawn, 0);
+                                target.sendMessage("§6§lIles §8» §fVous avez été expulsé de l'île par " + p.getName() + ".");
+                                playerIsland.sendMessageToEveryMember("§6§lIles §8» §f" + target.getName() +
+                                        " vient d'être expulsé de l'île par " + p.getName() + ".");
+                            } else {
+                                p.sendMessage("§6§lIles §8» §f" + target.getName() + " n'est pas sur l'île.");
+                            }
+                        }
+                        return true;
                     }
                 } else if (args.length == 3) {
 
@@ -331,9 +383,50 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
             if (args.length == 1) {
                 subcmd.addAll(Arrays.asList("go", "home", "invite", "accept", "kick", "promote", "demote", "sethome", "upgrade", "bank",
                         "border", "bordure", "leave", "delete", "top", "coop", "uncoop", "chat", "public", "private", "bypass", "spy",
-                        "transfer"));
+                        "transfer", "ban", "unban", "expel"));
             } else {
-                subcmd.add("");
+                if (IslandManager.instance.asAnIsland((Player) sender)) {
+                    Island playerIsland = IslandManager.instance.getPlayerIsland((Player) sender);
+                    if (args[0].equalsIgnoreCase("ban")) {
+                        for (Player p : Bukkit.getOnlinePlayers()) {
+                            if (!playerIsland.getMembers().containsKey(p.getUniqueId())) {
+                                subcmd.add(p.getName());
+                            }
+                        }
+                    }
+                    if (args[0].equalsIgnoreCase("unban")) {
+                        for (UUID uuid : playerIsland.getBanneds()) {
+                            subcmd.add(Bukkit.getOfflinePlayer(uuid).getName());
+                        }
+                    }
+                    if (args[0].equalsIgnoreCase("expel")) {
+                        for (Player p : Bukkit.getOnlinePlayers()) {
+                            subcmd.add(p.getName());
+                        }
+                    }
+                    if (args[0].equalsIgnoreCase("invite")) {
+                        for (Player p : Bukkit.getOnlinePlayers()) {
+                            if (!playerIsland.getMembers().containsKey(p.getUniqueId())) {
+                                subcmd.add(p.getName());
+                            }
+                        }
+                    }
+                    if (args[0].equalsIgnoreCase("accept")) {
+                        for (Player p : Bukkit.getOnlinePlayers()) {
+                            subcmd.add(p.getName());
+                        }
+                    }
+                    if (args[0].equalsIgnoreCase("kick")) {
+                        for (Player p : Bukkit.getOnlinePlayers()) {
+                            if (playerIsland.getMembers().containsKey(p.getUniqueId())) {
+                                subcmd.add(p.getName());
+                            }
+                        }
+                    }
+                }
+                if (subcmd.size() == 0) {
+                    subcmd.add("");
+                }
             }
         }
         Collections.sort(subcmd);

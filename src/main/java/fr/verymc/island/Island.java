@@ -32,11 +32,12 @@ public class Island {
     private Double value;
     private ArrayList<UUID> coops = new ArrayList<>();
     private ArrayList<UUID> chatToggled = new ArrayList<>();
+    private ArrayList<UUID> banneds = new ArrayList<>();
     private boolean isPublic;
 
     public Island(String name, String owner, UUID ownerUUID, Location home, int id, HashMap<UUID, IslandRanks> members, boolean defaultPerms,
                   IslandUpgradeSize upgradeSize, IslandUpgradeMember upgradeMember, WorldBorderUtil.Color borderColor,
-                  IslandBank bank, IslandUpgradeGenerator generatorUpgrade) {
+                  IslandBank bank, IslandUpgradeGenerator generatorUpgrade, ArrayList<UUID> banneds) {
         this.name = name;
         this.owner = owner;
         this.ownerUUID = ownerUUID;
@@ -54,6 +55,7 @@ public class Island {
         this.value = 0.0;
         this.isPublic = true;
         this.generatorUpgrade = generatorUpgrade;
+        this.banneds = banneds;
     }
 
     public void setDefaultPerms() {
@@ -456,6 +458,30 @@ public class Island {
 
     public void setGeneratorUpgrade(IslandUpgradeGenerator generatorUpgrade) {
         this.generatorUpgrade = generatorUpgrade;
+    }
+
+    public boolean isBanned(UUID uuid) {
+        return banneds.contains(uuid);
+    }
+
+    public boolean addBanned(UUID uuid) {
+        if (banneds.contains(uuid)) {
+            return false;
+        }
+        banneds.add(uuid);
+        return true;
+    }
+
+    public boolean removeBanned(UUID uuid) {
+        if (!banneds.contains(uuid)) {
+            return false;
+        }
+        banneds.remove(uuid);
+        return true;
+    }
+
+    public ArrayList<UUID> getBanneds() {
+        return banneds;
     }
 
 }

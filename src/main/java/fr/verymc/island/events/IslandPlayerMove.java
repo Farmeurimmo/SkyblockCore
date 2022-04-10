@@ -19,6 +19,11 @@ public class IslandPlayerMove implements Listener {
                     e.setCancelled(true);
                     return;
                 }
+                if (IslandManager.instance.getIslandByLoc(e.getTo()).isBanned(e.getPlayer().getUniqueId())) {
+                    e.getPlayer().sendMessage("§6§lIles §8» §cVous n'avez pas accès à cette île car vous êtes banni.");
+                    e.setCancelled(true);
+                    return;
+                }
             }
         }
     }

@@ -14,8 +14,8 @@ public enum IslandPerms {
     KICK("§6Expulser un membre inférieur à lui"),
     BAN("§6Bannir un visiteur"),
     UNBAN("§6Débannir un visiteur"),
+    EXPEL("§6Expulser un visiteur"),
     SET_ISLAND_NAME("§6Définir le nom de l'île"),
-    SET_ISLAND_WARP("§6Définir le warp de l'île"),
     PRIVATE("§6Définir la visibilité de l'île sur privée"),
     PUBLIC("§6Définir la visibilité de l'île sur publique"),
     CHANGE_BORDER_COLOR("§6Changer la couleur de la bordure"),
@@ -87,9 +87,6 @@ public enum IslandPerms {
             case SET_ISLAND_NAME -> {
                 return new ItemStack(Material.NAME_TAG);
             }
-            case SET_ISLAND_WARP -> {
-                return new ItemStack(Material.COMPASS);
-            }
             case CHANGE_PERMS -> {
                 return new ItemStack(Material.EMERALD_BLOCK);
             }
@@ -119,6 +116,9 @@ public enum IslandPerms {
             }
             case BANK_REMOVE -> {
                 return new ItemStack(Material.GOLD_NUGGET);
+            }
+            case EXPEL -> {
+                return new ItemStack(Material.DIAMOND_HOE);
             }
             default -> {
                 return new ItemStack(Material.AIR);

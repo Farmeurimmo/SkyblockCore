@@ -506,8 +506,9 @@ public class IslandManager {
                             IslandUpgradeSize islandUpgradeSize = new IslandUpgradeSize(50, 0);
                             IslandUpgradeMember islandUpgradeMember = new IslandUpgradeMember(0);
                             IslandUpgradeGenerator islandUpgradeGenerator = new IslandUpgradeGenerator(0);
+                            ArrayList<UUID> banneds = new ArrayList<>();
                             islands.add(new Island("Ile de " + p.getName(), p.getName(), p.getUniqueId(), finalToReturn1, finalId + 1, members, true,
-                                    islandUpgradeSize, islandUpgradeMember, WorldBorderUtil.Color.BLUE, islandBank, islandUpgradeGenerator));
+                                    islandUpgradeSize, islandUpgradeMember, WorldBorderUtil.Color.BLUE, islandBank, islandUpgradeGenerator, banneds));
                             addPlayerAsAnIsland(p);
                             p.sendMessage("§6§lIles §8» §aVous avez généré une nouvelle île avec succès (en " + (System.currentTimeMillis() - start) + "ms).");
                             teleportPlayerToIslandSafe(p);
