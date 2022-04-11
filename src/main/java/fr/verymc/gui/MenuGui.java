@@ -3,6 +3,8 @@ package main.java.fr.verymc.gui;
 import main.java.fr.verymc.atout.AtoutGui;
 import main.java.fr.verymc.auctions.AuctionsManager;
 import main.java.fr.verymc.challenges.ChallengesGuis;
+import main.java.fr.verymc.island.IslandManager;
+import main.java.fr.verymc.island.guis.IslandMainGui;
 import main.java.fr.verymc.shopgui.MainShopGui;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -85,25 +87,37 @@ public class MenuGui implements Listener {
         if (e.getView().getTitle() == "§6Menu du Skyblock") {
             e.setCancelled(true);
             if (current.getType() == Material.GRASS_BLOCK) {
-                player.chat("/is");
+                if (IslandManager.instance.asAnIsland(player)) {
+                    IslandMainGui.instance.openMainIslandMenu(player);
+                    return;
+                } else {
+                    IslandManager.instance.genIsland(player);
+                    return;
+                }
             }
             if (current.getType() == Material.DIAMOND_SWORD) {
                 Farm2WinGui.MainBoutiqueGUI(player);
+                return;
             }
             if (current.getType() == Material.ENDER_EYE) {
                 WarpGui.OpenGUi(player);
+                return;
             }
             if (current.getType() == Material.SADDLE) {
                 AuctionsManager.instance.openAuction(player, 1);
+                return;
             }
             if (current.getType() == Material.VILLAGER_SPAWN_EGG) {
                 MainShopGui.OpenMainShopMenu(player);
+                return;
             }
             if (current.getType() == Material.IRON_SWORD) {
                 ChallengesGuis.MakeMainGui(player);
+                return;
             }
             if (current.getType() == Material.POTION) {
                 AtoutGui.MakeAtoutGui(player);
+                return;
             }
         }
     }

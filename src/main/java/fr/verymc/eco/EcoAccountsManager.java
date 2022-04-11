@@ -6,6 +6,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -59,10 +60,16 @@ public class EcoAccountsManager {
         return b;
     }
 
-    public double moneyGetarrondiNDecimales(Player player, int n) {
-        double money = getMoney(player.getName());
-        double pow = Math.pow(10, n);
-        return (Math.floor(money * pow)) / pow;
+    public String moneyGetarrondiNDecimales(Player player) {
+        return DecimalFormat.getNumberInstance().format(EcoAccountsManager.instance.getMoneyUUID(player.getUniqueId()));
+    }
+
+    public String moneyGetarrondiNDecimalesFromStr(String player) {
+        return DecimalFormat.getNumberInstance().format(EcoAccountsManager.instance.getMoney(player));
+    }
+
+    public String moneyGetarrondiNDecimalesFromUUID(UUID player) {
+        return DecimalFormat.getNumberInstance().format(EcoAccountsManager.instance.getMoneyUUID(player));
     }
 
     public boolean checkForFounds(Player player, Double f) {

@@ -1,7 +1,6 @@
 package main.java.fr.verymc.cmd.base;
 
 import main.java.fr.verymc.eco.EcoAccountsManager;
-import main.java.fr.verymc.utils.Maths;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -22,7 +21,7 @@ public class MoneyCmd implements CommandExecutor, TabCompleter {
             if (sender instanceof Player) {
                 Player player = (Player) sender;
                 player.sendMessage("§6§lMonnaie §8» §fVous avez §6" +
-                        Maths.arrondiNDecimales(EcoAccountsManager.instance.getMoney(player.getName()), 2) + "$");
+                        EcoAccountsManager.instance.moneyGetarrondiNDecimales(player) + "$");
                 return true;
             }
         } else if (args.length == 1) {
@@ -32,7 +31,7 @@ public class MoneyCmd implements CommandExecutor, TabCompleter {
             }
             if (EcoAccountsManager.instance.isExisting((Player) Bukkit.getOfflinePlayer(args[0])) == true) {
                 sender.sendMessage("§6§lMonnaie §8» §6" + args[0] + "§f possède §6" +
-                        Maths.arrondiNDecimales(EcoAccountsManager.instance.getMoney(args[0]), 2) + "$");
+                        EcoAccountsManager.instance.moneyGetarrondiNDecimalesFromStr(args[0]) + "$");
                 return true;
             }
         } else if (args.length == 2) {

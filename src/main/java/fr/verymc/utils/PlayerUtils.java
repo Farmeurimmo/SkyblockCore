@@ -6,7 +6,7 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
-public class TeleportPlayer {
+public class PlayerUtils {
 
     public static void TeleportPlayerFromRequest(Player player, Location loc, int temp) {
 
@@ -17,6 +17,11 @@ public class TeleportPlayer {
             return;
         } else {
             if (timeLeft == 0) {
+                if (temp == 0) {
+                    player.teleport(loc);
+                    player.sendActionBar("§6Téléportation effectuée !");
+                    return;
+                }
                 if (temp == 1) {
                     player.sendActionBar("§6Téléportation dans 1 seconde...");
                     Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
@@ -34,7 +39,7 @@ public class TeleportPlayer {
                     @Override
                     public void run() {
                         int timeLeft = Main.instance.getCooldown(player.getName());
-                        if (timeLeft == 0) {
+                        if (timeLeft <= 0) {
                             Main.instance.setCooldown(player.getName(), 0);
                             player.teleport(loc);
                             player.sendActionBar("§6Téléportation effectuée !");
@@ -47,6 +52,7 @@ public class TeleportPlayer {
                         } else if (timeLeft == 1) {
                             player.sendActionBar("§6Téléportation dans " + timeLeft + " seconde...");
                         } else if (timeLeft <= 0) {
+                            this.cancel();
                             return;
                         }
                     }
@@ -65,7 +71,7 @@ public class TeleportPlayer {
         final int timeLeft = Main.instance.getCooldown(player.getName());
         if (GetTeleportDelay.GetPlayerTeleportingdelay(player) == 0) {
             player.teleport(totp);
-            player.sendActionBar("fTéléportation sur §a" + p.getName() + "§f effectu§e !");
+            player.sendActionBar("fTéléportation sur §a" + p.getName() + "§f effectuée !");
             return;
         } else {
             if (timeLeft == 0) {
@@ -86,7 +92,7 @@ public class TeleportPlayer {
                     @Override
                     public void run() {
                         int timeLeft = Main.instance.getCooldown(player.getName());
-                        if (timeLeft == 0) {
+                        if (timeLeft <= 0) {
                             Main.instance.setCooldown(player.getName(), 0);
                             player.teleport(totp);
                             player.sendActionBar("§fTéléportation sur §a" + p.getName() + "§f effectuée !");
@@ -98,6 +104,9 @@ public class TeleportPlayer {
                             player.sendActionBar("§fTéléportation sur §a" + p.getName() + "§f dans §c" + timeLeft + " §fsecondes...");
                         } else if (timeLeft == 1) {
                             player.sendActionBar("§fTéléportation sur §a" + p.getName() + "§f dans §c" + timeLeft + " §fseconde...");
+                        } else if (timeLeft <= 0) {
+                            this.cancel();
+                            return;
                         }
                     }
                 }.runTaskTimer(Main.instance, 20, 20);
@@ -105,5 +114,55 @@ public class TeleportPlayer {
 
         }
 
+    }
+
+    private static int getExpAtLevel(final int level) {
+        if (level <= 15) {
+            return (2 * level) + 7;
+        } else if (level <= 30) {
+            return (5 * level) - 38;
+        }
+        return (9 * level) - 158;
+    }
+
+    public static int getTotalExperience(final Player player) {
+        int exp = Math.round(getExpAtLevel(player.getLevel()) * player.getExp());
+        int currentLevel = player.getLevel();
+
+        while (currentLevel > 0) {
+            currentLevel--;
+            exp += getExpAtLevel(currentLevel);
+        }
+
+        if (exp < 0) {
+            exp = Integer.MAX_VALUE;
+        }
+
+        return exp;
+    }
+
+    public static void setTotalExperience(final Player player, final int exp) {
+        if (exp < 0) {
+            return;
+        }
+
+        player.setExp(0);
+        player.setLevel(0);
+        player.setTotalExperience(0);
+
+        int amount = exp;
+        while (amount > 0) {
+            final int expToLevel = getExpAtLevel(player.getLevel());
+            amount -= expToLevel;
+            if (amount >= 0) {
+                // give until next level
+                player.giveExp(expToLevel);
+            } else {
+                // give the rest
+                amount += expToLevel;
+                player.giveExp(amount);
+                amount = 0;
+            }
+        }
     }
 }

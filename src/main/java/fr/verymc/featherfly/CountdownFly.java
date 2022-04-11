@@ -37,12 +37,10 @@ public class CountdownFly implements Listener {
     public void WriteFlyLeft() {
         for (Map.Entry<UUID, Integer> aaa : CountdownFly.fly.entrySet()) {
             if (aaa.getValue() >= 1) {
-                HashMap<String, Object> objectHashMap = new HashMap<>();
-                objectHashMap.put("Joueurs." + aaa.getKey() + ".Fly.timeleft", aaa.getValue());
-                AsyncSaver.instance.setAndSaveAsync(objectHashMap, ConfigManager.instance.getDataFly(),
-                        ConfigManager.instance.flyFile);
+                ConfigManager.instance.getDataFly().set("Joueurs." + aaa.getKey() + ".Fly.timeleft", aaa.getValue());
             }
         }
+        ConfigManager.instance.saveDataFly();
     }
 
     public void ReadForTempFly() {

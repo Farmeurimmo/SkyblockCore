@@ -1,6 +1,7 @@
 package main.java.fr.verymc;
 
-import com.iridium.iridiumskyblock.api.IridiumSkyblockAPI;
+import com.gmail.filoghost.holographicdisplays.api.Hologram;
+import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
 import main.java.fr.verymc.antiafk.AntiAfk;
 import main.java.fr.verymc.atout.AtoutCmd;
 import main.java.fr.verymc.atout.AtoutGui;
@@ -19,8 +20,6 @@ import main.java.fr.verymc.config.ConfigManager;
 import main.java.fr.verymc.crates.CratesManager;
 import main.java.fr.verymc.crates.KeyCmd;
 import main.java.fr.verymc.eco.EcoAccountsManager;
-import main.java.fr.verymc.eco.EconomyImplementer;
-import main.java.fr.verymc.eco.VaultHook;
 import main.java.fr.verymc.evenement.ChatReaction;
 import main.java.fr.verymc.events.*;
 import main.java.fr.verymc.featherfly.CountdownFly;
@@ -32,6 +31,12 @@ import main.java.fr.verymc.gui.Farm2WinGui;
 import main.java.fr.verymc.gui.MenuGui;
 import main.java.fr.verymc.gui.WarpGui;
 import main.java.fr.verymc.holos.HolosSetup;
+import main.java.fr.verymc.island.IslandManager;
+import main.java.fr.verymc.island.cmds.IslandCmd;
+import main.java.fr.verymc.island.events.IslandGeneratorForm;
+import main.java.fr.verymc.island.events.IslandInteractManager;
+import main.java.fr.verymc.island.events.IslandPlayerMove;
+import main.java.fr.verymc.island.guis.IslandGuiManager;
 import main.java.fr.verymc.items.FarmHoeCmd;
 import main.java.fr.verymc.items.FarmHoeGui;
 import main.java.fr.verymc.items.FarmHoeManager;
@@ -40,8 +45,11 @@ import main.java.fr.verymc.minions.*;
 import main.java.fr.verymc.scoreboard.ScoreBoard;
 import main.java.fr.verymc.scoreboard.TABManager;
 import main.java.fr.verymc.shopgui.*;
+import main.java.fr.verymc.utils.WorldBorderUtil;
 import main.java.fr.verymc.winelottery.WineGui;
 import main.java.fr.verymc.winelottery.WineSpawn;
+import net.citizensnpcs.api.CitizensAPI;
+import net.citizensnpcs.api.npc.NPC;
 import net.luckperms.api.LuckPerms;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -62,8 +70,6 @@ public class Main extends JavaPlugin implements Listener {
     public ArrayList<Player> pending = new ArrayList<Player>();
     public ArrayList<Player> haverequest = new ArrayList<Player>();
     public HashMap<String, String> tpatarget = new HashMap<>();
-    public EconomyImplementer economyImplementer;
-    private VaultHook vaultHook;
 
     public void setTarget(String uuid, String aaa) {
         if (aaa == null)
@@ -123,12 +129,13 @@ public class Main extends JavaPlugin implements Listener {
             getLogger().warning("Le plugin HolographicDisplays est manquant.");
             Bukkit.getPluginManager().disablePlugin(this);
         }
-        if (IridiumSkyblockAPI.getInstance() == null) {
-            Bukkit.getPluginManager().disablePlugin(this);
-            getLogger().warning("Le plugin IridiumSkyblock est manquant.");
-        }
-        System.out.println("API IRIDIUMSKYBLOCK initialisée !");
         System.out.println("-----------------------------------------------------------------------------------------------------");
+
+        System.out.println("Island startup...");
+        saveResource("ileworld.schem", true);
+        saveResource("clear.schem", true);
+        new IslandManager();
+        new WorldBorderUtil(this);
 
         System.out.println("Initialisation des MODULES en cours...");
         new ConfigManager();
@@ -141,9 +148,6 @@ public class Main extends JavaPlugin implements Listener {
         ChunkCollectorManager.ReadFromFile();
         SellChestManager.ReadFromFile();
         FarmHoeManager.addtolist();
-        economyImplementer = new EconomyImplementer();
-        vaultHook = new VaultHook();
-        vaultHook.hook();
         new EcoAccountsManager();
         System.out.println("Starting one time methods DONE | NEXT Pregen shopgui ");
 
@@ -213,6 +217,10 @@ public class Main extends JavaPlugin implements Listener {
         getServer().getPluginManager().registerEvents(new AuctionGui(), this);
         getServer().getPluginManager().registerEvents(new AntiAfk(), this);
         getServer().getPluginManager().registerEvents(new MinionsListener(), this);
+        getServer().getPluginManager().registerEvents(new IslandGuiManager(), this);
+        getServer().getPluginManager().registerEvents(new IslandInteractManager(), this);
+        getServer().getPluginManager().registerEvents(new IslandPlayerMove(), this);
+        getServer().getPluginManager().registerEvents(new IslandGeneratorForm(), this);
         PluginManager pm = getServer().getPluginManager();
         pm.registerEvents(this, this);
         System.out.println("Listeners DONE | NEXT commands");
@@ -260,6 +268,7 @@ public class Main extends JavaPlugin implements Listener {
         this.getCommand("boost").setExecutor(new BoostCmd());
         this.getCommand("admin").setExecutor(new AdminCmd());
         this.getCommand("minions").setExecutor(new MinionsCmd());
+        this.getCommand("is").setExecutor(new IslandCmd());
         System.out.println("Commands DONE | NEXT end");
 
         new AuctionsManager();
@@ -279,7 +288,12 @@ public class Main extends JavaPlugin implements Listener {
         //BossBar.RemoveBossBarForPlayers();
         HolosSetup.RemoveNpc();
         WineSpawn.DestroyPnj();
-        vaultHook.unhook();
+        for (Hologram hologram : HologramsAPI.getHolograms(this)) {
+            hologram.delete();
+        }
+        for (NPC npc : CitizensAPI.getNPCRegistry().sorted()) {
+            npc.destroy();
+        }
         System.out.println("-----------------------------------------------------------------------------------------------------");
         System.out.println("Plugin stoppé !");
         System.out.println("-----------------------------------------------------------------------------------------------------");

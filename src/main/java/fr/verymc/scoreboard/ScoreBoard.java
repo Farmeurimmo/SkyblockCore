@@ -1,9 +1,10 @@
 package main.java.fr.verymc.scoreboard;
 
-import com.iridium.iridiumskyblock.api.IridiumSkyblockAPI;
 import main.java.fr.verymc.Main;
 import main.java.fr.verymc.eco.EcoAccountsManager;
-import main.java.fr.verymc.utils.Maths;
+import main.java.fr.verymc.island.Island;
+import main.java.fr.verymc.island.IslandManager;
+import main.java.fr.verymc.island.guis.IslandTopGui;
 import net.luckperms.api.LuckPermsProvider;
 import net.luckperms.api.model.user.User;
 import org.bukkit.Bukkit;
@@ -14,6 +15,7 @@ import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class ScoreBoard implements Listener {
@@ -39,10 +41,9 @@ public class ScoreBoard implements Listener {
         }
 
         obj.getScore("§6§l" + player.getName()).setScore(14);
-        obj.getScore(" §eplay.verymc.fr").setScore(1);
+        obj.getScore("§eplay.verymc.fr").setScore(1);
         obj.getScore("§a").setScore(15);
         obj.getScore("§l").setScore(11);
-        obj.getScore("§6§lIle").setScore(10);
         obj.getScore("§o").setScore(4);
         obj.getScore("§d").setScore(2);
 
@@ -54,6 +55,7 @@ public class ScoreBoard implements Listener {
         Team iscrystaux = board.registerNewTeam("iscrystaux");
         Team ismoney = board.registerNewTeam("ismoney");
         Team online = board.registerNewTeam("online");
+        Team island = board.registerNewTeam("island");
 
         online.addEntry("§k");
         ismoney.addEntry("§9");
@@ -63,6 +65,7 @@ public class ScoreBoard implements Listener {
         gradeis.addEntry("§5");
         money.addEntry("§3");
         rank.addEntry("§2");
+        island.addEntry("§1");
 
         obj.getScore("§k").setScore(3);
         obj.getScore("§9").setScore(6);
@@ -70,6 +73,7 @@ public class ScoreBoard implements Listener {
         obj.getScore("§7").setScore(5);
         obj.getScore("§6").setScore(8);
         obj.getScore("§5").setScore(9);
+        obj.getScore("§1").setScore(10);
         obj.getScore("§3").setScore(12);
         obj.getScore("§2").setScore(13);
 
@@ -98,61 +102,52 @@ public class ScoreBoard implements Listener {
 
             if (board.getTeam("rank") != null) {
                 if (Grade.length() < 64) {
-                    board.getTeam("rank").setPrefix("§fGrade §8▸ " + Grade);
+                    board.getTeam("rank").setPrefix(" §fGrade §8▸ " + Grade);
                 } else {
-                    board.getTeam("rank").setPrefix("§fGrade §8▸ ");
+                    board.getTeam("rank").setPrefix(" §fGrade §8▸ ");
                 }
             }
             if (board.getTeam("money") != null) {
-                String a = Maths.reducedNumberWithLetter(EcoAccountsManager.instance.moneyGetarrondiNDecimales(player, 1));
-                board.getTeam("money").setPrefix("§fArgent §8▸ §e" + a);
+                String a = EcoAccountsManager.instance.moneyGetarrondiNDecimales(player);
+                board.getTeam("money").setPrefix(" §fArgent §8▸ §e" + a);
             }
             if (board.getTeam("online") != null) {
                 board.getTeam("online").setPrefix("§fSkyblock §8▸ §c" + online);
             }
 
-            if (IridiumSkyblockAPI.getInstance().getUser(player).getIsland().isPresent()) {
-                String Gradeis = IridiumSkyblockAPI.getInstance().getUser(player).getIslandRank().name();
-                int classement = IridiumSkyblockAPI.getInstance().getUser(player).getIsland().get().getRank();
-                int ismembre = IridiumSkyblockAPI.getInstance().getUser(player).getIsland().get().getMembers().size();
-                int iscristal = IridiumSkyblockAPI.getInstance().getUser(player).getIsland().get().getCrystals();
-                double ismoney = IridiumSkyblockAPI.getInstance().getUser(player).getIsland().get().getMoney();
-
-                switch (Gradeis) {
-                    case "OWNER":
-                        Gradeis = "Chef";
-                        break;
-                    case "CO_OWNER":
-                        Gradeis = "Co-Chef";
-                        break;
-                    case "MODERATOR":
-                        Gradeis = "Modérateur";
-                        break;
-                    case "MEMBER":
-                        Gradeis = "Membre";
-                        break;
-                    case "VISITOR":
-                        Gradeis = "Visiteur";
-                        break;
-
+            Island island = IslandManager.instance.getPlayerIsland(player);
+            if (island != null) {
+                String Gradeis = island.getIslandRankFromUUID(player.getUniqueId()).getName();
+                String classement = "#N/A";
+                if (IslandTopGui.instance.getTopIsland().containsKey(island)) {
+                    classement = "#" + IslandTopGui.instance.getTopIsland().get(island);
                 }
+                int ismembre = island.getMembers().size();
+                double iscristal = island.getBank().getCrystaux();
+                double ismoney = island.getBank().getMoney();
+                int maxMembers = island.getMaxMembers();
+
+
+                if (board.getTeam("island") != null) board.getTeam("island").setPrefix("§6§l" + island.getName());
                 if (board.getTeam("gradeis") != null)
-                    board.getTeam("gradeis").setPrefix("§fGrade d'ile §8▸ §a" + Gradeis);
+                    board.getTeam("gradeis").setPrefix(" §fGrade d'ile §8▸ §a" + Gradeis);
                 if (board.getTeam("classementis") != null)
-                    board.getTeam("classementis").setPrefix("§fClassement §8▸ §a#" + classement);
+                    board.getTeam("classementis").setPrefix(" §fClassement §8▸ §a" + classement);
                 if (board.getTeam("ismembre") != null)
-                    board.getTeam("ismembre").setPrefix("§fMembres §8▸ §a" + ismembre);
+                    board.getTeam("ismembre").setPrefix(" §fMembres §8▸ §a" + ismembre + "/" + maxMembers);
                 if (board.getTeam("iscrystaux") != null)
-                    board.getTeam("iscrystaux").setPrefix("§fCrystaux §8▸ §a" + iscristal);
-                if (board.getTeam("ismoney") != null) board.getTeam("ismoney").setPrefix("§fArgent §8▸ §a" + ismoney);
+                    board.getTeam("iscrystaux").setPrefix("§f Crystaux §8▸ §a" + DecimalFormat.getNumberInstance().format(iscristal));
+                if (board.getTeam("ismoney") != null) board.getTeam("ismoney").setPrefix(" §fArgent §8▸ §a" +
+                        DecimalFormat.getNumberInstance().format(ismoney));
 
             } else {
-                if (board.getTeam("gradeis") != null) board.getTeam("gradeis").setPrefix("§fGrade d'ile §8▸ §aN/A");
+                board.getTeam("island").setPrefix("§6§lIle");
+                if (board.getTeam("gradeis") != null) board.getTeam("gradeis").setPrefix(" §fGrade d'ile §8▸ §aN/A");
                 if (board.getTeam("classementis") != null)
-                    board.getTeam("classementis").setPrefix("§fClassement §8▸ §aN/A");
-                if (board.getTeam("ismembre") != null) board.getTeam("ismembre").setPrefix("§fMembres §8▸ §aN/A");
-                if (board.getTeam("iscrystaux") != null) board.getTeam("iscrystaux").setPrefix("§fCrystaux §8▸ §aN/A");
-                if (board.getTeam("ismoney") != null) board.getTeam("ismoney").setPrefix("§fArgent §8▸ §aN/A");
+                    board.getTeam("classementis").setPrefix(" §fClassement §8▸ §aN/A");
+                if (board.getTeam("ismembre") != null) board.getTeam("ismembre").setPrefix(" §fMembres §8▸ §aN/A");
+                if (board.getTeam("iscrystaux") != null) board.getTeam("iscrystaux").setPrefix(" §fCrystaux §8▸ §aN/A");
+                if (board.getTeam("ismoney") != null) board.getTeam("ismoney").setPrefix(" §fArgent §8▸ §aN/A");
             }
         }
         Bukkit.getServer().getScheduler().scheduleAsyncDelayedTask(Main.instance, new Runnable() {
