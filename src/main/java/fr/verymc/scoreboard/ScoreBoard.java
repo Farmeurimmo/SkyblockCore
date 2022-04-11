@@ -44,7 +44,6 @@ public class ScoreBoard implements Listener {
         obj.getScore("§eplay.verymc.fr").setScore(1);
         obj.getScore("§a").setScore(15);
         obj.getScore("§l").setScore(11);
-        obj.getScore("§6§lIle").setScore(10);
         obj.getScore("§o").setScore(4);
         obj.getScore("§d").setScore(2);
 
@@ -56,6 +55,7 @@ public class ScoreBoard implements Listener {
         Team iscrystaux = board.registerNewTeam("iscrystaux");
         Team ismoney = board.registerNewTeam("ismoney");
         Team online = board.registerNewTeam("online");
+        Team island = board.registerNewTeam("island");
 
         online.addEntry("§k");
         ismoney.addEntry("§9");
@@ -65,6 +65,7 @@ public class ScoreBoard implements Listener {
         gradeis.addEntry("§5");
         money.addEntry("§3");
         rank.addEntry("§2");
+        island.addEntry("§1");
 
         obj.getScore("§k").setScore(3);
         obj.getScore("§9").setScore(6);
@@ -72,6 +73,7 @@ public class ScoreBoard implements Listener {
         obj.getScore("§7").setScore(5);
         obj.getScore("§6").setScore(8);
         obj.getScore("§5").setScore(9);
+        obj.getScore("§1").setScore(10);
         obj.getScore("§3").setScore(12);
         obj.getScore("§2").setScore(13);
 
@@ -125,6 +127,8 @@ public class ScoreBoard implements Listener {
                 double ismoney = island.getBank().getMoney();
                 int maxMembers = island.getMaxMembers();
 
+
+                if (board.getTeam("island") != null) board.getTeam("island").setPrefix("§6§l" + island.getName());
                 if (board.getTeam("gradeis") != null)
                     board.getTeam("gradeis").setPrefix(" §fGrade d'ile §8▸ §a" + Gradeis);
                 if (board.getTeam("classementis") != null)
@@ -137,6 +141,7 @@ public class ScoreBoard implements Listener {
                         DecimalFormat.getNumberInstance().format(ismoney));
 
             } else {
+                board.getTeam("island").setPrefix("§6§lIle");
                 if (board.getTeam("gradeis") != null) board.getTeam("gradeis").setPrefix(" §fGrade d'ile §8▸ §aN/A");
                 if (board.getTeam("classementis") != null)
                     board.getTeam("classementis").setPrefix(" §fClassement §8▸ §aN/A");

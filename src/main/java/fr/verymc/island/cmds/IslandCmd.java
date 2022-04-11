@@ -165,7 +165,7 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
 
 
                 } else if (args.length == 2) {
-                    if (Bukkit.getPlayer(args[1]) == null) {
+                    if (!args[0].equalsIgnoreCase("rename") && Bukkit.getPlayer(args[1]) == null) {
                         p.sendMessage("§6§lIles §8» §fCe joueur n'existe pas ou n'est pas connecté.");
                         return true;
                     }
@@ -336,6 +336,19 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
                                 p.sendMessage("§6§lIles §8» §f" + target.getName() + " n'a pas d'invitation en cours.");
                             }
                         }
+                        return true;
+                    } else if (args[0].equalsIgnoreCase("rename")) {
+                        Island playerIsland = IslandManager.instance.getPlayerIsland(p);
+                        if (playerIsland.hasPerms(playerIsland.getIslandRankFromUUID(p.getUniqueId()), IslandPerms.SET_ISLAND_NAME, p)) {
+                            if (args[1].length() >= 4 && args[1].length() <= 32) {
+                                playerIsland.setName(args[1]);
+                                playerIsland.sendMessageToEveryMember("§6§lIles §8» §fL'île a été renommée par " + p.getName() + " en " +
+                                        playerIsland.getName() + ".");
+                            } else {
+                                p.sendMessage("§6§lIles §8» §fLe nom de l'île doit contenir entre 4 et 32 caractères.");
+                            }
+                        }
+                        return true;
                     }
                 } else if (args.length == 3) {
 
@@ -401,7 +414,7 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
             if (args.length == 1) {
                 subcmd.addAll(Arrays.asList("go", "home", "invite", "accept", "kick", "promote", "demote", "sethome", "upgrade", "bank",
                         "border", "bordure", "leave", "delete", "top", "coop", "uncoop", "chat", "public", "private", "bypass", "spy",
-                        "transfer", "ban", "unban", "expel", "cancelinvites"));
+                        "transfer", "ban", "unban", "expel", "cancelinvites", "rename"));
             } else {
                 if (IslandManager.instance.asAnIsland((Player) sender)) {
                     Island playerIsland = IslandManager.instance.getPlayerIsland((Player) sender);

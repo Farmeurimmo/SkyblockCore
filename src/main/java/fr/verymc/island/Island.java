@@ -109,7 +109,7 @@ public class Island {
     }
 
     public String getName() {
-        return name;
+        return name.replace("&", "§");
     }
 
     public void setName(String name) {
