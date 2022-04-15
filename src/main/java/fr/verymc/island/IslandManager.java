@@ -15,6 +15,7 @@ import com.sk89q.worldedit.session.ClipboardHolder;
 import main.java.fr.verymc.Main;
 import main.java.fr.verymc.cmd.base.SpawnCmd;
 import main.java.fr.verymc.island.bank.IslandBank;
+import main.java.fr.verymc.island.challenges.IslandChallenge;
 import main.java.fr.verymc.island.generator.EmptyChunkGenerator;
 import main.java.fr.verymc.island.guis.*;
 import main.java.fr.verymc.island.perms.IslandPerms;
@@ -524,8 +525,9 @@ public class IslandManager {
                             IslandUpgradeMember islandUpgradeMember = new IslandUpgradeMember(0);
                             IslandUpgradeGenerator islandUpgradeGenerator = new IslandUpgradeGenerator(0);
                             ArrayList<UUID> banneds = new ArrayList<>();
+                            ArrayList<IslandChallenge> challenges = new ArrayList<>();
                             islands.add(new Island("Ile de " + p.getName(), p.getName(), p.getUniqueId(), finalToReturn1, finalId + 1, members, true,
-                                    islandUpgradeSize, islandUpgradeMember, WorldBorderUtil.Color.BLUE, islandBank, islandUpgradeGenerator, banneds));
+                                    islandUpgradeSize, islandUpgradeMember, WorldBorderUtil.Color.BLUE, islandBank, islandUpgradeGenerator, banneds, challenges, true));
                             addPlayerAsAnIsland(p);
                             p.sendMessage("§6§lIles §8» §aVous avez généré une nouvelle île avec succès (en " + (System.currentTimeMillis() - start) + "ms).");
                             teleportPlayerToIslandSafe(p);

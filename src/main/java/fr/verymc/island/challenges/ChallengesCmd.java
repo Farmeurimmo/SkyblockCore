@@ -1,4 +1,4 @@
-package main.java.fr.verymc.challenges;
+package main.java.fr.verymc.island.challenges;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -17,7 +17,7 @@ public class ChallengesCmd implements CommandExecutor, TabCompleter {
 
         if (sender instanceof Player) {
             Player player = (Player) sender;
-            ChallengesGuis.MakeMainGui(player);
+            IslandChallengesGuis.MakeMainGui(player);
         }
 
         return false;

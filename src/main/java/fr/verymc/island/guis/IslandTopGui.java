@@ -34,7 +34,7 @@ public class IslandTopGui {
                 ArrayList<Island> islands = IslandManager.instance.islands;
                 ArrayList<Island> islandsAlreadySorted = new ArrayList<>();
                 HashMap<Island, Integer> islandClassementPos = new HashMap<>();
-                while (true) {
+                while (islands.size() != islandClassementPos.size()) {
                     double bestValue = -1;
                     Island tmpIsland = null;
                     for (Island island : islands) {
@@ -54,9 +54,6 @@ public class IslandTopGui {
                     }
                     islandClassementPos.put(tmpIsland, currentNum);
                     currentNum += 1;
-                    if (islandsAlreadySorted.size() >= islandClassementPos.size()) {
-                        break;
-                    }
                 }
                 Bukkit.getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
                     @Override

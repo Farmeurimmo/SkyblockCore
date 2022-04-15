@@ -4,6 +4,7 @@ import main.java.fr.verymc.eco.EcoAccountsManager;
 import main.java.fr.verymc.gui.MenuGui;
 import main.java.fr.verymc.island.Island;
 import main.java.fr.verymc.island.IslandManager;
+import main.java.fr.verymc.island.challenges.IslandChallengesGuis;
 import main.java.fr.verymc.island.perms.IslandPerms;
 import main.java.fr.verymc.island.perms.IslandRank;
 import main.java.fr.verymc.utils.PlayerUtils;
@@ -76,6 +77,9 @@ public class IslandGuiManager implements Listener {
             if (current.getType() == Material.WOODEN_HOE) {
                 IslandCoopGui.instance.openCoopIslandMenu(player);
                 return;
+            }
+            if (current.getType() == Material.PAPER) {
+                IslandChallengesGuis.MakeMainGui(player);
             }
             return;
         }

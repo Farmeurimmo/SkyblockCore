@@ -50,9 +50,9 @@ public class IslandValueCalcManager {
                                         final Block block = world.getBlockAt(x, y, z);
                                         if (blocks.containsKey(block.getType())) {
                                             blocks.put(block.getType(), blocks.get(block.getType()) + 1);
-                                            continue;
+                                        } else {
+                                            blocks.put(block.getType(), 1);
                                         }
-                                        blocks.put(block.getType(), 1);
                                     }
                                 }
                             }
@@ -62,10 +62,10 @@ public class IslandValueCalcManager {
                                 }
                             }
 
-                            island.setValue(value);
+                            IslandManager.instance.getIslandByLoc(island.getCenter()).setValue(value);
                             Long elasped = (System.currentTimeMillis() - startmills);
 
-                            island.sendMessageToEveryMember("§6§lIles §8» §fRecalcul de votre île terminé. (en " + elasped + " ms)");
+                            IslandManager.instance.getIslandByLoc(island.getCenter()).sendMessageToEveryMember("§6§lIles §8» §fRecalcul de votre île terminé. (en " + elasped + " ms)");
                         }
                     }, 0);
                 }

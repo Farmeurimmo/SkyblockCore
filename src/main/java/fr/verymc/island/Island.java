@@ -1,6 +1,8 @@
 package main.java.fr.verymc.island;
 
 import main.java.fr.verymc.island.bank.IslandBank;
+import main.java.fr.verymc.island.challenges.IslandChallenge;
+import main.java.fr.verymc.island.challenges.IslandChallengesListener;
 import main.java.fr.verymc.island.perms.IslandPerms;
 import main.java.fr.verymc.island.perms.IslandRank;
 import main.java.fr.verymc.island.perms.IslandRanks;
@@ -10,6 +12,7 @@ import main.java.fr.verymc.island.upgrade.IslandUpgradeSize;
 import main.java.fr.verymc.utils.WorldBorderUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
 import java.util.*;
@@ -34,10 +37,12 @@ public class Island {
     private ArrayList<UUID> chatToggled = new ArrayList<>();
     private ArrayList<UUID> banneds = new ArrayList<>();
     private boolean isPublic;
+    private ArrayList<IslandChallenge> challenges = new ArrayList<>();
 
     public Island(String name, String owner, UUID ownerUUID, Location home, int id, HashMap<UUID, IslandRanks> members, boolean defaultPerms,
                   IslandUpgradeSize upgradeSize, IslandUpgradeMember upgradeMember, WorldBorderUtil.Color borderColor,
-                  IslandBank bank, IslandUpgradeGenerator generatorUpgrade, ArrayList<UUID> banneds) {
+                  IslandBank bank, IslandUpgradeGenerator generatorUpgrade, ArrayList<UUID> banneds, ArrayList<IslandChallenge> challenges,
+                  boolean isDefaultChallenges) {
         this.name = name;
         this.owner = owner;
         this.ownerUUID = ownerUUID;
@@ -56,6 +61,10 @@ public class Island {
         this.isPublic = true;
         this.generatorUpgrade = generatorUpgrade;
         this.banneds = banneds;
+        this.challenges = challenges;
+        if (isDefaultChallenges) {
+            addDefaultChallenges();
+        }
     }
 
     public void setDefaultPerms() {
@@ -82,6 +91,23 @@ public class Island {
         ArrayList<IslandPerms> permsChef = new ArrayList<>();
         permsChef.add(IslandPerms.ALL_PERMS);
         permsPerRanks.put(IslandRanks.CHEF, permsChef);
+    }
+
+    public void addDefaultChallenges() {
+        int id = 0;
+        challenges.add(new IslandChallenge("Miner de la pierre", 0, Material.COBBLESTONE, 0, id, true, IslandChallengesListener.cobble));
+        id++;
+        challenges.add(new IslandChallenge("Miner du charbon", 0, Material.COAL_ORE, 0, id, true, IslandChallengesListener.coal));
+        id++;
+        challenges.add(new IslandChallenge("Miner du fer", 0, Material.IRON_ORE, 0, id, true, IslandChallengesListener.iron));
+        id++;
+        challenges.add(new IslandChallenge("Miner de l'or", 0, Material.GOLD_ORE, 0, id, true, IslandChallengesListener.gold));
+        id++;
+        challenges.add(new IslandChallenge("Miner du diamant", 0, Material.DIAMOND_ORE, 0, id, true, IslandChallengesListener.diamond));
+        id++;
+        challenges.add(new IslandChallenge("Miner de l'émeraude", 0, Material.EMERALD_ORE, 0, id, true, IslandChallengesListener.emerald));
+        id++;
+        challenges.add(new IslandChallenge("Miner de l'ancient débris", 0, Material.ANCIENT_DEBRIS, 0, id, true, IslandChallengesListener.debris));
     }
 
     public IslandBank getBank() {
@@ -482,6 +508,18 @@ public class Island {
 
     public ArrayList<UUID> getBanneds() {
         return banneds;
+    }
+
+    public ArrayList<IslandChallenge> getChallenges() {
+        return challenges;
+    }
+
+    public void addChallenge(IslandChallenge challenge) {
+        challenges.add(challenge);
+    }
+
+    public void removeChallenge(IslandChallenge challenge) {
+        challenges.remove(challenge);
     }
 
 }

@@ -27,7 +27,11 @@ public class TchatManager implements Listener {
             return;
         }
         e.setCancelled(true);
-        boolean isIslandChat = playerIsland.isIslandChatToggled(player.getUniqueId());
+
+        boolean isIslandChat = false;
+        if (playerIsland != null) {
+            isIslandChat = playerIsland.isIslandChatToggled(player.getUniqueId());
+        }
 
         User user = LuckPermsProvider.get().getUserManager().getUser(player.getUniqueId());
         if (user.getCachedData().getMetaData().getPrefix() != null) {

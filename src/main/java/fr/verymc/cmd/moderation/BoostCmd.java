@@ -1,6 +1,6 @@
 package main.java.fr.verymc.cmd.moderation;
 
-import main.java.fr.verymc.challenges.ChallengesGuis;
+import main.java.fr.verymc.island.challenges.IslandChallengesGuis;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -14,7 +14,7 @@ public class BoostCmd implements CommandExecutor {
             if (args[0].equalsIgnoreCase("challenges")) {
                 int boost = Integer.parseInt(args[1]);
                 sender.sendMessage("Boost challenges = x" + boost);
-                ChallengesGuis.boost = boost;
+                IslandChallengesGuis.boost = boost;
                 return true;
             }
         }

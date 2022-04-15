@@ -2,8 +2,8 @@ package main.java.fr.verymc.gui;
 
 import main.java.fr.verymc.atout.AtoutGui;
 import main.java.fr.verymc.auctions.AuctionsManager;
-import main.java.fr.verymc.challenges.ChallengesGuis;
 import main.java.fr.verymc.island.IslandManager;
+import main.java.fr.verymc.island.challenges.IslandChallengesGuis;
 import main.java.fr.verymc.island.guis.IslandMainGui;
 import main.java.fr.verymc.shopgui.MainShopGui;
 import org.bukkit.Bukkit;
@@ -112,7 +112,7 @@ public class MenuGui implements Listener {
                 return;
             }
             if (current.getType() == Material.IRON_SWORD) {
-                ChallengesGuis.MakeMainGui(player);
+                IslandChallengesGuis.MakeMainGui(player);
                 return;
             }
             if (current.getType() == Material.POTION) {

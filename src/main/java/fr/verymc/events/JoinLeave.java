@@ -1,6 +1,5 @@
 package main.java.fr.verymc.events;
 
-import main.java.fr.verymc.challenges.ChallengesReset;
 import main.java.fr.verymc.config.ConfigManager;
 import main.java.fr.verymc.eco.EcoAccountsManager;
 import main.java.fr.verymc.island.Island;
@@ -54,8 +53,6 @@ public class JoinLeave implements Listener {
             JoinMessage = "§7[§a+§7] [#" + classement + "] " + Grade.replace("&", "§") + " " + player.getName();
         }
         event.setJoinMessage(JoinMessage);
-
-        ChallengesReset.CreateChallengesForPlayer(player.getUniqueId());
 
         EcoAccountsManager.instance.checkForAccount(player);
 
