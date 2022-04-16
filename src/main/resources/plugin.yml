@@ -83,3 +83,4 @@ commands:
   minions:
     permission: minions.manage
   is:
+  invest:

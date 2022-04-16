@@ -18,10 +18,13 @@ public class SkyblockUser {
     private int flyLeft;
     private boolean isActive;
 
+    private boolean isInInvestMode;
+    private double timeInvest;
+
 
     public SkyblockUser(String username, UUID userUUID, double money, boolean hasHaste, boolean hasHasteActvie,
                         boolean hasSpeed, boolean hasSpeedActive, boolean hasJump, boolean hasJumpActive, int flyLeft,
-                        boolean isActive) {
+                        boolean isActive, boolean isInInvestMode, double timeInvest) {
         this.username = username;
         this.userUUID = userUUID;
         this.money = money;
@@ -33,6 +36,8 @@ public class SkyblockUser {
         this.hasJumpActive = hasJumpActive;
         this.flyLeft = flyLeft;
         this.isActive = isActive;
+        this.isInInvestMode = isInInvestMode;
+        this.timeInvest = timeInvest;
     }
 
     public String getUsername() {
@@ -129,6 +134,22 @@ public class SkyblockUser {
 
     public void setActive(boolean isActive) {
         this.isActive = isActive;
+    }
+
+    public boolean isInInvestMode() {
+        return isInInvestMode;
+    }
+
+    public void setInInvestMode(boolean isInInvestMode) {
+        this.isInInvestMode = isInInvestMode;
+    }
+
+    public double getTimeInvest() {
+        return timeInvest;
+    }
+
+    public void setTimeInvest(double timeInvest) {
+        this.timeInvest = timeInvest;
     }
 
 }

@@ -28,6 +28,8 @@ import main.java.fr.verymc.gui.Farm2WinGui;
 import main.java.fr.verymc.gui.MenuGui;
 import main.java.fr.verymc.gui.WarpGui;
 import main.java.fr.verymc.holos.HolosSetup;
+import main.java.fr.verymc.invest.InvestCmd;
+import main.java.fr.verymc.invest.InvestManager;
 import main.java.fr.verymc.island.IslandManager;
 import main.java.fr.verymc.island.challenges.ChallengesCmd;
 import main.java.fr.verymc.island.challenges.IslandChallengesGuis;
@@ -47,6 +49,7 @@ import main.java.fr.verymc.scoreboard.ScoreBoard;
 import main.java.fr.verymc.scoreboard.TABManager;
 import main.java.fr.verymc.shopgui.*;
 import main.java.fr.verymc.storage.ConfigManager;
+import main.java.fr.verymc.storage.SkyblockUser;
 import main.java.fr.verymc.storage.SkyblockUserManager;
 import main.java.fr.verymc.storage.StorageAPIManager;
 import main.java.fr.verymc.utils.WorldBorderUtil;
@@ -272,12 +275,15 @@ public class Main extends JavaPlugin implements Listener {
         this.getCommand("admin").setExecutor(new AdminCmd());
         this.getCommand("minions").setExecutor(new MinionsCmd());
         this.getCommand("is").setExecutor(new IslandCmd());
+        this.getCommand("invest").setExecutor(new InvestCmd());
         System.out.println("Commands DONE | NEXT end");
 
         new AuctionsManager();
         new MinionManager();
         new MinionsGui();
         new MinionHarvest();
+
+        new InvestManager();
 
         System.out.println("§aDémarrage du plugin TERMINE!");
         System.out.println("-----------------------------------------------------------------------------------------------------");
@@ -290,6 +296,11 @@ public class Main extends JavaPlugin implements Listener {
 
     @Override
     public void onDisable() {
+        for (SkyblockUser user : SkyblockUserManager.instance.users) {
+            if (user.isInInvestMode()) {
+                InvestManager.instance.giveReward(user);
+            }
+        }
         HolosSetup.RemoveBoxeHolo();
         CratesManager.RemoveBoxeHolo();
         //BossBar.RemoveBossBarForPlayers();
