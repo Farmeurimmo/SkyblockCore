@@ -1,6 +1,7 @@
 package main.java.fr.verymc.storage;
 
 import main.java.fr.verymc.Main;
+import main.java.fr.verymc.blocks.Chest;
 import main.java.fr.verymc.island.Island;
 import main.java.fr.verymc.island.IslandManager;
 import main.java.fr.verymc.minions.Minion;
@@ -35,6 +36,8 @@ public class StorageAPIManager {
                 ArrayList<SkyblockUser> skyblockUsers = new ArrayList<>();
                 //DATA USERS
 
+                ArrayList<Chest> chests = new ArrayList<>();
+                //DATA CHESTS
 
                 Bukkit.getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
                     public void run() {
@@ -47,6 +50,8 @@ public class StorageAPIManager {
                         //SEND Islands to -> IslandManager.instance.islands
 
                         //SEND SkyblockUser to -> SkyblockUserManager.instance.users
+
+                        //SEND Chests to -> ChestManager.instance.chests
 
                     }
                 }, 0);

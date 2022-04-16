@@ -9,11 +9,11 @@ public class Chest {
     public int type;
     public Location block;
     public UUID owner;
-    public int id;
+    public long id;
     public String ownerName;
     private Long chunkKey;
 
-    public Chest(int type, Location block, UUID owner, String ownerName, int id, Long chunkKey) {
+    public Chest(int type, Location block, UUID owner, String ownerName, long id, Long chunkKey) {
         this.type = type;
         this.block = block;
         this.owner = owner;
@@ -46,7 +46,7 @@ public class Chest {
         this.owner = owner;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 

@@ -13,6 +13,8 @@ import com.sk89q.worldedit.function.operation.Operations;
 import com.sk89q.worldedit.math.BlockVector3;
 import com.sk89q.worldedit.session.ClipboardHolder;
 import main.java.fr.verymc.Main;
+import main.java.fr.verymc.blocks.Chest;
+import main.java.fr.verymc.blocks.ChestManager;
 import main.java.fr.verymc.cmd.base.SpawnCmd;
 import main.java.fr.verymc.island.bank.IslandBank;
 import main.java.fr.verymc.island.challenges.IslandChallenge;
@@ -24,6 +26,8 @@ import main.java.fr.verymc.island.perms.IslandRanks;
 import main.java.fr.verymc.island.upgrade.IslandUpgradeGenerator;
 import main.java.fr.verymc.island.upgrade.IslandUpgradeMember;
 import main.java.fr.verymc.island.upgrade.IslandUpgradeSize;
+import main.java.fr.verymc.minions.Minion;
+import main.java.fr.verymc.minions.MinionManager;
 import main.java.fr.verymc.utils.PlayerUtils;
 import main.java.fr.verymc.utils.WorldBorderUtil;
 import org.bukkit.*;
@@ -195,6 +199,44 @@ public class IslandManager {
                         Operations.complete(operation);
                         editSession.flushSession();
 
+                        Bukkit.getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
+                            @Override
+                            public void run() {
+                                ArrayList<Minion> minions = new ArrayList<>();
+                                for (Minion m : MinionManager.instance.minions) {
+                                    minions.add(m);
+                                }
+                                for (Minion m : minions) {
+                                    if (getIslandByLoc(m.getBlocLocation()) == playerIsland) {
+                                        MinionManager.instance.removeMinion(m);
+                                    }
+                                }
+                                ArrayList<Chest> chests = new ArrayList<>();
+                                for (Chest c : ChestManager.instance.chests) {
+                                    chests.add(c);
+                                }
+                                for (Chest c : chests) {
+                                    if (getIslandByLoc(c.getBlock()) == playerIsland) {
+                                        ChestManager.instance.removeChestFromLoc(c.getBlock());
+                                    }
+                                }
+                                if (islands.contains(playerIsland)) {
+                                    islands.remove(playerIsland);
+                                }
+                                Long currentMills = System.currentTimeMillis();
+                                playerIsland.sendMessageToEveryMember("§6§lIles §8» §4L'île a été §lsupprimée §4par le chef. §f(en " + (currentMills - start) + "ms)");
+                                for (Map.Entry<UUID, IslandRanks> entry : playerIsland.getMembers().entrySet()) {
+                                    Player member = Bukkit.getPlayer(entry.getKey());
+                                    if (member == null) {
+                                        member = Bukkit.getOfflinePlayer(entry.getKey()).getPlayer();
+                                    }
+                                    PlayerUtils.TeleportPlayerFromRequest(member, SpawnCmd.Spawn, 0);
+                                    removePlayerAsAnIsland(member);
+                                }
+                                playerIsland.getMembers().clear();
+                            }
+                        }, 0);
+
                     } catch (WorldEditException e) {
                         p.sendMessage("§6§lIles §8» §cUne erreur est survenue lors de la suppression de l'île. Merci de réessayer.");
                         return;
@@ -203,25 +245,6 @@ public class IslandManager {
                     p.sendMessage("§6§lIles §8» §cUne erreur est survenue lors de la lecture du schématic. Merci de contacter un administrateur.");
                     return;
                 }
-                Bukkit.getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
-                    @Override
-                    public void run() {
-                        if (islands.contains(playerIsland)) {
-                            islands.remove(playerIsland);
-                        }
-                        Long currentMills = System.currentTimeMillis();
-                        playerIsland.sendMessageToEveryMember("§6§lIles §8» §4L'île a été §lsupprimée §4par le chef. §f(en " + (currentMills - start) + "ms)");
-                        for (Map.Entry<UUID, IslandRanks> entry : playerIsland.getMembers().entrySet()) {
-                            Player member = Bukkit.getPlayer(entry.getKey());
-                            if (member == null) {
-                                member = Bukkit.getOfflinePlayer(entry.getKey()).getPlayer();
-                            }
-                            PlayerUtils.TeleportPlayerFromRequest(member, SpawnCmd.Spawn, 0);
-                            removePlayerAsAnIsland(member);
-                        }
-                        playerIsland.getMembers().clear();
-                    }
-                }, 0);
             }
         }, 0);
     }
@@ -511,29 +534,30 @@ public class IslandManager {
                         Operations.complete(operation);
                         editSession.flushSession();
 
+                        Bukkit.getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
+                            @Override
+                            public void run() {
+                                HashMap<UUID, IslandRanks> members = new HashMap<>();
+                                members.put(p.getUniqueId(), IslandRanks.CHEF);
+                                IslandBank islandBank = new IslandBank(0, 0, 0, 0);
+                                IslandUpgradeSize islandUpgradeSize = new IslandUpgradeSize(50, 0);
+                                IslandUpgradeMember islandUpgradeMember = new IslandUpgradeMember(0);
+                                IslandUpgradeGenerator islandUpgradeGenerator = new IslandUpgradeGenerator(0);
+                                ArrayList<UUID> banneds = new ArrayList<>();
+                                ArrayList<IslandChallenge> challenges = new ArrayList<>();
+                                islands.add(new Island("Ile de " + p.getName(), p.getName(), p.getUniqueId(), finalToReturn1, finalId + 1, members, true,
+                                        islandUpgradeSize, islandUpgradeMember, WorldBorderUtil.Color.BLUE, islandBank, islandUpgradeGenerator, banneds, challenges, true));
+                                addPlayerAsAnIsland(p);
+                                p.sendMessage("§6§lIles §8» §aVous avez généré une nouvelle île avec succès (en " + (System.currentTimeMillis() - start) + "ms).");
+                                teleportPlayerToIslandSafe(p);
+                                return;
+                            }
+                        }, 0);
+
                     } catch (WorldEditException e) {
                         p.sendMessage("§6§lIles §8» §cUne erreur est survenue lors de la génération de l'île. Merci de réessayer.");
                         return;
                     }
-                    Bukkit.getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
-                        @Override
-                        public void run() {
-                            HashMap<UUID, IslandRanks> members = new HashMap<>();
-                            members.put(p.getUniqueId(), IslandRanks.CHEF);
-                            IslandBank islandBank = new IslandBank(0, 0, 0, 0);
-                            IslandUpgradeSize islandUpgradeSize = new IslandUpgradeSize(50, 0);
-                            IslandUpgradeMember islandUpgradeMember = new IslandUpgradeMember(0);
-                            IslandUpgradeGenerator islandUpgradeGenerator = new IslandUpgradeGenerator(0);
-                            ArrayList<UUID> banneds = new ArrayList<>();
-                            ArrayList<IslandChallenge> challenges = new ArrayList<>();
-                            islands.add(new Island("Ile de " + p.getName(), p.getName(), p.getUniqueId(), finalToReturn1, finalId + 1, members, true,
-                                    islandUpgradeSize, islandUpgradeMember, WorldBorderUtil.Color.BLUE, islandBank, islandUpgradeGenerator, banneds, challenges, true));
-                            addPlayerAsAnIsland(p);
-                            p.sendMessage("§6§lIles §8» §aVous avez généré une nouvelle île avec succès (en " + (System.currentTimeMillis() - start) + "ms).");
-                            teleportPlayerToIslandSafe(p);
-                            return;
-                        }
-                    }, 0);
                 } catch (IOException e) {
                     p.sendMessage("§6§lIles §8» §cUne erreur est survenue lors de la lecture du schématic. Merci de contacter un administrateur.");
                     return;

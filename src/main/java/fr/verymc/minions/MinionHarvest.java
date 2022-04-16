@@ -76,14 +76,14 @@ public class MinionHarvest {
             if (!lastWarn.containsKey(minion)) {
                 lastWarn.put(minion, 1);
             } else {
-                lastWarn.put(minion, lastWarn.get(player.getName()) + 1);
+                lastWarn.put(minion, lastWarn.get(minion) + 1);
             }
-            if (lastWarn.get(player.getName()) >= 30) {
+            if (lastWarn.get(minion) >= 30) {
                 player.sendMessage("§6§lMinions §8» §cLe minion en x: " + minion.getBlocLocation().getX() +
                         " y: " + minion.getBlocLocation().getY() + " z: " + minion.getBlocLocation().getZ() +
                         " possède un §lcoffre invalide/non définit§c.");
                 player.playEffect(player.getLocation(), Effect.ANVIL_BREAK, 0);
-                lastWarn.remove(player.getName());
+                lastWarn.remove(minion);
             }
         }
     }

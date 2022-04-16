@@ -25,8 +25,6 @@ public class ChestManager {
 
     public ChestManager() {
         instance = this;
-        readFromFile();
-        autoSave();
     }
 
     public void autoSellForVeryChest() {
@@ -74,37 +72,20 @@ public class ChestManager {
         }, 20 * 20);
     }
 
-    public void giveChest(Player player, int i, int type) {
-        int a = i;
-        boolean found = false;
-        for (main.java.fr.verymc.blocks.Chest chest : chests) {
-            if (chest.getId() == i) {
-                found = true;
-            }
-        }
-        if (found) {
-            for (main.java.fr.verymc.blocks.Chest chest : chests) {
-                if (chest.getType() == type) {
-                    if (chest.getId() > a) {
-                        a = chest.getId();
-                    }
-                }
-            }
-            a++;
-        }
+    public void giveChest(Player player, Long i, int type) {
         ItemStack aa = new ItemStack(Material.AIR);
         if (type == 1) {
             aa = new ItemStack(Material.CHEST);
             ItemMeta ameta = aa.getItemMeta();
 
-            ameta.setDisplayName("§6SellChest §c(id#" + a + ")");
+            ameta.setDisplayName("§6SellChest §c(id#" + i + ")");
             aa.setUnbreakable(true);
             aa.setItemMeta(ameta);
         } else if (type == 0) {
             aa = new ItemStack(Material.HOPPER);
             ItemMeta ameta = aa.getItemMeta();
 
-            ameta.setDisplayName("§6Chunk Hoppeur §c(id#" + a + ")");
+            ameta.setDisplayName("§6Chunk Hoppeur §c(id#" + i + ")");
             aa.setUnbreakable(true);
             aa.setItemMeta(ameta);
         }
@@ -116,7 +97,7 @@ public class ChestManager {
         player.getInventory().addItem(aa);
     }
 
-    public void placeChest(Player player, Location block, int num, int type) {
+    public void placeChest(Player player, Location block, long num, int type) {
         chests.add(new main.java.fr.verymc.blocks.Chest(type, block, player.getUniqueId(), player.getName(), num, block.getChunk().getChunkKey()));
     }
 
@@ -137,27 +118,4 @@ public class ChestManager {
         }
         return null;
     }
-
-    public void readFromFile() {
-
-        // API REQUEST
-
-
-    }
-
-    public void autoSave() {
-        Bukkit.getScheduler().scheduleAsyncDelayedTask(Main.instance, new Runnable() {
-            public void run() {
-
-
-                // API REQUEST
-
-
-                autoSave();
-            }
-        }, 20 * 120);
-
-
-    }
-
 }

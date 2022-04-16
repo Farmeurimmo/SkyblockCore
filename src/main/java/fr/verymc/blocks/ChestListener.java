@@ -95,7 +95,7 @@ public class ChestListener implements Listener {
         }
         String numberOnly = a.replaceAll("[^0-9]", "");
         ChestManager.instance.removeChestFromLoc(e.getBlock().getLocation());
-        ChestManager.instance.giveChest(e.getPlayer(), Integer.parseInt(numberOnly), type);
+        ChestManager.instance.giveChest(e.getPlayer(), Long.parseLong(numberOnly), type);
         e.setDropItems(false);
     }
 
@@ -117,7 +117,7 @@ public class ChestListener implements Listener {
         } else {
             return;
         }
-        ChestManager.instance.placeChest(e.getPlayer(), e.getBlock().getLocation(), Integer.parseInt(numberOnly), type);
+        ChestManager.instance.placeChest(e.getPlayer(), e.getBlock().getLocation(), Long.parseLong(numberOnly), type);
     }
 
 }
