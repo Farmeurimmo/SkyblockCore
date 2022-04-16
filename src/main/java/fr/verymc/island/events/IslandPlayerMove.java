@@ -25,7 +25,7 @@ public class IslandPlayerMove implements Listener {
                     return;
                 }
             }
-
+            IslandManager.instance.setWorldBorder(e.getPlayer(), e.getTo());
         }
     }
 

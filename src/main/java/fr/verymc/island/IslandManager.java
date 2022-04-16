@@ -142,6 +142,17 @@ public class IslandManager {
         }
     }
 
+    public void setWorldBorder(Player p, Location loc) {
+        Island i = getIslandByLoc(loc);
+        if (p.getWorld().getName().equalsIgnoreCase("world")) {
+            return;
+        }
+        if (i != null) {
+            WorldBorderUtil.instanceClass.sendWorldBorder(p, i.getBorderColor(),
+                    i.getSizeUpgrade().getSize(), i.getCenter());
+        }
+    }
+
     public void teleportPlayerToIslandSafe(Player p) {
         for (Island i : islands) {
             if (i.getMembers().containsKey(p.getUniqueId())) {
