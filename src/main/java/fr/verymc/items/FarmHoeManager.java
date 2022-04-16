@@ -161,7 +161,7 @@ public class FarmHoeManager implements Listener {
                 int age = ageable.getAge();
                 int fd = 1;
                 if (age == ageable.getMaximumAge()) {
-                    for (ItemStack eed : bltmp.getDrops()) {
+                    for (ItemStack eed : bltmp.getDrops(e.getItem())) {
                         if (eed.getType().toString().contains("SEED") || eed.getType() == Material.CARROT
                                 || eed.getType() == Material.POTATO || eed.getType() == Material.NETHER_WART) {
                             if (fd == 1) {
