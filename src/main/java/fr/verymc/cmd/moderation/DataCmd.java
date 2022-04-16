@@ -1,6 +1,6 @@
 package main.java.fr.verymc.cmd.moderation;
 
-import main.java.fr.verymc.config.ConfigManager;
+import main.java.fr.verymc.storage.ConfigManager;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;

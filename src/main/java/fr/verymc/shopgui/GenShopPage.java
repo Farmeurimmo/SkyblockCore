@@ -10,6 +10,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -59,22 +60,20 @@ public class GenShopPage {
                 spawneurtype.put(custom1.getDisplayName(), EntityType.valueOf(Main.instance.getConfig().getString("Shops." + page + "." + aa + ".spawnertype")));
             }
 
-            String achat = "";
-            Double prixachat = BuyShopItem.pricesbuy.get(custom1);
-            if (prixachat == null || prixachat == -1) {
-                achat = "§cNon achetable";
-            } else {
-                achat = "§c" + prixachat + "$";
+            String achat = "§cNon achetable";
+            double prixachat = BuyShopItem.pricesbuy.get(custom1);
+            if (prixachat > 0) {
+                achat = "§c" + DecimalFormat.getNumberInstance().format(prixachat) + " $";
             }
 
-            String vente = "";
-            Double prixvente = BuyShopItem.pricessell.get(custom1);
-            if (prixvente == null || prixvente == -1) {
-                vente = "§cNon vendable";
-            } else {
-                vente = "§c" + prixvente + "$";
+            String vente = "§cNon vendable";
+            double prixvente = BuyShopItem.pricessell.get(custom1);
+            if (prixvente > 0) {
+                vente = "§c" + DecimalFormat.getNumberInstance().format(prixvente) + " $";
             }
-            meta1.setLore(Arrays.asList("§6Achat: " + achat, "§6Vente: " + vente));
+
+            meta1.setLore(Arrays.asList("§6Achat: " + achat, "§6Vente: " +
+                    vente));
             custom1.setItemMeta(meta1);
 
             int slot = GetNextSlot();

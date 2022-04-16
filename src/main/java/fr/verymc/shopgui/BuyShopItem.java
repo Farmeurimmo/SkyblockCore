@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import java.text.DecimalFormat;
 import java.util.HashMap;
 
 public class BuyShopItem {
@@ -205,14 +206,15 @@ public class BuyShopItem {
                 }
             } else {
                 double loa = price * amount - EcoAccountsManager.instance.getMoneyUUID(player.getUniqueId());
-                player.sendMessage("§6§lShop §8» §fIl vous manque §6" + loa + "$§f.");
+                player.sendMessage("§6§lShop §8» §fIl vous manque §6" + DecimalFormat.getNumberInstance().format(loa) + " $§f.");
             }
         } else {
             if (player.getInventory().contains(a.getType(), amount)) {
                 Double profit = pricessell.get(new ItemStack(Material.valueOf(a.getType().toString()))) * amount;
                 player.closeInventory();
                 removeItems(player.getInventory(), a.getType(), amount);
-                player.sendMessage("§6§lShop §8» §fVous avez vendu §ax" + amount + " " + a.getType() + "§f pour §6" + profit + "$§f.");
+                player.sendMessage("§6§lShop §8» §fVous avez vendu §ax" + amount + " " + a.getType() + "§f pour §6" +
+                        DecimalFormat.getNumberInstance().format(profit) + " $§f.");
                 EcoAccountsManager.instance.addFoundsUUID(player.getUniqueId(), profit, false);
             } else {
                 player.sendMessage("§6§lShop §8» §fVous avez besoin de plus de " + a.getType() + ".");

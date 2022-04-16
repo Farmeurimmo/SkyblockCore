@@ -141,7 +141,7 @@ public class ScoreBoard implements Listener {
                         DecimalFormat.getNumberInstance().format(ismoney));
 
             } else {
-                board.getTeam("island").setPrefix("§6§lIle");
+                if (board.getTeam("island") != null) board.getTeam("island").setPrefix("§6§lIle");
                 if (board.getTeam("gradeis") != null) board.getTeam("gradeis").setPrefix(" §fGrade d'ile §8▸ §aN/A");
                 if (board.getTeam("classementis") != null)
                     board.getTeam("classementis").setPrefix(" §fClassement §8▸ §aN/A");

@@ -9,10 +9,11 @@ import main.java.fr.verymc.atout.BuyAtoutGui;
 import main.java.fr.verymc.auctions.AhCmd;
 import main.java.fr.verymc.auctions.AuctionGui;
 import main.java.fr.verymc.auctions.AuctionsManager;
-import main.java.fr.verymc.blocks.*;
+import main.java.fr.verymc.blocks.ChestListener;
+import main.java.fr.verymc.blocks.ChestManager;
+import main.java.fr.verymc.blocks.ChestsCmd;
 import main.java.fr.verymc.cmd.base.*;
 import main.java.fr.verymc.cmd.moderation.*;
-import main.java.fr.verymc.config.ConfigManager;
 import main.java.fr.verymc.crates.CratesManager;
 import main.java.fr.verymc.crates.KeyCmd;
 import main.java.fr.verymc.eco.EcoAccountsManager;
@@ -45,6 +46,8 @@ import main.java.fr.verymc.minions.*;
 import main.java.fr.verymc.scoreboard.ScoreBoard;
 import main.java.fr.verymc.scoreboard.TABManager;
 import main.java.fr.verymc.shopgui.*;
+import main.java.fr.verymc.storage.ConfigManager;
+import main.java.fr.verymc.storage.SkyblockUserManager;
 import main.java.fr.verymc.utils.WorldBorderUtil;
 import main.java.fr.verymc.winelottery.WineGui;
 import main.java.fr.verymc.winelottery.WineSpawn;
@@ -132,6 +135,7 @@ public class Main extends JavaPlugin implements Listener {
         System.out.println("-----------------------------------------------------------------------------------------------------");
 
         System.out.println("Island startup...");
+        new SkyblockUserManager();
         saveResource("ileworld.schem", true);
         saveResource("clear.schem", true);
         new IslandManager();
@@ -145,8 +149,7 @@ public class Main extends JavaPlugin implements Listener {
         spawncooldown.clear();
         ChatReaction.WriteWords();
         //BossBar.CreateBossBar();
-        ChunkCollectorManager.ReadFromFile();
-        SellChestManager.ReadFromFile();
+        new ChestManager();
         FarmHoeManager.addtolist();
         new EcoAccountsManager();
         System.out.println("Starting one time methods DONE | NEXT Pregen shopgui ");
@@ -169,12 +172,8 @@ public class Main extends JavaPlugin implements Listener {
 
         ChatReaction.StartChatReaction();
         IslandChallengesReset.CheckForReset();
-        EcoAccountsManager.instance.updateHash();
-        SellChestManager.AutoSellForVeryChest();
+        ChestManager.instance.autoSellForVeryChest();
         new ScoreBoard();
-        for (Player player : Bukkit.getOnlinePlayers()) {
-            ScoreBoard.acces.setScoreBoard(player);
-        }
         System.out.println("Starting permanant loops DONE | NEXT blocs/pnj/holos");
 
         WineSpawn.SpawnPnj(new Location(Bukkit.getServer().getWorld("world"), -184.5, 70.5, -77.5, -90, 0));
@@ -210,8 +209,7 @@ public class Main extends JavaPlugin implements Listener {
         getServer().getPluginManager().registerEvents(new AmountGuiManager(), this);
         getServer().getPluginManager().registerEvents(new MultiStacksShopGuiManager(), this);
         getServer().getPluginManager().registerEvents(new TchatManager(), this);
-        getServer().getPluginManager().registerEvents(new ChunkCollector(), this);
-        getServer().getPluginManager().registerEvents(new SellChest(), this);
+        getServer().getPluginManager().registerEvents(new ChestListener(), this);
         getServer().getPluginManager().registerEvents(new FarmHoeManager(), this);
         getServer().getPluginManager().registerEvents(new FarmHoeGui(), this);
         getServer().getPluginManager().registerEvents(new AuctionGui(), this);
@@ -278,11 +276,15 @@ public class Main extends JavaPlugin implements Listener {
 
         System.out.println("§aDémarrage du plugin TERMINE!");
         System.out.println("-----------------------------------------------------------------------------------------------------");
+
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            SkyblockUserManager.instance.checkForAccount(player);
+            ScoreBoard.acces.setScoreBoard(player);
+        }
     }
 
     @Override
     public void onDisable() {
-        CountdownFly.instance.WriteFlyLeft();
         HolosSetup.RemoveBoxeHolo();
         CratesManager.RemoveBoxeHolo();
         //BossBar.RemoveBossBarForPlayers();

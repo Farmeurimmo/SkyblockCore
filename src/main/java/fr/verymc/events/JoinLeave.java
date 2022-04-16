@@ -1,12 +1,12 @@
 package main.java.fr.verymc.events;
 
-import main.java.fr.verymc.config.ConfigManager;
-import main.java.fr.verymc.eco.EcoAccountsManager;
 import main.java.fr.verymc.island.Island;
 import main.java.fr.verymc.island.IslandManager;
 import main.java.fr.verymc.island.guis.IslandTopGui;
 import main.java.fr.verymc.island.perms.IslandRanks;
 import main.java.fr.verymc.scoreboard.ScoreBoard;
+import main.java.fr.verymc.storage.SkyblockUser;
+import main.java.fr.verymc.storage.SkyblockUserManager;
 import net.luckperms.api.LuckPermsProvider;
 import net.luckperms.api.model.user.User;
 import org.bukkit.Bukkit;
@@ -24,11 +24,13 @@ import java.util.UUID;
 
 public class JoinLeave implements Listener {
 
-    String Grade = "§7N/A";
-
     @EventHandler
     public void OnJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
+
+        SkyblockUserManager.instance.checkForAccount(player);
+
+        SkyblockUser skyblockUser = SkyblockUserManager.instance.getUser(player.getUniqueId());
 
         player.setGameMode(GameMode.SURVIVAL);
 
@@ -39,6 +41,7 @@ public class JoinLeave implements Listener {
         ScoreBoard.acces.setScoreBoard(player);
 
         User user = LuckPermsProvider.get().getUserManager().getUser(player.getName());
+        String Grade = "§7N/A";
         if (user.getCachedData().getMetaData().getPrefix() != null) {
             Grade = user.getCachedData().getMetaData().getPrefix();
         }
@@ -54,43 +57,16 @@ public class JoinLeave implements Listener {
         }
         event.setJoinMessage(JoinMessage);
 
-        EcoAccountsManager.instance.checkForAccount(player);
+        if (skyblockUser.hasHasteActive()) {
+            player.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 999999999, 1));
+        }
+        if (skyblockUser.hasSpeedActive()) {
+            player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999999, 1));
+        }
+        if (skyblockUser.hasJumpActive()) {
+            player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 999999999, 2));
+        }
 
-        if (ConfigManager.instance.getDataAtoutsChallenges().getString("Joueurs." + player.getUniqueId() + ".Atout.1.Active") == null) {
-            ConfigManager.instance.getDataAtoutsChallenges().set("Joueurs." + player.getUniqueId() + ".Atout.1.Active", false);
-            ConfigManager.instance.getDataAtoutsChallenges().set("Joueurs." + player.getUniqueId() + ".Atout.1.Level", 0);
-            ConfigManager.instance.saveData();
-        }
-        if (ConfigManager.instance.getDataAtoutsChallenges().getString("Joueurs." + player.getUniqueId() + ".Atout.2.Active") == null) {
-            ConfigManager.instance.getDataAtoutsChallenges().set("Joueurs." + player.getUniqueId() + ".Atout.2.Active", false);
-            ConfigManager.instance.getDataAtoutsChallenges().set("Joueurs." + player.getUniqueId() + ".Atout.2.Level", 0);
-            ConfigManager.instance.saveData();
-        }
-        if (ConfigManager.instance.getDataAtoutsChallenges().getString("Joueurs." + player.getUniqueId() + ".Atout.3.Active") == null) {
-            ConfigManager.instance.getDataAtoutsChallenges().set("Joueurs." + player.getUniqueId() + ".Atout.3.Active", false);
-            ConfigManager.instance.getDataAtoutsChallenges().set("Joueurs." + player.getUniqueId() + ".Atout.3.Level", 0);
-            ConfigManager.instance.saveData();
-        }
-        if (ConfigManager.instance.getDataAtoutsChallenges().getString("Joueurs." + player.getUniqueId() + ".Atout.4.Active") == null) {
-            ConfigManager.instance.getDataAtoutsChallenges().set("Joueurs." + player.getUniqueId() + ".Atout.4.Active", false);
-            ConfigManager.instance.getDataAtoutsChallenges().set("Joueurs." + player.getUniqueId() + ".Atout.4.Level", 0);
-            ConfigManager.instance.saveData();
-        }
-        if (ConfigManager.instance.getDataAtoutsChallenges().getBoolean("Joueurs." + player.getUniqueId() + ".Atout.1.Active") == true) {
-            if (ConfigManager.instance.getDataAtoutsChallenges().getInt("Joueurs." + player.getUniqueId() + ".Atout.1.Level") == 2) {
-                player.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 999999999, 1));
-            }
-        }
-        if (ConfigManager.instance.getDataAtoutsChallenges().getBoolean("Joueurs." + player.getUniqueId() + ".Atout.2.Active") == true) {
-            if (ConfigManager.instance.getDataAtoutsChallenges().getInt("Joueurs." + player.getUniqueId() + ".Atout.2.Level") == 2) {
-                player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999999, 1));
-            }
-        }
-        if (ConfigManager.instance.getDataAtoutsChallenges().getBoolean("Joueurs." + player.getUniqueId() + ".Atout.3.Active") == true) {
-            if (ConfigManager.instance.getDataAtoutsChallenges().getInt("Joueurs." + player.getUniqueId() + ".Atout.3.Level") == 3) {
-                player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 999999999, 2));
-            }
-        }
         IslandManager.instance.setWorldBorder(player);
     }
 
@@ -119,6 +95,7 @@ public class JoinLeave implements Listener {
             }
         }
         User user = LuckPermsProvider.get().getUserManager().getUser(player.getName());
+        String Grade = "§7N/A";
         if (user.getCachedData().getMetaData().getPrefix() != null) {
             Grade = user.getCachedData().getMetaData().getPrefix();
         }

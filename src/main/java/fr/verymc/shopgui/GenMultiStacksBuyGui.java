@@ -8,6 +8,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map.Entry;
@@ -28,7 +29,7 @@ public class GenMultiStacksBuyGui {
         custom7.setItemMeta(customg);
         inv.setItem(53, custom7);
 
-        Double price = 0.0;
+        double price = 0.0;
         if (aa.getType() != Material.SPAWNER) {
             price = BuyShopItem.pricesbuy.get(new ItemStack(Material.valueOf(aa.getType().toString())));
         } else {
@@ -38,20 +39,22 @@ public class GenMultiStacksBuyGui {
         }
         ItemMeta tempameta = aa.getItemMeta();
         tempameta.setLore(null);
-        tempameta.setLore(Arrays.asList("§aPrix par stack: §c" + price * 64 + "$"));
+        tempameta.setLore(Arrays.asList("§aPrix par stack: §c" + DecimalFormat.getNumberInstance().format(price * 64) + " $"));
         aa.setItemMeta(tempameta);
         inv.setItem(45, aa);
 
         for (Entry<ItemStack, Integer> cc : multistacks.entrySet()) {
             ItemMeta temp = cc.getKey().getItemMeta();
             if (cc.getKey().getAmount() < 64) {
-                temp.setLore(Arrays.asList("§aTotal: §c" + price * cc.getKey().getAmount() * 64 + "$"));
+                temp.setLore(Arrays.asList("§aTotal: §c" +
+                        DecimalFormat.getNumberInstance().format(price * cc.getKey().getAmount() * 64) + " $"));
             } else {
                 ItemStack ddddd = new ItemStack(aa.getType());
                 if (cc.getKey().getType() == Material.SPAWNER) {
                     ddddd.setDisplayName(aa.getDisplayName());
                 }
-                temp.setLore(Arrays.asList("§aTotal: §c" + price * BuyShopItem.GetAmountToFillInInv(ddddd, player) + "$"));
+                temp.setLore(Arrays.asList("§aTotal: §c" + DecimalFormat.getNumberInstance().format(price *
+                        BuyShopItem.GetAmountToFillInInv(ddddd, player)) + " $"));
             }
             cc.getKey().setItemMeta(temp);
             inv.setItem(cc.getValue(), cc.getKey());

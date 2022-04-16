@@ -60,6 +60,7 @@ public class IslandManager {
                 fileEmptyIsland = file;
             }
         }
+        readFromAPI();
         new IslandRank();
         new IslandMainGui();
         new IslandMemberGui();
@@ -73,6 +74,31 @@ public class IslandManager {
         blocks.put(Material.IRON_BLOCK, 10.0);
         islandBockValues = new IslandBlockValues(blocks);
         new IslandValueCalcManager();
+        autoSaveIslandsToAPI();
+    }
+
+
+    public void readFromAPI() {
+
+
+        // API REQUEST
+
+
+    }
+
+    public void autoSaveIslandsToAPI() {
+        Bukkit.getScheduler().scheduleAsyncDelayedTask(Main.instance, new Runnable() {
+            public void run() {
+
+
+                // API REQUEST
+
+
+                autoSaveIslandsToAPI();
+            }
+        }, 20 * 120);
+
+
     }
 
     public boolean isAnIslandByLoc(Location loc) {

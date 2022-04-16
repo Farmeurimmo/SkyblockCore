@@ -8,6 +8,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map.Entry;
@@ -54,7 +55,7 @@ public class GenAmoutShopGui {
         }
         custom4.setItemMeta(customd);
 
-        Double price = 0.0;
+        double price = 0.0;
         ItemMeta tempameta = aa.getItemMeta();
         tempameta.setLore(null);
         if (a == true) {
@@ -63,15 +64,17 @@ public class GenAmoutShopGui {
             } else {
                 price = BuyShopItem.pricesbuy.get(aa);
             }
-            tempameta.setLore(Arrays.asList("§6Prix d'achat: §c" + price + "$/u", "§6Total: §c" + price * aa.getAmount() + "$"));
+            tempameta.setLore(Arrays.asList("§6Prix d'achat: §c" + DecimalFormat.getNumberInstance().format(price) +
+                    " $/u", "§6Total: §c" + DecimalFormat.getNumberInstance().format(price * aa.getAmount()) + " $"));
             ItemMeta temp = custom11.getItemMeta();
-            temp.setLore(Arrays.asList("§aTotal: §c" + price * aa.getAmount() + "$"));
+            temp.setLore(Arrays.asList("§aTotal: §c" + DecimalFormat.getNumberInstance().format(price * aa.getAmount()) + " $"));
             custom11.setItemMeta(temp);
         } else {
             price = BuyShopItem.pricessell.get(new ItemStack(Material.valueOf(aa.getType().toString())));
-            tempameta.setLore(Arrays.asList("§6Prix de vente: §a" + price + "$/u", "§6Total: §a" + price * aa.getAmount() + "$"));
+            tempameta.setLore(Arrays.asList("§6Prix de vente: §a" + DecimalFormat.getNumberInstance().format(price) +
+                    " $/u", "§6Total: §a" + DecimalFormat.getNumberInstance().format(price * aa.getAmount()) + " $"));
             ItemMeta temp = custom11.getItemMeta();
-            temp.setLore(Arrays.asList("§aTotal: §a" + price * aa.getAmount() + "$"));
+            temp.setLore(Arrays.asList("§aTotal: §a" + DecimalFormat.getNumberInstance().format(price * aa.getAmount()) + " $"));
             custom11.setItemMeta(temp);
         }
         aa.setItemMeta(tempameta);

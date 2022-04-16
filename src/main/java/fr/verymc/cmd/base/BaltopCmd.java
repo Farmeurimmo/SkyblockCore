@@ -1,7 +1,7 @@
 package main.java.fr.verymc.cmd.base;
 
 import main.java.fr.verymc.eco.BaltopManager;
-import main.java.fr.verymc.eco.EcoAccountsManager;
+import main.java.fr.verymc.storage.SkyblockUserManager;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -27,7 +27,7 @@ public class BaltopCmd implements CommandExecutor {
                 }
                 if (!args[0].contains("-") && digit == true) {
                     int intValue = Integer.parseInt(args[0]);
-                    int TotalPlayers = EcoAccountsManager.instance.Moneys.size();
+                    int TotalPlayers = SkyblockUserManager.instance.users.size();
                     int TotalPage = TotalPlayers / 10 + 1;
                     if (intValue >= 1) {
                         if (intValue <= TotalPage) {

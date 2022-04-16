@@ -8,6 +8,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.text.DecimalFormat;
 import java.util.Arrays;
 
 public class AmountGuiManager implements Listener {
@@ -41,10 +42,11 @@ public class AmountGuiManager implements Listener {
                     price = BuyShopItem.pricesbuy.get(ddddd);
                 }
                 double totalcost = price * e.getInventory().getItem(22).getAmount();
-                temp.setLore(Arrays.asList("§6Prix d'achat: §c" + price + "$/u", "§6Total: §c" + totalcost + "$"));
+                temp.setLore(Arrays.asList("§6Prix d'achat: §c" + price + " $/u", "§6Total: §c" +
+                        DecimalFormat.getNumberInstance().format(totalcost) + " $"));
                 e.getInventory().getItem(22).setItemMeta(temp);
                 ItemMeta temp2 = e.getInventory().getItem(40).getItemMeta();
-                temp2.setLore(Arrays.asList("§aTotal: §c" + totalcost + "$"));
+                temp2.setLore(Arrays.asList("§aTotal: §c" + DecimalFormat.getNumberInstance().format(totalcost) + " $"));
                 e.getInventory().getItem(40).setItemMeta(temp2);
                 return;
             }
@@ -67,10 +69,11 @@ public class AmountGuiManager implements Listener {
                     price = BuyShopItem.pricesbuy.get(ddddd);
                 }
                 double totalcost = price * e.getInventory().getItem(22).getAmount();
-                temp.setLore(Arrays.asList("§6Prix d'achat: §c" + price + "$/u", "§6Total: §c" + totalcost + "$"));
+                temp.setLore(Arrays.asList("§6Prix d'achat: §c" + price + " $/u", "§6Total: §c" +
+                        DecimalFormat.getNumberInstance().format(totalcost) + " $"));
                 e.getInventory().getItem(22).setItemMeta(temp);
                 ItemMeta temp2 = e.getInventory().getItem(40).getItemMeta();
-                temp2.setLore(Arrays.asList("§aTotal: §c" + totalcost + "$"));
+                temp2.setLore(Arrays.asList("§aTotal: §c" + DecimalFormat.getNumberInstance().format(totalcost) + " $"));
                 e.getInventory().getItem(40).setItemMeta(temp2);
                 return;
             }
@@ -120,10 +123,11 @@ public class AmountGuiManager implements Listener {
                 ItemMeta temp = e.getInventory().getItem(22).getItemMeta();
                 Double price = BuyShopItem.pricessell.get(new ItemStack(Material.valueOf(e.getInventory().getItem(22).getType().toString())));
                 double totalcost = price * e.getInventory().getItem(22).getAmount();
-                temp.setLore(Arrays.asList("§6Prix de vente: §a" + price + "$/u", "§6Total: §a" + totalcost + "$"));
+                temp.setLore(Arrays.asList("§6Prix de vente: §a" + price + " $/u", "§6Total: §a" +
+                        DecimalFormat.getNumberInstance().format(totalcost) + " $"));
                 e.getInventory().getItem(22).setItemMeta(temp);
                 ItemMeta temp2 = e.getInventory().getItem(40).getItemMeta();
-                temp2.setLore(Arrays.asList("§aTotal: §a" + totalcost + "$"));
+                temp2.setLore(Arrays.asList("§aTotal: §a" + DecimalFormat.getNumberInstance().format(totalcost) + " $"));
                 e.getInventory().getItem(40).setItemMeta(temp2);
                 return;
             }
@@ -139,10 +143,11 @@ public class AmountGuiManager implements Listener {
                 ItemMeta temp = e.getInventory().getItem(22).getItemMeta();
                 Double price = BuyShopItem.pricessell.get(new ItemStack(Material.valueOf(e.getInventory().getItem(22).getType().toString())));
                 double totalcost = price * e.getInventory().getItem(22).getAmount();
-                temp.setLore(Arrays.asList("§6Prix de vente: §a" + price + "$/u", "§6Total: §a" + totalcost + "$"));
+                temp.setLore(Arrays.asList("§6Prix de vente: §a" + price + "$/u", "§6Total: §a" +
+                        DecimalFormat.getNumberInstance().format(totalcost) + " $"));
                 e.getInventory().getItem(22).setItemMeta(temp);
                 ItemMeta temp2 = e.getInventory().getItem(40).getItemMeta();
-                temp2.setLore(Arrays.asList("§aTotal: §a" + totalcost + "$"));
+                temp2.setLore(Arrays.asList("§aTotal: §a" + DecimalFormat.getNumberInstance().format(totalcost) + " $"));
                 e.getInventory().getItem(40).setItemMeta(temp2);
                 return;
             }

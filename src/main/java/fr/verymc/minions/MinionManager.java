@@ -1,14 +1,11 @@
 package main.java.fr.verymc.minions;
 
 import main.java.fr.verymc.Main;
-import main.java.fr.verymc.config.AsyncSaver;
-import main.java.fr.verymc.config.ConfigManager;
 import main.java.fr.verymc.utils.PreGenItems;
 import org.bukkit.Bukkit;
 import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
@@ -24,7 +21,6 @@ import org.bukkit.util.EulerAngle;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.UUID;
 
 public class MinionManager {
 
@@ -44,15 +40,31 @@ public class MinionManager {
         instance = this;
         readForMinions();
         faceBloc.addAll(Arrays.asList(BlockFace.EAST, BlockFace.NORTH, BlockFace.SOUTH, BlockFace.WEST));
+        autoSave();
+    }
+
+    public void autoSave() {
+        Bukkit.getScheduler().scheduleAsyncDelayedTask(Main.instance, new Runnable() {
+            public void run() {
+
+
+                // API REQUEST
+
+
+                autoSave();
+            }
+        }, 20 * 120);
+
+
     }
 
     public void readForMinions() {
-        if (ConfigManager.instance.getDataMinion().getConfigurationSection("Minions.mineur") == null) {
+        /*if (ConfigManager.instance.getDataMinion().getConfigurationSection("Minions.mineur") == null) {
             return;
-        }
+        }*/
         Bukkit.getServer().getScheduler().scheduleAsyncDelayedTask(Main.instance, new Runnable() {
             public void run() {
-                for (String id : ConfigManager.instance.getDataMinion().getConfigurationSection("Minions.mineur").getKeys(false)) {
+                /*for (String id : ConfigManager.instance.getDataMinion().getConfigurationSection("Minions.mineur").getKeys(false)) {
                     Long idMinion = Long.parseLong(id);
                     String ownerS = ConfigManager.instance.getDataMinion().getString("Minions.mineur." + id + ".ownerS");
                     UUID ownerUUID = UUID.fromString(ConfigManager.instance.getDataMinion().getString("Minions.mineur." + id + ".ownerUUID"));
@@ -72,7 +84,11 @@ public class MinionManager {
 
                     minions.add(new Minion(idMinion, ownerS, ownerUUID, levelInt, blocLoc, minionType
                             , blockFace, isChestLinked, blocChest, isAutoSmelt));
-                }
+                }*/
+
+                //API REQUEST
+
+
             }
         }, 0);
     }
@@ -154,7 +170,7 @@ public class MinionManager {
         blocLoc.add(0.5, 1, 0.5);
         blocLoc.setDirection(player.getLocation().getDirection());
 
-        HashMap<String, Object> objectHashMap = new HashMap<>();
+        /*HashMap<String, Object> objectHashMap = new HashMap<>();
         objectHashMap.put("Minions.mineur." + id + ".ownerS", player.getName());
         objectHashMap.put("Minions.mineur." + id + ".ownerUUID", player.getUniqueId().toString());
         objectHashMap.put("Minions.mineur." + id + ".levelint", levelInt);
@@ -165,7 +181,7 @@ public class MinionManager {
         objectHashMap.put("Minions.mineur." + id + ".blocChest", null);
         objectHashMap.put("Minions.mineur." + id + ".isAutoSmelt", false);
         AsyncSaver.instance.setAndSaveAsync(objectHashMap, ConfigManager.instance.getDataMinion(),
-                ConfigManager.instance.minionFile);
+                ConfigManager.instance.minionFile);*/
 
         Minion minion = new Minion(id, player.getName(), player.getUniqueId(), levelInt, blocLoc, minionType,
                 blockFace, false, null, false);
@@ -220,10 +236,10 @@ public class MinionManager {
             }
         }
 
-        HashMap<String, Object> objectHashMap = new HashMap<>();
+        /*HashMap<String, Object> objectHashMap = new HashMap<>();
         objectHashMap.put("Minions.mineur." + minion.getID(), null);
         AsyncSaver.instance.setAndSaveAsync(objectHashMap, ConfigManager.instance.getDataMinion(),
-                ConfigManager.instance.minionFile);
+                ConfigManager.instance.minionFile);*/
 
         minions.remove(minion);
     }

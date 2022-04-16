@@ -1,10 +1,10 @@
 package main.java.fr.verymc.atout;
 
 import main.java.fr.verymc.Main;
-import main.java.fr.verymc.config.AsyncSaver;
-import main.java.fr.verymc.config.ConfigManager;
 import main.java.fr.verymc.eco.EcoAccountsManager;
 import main.java.fr.verymc.gui.Farm2WinGui;
+import main.java.fr.verymc.storage.SkyblockUser;
+import main.java.fr.verymc.storage.SkyblockUserManager;
 import main.java.fr.verymc.utils.PreGenItems;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -19,7 +19,6 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import java.util.Arrays;
-import java.util.HashMap;
 
 public class BuyAtoutGui implements Listener {
 
@@ -34,14 +33,18 @@ public class BuyAtoutGui implements Listener {
 
         inv.setItem(22, PreGenItems.getOwnerHead(player));
 
-        if (ConfigManager.instance.getDataAtoutsChallenges().getInt("Joueurs." + player.getUniqueId() + ".Atout.1.Level") == 0) {
+        SkyblockUserManager.instance.checkForAccount(player);
+
+        SkyblockUser skyblockUser = SkyblockUserManager.instance.getUser(player.getUniqueId());
+
+        if (!skyblockUser.hasHaste()) {
             ItemStack custom1 = new ItemStack(Material.GOLDEN_PICKAXE, 1);
             ItemMeta customa = custom1.getItemMeta();
             customa.setDisplayName("§eHaste 2");
             customa.setLore(Arrays.asList("§7", "§6Prix: " + haste + "$"));
             custom1.setItemMeta(customa);
             inv.setItem(10, custom1);
-        } else if (ConfigManager.instance.getDataAtoutsChallenges().getInt("Joueurs." + player.getUniqueId() + ".Atout.1.Level") == 2) {
+        } else if (skyblockUser.hasHaste()) {
             ItemStack custom10 = new ItemStack(Material.BEDROCK, 1);
             ItemMeta customi = custom10.getItemMeta();
             customi.setDisplayName("§eHaste 2 §c(déjà possédé)");
@@ -50,14 +53,14 @@ public class BuyAtoutGui implements Listener {
         }
 
 
-        if (ConfigManager.instance.getDataAtoutsChallenges().getInt("Joueurs." + player.getUniqueId() + ".Atout.2.Level") == 0) {
+        if (!skyblockUser.hasSpeed()) {
             ItemStack custom1 = new ItemStack(Material.SUGAR, 1);
             ItemMeta customa = custom1.getItemMeta();
             customa.setDisplayName("§eSpeed 2");
             customa.setLore(Arrays.asList("§7", "§6Prix: " + speed + "$"));
             custom1.setItemMeta(customa);
             inv.setItem(12, custom1);
-        } else if (ConfigManager.instance.getDataAtoutsChallenges().getInt("Joueurs." + player.getUniqueId() + ".Atout.2.Level") == 2) {
+        } else if (skyblockUser.hasSpeed()) {
             ItemStack custom10 = new ItemStack(Material.BEDROCK, 1);
             ItemMeta customi = custom10.getItemMeta();
             customi.setDisplayName("§eSpeed 2 §c(déjà possédé)");
@@ -66,14 +69,14 @@ public class BuyAtoutGui implements Listener {
         }
 
 
-        if (ConfigManager.instance.getDataAtoutsChallenges().getInt("Joueurs." + player.getUniqueId() + ".Atout.3.Level") == 0) {
+        if (!skyblockUser.hasJump()) {
             ItemStack custom1 = new ItemStack(Material.RABBIT_FOOT, 1);
             ItemMeta customa = custom1.getItemMeta();
             customa.setDisplayName("§eJumpboost 3");
             customa.setLore(Arrays.asList("§7", "§6Prix: " + jumpboost + "$"));
             custom1.setItemMeta(customa);
             inv.setItem(14, custom1);
-        } else if (ConfigManager.instance.getDataAtoutsChallenges().getInt("Joueurs." + player.getUniqueId() + ".Atout.3.Level") == 3) {
+        } else if (skyblockUser.hasJump()) {
             ItemStack custom10 = new ItemStack(Material.BEDROCK, 1);
             ItemMeta customi = custom10.getItemMeta();
             customi.setDisplayName("§eJumpboost 3 §c(déjà possédé)");
@@ -92,16 +95,18 @@ public class BuyAtoutGui implements Listener {
     }
 
     public static void BuyAtout(int effect, Player player) {
+
+        SkyblockUserManager.instance.checkForAccount(player);
+
+        SkyblockUser skyblockUser = SkyblockUserManager.instance.getUser(player.getUniqueId());
+
         Double money = EcoAccountsManager.instance.getMoney(player.getName());
 
         if (effect == 1) {
             if (money >= haste) {
                 EcoAccountsManager.instance.removeFounds(player, haste, true);
-                HashMap<String, Object> objectHashMap = new HashMap<>();
-                objectHashMap.put("Joueurs." + player.getUniqueId() + ".Atout.1.Active", true);
-                objectHashMap.put("Joueurs." + player.getUniqueId() + ".Atout.1.Level", 2);
-                AsyncSaver.instance.setAndSaveAsync(objectHashMap, ConfigManager.instance.getDataAtoutsChallenges(),
-                        ConfigManager.instance.fileChallengesAtouts);
+                skyblockUser.setHaste(true);
+                skyblockUser.setHasteActive(true);
                 player.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 999999999, 1));
                 player.sendMessage("§6Vous avez reçu l'accès à l'atout haste 2 !");
                 Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
@@ -113,12 +118,9 @@ public class BuyAtoutGui implements Listener {
         }
         if (effect == 2) {
             if (money >= speed) {
-                EcoAccountsManager.instance.removeFounds(player, (double) speed, true);
-                HashMap<String, Object> objectHashMap = new HashMap<>();
-                objectHashMap.put("Joueurs." + player.getUniqueId() + ".Atout.2.Active", true);
-                objectHashMap.put("Joueurs." + player.getUniqueId() + ".Atout.2.Level", 2);
-                AsyncSaver.instance.setAndSaveAsync(objectHashMap, ConfigManager.instance.getDataAtoutsChallenges(),
-                        ConfigManager.instance.fileChallengesAtouts);
+                EcoAccountsManager.instance.removeFounds(player, speed, true);
+                skyblockUser.setSpeed(true);
+                skyblockUser.setSpeedActive(true);
                 player.sendMessage("§6Vous avez reçu l'accès à l'atout speed 2 !");
                 player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999999, 1));
                 Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
@@ -130,12 +132,9 @@ public class BuyAtoutGui implements Listener {
         }
         if (effect == 3) {
             if (money >= jumpboost) {
-                EcoAccountsManager.instance.removeFounds(player, (double) jumpboost, true);
-                HashMap<String, Object> objectHashMap = new HashMap<>();
-                objectHashMap.put("Joueurs." + player.getUniqueId() + ".Atout.3.Active", true);
-                objectHashMap.put("Joueurs." + player.getUniqueId() + ".Atout.3.Level", 3);
-                AsyncSaver.instance.setAndSaveAsync(objectHashMap, ConfigManager.instance.getDataAtoutsChallenges(),
-                        ConfigManager.instance.fileChallengesAtouts);
+                EcoAccountsManager.instance.removeFounds(player, jumpboost, true);
+                skyblockUser.setJump(true);
+                skyblockUser.setJumpActive(true);
                 player.sendMessage("§§6Vous avez reçu l'accès à l'atout Jumpboost 3 !");
                 player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 999999999, 2));
                 Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {

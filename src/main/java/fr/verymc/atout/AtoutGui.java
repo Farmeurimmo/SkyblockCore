@@ -1,8 +1,9 @@
 package main.java.fr.verymc.atout;
 
 import main.java.fr.verymc.Main;
-import main.java.fr.verymc.config.ConfigManager;
 import main.java.fr.verymc.gui.MenuGui;
+import main.java.fr.verymc.storage.SkyblockUser;
+import main.java.fr.verymc.storage.SkyblockUserManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -26,17 +27,21 @@ public class AtoutGui implements Listener {
     public static void MakeAtoutGui(Player player) {
         Inventory inv = Bukkit.createInventory(null, 27, "§6Atouts");
 
-        if (ConfigManager.instance.getDataAtoutsChallenges().getInt("Joueurs." + player.getUniqueId() + ".Atout.1.Level") == 0) {
+        SkyblockUserManager.instance.checkForAccount(player);
+
+        SkyblockUser skyblockUser = SkyblockUserManager.instance.getUser(player.getUniqueId());
+
+        if (!skyblockUser.hasHaste()) {
             ItemStack custom1 = new ItemStack(Material.GOLDEN_PICKAXE, 1);
             ItemMeta customa = custom1.getItemMeta();
             customa.setDisplayName("§6Haste 2");
             customa.setLore(Arrays.asList("§7", "§cAchetez cet atout dans le /farm2win"));
             custom1.setItemMeta(customa);
             inv.setItem(10, custom1);
-        } else if (ConfigManager.instance.getDataAtoutsChallenges().getInt("Joueurs." + player.getUniqueId() + ".Atout.1.Level") == 2) {
+        } else if (skyblockUser.hasHaste()) {
             ItemStack custom1 = new ItemStack(Material.GOLDEN_PICKAXE, 1);
             ItemMeta customa = custom1.getItemMeta();
-            if (ConfigManager.instance.getDataAtoutsChallenges().getBoolean("Joueurs." + player.getUniqueId() + ".Atout.1.Active") == true) {
+            if (skyblockUser.hasHasteActive()) {
                 customa.addEnchant(Enchantment.ARROW_FIRE, 1, true);
                 customa.addItemFlags(ItemFlag.HIDE_ENCHANTS);
                 customa.setDisplayName("§6Haste 2 §a(Actif)");
@@ -48,17 +53,17 @@ public class AtoutGui implements Listener {
         }
 
 
-        if (ConfigManager.instance.getDataAtoutsChallenges().getInt("Joueurs." + player.getUniqueId() + ".Atout.2.Level") == 0) {
+        if (!skyblockUser.hasSpeed()) {
             ItemStack custom1 = new ItemStack(Material.SUGAR, 1);
             ItemMeta customa = custom1.getItemMeta();
             customa.setDisplayName("§6Speed 2");
             customa.setLore(Arrays.asList("§7", "§cAchetez cet atout dans le /farm2win"));
             custom1.setItemMeta(customa);
             inv.setItem(12, custom1);
-        } else if (ConfigManager.instance.getDataAtoutsChallenges().getInt("Joueurs." + player.getUniqueId() + ".Atout.2.Level") == 2) {
+        } else if (skyblockUser.hasSpeed()) {
             ItemStack custom1 = new ItemStack(Material.SUGAR, 1);
             ItemMeta customa = custom1.getItemMeta();
-            if (ConfigManager.instance.getDataAtoutsChallenges().getBoolean("Joueurs." + player.getUniqueId() + ".Atout.2.Active") == true) {
+            if (skyblockUser.hasSpeedActive()) {
                 customa.addEnchant(Enchantment.ARROW_FIRE, 1, true);
                 customa.addItemFlags(ItemFlag.HIDE_ENCHANTS);
                 customa.setDisplayName("§6Speed 2 §a(Actif)");
@@ -70,17 +75,17 @@ public class AtoutGui implements Listener {
         }
 
 
-        if (ConfigManager.instance.getDataAtoutsChallenges().getInt("Joueurs." + player.getUniqueId() + ".Atout.3.Level") == 0) {
+        if (!skyblockUser.hasJump()) {
             ItemStack custom1 = new ItemStack(Material.RABBIT_FOOT, 1);
             ItemMeta customa = custom1.getItemMeta();
             customa.setDisplayName("§6Jumpboost 3");
             customa.setLore(Arrays.asList("§7", "§cAchetez cet atout dans le /farm2win"));
             custom1.setItemMeta(customa);
             inv.setItem(14, custom1);
-        } else if (ConfigManager.instance.getDataAtoutsChallenges().getInt("Joueurs." + player.getUniqueId() + ".Atout.3.Level") == 3) {
+        } else if (skyblockUser.hasJump()) {
             ItemStack custom1 = new ItemStack(Material.RABBIT_FOOT, 1);
             ItemMeta customa = custom1.getItemMeta();
-            if (ConfigManager.instance.getDataAtoutsChallenges().getBoolean("Joueurs." + player.getUniqueId() + ".Atout.3.Active") == true) {
+            if (skyblockUser.hasJumpActive()) {
                 customa.addEnchant(Enchantment.ARROW_FIRE, 1, true);
                 customa.addItemFlags(ItemFlag.HIDE_ENCHANTS);
                 customa.setDisplayName("§6Jumpboost 3 §a(Actif)");
@@ -107,20 +112,16 @@ public class AtoutGui implements Listener {
         Player player = e.getPlayer();
         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
             public void run() {
-                if (ConfigManager.instance.getDataAtoutsChallenges().getBoolean("Joueurs." + player.getUniqueId() + ".Atout.1.Active") == true) {
-                    if (ConfigManager.instance.getDataAtoutsChallenges().getInt("Joueurs." + player.getUniqueId() + ".Atout.1.Level") == 2) {
-                        player.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 999999999, 1));
-                    }
+                SkyblockUserManager.instance.checkForAccount(player);
+                SkyblockUser skyblockUser = SkyblockUserManager.instance.getUser(player.getUniqueId());
+                if (skyblockUser.hasHaste()) {
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 999999999, 1));
                 }
-                if (ConfigManager.instance.getDataAtoutsChallenges().getBoolean("Joueurs." + player.getUniqueId() + ".Atout.2.Active") == true) {
-                    if (ConfigManager.instance.getDataAtoutsChallenges().getInt("Joueurs." + player.getUniqueId() + ".Atout.2.Level") == 2) {
-                        player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999999, 1));
-                    }
+                if (skyblockUser.hasSpeedActive()) {
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999999, 1));
                 }
-                if (ConfigManager.instance.getDataAtoutsChallenges().getBoolean("Joueurs." + player.getUniqueId() + ".Atout.3.Active") == true) {
-                    if (ConfigManager.instance.getDataAtoutsChallenges().getInt("Joueurs." + player.getUniqueId() + ".Atout.3.Level") == 3) {
-                        player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 999999999, 2));
-                    }
+                if (skyblockUser.hasJumpActive()) {
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 999999999, 2));
                 }
             }
         }, 5);
@@ -132,20 +133,16 @@ public class AtoutGui implements Listener {
             Player player = e.getPlayer();
             Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
                 public void run() {
-                    if (ConfigManager.instance.getDataAtoutsChallenges().getBoolean("Joueurs." + player.getUniqueId() + ".Atout.1.Active") == true) {
-                        if (ConfigManager.instance.getDataAtoutsChallenges().getInt("Joueurs." + player.getUniqueId() + ".Atout.1.Level") == 2) {
-                            player.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 999999999, 1));
-                        }
+                    SkyblockUserManager.instance.checkForAccount(player);
+                    SkyblockUser skyblockUser = SkyblockUserManager.instance.getUser(player.getUniqueId());
+                    if (skyblockUser.hasHaste()) {
+                        player.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 999999999, 1));
                     }
-                    if (ConfigManager.instance.getDataAtoutsChallenges().getBoolean("Joueurs." + player.getUniqueId() + ".Atout.2.Active") == true) {
-                        if (ConfigManager.instance.getDataAtoutsChallenges().getInt("Joueurs." + player.getUniqueId() + ".Atout.2.Level") == 2) {
-                            player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999999, 1));
-                        }
+                    if (skyblockUser.hasSpeedActive()) {
+                        player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999999, 1));
                     }
-                    if (ConfigManager.instance.getDataAtoutsChallenges().getBoolean("Joueurs." + player.getUniqueId() + ".Atout.3.Active") == true) {
-                        if (ConfigManager.instance.getDataAtoutsChallenges().getInt("Joueurs." + player.getUniqueId() + ".Atout.3.Level") == 3) {
-                            player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 999999999, 2));
-                        }
+                    if (skyblockUser.hasJumpActive()) {
+                        player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 999999999, 2));
                     }
                 }
             }, 1);
@@ -164,20 +161,20 @@ public class AtoutGui implements Listener {
             if (current.getType() == Material.ARROW) {
                 MenuGui.OpenMainMenu(player);
             }
-            if (current.getType() == Material.GOLDEN_PICKAXE && current.getItemMeta().getItemFlags().contains(ItemFlag.HIDE_ENCHANTS)) {
+            SkyblockUserManager.instance.checkForAccount(player);
+            SkyblockUser skyblockUser = SkyblockUserManager.instance.getUser(player.getUniqueId());
+            if (current.getType() == Material.GOLDEN_PICKAXE && skyblockUser.hasHasteActive() && skyblockUser.hasHaste()) {
                 player.removePotionEffect(PotionEffectType.FAST_DIGGING);
-                ConfigManager.instance.getDataAtoutsChallenges().set("Joueurs." + player.getUniqueId() + ".Atout.1.Active", false);
-                ConfigManager.instance.saveData();
+                skyblockUser.setHasteActive(false);
                 player.sendActionBar("§6Atout haste §c§ldésactivé !");
                 AtoutGui.MakeAtoutGui(player);
                 return;
             }
-            if (current.getType() == Material.GOLDEN_PICKAXE) {
-                if (ConfigManager.instance.getDataAtoutsChallenges().getInt("Joueurs." + player.getUniqueId() + ".Atout.1.Level") == 2) {
+            if (current.getType() == Material.GOLDEN_PICKAXE && !skyblockUser.hasHasteActive()) {
+                if (skyblockUser.hasHaste() && !skyblockUser.hasHasteActive()) {
                     player.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 999999999, 1));
                     player.sendActionBar("§6Atout haste §a§lactivé !");
-                    ConfigManager.instance.getDataAtoutsChallenges().set("Joueurs." + player.getUniqueId() + ".Atout.1.Active", true);
-                    ConfigManager.instance.saveData();
+                    skyblockUser.setHasteActive(true);
                     AtoutGui.MakeAtoutGui(player);
                     return;
                 } else {
@@ -186,20 +183,18 @@ public class AtoutGui implements Listener {
             }
 
 
-            if (current.getType() == Material.SUGAR && current.getItemMeta().getItemFlags().contains(ItemFlag.HIDE_ENCHANTS)) {
+            if (current.getType() == Material.SUGAR && skyblockUser.hasSpeedActive() && skyblockUser.hasSpeed()) {
                 player.removePotionEffect(PotionEffectType.SPEED);
-                ConfigManager.instance.getDataAtoutsChallenges().set("Joueurs." + player.getUniqueId() + ".Atout.2.Active", false);
-                ConfigManager.instance.saveData();
+                skyblockUser.setSpeedActive(false);
                 player.sendActionBar("§6Atout speed §c§ldésactivé !");
                 AtoutGui.MakeAtoutGui(player);
                 return;
             }
-            if (current.getType() == Material.SUGAR) {
-                if (ConfigManager.instance.getDataAtoutsChallenges().getInt("Joueurs." + player.getUniqueId() + ".Atout.2.Level") == 2) {
+            if (current.getType() == Material.SUGAR && !skyblockUser.hasSpeedActive()) {
+                if (!skyblockUser.hasSpeedActive() && skyblockUser.hasSpeed()) {
                     player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999999, 1));
                     player.sendActionBar("§6Atout speed §a§lactivé !");
-                    ConfigManager.instance.getDataAtoutsChallenges().set("Joueurs." + player.getUniqueId() + ".Atout.2.Active", true);
-                    ConfigManager.instance.saveData();
+                    skyblockUser.setSpeedActive(true);
                     AtoutGui.MakeAtoutGui(player);
                     return;
                 } else {
@@ -208,20 +203,18 @@ public class AtoutGui implements Listener {
             }
 
 
-            if (current.getType() == Material.RABBIT_FOOT && current.getItemMeta().getItemFlags().contains(ItemFlag.HIDE_ENCHANTS)) {
+            if (current.getType() == Material.RABBIT_FOOT && skyblockUser.hasJumpActive() && skyblockUser.hasJump()) {
                 player.removePotionEffect(PotionEffectType.JUMP);
-                ConfigManager.instance.getDataAtoutsChallenges().set("Joueurs." + player.getUniqueId() + ".Atout.3.Active", false);
-                ConfigManager.instance.saveData();
+                skyblockUser.setJumpActive(false);
                 player.sendActionBar("§6Atout Jumpboost §c§ldésactivé !");
                 AtoutGui.MakeAtoutGui(player);
                 return;
             }
             if (current.getType() == Material.RABBIT_FOOT) {
-                if (ConfigManager.instance.getDataAtoutsChallenges().getInt("Joueurs." + player.getUniqueId() + ".Atout.3.Level") == 3) {
+                if (skyblockUser.hasJump() && !skyblockUser.hasJumpActive()) {
                     player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 999999999, 2));
                     player.sendActionBar("§6Atout Jumpboost §a§lactivé !");
-                    ConfigManager.instance.getDataAtoutsChallenges().set("Joueurs." + player.getUniqueId() + ".Atout.3.Active", true);
-                    ConfigManager.instance.saveData();
+                    skyblockUser.setJumpActive(true);
                     AtoutGui.MakeAtoutGui(player);
                     return;
                 } else {
