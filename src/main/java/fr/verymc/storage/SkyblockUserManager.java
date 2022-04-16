@@ -1,7 +1,5 @@
 package main.java.fr.verymc.storage;
 
-import main.java.fr.verymc.Main;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;

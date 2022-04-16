@@ -24,16 +24,16 @@ public class StorageAPIManager {
         Bukkit.getScheduler().scheduleAsyncDelayedTask(Main.instance, new Runnable() {
             public void run() {
 
-        //API FETCH DATA
+                //API FETCH DATA
 
-        ArrayList<Minion> minions = new ArrayList<>();
-        //DATA MINIONS
+                ArrayList<Minion> minions = new ArrayList<>();
+                //DATA MINIONS
 
-        ArrayList<Island> islands = new ArrayList<>();
-        //DATA ISLANDS
+                ArrayList<Island> islands = new ArrayList<>();
+                //DATA ISLANDS
 
-        ArrayList<SkyblockUser> skyblockUsers = new ArrayList<>();
-        //DATA USERS
+                ArrayList<SkyblockUser> skyblockUsers = new ArrayList<>();
+                //DATA USERS
 
 
                 Bukkit.getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {

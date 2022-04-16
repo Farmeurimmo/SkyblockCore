@@ -20,7 +20,6 @@ import org.bukkit.util.EulerAngle;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 
 public class MinionManager {
 
