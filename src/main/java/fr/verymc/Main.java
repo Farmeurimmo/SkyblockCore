@@ -48,6 +48,7 @@ import main.java.fr.verymc.scoreboard.TABManager;
 import main.java.fr.verymc.shopgui.*;
 import main.java.fr.verymc.storage.ConfigManager;
 import main.java.fr.verymc.storage.SkyblockUserManager;
+import main.java.fr.verymc.storage.StorageAPIManager;
 import main.java.fr.verymc.utils.WorldBorderUtil;
 import main.java.fr.verymc.winelottery.WineGui;
 import main.java.fr.verymc.winelottery.WineSpawn;
@@ -133,6 +134,10 @@ public class Main extends JavaPlugin implements Listener {
             Bukkit.getPluginManager().disablePlugin(this);
         }
         System.out.println("-----------------------------------------------------------------------------------------------------");
+
+        System.out.println("Fetching Datas...");
+        new StorageAPIManager();
+
 
         System.out.println("Island startup...");
         new SkyblockUserManager();

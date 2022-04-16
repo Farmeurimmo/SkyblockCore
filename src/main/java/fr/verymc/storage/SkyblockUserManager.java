@@ -42,28 +42,4 @@ public class SkyblockUserManager {
         }
     }
 
-    public void autoSave() {
-
-        Bukkit.getScheduler().scheduleAsyncDelayedTask(Main.instance, new Runnable() {
-            @Override
-            public void run() {
-
-                // API REQUEST
-
-
-                autoSave();
-            }
-        }, 20 * 60 * 2);
-    }
-
-    public void readFromAPI() {
-
-
-        // API REQUEST
-
-
-        autoSave();
-    }
-
-
 }

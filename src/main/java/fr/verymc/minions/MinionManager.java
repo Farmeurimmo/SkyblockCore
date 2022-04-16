@@ -33,64 +33,11 @@ public class MinionManager {
     public static Integer level6 = 500000;
     public ArrayList<Minion> minions = new ArrayList<>();
     public ArrayList<BlockFace> faceBloc = new ArrayList<>();
-    public HashMap<Player, Minion> openedMinion = new HashMap<>();
 
 
     public MinionManager() {
         instance = this;
-        readForMinions();
         faceBloc.addAll(Arrays.asList(BlockFace.EAST, BlockFace.NORTH, BlockFace.SOUTH, BlockFace.WEST));
-        autoSave();
-    }
-
-    public void autoSave() {
-        Bukkit.getScheduler().scheduleAsyncDelayedTask(Main.instance, new Runnable() {
-            public void run() {
-
-
-                // API REQUEST
-
-
-                autoSave();
-            }
-        }, 20 * 120);
-
-
-    }
-
-    public void readForMinions() {
-        /*if (ConfigManager.instance.getDataMinion().getConfigurationSection("Minions.mineur") == null) {
-            return;
-        }*/
-        Bukkit.getServer().getScheduler().scheduleAsyncDelayedTask(Main.instance, new Runnable() {
-            public void run() {
-                /*for (String id : ConfigManager.instance.getDataMinion().getConfigurationSection("Minions.mineur").getKeys(false)) {
-                    Long idMinion = Long.parseLong(id);
-                    String ownerS = ConfigManager.instance.getDataMinion().getString("Minions.mineur." + id + ".ownerS");
-                    UUID ownerUUID = UUID.fromString(ConfigManager.instance.getDataMinion().getString("Minions.mineur." + id + ".ownerUUID"));
-                    Integer levelInt = ConfigManager.instance.getDataMinion().getInt("Minions.mineur." + id + ".levelint");
-                    Location blocLoc = ConfigManager.instance.getDataMinion().getLocation("Minions.mineur." + id + ".blocLoc");
-                    MinionType minionType = MinionType.valueOf(ConfigManager.instance.getDataMinion().getString("Minions.mineur." + id + ".minionType"));
-                    BlockFace blockFace = BlockFace.valueOf(ConfigManager.instance.getDataMinion().getString("Minions.mineur." + id + ".blocFace"));
-                    Block blocChest = null;
-                    Boolean isChestLinked = ConfigManager.instance.getDataMinion().getBoolean("Minions.mineur." + id + ".isChestLinked");
-                    if (isChestLinked) {
-                        blocChest = ConfigManager.instance.getDataMinion().getLocation("Minions.mineur." + id + ".blocChest").getBlock();
-                    }
-                    Boolean isAutoSmelt = false;
-                    if (ConfigManager.instance.getDataMinion().get("Minions.mineur." + id + ".isAutoSmelt") != null) {
-                        isAutoSmelt = ConfigManager.instance.getDataMinion().getBoolean("Minions.mineur." + id + ".isAutoSmelt");
-                    }
-
-                    minions.add(new Minion(idMinion, ownerS, ownerUUID, levelInt, blocLoc, minionType
-                            , blockFace, isChestLinked, blocChest, isAutoSmelt));
-                }*/
-
-                //API REQUEST
-
-
-            }
-        }, 0);
     }
 
     public void giveMinionItem(Player player, String type) {
@@ -170,19 +117,6 @@ public class MinionManager {
         blocLoc.add(0.5, 1, 0.5);
         blocLoc.setDirection(player.getLocation().getDirection());
 
-        /*HashMap<String, Object> objectHashMap = new HashMap<>();
-        objectHashMap.put("Minions.mineur." + id + ".ownerS", player.getName());
-        objectHashMap.put("Minions.mineur." + id + ".ownerUUID", player.getUniqueId().toString());
-        objectHashMap.put("Minions.mineur." + id + ".levelint", levelInt);
-        objectHashMap.put("Minions.mineur." + id + ".blocLoc", blocLoc);
-        objectHashMap.put("Minions.mineur." + id + ".minionType", minionType.getName(minionType));
-        objectHashMap.put("Minions.mineur." + id + ".blocFace", blockFace.toString());
-        objectHashMap.put("Minions.mineur." + id + ".isChestLinked", false);
-        objectHashMap.put("Minions.mineur." + id + ".blocChest", null);
-        objectHashMap.put("Minions.mineur." + id + ".isAutoSmelt", false);
-        AsyncSaver.instance.setAndSaveAsync(objectHashMap, ConfigManager.instance.getDataMinion(),
-                ConfigManager.instance.minionFile);*/
-
         Minion minion = new Minion(id, player.getName(), player.getUniqueId(), levelInt, blocLoc, minionType,
                 blockFace, false, null, false);
 
@@ -235,11 +169,6 @@ public class MinionManager {
                 entity.remove();
             }
         }
-
-        /*HashMap<String, Object> objectHashMap = new HashMap<>();
-        objectHashMap.put("Minions.mineur." + minion.getID(), null);
-        AsyncSaver.instance.setAndSaveAsync(objectHashMap, ConfigManager.instance.getDataMinion(),
-                ConfigManager.instance.minionFile);*/
 
         minions.remove(minion);
     }
