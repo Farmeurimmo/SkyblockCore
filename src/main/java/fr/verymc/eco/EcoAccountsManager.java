@@ -21,9 +21,9 @@ public class EcoAccountsManager {
         return a;
     }
 
-    public double getMoney(String playername) {
+    public double getMoney(UUID playername) {
         Double b = (double) 0;
-        SkyblockUser skyblockUser = SkyblockUserManager.instance.getUser(Bukkit.getOfflinePlayer(playername).getUniqueId());
+        SkyblockUser skyblockUser = SkyblockUserManager.instance.getUser(playername);
         if (skyblockUser != null) {
             if (skyblockUser.getUserUUID() != null) {
                 b = skyblockUser.getMoney();
@@ -47,7 +47,7 @@ public class EcoAccountsManager {
     }
 
     public String moneyGetarrondiNDecimalesFromStr(String player) {
-        return DecimalFormat.getNumberInstance().format(EcoAccountsManager.instance.getMoney(player));
+        return DecimalFormat.getNumberInstance().format(EcoAccountsManager.instance.getMoney(Bukkit.getOfflinePlayer(player).getPlayer().getUniqueId()));
     }
 
     public String moneyGetarrondiNDecimalesFromUUID(UUID player) {
@@ -56,7 +56,16 @@ public class EcoAccountsManager {
 
     public boolean checkForFounds(Player player, Double f) {
         boolean aa = false;
-        Double moneyplayer = instance.getMoney(player.getName());
+        Double moneyplayer = instance.getMoney(player.getUniqueId());
+        if (moneyplayer >= f) {
+            aa = true;
+        }
+        return aa;
+    }
+
+    public boolean checkForFoundsUUID(UUID uuid, Double f) {
+        boolean aa = false;
+        Double moneyplayer = instance.getMoney(uuid);
         if (moneyplayer >= f) {
             aa = true;
         }
@@ -64,7 +73,7 @@ public class EcoAccountsManager {
     }
 
     public void removeFounds(Player player, double toremove, boolean ase) {
-        Double moneybefore = instance.getMoney(player.getName());
+        Double moneybefore = instance.getMoney(player.getUniqueId());
         if (moneybefore >= toremove) {
             double now = moneybefore - toremove;
             SkyblockUser skyblockUser = SkyblockUserManager.instance.getUser(player.getUniqueId());
@@ -80,6 +89,15 @@ public class EcoAccountsManager {
         }
     }
 
+    public void removeFoundsUUID(UUID player, double toremove, boolean ase) {
+        Double moneybefore = instance.getMoney(player);
+        if (moneybefore >= toremove) {
+            double now = moneybefore - toremove;
+            SkyblockUser skyblockUser = SkyblockUserManager.instance.getUser(player);
+            skyblockUser.setMoney(now);
+        }
+    }
+
     public void setFounds(Player player, Double toset) {
         SkyblockUser skyblockUser = SkyblockUserManager.instance.getUser(player.getUniqueId());
         skyblockUser.setMoney(toset);
@@ -89,9 +107,9 @@ public class EcoAccountsManager {
     }
 
     public void addFounds(Player player, double aaa, boolean dd) {
-        Double moneybefore = instance.getMoney(player.getName());
+        Double moneybefore = instance.getMoney(player.getUniqueId());
         if (moneybefore < Double.MAX_VALUE - aaa) {
-            double now = getMoney(player.getName()) + aaa;
+            double now = getMoney(player.getUniqueId()) + aaa;
             SkyblockUser skyblockUser = SkyblockUserManager.instance.getUser(player.getUniqueId());
             skyblockUser.setMoney(now);
             if (player != null) {
@@ -112,9 +130,6 @@ public class EcoAccountsManager {
             double now = getMoneyUUID(player) + aaa;
             SkyblockUser skyblockUser = SkyblockUserManager.instance.getUser(player);
             skyblockUser.setMoney(now);
-            if (dd == true && Bukkit.getPlayer(player) != null) {
-                Bukkit.getPlayer(player).sendMessage("§6§lMonnaie §8» §6" + DecimalFormat.getNumberInstance().format(aaa) + "$§f ont été §aajouté §f§ votre compte.");
-            }
         }
     }
 }

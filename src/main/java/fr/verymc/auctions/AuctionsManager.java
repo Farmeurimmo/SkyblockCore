@@ -123,7 +123,7 @@ public class AuctionsManager {
         if (EcoAccountsManager.instance.checkForFounds(player, price)) {
 
             if (player.getInventory().firstEmpty() == -1) {
-                player.sendMessage("§6§lAuctions §8» §fVous n'avez pas asser de place dans votre inventaire.");
+                player.sendMessage("§6§lAuctions §8» §fVous n'avez pas assez de place dans votre inventaire.");
                 return;
             }
 

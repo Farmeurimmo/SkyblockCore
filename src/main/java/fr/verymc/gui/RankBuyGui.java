@@ -15,7 +15,7 @@ import java.util.Arrays;
 public class RankBuyGui {
 
     public static void BuyRank(String rank, Player player) {
-        Double money = EcoAccountsManager.instance.getMoney(player.getName());
+        Double money = EcoAccountsManager.instance.getMoney(player.getUniqueId());
 
         if (rank.contains("Légende")) {
             if (money >= Farm2WinGui.legendeprix) {

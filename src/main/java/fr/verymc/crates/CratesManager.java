@@ -3,7 +3,7 @@ package main.java.fr.verymc.crates;
 import com.gmail.filoghost.holographicdisplays.api.Hologram;
 import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
 import main.java.fr.verymc.Main;
-import main.java.fr.verymc.utils.CheckPlayerInventory;
+import main.java.fr.verymc.utils.InventoryUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -86,7 +86,7 @@ public class CratesManager implements Listener {
                     ItemStack bb = player.getItemInHand();
                     if (bb.getType() == Material.TRIPWIRE_HOOK && bb.getItemMeta().getDisplayName().equalsIgnoreCase("§6§lClée légendaire") &&
                             bb.getItemMeta().getItemFlags().contains(ItemFlag.HIDE_UNBREAKABLE)
-                            && CheckPlayerInventory.CheckPlayerInventoryForSlot(player) == true) {
+                            && InventoryUtils.CheckPlayerInventoryForSlot(player) == true) {
                         String loot = LegCrateManager.LegCrateLoot(player);
                         if (!loot.equalsIgnoreCase("reroll")) {
                             if (!loot.equalsIgnoreCase("error")) {
@@ -127,7 +127,7 @@ public class CratesManager implements Listener {
                     ItemStack bb = player.getItemInHand();
                     if (bb.getType() == Material.TRIPWIRE_HOOK && bb.getItemMeta().getDisplayName().equalsIgnoreCase("§6§lClée challenge") &&
                             bb.getItemMeta().getItemFlags().contains(ItemFlag.HIDE_UNBREAKABLE)
-                            && CheckPlayerInventory.CheckPlayerInventoryForSlot(player) == true) {
+                            && InventoryUtils.CheckPlayerInventoryForSlot(player) == true) {
                         String loot = ChallengeCrateManager.ChallengeCrateLoot(player);
                         if (!loot.equalsIgnoreCase("reroll")) {
                             if (!loot.equalsIgnoreCase("error")) {
@@ -163,7 +163,7 @@ public class CratesManager implements Listener {
                     ItemStack bb = player.getItemInHand();
                     if (bb.getType() == Material.TRIPWIRE_HOOK && bb.getItemMeta().getDisplayName().equalsIgnoreCase("§6§lClée vote") &&
                             bb.getItemMeta().getItemFlags().contains(ItemFlag.HIDE_UNBREAKABLE)
-                            && CheckPlayerInventory.CheckPlayerInventoryForSlot(player) == true) {
+                            && InventoryUtils.CheckPlayerInventoryForSlot(player) == true) {
                         String loot = "error";
                         if (!loot.equalsIgnoreCase("reroll")) {
                             if (!loot.equalsIgnoreCase("error")) {

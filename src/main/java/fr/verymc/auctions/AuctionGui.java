@@ -103,7 +103,7 @@ public class AuctionGui implements Listener {
             long millis = Long.parseLong(toparse);
             if (AuctionsManager.instance.ahtype.containsKey(millis)) {
                 if (player.getInventory().firstEmpty() == -1) {
-                    player.sendMessage("§6§lAuctions §8» §fVous n'avez pas asser de place dans votre inventaire.");
+                    player.sendMessage("§6§lAuctions §8» §fVous n'avez pas assez de place dans votre inventaire.");
                     return;
                 }
                 ArrayList<String> lore = new ArrayList<>();

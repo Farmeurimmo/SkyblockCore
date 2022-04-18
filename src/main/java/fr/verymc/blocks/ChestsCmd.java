@@ -36,6 +36,8 @@ public class ChestsCmd implements CommandExecutor, TabCompleter {
             ChestManager.instance.giveChest(Bukkit.getPlayer(args[0]), System.currentTimeMillis(), 0);
         } else if (args[1].equalsIgnoreCase("sellchest")) {
             ChestManager.instance.giveChest(Bukkit.getPlayer(args[0]), System.currentTimeMillis(), 1);
+        } else if (args[1].equalsIgnoreCase("playershop")) {
+            ChestManager.instance.giveChest(Bukkit.getPlayer(args[0]), System.currentTimeMillis(), 2);
         } else {
             sender.sendMessage("§cErreur, coffre/hoppeur inconnu");
         }
@@ -52,7 +54,7 @@ public class ChestsCmd implements CommandExecutor, TabCompleter {
                     subcmd.add(p.getName());
                 }
             } else if (args.length == 2) {
-                subcmd.addAll(Arrays.asList("ChunkHoppeur", "SellChest"));
+                subcmd.addAll(Arrays.asList("ChunkHoppeur", "SellChest", "PlayerShop"));
             } else {
                 subcmd.add("");
             }

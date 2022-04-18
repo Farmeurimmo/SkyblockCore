@@ -149,7 +149,7 @@ public class CommandBuyGui {
     }
 
     public static void BuyCmd(String cmd, Player player) {
-        Double money = EcoAccountsManager.instance.getMoney(player.getName());
+        Double money = EcoAccountsManager.instance.getMoney(player.getUniqueId());
 
         if (cmd.contains("hat")) {
             if (money >= Farm2WinGui.hatprix) ;

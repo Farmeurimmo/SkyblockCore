@@ -170,7 +170,7 @@ public class IslandGuiManager implements Listener {
                         EcoAccountsManager.instance.removeFounds(player, 1000.0, true);
                         playerIsland.getBank().addMoney(1000.0);
                     } else {
-                        player.sendMessage("§6§lIles §8» §fTu n'as pas asser d'argent en banque.");
+                        player.sendMessage("§6§lIles §8» §fTu n'as pas assez d'argent en banque.");
                     }
                     IslandBankGui.instance.openBankIslandMenu(player);
                     return;
@@ -180,7 +180,7 @@ public class IslandGuiManager implements Listener {
                         EcoAccountsManager.instance.addFounds(player, 1000.0, true);
                         playerIsland.getBank().removeMoney(1000.0);
                     } else {
-                        player.sendMessage("§6§lIles §8» §fTu n'as pas asser d'argent en banque.");
+                        player.sendMessage("§6§lIles §8» §fTu n'as pas assez d'argent en banque.");
                     }
                     IslandBankGui.instance.openBankIslandMenu(player);
                     return;
@@ -189,7 +189,7 @@ public class IslandGuiManager implements Listener {
             }
             if (current.getType() == Material.NETHER_STAR) {
                 if (playerIsland.getBank().getCrystaux() < 5.0) {
-                    player.sendMessage("§6§lIles §8» §fTu n'as pas asser de crystaux en banque.");
+                    player.sendMessage("§6§lIles §8» §fTu n'as pas assez de crystaux en banque.");
                     return;
                 }
                 if (e.getClick() == ClickType.LEFT &&

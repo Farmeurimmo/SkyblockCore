@@ -1,6 +1,7 @@
 package main.java.fr.verymc.blocks;
 
 import org.bukkit.Location;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.UUID;
 
@@ -12,14 +13,25 @@ public class Chest {
     public long id;
     public String ownerName;
     private Long chunkKey;
+    private ItemStack itemToBuySell;
+    private double price;
+    private boolean isSell;
+    private boolean activeSellOrBuy;
 
-    public Chest(int type, Location block, UUID owner, String ownerName, long id, Long chunkKey) {
+    public Chest(int type, Location block, UUID owner, String ownerName, long id, Long chunkKey, ItemStack itemToBuySell, double price, boolean isSell,
+                 boolean activeSellOrBuy) {
         this.type = type;
         this.block = block;
         this.owner = owner;
         this.ownerName = ownerName;
         this.id = id;
         this.chunkKey = chunkKey;
+        this.itemToBuySell = itemToBuySell;
+        if (price == 0) {
+            price++;
+        }
+        this.price = price;
+        this.activeSellOrBuy = activeSellOrBuy;
     }
 
     public int getType() {
@@ -69,4 +81,37 @@ public class Chest {
     public void setChunkKey(Long chunkKey) {
         this.chunkKey = chunkKey;
     }
+
+    public ItemStack getItemToBuySell() {
+        return itemToBuySell;
+    }
+
+    public void setItemToBuySell(ItemStack itemToBuySell) {
+        this.itemToBuySell = itemToBuySell;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public boolean isSell() {
+        return isSell;
+    }
+
+    public void setSell(boolean isSell) {
+        this.isSell = isSell;
+    }
+
+    public boolean isActiveSellOrBuy() {
+        return activeSellOrBuy;
+    }
+
+    public void setActiveSellOrBuy(boolean activeSellOrBuy) {
+        this.activeSellOrBuy = activeSellOrBuy;
+    }
+
 }

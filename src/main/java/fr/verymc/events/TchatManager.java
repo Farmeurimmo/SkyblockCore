@@ -1,5 +1,6 @@
 package main.java.fr.verymc.events;
 
+import main.java.fr.verymc.blocks.PlayerShopGuis;
 import main.java.fr.verymc.island.Island;
 import main.java.fr.verymc.island.IslandManager;
 import main.java.fr.verymc.island.guis.IslandTopGui;
@@ -27,6 +28,26 @@ public class TchatManager implements Listener {
             return;
         }
         e.setCancelled(true);
+
+        if (PlayerShopGuis.instance.priceEditing.containsKey(player)) {
+            double price;
+            try {
+                price = Double.parseDouble(e.getMessage());
+            } catch (NumberFormatException ex) {
+                player.sendMessage("§6§lPlayerShop §8» §cVeuillez entrer un nombre valide.");
+                return;
+            }
+
+            if (price > 0) {
+                PlayerShopGuis.instance.priceEditing.get(player).setPrice(price);
+                PlayerShopGuis.instance.mainShopGui(PlayerShopGuis.instance.priceEditing.get(player), player);
+                player.sendMessage("§6§lPlayerShop §8» §fLe prix a été mis à jour.");
+                PlayerShopGuis.instance.priceEditing.remove(player);
+                return;
+            }
+
+            return;
+        }
 
         boolean isIslandChat = false;
         if (playerIsland != null) {

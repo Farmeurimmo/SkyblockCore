@@ -25,6 +25,8 @@ public class ChestManager {
 
     public ChestManager() {
         instance = this;
+
+        new PlayerShopGuis();
     }
 
     public void autoSellForVeryChest() {
@@ -88,6 +90,13 @@ public class ChestManager {
             ameta.setDisplayName("§6Chunk Hoppeur §c(id#" + i + ")");
             aa.setUnbreakable(true);
             aa.setItemMeta(ameta);
+        } else if (type == 2) {
+            aa = new ItemStack(Material.CHEST);
+            ItemMeta ameta = aa.getItemMeta();
+
+            ameta.setDisplayName("§6Player shop §c(id#" + i + ")");
+            aa.setUnbreakable(true);
+            aa.setItemMeta(ameta);
         }
 
         if (aa.getType() == Material.AIR) {
@@ -97,8 +106,9 @@ public class ChestManager {
         player.getInventory().addItem(aa);
     }
 
-    public void placeChest(Player player, Location block, long num, int type) {
-        chests.add(new main.java.fr.verymc.blocks.Chest(type, block, player.getUniqueId(), player.getName(), num, block.getChunk().getChunkKey()));
+    public void placeChest(Player player, Location block, long num, int type, ItemStack item, double price) {
+        chests.add(new main.java.fr.verymc.blocks.Chest(type, block, player.getUniqueId(), player.getName(), num, block.getChunk().getChunkKey(),
+                item, price, false, false));
     }
 
     public void removeChestFromLoc(Location block) {
@@ -110,10 +120,10 @@ public class ChestManager {
         }
     }
 
-    public String getOwner(Location loc) {
+    public UUID getOwner(Location loc) {
         for (main.java.fr.verymc.blocks.Chest chest : chests) {
             if (chest.getBlock().equals(loc)) {
-                return String.valueOf(chest.getOwnerName());
+                return chest.getOwner();
             }
         }
         return null;

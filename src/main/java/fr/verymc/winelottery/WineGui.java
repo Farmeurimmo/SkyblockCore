@@ -45,7 +45,7 @@ public class WineGui implements Listener {
         if (e.getView().getTitle().equalsIgnoreCase("§6Boutique des vins")) {
             e.setCancelled(true);
             if (current.getType() == Material.POTION && current.getItemMeta().getDisplayName().equalsIgnoreCase("§6Cidre")) {
-                Double money = EcoAccountsManager.instance.getMoney(player.getName());
+                Double money = EcoAccountsManager.instance.getMoney(player.getUniqueId());
 
 
                 if (money >= BuyWinePotion.cidreprice) {
@@ -60,12 +60,12 @@ public class WineGui implements Listener {
 
                     player.getInventory().addItem(custom1);
                 } else {
-                    player.sendMessage("§6§lBarman §8» §fVous n'avez pas asser d'argent.");
+                    player.sendMessage("§6§lBarman §8» §fVous n'avez pas assez d'argent.");
                 }
             }
             if (current.getType() == Material.POTION && current.getItemMeta().getDisplayName().equalsIgnoreCase("§6Bière")) {
 
-                Double money = EcoAccountsManager.instance.getMoney(player.getName());
+                Double money = EcoAccountsManager.instance.getMoney(player.getUniqueId());
 
 
                 if (money >= BuyWinePotion.biereprice) {
@@ -80,11 +80,11 @@ public class WineGui implements Listener {
 
                     player.getInventory().addItem(custom1);
                 } else {
-                    player.sendMessage("§6§lBarman §8» §fVous n'avez pas asser d'argent.");
+                    player.sendMessage("§6§lBarman §8» §fVous n'avez pas assez d'argent.");
                 }
             }
             if (current.getType() == Material.POTION && current.getItemMeta().getDisplayName().equalsIgnoreCase("§6Rhum")) {
-                Double money = EcoAccountsManager.instance.getMoney(player.getName());
+                Double money = EcoAccountsManager.instance.getMoney(player.getUniqueId());
 
 
                 if (money >= BuyWinePotion.rhumprice) {
@@ -99,12 +99,12 @@ public class WineGui implements Listener {
 
                     player.getInventory().addItem(custom1);
                 } else {
-                    player.sendMessage("§6§lBarman §8» §fVous n'avez pas asser d'argent.");
+                    player.sendMessage("§6§lBarman §8» §fVous n'avez pas assez d'argent.");
                 }
             }
             if (current.getType() == Material.POTION && current.getItemMeta().getDisplayName().equalsIgnoreCase("§6Vodka")) {
 
-                Double money = EcoAccountsManager.instance.getMoney(player.getName());
+                Double money = EcoAccountsManager.instance.getMoney(player.getUniqueId());
 
 
                 if (money >= BuyWinePotion.vodkaprice) {
@@ -119,7 +119,7 @@ public class WineGui implements Listener {
 
                     player.getInventory().addItem(custom1);
                 } else {
-                    player.sendMessage("§6§lBarman §8» §fVous n'avez pas asser d'argent.");
+                    player.sendMessage("§6§lBarman §8» §fVous n'avez pas assez d'argent.");
                 }
             }
         }

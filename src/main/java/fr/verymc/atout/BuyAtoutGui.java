@@ -100,7 +100,7 @@ public class BuyAtoutGui implements Listener {
 
         SkyblockUser skyblockUser = SkyblockUserManager.instance.getUser(player.getUniqueId());
 
-        Double money = EcoAccountsManager.instance.getMoney(player.getName());
+        Double money = EcoAccountsManager.instance.getMoney(player.getUniqueId());
 
         if (effect == 1) {
             if (money >= haste) {
