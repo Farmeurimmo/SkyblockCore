@@ -43,9 +43,9 @@ public class TchatManager implements Listener {
                 PlayerShopGuis.instance.mainShopGui(PlayerShopGuis.instance.priceEditing.get(player), player);
                 player.sendMessage("§6§lPlayerShop §8» §fLe prix a été mis à jour.");
                 PlayerShopGuis.instance.priceEditing.remove(player);
-                return;
+            } else {
+                player.sendMessage("§6§lPlayerShop §8» §cVeuillez entrer un nombre positif et supérieur à 0.");
             }
-
             return;
         }
 

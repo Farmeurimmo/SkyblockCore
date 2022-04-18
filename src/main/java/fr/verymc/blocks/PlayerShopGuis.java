@@ -91,6 +91,19 @@ public class PlayerShopGuis {
             }
             inv.setItem(22, custom2);
 
+            ItemStack help = new ItemStack(Material.KNOWLEDGE_BOOK);
+            help.setDisplayName("§6Aide");
+            help.setLore(Arrays.asList("§7Pour ouvrir le menu du player shop -> clic droit ou gauche",
+                    "§7Pour ouvrir le menu du coffre -> shift + clic gauche.",
+                    "§7Pour le casser -> shift + clic droit.",
+                    "§7Les menus possèdent des inventaires indépendants.",
+                    "§7Les player shop en mode édition sont accessibles",
+                    "  §7uniquement par le propriétaire.",
+                    "§7Le player shop doit être sur actif pour pouvoir vendre/acheter.",
+                    "§7Si il est sur inactif, aucune transaction n'est possible.",
+                    "§7Le prix ne peut pas être négatif et égal à 0."));
+            inv.setItem(18, help);
+
         } else {
 
             if (chest.getItemToBuySell() == null) {

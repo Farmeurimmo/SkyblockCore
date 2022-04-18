@@ -123,6 +123,11 @@ public class ChestListener implements Listener {
                     }
                     ItemStack item = current.clone();
                     item.setAmount(1);
+                    if (item.hasItemMeta()) {
+                        p.sendMessage("§6§lPlayerShop §8» §cImpossible de choisir cet item car il possède une metadata.");
+                        e.setCancelled(true);
+                        return;
+                    }
                     PlayerShopGuis.instance.itemEditing.get(p).setItemToBuySell(item);
                     PlayerShopGuis.instance.mainShopGui(c, p);
                     e.setCancelled(true);
