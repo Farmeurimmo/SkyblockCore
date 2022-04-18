@@ -29,7 +29,7 @@ public class GenAmoutShopGui {
         for (Entry<ItemStack, Integer> cc : amountchoice.entrySet()) {
             inv.setItem(cc.getValue(), cc.getKey());
         }
-        inv.setItem(49, PreGenItems.getOwnerHead(player));
+        inv.setItem(49, PreGenItems.instance.getOwnerHead(player));
 
         ItemStack custom7 = new ItemStack(Material.ARROW, 1);
         ItemMeta customg = custom7.getItemMeta();

@@ -74,27 +74,27 @@ public class ChestManager {
         }, 20 * 20);
     }
 
-    public void giveChest(Player player, Long i, int type) {
+    public void giveChest(Player player, int type) {
         ItemStack aa = new ItemStack(Material.AIR);
         if (type == 1) {
             aa = new ItemStack(Material.CHEST);
             ItemMeta ameta = aa.getItemMeta();
 
-            ameta.setDisplayName("§6SellChest §c(id#" + i + ")");
+            ameta.setDisplayName("§6SellChest");
             aa.setUnbreakable(true);
             aa.setItemMeta(ameta);
         } else if (type == 0) {
             aa = new ItemStack(Material.HOPPER);
             ItemMeta ameta = aa.getItemMeta();
 
-            ameta.setDisplayName("§6Chunk Hoppeur §c(id#" + i + ")");
+            ameta.setDisplayName("§6Chunk Hoppeur");
             aa.setUnbreakable(true);
             aa.setItemMeta(ameta);
         } else if (type == 2) {
             aa = new ItemStack(Material.CHEST);
             ItemMeta ameta = aa.getItemMeta();
 
-            ameta.setDisplayName("§6Player shop §c(id#" + i + ")");
+            ameta.setDisplayName("§6Player shop");
             aa.setUnbreakable(true);
             aa.setItemMeta(ameta);
         }
@@ -106,8 +106,8 @@ public class ChestManager {
         player.getInventory().addItem(aa);
     }
 
-    public void placeChest(Player player, Location block, long num, int type, ItemStack item, double price) {
-        chests.add(new main.java.fr.verymc.blocks.Chest(type, block, player.getUniqueId(), player.getName(), num, block.getChunk().getChunkKey(),
+    public void placeChest(Player player, Location block, int type, ItemStack item, double price) {
+        chests.add(new main.java.fr.verymc.blocks.Chest(type, block, player.getUniqueId(), player.getName(), block.getChunk().getChunkKey(),
                 item, price, false, false));
     }
 
@@ -118,6 +118,15 @@ public class ChestManager {
                 return;
             }
         }
+    }
+
+    public main.java.fr.verymc.blocks.Chest getChestFromLoc(Location block) {
+        for (main.java.fr.verymc.blocks.Chest chest : chests) {
+            if (chest.getBlock().equals(block.getBlock().getLocation())) {
+                return chest;
+            }
+        }
+        return null;
     }
 
     public UUID getOwner(Location loc) {

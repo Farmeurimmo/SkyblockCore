@@ -214,19 +214,19 @@ public class IslandGuiManager implements Listener {
                     if (exp <= 0) {
                         return;
                     }
-                    PlayerUtils.setTotalExperience(player, exp + PlayerUtils.getTotalExperience(player));
+                    PlayerUtils.instance.setTotalExperience(player, exp + PlayerUtils.instance.getTotalExperience(player));
                     playerIsland.getBank().removeXp(exp);
                     IslandBankGui.instance.openBankIslandMenu(player);
                     return;
                 }
                 if (e.getClick() == ClickType.RIGHT &&
                         playerIsland.hasPerms(playerIsland.getIslandRankFromUUID(player.getUniqueId()), IslandPerms.BANK_REMOVE, player)) {
-                    Integer exp = PlayerUtils.getTotalExperience(player);
+                    Integer exp = PlayerUtils.instance.getTotalExperience(player);
                     if (exp <= 0) {
                         return;
                     }
                     playerIsland.getBank().addXp(exp);
-                    PlayerUtils.setTotalExperience(player, 0);
+                    PlayerUtils.instance.setTotalExperience(player, 0);
                     IslandBankGui.instance.openBankIslandMenu(player);
                     return;
                 }

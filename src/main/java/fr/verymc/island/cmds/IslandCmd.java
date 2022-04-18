@@ -283,7 +283,7 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
                             if (!playerIsland.isBanned(target.getUniqueId())) {
                                 if (playerIsland.addBanned(target.getUniqueId())) {
                                     if (IslandManager.instance.getIslandByLoc(target.getLocation()) == playerIsland) {
-                                        PlayerUtils.TeleportPlayerFromRequest(target, SpawnCmd.Spawn, 0);
+                                        PlayerUtils.instance.teleportPlayerFromRequest(target, SpawnCmd.Spawn, 0);
                                     }
                                     playerIsland.sendMessageToEveryMember("§6§lIles §8» §f" + target.getName() +
                                             " vient d'être banni de l'île par " + p.getName() + ".");
@@ -318,7 +318,7 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
                                 return true;
                             }
                             if (IslandManager.instance.getIslandByLoc(target.getLocation()) == playerIsland) {
-                                PlayerUtils.TeleportPlayerFromRequest(target, SpawnCmd.Spawn, 0);
+                                PlayerUtils.instance.teleportPlayerFromRequest(target, SpawnCmd.Spawn, 0);
                                 target.sendMessage("§6§lIles §8» §fVous avez été expulsé de l'île par " + p.getName() + ".");
                                 playerIsland.sendMessageToEveryMember("§6§lIles §8» §f" + target.getName() +
                                         " vient d'être expulsé de l'île par " + p.getName() + ".");

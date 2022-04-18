@@ -232,7 +232,7 @@ public class GenShopPage {
         custom7.setItemMeta(customg);
         inv.setItem(0, custom7);
 
-        inv.setItem(49, PreGenItems.getOwnerHead(player));
+        inv.setItem(49, PreGenItems.instance.getOwnerHead(player));
 
         player.openInventory(inv);
         numpages.put(player.getName(), pagenum);

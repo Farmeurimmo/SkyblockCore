@@ -51,7 +51,7 @@ public class MakeItemGui {
         invboutiquefarm2win.setItem(16, custom13);
 
         invboutiquefarm2win.setItem(26, custom8);
-        invboutiquefarm2win.setItem(22, PreGenItems.getOwnerHead(player));
+        invboutiquefarm2win.setItem(22, PreGenItems.instance.getOwnerHead(player));
 
         player.openInventory(invboutiquefarm2win);
     }

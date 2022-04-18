@@ -12,7 +12,13 @@ import java.util.Arrays;
 
 public class PreGenItems {
 
-    public static ItemStack getOwnerHead(Player player) {
+    public static PreGenItems instance;
+
+    public PreGenItems() {
+        instance = this;
+    }
+
+    public ItemStack getOwnerHead(Player player) {
         User user = LuckPermsProvider.get().getUserManager().getUser(player.getName());
         String Grade = user.getCachedData().getMetaData().getPrefix().replace("&", "§");
 
@@ -26,7 +32,7 @@ public class PreGenItems {
         return custom10;
     }
 
-    public static ItemStack getHead(Player player) {
+    public ItemStack getHead(Player player) {
         ItemStack custom10 = new ItemStack(Material.PLAYER_HEAD, 1);
         SkullMeta customi = (SkullMeta) custom10.getItemMeta();
         customi.setOwner(player.getName());

@@ -20,24 +20,6 @@ import org.bukkit.inventory.ItemStack;
 
 public class ChestListener implements Listener {
 
-    public static int GetAmountToFillInInv(ItemStack aa, Inventory player) {
-        int total = 0;
-
-        int size = player.getSize();
-        for (int slot = 0; slot < size; slot++) {
-            ItemStack is = player.getItem(slot);
-            if (is == null) {
-                total += 64;
-                continue;
-            } else if (is.getType() == aa.getType()) {
-                total += 64 - is.getAmount();
-                continue;
-            }
-        }
-
-        return total;
-    }
-
     @EventHandler
     public void playerInteract(PlayerInteractEvent e) {
         if (e.getClickedBlock() == null) {
@@ -49,7 +31,7 @@ public class ChestListener implements Listener {
         if (e.getClickedBlock().getType() == Material.CHEST) {
             BlockState bs = e.getClickedBlock().getState();
             org.bukkit.block.Chest hopper = (org.bukkit.block.Chest) bs;
-            if (hopper.getCustomName().contains("§6Player shop ")) {
+            if (hopper.getCustomName().contains("§6Player shop")) {
                 for (Chest c : ChestManager.instance.chests) {
                     if (c.getType() == 2 && c.getBlock().equals(e.getClickedBlock().getLocation())) {
                         PlayerShopGuis.instance.mainShopGui(c, e.getPlayer());
@@ -62,7 +44,7 @@ public class ChestListener implements Listener {
     }
 
     @EventHandler
-    public void CheckForItem(ItemSpawnEvent e) {
+    public void checkForItem(ItemSpawnEvent e) {
         if (!(e.getEntity() instanceof Item)) {
             return;
         }
@@ -74,11 +56,11 @@ public class ChestListener implements Listener {
                 if (c.getChunkKey().equals(e.getLocation().getChunk().getChunkKey())) {
                     if (c.getBlock().getBlock().getType() == Material.HOPPER) {
                         Hopper blhopper = (Hopper) c.getBlock().getBlock().getState();
-                        if (!blhopper.getCustomName().contains("§6Chunk Hoppeur ")) {
+                        if (!blhopper.getCustomName().contains("§6Chunk Hoppeur")) {
                             continue;
                         }
                         ItemStack a = e.getEntity().getItemStack();
-                        if (GetAmountToFillInInv(a, blhopper.getInventory()) > 0) {
+                        if (InventoryUtils.instance.getAmountToFillInInv(a, blhopper.getInventory()) > 0) {
                             e.getEntity().remove();
                             blhopper.getInventory().addItem(a);
                             break;
@@ -224,11 +206,11 @@ public class ChestListener implements Listener {
                                 return;
                             }
 
-                            if (InventoryUtils.hasItemWithStackCo(c.getItemToBuySell(), inv) < amount) {
+                            if (InventoryUtils.instance.hasItemWithStackCo(c.getItemToBuySell(), inv) < amount) {
                                 p.sendMessage("§6§lPlayerShop §8» §cLe coffre n'a pas assez d'item.");
                                 return;
                             }
-                            if (InventoryUtils.hasPlaceWithStackCo(c.getItemToBuySell(), p.getInventory(), p) < amount) {
+                            if (InventoryUtils.instance.hasPlaceWithStackCo(c.getItemToBuySell(), p.getInventory(), p) < amount) {
                                 p.sendMessage("§6§lPlayerShop §8» §cVotre inventaire n'a pas assez de place.");
                                 return;
                             }
@@ -267,11 +249,11 @@ public class ChestListener implements Listener {
                                 return;
                             }
 
-                            if (InventoryUtils.hasItemWithStackCo(c.getItemToBuySell(), p.getInventory()) < amount) {
+                            if (InventoryUtils.instance.hasItemWithStackCo(c.getItemToBuySell(), p.getInventory()) < amount) {
                                 p.sendMessage("§6§lPlayerShop §8» §cVotre inventaire n'a pas assez d'items'.");
                                 return;
                             }
-                            if (InventoryUtils.hasPlaceWithStackCo(c.getItemToBuySell(), inv, p) < amount) {
+                            if (InventoryUtils.instance.hasPlaceWithStackCo(c.getItemToBuySell(), inv, p) < amount) {
                                 p.sendMessage("§6§lPlayerShop §8» §cLe coffre n'a pas assez de place.");
                                 return;
                             }
@@ -310,7 +292,7 @@ public class ChestListener implements Listener {
     }
 
     @EventHandler
-    public void BreakEvent(BlockBreakEvent e) {
+    public void breakEvent(BlockBreakEvent e) {
         if (e.getBlock() == null) {
             return;
         }
@@ -320,27 +302,23 @@ public class ChestListener implements Listener {
         if (e.getBlock().getState() == null) {
             return;
         }
-        BlockState bs = e.getBlock().getState();
-        String a = "";
         int type;
         if (e.getBlock().getType() == Material.HOPPER) {
             Hopper blhopper = (Hopper) e.getBlock().getState();
-            if (blhopper.getCustomName().contains("§6Chunk Hoppeur ")) {
+            if (blhopper.getCustomName().contains("§6Chunk Hoppeur")) {
                 type = 0;
             } else {
                 return;
             }
-            a = blhopper.getCustomName().replace("§6", "");
         } else if (e.getBlock().getType() == Material.CHEST) {
             org.bukkit.block.Chest blchest = (org.bukkit.block.Chest) e.getBlock().getState();
-            if (blchest.getCustomName().contains("§6SellChest ")) {
+            if (blchest.getCustomName().contains("§6SellChest")) {
                 type = 1;
-            } else if (blchest.getCustomName().contains("§6Player shop ")) {
+            } else if (blchest.getCustomName().contains("§6Player shop")) {
                 type = 2;
             } else {
                 return;
             }
-            a = blchest.getCustomName().replace("§6", "");
         } else {
             return;
         }
@@ -352,33 +330,30 @@ public class ChestListener implements Listener {
             e.setCancelled(true);
             return;
         }
-        String numberOnly = a.replaceAll("[^0-9]", "");
         ChestManager.instance.removeChestFromLoc(e.getBlock().getLocation());
-        ChestManager.instance.giveChest(e.getPlayer(), Long.parseLong(numberOnly), type);
+        ChestManager.instance.giveChest(e.getPlayer(), type);
         e.setDropItems(false);
     }
 
     @EventHandler
-    public void PlaceEvent(BlockPlaceEvent e) {
+    public void placeEvent(BlockPlaceEvent e) {
         if (e.getItemInHand() == null) {
             return;
         }
         if (e.getItemInHand().getType() == null) {
             return;
         }
-        String str = e.getItemInHand().getDisplayName().replace("§6", "");
-        String numberOnly = str.replaceAll("[^0-9]", "");
         int type;
         if (e.getItemInHand().getDisplayName().contains("§6Chunk Hoppeur")) {
             type = 0;
-        } else if (e.getItemInHand().getDisplayName().contains("§6SellChest ")) {
+        } else if (e.getItemInHand().getDisplayName().contains("§6SellChest")) {
             type = 1;
-        } else if (e.getItemInHand().getDisplayName().contains("§6Player shop ")) {
+        } else if (e.getItemInHand().getDisplayName().contains("§6Player shop")) {
             type = 2;
         } else {
             return;
         }
-        ChestManager.instance.placeChest(e.getPlayer(), e.getBlock().getLocation(), Long.parseLong(numberOnly), type, null, 0.0);
+        ChestManager.instance.placeChest(e.getPlayer(), e.getBlock().getLocation(), type, null, 0.0);
     }
 
 }

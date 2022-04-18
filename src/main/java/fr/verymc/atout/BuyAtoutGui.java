@@ -31,7 +31,7 @@ public class BuyAtoutGui implements Listener {
 
         Inventory inv = Bukkit.createInventory(null, 27, "§6Boutique des atouts");
 
-        inv.setItem(22, PreGenItems.getOwnerHead(player));
+        inv.setItem(22, PreGenItems.instance.getOwnerHead(player));
 
         SkyblockUserManager.instance.checkForAccount(player);
 

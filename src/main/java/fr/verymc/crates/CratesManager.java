@@ -86,7 +86,7 @@ public class CratesManager implements Listener {
                     ItemStack bb = player.getItemInHand();
                     if (bb.getType() == Material.TRIPWIRE_HOOK && bb.getItemMeta().getDisplayName().equalsIgnoreCase("§6§lClée légendaire") &&
                             bb.getItemMeta().getItemFlags().contains(ItemFlag.HIDE_UNBREAKABLE)
-                            && InventoryUtils.CheckPlayerInventoryForSlot(player) == true) {
+                            && InventoryUtils.instance.checkPlayerInventoryForSlot(player) == true) {
                         String loot = LegCrateManager.LegCrateLoot(player);
                         if (!loot.equalsIgnoreCase("reroll")) {
                             if (!loot.equalsIgnoreCase("error")) {
@@ -127,7 +127,7 @@ public class CratesManager implements Listener {
                     ItemStack bb = player.getItemInHand();
                     if (bb.getType() == Material.TRIPWIRE_HOOK && bb.getItemMeta().getDisplayName().equalsIgnoreCase("§6§lClée challenge") &&
                             bb.getItemMeta().getItemFlags().contains(ItemFlag.HIDE_UNBREAKABLE)
-                            && InventoryUtils.CheckPlayerInventoryForSlot(player) == true) {
+                            && InventoryUtils.instance.checkPlayerInventoryForSlot(player) == true) {
                         String loot = ChallengeCrateManager.ChallengeCrateLoot(player);
                         if (!loot.equalsIgnoreCase("reroll")) {
                             if (!loot.equalsIgnoreCase("error")) {
@@ -163,7 +163,7 @@ public class CratesManager implements Listener {
                     ItemStack bb = player.getItemInHand();
                     if (bb.getType() == Material.TRIPWIRE_HOOK && bb.getItemMeta().getDisplayName().equalsIgnoreCase("§6§lClée vote") &&
                             bb.getItemMeta().getItemFlags().contains(ItemFlag.HIDE_UNBREAKABLE)
-                            && InventoryUtils.CheckPlayerInventoryForSlot(player) == true) {
+                            && InventoryUtils.instance.checkPlayerInventoryForSlot(player) == true) {
                         String loot = "error";
                         if (!loot.equalsIgnoreCase("reroll")) {
                             if (!loot.equalsIgnoreCase("error")) {

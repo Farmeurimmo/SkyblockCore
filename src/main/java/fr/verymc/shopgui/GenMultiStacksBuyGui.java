@@ -21,7 +21,7 @@ public class GenMultiStacksBuyGui {
         Inventory inv = Bukkit.createInventory(null, 54, "§6Choix des stacks à acheter");
 
 
-        inv.setItem(49, PreGenItems.getOwnerHead(player));
+        inv.setItem(49, PreGenItems.instance.getOwnerHead(player));
 
         ItemStack custom7 = new ItemStack(Material.ARROW, 1);
         ItemMeta customg = custom7.getItemMeta();

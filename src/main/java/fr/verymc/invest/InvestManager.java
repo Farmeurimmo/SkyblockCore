@@ -22,7 +22,7 @@ public class InvestManager {
         SkyblockUserManager.instance.checkForAccount(player);
         SkyblockUser skyblockUser = SkyblockUserManager.instance.getUser(player.getUniqueId());
         if (!skyblockUser.isInInvestMode()) {
-            PlayerUtils.TeleportPlayerFromRequest(player, SpawnCmd.Spawn, 0);
+            PlayerUtils.instance.teleportPlayerFromRequest(player, SpawnCmd.Spawn, 0);
             skyblockUser.setInInvestMode(true);
         } else {
             giveReward(skyblockUser);

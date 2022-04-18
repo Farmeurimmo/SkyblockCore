@@ -32,7 +32,7 @@ public class IslandPlayerMove implements Listener {
     @EventHandler
     public void playerMove(PlayerMoveEvent e) {
         if (e.getTo().getY() < -1) {
-            PlayerUtils.TeleportPlayerFromRequest(e.getPlayer(), SpawnCmd.Spawn, 0);
+            PlayerUtils.instance.teleportPlayerFromRequest(e.getPlayer(), SpawnCmd.Spawn, 0);
             return;
         }
     }

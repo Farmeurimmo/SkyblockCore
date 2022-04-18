@@ -1,7 +1,6 @@
 package main.java.fr.verymc.cmd.base;
 
 import main.java.fr.verymc.Main;
-import main.java.fr.verymc.utils.GetTeleportDelay;
 import main.java.fr.verymc.utils.PlayerUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -28,7 +27,7 @@ public class SpawnCmd implements CommandExecutor, TabCompleter {
                 if (args.length == 0) {
                     final int timeLeft = Main.instance.getCooldown(player.getName());
                     if (timeLeft == 0) {
-                        PlayerUtils.TeleportPlayerFromRequest(player, Spawn, GetTeleportDelay.GetPlayerTeleportingdelay(player));
+                        PlayerUtils.instance.teleportPlayerFromRequest(player, Spawn, PlayerUtils.instance.getPlayerTeleportingdelay(player));
                     }
                 } else if (args.length == 1) {
                     if (Bukkit.getPlayer(args[0]) != null) {

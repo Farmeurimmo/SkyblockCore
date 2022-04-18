@@ -241,7 +241,7 @@ public class IslandManager {
                                     if (member == null) {
                                         member = Bukkit.getOfflinePlayer(entry.getKey()).getPlayer();
                                     }
-                                    PlayerUtils.TeleportPlayerFromRequest(member, SpawnCmd.Spawn, 0);
+                                    PlayerUtils.instance.teleportPlayerFromRequest(member, SpawnCmd.Spawn, 0);
                                     removePlayerAsAnIsland(member);
                                 }
                                 playerIsland.getMembers().clear();
@@ -268,7 +268,7 @@ public class IslandManager {
                 i.getMembers().remove(p.getUniqueId());
                 p.sendMessage("§6§lIles §8» §fVous avez quitté l'île.");
                 IslandManager.instance.removePlayerAsAnIsland(p);
-                PlayerUtils.TeleportPlayerFromRequest(p, SpawnCmd.Spawn, 0);
+                PlayerUtils.instance.teleportPlayerFromRequest(p, SpawnCmd.Spawn, 0);
                 break;
             }
         }

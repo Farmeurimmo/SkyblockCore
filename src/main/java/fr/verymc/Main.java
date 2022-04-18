@@ -52,6 +52,7 @@ import main.java.fr.verymc.storage.ConfigManager;
 import main.java.fr.verymc.storage.SkyblockUser;
 import main.java.fr.verymc.storage.SkyblockUserManager;
 import main.java.fr.verymc.storage.StorageAPIManager;
+import main.java.fr.verymc.utils.UtilsManager;
 import main.java.fr.verymc.utils.WorldBorderUtil;
 import main.java.fr.verymc.winelottery.WineGui;
 import main.java.fr.verymc.winelottery.WineSpawn;
@@ -284,6 +285,8 @@ public class Main extends JavaPlugin implements Listener {
         new MinionHarvest();
 
         new InvestManager();
+
+        new UtilsManager();
 
         System.out.println("§aDémarrage du plugin TERMINE!");
         System.out.println("-----------------------------------------------------------------------------------------------------");

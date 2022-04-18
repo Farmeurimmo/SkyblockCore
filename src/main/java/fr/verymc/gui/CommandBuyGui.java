@@ -20,7 +20,7 @@ public class CommandBuyGui {
 
         Inventory inv = Bukkit.createInventory(null, 36, "§6Boutique des commandes Farm2Win");
 
-        inv.setItem(31, PreGenItems.getOwnerHead(player));
+        inv.setItem(31, PreGenItems.instance.getOwnerHead(player));
 
         ItemStack custom10 = new ItemStack(Material.BEDROCK, 1);
         ItemMeta customi = custom10.getItemMeta();

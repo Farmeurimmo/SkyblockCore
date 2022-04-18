@@ -147,7 +147,7 @@ public class MinionManager {
         equipment.setBoots(boots);
         equipment.setItemInMainHand(new ItemStack(Material.DIAMOND_PICKAXE));
 
-        equipment.setHelmet(PreGenItems.getHead(player));
+        equipment.setHelmet(PreGenItems.instance.getHead(player));
 
         stand.setRightLegPose(new EulerAngle(0.0, 0.0, -50.0));
         stand.setLeftLegPose(new EulerAngle(0.0, 0.0, 50.0));

@@ -1,8 +1,10 @@
 package main.java.fr.verymc.blocks;
 
 import org.bukkit.Location;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.Map;
 import java.util.UUID;
 
 public class Chest {
@@ -10,7 +12,6 @@ public class Chest {
     public int type;
     public Location block;
     public UUID owner;
-    public long id;
     public String ownerName;
     private Long chunkKey;
     private ItemStack itemToBuySell;
@@ -18,13 +19,12 @@ public class Chest {
     private boolean isSell;
     private boolean activeSellOrBuy;
 
-    public Chest(int type, Location block, UUID owner, String ownerName, long id, Long chunkKey, ItemStack itemToBuySell, double price, boolean isSell,
+    public Chest(int type, Location block, UUID owner, String ownerName, Long chunkKey, ItemStack itemToBuySell, double price, boolean isSell,
                  boolean activeSellOrBuy) {
         this.type = type;
         this.block = block;
         this.owner = owner;
         this.ownerName = ownerName;
-        this.id = id;
         this.chunkKey = chunkKey;
         this.itemToBuySell = itemToBuySell;
         if (price == 0) {
@@ -58,28 +58,12 @@ public class Chest {
         this.owner = owner;
     }
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getOwnerName() {
         return ownerName;
     }
 
-    public void setOwnerName(String ownerName) {
-        this.ownerName = ownerName;
-    }
-
     public Long getChunkKey() {
         return chunkKey;
-    }
-
-    public void setChunkKey(Long chunkKey) {
-        this.chunkKey = chunkKey;
     }
 
     public ItemStack getItemToBuySell() {
@@ -104,6 +88,11 @@ public class Chest {
 
     public void setSell(boolean isSell) {
         this.isSell = isSell;
+        for (Map.Entry<Player, Chest> chestEntry : PlayerShopGuis.instance.opened.entrySet()) {
+            if (chestEntry.getValue().equals(this)) {
+                PlayerShopGuis.instance.mainShopGui(this, chestEntry.getKey());
+            }
+        }
     }
 
     public boolean isActiveSellOrBuy() {

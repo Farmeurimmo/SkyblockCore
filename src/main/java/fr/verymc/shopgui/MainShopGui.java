@@ -79,7 +79,7 @@ public class MainShopGui implements Listener {
         inv.setItem(32, custom12);
 
 
-        inv.setItem(36, PreGenItems.getOwnerHead(player));
+        inv.setItem(36, PreGenItems.instance.getOwnerHead(player));
 
 
         player.openInventory(inv);

@@ -1,6 +1,5 @@
 package main.java.fr.verymc.cmd.base;
 
-import main.java.fr.verymc.utils.GetTeleportDelay;
 import main.java.fr.verymc.utils.PlayerUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -27,13 +26,13 @@ public class WarpCmd implements CommandExecutor, TabCompleter {
             Player player = (Player) sender;
             if (args.length == 1) {
                 if (args[0].equalsIgnoreCase("boxes")) {
-                    PlayerUtils.TeleportPlayerFromRequest(player, Crates, GetTeleportDelay.GetPlayerTeleportingdelay(player));
+                    PlayerUtils.instance.teleportPlayerFromRequest(player, Crates, PlayerUtils.instance.getPlayerTeleportingdelay(player));
                 }
                 if (args[0].equalsIgnoreCase("enchantement")) {
-                    PlayerUtils.TeleportPlayerFromRequest(player, Enchantement, GetTeleportDelay.GetPlayerTeleportingdelay(player));
+                    PlayerUtils.instance.teleportPlayerFromRequest(player, Enchantement, PlayerUtils.instance.getPlayerTeleportingdelay(player));
                 }
                 if (args[0].equalsIgnoreCase("bar")) {
-                    PlayerUtils.TeleportPlayerFromRequest(player, Bar, GetTeleportDelay.GetPlayerTeleportingdelay(player));
+                    PlayerUtils.instance.teleportPlayerFromRequest(player, Bar, PlayerUtils.instance.getPlayerTeleportingdelay(player));
                 }
             } else if (args.length == 2) {
                 if (player.hasPermission("*")) {

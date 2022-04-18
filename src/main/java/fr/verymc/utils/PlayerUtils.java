@@ -8,10 +8,16 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 public class PlayerUtils {
 
-    public static void TeleportPlayerFromRequest(Player player, Location loc, int temp) {
+    public static PlayerUtils instance;
+
+    public PlayerUtils() {
+        instance = this;
+    }
+
+    public void teleportPlayerFromRequest(Player player, Location loc, int temp) {
 
         final int timeLeft = Main.instance.getCooldown(player.getName());
-        if (GetTeleportDelay.GetPlayerTeleportingdelay(player) == 0) {
+        if (getPlayerTeleportingdelay(player) == 0) {
             player.teleport(loc);
             player.sendActionBar("§6Téléportation effectuée !");
             return;
@@ -63,13 +69,13 @@ public class PlayerUtils {
 
     }
 
-    public static void TeleportPlayerFromRequestToAnotherPlayer(Player player, Player p, int temp) {
+    public void teleportPlayerFromRequestToAnotherPlayer(Player player, Player p, int temp) {
 
         Location totp = p.getLocation();
 
         player.sendMessage("§6§lTéléportation §8» §a" + p.getName() + " §fvient d'accepter votre demande de Téléportation.");
         final int timeLeft = Main.instance.getCooldown(player.getName());
-        if (GetTeleportDelay.GetPlayerTeleportingdelay(player) == 0) {
+        if (getPlayerTeleportingdelay(player) == 0) {
             player.teleport(totp);
             player.sendActionBar("fTéléportation sur §a" + p.getName() + "§f effectuée !");
             return;
@@ -116,7 +122,7 @@ public class PlayerUtils {
 
     }
 
-    private static int getExpAtLevel(final int level) {
+    private int getExpAtLevel(final int level) {
         if (level <= 15) {
             return (2 * level) + 7;
         } else if (level <= 30) {
@@ -125,7 +131,7 @@ public class PlayerUtils {
         return (9 * level) - 158;
     }
 
-    public static int getTotalExperience(final Player player) {
+    public int getTotalExperience(final Player player) {
         int exp = Math.round(getExpAtLevel(player.getLevel()) * player.getExp());
         int currentLevel = player.getLevel();
 
@@ -141,7 +147,7 @@ public class PlayerUtils {
         return exp;
     }
 
-    public static void setTotalExperience(final Player player, final int exp) {
+    public void setTotalExperience(final Player player, final int exp) {
         if (exp < 0) {
             return;
         }
@@ -163,6 +169,21 @@ public class PlayerUtils {
                 player.giveExp(amount);
                 amount = 0;
             }
+        }
+    }
+
+    public int getPlayerTeleportingdelay(Player player) {
+        int time = 0;
+        if (player.hasPermission("*")) {
+            return time;
+        } else if (player.hasPermission("group.zeus")) {
+            return time;
+        } else if (player.hasPermission("group.dieu")) {
+            return time + 1;
+        } else if (player.hasPermission("group.legende")) {
+            return time + 3;
+        } else {
+            return time + 5;
         }
     }
 }

@@ -1,7 +1,7 @@
 package main.java.fr.verymc.minions;
 
 import main.java.fr.verymc.Main;
-import main.java.fr.verymc.blocks.ChestListener;
+import main.java.fr.verymc.utils.InventoryUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Effect;
 import org.bukkit.Location;
@@ -129,7 +129,7 @@ public class MinionHarvest {
                     Chest blhopper = (Chest) minion.getChestBloc().getState();
                     Collection<ItemStack> a = finalBlockToBreak.getDrops();
                     for (ItemStack fda : a) {
-                        if (ChestListener.GetAmountToFillInInv(fda, blhopper.getInventory()) > 0) {
+                        if (InventoryUtils.instance.getAmountToFillInInv(fda, blhopper.getInventory()) > 0) {
                             if (minion.isAutoSmelt()) {
                                 blhopper.getInventory().addItem(returnCookedItem(fda));
                                 continue;

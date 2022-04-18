@@ -78,9 +78,9 @@ public class MinionsCmd implements CommandExecutor {
                 equipment.setItemInMainHand(new ItemStack(Material.DIAMOND_PICKAXE));
 
                 if (Bukkit.getPlayer(minion.getOwnerUUID()) == null) {
-                    equipment.setHelmet(PreGenItems.getHead(Bukkit.getPlayer(sender.getName())));
+                    equipment.setHelmet(PreGenItems.instance.getHead(Bukkit.getPlayer(sender.getName())));
                 } else {
-                    equipment.setHelmet(PreGenItems.getHead(Bukkit.getPlayer(minion.getOwnerUUID())));
+                    equipment.setHelmet(PreGenItems.instance.getHead(Bukkit.getPlayer(minion.getOwnerUUID())));
                 }
 
                 stand.setRightLegPose(new EulerAngle(0.0, 0.0, -50.0));

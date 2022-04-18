@@ -7,7 +7,13 @@ import org.bukkit.inventory.ItemStack;
 
 public class InventoryUtils {
 
-    public static boolean CheckPlayerInventoryForSlot(Player player) {
+    public static InventoryUtils instance;
+
+    public InventoryUtils() {
+        instance = this;
+    }
+
+    public boolean checkPlayerInventoryForSlot(Player player) {
         checkFreeSlot:
         {
             for (int i = 0; i < 36; i++) {
@@ -24,7 +30,7 @@ public class InventoryUtils {
         return true;
     }
 
-    public static int hasPlaceWithStackCo(ItemStack item, Inventory inv, Player p) {
+    public int hasPlaceWithStackCo(ItemStack item, Inventory inv, Player p) {
 
         int place = 0;
         ItemStack cloned = item.clone();
@@ -66,7 +72,7 @@ public class InventoryUtils {
 
     }
 
-    public static int hasItemWithStackCo(ItemStack item, Inventory inv) {
+    public int hasItemWithStackCo(ItemStack item, Inventory inv) {
 
         int items = 0;
         ItemStack cloned = item.clone();
@@ -87,5 +93,23 @@ public class InventoryUtils {
 
         return items;
 
+    }
+
+    public int getAmountToFillInInv(ItemStack aa, Inventory player) {
+        int total = 0;
+
+        int size = player.getSize();
+        for (int slot = 0; slot < size; slot++) {
+            ItemStack is = player.getItem(slot);
+            if (is == null) {
+                total += 64;
+                continue;
+            } else if (is.getType() == aa.getType()) {
+                total += 64 - is.getAmount();
+                continue;
+            }
+        }
+
+        return total;
     }
 }
