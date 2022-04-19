@@ -20,8 +20,6 @@ import java.util.*;
 public class Island {
 
     private String name;
-    private String owner;
-    private UUID ownerUUID;
     private Location home;
     private Location center;
     private int id;
@@ -39,13 +37,11 @@ public class Island {
     private boolean isPublic;
     private ArrayList<IslandChallenge> challenges = new ArrayList<>();
 
-    public Island(String name, String owner, UUID ownerUUID, Location home, int id, HashMap<UUID, IslandRanks> members, boolean defaultPerms,
+    public Island(String name, Location home, int id, HashMap<UUID, IslandRanks> members, boolean defaultPerms,
                   IslandUpgradeSize upgradeSize, IslandUpgradeMember upgradeMember, WorldBorderUtil.Color borderColor,
                   IslandBank bank, IslandUpgradeGenerator generatorUpgrade, ArrayList<UUID> banneds, ArrayList<IslandChallenge> challenges,
                   boolean isDefaultChallenges) {
         this.name = name;
-        this.owner = owner;
-        this.ownerUUID = ownerUUID;
         Location tmp = home.clone();
         tmp.add(0.5, 0.1, 0.5);
         tmp.setPitch(0);
@@ -146,14 +142,6 @@ public class Island {
         this.name = name;
     }
 
-    public String getOwner() {
-        return owner;
-    }
-
-    public void setOwner(String owner) {
-        this.owner = owner;
-    }
-
     public Location getHome() {
         return home;
     }
@@ -197,8 +185,10 @@ public class Island {
     }
 
     public boolean kickFromIsland(UUID uuid) {
-        if (uuid.equals(ownerUUID)) {
-            return false;
+        if (getMembers().get(uuid) != null) {
+            if (getMembers().get(uuid) == IslandRanks.CHEF) {
+                return false;
+            }
         }
         if (members.containsKey(uuid)) {
             members.remove(uuid);
@@ -379,11 +369,12 @@ public class Island {
     }
 
     public UUID getOwnerUUID() {
-        return ownerUUID;
-    }
-
-    public void setOwnerUUID(UUID ownerUUID) {
-        this.ownerUUID = ownerUUID;
+        for (Map.Entry<UUID, IslandRanks> entry : members.entrySet()) {
+            if (entry.getValue() == IslandRanks.CHEF) {
+                return entry.getKey();
+            }
+        }
+        return null;
     }
 
     public Integer getMaxMembers() {
