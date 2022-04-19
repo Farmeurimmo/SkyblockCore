@@ -45,6 +45,9 @@ import main.java.fr.verymc.items.FarmHoeGui;
 import main.java.fr.verymc.items.FarmHoeManager;
 import main.java.fr.verymc.items.ItemLegCmd;
 import main.java.fr.verymc.minions.*;
+import main.java.fr.verymc.playerwarps.PlayerWarpCmd;
+import main.java.fr.verymc.playerwarps.PlayerWarpGuiManager;
+import main.java.fr.verymc.playerwarps.PlayerWarpManager;
 import main.java.fr.verymc.scoreboard.ScoreBoard;
 import main.java.fr.verymc.scoreboard.TABManager;
 import main.java.fr.verymc.shopgui.*;
@@ -228,6 +231,7 @@ public class Main extends JavaPlugin implements Listener {
         getServer().getPluginManager().registerEvents(new IslandInteractManager(), this);
         getServer().getPluginManager().registerEvents(new IslandPlayerMove(), this);
         getServer().getPluginManager().registerEvents(new IslandGeneratorForm(), this);
+        getServer().getPluginManager().registerEvents(new PlayerWarpGuiManager(), this);
         PluginManager pm = getServer().getPluginManager();
         pm.registerEvents(this, this);
         System.out.println("Listeners DONE | NEXT commands");
@@ -277,6 +281,7 @@ public class Main extends JavaPlugin implements Listener {
         this.getCommand("minions").setExecutor(new MinionsCmd());
         this.getCommand("is").setExecutor(new IslandCmd());
         this.getCommand("invest").setExecutor(new InvestCmd());
+        this.getCommand("playerwarp").setExecutor(new PlayerWarpCmd());
         System.out.println("Commands DONE | NEXT end");
 
         new AuctionsManager();
@@ -285,6 +290,8 @@ public class Main extends JavaPlugin implements Listener {
         new MinionHarvest();
 
         new InvestManager();
+
+        new PlayerWarpManager();
 
         new UtilsManager();
 

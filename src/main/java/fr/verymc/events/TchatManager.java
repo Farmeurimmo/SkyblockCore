@@ -4,6 +4,9 @@ import main.java.fr.verymc.blocks.PlayerShopGuis;
 import main.java.fr.verymc.island.Island;
 import main.java.fr.verymc.island.IslandManager;
 import main.java.fr.verymc.island.guis.IslandTopGui;
+import main.java.fr.verymc.playerwarps.PlayerWarp;
+import main.java.fr.verymc.playerwarps.PlayerWarpManager;
+import main.java.fr.verymc.playerwarps.PlayerWarpManagingGui;
 import net.luckperms.api.LuckPermsProvider;
 import net.luckperms.api.model.user.User;
 import net.md_5.bungee.api.chat.ComponentBuilder;
@@ -47,6 +50,84 @@ public class TchatManager implements Listener {
                 player.sendMessage("§6§lPlayerShop §8» §cVeuillez entrer un nombre positif et supérieur à 0.");
             }
             return;
+        }
+
+        if (PlayerWarpManagingGui.instance.creationMode.containsKey(player)) {
+            PlayerWarp warp = PlayerWarpManagingGui.instance.creationMode.get(player);
+            if (e.getMessage().equalsIgnoreCase("cancel")) {
+                PlayerWarpManagingGui.instance.creationMode.remove(player);
+                if (PlayerWarpManagingGui.instance.oldLocation.containsKey(player)) {
+                    if (warp.getLocation() == null) {
+                        warp.setLocation(PlayerWarpManagingGui.instance.oldLocation.get(player));
+                        player.sendMessage("§6§lPlayerWarp §8» §fVotre ancienne position a été restaurée.");
+                        PlayerWarpManagingGui.instance.oldLocation.remove(player);
+                        PlayerWarpManagingGui.instance.openManagingMenu(player);
+                    }
+                } else if (PlayerWarpManagingGui.instance.oldName.containsKey(player)) {
+                    if (warp.getName() == null) {
+                        warp.setName(PlayerWarpManagingGui.instance.oldName.get(player));
+                        player.sendMessage("§6§lPlayerWarp §8» §fVotre ancien nom a été restauré.");
+                        PlayerWarpManagingGui.instance.oldName.remove(player);
+                        PlayerWarpManagingGui.instance.openManagingMenu(player);
+                    }
+                } else {
+                    player.sendMessage("§6§lPlayerWarp §8» §fVous avez annulé la création de ce warp.");
+                }
+                return;
+            }
+            if (warp.getName() == null) {
+                if (e.getMessage().length() >= 4 && e.getMessage().length() <= 32) {
+                    warp.setName(e.getMessage().replace("&", "§"));
+                    String toAdd = "";
+                    if (warp.getLocation() == null) {
+                        toAdd = "Dites OUI à l'endroit de la localisation souhaité pour le warp.";
+                    }
+                    player.sendMessage("§6§lPlayerShop §8» §fLe nom du warp a été mis à jour."
+                            + " Nouveau nom : §7" + warp.getName() + " §f. " + toAdd);
+                    if (toAdd.equals("")) {
+                        PlayerWarpManagingGui.instance.openManagingMenu(player);
+                        PlayerWarpManagingGui.instance.creationMode.remove(player);
+                    }
+                    if (PlayerWarpManagingGui.instance.oldName.containsKey(player)) {
+                        PlayerWarpManagingGui.instance.oldName.remove(player);
+                    }
+                } else {
+                    player.sendMessage("§6§lPlayerWarp §8» §cVeuillez entrer un nom de warp possédant entre 4 et 32 caractères. " +
+                            "Pour annuler la création du warp dites CANCEL.");
+                }
+                return;
+            } else if (warp.getLocation() == null) {
+                if (e.getMessage().equalsIgnoreCase("OUI")) {
+                    if (player.getLocation().getWorld() != IslandManager.instance.getMainWorld()) {
+                        player.sendMessage("§6§lPlayerWarp §8» §cVous devez être dans le monde des îles pour y mettre votre warp.");
+                        return;
+                    }
+                    Island island = IslandManager.instance.getIslandByLoc(player.getLocation());
+                    if (island == null) {
+                        player.sendMessage("§6§lPlayerWarp §8» §cVous devez être sur une île pour y mettre votre warp.");
+                        return;
+                    } else if (!island.getMembers().containsKey(player.getUniqueId())) {
+                        player.sendMessage("§6§lPlayerWarp §8» §cVous devez être membre de cette île pour y mettre votre warp.");
+                        return;
+                    }
+                    warp.setLocation(player.getLocation());
+                    player.sendMessage("§6§lPlayerWarp §8» §fLa localisation du warp a été enregistré.");
+                    PlayerWarpManagingGui.instance.creationMode.remove(player);
+                    if (PlayerWarpManager.instance.getPlayerWarpFromUUID(player.getUniqueId()) == null) {
+                        player.sendMessage("§6§lPlayerWarp §8» §fWarp créé avec succès, pour le modifier retourner dans le menu" +
+                                " de gestion (/playerwarp).");
+                    }
+                    PlayerWarpManager.instance.addWarp(warp);
+                    PlayerWarpManagingGui.instance.openManagingMenu(player);
+                    if (PlayerWarpManagingGui.instance.oldLocation.containsKey(player)) {
+                        PlayerWarpManagingGui.instance.oldLocation.remove(player);
+                    }
+                } else {
+                    player.sendMessage("§6§lPlayerWarp §8» §cVeuillez entrer OUI pour valider la localisation du warp. " +
+                            "Pour annuler la création du warp dites CANCEL.");
+                }
+                return;
+            }
         }
 
         boolean isIslandChat = false;
