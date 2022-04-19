@@ -46,7 +46,11 @@ public class Island {
         this.name = name;
         this.owner = owner;
         this.ownerUUID = ownerUUID;
-        this.home = home.clone().add(0.5, 0.1, 0.5);
+        Location tmp = home.clone();
+        tmp.add(0.5, 0.1, 0.5);
+        tmp.setPitch(0);
+        tmp.setYaw(130);
+        this.home = tmp;
         this.center = home;
         this.id = id;
         this.members = members;
