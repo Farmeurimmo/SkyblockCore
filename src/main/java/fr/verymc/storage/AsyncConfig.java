@@ -6,14 +6,16 @@ import org.bukkit.configuration.file.FileConfiguration;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 
-public class AsyncSaver {
+public class AsyncConfig {
 
-    public static AsyncSaver instance;
+    public static AsyncConfig instance;
 
-    public AsyncSaver() {
+    public AsyncConfig() {
         instance = this;
     }
 
@@ -30,5 +32,20 @@ public class AsyncSaver {
                 }
             }
         }, 0);
+    }
+
+    public ArrayList<Object> getObjectsStartup(FileConfiguration fileConfiguration, File file) {
+        ArrayList<Object> objects = new ArrayList<>();
+        //CompletableFuture<T>#supplyAsync(Supplier<T>)
+        CompletableFuture.supplyAsync(() -> {
+            //tries to fetch data from a database which doesn’t block the main thread but another thread.
+            for (String key : fileConfiguration.getKeys(false)) {
+                objects.add(fileConfiguration.get(key));
+            }
+            return objects;
+        }).join(); //makes it blocking
+
+        //never used
+        return null;
     }
 }

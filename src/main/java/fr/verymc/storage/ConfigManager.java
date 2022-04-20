@@ -12,11 +12,15 @@ public class ConfigManager {
 
     public static ConfigManager instance;
     public FileConfiguration dataAh;
+    public FileConfiguration dataIslands;
+    public FileConfiguration dataSkyblockUser;
     public File ahFile;
+    public File islandsFile;
+    public File skyblockUserFile;
 
     public ConfigManager() {
         instance = this;
-        new AsyncSaver();
+        new AsyncConfig();
         setup();
     }
 
@@ -33,11 +37,43 @@ public class ConfigManager {
 
         dataAh = YamlConfiguration.loadConfiguration(ahFile);
 
+        islandsFile = new File(Main.instance.getDataFolder(), "islands.yml");
+
+        if (!islandsFile.exists()) {
+            try {
+                islandsFile.createNewFile();
+            } catch (IOException e) {
+                Main.instance.getLogger().info("§c§lErreur lors de la création de islands.yml");
+            }
+        }
+
+        dataIslands = YamlConfiguration.loadConfiguration(islandsFile);
+
+        skyblockUserFile = new File(Main.instance.getDataFolder(), "skyblockUser.yml");
+
+        if (!skyblockUserFile.exists()) {
+            try {
+                skyblockUserFile.createNewFile();
+            } catch (IOException e) {
+                Main.instance.getLogger().info("§c§lErreur lors de la création de skyblockUser.yml");
+            }
+        }
+
+        dataSkyblockUser = YamlConfiguration.loadConfiguration(skyblockUserFile);
+
 
     }
 
     public FileConfiguration getDataah() {
         return dataAh;
+    }
+
+    public FileConfiguration getDataIslands() {
+        return dataIslands;
+    }
+
+    public FileConfiguration getDataSkyblockUser() {
+        return dataSkyblockUser;
     }
 
 
@@ -48,12 +84,14 @@ public class ConfigManager {
             Main.instance.getLogger().info("§c§lErreur lors de la sauvegarde!");
             e.printStackTrace();
         }
-    }
-
-    public void saveDataAh() {
         try {
-            dataAh.save(ahFile);
-        } catch (IOException e) {
+            dataIslands.load(islandsFile);
+        } catch (InvalidConfigurationException e) {
+            Main.instance.getLogger().info("§c§lErreur lors de la sauvegarde!");
+        }
+        try {
+            dataSkyblockUser.load(skyblockUserFile);
+        } catch (InvalidConfigurationException e) {
             Main.instance.getLogger().info("§c§lErreur lors de la sauvegarde!");
         }
     }

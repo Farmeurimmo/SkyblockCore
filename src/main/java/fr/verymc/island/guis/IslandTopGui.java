@@ -84,7 +84,7 @@ public class IslandTopGui {
             if (slot == 13) slot += 2;
             ItemStack custom10 = new ItemStack(Material.PLAYER_HEAD, 1);
             SkullMeta customi = (SkullMeta) custom10.getItemMeta();
-            customi.setOwner(entry.getKey().getOwner());
+            customi.setOwner(Bukkit.getOfflinePlayer(entry.getKey().getOwnerUUID()).getName());
             customi.setDisplayName("§6#" + entry.getValue() + ": " + entry.getKey().getName());
             customi.setLore(Arrays.asList("§7Points: " + entry.getKey().getValue()));
             custom10.setItemMeta(customi);

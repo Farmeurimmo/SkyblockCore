@@ -54,7 +54,7 @@ import main.java.fr.verymc.shopgui.*;
 import main.java.fr.verymc.storage.ConfigManager;
 import main.java.fr.verymc.storage.SkyblockUser;
 import main.java.fr.verymc.storage.SkyblockUserManager;
-import main.java.fr.verymc.storage.StorageAPIManager;
+import main.java.fr.verymc.storage.StorageYAMLManager;
 import main.java.fr.verymc.utils.UtilsManager;
 import main.java.fr.verymc.utils.WorldBorderUtil;
 import main.java.fr.verymc.winelottery.WineGui;
@@ -143,7 +143,7 @@ public class Main extends JavaPlugin implements Listener {
         System.out.println("-----------------------------------------------------------------------------------------------------");
 
         System.out.println("Fetching Datas...");
-        new StorageAPIManager();
+        new StorageYAMLManager();
 
 
         System.out.println("Island startup...");

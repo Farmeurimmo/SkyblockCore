@@ -166,10 +166,7 @@ public class IslandManager {
 
     public void setIslandNewOwner(Player p) {
         Island playerIsland = getIslandByLoc(p.getLocation());
-        String oldOwner = playerIsland.getOwner();
-        playerIsland.getMembers().put(playerIsland.getOwnerUUID(), IslandRanks.COCHEF);
-        playerIsland.setOwnerUUID(p.getUniqueId());
-        playerIsland.setOwner(p.getName());
+        String oldOwner = Bukkit.getOfflinePlayer(playerIsland.getOwnerUUID()).getName();
         playerIsland.getMembers().put(p.getUniqueId(), IslandRanks.CHEF);
         playerIsland.sendMessageToEveryMember("§6§lIles §8» §f" + p.getName() + " vient de devenir le chef de l'île, transféré par " +
                 oldOwner + ".");
@@ -550,13 +547,13 @@ public class IslandManager {
                             public void run() {
                                 HashMap<UUID, IslandRanks> members = new HashMap<>();
                                 members.put(p.getUniqueId(), IslandRanks.CHEF);
-                                IslandBank islandBank = new IslandBank(0, 0, 0, 0);
+                                IslandBank islandBank = new IslandBank(0, 0, 0);
                                 IslandUpgradeSize islandUpgradeSize = new IslandUpgradeSize(50, 0);
                                 IslandUpgradeMember islandUpgradeMember = new IslandUpgradeMember(0);
                                 IslandUpgradeGenerator islandUpgradeGenerator = new IslandUpgradeGenerator(0);
                                 ArrayList<UUID> banneds = new ArrayList<>();
                                 ArrayList<IslandChallenge> challenges = new ArrayList<>();
-                                islands.add(new Island("Ile de " + p.getName(), p.getName(), p.getUniqueId(), finalToReturn1, finalId + 1, members, true,
+                                islands.add(new Island("Ile de " + p.getName(), finalToReturn1, finalId + 1, members, true,
                                         islandUpgradeSize, islandUpgradeMember, WorldBorderUtil.Color.BLUE, islandBank, islandUpgradeGenerator, banneds, challenges, true));
                                 addPlayerAsAnIsland(p);
                                 p.sendMessage("§6§lIles §8» §aVous avez généré une nouvelle île avec succès (en " + (System.currentTimeMillis() - start) + "ms).");
