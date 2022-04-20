@@ -6,6 +6,7 @@ import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 public class PlayerWarpManager {
@@ -26,13 +27,33 @@ public class PlayerWarpManager {
     }
 
     public void regenPosBrowser() {
-        Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.instance, new Runnable() {
+        Bukkit.getScheduler().scheduleAsyncRepeatingTask(Main.instance, new Runnable() {
             @Override
             public void run() {
-                posBrowser.clear();
-                for (int i = 0; i < playerWarps.size(); i++) {
-                    posBrowser.put(i + 1, playerWarps.get(i));
-                }
+                Bukkit.getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
+                    @Override
+                    public void run() {
+                        posBrowser.clear();
+                        for (int i = 0; i < playerWarps.size(); i++) {
+                            posBrowser.put(i + 1, playerWarps.get(i));
+                        }
+                        ArrayList<Player> toRemove = new ArrayList<Player>();
+                        for (Map.Entry<Player, Integer> entry : PlayerWarpBrowserGui.instance.toAct.entrySet()) {
+                            if (entry.getKey().isOnline()) {
+                                if (entry.getKey().getOpenInventory() != null) {
+                                    if (entry.getKey().getOpenInventory().getTitle().contains("§6Warp browser #")) {
+                                        PlayerWarpBrowserGui.instance.openBrowserMenu(entry.getKey(), entry.getValue());
+                                        continue;
+                                    }
+                                }
+                            }
+                            toRemove.add(entry.getKey());
+                        }
+                        for (Player p : toRemove) {
+                            PlayerWarpBrowserGui.instance.toAct.remove(p);
+                        }
+                    }
+                }, 0);
             }
         }, 0, 40);
     }

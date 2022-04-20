@@ -5,10 +5,12 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.text.NumberFormat;
+import java.util.HashMap;
 
 public class PlayerWarpGuiManager implements Listener {
 
@@ -108,6 +110,31 @@ public class PlayerWarpGuiManager implements Listener {
                 }
             }
             return;
+        }
+        if (e.getView().getTitle().contains("§6Warp browser #")) {
+            e.setCancelled(true);
+            int page = 1;
+            try {
+                page = Integer.parseInt(e.getView().getTitle().replace("§6Warp browser #", ""));
+            } catch (NumberFormatException ex) {
+                return;
+            }
+            HashMap<Integer, PlayerWarp> warps = PlayerWarpBrowserGui.instance.getWarpsFromPageNum(page);
+
+            if (warps.containsKey(e.getSlot())) {
+                PlayerWarp pw = warps.get(e.getSlot());
+                if (e.getClick() == ClickType.LEFT) {
+                    PlayerUtils.instance.teleportPlayerFromRequest(p, pw.getLocation(), 0);
+                    return;
+                } else if (e.getClick() == ClickType.RIGHT) {
+                    if (pw.alreadyVoted(p.getUniqueId())) {
+                        p.sendMessage("§6§lPlayerWarp §8» §fVous avez déjà voté pour ce warp.");
+                        return;
+                    }
+                    PlayerWarpNotationGui.instance.openNotationMenu(p, pw);
+                }
+            }
+
         }
     }
 
