@@ -189,8 +189,10 @@ public class Island {
     }
 
     public boolean kickFromIsland(UUID uuid) {
-        if (uuid.equals(getOwnerUUID())) {
-            return false;
+        if (getMembers().get(uuid) != null) {
+            if (getMembers().get(uuid) == IslandRanks.CHEF) {
+                return false;
+            }
         }
         if (members.containsKey(uuid)) {
             members.remove(uuid);
@@ -370,7 +372,6 @@ public class Island {
     }
 
     public UUID getOwnerUUID() {
-
         for (Map.Entry<UUID, IslandRanks> entry : members.entrySet()) {
             if (entry.getValue() == IslandRanks.CHEF) {
                 return entry.getKey();

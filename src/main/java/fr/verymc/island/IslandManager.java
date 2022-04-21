@@ -166,6 +166,7 @@ public class IslandManager {
     public void setIslandNewOwner(Player p) {
         Island playerIsland = getIslandByLoc(p.getLocation());
         String oldOwner = Bukkit.getOfflinePlayer(playerIsland.getOwnerUUID()).getName();
+        playerIsland.getMembers().put(playerIsland.getOwnerUUID(), IslandRanks.COCHEF);
         playerIsland.getMembers().put(p.getUniqueId(), IslandRanks.CHEF);
         playerIsland.sendMessageToEveryMember("§6§lIles §8» §f" + p.getName() + " vient de devenir le chef de l'île, transféré par " +
                 oldOwner + ".");
