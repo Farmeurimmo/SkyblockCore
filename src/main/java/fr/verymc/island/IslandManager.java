@@ -45,7 +45,6 @@ public class IslandManager {
     public static int distanceBetweenIslands = 400;
     public static IslandBlockValues islandBockValues;
     public World mainWorld;
-    public ArrayList<UUID> isInIsland = new ArrayList<>();
     public ArrayList<Island> islands = new ArrayList<>();
     public ArrayList<UUID> bypasser = new ArrayList<>();
     public ArrayList<UUID> spying = new ArrayList<>();
@@ -240,7 +239,6 @@ public class IslandManager {
                                         member = Bukkit.getOfflinePlayer(entry.getKey()).getPlayer();
                                     }
                                     PlayerUtils.instance.teleportPlayerFromRequest(member, SpawnCmd.Spawn, 0);
-                                    removePlayerAsAnIsland(member);
                                 }
                                 playerIsland.getMembers().clear();
                             }
@@ -265,7 +263,6 @@ public class IslandManager {
                         i.getMembers().get(p.getUniqueId()).name() + ".");
                 i.getMembers().remove(p.getUniqueId());
                 p.sendMessage("§6§lIles §8» §fVous avez quitté l'île.");
-                IslandManager.instance.removePlayerAsAnIsland(p);
                 PlayerUtils.instance.teleportPlayerFromRequest(p, SpawnCmd.Spawn, 0);
                 break;
             }
@@ -295,7 +292,6 @@ public class IslandManager {
                     pendingInvites.remove(p);
                 }
                 target.sendMessage("§6§lIles §8» §fVous avez rejoint l'île de " + p.getName() + ".");
-                IslandManager.instance.addPlayerAsAnIsland(target);
                 getPlayerIsland(p).addMembers(target.getUniqueId(), IslandRanks.MEMBRE);
                 IslandManager.instance.getPlayerIsland(p).sendMessageToEveryMember("§6§lIles §8» §6" + target.getName() +
                         "§f a rejoint l'île par l'invitation de §f" + p.getName() + "§f.");
@@ -439,15 +435,10 @@ public class IslandManager {
     }
 
     public boolean asAnIsland(Player p) {
-        return isInIsland.contains(p.getUniqueId());
-    }
-
-    public void addPlayerAsAnIsland(Player p) {
-        isInIsland.add(p.getUniqueId());
-    }
-
-    public void removePlayerAsAnIsland(Player p) {
-        isInIsland.remove(p.getUniqueId());
+        if (getPlayerIsland(p) == null) {
+            return false;
+        }
+        return true;
     }
 
     public World getMainWorld() {
@@ -548,15 +539,15 @@ public class IslandManager {
                             public void run() {
                                 HashMap<UUID, IslandRanks> members = new HashMap<>();
                                 members.put(p.getUniqueId(), IslandRanks.CHEF);
-                                IslandBank islandBank = new IslandBank(0, 0, 0, 0);
+                                IslandBank islandBank = new IslandBank(0, 0, 0);
                                 IslandUpgradeSize islandUpgradeSize = new IslandUpgradeSize(50, 0);
                                 IslandUpgradeMember islandUpgradeMember = new IslandUpgradeMember(0);
                                 IslandUpgradeGenerator islandUpgradeGenerator = new IslandUpgradeGenerator(0);
                                 ArrayList<UUID> banneds = new ArrayList<>();
                                 ArrayList<IslandChallenge> challenges = new ArrayList<>();
-                                islands.add(new Island("Ile de " + p.getName(), finalToReturn1, finalId + 1, members, true,
-                                        islandUpgradeSize, islandUpgradeMember, WorldBorderUtil.Color.BLUE, islandBank, islandUpgradeGenerator, banneds, challenges, true));
-                                addPlayerAsAnIsland(p);
+                                islands.add(new Island("Ile de " + p.getName(), finalToReturn1, finalToReturn1, finalId + 1, members,
+                                        islandUpgradeSize, islandUpgradeMember, WorldBorderUtil.Color.BLUE, islandBank, islandUpgradeGenerator, banneds, challenges,
+                                        true, null, true, 0.0));
                                 p.sendMessage("§6§lIles §8» §aVous avez généré une nouvelle île avec succès (en " + (System.currentTimeMillis() - start) + "ms).");
                                 teleportPlayerToIslandSafe(p);
                                 return;

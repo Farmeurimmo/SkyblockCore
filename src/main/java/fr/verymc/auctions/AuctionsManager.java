@@ -2,7 +2,7 @@ package main.java.fr.verymc.auctions;
 
 import main.java.fr.verymc.Main;
 import main.java.fr.verymc.eco.EcoAccountsManager;
-import main.java.fr.verymc.storage.AsyncSaver;
+import main.java.fr.verymc.storage.AsyncConfig;
 import main.java.fr.verymc.storage.ConfigManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -110,7 +110,7 @@ public class AuctionsManager {
 
         HashMap<String, Object> objectHashMap = new HashMap<>();
         objectHashMap.put("auction." + millis, null);
-        AsyncSaver.instance.setAndSaveAsync(objectHashMap, ConfigManager.instance.getDataah(),
+        AsyncConfig.instance.setAndSaveAsync(objectHashMap, ConfigManager.instance.getDataah(),
                 ConfigManager.instance.ahFile);
     }
 
@@ -328,7 +328,7 @@ public class AuctionsManager {
         objectHashMap.put("auction." + millis + ".itemStack", tosell);
         objectHashMap.put("auction." + millis + ".seller", player.getName());
         objectHashMap.put("auction." + millis + ".sellerUUID", player.getUniqueId().toString());
-        AsyncSaver.instance.setAndSaveAsync(objectHashMap, ConfigManager.instance.getDataah(),
+        AsyncConfig.instance.setAndSaveAsync(objectHashMap, ConfigManager.instance.getDataah(),
                 ConfigManager.instance.ahFile);
 
         if (tosell.getLore() == null) {

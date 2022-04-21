@@ -1,5 +1,6 @@
 package main.java.fr.verymc.minions;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -8,7 +9,6 @@ import java.util.UUID;
 
 public class Minion {
 
-    private String ownerName;
     private UUID ownerUUID;
     private Integer levelInt;
     private Long id;
@@ -19,10 +19,9 @@ public class Minion {
     private Block chestBloc;
     private Boolean isAutoSmelt;
 
-    public Minion(Long id, String ownerS, UUID ownerUUID, Integer levelInt, Location blocLocation, MinionType minionType,
+    public Minion(Long id, UUID ownerUUID, Integer levelInt, Location blocLocation, MinionType minionType,
                   BlockFace blockFace, Boolean chestLinked, Block chestBloc, Boolean isAutoSmelt) {
         this.id = id;
-        this.ownerName = ownerS;
         this.ownerUUID = ownerUUID;
         this.levelInt = levelInt;
         this.blocLocation = blocLocation;
@@ -46,7 +45,7 @@ public class Minion {
     }
 
     public String getOwnerName() {
-        return ownerName;
+        return Bukkit.getOfflinePlayer(ownerUUID).getName();
     }
 
     public UUID getOwnerUUID() {

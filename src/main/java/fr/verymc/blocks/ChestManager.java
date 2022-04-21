@@ -107,8 +107,8 @@ public class ChestManager {
     }
 
     public void placeChest(Player player, Location block, int type, ItemStack item, double price) {
-        chests.add(new main.java.fr.verymc.blocks.Chest(type, block, player.getUniqueId(), player.getName(), block.getChunk().getChunkKey(),
-                item, price, false, false));
+        chests.add(new main.java.fr.verymc.blocks.Chest(type, block, player.getUniqueId(), block.getChunk().getChunkKey(),
+                item, price, false, false, System.currentTimeMillis()));
     }
 
     public void removeChestFromLoc(Location block) {
