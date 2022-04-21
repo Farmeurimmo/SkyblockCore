@@ -142,10 +142,6 @@ public class Main extends JavaPlugin implements Listener {
         }
         System.out.println("-----------------------------------------------------------------------------------------------------");
 
-        System.out.println("Fetching Datas...");
-        new StorageYAMLManager();
-
-
         System.out.println("Island startup...");
         new SkyblockUserManager();
         saveResource("ileworld.schem", true);
@@ -154,8 +150,8 @@ public class Main extends JavaPlugin implements Listener {
         new WorldBorderUtil(this);
 
         System.out.println("Initialisation des MODULES en cours...");
-        new ConfigManager();
         System.out.println("Fichier yml DONE | NEXT Methods init");
+        new ConfigManager();
 
         BuildCmd.Build.clear();
         spawncooldown.clear();
@@ -164,6 +160,15 @@ public class Main extends JavaPlugin implements Listener {
         new ChestManager();
         FarmHoeManager.addtolist();
         new EcoAccountsManager();
+
+        System.out.println("Starting minion module...");
+        new MinionManager();
+        new MinionsGui();
+        new MinionHarvest();
+
+        System.out.println("Fetching Datas...");
+        new StorageYAMLManager();
+
         System.out.println("Starting one time methods DONE | NEXT Pregen shopgui ");
 
         BuyShopItem.GenPriceShopStartup();
@@ -285,9 +290,6 @@ public class Main extends JavaPlugin implements Listener {
         System.out.println("Commands DONE | NEXT end");
 
         new AuctionsManager();
-        new MinionManager();
-        new MinionsGui();
-        new MinionHarvest();
 
         new InvestManager();
 

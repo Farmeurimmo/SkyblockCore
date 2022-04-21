@@ -6,10 +6,8 @@ import org.bukkit.configuration.file.FileConfiguration;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.CompletableFuture;
 
 public class AsyncConfig {
 
@@ -34,7 +32,7 @@ public class AsyncConfig {
         }, 0);
     }
 
-    public ArrayList<Object> getObjectsStartup(FileConfiguration fileConfiguration, File file) {
+    /*public ArrayList<Object> getObjectsStartup(FileConfiguration fileConfiguration, File file) {
         ArrayList<Object> objects = new ArrayList<>();
         //CompletableFuture<T>#supplyAsync(Supplier<T>)
         CompletableFuture.supplyAsync(() -> {
@@ -47,5 +45,5 @@ public class AsyncConfig {
 
         //never used
         return null;
-    }
+    }*/
 }

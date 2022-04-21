@@ -37,33 +37,37 @@ public class Island {
     private boolean isPublic;
     private ArrayList<IslandChallenge> challenges = new ArrayList<>();
 
-    public Island(String name, Location home, int id, HashMap<UUID, IslandRanks> members, boolean defaultPerms,
+    public Island(String name, Location home, Location center, int id, HashMap<UUID, IslandRanks> members,
                   IslandUpgradeSize upgradeSize, IslandUpgradeMember upgradeMember, WorldBorderUtil.Color borderColor,
                   IslandBank bank, IslandUpgradeGenerator generatorUpgrade, ArrayList<UUID> banneds, ArrayList<IslandChallenge> challenges,
-                  boolean isDefaultChallenges) {
+                  boolean isDefaultChallenges, HashMap<IslandRanks, ArrayList<IslandPerms>> permsPerRanks,
+                  boolean isPublic, double value) {
         this.name = name;
         Location tmp = home.clone();
         tmp.add(0.5, 0.1, 0.5);
         tmp.setPitch(0);
         tmp.setYaw(130);
         this.home = tmp;
-        this.center = home;
+        this.center = center;
         this.id = id;
         this.members = members;
-        if (defaultPerms) {
-            setDefaultPerms();
-        }
         this.sizeUpgrade = upgradeSize;
         this.memberUpgrade = upgradeMember;
         this.borderColor = borderColor;
         this.bank = bank;
         this.value = 0.0;
-        this.isPublic = true;
+        this.isPublic = isPublic;
+        this.value = value;
         this.generatorUpgrade = generatorUpgrade;
         this.banneds = banneds;
         this.challenges = challenges;
         if (isDefaultChallenges) {
             addDefaultChallenges();
+        }
+        if (permsPerRanks == null) {
+            setDefaultPerms();
+        } else {
+            this.permsPerRanks = permsPerRanks;
         }
     }
 
@@ -197,7 +201,6 @@ public class Island {
         } else {
             p = (Player) Bukkit.getOfflinePlayer(uuid);
         }
-        IslandManager.instance.removePlayerAsAnIsland(p);
         return true;
     }
 

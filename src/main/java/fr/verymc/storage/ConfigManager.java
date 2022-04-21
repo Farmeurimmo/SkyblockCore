@@ -7,6 +7,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.concurrent.CompletableFuture;
 
 public class ConfigManager {
 
@@ -14,9 +15,11 @@ public class ConfigManager {
     public FileConfiguration dataAh;
     public FileConfiguration dataIslands;
     public FileConfiguration dataSkyblockUser;
+    public FileConfiguration dataMinions;
     public File ahFile;
     public File islandsFile;
     public File skyblockUserFile;
+    public File minionsFile;
 
     public ConfigManager() {
         instance = this;
@@ -61,6 +64,18 @@ public class ConfigManager {
 
         dataSkyblockUser = YamlConfiguration.loadConfiguration(skyblockUserFile);
 
+        minionsFile = new File(Main.instance.getDataFolder(), "minions.yml");
+
+        if (!minionsFile.exists()) {
+            try {
+                minionsFile.createNewFile();
+            } catch (IOException e) {
+                Main.instance.getLogger().info("§c§lErreur lors de la création de minions.yml");
+            }
+        }
+
+        dataMinions = YamlConfiguration.loadConfiguration(minionsFile);
+
 
     }
 
@@ -74,6 +89,21 @@ public class ConfigManager {
 
     public FileConfiguration getDataSkyblockUser() {
         return dataSkyblockUser;
+    }
+
+    public FileConfiguration getDataMinions() {
+        return dataMinions;
+    }
+
+    public boolean breakIslandFile() {
+        CompletableFuture.supplyAsync(() -> {
+            islandsFile.delete();
+            skyblockUserFile.delete();
+            minionsFile.delete();
+            setup();
+            return true;
+        }).join(); //makes it blocking
+        return true;
     }
 
 
@@ -91,6 +121,11 @@ public class ConfigManager {
         }
         try {
             dataSkyblockUser.load(skyblockUserFile);
+        } catch (InvalidConfigurationException e) {
+            Main.instance.getLogger().info("§c§lErreur lors de la sauvegarde!");
+        }
+        try {
+            dataMinions.load(minionsFile);
         } catch (InvalidConfigurationException e) {
             Main.instance.getLogger().info("§c§lErreur lors de la sauvegarde!");
         }

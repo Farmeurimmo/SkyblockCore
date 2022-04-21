@@ -116,7 +116,7 @@ public class MinionManager {
         blocLoc.add(0.5, 1, 0.5);
         blocLoc.setDirection(player.getLocation().getDirection());
 
-        Minion minion = new Minion(id, player.getName(), player.getUniqueId(), levelInt, blocLoc, minionType,
+        Minion minion = new Minion(id, player.getUniqueId(), levelInt, blocLoc, minionType,
                 blockFace, false, null, false);
 
         final ArmorStand stand = (ArmorStand) minion.getBlocLocation().getWorld().spawnEntity(minion.getBlocLocation(), EntityType.ARMOR_STAND);
