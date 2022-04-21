@@ -2,6 +2,7 @@ package main.java.fr.verymc.storage;
 
 import main.java.fr.verymc.Main;
 import main.java.fr.verymc.blocks.Chest;
+import main.java.fr.verymc.blocks.ChestManager;
 import main.java.fr.verymc.island.Island;
 import main.java.fr.verymc.island.IslandManager;
 import main.java.fr.verymc.island.bank.IslandBank;
@@ -19,6 +20,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -151,6 +153,23 @@ public class StorageYAMLManager {
             //DATA USERS
 
             ArrayList<Chest> chests = new ArrayList<>();
+            for (String str : ConfigManager.instance.getDataChests().getKeys(false)) {
+                String uuidString = ConfigManager.instance.getDataChests().getString(str + ".uuid");
+                if (uuidString == null || uuidString.length() != 36) {
+                    continue;
+                }
+                UUID uuid = UUID.fromString(uuidString);
+                long id = Long.parseLong(str);
+                ItemStack itemStack = ConfigManager.instance.getDataChests().getItemStack(str + ".item");
+                int type = ConfigManager.instance.getDataChests().getInt(str + ".type");
+                Location loc = ConfigManager.instance.getDataChests().getLocation(str + ".loc");
+                boolean isSell = ConfigManager.instance.getDataChests().getBoolean(str + ".isSell");
+                long chunk = ConfigManager.instance.getDataChests().getLong(str + ".chunk");
+                double price = ConfigManager.instance.getDataChests().getDouble(str + ".price");
+                boolean active = ConfigManager.instance.getDataChests().getBoolean(str + ".active");
+
+                chests.add(new Chest(type, loc, uuid, chunk, itemStack, price, isSell, active, id));
+            }
             //DATA CHESTS
 
             Bukkit.getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
@@ -169,6 +188,7 @@ public class StorageYAMLManager {
                     SkyblockUserManager.instance.users = skyblockUsers;
 
                     //SEND Chests to -> ChestManager.instance.chests
+                    ChestManager.instance.chests = chests;
 
                 }
             }, 0);
@@ -246,6 +266,21 @@ public class StorageYAMLManager {
                 toSendSkyUser.put(uuid + ".hasJump", skyblockUser.hasJump());
             }
 
+            ArrayList<Chest> chests = ChestManager.instance.chests;
+
+            HashMap<String, Object> toSendChest = new HashMap<>();
+            for (Chest chest : chests) {
+                toSendChest.put(chest.getId() + ".loc", chest.getBlock());
+                toSendChest.put(chest.getId() + ".uuid", chest.getOwner().toString());
+                toSendChest.put(chest.getId() + ".type", chest.getType());
+                toSendChest.put(chest.getId() + ".isSell", chest.isSell());
+                toSendChest.put(chest.getId() + ".active", chest.isActiveSellOrBuy());
+                toSendChest.put(chest.getId() + ".price", chest.getPrice());
+                toSendChest.put(chest.getId() + ".item", chest.getItemToBuySell());
+                toSendChest.put(chest.getId() + ".chunk", chest.getChunkKey());
+            }
+
+
             //SEND TO API
 
             if (ConfigManager.instance.breakIslandFile()) {
@@ -255,6 +290,8 @@ public class StorageYAMLManager {
                         ConfigManager.instance.skyblockUserFile);
                 AsyncConfig.instance.setAndSaveAsync(toSendMinions, ConfigManager.instance.getDataMinions(),
                         ConfigManager.instance.minionsFile);
+                AsyncConfig.instance.setAndSaveAsync(toSendChest, ConfigManager.instance.getDataChests(),
+                        ConfigManager.instance.chestsFile);
 
             }
 

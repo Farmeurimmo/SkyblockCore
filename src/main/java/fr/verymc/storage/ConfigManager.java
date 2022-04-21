@@ -16,10 +16,13 @@ public class ConfigManager {
     public FileConfiguration dataIslands;
     public FileConfiguration dataSkyblockUser;
     public FileConfiguration dataMinions;
+    public FileConfiguration dataChests;
     public File ahFile;
     public File islandsFile;
     public File skyblockUserFile;
     public File minionsFile;
+    public File chestsFile;
+
 
     public ConfigManager() {
         instance = this;
@@ -76,6 +79,18 @@ public class ConfigManager {
 
         dataMinions = YamlConfiguration.loadConfiguration(minionsFile);
 
+        chestsFile = new File(Main.instance.getDataFolder(), "chests.yml");
+
+        if (!chestsFile.exists()) {
+            try {
+                chestsFile.createNewFile();
+            } catch (IOException e) {
+                Main.instance.getLogger().info("§c§lErreur lors de la création de chests.yml");
+            }
+        }
+
+        dataChests = YamlConfiguration.loadConfiguration(chestsFile);
+
 
     }
 
@@ -95,11 +110,16 @@ public class ConfigManager {
         return dataMinions;
     }
 
+    public FileConfiguration getDataChests() {
+        return dataChests;
+    }
+
     public boolean breakIslandFile() {
         CompletableFuture.supplyAsync(() -> {
             islandsFile.delete();
             skyblockUserFile.delete();
             minionsFile.delete();
+            chestsFile.delete();
             setup();
             return true;
         }).join(); //makes it blocking
@@ -126,6 +146,11 @@ public class ConfigManager {
         }
         try {
             dataMinions.load(minionsFile);
+        } catch (InvalidConfigurationException e) {
+            Main.instance.getLogger().info("§c§lErreur lors de la sauvegarde!");
+        }
+        try {
+            dataChests.load(chestsFile);
         } catch (InvalidConfigurationException e) {
             Main.instance.getLogger().info("§c§lErreur lors de la sauvegarde!");
         }

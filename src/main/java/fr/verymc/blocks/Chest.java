@@ -1,5 +1,6 @@
 package main.java.fr.verymc.blocks;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -12,19 +13,18 @@ public class Chest {
     public int type;
     public Location block;
     public UUID owner;
-    public String ownerName;
     private Long chunkKey;
     private ItemStack itemToBuySell;
     private double price;
     private boolean isSell;
     private boolean activeSellOrBuy;
+    private long id;
 
-    public Chest(int type, Location block, UUID owner, String ownerName, Long chunkKey, ItemStack itemToBuySell, double price, boolean isSell,
-                 boolean activeSellOrBuy) {
+    public Chest(int type, Location block, UUID owner, Long chunkKey, ItemStack itemToBuySell, double price, boolean isSell,
+                 boolean activeSellOrBuy, long id) {
         this.type = type;
         this.block = block;
         this.owner = owner;
-        this.ownerName = ownerName;
         this.chunkKey = chunkKey;
         this.itemToBuySell = itemToBuySell;
         if (price == 0) {
@@ -54,12 +54,8 @@ public class Chest {
         return owner;
     }
 
-    public void setOwner(UUID owner) {
-        this.owner = owner;
-    }
-
     public String getOwnerName() {
-        return ownerName;
+        return Bukkit.getOfflinePlayer(owner).getName();
     }
 
     public Long getChunkKey() {
@@ -101,6 +97,10 @@ public class Chest {
 
     public void setActiveSellOrBuy(boolean activeSellOrBuy) {
         this.activeSellOrBuy = activeSellOrBuy;
+    }
+
+    public long getId() {
+        return id;
     }
 
 }
