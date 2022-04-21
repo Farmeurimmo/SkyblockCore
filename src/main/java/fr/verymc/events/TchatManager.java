@@ -7,6 +7,7 @@ import main.java.fr.verymc.island.guis.IslandTopGui;
 import main.java.fr.verymc.playerwarps.PlayerWarp;
 import main.java.fr.verymc.playerwarps.PlayerWarpManager;
 import main.java.fr.verymc.playerwarps.PlayerWarpManagingGui;
+import main.java.fr.verymc.storage.SkyblockUserManager;
 import net.luckperms.api.LuckPermsProvider;
 import net.luckperms.api.model.user.User;
 import net.md_5.bungee.api.chat.ComponentBuilder;
@@ -117,7 +118,7 @@ public class TchatManager implements Listener {
                         player.sendMessage("§6§lPlayerWarp §8» §fWarp créé avec succès, pour le modifier retourner dans le menu" +
                                 " de gestion (/playerwarp).");
                     }
-                    PlayerWarpManager.instance.addWarp(warp);
+                    PlayerWarpManager.instance.addWarp(SkyblockUserManager.instance.getUser(player), warp);
                     PlayerWarpManagingGui.instance.openManagingMenu(player);
                     if (PlayerWarpManagingGui.instance.oldLocation.containsKey(player)) {
                         PlayerWarpManagingGui.instance.oldLocation.remove(player);

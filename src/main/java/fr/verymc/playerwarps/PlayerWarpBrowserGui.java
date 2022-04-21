@@ -29,7 +29,7 @@ public class PlayerWarpBrowserGui {
             item.setDisplayName("§7" + entry.getValue().getName());
             item.setLore(Arrays.asList("§7Vues: " + NumberFormat.getInstance().format(entry.getValue().getVues()),
                     "§7Note : " + (entry.getValue().getNote() < 0 ? "§cAucune note" : NumberFormat.getInstance().format(entry.getValue().getNote())),
-                    "§7Propriétaire: " + entry.getValue().getOwner(),
+                    "§7Propriétaire: " + PlayerWarpManager.instance.getOwnerFromPlayerWarp(entry.getValue()),
                     "§7Promu: " + (entry.getValue().isPromoted() ? "§aOui" : "§cNon"), "", "§7Clic droit pour s'y téléporter",
                     "§7Clic gauche pour noter ce warp"));
             inv.setItem(entry.getKey(), item);

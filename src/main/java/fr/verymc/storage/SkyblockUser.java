@@ -1,5 +1,7 @@
 package main.java.fr.verymc.storage;
 
+import main.java.fr.verymc.playerwarps.PlayerWarp;
+
 import java.util.UUID;
 
 public class SkyblockUser {
@@ -20,11 +22,12 @@ public class SkyblockUser {
 
     private boolean isInInvestMode;
     private double timeInvest;
+    private PlayerWarp playerWarp;
 
 
     public SkyblockUser(String username, UUID userUUID, double money, boolean hasHaste, boolean hasHasteActvie,
                         boolean hasSpeed, boolean hasSpeedActive, boolean hasJump, boolean hasJumpActive, int flyLeft,
-                        boolean isActive, boolean isInInvestMode, double timeInvest) {
+                        boolean isActive, boolean isInInvestMode, double timeInvest, PlayerWarp playerWarp) {
         this.username = username;
         this.userUUID = userUUID;
         this.money = money;
@@ -38,6 +41,9 @@ public class SkyblockUser {
         this.isActive = isActive;
         this.isInInvestMode = isInInvestMode;
         this.timeInvest = timeInvest;
+        if (playerWarp != null) {
+            this.playerWarp = playerWarp;
+        }
     }
 
     public String getUsername() {
@@ -150,6 +156,14 @@ public class SkyblockUser {
 
     public void setTimeInvest(double timeInvest) {
         this.timeInvest = timeInvest;
+    }
+
+    public PlayerWarp getPlayerWarp() {
+        return playerWarp;
+    }
+
+    public void setPlayerWarp(PlayerWarp playerWarp) {
+        this.playerWarp = playerWarp;
     }
 
 }

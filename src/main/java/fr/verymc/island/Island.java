@@ -43,11 +43,10 @@ public class Island {
                   boolean isDefaultChallenges, HashMap<IslandRanks, ArrayList<IslandPerms>> permsPerRanks,
                   boolean isPublic, double value) {
         this.name = name;
-        Location tmp = home.clone();
-        tmp.add(0.5, 0.1, 0.5);
-        tmp.setPitch(0);
-        tmp.setYaw(130);
-        this.home = tmp;
+        home.add(0.5, 0.1, 0.5);
+        home.setPitch(0);
+        home.setYaw(130);
+        this.home = home;
         this.center = center;
         this.id = id;
         this.members = members;
@@ -55,7 +54,6 @@ public class Island {
         this.memberUpgrade = upgradeMember;
         this.borderColor = borderColor;
         this.bank = bank;
-        this.value = 0.0;
         this.isPublic = isPublic;
         this.value = value;
         this.generatorUpgrade = generatorUpgrade;

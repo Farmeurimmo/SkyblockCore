@@ -11,22 +11,19 @@ public class PlayerWarp {
     public Location location;
     public boolean isPromoted;
     public double timeLeftPromoted;
-    public String owner;
-    public UUID ownerUUID;
     public double vues;
     public double note;
     public ArrayList<UUID> alreadyVoted;
 
-    public PlayerWarp(String name, Location location, boolean isPromoted, double timeLeftPromoted, String owner, UUID ownerUUID) {
+    public PlayerWarp(String name, Location location, boolean isPromoted, double timeLeftPromoted, double vues,
+                      double note, ArrayList<UUID> alreadyVoted) {
         this.name = name;
         this.location = location;
         this.isPromoted = isPromoted;
         this.timeLeftPromoted = timeLeftPromoted;
-        this.owner = owner;
-        this.ownerUUID = ownerUUID;
-        this.vues = 0.0;
-        this.note = -1.0;
-        this.alreadyVoted = new ArrayList<>();
+        this.vues = vues;
+        this.note = note;
+        this.alreadyVoted = alreadyVoted;
     }
 
     public String getName() {
@@ -59,22 +56,6 @@ public class PlayerWarp {
 
     public void setTimeLeftPromoted(double timeLeftPromoted) {
         this.timeLeftPromoted = timeLeftPromoted;
-    }
-
-    public String getOwner() {
-        return owner;
-    }
-
-    public void setOwner(String owner) {
-        this.owner = owner;
-    }
-
-    public UUID getOwnerUUID() {
-        return ownerUUID;
-    }
-
-    public void setOwnerUUID(UUID ownerUUID) {
-        this.ownerUUID = ownerUUID;
     }
 
     public double getVues() {

@@ -18,13 +18,14 @@ public class PlayerWarpNotationGui {
     }
 
     public void openNotationMenu(Player player, PlayerWarp playerWarp) {
-        Inventory inv = Bukkit.createInventory(null, 27, "§6Notation du warp de " + playerWarp.getOwner());
+        String owner = PlayerWarpManager.instance.getOwnerFromPlayerWarp(playerWarp);
+        Inventory inv = Bukkit.createInventory(null, 27, "§6Notation du warp de " + owner);
 
         ItemStack item = new ItemStack(Material.PAPER);
         ItemMeta meta = item.getItemMeta();
         meta.setDisplayName("§6Informations");
         meta.setLore(Arrays.asList("§7Nom: " + playerWarp.getName(), "§7Vues totales: " + playerWarp.getVues(), "§7Note moyenne: " +
-                (playerWarp.getNote() < 0 ? "§cAucune note" : playerWarp.getNote()), "§7Propriétaire: " + playerWarp.getOwner()));
+                (playerWarp.getNote() < 0 ? "§cAucune note" : playerWarp.getNote()), "§7Propriétaire: " + owner));
         item.setItemMeta(meta);
         inv.setItem(10, item);
 

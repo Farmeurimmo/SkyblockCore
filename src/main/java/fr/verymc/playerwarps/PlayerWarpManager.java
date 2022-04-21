@@ -1,6 +1,8 @@
 package main.java.fr.verymc.playerwarps;
 
 import main.java.fr.verymc.Main;
+import main.java.fr.verymc.storage.SkyblockUser;
+import main.java.fr.verymc.storage.SkyblockUserManager;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -33,6 +35,12 @@ public class PlayerWarpManager {
                 Bukkit.getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
                     @Override
                     public void run() {
+                        playerWarps.clear();
+                        for (SkyblockUser user : SkyblockUserManager.instance.users) {
+                            if (user.getPlayerWarp() != null) {
+                                playerWarps.add(user.getPlayerWarp());
+                            }
+                        }
                         posBrowser.clear();
                         for (int i = 0; i < playerWarps.size(); i++) {
                             posBrowser.put(i + 1, playerWarps.get(i));
@@ -59,34 +67,52 @@ public class PlayerWarpManager {
     }
 
     public PlayerWarp getPlayerWarpFromUUID(UUID uuid) {
-        for (PlayerWarp playerWarp : playerWarps) {
-            if (playerWarp.getOwnerUUID().equals(uuid)) {
-                return playerWarp;
+        for (SkyblockUser skyblockUser : SkyblockUserManager.instance.users) {
+            if (skyblockUser.getUserUUID().equals(uuid)) {
+                return skyblockUser.getPlayerWarp();
             }
         }
         return null;
     }
 
     public PlayerWarp getPlayerWarpFromPlayerName(String name) {
-        for (PlayerWarp playerWarp : playerWarps) {
-            if (playerWarp.getOwner().equals(name)) {
-                return playerWarp;
+        for (SkyblockUser skyblockUser : SkyblockUserManager.instance.users) {
+            if (skyblockUser.getUsername().equals(name)) {
+                return skyblockUser.getPlayerWarp();
             }
         }
         return null;
     }
 
-    public void addWarp(PlayerWarp playerWarp) {
-        for (PlayerWarp playerWarp1 : playerWarps) {
-            if (playerWarp1.getOwnerUUID().equals(playerWarp.getOwnerUUID())) {
-                playerWarps.remove(playerWarp1);
-                break;
-            }
+    public void addWarp(SkyblockUser user, PlayerWarp playerWarp) {
+        PlayerWarp playerWarp1 = getPlayerWarpFromUUID(user.getUserUUID());
+        if (playerWarp1 != null) {
+            playerWarps.remove(playerWarp1);
         }
         playerWarps.add(playerWarp);
+        user.setPlayerWarp(playerWarp);
+    }
+
+    public String getOwnerFromPlayerWarp(PlayerWarp playerWarp) {
+        for (SkyblockUser skyblockUser : SkyblockUserManager.instance.users) {
+            if (skyblockUser.getPlayerWarp().equals(playerWarp)) {
+                return skyblockUser.getUsername();
+            }
+        }
+        return null;
+    }
+
+    public UUID getOwnerUUIDFromPlayerWarp(PlayerWarp playerWarp) {
+        for (SkyblockUser skyblockUser : SkyblockUserManager.instance.users) {
+            if (skyblockUser.getPlayerWarp().equals(playerWarp)) {
+                return skyblockUser.getUserUUID();
+            }
+        }
+        return null;
     }
 
     public void deleteWarp(Player player) {
         playerWarps.remove(getPlayerWarpFromUUID(player.getUniqueId()));
+        SkyblockUserManager.instance.getUser(player.getUniqueId()).setPlayerWarp(null);
     }
 }
