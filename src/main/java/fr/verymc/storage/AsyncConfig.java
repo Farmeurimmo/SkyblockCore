@@ -1,13 +1,12 @@
 package main.java.fr.verymc.storage;
 
-import main.java.fr.verymc.Main;
-import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 
 public class AsyncConfig {
 
@@ -18,18 +17,18 @@ public class AsyncConfig {
     }
 
     public void setAndSaveAsync(HashMap<String, Object> hashMap, FileConfiguration fileConfiguration, File file) {
-        Bukkit.getServer().getScheduler().scheduleAsyncDelayedTask(Main.instance, new Runnable() {
-            public void run() {
-                for (Map.Entry<String, Object> objectEntry : hashMap.entrySet()) {
-                    fileConfiguration.set(objectEntry.getKey(), objectEntry.getValue());
-                }
-                try {
-                    fileConfiguration.save(file);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+        CompletableFuture.supplyAsync(() -> {
+            for (Map.Entry<String, Object> objectEntry : hashMap.entrySet()) {
+                fileConfiguration.set(objectEntry.getKey(), objectEntry.getValue());
             }
-        }, 0);
+            try {
+                fileConfiguration.save(file);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }).join();
+
     }
 
     /*public ArrayList<Object> getObjectsStartup(FileConfiguration fileConfiguration, File file) {

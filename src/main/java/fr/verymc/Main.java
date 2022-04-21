@@ -313,6 +313,7 @@ public class Main extends JavaPlugin implements Listener {
                 InvestManager.instance.giveReward(user);
             }
         }
+        StorageYAMLManager.instance.sendDataToAPIAuto(true);
         HolosSetup.RemoveBoxeHolo();
         CratesManager.RemoveBoxeHolo();
         //BossBar.RemoveBossBarForPlayers();

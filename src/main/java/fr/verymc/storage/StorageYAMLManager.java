@@ -36,7 +36,7 @@ public class StorageYAMLManager {
     public StorageYAMLManager() {
         instance = this;
         if (getDataFromAPI()) {
-            sendDataToAPIAuto();
+            sendDataToAPIAuto(false);
         }
     }
 
@@ -198,7 +198,7 @@ public class StorageYAMLManager {
         return true;
     }
 
-    public boolean sendDataToAPIAuto() {
+    public boolean sendDataToAPIAuto(boolean force) {
         CompletableFuture.supplyAsync(() -> {
 
             // API SEND DATA
@@ -295,11 +295,13 @@ public class StorageYAMLManager {
 
             }
 
-
+            if (force) {
+                return true;
+            }
             Bukkit.getScheduler().scheduleAsyncDelayedTask(Main.instance, new Runnable() {
                 @Override
                 public void run() {
-                    sendDataToAPIAuto();
+                    sendDataToAPIAuto(false);
                 }
             }, 20 * 60);
             return true;
