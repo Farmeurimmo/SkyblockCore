@@ -10,21 +10,47 @@ import java.util.TimeZone;
 
 public class IslandChallengesReset {
 
-    public static void CheckForReset() {
+    public static IslandChallengesReset instance;
+
+    public IslandChallengesReset() {
+        instance = this;
+        checkForReset();
+    }
+
+    public void checkForReset() {
         TimeZone.setDefault(TimeZone.getTimeZone("Europe/Paris"));
         Calendar calendar = Calendar.getInstance();
-        if (calendar.getTime().getHours() == 0 && calendar.getTime().getMinutes() == 0 &&
+        if (calendar.getTime().getHours() == 19 && calendar.getTime().getMinutes() == 0 &&
                 calendar.getTime().getSeconds() == 0) {
-            ResetAllChallenges();
+            resetAllChallenges();
         }
         Bukkit.getServer().getScheduler().scheduleAsyncDelayedTask(Main.instance, new Runnable() {
             public void run() {
-                CheckForReset();
+                checkForReset();
             }
         }, 20);
     }
 
-    public static void ResetAllChallenges() {
+    public long getTimeBeforeReset() {
+        TimeZone.setDefault(TimeZone.getTimeZone("Europe/Paris"));
+        Calendar calendar = Calendar.getInstance();
+        if (calendar.getTime().getHours() < 19) {
+            calendar.set(Calendar.HOUR_OF_DAY, 19);
+            calendar.set(Calendar.MINUTE, 0);
+            calendar.set(Calendar.SECOND, 0);
+        } else {
+            calendar.add(Calendar.DAY_OF_MONTH, 1);
+            calendar.set(Calendar.HOUR_OF_DAY, 19);
+            calendar.set(Calendar.MINUTE, 0);
+            calendar.set(Calendar.SECOND, 0);
+        }
+        long time = calendar.getTimeInMillis();
+        final long total = time - System.currentTimeMillis();
+        calendar.clear();
+        return total;
+    }
+
+    public void resetAllChallenges() {
         for (Island island : IslandManager.instance.islands) {
             island.getChallenges().clear();
             island.addDefaultChallenges();

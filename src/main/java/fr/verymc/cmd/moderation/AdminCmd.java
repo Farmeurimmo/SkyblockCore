@@ -13,7 +13,7 @@ public class AdminCmd implements CommandExecutor {
         if (args.length == 2) {
             if (args[0].equalsIgnoreCase("reset")) {
                 if (args[1].equalsIgnoreCase("challenges")) {
-                    IslandChallengesReset.ResetAllChallenges();
+                    IslandChallengesReset.instance.resetAllChallenges();
                     sender.sendMessage("Challenges reset !");
                     return true;
                 }

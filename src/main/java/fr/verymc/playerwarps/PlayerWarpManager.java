@@ -85,18 +85,15 @@ public class PlayerWarpManager {
     }
 
     public void addWarp(SkyblockUser user, PlayerWarp playerWarp) {
-        PlayerWarp playerWarp1 = getPlayerWarpFromUUID(user.getUserUUID());
-        if (playerWarp1 != null) {
-            playerWarps.remove(playerWarp1);
-        }
-        playerWarps.add(playerWarp);
         user.setPlayerWarp(playerWarp);
     }
 
     public String getOwnerFromPlayerWarp(PlayerWarp playerWarp) {
         for (SkyblockUser skyblockUser : SkyblockUserManager.instance.users) {
-            if (skyblockUser.getPlayerWarp().equals(playerWarp)) {
-                return skyblockUser.getUsername();
+            if (skyblockUser.getPlayerWarp() != null) {
+                if (skyblockUser.getPlayerWarp().equals(playerWarp)) {
+                    return skyblockUser.getUsername();
+                }
             }
         }
         return null;
@@ -104,15 +101,16 @@ public class PlayerWarpManager {
 
     public UUID getOwnerUUIDFromPlayerWarp(PlayerWarp playerWarp) {
         for (SkyblockUser skyblockUser : SkyblockUserManager.instance.users) {
-            if (skyblockUser.getPlayerWarp().equals(playerWarp)) {
-                return skyblockUser.getUserUUID();
+            if (skyblockUser.getPlayerWarp() != null) {
+                if (skyblockUser.getPlayerWarp().equals(playerWarp)) {
+                    return skyblockUser.getUserUUID();
+                }
             }
         }
         return null;
     }
 
     public void deleteWarp(Player player) {
-        playerWarps.remove(getPlayerWarpFromUUID(player.getUniqueId()));
         SkyblockUserManager.instance.getUser(player.getUniqueId()).setPlayerWarp(null);
     }
 }

@@ -24,6 +24,9 @@ public class ConfigManager {
     public File chestsFile;
 
 
+    public File subdir;
+
+
     public ConfigManager() {
         instance = this;
         new AsyncConfig();
@@ -91,6 +94,10 @@ public class ConfigManager {
 
         dataChests = YamlConfiguration.loadConfiguration(chestsFile);
 
+        subdir = new File(Main.instance.getDataFolder().getPath() + System.getProperty("file.separator") +
+                "backups");
+        subdir.mkdir();
+
 
     }
 
@@ -116,6 +123,16 @@ public class ConfigManager {
 
     public boolean breakIslandFile() {
         CompletableFuture.supplyAsync(() -> {
+
+            //backup process
+            /*TimeZone.setDefault(TimeZone.getTimeZone("Europe/Paris"));
+            Calendar calendar = Calendar.getInstance();
+            File fileinsubdir = new File(subdir.getPath() + System.getProperty("file.separator"),
+                    calendar.getTime()+".yml");
+            try {
+                fileinsubdir.createNewFile();
+            } catch (IOException e) {}
+            FileUtil.copy(islandsFile, fileinsubdir);*/
             islandsFile.delete();
             skyblockUserFile.delete();
             minionsFile.delete();

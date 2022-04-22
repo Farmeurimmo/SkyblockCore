@@ -18,6 +18,7 @@ import main.java.fr.verymc.crates.CratesManager;
 import main.java.fr.verymc.crates.KeyCmd;
 import main.java.fr.verymc.eco.EcoAccountsManager;
 import main.java.fr.verymc.evenement.ChatReaction;
+import main.java.fr.verymc.evenement.EventManager;
 import main.java.fr.verymc.events.*;
 import main.java.fr.verymc.featherfly.CountdownFly;
 import main.java.fr.verymc.featherfly.DailyFlyCmd;
@@ -188,9 +189,8 @@ public class Main extends JavaPlugin implements Listener {
         System.out.println("PregenShopGui & price DONE | NEXT permanant loops");
 
         ChatReaction.StartChatReaction();
-        IslandChallengesReset.CheckForReset();
+        new IslandChallengesReset();
         ChestManager.instance.autoSellForVeryChest();
-        new ScoreBoard();
         System.out.println("Starting permanant loops DONE | NEXT blocs/pnj/holos");
 
         WineSpawn.SpawnPnj(new Location(Bukkit.getServer().getWorld("world"), -184.5, 70.5, -77.5, -90, 0));
@@ -198,6 +198,7 @@ public class Main extends JavaPlugin implements Listener {
                 new Location(Bukkit.getServer().getWorld("world"), -172.5, 71, -64.5, 90, 0));
         HolosSetup.SpawnCrates();
         CratesManager.SpawnCrates();
+        new EventManager();
         System.out.println("Spawn Blocs/PNJ/HOLOS DONE | NEXT listeners");
 
         getServer().getPluginManager().registerEvents(new JoinLeave(), this);
