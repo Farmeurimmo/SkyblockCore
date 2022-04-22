@@ -45,7 +45,7 @@ public class InvestManager {
         skyblockUser.setTimeInvest(skyblockUser.getTimeInvest() + 1);
         Player player = Bukkit.getPlayer(skyblockUser.getUserUUID());
         if (player != null) {
-            player.sendTitle("§6Invest en cours...", "§fTemps écoulé: " + getConverted((int) skyblockUser.getTimeInvest()), 0, 25, 0);
+            player.sendTitle("§6Invest en cours...", "§fTemps écoulé: " + getConverted((int) skyblockUser.getTimeInvest()), 0, 60, 0);
         }
     }
 

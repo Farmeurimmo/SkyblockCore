@@ -11,45 +11,58 @@ public class EventManager {
     public EventManager() {
         instance = this;
         new DailyBonus();
+        new BlocBreakerContest();
     }
 
-    public String getCurrentEventRandom() {
+    public String getBreakerContest() {
+        if (DailyBonus.instance.active) {
+            return "§7Breaker Contest: §a" + (System.currentTimeMillis() - DailyBonus.instance.lastAct) / 1000 + "s restantes";
+        } else {
+            return "§7Breaker Contest: §c" + returnFormattedTime((int) TimeUnit.MILLISECONDS.toSeconds(getTimeBeforeReset(
+                    BlocBreakerContest.instance.hour, BlocBreakerContest.instance.min)));
+        }
+    }
+
+    public String getEventDailyBonus() {
         TimeZone.setDefault(TimeZone.getTimeZone("Europe/Paris"));
         Calendar calendar = Calendar.getInstance();
         if (DailyBonus.instance.active) {
-            return "§ax2 /c " + (System.currentTimeMillis() - DailyBonus.instance.lastAct) / 1000 + "s restantes";
+            return "§7x2 /c: §a" + (System.currentTimeMillis() - DailyBonus.instance.lastAct) / 1000 + "s restantes";
         } else {
             int next = -1;
             int max = 0;
+            for (Integer i : DailyBonus.instance.hours) {
+                if (i > max) {
+                    max = i;
+                }
+            }
             for (Integer i : DailyBonus.instance.hours) {
                 if (i < calendar.getTime().getHours()) {
                     continue;
                 }
                 if (next == -1) {
                     next = i;
-                    max = i;
                     continue;
                 }
                 if (max > i) {
                     next = i;
-                    max = i;
                 }
             }
-            return "§7Prochain x2 /c: §c" + returnFormattedTime((int) TimeUnit.MILLISECONDS.toSeconds(getTimeBeforeReset(next)));
+            return "§7Prochain x2 /c: §c" + returnFormattedTime((int) TimeUnit.MILLISECONDS.toSeconds(getTimeBeforeReset(next, 0)));
         }
     }
 
-    public long getTimeBeforeReset(int hour) {
+    public long getTimeBeforeReset(int hour, int min) {
         TimeZone.setDefault(TimeZone.getTimeZone("Europe/Paris"));
         Calendar calendar = Calendar.getInstance();
         if (calendar.getTime().getHours() < hour) {
             calendar.set(Calendar.HOUR_OF_DAY, hour);
-            calendar.set(Calendar.MINUTE, 0);
+            calendar.set(Calendar.MINUTE, min);
             calendar.set(Calendar.SECOND, 0);
         } else {
             calendar.add(Calendar.DAY_OF_MONTH, 1);
             calendar.set(Calendar.HOUR_OF_DAY, hour);
-            calendar.set(Calendar.MINUTE, 0);
+            calendar.set(Calendar.MINUTE, min);
             calendar.set(Calendar.SECOND, 0);
         }
         long time = calendar.getTimeInMillis();

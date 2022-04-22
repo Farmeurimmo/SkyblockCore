@@ -1,5 +1,6 @@
 package main.java.fr.verymc.events;
 
+import main.java.fr.verymc.invest.InvestManager;
 import main.java.fr.verymc.island.Island;
 import main.java.fr.verymc.island.IslandManager;
 import main.java.fr.verymc.island.guis.IslandTopGui;
@@ -73,6 +74,7 @@ public class JoinLeave implements Listener {
     @EventHandler
     public void OnLeave(PlayerQuitEvent event) {
         Player player = event.getPlayer();
+        SkyblockUser skyblockUser = SkyblockUserManager.instance.getUser(player.getUniqueId());
         Island playerIsland = IslandManager.instance.getPlayerIsland(player);
         if (playerIsland != null) {
             int onlineIs = 0;
@@ -110,5 +112,10 @@ public class JoinLeave implements Listener {
             LeaveMessage = "§7[§c-§7] [" + classement + "] " + Grade.replace("&", "§").replace("&", "§") + " " + player.getName();
         }
         event.setQuitMessage(LeaveMessage);
+        if (skyblockUser != null) {
+            if (skyblockUser.isInInvestMode()) {
+                InvestManager.instance.giveReward(skyblockUser);
+            }
+        }
     }
 }

@@ -32,8 +32,6 @@ public class DailyBonus {
                         && calendar.getTime().getSeconds() == 0) {
                     startBonus();
                 }
-
-
             }
         }, 0L, 20L);
     }

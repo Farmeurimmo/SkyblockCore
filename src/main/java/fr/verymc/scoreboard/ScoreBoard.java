@@ -26,7 +26,7 @@ public class ScoreBoard implements Listener {
 
     public static ScoreBoard acces;
     static String Grade = "";
-
+    public int cPassed = 0;
 
     public ScoreBoard() {
         updateScoreBoard();
@@ -45,7 +45,7 @@ public class ScoreBoard implements Listener {
         }
 
         obj.getScore("§6go.verymc.fr").setScore(1);
-        obj.getScore("§a").setScore(15);
+        obj.getScore("§g").setScore(15);
         obj.getScore("§l").setScore(12);
         obj.getScore("§o").setScore(6);
         obj.getScore("§d").setScore(2);
@@ -95,10 +95,18 @@ public class ScoreBoard implements Listener {
                     Vanished.add(p.getName());
                 }
             }
-            long timeBeforeReset = IslandChallengesReset.instance.getTimeBeforeReset();
-            String messagetimeleft = EventManager.instance.returnFormattedTime((int) TimeUnit.MILLISECONDS.toSeconds(timeBeforeReset));
-
-            String nextEvent = EventManager.instance.getCurrentEventRandom();
+            String cMsg = "§7";
+            if (cPassed <= 15) {
+                long timeBeforeReset = IslandChallengesReset.instance.getTimeBeforeReset();
+                cMsg = "§7Reset /c: §c" + EventManager.instance.returnFormattedTime((int) TimeUnit.MILLISECONDS.toSeconds(timeBeforeReset));
+            } else {
+                cMsg = EventManager.instance.getEventDailyBonus();
+                if (cPassed >= 30) {
+                    cPassed = -1;
+                }
+            }
+            cPassed++;
+            String nextEvent = EventManager.instance.getBreakerContest();
 
             int online = Bukkit.getOnlinePlayers().size() - Vanished.size();
             for (Player player : Bukkit.getOnlinePlayers()) {
@@ -160,10 +168,10 @@ public class ScoreBoard implements Listener {
                     if (board.getTeam("ismoney") != null) board.getTeam("ismoney").setPrefix("§7Argent: §dN/A");
                 }
                 if (board.getTeam("challenges") != null) {
-                    board.getTeam("challenges").setPrefix("§7Reset /c: §c" + messagetimeleft);
+                    board.getTeam("challenges").setPrefix("§7" + cMsg);
                 }
                 if (board.getTeam("event") != null) {
-                    board.getTeam("event").setPrefix(nextEvent);
+                    board.getTeam("event").setPrefix("§7" + nextEvent);
                 }
             }
             Bukkit.getServer().getScheduler().scheduleAsyncDelayedTask(Main.instance, new Runnable() {

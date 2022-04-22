@@ -2,6 +2,7 @@ package main.java.fr.verymc.island.challenges;
 
 import main.java.fr.verymc.Main;
 import main.java.fr.verymc.cmd.moderation.BuildCmd;
+import main.java.fr.verymc.evenement.BlocBreakerContest;
 import main.java.fr.verymc.island.Island;
 import main.java.fr.verymc.island.IslandManager;
 import org.bukkit.Material;
@@ -52,6 +53,11 @@ public class IslandChallengesListener implements Listener {
             return;
         }
         if (!e.isCancelled() && !BuildCmd.Build.contains(player)) {
+            if (BlocBreakerContest.instance.isActive) {
+                if (e.getBlock().getType() == BlocBreakerContest.instance.material) {
+                    BlocBreakerContest.instance.addBlock(e.getPlayer().getUniqueId());
+                }
+            }
             if (!IslandManager.instance.asAnIsland(player)) {
                 return;
             }
