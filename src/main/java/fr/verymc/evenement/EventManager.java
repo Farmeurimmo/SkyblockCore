@@ -15,7 +15,7 @@ public class EventManager {
     }
 
     public String getBreakerContest() {
-        if (DailyBonus.instance.active) {
+        if (BlocBreakerContest.instance.isActive) {
             return "§7Breaker Contest: §a" + (System.currentTimeMillis() - DailyBonus.instance.lastAct) / 1000 + "s restantes";
         } else {
             return "§7Breaker Contest: §c" + returnFormattedTime((int) TimeUnit.MILLISECONDS.toSeconds(getTimeBeforeReset(

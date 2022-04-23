@@ -9,6 +9,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 
+import java.util.Arrays;
+
 public class IslandMainGui {
 
     public static IslandMainGui instance;
@@ -80,6 +82,11 @@ public class IslandMainGui {
         custom9.setItemMeta(meta9);
         inv.setItem(20, custom9);
 
+        ItemStack custom11 = new ItemStack(Material.SPRUCE_SAPLING, 1);
+        ItemMeta meta11 = custom11.getItemMeta();
+        meta11.setDisplayName("§6Biome §8| §7(clic gauche)");
+        meta11.setLore(Arrays.asList("","§c§lINDISPONIBLE POUR LE MOMENT"));
+        custom11.setItemMeta(meta11);
 
         ItemStack custom8 = new ItemStack(Material.ARROW, 1);
         ItemMeta customh = custom8.getItemMeta();
