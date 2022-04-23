@@ -2,6 +2,10 @@ package main.java.fr.verymc.island.challenges;
 
 import org.bukkit.Material;
 
+import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class IslandChallenge {
 
     private String name;
@@ -11,8 +15,11 @@ public class IslandChallenge {
     private int id;
     private boolean isActive;
     private int maxProgress;
+    private int type;
+    private ArrayList<Material> toGet;
 
-    public IslandChallenge(String name, int progress, Material material, int palier, int id, boolean isActive, int maxProgress) {
+    public IslandChallenge(String name, int progress, Material material, int palier, int id, boolean isActive,
+                           int maxProgress, int type, ArrayList<Material> toGet) {
         this.name = name;
         this.progress = progress;
         this.material = material;
@@ -20,6 +27,8 @@ public class IslandChallenge {
         this.id = id;
         this.isActive = isActive;
         this.maxProgress = maxProgress;
+        this.type = type;
+        this.toGet = toGet;
     }
 
     public String getName() {
@@ -80,6 +89,26 @@ public class IslandChallenge {
 
     public void setMaxProgress(int maxProgress) {
         this.maxProgress = maxProgress;
+    }
+
+    public int getType() {
+        return this.type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
+
+    public ArrayList<Material> getToGet() {
+        return this.toGet;
+    }
+
+    public void setToGet(ArrayList<Material> toGet) {
+        this.toGet = toGet;
+    }
+
+    public void addToGet(Material material) {
+        this.toGet.add(material);
     }
 
 }

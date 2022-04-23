@@ -95,19 +95,26 @@ public class Island {
 
     public void addDefaultChallenges() {
         int id = 0;
-        challenges.add(new IslandChallenge("Miner de la pierre", 0, Material.COBBLESTONE, 0, id, true, IslandChallengesListener.cobble));
+        challenges.add(new IslandChallenge("Miner de la pierre", 0, Material.COBBLESTONE, 0, id,
+                true, IslandChallengesListener.cobble, 0, null));
         id++;
-        challenges.add(new IslandChallenge("Miner du charbon", 0, Material.COAL_ORE, 0, id, true, IslandChallengesListener.coal));
+        challenges.add(new IslandChallenge("Miner du charbon", 0, Material.COAL_ORE, 0, id,
+                true, IslandChallengesListener.coal, 0, null));
         id++;
-        challenges.add(new IslandChallenge("Miner du fer", 0, Material.IRON_ORE, 0, id, true, IslandChallengesListener.iron));
+        challenges.add(new IslandChallenge("Miner du fer", 0, Material.IRON_ORE, 0, id,
+                true, IslandChallengesListener.iron, 0, null));
         id++;
-        challenges.add(new IslandChallenge("Miner de l'or", 0, Material.GOLD_ORE, 0, id, true, IslandChallengesListener.gold));
+        challenges.add(new IslandChallenge("Miner de l'or", 0, Material.GOLD_ORE, 0, id,
+                true, IslandChallengesListener.gold, 0, null));
         id++;
-        challenges.add(new IslandChallenge("Miner du diamant", 0, Material.DIAMOND_ORE, 0, id, true, IslandChallengesListener.diamond));
+        challenges.add(new IslandChallenge("Miner du diamant", 0, Material.DIAMOND_ORE, 0, id,
+                true, IslandChallengesListener.diamond, 0, null));
         id++;
-        challenges.add(new IslandChallenge("Miner de l'émeraude", 0, Material.EMERALD_ORE, 0, id, true, IslandChallengesListener.emerald));
+        challenges.add(new IslandChallenge("Miner de l'émeraude", 0, Material.EMERALD_ORE, 0, id,
+                true, IslandChallengesListener.emerald, 0, null));
         id++;
-        challenges.add(new IslandChallenge("Miner de l'ancient débris", 0, Material.ANCIENT_DEBRIS, 0, id, true, IslandChallengesListener.debris));
+        challenges.add(new IslandChallenge("Miner de l'ancient débris", 0, Material.ANCIENT_DEBRIS, 0, id,
+                true, IslandChallengesListener.debris, 0, null));
     }
 
     public IslandBank getBank() {
