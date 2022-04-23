@@ -20,12 +20,8 @@ import java.util.List;
 
 public class FarmHoeManager implements Listener {
 
-    public static ArrayList<String> replantableblocks = new ArrayList<String>();
-
-    public static void addtolist() {
-        replantableblocks.addAll(Arrays.asList("WHEAT", "CARROTS", "POTATOES",
-                "NETHER_WART"));
-    }
+    public static ArrayList<String> replantableblocks = new ArrayList<String>(Arrays.asList("WHEAT", "CARROTS", "POTATOES",
+            "NETHER_WART", "BEETROOTS"));
 
     public static List<Block> getNearbyBlocks(Location location, int radius) {
         List<Block> blocks = new ArrayList<Block>();
