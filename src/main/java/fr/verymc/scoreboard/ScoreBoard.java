@@ -29,7 +29,6 @@ public class ScoreBoard implements Listener {
     public int cPassed = 0;
 
     public ScoreBoard() {
-        updateScoreBoard();
         acces = this;
     }
 

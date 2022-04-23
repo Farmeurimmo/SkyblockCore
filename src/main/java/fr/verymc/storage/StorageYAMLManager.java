@@ -21,6 +21,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
@@ -28,184 +29,206 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class StorageYAMLManager {
 
     public static StorageYAMLManager instance;
-    ArrayList<Object> toSave = new ArrayList<>();
+    public boolean loading = true;
+    public boolean error = false;
 
     public StorageYAMLManager() {
         instance = this;
-        if (getDataFromAPI()) {
+        boolean good = getDataFromAPI();
+        loading = false;
+        if (good) {
             sendDataToAPIAuto(false);
+        } else {
+            Bukkit.broadcastMessage("§6§lDonnées §8» §4§lERREUR CRITIQUE DANS LA RECUPERATION DES DONNEES");
+            Bukkit.broadcastMessage("§6§lDonnées §8» §6§lMERCI DE CONTACTER FARMEURIMMO OU DE FAIRE UN TICKET");
+            Bukkit.broadcastMessage("§6§lDonnées §8» §4ABORDING SERVER FREEZING...");
+            for (Player player : Bukkit.getOnlinePlayers()) {
+                player.kickPlayer("§4§lERREUR CRITIQUE DANS LA RECUPERATION DES DONNEES\n" +
+                        "§6§lMERCI DE CONTACTER FARMEURIMMO OU DE FAIRE UN TICKET");
+            }
         }
     }
 
     public boolean getDataFromAPI() {
+        final AtomicInteger bolea = new AtomicInteger(0);
         CompletableFuture.supplyAsync(() -> {
             //tries to fetch data from a database which doesn’t block the main thread but another thread.
 
             //API FETCH DATA
 
             ArrayList<Minion> minions = new ArrayList<>();
-            for (String str : ConfigManager.instance.getDataIslands().getKeys(false)) {
-                String ownerUUIDstr = ConfigManager.instance.getDataMinions().getString(str + ".uuid");
-                if (ownerUUIDstr == null || ownerUUIDstr.length() != 36) {
-                    continue;
-                }
-                UUID owner = UUID.fromString(ownerUUIDstr);
-                MinionType minionType = MinionType.valueOf(ConfigManager.instance.getDataMinions().getString(str + ".type"));
-                BlockFace blockFace = BlockFace.valueOf(ConfigManager.instance.getDataMinions().getString(str + ".blFace"));
-                Integer lvl = ConfigManager.instance.getDataMinions().getInt(str + ".lvl");
-                Location loc = ConfigManager.instance.getDataMinions().getLocation(str + ".loc");
-                Location locChest = ConfigManager.instance.getDataMinions().getLocation(str + ".locChest");
-                boolean linked = ConfigManager.instance.getDataMinions().getBoolean(str + ".linked");
-                boolean smelft = ConfigManager.instance.getDataMinions().getBoolean(str + ".smelt");
-                Long id = Long.parseLong(str);
-
-                minions.add(new Minion(id, owner, lvl, loc, minionType, blockFace, linked, locChest.getBlock(), smelft));
-            }
-            //DATA MINIONS
-
             ArrayList<Island> islands = new ArrayList<>();
-            for (String str : ConfigManager.instance.getDataIslands().getKeys(false)) {
-                String name = ConfigManager.instance.getDataIslands().getString(str + ".name");
-                Location home = ConfigManager.instance.getDataIslands().getLocation(str + ".home");
-                Location center = ConfigManager.instance.getDataIslands().getLocation(str + ".center");
-                int id = ConfigManager.instance.getDataIslands().getInt(str);
-
-                HashMap<UUID, IslandRanks> members = new HashMap<>();
-                if (ConfigManager.instance.getDataIslands().contains(str + ".players")) {
-                    String parts[] = ConfigManager.instance.getDataIslands().getString(str + ".players")
-                            .replace("{", "").replace("}", "").split(",");
-                    for (String part : parts) {
-                        String stuData[] = part.split("=");
-                        members.put(UUID.fromString(stuData[0]), IslandRanks.valueOf(stuData[1]));
-                    }
-                }
-
-                IslandUpgradeSize islandUpgradeSize = new IslandUpgradeSize(
-                        ConfigManager.instance.getDataIslands().getInt(str + ".upgradeSizeSize"),
-                        ConfigManager.instance.getDataIslands().getInt(str + ".upgradeSizePrice"));
-
-                IslandUpgradeMember islandUpgradeMember = new IslandUpgradeMember(
-                        ConfigManager.instance.getDataIslands().getInt(str + ".upgradeMemberLevel"));
-
-                WorldBorderUtil.Color color = WorldBorderUtil.Color.BLUE;
-                if (ConfigManager.instance.getDataIslands().contains(str + ".borderColor")) {
-                    WorldBorderUtil.Color.valueOf(ConfigManager.instance.getDataIslands().
-                            getString(str + ".borderColor"));
-                }
-
-                IslandBank islandBank = new IslandBank(
-                        ConfigManager.instance.getDataIslands().getInt(str + ".bank.money"),
-                        ConfigManager.instance.getDataIslands().getInt(str + ".bank.crystaux"),
-                        ConfigManager.instance.getDataIslands().getInt(str + ".bank.xp"));
-
-                double value = ConfigManager.instance.getDataIslands().getDouble(str + ".value");
-
-                boolean isPublic = ConfigManager.instance.getDataIslands().getBoolean(str + ".isPublic");
-
-                IslandUpgradeGenerator islandUpgradeGenerator = new IslandUpgradeGenerator(
-                        ConfigManager.instance.getDataIslands().getInt(str + ".upgradeGeneratorLevel"));
-
-                ArrayList<UUID> banneds = new ArrayList<>();
-                if (ConfigManager.instance.getDataIslands().getString(str + ".banneds") != null) {
-                    for (String par : ConfigManager.instance.getDataIslands().getString(str + ".banneds").split(",")) {
-                        if (par.length() == 36) {
-                            banneds.add(UUID.fromString(par));
-                        }
-                    }
-                }
-
-                ArrayList<IslandChallenge> list = new ArrayList<>();
-                if (ConfigManager.instance.getDataIslands().contains(str + ".c")) {
-                    for (String part : ConfigManager.instance.getDataIslands().getConfigurationSection(str + ".c").getKeys(false)) {
-                        int prog = ConfigManager.instance.getDataIslands().getInt(str + ".c." + part + ".prog");
-                        int max = ConfigManager.instance.getDataIslands().getInt(str + ".c." + part + ".max");
-                        int palier = ConfigManager.instance.getDataIslands().getInt(str + ".c." + part + ".pal");
-                        boolean act = ConfigManager.instance.getDataIslands().getBoolean(str + ".c." + part + ".act");
-                        String nameC = ConfigManager.instance.getDataIslands().getString(str + ".c." + part + ".name");
-                        Material material = Material.valueOf(ConfigManager.instance.getDataIslands().getString(str + ".c." + part + ".mat"));
-                        list.add(new IslandChallenge(nameC, prog, material, palier, Integer.parseInt(part), act, max));
-                    }
-                }
-
-                HashMap<IslandRanks, ArrayList<IslandPerms>> permsPerRanks = new HashMap<>();
-                if (ConfigManager.instance.getDataIslands().contains(str + ".perm")) {
-                    for (String part : ConfigManager.instance.getDataIslands().getConfigurationSection(str + ".perm").getKeys(false)) {
-                        ArrayList<IslandPerms> perms = new ArrayList<>();
-                        for (String par : ConfigManager.instance.getDataIslands().getString(str + ".perm." + part).split(",")) {
-                            if (par == null) continue;
-                            perms.add(IslandPerms.valueOf(par));
-                        }
-                        permsPerRanks.put(IslandRanks.valueOf(part), perms);
-                    }
-                }
-
-                islands.add(new Island(name, home, center, id, members, islandUpgradeSize, islandUpgradeMember,
-                        color, islandBank, islandUpgradeGenerator, banneds, list, false,
-                        permsPerRanks, isPublic, value));
-
-
-            }
-            //DATA ISLANDS
-
             ArrayList<SkyblockUser> skyblockUsers = new ArrayList<>();
-            for (String str : ConfigManager.instance.getDataSkyblockUser().getKeys(false)) {
-                UUID uuid = UUID.fromString(str);
-                double money = ConfigManager.instance.getDataSkyblockUser().getDouble(str + ".money");
-                int flyLeft = ConfigManager.instance.getDataSkyblockUser().getInt(str + ".flyLeft");
-                boolean hasHaste = ConfigManager.instance.getDataSkyblockUser().getBoolean(str + ".hasHaste");
-                boolean hasSpeed = ConfigManager.instance.getDataSkyblockUser().getBoolean(str + ".hasSpeed");
-                boolean hasJump = ConfigManager.instance.getDataSkyblockUser().getBoolean(str + ".hasJump");
+            ArrayList<Chest> chests = new ArrayList<>();
 
-                PlayerWarp playerWarp = null;
-                if (ConfigManager.instance.getDataSkyblockUser().contains(str + ".pw")) {
-                    String name = ConfigManager.instance.getDataSkyblockUser().getString(str + ".pw.name");
-                    Location location = ConfigManager.instance.getDataSkyblockUser().getLocation(str + ".pw.loc");
-                    double note = ConfigManager.instance.getDataSkyblockUser().getDouble(str + ".pw.note");
-                    double vues = ConfigManager.instance.getDataSkyblockUser().getDouble(str + ".pw.vues");
-                    boolean promu = ConfigManager.instance.getDataSkyblockUser().getBoolean(str + ".pw.promu");
-                    double timeLeftPromu = ConfigManager.instance.getDataSkyblockUser().getDouble(str + ".pw.timeLeftPromu");
-                    ArrayList<UUID> alreadyVoted = new ArrayList<>();
-                    if (ConfigManager.instance.getDataSkyblockUser().get(str + ".pw.voted") != null) {
-                        for (String par : ConfigManager.instance.getDataSkyblockUser().getString(str + ".pw.voted").split(",")) {
-                            if (par == null || par.length() != 36) {
-                                continue;
-                            }
-                            alreadyVoted.add(UUID.fromString(par));
+            try {
+
+                for (String str : ConfigManager.instance.getDataIslands().getKeys(false)) {
+                    String ownerUUIDstr = ConfigManager.instance.getDataMinions().getString(str + ".uuid");
+                    if (ownerUUIDstr == null || ownerUUIDstr.length() != 36) {
+                        continue;
+                    }
+                    UUID owner = UUID.fromString(ownerUUIDstr);
+                    MinionType minionType = MinionType.valueOf(ConfigManager.instance.getDataMinions().getString(str + ".type"));
+                    BlockFace blockFace = BlockFace.valueOf(ConfigManager.instance.getDataMinions().getString(str + ".blFace"));
+                    Integer lvl = ConfigManager.instance.getDataMinions().getInt(str + ".lvl");
+                    Location loc = ConfigManager.instance.getDataMinions().getLocation(str + ".loc");
+                    Location locChest = ConfigManager.instance.getDataMinions().getLocation(str + ".locChest");
+                    boolean linked = ConfigManager.instance.getDataMinions().getBoolean(str + ".linked");
+                    boolean smelft = ConfigManager.instance.getDataMinions().getBoolean(str + ".smelt");
+                    Long id = Long.parseLong(str);
+
+                    minions.add(new Minion(id, owner, lvl, loc, minionType, blockFace, linked, locChest.getBlock(), smelft));
+                }
+                //DATA MINIONS
+
+                for (String str : ConfigManager.instance.getDataIslands().getKeys(false)) {
+                    String name = ConfigManager.instance.getDataIslands().getString(str + ".name");
+                    Location home = ConfigManager.instance.getDataIslands().getLocation(str + ".home");
+                    Location center = ConfigManager.instance.getDataIslands().getLocation(str + ".center");
+                    int id = ConfigManager.instance.getDataIslands().getInt(str);
+
+                    HashMap<UUID, IslandRanks> members = new HashMap<>();
+                    if (ConfigManager.instance.getDataIslands().contains(str + ".players")) {
+                        String parts[] = ConfigManager.instance.getDataIslands().getString(str + ".players")
+                                .replace("{", "").replace("}", "").split(",");
+                        for (String part : parts) {
+                            String stuData[] = part.split("=");
+                            members.put(UUID.fromString(stuData[0].replace(" ", "")),
+                                    IslandRanks.valueOf(stuData[1].replace(" ", "")));
                         }
                     }
-                    playerWarp = new PlayerWarp(name, location, promu, timeLeftPromu, vues, note, alreadyVoted);
+
+                    IslandUpgradeSize islandUpgradeSize = new IslandUpgradeSize(
+                            ConfigManager.instance.getDataIslands().getInt(str + ".upgradeSizeSize"),
+                            ConfigManager.instance.getDataIslands().getInt(str + ".upgradeSizePrice"));
+
+                    IslandUpgradeMember islandUpgradeMember = new IslandUpgradeMember(
+                            ConfigManager.instance.getDataIslands().getInt(str + ".upgradeMemberLevel"));
+
+                    WorldBorderUtil.Color color = WorldBorderUtil.Color.BLUE;
+                    if (ConfigManager.instance.getDataIslands().contains(str + ".borderColor")) {
+                        WorldBorderUtil.Color.valueOf(ConfigManager.instance.getDataIslands().
+                                getString(str + ".borderColor"));
+                    }
+
+                    IslandBank islandBank = new IslandBank(
+                            ConfigManager.instance.getDataIslands().getInt(str + ".bank.money"),
+                            ConfigManager.instance.getDataIslands().getInt(str + ".bank.crystaux"),
+                            ConfigManager.instance.getDataIslands().getInt(str + ".bank.xp"));
+
+                    double value = ConfigManager.instance.getDataIslands().getDouble(str + ".value");
+
+                    boolean isPublic = ConfigManager.instance.getDataIslands().getBoolean(str + ".isPublic");
+
+                    IslandUpgradeGenerator islandUpgradeGenerator = new IslandUpgradeGenerator(
+                            ConfigManager.instance.getDataIslands().getInt(str + ".upgradeGeneratorLevel"));
+
+                    ArrayList<UUID> banneds = new ArrayList<>();
+                    if (ConfigManager.instance.getDataIslands().getString(str + ".banneds") != null) {
+                        for (String par : ConfigManager.instance.getDataIslands().getString(str + ".banneds").split(",")) {
+                            if (par.length() == 36) {
+                                banneds.add(UUID.fromString(par));
+                            }
+                        }
+                    }
+
+                    ArrayList<IslandChallenge> list = new ArrayList<>();
+                    if (ConfigManager.instance.getDataIslands().contains(str + ".c")) {
+                        for (String part : ConfigManager.instance.getDataIslands().getConfigurationSection(str + ".c").getKeys(false)) {
+                            int prog = ConfigManager.instance.getDataIslands().getInt(str + ".c." + part + ".prog");
+                            int max = ConfigManager.instance.getDataIslands().getInt(str + ".c." + part + ".max");
+                            int palier = ConfigManager.instance.getDataIslands().getInt(str + ".c." + part + ".pal");
+                            boolean act = ConfigManager.instance.getDataIslands().getBoolean(str + ".c." + part + ".act");
+                            String nameC = ConfigManager.instance.getDataIslands().getString(str + ".c." + part + ".name");
+                            Material material = Material.valueOf(ConfigManager.instance.getDataIslands().getString(str + ".c." + part + ".mat"));
+                            list.add(new IslandChallenge(nameC, prog, material, palier, Integer.parseInt(part), act, max));
+                        }
+                    }
+
+                    HashMap<IslandRanks, ArrayList<IslandPerms>> permsPerRanks = new HashMap<>();
+                    if (ConfigManager.instance.getDataIslands().contains(str + ".perm")) {
+                        for (String part : ConfigManager.instance.getDataIslands().getConfigurationSection(str + ".perm").getKeys(false)) {
+                            ArrayList<IslandPerms> perms = new ArrayList<>();
+                            for (String par : ConfigManager.instance.getDataIslands().getString(str + ".perm." + part).split(",")) {
+                                if (par == null) continue;
+                                perms.add(IslandPerms.valueOf(par));
+                            }
+                            permsPerRanks.put(IslandRanks.valueOf(part), perms);
+                        }
+                    }
+
+                    islands.add(new Island(name, home, center, id, members, islandUpgradeSize, islandUpgradeMember,
+                            color, islandBank, islandUpgradeGenerator, banneds, list, false,
+                            permsPerRanks, isPublic, value));
+
 
                 }
+                //DATA ISLANDS
 
-                skyblockUsers.add(new SkyblockUser(Bukkit.getOfflinePlayer(uuid).getName(), uuid, money,
-                        hasHaste, hasHaste, hasSpeed, hasSpeed, hasJump, hasJump, flyLeft, false,
-                        false, 0, playerWarp));
-            }
-            //DATA USERS
+                for (String str : ConfigManager.instance.getDataSkyblockUser().getKeys(false)) {
+                    UUID uuid = UUID.fromString(str);
+                    double money = ConfigManager.instance.getDataSkyblockUser().getDouble(str + ".money");
+                    int flyLeft = ConfigManager.instance.getDataSkyblockUser().getInt(str + ".flyLeft");
+                    boolean hasHaste = ConfigManager.instance.getDataSkyblockUser().getBoolean(str + ".hasHaste");
+                    boolean hasSpeed = ConfigManager.instance.getDataSkyblockUser().getBoolean(str + ".hasSpeed");
+                    boolean hasJump = ConfigManager.instance.getDataSkyblockUser().getBoolean(str + ".hasJump");
 
-            ArrayList<Chest> chests = new ArrayList<>();
-            for (String str : ConfigManager.instance.getDataChests().getKeys(false)) {
-                String uuidString = ConfigManager.instance.getDataChests().getString(str + ".uuid");
-                if (uuidString == null || uuidString.length() != 36) {
-                    continue;
+                    PlayerWarp playerWarp = null;
+                    if (ConfigManager.instance.getDataSkyblockUser().contains(str + ".pw")) {
+                        String name = ConfigManager.instance.getDataSkyblockUser().getString(str + ".pw.name");
+                        Location location = ConfigManager.instance.getDataSkyblockUser().getLocation(str + ".pw.loc");
+                        double note = ConfigManager.instance.getDataSkyblockUser().getDouble(str + ".pw.note");
+                        double vues = ConfigManager.instance.getDataSkyblockUser().getDouble(str + ".pw.vues");
+                        boolean promu = ConfigManager.instance.getDataSkyblockUser().getBoolean(str + ".pw.promu");
+                        double timeLeftPromu = ConfigManager.instance.getDataSkyblockUser().getDouble(str + ".pw.timeLeftPromu");
+                        ArrayList<UUID> alreadyVoted = new ArrayList<>();
+                        if (ConfigManager.instance.getDataSkyblockUser().get(str + ".pw.voted") != null) {
+                            for (String par : ConfigManager.instance.getDataSkyblockUser().getString(str + ".pw.voted").split(",")) {
+                                if (par == null || par.length() != 36) {
+                                    continue;
+                                }
+                                alreadyVoted.add(UUID.fromString(par));
+                            }
+                        }
+                        playerWarp = new PlayerWarp(name, location, promu, timeLeftPromu, vues, note, alreadyVoted);
+
+                    }
+
+                    skyblockUsers.add(new SkyblockUser(Bukkit.getOfflinePlayer(uuid).getName(), uuid, money,
+                            hasHaste, hasHaste, hasSpeed, hasSpeed, hasJump, hasJump, flyLeft, false,
+                            false, 0, playerWarp));
                 }
-                UUID uuid = UUID.fromString(uuidString);
-                long id = Long.parseLong(str);
-                ItemStack itemStack = ConfigManager.instance.getDataChests().getItemStack(str + ".item");
-                int type = ConfigManager.instance.getDataChests().getInt(str + ".type");
-                Location loc = ConfigManager.instance.getDataChests().getLocation(str + ".loc");
-                boolean isSell = ConfigManager.instance.getDataChests().getBoolean(str + ".isSell");
-                long chunk = ConfigManager.instance.getDataChests().getLong(str + ".chunk");
-                double price = ConfigManager.instance.getDataChests().getDouble(str + ".price");
-                boolean active = ConfigManager.instance.getDataChests().getBoolean(str + ".active");
+                //DATA USERS
 
-                chests.add(new Chest(type, loc, uuid, chunk, itemStack, price, isSell, active, id));
+                for (String str : ConfigManager.instance.getDataChests().getKeys(false)) {
+                    String uuidString = ConfigManager.instance.getDataChests().getString(str + ".uuid");
+                    if (uuidString == null || uuidString.length() != 36) {
+                        continue;
+                    }
+                    UUID uuid = UUID.fromString(uuidString);
+                    long id = Long.parseLong(str);
+                    ItemStack itemStack = ConfigManager.instance.getDataChests().getItemStack(str + ".item");
+                    int type = ConfigManager.instance.getDataChests().getInt(str + ".type");
+                    Location loc = ConfigManager.instance.getDataChests().getLocation(str + ".loc");
+                    boolean isSell = ConfigManager.instance.getDataChests().getBoolean(str + ".isSell");
+                    long chunk = ConfigManager.instance.getDataChests().getLong(str + ".chunk");
+                    double price = ConfigManager.instance.getDataChests().getDouble(str + ".price");
+                    boolean active = ConfigManager.instance.getDataChests().getBoolean(str + ".active");
+
+                    chests.add(new Chest(type, loc, uuid, chunk, itemStack, price, isSell, active, id));
+                }
+                //DATA CHESTS
+            } catch (Exception e) {
+                e.printStackTrace();
+                bolea.set(0);
+                return false;
             }
-            //DATA CHESTS
 
             Bukkit.getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
                 @Override
@@ -226,13 +249,21 @@ public class StorageYAMLManager {
                     ChestManager.instance.chests = chests;
                 }
             }, 0);
-
+            bolea.set(1);
             return true;
         }).join(); //makes it blocking
-        return true;
+        if (bolea.get() == 0) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     public boolean sendDataToAPIAuto(boolean force) {
+        if (error) {
+            Bukkit.broadcastMessage("§4§lSAVE CANCELLED");
+            return false;
+        }
         CompletableFuture.supplyAsync(() -> {
 
             // API SEND DATA

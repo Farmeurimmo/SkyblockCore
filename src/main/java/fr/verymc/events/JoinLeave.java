@@ -8,6 +8,7 @@ import main.java.fr.verymc.island.perms.IslandRanks;
 import main.java.fr.verymc.scoreboard.ScoreBoard;
 import main.java.fr.verymc.storage.SkyblockUser;
 import main.java.fr.verymc.storage.SkyblockUserManager;
+import main.java.fr.verymc.storage.StorageYAMLManager;
 import net.luckperms.api.LuckPermsProvider;
 import net.luckperms.api.model.user.User;
 import org.bukkit.Bukkit;
@@ -15,6 +16,7 @@ import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.potion.PotionEffect;
@@ -116,6 +118,19 @@ public class JoinLeave implements Listener {
             if (skyblockUser.isInInvestMode()) {
                 InvestManager.instance.giveReward(skyblockUser);
             }
+        }
+    }
+
+    @EventHandler
+    public void preLogin(AsyncPlayerPreLoginEvent event) {
+        if (StorageYAMLManager.instance.loading) {
+            event.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER,
+                    "§cLe serveur est en cours de démarrage, veuillez patienter.");
+        }
+        if (StorageYAMLManager.instance.error) {
+            event.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER,
+                    "§4§lERREUR CRITIQUE DANS LA RECUPERATION DES DONNEES\n" +
+                            "§6§lMERCI DE CONTACTER FARMEURIMMO OU DE FAIRE UN TICKET");
         }
     }
 }

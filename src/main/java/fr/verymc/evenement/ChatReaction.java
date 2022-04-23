@@ -17,16 +17,12 @@ import java.util.Random;
 
 public class ChatReaction implements Listener {
 
-    public static ArrayList<String> mots = new ArrayList<String>();
+    public static ArrayList<String> mots = new ArrayList<String>(Arrays.asList("VeryMc", "Skyblock", "Orthographe", "Minecraft",
+            "Téléphone", "Développement", "Forteresse"));
     static String aaa = null;
     static boolean bbb = false;
     static long timestart = 0;
     static long timeend = 0;
-
-    public static void WriteWords() {
-        mots.clear();
-        mots.addAll(Arrays.asList("VeryMc", "Skyblock", "Orthographe", "Minecraft", "Téléphone", "Développement", "Forteresse"));
-    }
 
     public static void StartChatReaction() {
         Random rand = new Random();

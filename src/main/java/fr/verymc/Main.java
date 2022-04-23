@@ -143,35 +143,39 @@ public class Main extends JavaPlugin implements Listener {
         }
         System.out.println("-----------------------------------------------------------------------------------------------------");
 
-        System.out.println("Island startup...");
+        System.out.println("Starting utils...");
+        new UtilsManager();
+
+        System.out.println("Starting economy & users...");
         new SkyblockUserManager();
+        new EcoAccountsManager();
+
+        System.out.println("Starting listeners...");
+        startListenerModule();
+
+        System.out.println("Starting commands...");
+        startCommandModule();
+
+        System.out.println("Island startup...");
         saveResource("ileworld.schem", true);
         saveResource("clear.schem", true);
         new IslandManager();
         new WorldBorderUtil(this);
 
-        System.out.println("Initialisation des MODULES en cours...");
-        System.out.println("Fichier yml DONE | NEXT Methods init");
-        new ConfigManager();
-
-        BuildCmd.Build.clear();
-        spawncooldown.clear();
-        ChatReaction.WriteWords();
-        //BossBar.CreateBossBar();
+        System.out.println("Starting chests...");
         new ChestManager();
-        FarmHoeManager.addtolist();
-        new EcoAccountsManager();
 
         System.out.println("Starting minion module...");
         new MinionManager();
         new MinionsGui();
         new MinionHarvest();
 
+        System.out.println("Preparing storage...");
+        new ConfigManager();
         System.out.println("Fetching Datas...");
         new StorageYAMLManager();
 
-        System.out.println("Starting one time methods DONE | NEXT Pregen shopgui ");
-
+        System.out.println("Starting Shop module...");
         BuyShopItem.GenPriceShopStartup();
         GenShopPage.GetNumberOfPage();
         GenShopPage.GenenerateShopPageStartup("Blocs");
@@ -185,22 +189,59 @@ public class Main extends JavaPlugin implements Listener {
         GenShopPage.GenenerateShopPageStartup("Spawneurs");
         GenAmoutShopGui.GenAmoutShopGuiStartup();
         GenMultiStacksBuyGui.GenMultiShopGuiStartup();
-        new TABManager();
-        System.out.println("PregenShopGui & price DONE | NEXT permanant loops");
 
+
+        System.out.println("Starting loops...");
         ChatReaction.StartChatReaction();
+        new TABManager();
         new IslandChallengesReset();
         ChestManager.instance.autoSellForVeryChest();
-        System.out.println("Starting permanant loops DONE | NEXT blocs/pnj/holos");
+        new AuctionsManager();
+        new InvestManager();
+        new PlayerWarpManager();
+        new EventManager();
+        ScoreBoard.acces.updateScoreBoard();
 
+        System.out.println("Initialization of locations, holos, npc, crates...");
         WineSpawn.SpawnPnj(new Location(Bukkit.getServer().getWorld("world"), -184.5, 70.5, -77.5, -90, 0));
         HolosSetup.SpawnPnj2(new Location(Bukkit.getServer().getWorld("world"), -155.5, 71, -60.5, 90, 0),
                 new Location(Bukkit.getServer().getWorld("world"), -172.5, 71, -64.5, 90, 0));
         HolosSetup.SpawnCrates();
         CratesManager.SpawnCrates();
-        new EventManager();
-        System.out.println("Spawn Blocs/PNJ/HOLOS DONE | NEXT listeners");
 
+        System.out.println("§aDémarrage du plugin TERMINE!");
+        System.out.println("-----------------------------------------------------------------------------------------------------");
+
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            SkyblockUserManager.instance.checkForAccount(player);
+            ScoreBoard.acces.setScoreBoard(player);
+        }
+    }
+
+    @Override
+    public void onDisable() {
+        for (SkyblockUser user : SkyblockUserManager.instance.users) {
+            if (user.isInInvestMode()) {
+                InvestManager.instance.giveReward(user);
+            }
+        }
+        StorageYAMLManager.instance.sendDataToAPIAuto(true);
+        HolosSetup.RemoveBoxeHolo();
+        CratesManager.RemoveBoxeHolo();
+        HolosSetup.RemoveNpc();
+        WineSpawn.DestroyPnj();
+        for (Hologram hologram : HologramsAPI.getHolograms(this)) {
+            hologram.delete();
+        }
+        for (NPC npc : CitizensAPI.getNPCRegistry().sorted()) {
+            npc.destroy();
+        }
+        System.out.println("-----------------------------------------------------------------------------------------------------");
+        System.out.println("Plugin stoppé !");
+        System.out.println("-----------------------------------------------------------------------------------------------------");
+    }
+
+    public void startListenerModule() {
         getServer().getPluginManager().registerEvents(new JoinLeave(), this);
         getServer().getPluginManager().registerEvents(new ScoreBoard(), this);
         getServer().getPluginManager().registerEvents(new Interact(), this);
@@ -240,8 +281,9 @@ public class Main extends JavaPlugin implements Listener {
         getServer().getPluginManager().registerEvents(new PlayerWarpGuiManager(), this);
         PluginManager pm = getServer().getPluginManager();
         pm.registerEvents(this, this);
-        System.out.println("Listeners DONE | NEXT commands");
+    }
 
+    public void startCommandModule() {
         this.getCommand("spawn").setExecutor(new SpawnCmd());
         this.getCommand("build").setExecutor(new BuildCmd());
         this.getCommand("farm2win").setExecutor(new Farm2WinCmd());
@@ -288,54 +330,6 @@ public class Main extends JavaPlugin implements Listener {
         this.getCommand("is").setExecutor(new IslandCmd());
         this.getCommand("invest").setExecutor(new InvestCmd());
         this.getCommand("playerwarp").setExecutor(new PlayerWarpCmd());
-        System.out.println("Commands DONE | NEXT end");
-
-        new AuctionsManager();
-
-        new InvestManager();
-
-        new PlayerWarpManager();
-
-        new UtilsManager();
-
-        System.out.println("§aDémarrage du plugin TERMINE!");
-        System.out.println("-----------------------------------------------------------------------------------------------------");
-
-        for (Player player : Bukkit.getOnlinePlayers()) {
-            SkyblockUserManager.instance.checkForAccount(player);
-            ScoreBoard.acces.setScoreBoard(player);
-        }
-    }
-
-    @Override
-    public void onDisable() {
-        for (SkyblockUser user : SkyblockUserManager.instance.users) {
-            if (user.isInInvestMode()) {
-                InvestManager.instance.giveReward(user);
-            }
-        }
-        StorageYAMLManager.instance.sendDataToAPIAuto(true);
-        HolosSetup.RemoveBoxeHolo();
-        CratesManager.RemoveBoxeHolo();
-        //BossBar.RemoveBossBarForPlayers();
-        HolosSetup.RemoveNpc();
-        WineSpawn.DestroyPnj();
-        for (Hologram hologram : HologramsAPI.getHolograms(this)) {
-            hologram.delete();
-        }
-        for (NPC npc : CitizensAPI.getNPCRegistry().sorted()) {
-            npc.destroy();
-        }
-        System.out.println("-----------------------------------------------------------------------------------------------------");
-        System.out.println("Plugin stoppé !");
-        System.out.println("-----------------------------------------------------------------------------------------------------");
     }
 
 }
-
-
-
-
-
-
-

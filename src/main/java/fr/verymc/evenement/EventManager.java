@@ -37,7 +37,7 @@ public class EventManager {
                 }
             }
             for (Integer i : DailyBonus.instance.hours) {
-                if (i < calendar.getTime().getHours()) {
+                if (i <= calendar.getTime().getHours()) {
                     continue;
                 }
                 if (i == 16) {

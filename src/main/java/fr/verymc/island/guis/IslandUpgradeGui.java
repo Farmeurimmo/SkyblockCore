@@ -74,17 +74,17 @@ public class IslandUpgradeGui {
                     str2 += "§6" + entry.getKey().name() + " §7" + entry.getValue() + "% §6";
                 }
             }
-            custom2Lore.add(str);
+            custom2Lore.add(str.toLowerCase());
             if (str2 != null && !str2.isEmpty()) {
-                custom2Lore.add(str2);
+                custom2Lore.add(str2.toLowerCase());
             }
-            custom2Lore.add(str3);
+            custom2Lore.add(str3.toLowerCase());
         }
-        custom2Lore.replaceAll(s -> s.replace("_ORE", ""));
-        custom2Lore.replaceAll(s -> s.replace("COBBLESTONE", "COBB"));
-        custom2Lore.replaceAll(s -> s.replace("DIAMOND", "DIAMS"));
-        custom2Lore.replaceAll(s -> s.replace("EMERALD", "EMER"));
-        custom2Lore.replaceAll(s -> s.replace("ANCIENT_", ""));
+        custom2Lore.replaceAll(s -> s.replace("_ore", ""));
+        custom2Lore.replaceAll(s -> s.replace("cobblestone", "cobb"));
+        custom2Lore.replaceAll(s -> s.replace("diamond", "diams"));
+        custom2Lore.replaceAll(s -> s.replace("emerald", "emer"));
+        custom2Lore.replaceAll(s -> s.replace("ancient_", ""));
         custom2Lore.add("");
         custom2Lore.add("§7Clic pour améliorer");
         custom2Meta.setLore(custom2Lore);
