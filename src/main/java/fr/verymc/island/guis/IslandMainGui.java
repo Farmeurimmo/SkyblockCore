@@ -23,7 +23,7 @@ public class IslandMainGui {
             return;
         }
 
-        Inventory inv = Bukkit.createInventory(null, 45, "§6Menu d'île");
+        Inventory inv = Bukkit.createInventory(null, 36, "§6Menu d'île");
 
         ItemStack custom1 = new ItemStack(Material.ENDER_EYE, 1);
         ItemMeta meta1 = custom1.getItemMeta();
@@ -48,25 +48,25 @@ public class IslandMainGui {
         ItemMeta meta3 = custom3.getItemMeta();
         meta3.setDisplayName("§6Banque §8| §7(clic gauche)");
         custom3.setItemMeta(meta3);
-        inv.setItem(13, custom3);
+        inv.setItem(21, custom3);
 
         ItemStack custom4 = new ItemStack(Material.BARRIER, 1);
         ItemMeta meta4 = custom4.getItemMeta();
         meta4.setDisplayName("§6Couleur de la bordure §8| §7(clic gauche)");
         custom4.setItemMeta(meta4);
-        inv.setItem(14, custom4);
+        inv.setItem(22, custom4);
 
         ItemStack custom5 = new ItemStack(Material.BEACON, 1);
         ItemMeta meta5 = custom5.getItemMeta();
         meta5.setDisplayName("§6Classement §8| §7(clic gauche)");
         custom5.setItemMeta(meta5);
-        inv.setItem(15, custom5);
+        inv.setItem(16, custom5);
 
         ItemStack custom6 = new ItemStack(Material.BOOKSHELF, 1);
         ItemMeta meta6 = custom6.getItemMeta();
         meta6.setDisplayName("§6Permissions §8| §7(clic gauche)");
         custom6.setItemMeta(meta6);
-        inv.setItem(16, custom6);
+        inv.setItem(13, custom6);
 
         ItemStack custom7 = new ItemStack(Material.WOODEN_HOE, 1);
         ItemMeta meta7 = custom7.getItemMeta();
@@ -85,7 +85,7 @@ public class IslandMainGui {
         ItemMeta customh = custom8.getItemMeta();
         customh.setDisplayName("§6Retour §8| §7(clic gauche)");
         custom8.setItemMeta(customh);
-        inv.setItem(44, custom8);
+        inv.setItem(35, custom8);
 
         player.openInventory(inv);
     }

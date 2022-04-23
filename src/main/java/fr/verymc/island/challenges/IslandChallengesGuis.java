@@ -1,9 +1,9 @@
 package main.java.fr.verymc.island.challenges;
 
 import main.java.fr.verymc.crates.CratesKeyManager;
-import main.java.fr.verymc.gui.MenuGui;
 import main.java.fr.verymc.island.Island;
 import main.java.fr.verymc.island.IslandManager;
+import main.java.fr.verymc.island.guis.IslandMainGui;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -97,7 +97,7 @@ public class IslandChallengesGuis implements Listener {
         if (e.getView().getTitle().equalsIgnoreCase("§6Challenges")) {
             e.setCancelled(true);
             if (current.getType() == Material.ARROW) {
-                MenuGui.OpenMainMenu((Player) e.getWhoClicked());
+                IslandMainGui.instance.openMainIslandMenu((Player) e.getWhoClicked());
                 return;
             }
             if (current.getType() == Material.CLOCK) {

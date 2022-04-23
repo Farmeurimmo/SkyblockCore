@@ -64,6 +64,7 @@ public class Island {
         } else {
             this.permsPerRanks = permsPerRanks;
         }
+        IslandManager.instance.setWorldBorderForAllPlayerOnIsland(this);
     }
 
     public void setDefaultPerms() {

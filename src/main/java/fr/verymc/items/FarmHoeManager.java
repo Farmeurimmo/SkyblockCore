@@ -190,7 +190,7 @@ public class FarmHoeManager implements Listener {
                 }
             }
         }
-        if (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) {
+        if (e.getAction() == Action.RIGHT_CLICK_AIR) {
             if (e.getPlayer().getItemInHand().getLore() == null) {
                 return;
             }

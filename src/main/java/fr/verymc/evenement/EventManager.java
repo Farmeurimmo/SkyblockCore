@@ -40,13 +40,16 @@ public class EventManager {
                 if (i < calendar.getTime().getHours()) {
                     continue;
                 }
-                if (next == -1) {
+                if (i == 16) {
                     next = i;
-                    continue;
+                    break;
                 }
-                if (max > i) {
+                if (i == 19) {
                     next = i;
+                    break;
                 }
+                next = i;
+                break;
             }
             return "§7Prochain x2 /c: §c" + returnFormattedTime((int) TimeUnit.MILLISECONDS.toSeconds(getTimeBeforeReset(next, 0)));
         }

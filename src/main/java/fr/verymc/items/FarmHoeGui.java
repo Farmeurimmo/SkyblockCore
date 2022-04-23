@@ -78,7 +78,7 @@ public class FarmHoeGui implements Listener {
             custom10.setType(Material.BEDROCK);
         }
         customi.setLore(Arrays.asList("§7Casse et replante en 1X1", "§7Coût: N/A",
-                "§7Utilisation minimales pour débloquer: N/A"));
+                "§7Utilisations minimales pour débloquer: N/A"));
         custom10.setItemMeta(customi);
         invboutiquefarm2win.setItem(10, custom10);
 
@@ -91,7 +91,7 @@ public class FarmHoeGui implements Listener {
             custom12.setType(Material.BEDROCK);
         }
         customk.setLore(Arrays.asList("§7Casse et replante en 3X3", "§7Coût: 500 000$",
-                "§7Utilisation minimales pour débloquer: 50 000"));
+                "§7Utilisations minimales pour débloquer: 50 000"));
         custom12.setItemMeta(customk);
         invboutiquefarm2win.setItem(13, custom12);
 
@@ -104,7 +104,7 @@ public class FarmHoeGui implements Listener {
             custom13.setType(Material.BEDROCK);
         }
         customl.setLore(Arrays.asList("§7Casse et replante en 5X5", "§7Coût: 1 000 000$",
-                "§7Utilisation minimales pour débloquer: 500 000"));
+                "§7Utilisations minimales pour débloquer: 500 000"));
         custom13.setItemMeta(customl);
         invboutiquefarm2win.setItem(16, custom13);
 
