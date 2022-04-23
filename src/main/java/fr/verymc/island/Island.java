@@ -43,9 +43,6 @@ public class Island {
                   boolean isDefaultChallenges, HashMap<IslandRanks, ArrayList<IslandPerms>> permsPerRanks,
                   boolean isPublic, double value) {
         this.name = name;
-        home.add(0.5, 0.1, 0.5);
-        home.setPitch(0);
-        home.setYaw(130);
         this.home = home;
         this.center = center;
         this.id = id;

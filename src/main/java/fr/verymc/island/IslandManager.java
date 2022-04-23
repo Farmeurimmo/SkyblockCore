@@ -183,7 +183,7 @@ public class IslandManager {
 
     public void deleteIsland(Player p) {
         Long start = System.currentTimeMillis();
-        Island playerIsland = getIslandByLoc(p.getLocation());
+        Island playerIsland = getPlayerIsland(p);
 
         playerIsland.sendMessageToEveryMember("§6§lIles §8» §4L'île a commencé à être supprimée...");
 
@@ -545,7 +545,11 @@ public class IslandManager {
                                 IslandUpgradeGenerator islandUpgradeGenerator = new IslandUpgradeGenerator(0);
                                 ArrayList<UUID> banneds = new ArrayList<>();
                                 ArrayList<IslandChallenge> challenges = new ArrayList<>();
-                                islands.add(new Island("Ile de " + p.getName(), finalToReturn1, finalToReturn1, finalId + 1, members,
+                                Location home = finalToReturn1;
+                                home.add(0.5, 0.1, 0.5);
+                                home.setPitch(0);
+                                home.setYaw(130);
+                                islands.add(new Island("Ile de " + p.getName(), home, finalToReturn1, finalId + 1, members,
                                         islandUpgradeSize, islandUpgradeMember, WorldBorderUtil.Color.BLUE, islandBank, islandUpgradeGenerator, banneds, challenges,
                                         true, null, true, 0.0));
                                 p.sendMessage("§6§lIles §8» §aVous avez généré une nouvelle île avec succès (en " + (System.currentTimeMillis() - start) + "ms).");
