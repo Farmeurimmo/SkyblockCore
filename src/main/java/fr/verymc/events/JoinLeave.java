@@ -16,9 +16,7 @@ import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.player.*;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -26,6 +24,13 @@ import java.util.Map;
 import java.util.UUID;
 
 public class JoinLeave implements Listener {
+
+    @EventHandler
+    public void postLogin(PlayerLoginEvent e) {
+        if (!e.getPlayer().hasPermission("maintenance")) {
+            e.disallow(PlayerLoginEvent.Result.KICK_OTHER, "§cLe serveur est en maintenance.");
+        }
+    }
 
     @EventHandler
     public void OnJoin(PlayerJoinEvent event) {

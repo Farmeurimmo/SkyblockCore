@@ -150,7 +150,7 @@ public class StorageYAMLManager {
                             ArrayList<Material> mats = new ArrayList<>();
                             if (ConfigManager.instance.getDataIslands().getString(str + ".c." + part + ".mats") != null) {
                                 for (String par : ConfigManager.instance.getDataIslands().getString(str + ".c." + part + ".mats").split(",")) {
-                                    if (par != null && Material.valueOf(par) != null) {
+                                    if (par != null && Material.matchMaterial(par) != null) {
                                         mats.add(Material.valueOf(par));
                                     }
                                 }
