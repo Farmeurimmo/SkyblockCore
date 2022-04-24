@@ -13,7 +13,6 @@ import java.util.Collections;
 import java.util.List;
 
 public class MoneyCmd implements CommandExecutor, TabCompleter {
-
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 

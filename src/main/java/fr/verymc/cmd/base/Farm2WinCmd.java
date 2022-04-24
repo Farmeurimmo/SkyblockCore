@@ -12,24 +12,20 @@ import java.util.Collections;
 import java.util.List;
 
 public class Farm2WinCmd implements CommandExecutor, TabCompleter {
-
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-        if (sender instanceof Player) {
-            Player player = (Player) sender;
-            Farm2WinGui.MainBoutiqueGUI(player);
+        if (!(sender instanceof Player player)) {
+            return false;
         }
+        Farm2WinGui.MainBoutiqueGUI(player);
         return false;
     }
-
     @Override
     public List<String> onTabComplete(CommandSender sender, Command cmd, String commandLabel, String[] args) {
-        ArrayList<String> subcmd = new ArrayList<String>();
+        ArrayList<String> subcmd = new ArrayList<>();
         if (cmd.getName().equalsIgnoreCase("farm2win")) {
-            if (args.length >= 0) {
-                subcmd.add("");
-                Collections.sort(subcmd);
-            }
+            subcmd.add("");
+            Collections.sort(subcmd);
         }
         return subcmd;
     }
