@@ -1,6 +1,11 @@
 package main.java.fr.verymc.antiafk;
 
+import main.java.fr.verymc.Main;
+import main.java.fr.verymc.cmd.base.SpawnCmd;
 import main.java.fr.verymc.gui.AfkMineCaptchaGui;
+import main.java.fr.verymc.utils.PlayerUtils;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -9,11 +14,60 @@ import org.bukkit.util.Vector;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 public class AntiAfk implements Listener {
 
     public Map<Player, Vector> playerLastDirection = new HashMap<>();
     public Map<Player, Integer> playerCountTimesAfkAsAResult = new HashMap<>();
+
+    public HashMap<UUID, Vector> locationHashMap = new HashMap<>();
+    public HashMap<UUID, Integer> countHashMap = new HashMap<>();
+    public AntiAfk() {
+        checkForAfk();
+    }
+
+    public void checkForAfk(){
+        Bukkit.getScheduler().scheduleAsyncRepeatingTask(Main.instance , new Runnable() {
+            @Override
+            public void run() {
+                for (Player p : Bukkit.getOnlinePlayers()) {
+                    if (p.getLocation().getWorld().getName().equalsIgnoreCase("world")) {
+                        continue;
+                    }
+                    Vector v = p.getLocation().getDirection();
+                    if (locationHashMap.containsKey(p.getUniqueId())) {
+                        if (locationHashMap.get(p.getUniqueId()).equals(v)) {
+                            if (countHashMap.containsKey(p.getUniqueId())) {
+                                countHashMap.put(p.getUniqueId(), countHashMap.get(p.getUniqueId()) + 1);
+                            } else {
+                                countHashMap.put(p.getUniqueId(), 1);
+                            }
+                        } else {
+                            countHashMap.put(p.getUniqueId(), 1);
+                        }
+                    }
+                    locationHashMap.put(p.getUniqueId(), v);
+                }
+                for (Map.Entry<UUID, Integer> entry : countHashMap.entrySet()) {
+                    if (entry.getValue() >= 60*15) {
+                        Player p = Bukkit.getPlayer(entry.getKey());
+                        if (p != null) {
+                            Bukkit.getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
+                                @Override
+                                public void run() {
+                                    PlayerUtils.instance.teleportPlayerFromRequest(p, SpawnCmd.Spawn, 0);
+                                }
+                                    }, 0);
+                            countHashMap.remove(entry.getKey());
+                            break;
+                        }
+                    }
+                    continue;
+                }
+            }
+            }, 20, 20);
+    }
 
     @EventHandler
     public void onPlayerInterractEvent(PlayerInteractEvent e) {

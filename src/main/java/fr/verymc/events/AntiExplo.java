@@ -9,6 +9,7 @@ import org.bukkit.event.block.BlockBurnEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.ExplosionPrimeEvent;
+import org.bukkit.event.player.PlayerPortalEvent;
 
 
 public class AntiExplo implements Listener {
@@ -46,5 +47,11 @@ public class AntiExplo implements Listener {
         if (e.getBlock().getWorld().getName().equalsIgnoreCase("world")) {
             e.setCancelled(true);
         }
+    }
+
+    @EventHandler
+    public void portal(PlayerPortalEvent e) {
+        e.setCancelled(true);
+        e.getPlayer().sendMessage("§6§lIles §8» §cLe nether est désactivé.");
     }
 }

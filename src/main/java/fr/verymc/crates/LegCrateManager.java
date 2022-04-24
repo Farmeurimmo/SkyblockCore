@@ -177,14 +177,14 @@ public class LegCrateManager {
         custom5.setItemMeta(meta5);
         inv.setItem(14, custom5);
 
-        ItemStack custom6 = new ItemStack(Material.SPAWNER, 2);
+        ItemStack custom6 = new ItemStack(Material.SPAWNER, 1);
         ItemMeta meta6 = custom6.getItemMeta();
         meta6.setDisplayName("§6Spawneur à Iron Golem x1");
         meta6.setLore(Arrays.asList("§7", "§e4%"));
         custom6.setItemMeta(meta6);
         inv.setItem(15, custom6);
 
-        ItemStack custom7 = new ItemStack(Material.SPAWNER, 3);
+        ItemStack custom7 = new ItemStack(Material.SPAWNER, 2);
         ItemMeta meta7 = custom7.getItemMeta();
         meta7.setDisplayName("§6Spawneur à Iron Golem x2");
         meta7.setLore(Arrays.asList("§7", "§e3%"));

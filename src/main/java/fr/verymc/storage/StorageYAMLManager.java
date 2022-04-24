@@ -48,8 +48,7 @@ public class StorageYAMLManager {
             Bukkit.broadcastMessage("§6§lDonnées §8» §6§lMERCI DE CONTACTER FARMEURIMMO OU DE FAIRE UN TICKET");
             Bukkit.broadcastMessage("§6§lDonnées §8» §4ABORDING SERVER FREEZING...");
             for (Player player : Bukkit.getOnlinePlayers()) {
-                player.kickPlayer("§4§lERREUR CRITIQUE DANS LA RECUPERATION DES DONNEES\n" +
-                        "§6§lMERCI DE CONTACTER FARMEURIMMO OU DE FAIRE UN TICKET");
+                player.kickPlayer("§4§lERREUR CRITIQUE DANS LA RECUPERATION DES DONNEES");
             }
         }
     }
