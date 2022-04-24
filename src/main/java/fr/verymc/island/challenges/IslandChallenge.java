@@ -2,9 +2,7 @@ package main.java.fr.verymc.island.challenges;
 
 import org.bukkit.Material;
 
-import javax.annotation.Nullable;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class IslandChallenge {
 

@@ -85,7 +85,7 @@ public class IslandMainGui {
         ItemStack custom11 = new ItemStack(Material.SPRUCE_SAPLING, 1);
         ItemMeta meta11 = custom11.getItemMeta();
         meta11.setDisplayName("§6Biome §8| §7(clic gauche)");
-        meta11.setLore(Arrays.asList("","§c§lINDISPONIBLE POUR LE MOMENT"));
+        meta11.setLore(Arrays.asList("", "§c§lINDISPONIBLE POUR LE MOMENT"));
         custom11.setItemMeta(meta11);
 
         ItemStack custom8 = new ItemStack(Material.ARROW, 1);
