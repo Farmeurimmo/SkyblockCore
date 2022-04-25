@@ -16,24 +16,23 @@ public class TpaCancelCmd implements CommandExecutor, TabCompleter {
     @SuppressWarnings("unlikely-arg-type")
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-        if (sender instanceof Player) {
-            Player player = (Player) sender;
-            if (Main.instance.pending.contains(player)) {
-                Main.instance.pending.remove(player);
-                player.sendMessage("§§6§lTéléportation §8» §fVous avez §cannulé §fvotre demande de Téléportation à "
-                        + Main.instance.getTarget(player.getName()) + ".");
-                Main.instance.haverequest.remove(Main.instance.getTarget(player.getName()));
-                Main.instance.tpatarget.remove(player);
-            } else {
-                player.sendMessage("§§6§lTéléportation §8» §fVous ne possèdez aucune demande de Téléportaiton de votre part.");
-            }
+        if (!(sender instanceof Player player)) {
+            return false;
         }
+        if (!Main.instance.pending.contains(player)) {
+            player.sendMessage("§§6§lTéléportation §8» §fVous ne possèdez aucune demande de Téléportaiton de votre part.");
+            return false;
+        }
+        Main.instance.pending.remove(player);
+        player.sendMessage("§§6§lTéléportation §8» §fVous avez §cannulé §fvotre demande de Téléportation à "
+        + Main.instance.getTarget(player.getName()) + ".");
+        Main.instance.haverequest.remove(Main.instance.getTarget(player.getName()));
+        Main.instance.tpatarget.remove(player);
         return false;
     }
-
     @Override
     public List<String> onTabComplete(CommandSender sender, Command cmd, String commandLabel, String[] args) {
-        ArrayList<String> subcmd = new ArrayList<String>();
+        ArrayList<String> subcmd = new ArrayList<>();
         if (cmd.getName().equalsIgnoreCase("tpacancel")) {
             if (args.length >= 1) {
                 subcmd.add("");
