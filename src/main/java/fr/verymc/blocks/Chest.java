@@ -32,6 +32,8 @@ public class Chest {
         }
         this.price = price;
         this.activeSellOrBuy = activeSellOrBuy;
+        this.isSell = isSell;
+        this.id = id;
     }
 
     public int getType() {
