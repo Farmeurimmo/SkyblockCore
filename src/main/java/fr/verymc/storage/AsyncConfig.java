@@ -30,15 +30,13 @@ public class AsyncConfig {
     }
 
     public void setAndSaveAsyncBlockCurrentThread(HashMap<String, Object> hashMap, FileConfiguration fileConfiguration, File file) {
-        CompletableFuture.runAsync(() -> {
-            for (Map.Entry<String, Object> objectEntry : hashMap.entrySet()) {
-                fileConfiguration.set(objectEntry.getKey(), objectEntry.getValue());
-            }
-            try {
-                fileConfiguration.save(file);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }).join();
+        for (Map.Entry<String, Object> objectEntry : hashMap.entrySet()) {
+            fileConfiguration.set(objectEntry.getKey(), objectEntry.getValue());
+        }
+        try {
+            fileConfiguration.save(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

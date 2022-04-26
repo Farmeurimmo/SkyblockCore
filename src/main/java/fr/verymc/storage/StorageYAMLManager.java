@@ -34,13 +34,17 @@ public class StorageYAMLManager {
 
     public static StorageYAMLManager instance;
     public boolean loading = true;
-    public boolean error = false;
 
     public StorageYAMLManager() {
         instance = this;
-        boolean good = getDataFromAPI();
+        getDataFromAPI();
         loading = false;
-        sendDataToAPIAuto(false);
+        Bukkit.getScheduler().scheduleAsyncDelayedTask(Main.instance, new Runnable() {
+            @Override
+            public void run() {
+                sendDataToAPIAuto(false);
+            }
+        }, 30);
     }
 
     public boolean getDataFromAPI() {
@@ -81,14 +85,13 @@ public class StorageYAMLManager {
             }
             //DATA MINIONS
 
-
             for (String str : ConfigManager.instance.getDataIslands().getKeys(false)) {
                 if (str == null) continue;
                 try {
                     String name = ConfigManager.instance.getDataIslands().getString(str + ".name");
                     Location home = ConfigManager.instance.getDataIslands().getLocation(str + ".home");
                     Location center = ConfigManager.instance.getDataIslands().getLocation(str + ".center");
-                    int id = ConfigManager.instance.getDataIslands().getInt(str);
+                    int id = Integer.parseInt(str.replace("'", ""));
 
                     HashMap<UUID, IslandRanks> members = new HashMap<>();
                     if (ConfigManager.instance.getDataIslands().contains(str + ".players")) {
@@ -167,13 +170,15 @@ public class StorageYAMLManager {
 
                     HashMap<IslandRanks, ArrayList<IslandPerms>> permsPerRanks = new HashMap<>();
                     if (ConfigManager.instance.getDataIslands().contains(str + ".perm")) {
+                        final String permsListToStr = IslandPerms.getAllPerms().toString().replace("[", "").replace("]", "");
                         for (String part : ConfigManager.instance.getDataIslands().getConfigurationSection(str + ".perm").getKeys(false)) {
                             if (part == null) continue;
                             ArrayList<IslandPerms> perms = new ArrayList<>();
                             for (String par : ConfigManager.instance.getDataIslands().getString(str + ".perm." + part).split(",")) {
                                 if (par == null) continue;
+                                if (par.length() <= 3) continue;
                                 par = par.replace(" ", "");
-                                if (IslandPerms.getAllPerms().contains(par)) {
+                                if (permsListToStr.contains(par)) {
                                     perms.add(IslandPerms.valueOf(par));
                                 }
                             }
@@ -188,8 +193,6 @@ public class StorageYAMLManager {
                     e.printStackTrace();
                     continue;
                 }
-
-
             }
             //DATA ISLANDS
 
@@ -242,7 +245,7 @@ public class StorageYAMLManager {
                         continue;
                     }
                     UUID uuid = UUID.fromString(uuidString);
-                    long id = Long.parseLong(str);
+                    long id = Long.parseLong(str.replace("'", ""));
                     ItemStack itemStack = ConfigManager.instance.getDataChests().getItemStack(str + ".item");
                     int type = ConfigManager.instance.getDataChests().getInt(str + ".type");
                     Location loc = ConfigManager.instance.getDataChests().getLocation(str + ".loc");
@@ -281,9 +284,8 @@ public class StorageYAMLManager {
         return true;
     }
 
-    public boolean sendDataToAPIAuto(boolean force) {
+    public void sendDataToAPIAuto(boolean force) {
         CompletableFuture.supplyAsync(() -> {
-
             long start = System.currentTimeMillis();
 
             HashMap<String, Object> toSendMinions = new HashMap<>();
@@ -459,6 +461,5 @@ public class StorageYAMLManager {
             }, 20 * 60 * 10);
             return true;
         }).join(); //makes it blocking
-        return true;
     }
 }
