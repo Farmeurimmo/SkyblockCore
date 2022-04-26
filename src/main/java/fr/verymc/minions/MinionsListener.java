@@ -202,7 +202,7 @@ public class MinionsListener implements Listener {
         Player player = e.getPlayer();
         if (e.getRightClicked().getType().equals(EntityType.ARMOR_STAND)) {
             Entity clicked = e.getRightClicked();
-            if (!clicked.hasGravity()) {
+            if (clicked.isInvulnerable()) {
                 Minion minion = null;
                 for (Minion minions : MinionManager.instance.minions) {
                     if (!e.getRightClicked().getLocation().equals(minions.getBlocLocation())) {

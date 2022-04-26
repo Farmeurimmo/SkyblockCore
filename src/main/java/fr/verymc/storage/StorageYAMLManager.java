@@ -65,7 +65,7 @@ public class StorageYAMLManager {
             ArrayList<SkyblockUser> skyblockUsers = new ArrayList<>();
             ArrayList<Chest> chests = new ArrayList<>();
 
-            for (String str : ConfigManager.instance.getDataIslands().getKeys(false)) {
+            for (String str : ConfigManager.instance.getDataMinions().getKeys(false)) {
                 if (str == null) continue;
                 try {
                     String ownerUUIDstr = ConfigManager.instance.getDataMinions().getString(str + ".uuid");
@@ -80,7 +80,7 @@ public class StorageYAMLManager {
                     Location locChest = ConfigManager.instance.getDataMinions().getLocation(str + ".locChest");
                     boolean linked = ConfigManager.instance.getDataMinions().getBoolean(str + ".linked");
                     boolean smelft = ConfigManager.instance.getDataMinions().getBoolean(str + ".smelt");
-                    long id = Long.parseLong(str);
+                    long id = Long.parseLong(str.replace("'", ""));
 
                     Block block = (locChest == null) ? null : locChest.getBlock();
                     minions.add(new Minion(id, owner, lvl, loc, minionType, blockFace, linked, block, smelft));
@@ -302,6 +302,7 @@ public class StorageYAMLManager {
             long start = System.currentTimeMillis();
 
             HashMap<String, Object> toSendMinions = new HashMap<>();
+            HashMap<String, Object> toRemoveMinions = new HashMap<>(); // NEED TO NULL Minion id because yaml don't support override data
             ArrayList<Minion> minions = MinionManager.instance.minions;
             for (Minion minion : minions) {
                 HashMap<String, Object> toSendMinion = new HashMap<>();
@@ -320,15 +321,19 @@ public class StorageYAMLManager {
                     toSendMinion.clear();
                 } finally {
                     if (toSendMinion.size() > 0) {
+                        toRemoveMinions.put(minion.getID()+"", null);
                         toSendMinions.putAll(toSendMinion);
                     }
                 }
             }
+            AsyncConfig.instance.setAndSaveAsyncBlockCurrentThread(toRemoveMinions, ConfigManager.instance.getDataMinions(),
+                    ConfigManager.instance.minionsFile);
             AsyncConfig.instance.setAndSaveAsync(toSendMinions, ConfigManager.instance.getDataMinions(),
                     ConfigManager.instance.minionsFile);
 
 
             HashMap<String, Object> toSendIslands = new HashMap<>();
+            HashMap<String, Object> toRemoveIslands = new HashMap<>(); // NEED TO NULL Island id because yaml don't support override data
             ArrayList<Island> islands = IslandManager.instance.islands;
             for (Island island : islands) {
                 HashMap<String, Object> toSendIsland = new HashMap<>();
@@ -373,10 +378,13 @@ public class StorageYAMLManager {
                     toSendIsland.clear();
                 } finally {
                     if (toSendIsland.size() > 0) {
+                        toRemoveIslands.put(island.getId()+"", null);
                         toSendIslands.putAll(toSendIsland);
                     }
                 }
             }
+            AsyncConfig.instance.setAndSaveAsyncBlockCurrentThread(toRemoveIslands, ConfigManager.instance.getDataIslands(),
+                    ConfigManager.instance.islandsFile);
             AsyncConfig.instance.setAndSaveAsync(toSendIslands, ConfigManager.instance.getDataIslands(),
                     ConfigManager.instance.islandsFile);
 
@@ -384,6 +392,7 @@ public class StorageYAMLManager {
             ArrayList<SkyblockUser> skyblockUsers = SkyblockUserManager.instance.users;
 
             HashMap<String, Object> toSendSkyUsers = new HashMap<>();
+            HashMap<String, Object> toRemoveSkyUsers = new HashMap<>();
             for (SkyblockUser skyblockUser : skyblockUsers) {
                 HashMap<String, Object> toSendSkyUser = new HashMap<>();
                 try {
@@ -410,17 +419,20 @@ public class StorageYAMLManager {
                     toSendSkyUser.clear();
                 } finally {
                     if (toSendSkyUser.size() > 0) {
+                        toRemoveSkyUsers.put(skyblockUser.getUserUUID().toString(), null);
                         toSendSkyUsers.putAll(toSendSkyUser);
                     }
                 }
             }
+            AsyncConfig.instance.setAndSaveAsyncBlockCurrentThread(toRemoveSkyUsers, ConfigManager.instance.getDataSkyblockUser(),
+                                ConfigManager.instance.skyblockUserFile);
             AsyncConfig.instance.setAndSaveAsync(toSendSkyUsers, ConfigManager.instance.getDataSkyblockUser(),
                     ConfigManager.instance.skyblockUserFile);
 
 
             ArrayList<Chest> chests = ChestManager.instance.chests;
             HashMap<String, Object> toSendChests = new HashMap<>();
-
+            HashMap<String, Object> toRemoveChests = new HashMap<>();
             for (Chest chest : chests) {
                 HashMap<String, Object> toSendChest = new HashMap<>();
                 try {
@@ -438,10 +450,13 @@ public class StorageYAMLManager {
                     toSendChest.clear();
                 } finally {
                     if (toSendChest.size() > 0) {
+                        toRemoveChests.put(chest.getId()+"", null);
                         toSendChests.putAll(toSendChest);
                     }
                 }
             }
+            AsyncConfig.instance.setAndSaveAsyncBlockCurrentThread(toRemoveChests, ConfigManager.instance.getDataChests(),
+                                ConfigManager.instance.chestsFile);
             AsyncConfig.instance.setAndSaveAsync(toSendChests, ConfigManager.instance.getDataChests(),
                     ConfigManager.instance.chestsFile);
 
