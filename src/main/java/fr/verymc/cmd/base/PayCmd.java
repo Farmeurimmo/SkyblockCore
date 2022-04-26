@@ -42,7 +42,7 @@ public class PayCmd implements CommandExecutor, TabCompleter {
             return false;
         }
         if (args[0].equals(player.getName())) {
-            player.sendMessage("§6§lMonnaie §8» §fVous ne pouvez pas vous envoyer de l'argent à vous m§me.");
+            player.sendMessage("§6§lMonnaie §8» §fVous ne pouvez pas vous envoyer de l'argent à vous même.");
             return false;
         }
         if (!get_if_args_is_float(args[1]) && args[1].contains("-") && args[1].contains(",")) {
@@ -59,7 +59,7 @@ public class PayCmd implements CommandExecutor, TabCompleter {
             return false;
         }
         if (amount < 5) {
-            player.sendMessage("§6§lMonnaie §8» §fVous devez entrer un montant §gal ou sup§rieur à 5$.");
+            player.sendMessage("§6§lMonnaie §8» §fVous devez entrer un montant égal ou supérieur à 5$.");
             return false;
         }
         EcoAccountsManager.instance.addFounds((Player) Bukkit.getOfflinePlayer(args[0]), amount, false);

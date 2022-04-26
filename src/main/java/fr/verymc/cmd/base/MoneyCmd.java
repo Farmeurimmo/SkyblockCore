@@ -78,7 +78,6 @@ public class MoneyCmd implements CommandExecutor, TabCompleter {
                 sender.sendMessage("§6§lMonnaie §8» §f/money <pseudo> <give/remove> <montant>");
                 return false;
             case 3:
-                parse_args2(args, sender);
                 if (Bukkit.getPlayer(args[0]) == null) {
                     sender.sendMessage("§6§lMonnaie §8» §fErreur compte inexistant ou indisponible !");
                     return false;
