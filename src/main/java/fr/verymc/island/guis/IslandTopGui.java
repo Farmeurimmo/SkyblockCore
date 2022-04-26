@@ -80,7 +80,7 @@ public class IslandTopGui {
 
         int slot = 9;
         int currentNum = 1;
-        for (int i = 1; i <= 21; i++) {
+        for (int i = 1; i <= 23; i++) {
             for (Map.Entry<Island, Integer> entry : getTopIsland().entrySet()) {
                 if (currentNum != entry.getValue()) continue;
                 slot++;
@@ -95,6 +95,7 @@ public class IslandTopGui {
                 customi.setLore(Arrays.asList("§7Points: " + entry.getKey().getValue()));
                 custom10.setItemMeta(customi);
                 inv.setItem(slot, custom10);
+                break;
             }
         }
 
