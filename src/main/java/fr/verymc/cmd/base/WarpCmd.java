@@ -12,82 +12,94 @@ import org.bukkit.entity.Player;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 public class WarpCmd implements CommandExecutor, TabCompleter {
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-
+        if (!(sender instanceof Player player)) {
+            return false;
+        }
         final Location Crates = new Location(Bukkit.getServer().getWorld("world"), -172.5, 70.5, -50.5, 40, 0);
         final Location Enchantement = new Location(Bukkit.getServer().getWorld("world"), -187.5, 64.5, -52.5, -125, 20);
         final Location Bar = new Location(Bukkit.getServer().getWorld("world"), -180.5, 70.5, -77.5, 90, 0);
-
-        if (sender instanceof Player) {
-            Player player = (Player) sender;
-            if (args.length == 1) {
-                if (args[0].equalsIgnoreCase("boxes")) {
+        if (args.length == 1) {
+            String str = args[0].toLowerCase();
+            switch (str) {
+                case "boxes":
                     PlayerUtils.instance.teleportPlayerFromRequest(player, Crates, PlayerUtils.instance.getPlayerTeleportingdelay(player));
-                }
-                if (args[0].equalsIgnoreCase("enchantement")) {
+                    break;
+                case "enchantement":
                     PlayerUtils.instance.teleportPlayerFromRequest(player, Enchantement, PlayerUtils.instance.getPlayerTeleportingdelay(player));
-                }
-                if (args[0].equalsIgnoreCase("bar")) {
+                    break;
+                case "bar":
                     PlayerUtils.instance.teleportPlayerFromRequest(player, Bar, PlayerUtils.instance.getPlayerTeleportingdelay(player));
-                }
-            } else if (args.length == 2) {
-                if (player.hasPermission("*")) {
-                    if (Bukkit.getPlayer(args[1]) != null) {
-                        if (Bukkit.getPlayer(args[1]).isOnline()) {
-                            Player p = Bukkit.getPlayer(args[1]);
-                            if (args[0].equalsIgnoreCase("boxes")) {
-                                p.teleport(Crates);
-                                p.sendActionBar("§aVous avez été téléporté au warp boxes par un membre du staff !");
-                            }
-                            if (args[0].equalsIgnoreCase("enchantement")) {
-                                p.teleport(Enchantement);
-                                p.sendActionBar("§aVous avez été téléporté au warp enchantement par un membre du staff !");
-                            }
-                            if (args[0].equalsIgnoreCase("bar")) {
-                                p.teleport(Bar);
-                                p.sendActionBar("§aVous avez été téléporté au warp bar par un membre du staff !");
-                            }
-                        }
-                    }
-                } else {
-                    player.sendMessage("§c/warp <warp>");
-                }
-            } else {
-                if (player.hasPermission("*")) {
-                    player.sendMessage("§c/warp <warp> [Joueur]");
-                } else {
-                    player.sendMessage("§c/warp <warp>");
+                default:
+                    break;
+            }
+            return false;
+        }
+        if (args.length == 2) {
+            if (!player.hasPermission("*")) {
+                player.sendMessage("§c/warp <warp>");
+                return false;
+            }
+            if (Bukkit.getPlayer(args[1]) != null
+            && Bukkit.getPlayer(args[1]).isOnline()) {
+                Player p = Bukkit.getPlayer(args[1]);
+                String str = args[0].toLowerCase();
+                switch (str) {
+                    case "boxes":
+                        p.teleport(Crates);
+                        p.sendActionBar("§aVous avez été téléporté au warp boxes par un membre du staff !");
+                        break;
+                    case "enchantement":
+                        p.teleport(Enchantement);
+                        p.sendActionBar("§aVous avez été téléporté au warp enchantement par un membre du staff !");
+                        break;
+                    case "bar":
+                        p.teleport(Bar);
+                        p.sendActionBar("§aVous avez été téléporté au warp bar par un membre du staff !");
+                    default:
+                        break;
                 }
             }
+            return false;
+        }
+        if (player.hasPermission("*")) {
+            player.sendMessage("§c/warp <warp> [Joueur]");
         }
         return false;
     }
-
+    public void get_all_player_for_tab_complete(ArrayList<String> subcmd, CommandSender sender) {
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            subcmd.add(player.getName());
+        }
+    }
     @Override
     public List<String> onTabComplete(CommandSender sender, Command cmd, String commandLabel, String[] args) {
-        ArrayList<String> subcmd = new ArrayList<String>();
+        ArrayList<String> subcmd = new ArrayList<>();
         if (cmd.getName().equalsIgnoreCase("warp")) {
-            if (args.length == 1) {
-                subcmd.add("boxes");
-                subcmd.add("enchantement");
-                subcmd.add("bar");
-                Collections.sort(subcmd);
-            } else if (args.length == 2) {
-                if (sender.hasPermission("*")) {
-                    for (Player player : Bukkit.getOnlinePlayers()) {
-                        subcmd.add(player.getName());
+            switch (args.length) {
+                case 1:
+                    subcmd.add("boxes");
+                    subcmd.add("enchantement");
+                    subcmd.add("bar");
+                    Collections.sort(subcmd);
+                    break;
+                case 2:
+                    if (sender.hasPermission("*")) {
+                        get_all_player_for_tab_complete(subcmd, sender);
+                    } else {
+                        subcmd.add("");
                     }
-                } else {
+                    Collections.sort(subcmd);
+                    break;
+                default:
                     subcmd.add("");
-                }
-                Collections.sort(subcmd);
-            } else if (args.length >= 3) {
-                subcmd.add("");
-                Collections.sort(subcmd);
+                    Collections.sort(subcmd);
+                    break;
             }
         }
         return subcmd;

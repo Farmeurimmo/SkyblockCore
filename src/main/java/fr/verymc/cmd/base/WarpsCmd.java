@@ -12,26 +12,20 @@ import java.util.Collections;
 import java.util.List;
 
 public class WarpsCmd implements CommandExecutor, TabCompleter {
-
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-
-        if (sender instanceof Player) {
-            Player player = (Player) sender;
-            WarpGui.OpenGUi(player);
+        if (!(sender instanceof Player player)) {
+            return false;
         }
-
+        WarpGui.OpenGUi(player);
         return false;
     }
-
     @Override
     public List<String> onTabComplete(CommandSender sender, Command cmd, String commandLabel, String[] args) {
-        ArrayList<String> subcmd = new ArrayList<String>();
+        ArrayList<String> subcmd = new ArrayList<>();
         if (cmd.getName().equalsIgnoreCase("warps")) {
-            if (args.length >= 0) {
-                subcmd.add("");
-                Collections.sort(subcmd);
-            }
+            subcmd.add("");
+            Collections.sort(subcmd);
         }
         return subcmd;
     }

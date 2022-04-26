@@ -13,76 +13,76 @@ import java.util.Collections;
 import java.util.List;
 
 public class PayCmd implements CommandExecutor, TabCompleter {
-
+    public boolean get_if_args_is_float(String args) {
+        boolean digit;
+        try {
+            @SuppressWarnings("unused")
+            Double intValue = Double.parseDouble(args);
+            digit = true;
+        } catch (NumberFormatException e) {
+            digit = false;
+        }
+        return digit;
+    }
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-
-        if (sender instanceof Player) {
-            Player player = (Player) sender;
-            if (args.length == 0 || args.length == 1 || args.length >= 3) {
-                player.sendMessage("§6§lMonnaie §8» §fUtilisation, /pay <joueur> <montant>");
-            } else {
-                if (Bukkit.getPlayer(args[0]) == null) {
-                    player.sendMessage("§6§lMonnaie §8» §fErreur compte inexistant ou indisponible !");
-                    return true;
-                }
-                if (EcoAccountsManager.instance.isExisting((Player) Bukkit.getOfflinePlayer(args[0])) == true) {
-                    if (!args[0].equals(player.getName())) {
-                        boolean digit = false;
-                        try {
-                            @SuppressWarnings("unused")
-                            float intValue = Float.parseFloat(args[1]);
-                            digit = true;
-                        } catch (NumberFormatException e) {
-                            digit = false;
-                        }
-                        if (!args[1].contains("-") && !args[1].contains(",") && digit == true) {
-                            if (args[1].length() <= 9) {
-                                Double aaa = Double.parseDouble(args[1]);
-                                if (EcoAccountsManager.instance.checkForFounds(player, aaa) == true) {
-                                    if (aaa >= 5) {
-                                        EcoAccountsManager.instance.addFounds((Player) Bukkit.getOfflinePlayer(args[0]), aaa, false);
-                                        EcoAccountsManager.instance.removeFounds(player, aaa, true);
-                                        player.sendMessage("§6§lMonnaie §8» §fVous avez envoyé avec §asuccès §6" + aaa + "$§f au joueur " + args[0]);
-                                        if (Bukkit.getPlayer(args[0]) != null) {
-                                            Bukkit.getPlayer(args[0]).sendMessage("§6§lMonnaie §8» §fVous avez reçu avec §asuccès §6" + aaa + "$§f du joueur " + player.getName());
-                                        }
-                                    } else {
-                                        player.sendMessage("§6§lMonnaie §8» §fVous devez entrer un montant §gal ou sup§rieur à 5$.");
-                                    }
-                                } else {
-                                    player.sendMessage("§6§lMonnaie §8» §fVous n'avez pas les fonds requis.");
-                                }
-                            } else {
-                                player.sendMessage("§6§lMonnaie §8» §fVeuillez choisir un nombre plus petit.");
-                            }
-                        } else {
-                            player.sendMessage("§6§lMonnaie §8» §fMerci d'entrer un nombre valide et positif.");
-                        }
-                    } else {
-                        player.sendMessage("§6§lMonnaie §8» §fVous ne pouvez pas vous envoyer de l'argent à vous m§me.");
-                    }
-                } else {
-                    player.sendMessage("§6§lMonnaie §8» §fCe compte n'existe pas.");
-                }
-            }
+        if (!(sender instanceof Player player)) {
+            return false;
         }
-
+        if (args.length != 2) {
+            player.sendMessage("§6§lMonnaie §8» §fUtilisation, /pay <joueur> <montant>");
+            return false;
+        }
+        if (Bukkit.getPlayer(args[0]) == null) {
+            player.sendMessage("§6§lMonnaie §8» §fErreur compte inexistant ou indisponible !");
+            return true;
+        }
+        if (!EcoAccountsManager.instance.isExisting(Bukkit.getOfflinePlayer(args[0]).getPlayer())) {
+            player.sendMessage("§6§lMonnaie §8» §fCe compte n'existe pas.");
+            return false;
+        }
+        if (args[0].equals(player.getName())) {
+            player.sendMessage("§6§lMonnaie §8» §fVous ne pouvez pas vous envoyer de l'argent à vous même.");
+            return false;
+        }
+        if (!get_if_args_is_float(args[1]) && args[1].contains("-") && args[1].contains(",")) {
+            player.sendMessage("§6§lMonnaie §8» §fMerci d'entrer un nombre valide et positif.");
+            return false;
+        }
+        if (args[1].length() > 9) {
+            player.sendMessage("§6§lMonnaie §8» §fVeuillez choisir un nombre plus petit.");
+            return false;
+        }
+        Double amount = Double.parseDouble(args[1]);
+        if (!EcoAccountsManager.instance.checkForFounds(player, amount)) {
+            player.sendMessage("§6§lMonnaie §8» §fVous n'avez pas les fonds requis.");
+            return false;
+        }
+        if (amount < 5) {
+            player.sendMessage("§6§lMonnaie §8» §fVous devez entrer un montant égal ou supérieur à 5$.");
+            return false;
+        }
+        EcoAccountsManager.instance.addFounds((Player) Bukkit.getOfflinePlayer(args[0]), amount, false);
+        EcoAccountsManager.instance.removeFounds(player, amount, true);
+        player.sendMessage("§6§lMonnaie §8» §fVous avez envoyé avec §asuccès §6" + amount + "$§f au joueur " + args[0]);
+        if (Bukkit.getPlayer(args[0]) != null) {
+            Bukkit.getPlayer(args[0]).sendMessage("§6§lMonnaie §8» §fVous avez reçu avec §asuccès §6" + amount + "$§f du joueur " + player.getName() + ".");
+        }
         return false;
     }
-
+    public void get_all_player_for_tab_complete(ArrayList<String> subcmd, CommandSender sender) {
+        for (Player p : Bukkit.getOnlinePlayers()) {
+            if (!p.getName().equals(sender.getName())) {
+                subcmd.add(p.getName());
+            }
+        }
+    }
     @Override
     public List<String> onTabComplete(CommandSender sender, Command cmd, String commandLabel, String[] args) {
-        ArrayList<String> subcmd = new ArrayList<String>();
+        ArrayList<String> subcmd = new ArrayList<>();
         if (cmd.getName().equalsIgnoreCase("pay")) {
             if (args.length == 1) {
-                for (Player p : Bukkit.getOnlinePlayers()) {
-                    if (!p.getName().equals(sender.getName())) {
-                        subcmd.add(p.getName());
-                    }
-                }
-            } else if (args.length == 2) {
-                subcmd.add("");
+                get_all_player_for_tab_complete(subcmd, sender);
             } else {
                 subcmd.add("");
             }
