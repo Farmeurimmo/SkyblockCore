@@ -16,7 +16,7 @@ public class EventManager {
 
     public String getBreakerContest() {
         if (BlocBreakerContest.instance.isActive) {
-            return "§7Breaker Contest: §a" + (System.currentTimeMillis() - DailyBonus.instance.lastAct) / 1000 + "s restantes";
+            return "§7Breaker Contest: §a" + ((BlocBreakerContest.instance.timeStarting + 1000 * 60 * 10) - System.currentTimeMillis()) / 1000 + "s restantes";
         } else {
             return "§7Breaker Contest: §c" + returnFormattedTime((int) TimeUnit.MILLISECONDS.toSeconds(getTimeBeforeReset(
                     BlocBreakerContest.instance.hour, BlocBreakerContest.instance.min)));
@@ -27,7 +27,7 @@ public class EventManager {
         TimeZone.setDefault(TimeZone.getTimeZone("Europe/Paris"));
         Calendar calendar = Calendar.getInstance();
         if (DailyBonus.instance.active) {
-            return "§7x2 /c: §a" + (System.currentTimeMillis() - DailyBonus.instance.lastAct) / 1000 + "s restantes";
+            return "§7x2 /c: §a" + ((DailyBonus.instance.lastAct + 1000 * 200) - System.currentTimeMillis()) / 1000 + "s restantes";
         } else {
             int next = -1;
             int max = 0;

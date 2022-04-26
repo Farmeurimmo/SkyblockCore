@@ -324,7 +324,7 @@ public class Main extends JavaPlugin implements Listener {
         this.getCommand("farmhoe").setExecutor(new FarmHoeCmd());
         this.getCommand("reboot").setExecutor(new RebootCmd());
         this.getCommand("ah").setExecutor(new AhCmd());
-        this.getCommand("boost").setExecutor(new BoostCmd());
+        this.getCommand("events").setExecutor(new EventsCmd());
         this.getCommand("admin").setExecutor(new AdminCmd());
         this.getCommand("minions").setExecutor(new MinionsCmd());
         this.getCommand("is").setExecutor(new IslandCmd());

@@ -76,8 +76,8 @@ commands:
     permission: reboot
   ah:
     permission: ah
-  boost:
-    permission: boost
+  events:
+    permission: events
   admin:
     permission: admin.manage
   minions:
