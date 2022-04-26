@@ -115,6 +115,8 @@ public class ChestManager {
         for (main.java.fr.verymc.blocks.Chest chest : chests) {
             if (chest.getBlock().equals(block.getBlock().getLocation())) {
                 chests.remove(chest);
+                HashMap<String, Object> toEdit = new HashMap<>();
+                toEdit.put(chest.getId() + "", null);
                 return;
             }
         }

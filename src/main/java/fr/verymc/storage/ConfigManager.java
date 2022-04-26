@@ -7,7 +7,6 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.concurrent.CompletableFuture;
 
 public class ConfigManager {
 
@@ -119,28 +118,6 @@ public class ConfigManager {
 
     public FileConfiguration getDataChests() {
         return dataChests;
-    }
-
-    public boolean breakIslandFile() {
-        CompletableFuture.supplyAsync(() -> {
-
-            //backup process
-            /*TimeZone.setDefault(TimeZone.getTimeZone("Europe/Paris"));
-            Calendar calendar = Calendar.getInstance();
-            File fileinsubdir = new File(subdir.getPath() + System.getProperty("file.separator"),
-                    calendar.getTime()+".yml");
-            try {
-                fileinsubdir.createNewFile();
-            } catch (IOException e) {}
-            FileUtil.copy(islandsFile, fileinsubdir);*/
-            islandsFile.delete();
-            skyblockUserFile.delete();
-            minionsFile.delete();
-            chestsFile.delete();
-            setup();
-            return true;
-        }).join(); //makes it blocking
-        return true;
     }
 
 

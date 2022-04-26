@@ -78,17 +78,24 @@ public class IslandTopGui {
         custom8.setItemMeta(customh);
         inv.setItem(44, custom8);
 
-        for (Map.Entry<Island, Integer> entry : getTopIsland().entrySet()) {
-            int slot = entry.getValue().intValue() + 9;
-            if (slot == 7) slot += 2;
-            if (slot == 13) slot += 2;
-            ItemStack custom10 = new ItemStack(Material.PLAYER_HEAD, 1);
-            SkullMeta customi = (SkullMeta) custom10.getItemMeta();
-            customi.setOwner(Bukkit.getOfflinePlayer(entry.getKey().getOwnerUUID()).getName());
-            customi.setDisplayName("§6#" + entry.getValue() + ": " + entry.getKey().getName());
-            customi.setLore(Arrays.asList("§7Points: " + entry.getKey().getValue()));
-            custom10.setItemMeta(customi);
-            inv.setItem(slot, custom10);
+        int slot = 9;
+        int currentNum = 1;
+        for (int i = 1; i <= 21; i++) {
+            for (Map.Entry<Island, Integer> entry : getTopIsland().entrySet()) {
+                if (currentNum != entry.getValue()) continue;
+                slot++;
+                currentNum++;
+                if (slot == 17) slot += 2;
+                if (slot == 26) slot += 2;
+                if (slot == 35) break;
+                ItemStack custom10 = new ItemStack(Material.PLAYER_HEAD, 1);
+                SkullMeta customi = (SkullMeta) custom10.getItemMeta();
+                customi.setOwner(Bukkit.getOfflinePlayer(entry.getKey().getOwnerUUID()).getName());
+                customi.setDisplayName("§6#" + entry.getValue() + ": " + entry.getKey().getName());
+                customi.setLore(Arrays.asList("§7Points: " + entry.getKey().getValue()));
+                custom10.setItemMeta(customi);
+                inv.setItem(slot, custom10);
+            }
         }
 
         player.openInventory(inv);

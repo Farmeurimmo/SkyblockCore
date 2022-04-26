@@ -1,6 +1,8 @@
 package main.java.fr.verymc.minions;
 
 import main.java.fr.verymc.Main;
+import main.java.fr.verymc.storage.AsyncConfig;
+import main.java.fr.verymc.storage.ConfigManager;
 import main.java.fr.verymc.utils.PreGenItems;
 import org.bukkit.Bukkit;
 import org.bukkit.Color;
@@ -20,6 +22,7 @@ import org.bukkit.util.EulerAngle;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 
 public class MinionManager {
 
@@ -170,6 +173,9 @@ public class MinionManager {
         }
 
         minions.remove(minion);
+        HashMap<String, Object> toEdit = new HashMap<>();
+        toEdit.put(minion.getID() + "", null);
+        AsyncConfig.instance.setAndSaveAsync(toEdit, ConfigManager.instance.getDataMinions(), ConfigManager.instance.minionsFile);
     }
 
 }

@@ -17,7 +17,7 @@ public class AsyncConfig {
     }
 
     public void setAndSaveAsync(HashMap<String, Object> hashMap, FileConfiguration fileConfiguration, File file) {
-        CompletableFuture.supplyAsync(() -> {
+        CompletableFuture.runAsync(() -> {
             for (Map.Entry<String, Object> objectEntry : hashMap.entrySet()) {
                 fileConfiguration.set(objectEntry.getKey(), objectEntry.getValue());
             }
@@ -26,23 +26,6 @@ public class AsyncConfig {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            return null;
-        }).join();
-
+        });
     }
-
-    /*public ArrayList<Object> getObjectsStartup(FileConfiguration fileConfiguration, File file) {
-        ArrayList<Object> objects = new ArrayList<>();
-        //CompletableFuture<T>#supplyAsync(Supplier<T>)
-        CompletableFuture.supplyAsync(() -> {
-            //tries to fetch data from a database which doesn’t block the main thread but another thread.
-            for (String key : fileConfiguration.getKeys(false)) {
-                objects.add(fileConfiguration.get(key));
-            }
-            return objects;
-        }).join(); //makes it blocking
-
-        //never used
-        return null;
-    }*/
 }

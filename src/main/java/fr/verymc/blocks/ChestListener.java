@@ -31,6 +31,9 @@ public class ChestListener implements Listener {
         if (e.getClickedBlock().getType() == Material.CHEST) {
             BlockState bs = e.getClickedBlock().getState();
             org.bukkit.block.Chest hopper = (org.bukkit.block.Chest) bs;
+            if (hopper.getCustomName() == null) {
+                return;
+            }
             if (hopper.getCustomName().contains("§6Player shop")) {
                 for (Chest c : ChestManager.instance.chests) {
                     if (c.getType() == 2 && c.getBlock().equals(e.getClickedBlock().getLocation())) {

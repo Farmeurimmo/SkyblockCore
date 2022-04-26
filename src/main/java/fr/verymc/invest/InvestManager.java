@@ -30,7 +30,7 @@ public class InvestManager {
     }
 
     public void giveReward(SkyblockUser skyblockUser) {
-        double gained = skyblockUser.getTimeInvest() * 2;
+        double gained = skyblockUser.getTimeInvest() * 1.6;
         EcoAccountsManager.instance.addFoundsUUID(skyblockUser.getUserUUID(), gained, false);
         if (Bukkit.getPlayer(skyblockUser.getUserUUID()) != null) {
             Bukkit.getPlayer(skyblockUser.getUserUUID()).sendMessage("§6§lInvest §8» §fVous êtes sortis du mode invest. Vous avez gagné §6" +

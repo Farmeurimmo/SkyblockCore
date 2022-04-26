@@ -222,6 +222,9 @@ public class Island {
     }
 
     public boolean hasPerms(IslandRanks rank, IslandPerms perm, Player p) {
+        if (rank == IslandRanks.CHEF) {
+            return true;
+        }
         if (getMapPerms().get(rank) != null) {
             if (p != null) {
                 if (IslandManager.instance.isBypassing(p.getUniqueId())) {

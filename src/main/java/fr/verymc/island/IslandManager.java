@@ -28,6 +28,8 @@ import main.java.fr.verymc.island.upgrade.IslandUpgradeMember;
 import main.java.fr.verymc.island.upgrade.IslandUpgradeSize;
 import main.java.fr.verymc.minions.Minion;
 import main.java.fr.verymc.minions.MinionManager;
+import main.java.fr.verymc.storage.AsyncConfig;
+import main.java.fr.verymc.storage.ConfigManager;
 import main.java.fr.verymc.utils.PlayerUtils;
 import main.java.fr.verymc.utils.WorldBorderUtil;
 import org.bukkit.*;
@@ -74,6 +76,10 @@ public class IslandManager {
         new IslandCoopGui();
         HashMap<Material, Double> blocks = new HashMap<>();
         blocks.put(Material.IRON_BLOCK, 10.0);
+        blocks.put(Material.GOLD_BLOCK, 20.0);
+        blocks.put(Material.DIAMOND_BLOCK, 50.0);
+        blocks.put(Material.EMERALD_BLOCK, 100.0);
+        blocks.put(Material.NETHERITE_BLOCK, 250.0);
         islandBockValues = new IslandBlockValues(blocks);
         new IslandValueCalcManager();
     }
@@ -241,6 +247,9 @@ public class IslandManager {
                                     PlayerUtils.instance.teleportPlayerFromRequest(member, SpawnCmd.Spawn, 0);
                                 }
                                 playerIsland.getMembers().clear();
+                                HashMap<String, Object> toEdit = new HashMap<>();
+                                toEdit.put(playerIsland.getId() + "", null);
+                                AsyncConfig.instance.setAndSaveAsync(toEdit, ConfigManager.instance.getDataIslands(), ConfigManager.instance.islandsFile);
                             }
                         }, 0);
 
