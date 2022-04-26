@@ -22,7 +22,6 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
@@ -41,17 +40,7 @@ public class StorageYAMLManager {
         instance = this;
         boolean good = getDataFromAPI();
         loading = false;
-        if (good) {
-            //sendDataToAPIAuto(false);
-        } else {
-            Bukkit.broadcastMessage("§6§lDonnées §8» §4§lERREUR CRITIQUE DANS LA RECUPERATION DES DONNEES");
-            Bukkit.broadcastMessage("§6§lDonnées §8» §6§lMERCI DE CONTACTER FARMEURIMMO OU DE FAIRE UN TICKET");
-            Bukkit.broadcastMessage("§6§lDonnées §8» §4ABORDING SERVER FREEZING...");
-            for (Player player : Bukkit.getOnlinePlayers()) {
-                player.kickPlayer("§4§lErreur critique dans la base de donnée. Serveur fermé temporairement.");
-            }
-            error = true;
-        }
+        sendDataToAPIAuto(false);
     }
 
     public boolean getDataFromAPI() {
@@ -293,10 +282,6 @@ public class StorageYAMLManager {
     }
 
     public boolean sendDataToAPIAuto(boolean force) {
-        if (error) {
-            Bukkit.broadcastMessage("§4§lSAVE CANCELLED");
-            return false;
-        }
         CompletableFuture.supplyAsync(() -> {
 
             long start = System.currentTimeMillis();
@@ -321,7 +306,7 @@ public class StorageYAMLManager {
                     toSendMinion.clear();
                 } finally {
                     if (toSendMinion.size() > 0) {
-                        toRemoveMinions.put(minion.getID()+"", null);
+                        toRemoveMinions.put(minion.getID() + "", null);
                         toSendMinions.putAll(toSendMinion);
                     }
                 }
@@ -378,7 +363,7 @@ public class StorageYAMLManager {
                     toSendIsland.clear();
                 } finally {
                     if (toSendIsland.size() > 0) {
-                        toRemoveIslands.put(island.getId()+"", null);
+                        toRemoveIslands.put(island.getId() + "", null);
                         toSendIslands.putAll(toSendIsland);
                     }
                 }
@@ -425,7 +410,7 @@ public class StorageYAMLManager {
                 }
             }
             AsyncConfig.instance.setAndSaveAsyncBlockCurrentThread(toRemoveSkyUsers, ConfigManager.instance.getDataSkyblockUser(),
-                                ConfigManager.instance.skyblockUserFile);
+                    ConfigManager.instance.skyblockUserFile);
             AsyncConfig.instance.setAndSaveAsync(toSendSkyUsers, ConfigManager.instance.getDataSkyblockUser(),
                     ConfigManager.instance.skyblockUserFile);
 
@@ -450,13 +435,13 @@ public class StorageYAMLManager {
                     toSendChest.clear();
                 } finally {
                     if (toSendChest.size() > 0) {
-                        toRemoveChests.put(chest.getId()+"", null);
+                        toRemoveChests.put(chest.getId() + "", null);
                         toSendChests.putAll(toSendChest);
                     }
                 }
             }
             AsyncConfig.instance.setAndSaveAsyncBlockCurrentThread(toRemoveChests, ConfigManager.instance.getDataChests(),
-                                ConfigManager.instance.chestsFile);
+                    ConfigManager.instance.chestsFile);
             AsyncConfig.instance.setAndSaveAsync(toSendChests, ConfigManager.instance.getDataChests(),
                     ConfigManager.instance.chestsFile);
 

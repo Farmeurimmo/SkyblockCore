@@ -135,10 +135,5 @@ public class JoinLeave implements Listener {
             event.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER,
                     "§cLe serveur est en cours de démarrage, veuillez patienter.");
         }
-        if (StorageYAMLManager.instance.error) {
-            event.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER,
-                    "§4§lERREUR CRITIQUE DANS LA RECUPERATION DES DONNEES\n" +
-                            "§6§lMERCI DE CONTACTER FARMEURIMMO OU DE FAIRE UN TICKET");
-        }
     }
 }
