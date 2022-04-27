@@ -34,6 +34,7 @@ public class AntiAfkMineCmd implements CommandExecutor, TabCompleter {
         AfkMineCaptchaGui.MakeAfkMineCaptchaGui(p);
         return false;
     }
+
     @Override
     public List<String> onTabComplete(CommandSender sender, Command cmd, String commandLabel, String[] args) {
         ArrayList<String> subcmd = new ArrayList<>();

@@ -39,6 +39,7 @@ public class GmLCmd implements CommandExecutor, TabCompleter {
             }
         }
     }
+
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (!(sender instanceof Player player)) {
@@ -64,13 +65,14 @@ public class GmLCmd implements CommandExecutor, TabCompleter {
         }
         return false;
     }
+
     @Override
     public List<String> onTabComplete(CommandSender sender, Command cmd, String commandLabel, String[] args) {
         ArrayList<String> subcmd = new ArrayList<>();
         if (cmd.getName().equalsIgnoreCase("gma")
-        || cmd.getName().equalsIgnoreCase("gms")
-        || cmd.getName().equalsIgnoreCase("gmsp")
-        || cmd.getName().equalsIgnoreCase("gmc")) {
+                || cmd.getName().equalsIgnoreCase("gms")
+                || cmd.getName().equalsIgnoreCase("gmsp")
+                || cmd.getName().equalsIgnoreCase("gmc")) {
             UtilsCmd.generate_auto_complete(args, subcmd);
         }
         return subcmd;

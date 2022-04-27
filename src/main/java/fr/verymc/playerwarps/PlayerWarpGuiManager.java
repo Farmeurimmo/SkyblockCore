@@ -1,5 +1,7 @@
 package main.java.fr.verymc.playerwarps;
 
+import main.java.fr.verymc.island.Island;
+import main.java.fr.verymc.island.IslandManager;
 import main.java.fr.verymc.utils.PlayerUtils;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -125,8 +127,29 @@ public class PlayerWarpGuiManager implements Listener {
             if (warps.containsKey(e.getSlot())) {
                 PlayerWarp pw = warps.get(e.getSlot());
                 if (e.getClick() == ClickType.LEFT) {
-                    PlayerUtils.instance.teleportPlayerFromRequest(p, pw.getLocation(), 0);
-                    return;
+                    Island island = IslandManager.instance.getIslandByLoc(pw.getLocation());
+                    if (island != null) {
+                        if (island.getMembers().containsKey(PlayerWarpManager.instance.getOwnerUUIDFromPlayerWarp(pw))) {
+                            if (island.isPublic()) {
+                                if (!island.getBanneds().contains(p.getUniqueId())) {
+                                    PlayerUtils.instance.teleportPlayerFromRequest(p, pw.getLocation(), 0);
+                                    pw.addVue();
+                                } else {
+                                    p.sendMessage("§6§lPlayerWarp §8» §fVous êtes banni de cette île.");
+                                }
+                            } else {
+                                if (island.getMembers().containsKey(p.getUniqueId())) {
+                                    PlayerUtils.instance.teleportPlayerFromRequest(p, pw.getLocation(), 0);
+                                    pw.addVue();
+                                } else {
+                                    p.sendMessage("§6§lPlayerWarp §8» §fVous n'avez pas accès à ce warp car l'île est privée.");
+                                }
+                            }
+                        } else {
+                            p.sendMessage("§6§lPlayerWarp §8» §fCe warp est invalide.");
+                        }
+                        return;
+                    }
                 } else if (e.getClick() == ClickType.RIGHT) {
                     if (pw.alreadyVoted(p.getUniqueId())) {
                         p.sendMessage("§6§lPlayerWarp §8» §fVous avez déjà voté pour ce warp.");

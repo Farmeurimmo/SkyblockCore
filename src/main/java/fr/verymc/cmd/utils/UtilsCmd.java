@@ -13,13 +13,15 @@ public class UtilsCmd {
             subcmd.add(player.getName());
         }
     }
+
     public static void set_all_player_in_subcmd_without_me(ArrayList<String> subcmd, CommandSender sender) {
-            for (Player p : Bukkit.getOnlinePlayers()) {
-                if (!p.getName().equals(sender.getName())) {
-                    subcmd.add(p.getName());
-                }
+        for (Player p : Bukkit.getOnlinePlayers()) {
+            if (!p.getName().equals(sender.getName())) {
+                subcmd.add(p.getName());
             }
+        }
     }
+
     public static void generate_auto_complete(String[] args, ArrayList<String> subcmd) {
         if (args.length == 1) {
             set_all_player_in_subcmd(subcmd);

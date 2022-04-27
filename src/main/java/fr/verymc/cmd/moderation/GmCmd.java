@@ -3,7 +3,6 @@ package main.java.fr.verymc.cmd.moderation;
 import main.java.fr.verymc.cmd.utils.UtilsCmd;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
-import org.bukkit.Utility;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -36,6 +35,7 @@ public class GmCmd implements CommandExecutor, TabCompleter {
             default -> player.sendActionBar("§cGamemodes disponibles: 0,1,2,3");
         }
     }
+
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (!(sender instanceof Player player)) {

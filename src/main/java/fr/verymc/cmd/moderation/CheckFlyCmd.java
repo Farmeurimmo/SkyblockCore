@@ -15,11 +15,12 @@ import java.util.List;
 public class CheckFlyCmd implements CommandExecutor, TabCompleter {
     public String get_color(boolean param) {
         if (param) {
-             return ("§c§l");
+            return ("§c§l");
         } else {
             return ("§a§l");
         }
     }
+
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!(sender instanceof Player player)) {
@@ -39,10 +40,11 @@ public class CheckFlyCmd implements CommandExecutor, TabCompleter {
         }
         Player p = Bukkit.getPlayer(args[0]);
         player.sendMessage("§6Gestion du fly de " + p.getName() + ": \n§6Permission de voler "
-        + get_color(!p.getAllowFlight()) + p.getAllowFlight() + "\n§6En vol: " + get_color(!p.isFlying())
-        + p.isFlying() + "\nTemp fly: " + SkyblockUserManager.instance.getUser(p.getUniqueId()).getFlyLeft());
+                + get_color(!p.getAllowFlight()) + p.getAllowFlight() + "\n§6En vol: " + get_color(!p.isFlying())
+                + p.isFlying() + "\nTemp fly: " + SkyblockUserManager.instance.getUser(p.getUniqueId()).getFlyLeft());
         return false;
     }
+
     @Override
     public List<String> onTabComplete(CommandSender sender, Command cmd, String commandLabel, String[] args) {
         ArrayList<String> subcmd = new ArrayList<>();

@@ -24,7 +24,7 @@ public class DataCmd implements CommandExecutor, TabCompleter {
         if (args[0].equalsIgnoreCase("reload")) {
             try {
                 ConfigManager.instance.reloadData();
-            }catch (IOException e) {
+            } catch (IOException e) {
                 e.printStackTrace();
                 sender.sendMessage("§6§lData §8» §fProblème lors du reload !");
             }
@@ -32,6 +32,7 @@ public class DataCmd implements CommandExecutor, TabCompleter {
         }
         return false;
     }
+
     @Override
     public List<String> onTabComplete(CommandSender sender, Command cmd, String commandLabel, String[] args) {
         ArrayList<String> subcmd = new ArrayList<>();
@@ -39,8 +40,7 @@ public class DataCmd implements CommandExecutor, TabCompleter {
             if (sender.hasPermission("*") && args.length == 1) {
                 subcmd.add("reload");
                 Collections.sort(subcmd);
-            }
-            else {
+            } else {
                 subcmd.add("");
                 Collections.sort(subcmd);
             }
