@@ -16,21 +16,20 @@ public class BuildCmd implements CommandExecutor, TabCompleter {
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-
         if (cmd.getName().equalsIgnoreCase("build")) {
-            if (sender instanceof Player) {
-                final Player player = (Player) sender;
-                if (player.hasPermission("build")) {
-                    if (Build.contains(player)) {
-                        Build.remove(player);
-                        player.sendActionBar("§6Mode buildeur désactivé !");
-                    } else {
-                        Build.add(player);
-                        player.sendActionBar("§6Mode buildeur activé !");
-                    }
-                } else {
-                    player.sendActionBar("§cPermissions insuffisantes !");
-                }
+            if (!(sender instanceof Player player)) {
+                return false;
+            }
+            if (!player.hasPermission("build")) {
+                player.sendActionBar("§cPermissions insuffisantes !");
+                return false;
+            }
+            if (Build.contains(player)) {
+                Build.remove(player);
+                player.sendActionBar("§6Mode buildeur désactivé !");
+            } else {
+                Build.add(player);
+                player.sendActionBar("§6Mode buildeur activé !");
             }
         }
         return false;
@@ -38,12 +37,10 @@ public class BuildCmd implements CommandExecutor, TabCompleter {
 
     @Override
     public List<String> onTabComplete(CommandSender sender, Command cmd, String commandLabel, String[] args) {
-        ArrayList<String> subcmd = new ArrayList<String>();
+        ArrayList<String> subcmd = new ArrayList<>();
         if (cmd.getName().equalsIgnoreCase("build")) {
-            if (args.length >= 0) {
-                subcmd.add("");
-                Collections.sort(subcmd);
-            }
+            subcmd.add("");
+            Collections.sort(subcmd);
         }
         return subcmd;
     }

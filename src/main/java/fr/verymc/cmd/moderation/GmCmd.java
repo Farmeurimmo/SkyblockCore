@@ -1,7 +1,9 @@
 package main.java.fr.verymc.cmd.moderation;
 
+import main.java.fr.verymc.cmd.utils.UtilsCmd;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
+import org.bukkit.Utility;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -13,95 +15,83 @@ import java.util.Collections;
 import java.util.List;
 
 public class GmCmd implements CommandExecutor, TabCompleter {
-
+    public void set_player_gamemode(String gamemode, Player player) {
+        switch (gamemode) {
+            case "0" -> {
+                player.setGameMode(GameMode.SURVIVAL);
+                player.sendActionBar("§aVous venez de passer en survie");
+            }
+            case "1" -> {
+                player.setGameMode(GameMode.CREATIVE);
+                player.sendActionBar("§aVous venez de passer en créatif");
+            }
+            case "2" -> {
+                player.setGameMode(GameMode.ADVENTURE);
+                player.sendActionBar("§aVous venez de passer en adventure");
+            }
+            case "3" -> {
+                player.setGameMode(GameMode.SPECTATOR);
+                player.sendActionBar("§aVous venez de passer en spectateur");
+            }
+            default -> player.sendActionBar("§cGamemodes disponibles: 0,1,2,3");
+        }
+    }
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-
-        if (sender instanceof Player) {
-            Player player = (Player) sender;
-            if (player.hasPermission("gm")) {
-                if (args.length == 0) {
-                    player.sendActionBar("§c/gm <0,1,2,3> [Joueur]");
-                    return true;
-                } else if (args.length == 1) {
-                    if (args[0].equalsIgnoreCase("0")) {
-                        player.setGameMode(GameMode.SURVIVAL);
-                        player.sendActionBar("§aVous venez de passer en survie");
-                        return true;
-                    } else if (args[0].equalsIgnoreCase("1")) {
-                        player.setGameMode(GameMode.CREATIVE);
-                        player.sendActionBar("§aVous venez de passer en créatif");
-                        return true;
-                    } else if (args[0].equalsIgnoreCase("2")) {
-                        player.setGameMode(GameMode.ADVENTURE);
-                        player.sendActionBar("§aVous venez de passer en adventure");
-                        return true;
-                    } else if (args[0].equalsIgnoreCase("3")) {
-                        player.setGameMode(GameMode.SPECTATOR);
-                        player.sendActionBar("§aVous venez de passer en spectateur");
-                        return true;
-                    } else {
-                        player.sendActionBar("§cGamemodes disponibles: 0,1,2,3");
-                        return true;
-                    }
-                } else if (args.length == 2) {
-                    if (Bukkit.getPlayer(args[1]) != null) {
-                        if (Bukkit.getPlayer(args[1]).isOnline()) {
-                            Player p = Bukkit.getPlayer(args[1]);
-                            if (args[0].equalsIgnoreCase("0")) {
-                                p.setGameMode(GameMode.SURVIVAL);
-                                p.sendActionBar("§aVous venez de passer en survie");
-                                return true;
-                            } else if (args[0].equalsIgnoreCase("1")) {
-                                p.setGameMode(GameMode.CREATIVE);
-                                p.sendActionBar("§aVous venez de passer en créatif");
-                                return true;
-                            } else if (args[0].equalsIgnoreCase("2")) {
-                                p.setGameMode(GameMode.ADVENTURE);
-                                p.sendActionBar("§aVous venez de passer en adventure");
-                                return true;
-                            } else if (args[0].equalsIgnoreCase("3")) {
-                                p.setGameMode(GameMode.SPECTATOR);
-                                p.sendActionBar("§aVous venez de passer en spectateur");
-                                return true;
-                            } else {
-                                player.sendActionBar("§cGamemodes disponibles: 0,1,2,3");
-                                return true;
-                            }
-                        } else {
-                            player.sendActionBar("§cCe joueur n'est pas en ligne !");
-                        }
-                    } else {
-                        player.sendActionBar("§cCe joueur n'existe pas !");
-                    }
-                } else {
-                    player.sendActionBar("§c/gm <0,1,2,3> [Joueur]");
-                }
-            } else {
-                player.sendActionBar("§cVous n'avez pas la permission !");
+        if (!(sender instanceof Player player)) {
+            return false;
+        }
+        if (!player.hasPermission("gm")) {
+            player.sendActionBar("§cVous n'avez pas la permission !");
+            return false;
+        }
+        switch (args.length) {
+            case 0 -> {
+                player.sendActionBar("§c/gm <0,1,2,3> [Joueur]");
             }
+            case 1 -> {
+                set_player_gamemode(args[0], player);
+                player.sendActionBar("§aVous venez de passer en " + player.getGameMode());
+            }
+            case 2 -> {
+                if (Bukkit.getPlayer(args[1]) == null) {
+                    player.sendActionBar("§cCe joueur n'existe pas !");
+                    return false;
+                }
+                if (!Bukkit.getPlayer(args[1]).isOnline()) {
+                    player.sendActionBar("§cCe joueur n'est pas en ligne !");
+                    return false;
+                }
+                Player p = Bukkit.getPlayer(args[1]);
+                set_player_gamemode(args[0], p);
+                p.sendActionBar("§aVous venez de passer en " + p.getGameMode());
+                player.sendActionBar("§aVous venez de passer " + p.getName() + " en " + p.getGameMode());
+            }
+            default -> player.sendActionBar("§c/gm <0,1,2,3> [Joueur]");
         }
         return false;
     }
 
     @Override
     public List<String> onTabComplete(CommandSender sender, Command cmd, String commandLabel, String[] args) {
-        ArrayList<String> subcmd = new ArrayList<String>();
+        ArrayList<String> subcmd = new ArrayList<>();
         if (cmd.getName().equalsIgnoreCase("gm")) {
-            if (args.length == 1) {
-                subcmd.add("0");
-                subcmd.add("1");
-                subcmd.add("2");
-                subcmd.add("3");
-                Collections.sort(subcmd);
-            } else if (args.length == 2) {
-                for (Player player : Bukkit.getOnlinePlayers()) {
-                    subcmd.add(player.getName());
+            switch (args.length) {
+                case 1 -> {
+                    subcmd.add("0");
+                    subcmd.add("1");
+                    subcmd.add("2");
+                    subcmd.add("3");
+                    Collections.sort(subcmd);
                 }
-                Collections.sort(subcmd);
-            } else if (args.length >= 3) {
-                subcmd.add("");
-                Collections.sort(subcmd);
+                case 2 -> {
+                    UtilsCmd.set_all_player_in_subcmd(subcmd);
+                    Collections.sort(subcmd);
+                }
+                default -> {
+                    subcmd.add("");
+                    Collections.sort(subcmd);
+                }
             }
         }
         return subcmd;
