@@ -7,31 +7,28 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
 public class EventsCmd implements CommandExecutor {
-
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-
-        if (args.length == 1) {
-            if (args[0].equalsIgnoreCase("challenges")) {
-                if (!DailyBonus.instance.active) {
-                    DailyBonus.instance.startBonus();
-                } else {
+        if (args.length != 1) {
+            sender.sendMessage("Usage /event <type>");
+            return false;
+        }
+        switch (args[0]) {
+            case "challenges" -> {
+                if (DailyBonus.instance.active) {
                     sender.sendMessage("§cLe bonus a déjà été lancé !");
+                    break;
                 }
-                return true;
-            } else if (args[0].equalsIgnoreCase("blockbreakercontest")) {
-                if (!BlocBreakerContest.instance.isActive) {
-                    BlocBreakerContest.instance.startContest();
-                } else {
+                DailyBonus.instance.startBonus();
+            }
+            case "blockbreakercontest" -> {
+                if (BlocBreakerContest.instance.isActive) {
                     sender.sendMessage("§cLe concours a déjà été lancé !");
+                    break;
                 }
-                return true;
+                BlocBreakerContest.instance.startContest();
             }
         }
-        sender.sendMessage("Usage /event <type>");
-
-        return true;
+        return false;
     }
-
-
 }
