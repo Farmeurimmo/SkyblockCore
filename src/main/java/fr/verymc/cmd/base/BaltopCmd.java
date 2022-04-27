@@ -19,6 +19,7 @@ public class BaltopCmd implements CommandExecutor {
         }
         return digit;
     }
+
     private void send_player_baltop_page(String args, Player player) {
         int intValue = Integer.parseInt(args);
         int TotalPlayers = SkyblockUserManager.instance.users.size();
@@ -34,6 +35,7 @@ public class BaltopCmd implements CommandExecutor {
             player.sendMessage("§6§lMonnaie §8» §fLe numéro de la page doit être égal ou supérieur à 1.");
         }
     }
+
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!(sender instanceof Player player)) {

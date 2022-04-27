@@ -8,10 +8,10 @@ import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import java.io.Console;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
 public class HatCmd implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
@@ -20,7 +20,7 @@ public class HatCmd implements CommandExecutor, TabCompleter {
         }
         ItemStack item_in_hand = player.getItemInHand();
         if (item_in_hand.getAmount() == 0
-        && player.getInventory().getHelmet() != null) {
+                && player.getInventory().getHelmet() != null) {
             player.getInventory().addItem(player.getInventory().getHelmet());
             player.getInventory().setHelmet(null);
             return false;
@@ -39,6 +39,7 @@ public class HatCmd implements CommandExecutor, TabCompleter {
         }
         return false;
     }
+
     @Override
     public List<String> onTabComplete(CommandSender sender, Command cmd, String commandLabel, String[] args) {
         ArrayList<String> subcmd = new ArrayList<>();

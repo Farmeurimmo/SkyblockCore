@@ -18,6 +18,8 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.Arrays;
+
 public class ChestListener implements Listener {
 
     @EventHandler
@@ -270,14 +272,33 @@ public class ChestListener implements Listener {
 
                                 itemTo.setAmount(item.getAmount());
                                 if (item.equals(itemTo)) {
-                                    if (item.getAmount() >= amount) {
-                                        item.setAmount(item.getAmount() - amount);
+                                    if (item.getAmount() + amount <= item.getMaxStackSize()) {
+                                        item.setAmount(item.getAmount() + amount);
                                         added += amount;
-                                    } else {
-                                        added += item.getAmount();
+                                    } else if (item.getAmount() + amount > item.getMaxStackSize()) {
+                                        added += item.getMaxStackSize() - item.getAmount();
+                                        item.setAmount(item.getMaxStackSize());
                                     }
                                     if (added >= amount) {
                                         break;
+                                    }
+                                }
+                            }
+                            if (added < amount) {
+                                while (added < amount) {
+                                    ItemStack tmp = c.getItemToBuySell().clone();
+                                    if (amount - added < tmp.getMaxStackSize()) {
+                                        tmp.setAmount(amount - added);
+                                        added += amount - added;
+                                    } else {
+                                        tmp.setAmount(tmp.getMaxStackSize());
+                                        added += tmp.getMaxStackSize();
+                                    }
+                                    for (int i = 0; i < Arrays.stream(items).count(); i++) {
+                                        if (items[i] == null) {
+                                            items[i] = tmp;
+                                            break;
+                                        }
                                     }
                                 }
                             }

@@ -24,6 +24,7 @@ public class PayCmd implements CommandExecutor, TabCompleter {
         }
         return digit;
     }
+
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (!(sender instanceof Player player)) {
@@ -70,6 +71,7 @@ public class PayCmd implements CommandExecutor, TabCompleter {
         }
         return false;
     }
+
     public void get_all_player_for_tab_complete(ArrayList<String> subcmd, CommandSender sender) {
         for (Player p : Bukkit.getOnlinePlayers()) {
             if (!p.getName().equals(sender.getName())) {
@@ -77,6 +79,7 @@ public class PayCmd implements CommandExecutor, TabCompleter {
             }
         }
     }
+
     @Override
     public List<String> onTabComplete(CommandSender sender, Command cmd, String commandLabel, String[] args) {
         ArrayList<String> subcmd = new ArrayList<>();

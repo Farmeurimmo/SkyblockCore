@@ -25,11 +25,12 @@ public class TpaCancelCmd implements CommandExecutor, TabCompleter {
         }
         Main.instance.pending.remove(player);
         player.sendMessage("§§6§lTéléportation §8» §fVous avez §cannulé §fvotre demande de Téléportation à "
-        + Main.instance.getTarget(player.getName()) + ".");
+                + Main.instance.getTarget(player.getName()) + ".");
         Main.instance.haverequest.remove(Main.instance.getTarget(player.getName()));
         Main.instance.tpatarget.remove(player);
         return false;
     }
+
     @Override
     public List<String> onTabComplete(CommandSender sender, Command cmd, String commandLabel, String[] args) {
         ArrayList<String> subcmd = new ArrayList<>();

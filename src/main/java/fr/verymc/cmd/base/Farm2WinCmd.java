@@ -20,6 +20,7 @@ public class Farm2WinCmd implements CommandExecutor, TabCompleter {
         Farm2WinGui.MainBoutiqueGUI(player);
         return false;
     }
+
     @Override
     public List<String> onTabComplete(CommandSender sender, Command cmd, String commandLabel, String[] args) {
         ArrayList<String> subcmd = new ArrayList<>();

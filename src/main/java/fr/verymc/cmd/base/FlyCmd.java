@@ -23,6 +23,7 @@ public class FlyCmd implements CommandExecutor, TabCompleter {
             player.sendActionBar("§aFly désactivé pour " + player.getDisplayName() + " !");
         }
     }
+
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (!(sender instanceof Player player)) {
@@ -44,6 +45,7 @@ public class FlyCmd implements CommandExecutor, TabCompleter {
         }
         return false;
     }
+
     @Override
     public List<String> onTabComplete(CommandSender sender, Command cmd, String commandLabel, String[] args) {
         ArrayList<String> subcmd = new ArrayList<>();

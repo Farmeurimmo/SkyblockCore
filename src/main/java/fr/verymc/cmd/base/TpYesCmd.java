@@ -25,7 +25,7 @@ public class TpYesCmd implements CommandExecutor, TabCompleter {
         }
         for (Player p : Bukkit.getOnlinePlayers()) {
             if (Main.instance.getTarget(p.getName()) != null
-            && Main.instance.getTarget(p.getName()).equalsIgnoreCase(player.getName())) {
+                    && Main.instance.getTarget(p.getName()).equalsIgnoreCase(player.getName())) {
                 PlayerUtils.instance.teleportPlayerFromRequestToAnotherPlayer(p, player, PlayerUtils.instance.getPlayerTeleportingdelay(p));
                 player.sendMessage("§6§lTéléportation §8» §fVous avez §aaccepté §fla demande de Téléportation de §6" + p.getName() + "§f.");
                 Main.instance.pending.remove(player);
@@ -34,6 +34,7 @@ public class TpYesCmd implements CommandExecutor, TabCompleter {
         }
         return false;
     }
+
     @Override
     public List<String> onTabComplete(CommandSender sender, Command cmd, String commandLabel, String[] args) {
         ArrayList<String> subcmd = new ArrayList<String>();

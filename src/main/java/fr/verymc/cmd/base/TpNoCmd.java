@@ -27,7 +27,7 @@ public class TpNoCmd implements CommandExecutor, TabCompleter {
         Main.instance.haverequest.remove(player);
         for (Player p : Bukkit.getOnlinePlayers()) {
             if (Main.instance.getTarget(p.getName()) != null
-            && Main.instance.getTarget(p.getName()).equalsIgnoreCase(player.getName())) {
+                    && Main.instance.getTarget(p.getName()).equalsIgnoreCase(player.getName())) {
                 Main.instance.pending.remove(player.getName());
                 Main.instance.tpatarget.remove(player.getName());
                 p.sendMessage("§6§lTéléportation §8» §a" + player.getName() + " §fa refusé votre demande de Téléportation.");

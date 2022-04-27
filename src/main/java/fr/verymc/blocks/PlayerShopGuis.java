@@ -55,12 +55,12 @@ public class PlayerShopGuis {
 
             ItemStack item;
             if (chest.isSell()) {
-                item = new ItemStack(Material.GREEN_WOOL);
-                item.setDisplayName("§aMode vente (Sens item: joueur <- coffre)");
+                item = new ItemStack(Material.RED_WOOL);
+                item.setDisplayName("§cMode achat (coffre achète au joueur)");
                 item.setLore(Arrays.asList("§7Clic pour changer le mode"));
             } else {
-                item = new ItemStack(Material.RED_WOOL);
-                item.setDisplayName("§cMode achat (Sens item: joueur -> coffre)");
+                item = new ItemStack(Material.GREEN_WOOL);
+                item.setDisplayName("§aMode vente (coffre vend au joueur)");
                 item.setLore(Arrays.asList("§7Clic pour changer le mode"));
             }
 

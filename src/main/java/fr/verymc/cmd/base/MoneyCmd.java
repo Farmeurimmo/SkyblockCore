@@ -13,7 +13,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class MoneyCmd implements CommandExecutor, TabCompleter {
-    public double check_args_2(String [] args, CommandSender sender, String message_to_send) {
+    public double check_args_2(String[] args, CommandSender sender, String message_to_send) {
         if (args[2].length() <= 9) {
             double amount = Double.parseDouble(args[2]);
             sender.sendMessage(message_to_send);
@@ -23,28 +23,29 @@ public class MoneyCmd implements CommandExecutor, TabCompleter {
             return (-1);
         }
     }
+
     public void parse_args2(String[] args, CommandSender sender) {
         String str = args[1].toLowerCase();
         double amount;
         switch (str) {
             case "give":
                 amount = check_args_2(args, sender,
-                "§6§lMonnaie §8» §f" + args[0] + " a reçu §6" + args[2] + "$§f sur son compte avec succès.");
-                if (amount != - 1) {
+                        "§6§lMonnaie §8» §f" + args[0] + " a reçu §6" + args[2] + "$§f sur son compte avec succès.");
+                if (amount != -1) {
                     EcoAccountsManager.instance.addFounds((Player) Bukkit.getOfflinePlayer(args[0]), amount, true);
                     return;
                 }
             case "remove":
                 amount = check_args_2(args, sender,
-                "§6§lMonnaie §8» §f" + args[0] + " a perdu §6" + args[2] + "$§f sur son compte avec succès.");
-                if (amount != - 1) {
+                        "§6§lMonnaie §8» §f" + args[0] + " a perdu §6" + args[2] + "$§f sur son compte avec succès.");
+                if (amount != -1) {
                     EcoAccountsManager.instance.removeFounds((Player) Bukkit.getOfflinePlayer(args[0]), amount, true);
                     return;
                 }
             case "set":
-                amount = check_args_2(args, sender, 
-                "§6§lMonnaie §8» §fL'argent de " + args[0] + " a été d§finis sur §6" + args[2] + "$§f avec succès.");
-                if (amount != - 1) {
+                amount = check_args_2(args, sender,
+                        "§6§lMonnaie §8» §fL'argent de " + args[0] + " a été d§finis sur §6" + args[2] + "$§f avec succès.");
+                if (amount != -1) {
                     EcoAccountsManager.instance.setFounds((Player) Bukkit.getOfflinePlayer(args[0]), amount);
                     return;
                 }
@@ -53,6 +54,7 @@ public class MoneyCmd implements CommandExecutor, TabCompleter {
                 break;
         }
     }
+
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         switch (args.length) {
@@ -61,7 +63,7 @@ public class MoneyCmd implements CommandExecutor, TabCompleter {
                     return false;
                 }
                 player.sendMessage("§6§lMonnaie §8» §fVous avez §6"
-                + EcoAccountsManager.instance.moneyGetarrondiNDecimales(player) + "$");
+                        + EcoAccountsManager.instance.moneyGetarrondiNDecimales(player) + "$");
                 return false;
             case 1:
                 if (Bukkit.getPlayer(args[0]) == null) {
@@ -70,7 +72,7 @@ public class MoneyCmd implements CommandExecutor, TabCompleter {
                 }
                 if (EcoAccountsManager.instance.isExisting((Player) Bukkit.getOfflinePlayer(args[0]))) {
                     sender.sendMessage("§6§lMonnaie §8» §6" + args[0] + "§f possède §6" +
-                    EcoAccountsManager.instance.moneyGetarrondiNDecimalesFromStr(args[0]) + "$");
+                            EcoAccountsManager.instance.moneyGetarrondiNDecimalesFromStr(args[0]) + "$");
                     return false;
                 }
                 break;

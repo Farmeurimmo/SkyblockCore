@@ -20,6 +20,7 @@ public class WarpsCmd implements CommandExecutor, TabCompleter {
         WarpGui.OpenGUi(player);
         return false;
     }
+
     @Override
     public List<String> onTabComplete(CommandSender sender, Command cmd, String commandLabel, String[] args) {
         ArrayList<String> subcmd = new ArrayList<>();

@@ -12,15 +12,18 @@ import java.util.*;
 
 public class FeedCmd implements CommandExecutor, TabCompleter {
     private final HashMap<UUID, Integer> cooldowns = new HashMap<>();
+
     public void setCooldown(UUID player, Integer time) {
         if (time == null)
             cooldowns.remove(player);
         else
             cooldowns.put(player, time);
     }
+
     public int getCooldown(UUID player) {
         return (cooldowns.get(player) == null ? 0 : cooldowns.get(player));
     }
+
     public void cooldown_manager(Player player) {
         new BukkitRunnable() {
             public void run() {
@@ -34,6 +37,7 @@ public class FeedCmd implements CommandExecutor, TabCompleter {
             }
         }.runTaskTimer(Main.instance, 20, 20);
     }
+
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (!(sender instanceof Player player)) {
@@ -56,6 +60,7 @@ public class FeedCmd implements CommandExecutor, TabCompleter {
         }
         return false;
     }
+
     @Override
     public List<String> onTabComplete(CommandSender sender, Command cmd, String commandLabel, String[] args) {
         ArrayList<String> subcmd = new ArrayList<>();

@@ -16,6 +16,7 @@ import java.util.List;
 
 public class SpawnCmd implements CommandExecutor, TabCompleter {
     public static final Location Spawn = new Location(Bukkit.getServer().getWorld("world"), -187.5, 72.5, -63.5, -90, 0);
+
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (!(sender instanceof final Player player) || !cmd.getName().equalsIgnoreCase("spawn")) {
@@ -50,6 +51,7 @@ public class SpawnCmd implements CommandExecutor, TabCompleter {
         }
         return false;
     }
+
     public void get_all_player_for_tab_complete(ArrayList<String> subcmd, CommandSender sender) {
         for (Player p : Bukkit.getOnlinePlayers()) {
             if (!p.getName().equals(sender.getName())) {
@@ -57,6 +59,7 @@ public class SpawnCmd implements CommandExecutor, TabCompleter {
             }
         }
     }
+
     @Override
     public List<String> onTabComplete(CommandSender sender, Command cmd, String commandLabel, String[] args) {
         ArrayList<String> subcmd = new ArrayList<>();

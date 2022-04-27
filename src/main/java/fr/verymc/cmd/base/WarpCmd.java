@@ -12,7 +12,6 @@ import org.bukkit.entity.Player;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
 
 public class WarpCmd implements CommandExecutor, TabCompleter {
 
@@ -46,7 +45,7 @@ public class WarpCmd implements CommandExecutor, TabCompleter {
                 return false;
             }
             if (Bukkit.getPlayer(args[1]) != null
-            && Bukkit.getPlayer(args[1]).isOnline()) {
+                    && Bukkit.getPlayer(args[1]).isOnline()) {
                 Player p = Bukkit.getPlayer(args[1]);
                 String str = args[0].toLowerCase();
                 switch (str) {
@@ -72,11 +71,13 @@ public class WarpCmd implements CommandExecutor, TabCompleter {
         }
         return false;
     }
+
     public void get_all_player_for_tab_complete(ArrayList<String> subcmd, CommandSender sender) {
         for (Player player : Bukkit.getOnlinePlayers()) {
             subcmd.add(player.getName());
         }
     }
+
     @Override
     public List<String> onTabComplete(CommandSender sender, Command cmd, String commandLabel, String[] args) {
         ArrayList<String> subcmd = new ArrayList<>();
