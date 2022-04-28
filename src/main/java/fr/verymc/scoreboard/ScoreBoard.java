@@ -43,7 +43,7 @@ public class ScoreBoard implements Listener {
             Grade = user.getCachedData().getMetaData().getPrefix().replace("&", "§");
         }
 
-        obj.getScore("§6go.verymc.fr").setScore(1);
+        obj.getScore("§6play.verymc.fr").setScore(1);
         obj.getScore("§g").setScore(15);
         obj.getScore("§l").setScore(12);
         obj.getScore("§o").setScore(6);

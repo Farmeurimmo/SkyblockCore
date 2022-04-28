@@ -21,7 +21,7 @@ public class EventsCmd implements CommandExecutor {
                 }
                 DailyBonus.instance.startBonus();
             }
-            case "blockbreakercontest" -> {
+            case "blocbreakercontest" -> {
                 if (BlocBreakerContest.instance.isActive) {
                     sender.sendMessage("§cLe concours a déjà été lancé !");
                     break;

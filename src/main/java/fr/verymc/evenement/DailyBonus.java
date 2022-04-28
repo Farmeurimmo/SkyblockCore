@@ -41,7 +41,7 @@ public class DailyBonus {
         active = true;
         IslandChallengesGuis.boost = 2;
         Bukkit.broadcastMessage("§6§lBonus §8» §fUn bonus x2 a été activé pour les challenges. Il expirera dans §e" + duration / 20 + "§f secondes.");
-        Bukkit.getScheduler().scheduleAsyncDelayedTask(Main.instance, new Runnable() {
+        Bukkit.getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
             @Override
             public void run() {
                 IslandChallengesGuis.boost = 1;

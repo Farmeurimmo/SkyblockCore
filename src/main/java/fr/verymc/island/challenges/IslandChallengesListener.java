@@ -54,8 +54,8 @@ public class IslandChallengesListener implements Listener {
         }
         if (!e.isCancelled() && !BuildCmd.Build.contains(player)) {
             if (BlocBreakerContest.instance.isActive) {
-                if (e.getBlock().getType() == BlocBreakerContest.instance.material) {
-                    BlocBreakerContest.instance.addBlock(e.getPlayer().getUniqueId());
+                if (e.getBlock().getType().equals(BlocBreakerContest.instance.material)) {
+                    BlocBreakerContest.instance.addBlock(player.getUniqueId());
                 }
             }
             if (!IslandManager.instance.asAnIsland(player)) {
