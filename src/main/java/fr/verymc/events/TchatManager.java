@@ -1,13 +1,18 @@
 package main.java.fr.verymc.events;
 
 import main.java.fr.verymc.blocks.PlayerShopGuis;
+import main.java.fr.verymc.eco.EcoAccountsManager;
 import main.java.fr.verymc.island.Island;
 import main.java.fr.verymc.island.IslandManager;
+import main.java.fr.verymc.island.guis.IslandBankGui;
+import main.java.fr.verymc.island.guis.IslandGuiManager;
 import main.java.fr.verymc.island.guis.IslandTopGui;
+import main.java.fr.verymc.island.perms.IslandPerms;
 import main.java.fr.verymc.playerwarps.PlayerWarp;
 import main.java.fr.verymc.playerwarps.PlayerWarpManager;
 import main.java.fr.verymc.playerwarps.PlayerWarpManagingGui;
 import main.java.fr.verymc.storage.SkyblockUserManager;
+import main.java.fr.verymc.utils.PlayerUtils;
 import net.luckperms.api.LuckPermsProvider;
 import net.luckperms.api.model.user.User;
 import net.md_5.bungee.api.chat.ComponentBuilder;
@@ -19,6 +24,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerChatEvent;
+
+import java.text.NumberFormat;
 
 public class TchatManager implements Listener {
 
@@ -32,6 +39,84 @@ public class TchatManager implements Listener {
             return;
         }
         e.setCancelled(true);
+
+
+        if (IslandGuiManager.instance.bankAmountWaiting.containsKey(player.getUniqueId()) &&
+                IslandGuiManager.instance.bankAmountWaitingBoolean.get(player.getUniqueId())) {
+            if (!playerIsland.hasPerms(playerIsland.getIslandRankFromUUID(player.getUniqueId()), IslandPerms.BANK_ADD, player)) {
+                return;
+            }
+            double price;
+            try {
+                price = Double.parseDouble(e.getMessage());
+            } catch (NumberFormatException ex) {
+                player.sendMessage("§6§lIles §8» §cVeuillez entrer un nombre valide.");
+                return;
+            }
+            if (IslandGuiManager.instance.bankAmountWaiting.get(player.getUniqueId()).equalsIgnoreCase("money")) {
+                if (!EcoAccountsManager.instance.checkForFounds(player, price)) {
+                    player.sendMessage("§6§lIles §8» §cVous n'avez pas assez d'argent sur votre compte.");
+                    return;
+                }
+                EcoAccountsManager.instance.removeFoundsUUID(player.getUniqueId(), price, false);
+                playerIsland.getBank().addMoney(price);
+                IslandGuiManager.instance.bankAmountWaiting.remove(player.getUniqueId());
+                IslandGuiManager.instance.bankAmountWaitingBoolean.remove(player.getUniqueId());
+                player.sendMessage("§6§lIles §8» §fVous avez §aajouté §6" + NumberFormat.getInstance().format(price) + "$§f à votre banque.");
+                player.sendMessage("§6§lIles §8» §cDésactivation §fdu mode séléction du montant pour §aajouter§f de l'argent à la banque.");
+            } else if (IslandGuiManager.instance.bankAmountWaiting.get(player.getUniqueId()).equalsIgnoreCase("xp")) {
+                if (PlayerUtils.instance.getTotalExperience(player) < price) {
+                    player.sendMessage("§6§lIles §8» §cVous n'avez pas assez d'xp sur vous.");
+                    return;
+                }
+                playerIsland.getBank().addXp((int) price);
+                PlayerUtils.instance.setTotalExperience(player, PlayerUtils.instance.getTotalExperience(player) - (int) price);
+                IslandGuiManager.instance.bankAmountWaiting.remove(player.getUniqueId());
+                IslandGuiManager.instance.bankAmountWaitingBoolean.remove(player.getUniqueId());
+                player.sendMessage("§6§lIles §8» §fVous avez §aajouté §6" + NumberFormat.getInstance().format(price) + "xp§f à votre banque.");
+                player.sendMessage("§6§lIles §8» §cDésactivation §fdu mode séléction du montant pour §aajouter§f de l'xp à la banque.");
+            }
+            IslandBankGui.instance.openBankIslandMenu(player);
+            return;
+        } else if (IslandGuiManager.instance.bankAmountWaiting.containsKey(player.getUniqueId()) &&
+                !IslandGuiManager.instance.bankAmountWaitingBoolean.get(player.getUniqueId())) {
+            if (!playerIsland.hasPerms(playerIsland.getIslandRankFromUUID(player.getUniqueId()), IslandPerms.BANK_REMOVE, player)) {
+                return;
+            }
+            double price;
+            try {
+                price = Double.parseDouble(e.getMessage());
+            } catch (NumberFormatException ex) {
+                player.sendMessage("§6§lIles §8» §cVeuillez entrer un nombre valide.");
+                return;
+            }
+            if (IslandGuiManager.instance.bankAmountWaiting.get(player.getUniqueId()).equalsIgnoreCase("money")) {
+                if (playerIsland.getBank().getMoney() < price) {
+                    player.sendMessage("§6§lIles §8» §cVous n'avez pas assez d'argent dans votre banque.");
+                    return;
+                }
+                EcoAccountsManager.instance.addFoundsUUID(player.getUniqueId(), price, false);
+                playerIsland.getBank().removeMoney(price);
+                IslandGuiManager.instance.bankAmountWaiting.remove(player.getUniqueId());
+                IslandGuiManager.instance.bankAmountWaitingBoolean.remove(player.getUniqueId());
+                player.sendMessage("§6§lIles §8» §fVous avez §cretiré §6" + NumberFormat.getInstance().format(price) + "$§f de votre banque.");
+                player.sendMessage("§6§lIles §8» §cDésactivation §fdu mode séléction du montant pour §cretirer§f de l'argent de la banque.");
+            } else if (IslandGuiManager.instance.bankAmountWaiting.get(player.getUniqueId()).equalsIgnoreCase("xp")) {
+                if (playerIsland.getBank().getXp() < price) {
+                    player.sendMessage("§6§lIles §8» §cVous n'avez pas assez d'xp dans votre banque.");
+                    return;
+                }
+                playerIsland.getBank().removeXp((int) price);
+                PlayerUtils.instance.setTotalExperience(player, PlayerUtils.instance.getTotalExperience(player) + (int) price);
+                IslandGuiManager.instance.bankAmountWaiting.remove(player.getUniqueId());
+                IslandGuiManager.instance.bankAmountWaitingBoolean.remove(player.getUniqueId());
+                player.sendMessage("§6§lIles §8» §fVous avez §cretiré §6" + NumberFormat.getInstance().format(price) + "xp§f de votre banque.");
+                player.sendMessage("§6§lIles §8» §cDésactivation §fdu mode séléction du montant pour §cretirer§f de l'xp de la banque.");
+            }
+            IslandBankGui.instance.openBankIslandMenu(player);
+            return;
+        }
+
 
         if (PlayerShopGuis.instance.priceEditing.containsKey(player)) {
             double price;

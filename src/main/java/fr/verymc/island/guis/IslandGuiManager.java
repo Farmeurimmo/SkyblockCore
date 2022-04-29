@@ -1,13 +1,11 @@
 package main.java.fr.verymc.island.guis;
 
-import main.java.fr.verymc.eco.EcoAccountsManager;
 import main.java.fr.verymc.gui.MenuGui;
 import main.java.fr.verymc.island.Island;
 import main.java.fr.verymc.island.IslandManager;
 import main.java.fr.verymc.island.challenges.IslandChallengesGuis;
 import main.java.fr.verymc.island.perms.IslandPerms;
 import main.java.fr.verymc.island.perms.IslandRank;
-import main.java.fr.verymc.utils.PlayerUtils;
 import main.java.fr.verymc.utils.WorldBorderUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -20,9 +18,18 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.UUID;
 
 public class IslandGuiManager implements Listener {
+
+    public static IslandGuiManager instance;
+    public HashMap<UUID, String> bankAmountWaiting = new HashMap<>();
+    public HashMap<UUID, Boolean> bankAmountWaitingBoolean = new HashMap<>();
+
+    public IslandGuiManager() {
+        instance = this;
+    }
 
     @EventHandler
     public void onInventoryClickEvent(InventoryClickEvent e) {
@@ -166,23 +173,33 @@ public class IslandGuiManager implements Listener {
             if (current.getType() == Material.SUNFLOWER) {
                 if (e.getClick() == ClickType.RIGHT &&
                         playerIsland.hasPerms(playerIsland.getIslandRankFromUUID(player.getUniqueId()), IslandPerms.BANK_ADD, player)) {
-                    if (EcoAccountsManager.instance.checkForFounds(player, 1000.0)) {
-                        EcoAccountsManager.instance.removeFounds(player, 1000.0, true);
-                        playerIsland.getBank().addMoney(1000.0);
+                    if (bankAmountWaiting.containsKey(player.getUniqueId()) && bankAmountWaiting.get(player.getUniqueId()).equals("money")
+                            && bankAmountWaitingBoolean.get(player.getUniqueId()) == true) {
+                        bankAmountWaitingBoolean.remove(player.getUniqueId());
+                        bankAmountWaiting.remove(player.getUniqueId());
+                        player.sendMessage("§6§lIles §8» §cDésactivation §fdu mode séléction du montant pour §aajouter§f de l'argent à la banque.");
+                        IslandBankGui.instance.openBankIslandMenu(player);
                     } else {
-                        player.sendMessage("§6§lIles §8» §fTu n'as pas assez d'argent en banque.");
+                        player.closeInventory();
+                        bankAmountWaiting.put(player.getUniqueId(), "money");
+                        bankAmountWaitingBoolean.put(player.getUniqueId(), true);
+                        player.sendMessage("§6§lIles §8» §aActivation §fdu mode séléction du montant pour §aajouter§f de l'argent à la banque.");
                     }
-                    IslandBankGui.instance.openBankIslandMenu(player);
                     return;
                 } else if (e.getClick() == ClickType.LEFT &&
                         playerIsland.hasPerms(playerIsland.getIslandRankFromUUID(player.getUniqueId()), IslandPerms.BANK_REMOVE, player)) {
-                    if (playerIsland.getBank().getMoney() >= 1000.0) {
-                        EcoAccountsManager.instance.addFounds(player, 1000.0, true);
-                        playerIsland.getBank().removeMoney(1000.0);
+                    if (bankAmountWaiting.containsKey(player.getUniqueId()) && bankAmountWaiting.get(player.getUniqueId()).equalsIgnoreCase("money")
+                            && bankAmountWaitingBoolean.get(player.getUniqueId()) == false) {
+                        bankAmountWaitingBoolean.remove(player.getUniqueId());
+                        bankAmountWaiting.remove(player.getUniqueId());
+                        player.sendMessage("§6§lIles §8» §cDésactivation §fdu mode séléction du montant pour §cretirer §fde l'argent de la banque.");
+                        IslandBankGui.instance.openBankIslandMenu(player);
                     } else {
-                        player.sendMessage("§6§lIles §8» §fTu n'as pas assez d'argent en banque.");
+                        player.closeInventory();
+                        bankAmountWaiting.put(player.getUniqueId(), "money");
+                        bankAmountWaitingBoolean.put(player.getUniqueId(), false);
+                        player.sendMessage("§6§lIles §8» §aActivation §fdu mode séléction du montant pour §cretirer §fde l'argent de la banque.");
                     }
-                    IslandBankGui.instance.openBankIslandMenu(player);
                     return;
                 }
                 return;
@@ -208,26 +225,36 @@ public class IslandGuiManager implements Listener {
                 }
             }
             if (current.getType() == Material.EXPERIENCE_BOTTLE) {
-                if (e.getClick() == ClickType.LEFT &&
+                if (e.getClick() == ClickType.RIGHT &&
                         playerIsland.hasPerms(playerIsland.getIslandRankFromUUID(player.getUniqueId()), IslandPerms.BANK_ADD, player)) {
-                    Integer exp = playerIsland.getBank().getXp();
-                    if (exp <= 0) {
-                        return;
+                    if (bankAmountWaiting.containsKey(player.getUniqueId()) && bankAmountWaiting.get(player.getUniqueId()).equalsIgnoreCase("xp") &&
+                            bankAmountWaitingBoolean.get(player.getUniqueId()) == true) {
+                        bankAmountWaitingBoolean.remove(player.getUniqueId());
+                        bankAmountWaiting.remove(player.getUniqueId());
+                        player.sendMessage("§6§lIles §8» §cDésactivation §fdu mode séléction du montant pour §aajouter §fde l'expérience à la banque.");
+                        IslandBankGui.instance.openBankIslandMenu(player);
+                    } else {
+                        player.closeInventory();
+                        bankAmountWaiting.put(player.getUniqueId(), "xp");
+                        bankAmountWaitingBoolean.put(player.getUniqueId(), true);
+                        player.sendMessage("§6§lIles §8» §aActivation §fdu mode séléction du montant pour §aajouter §fde l'expérience à la banque.");
                     }
-                    PlayerUtils.instance.setTotalExperience(player, exp + PlayerUtils.instance.getTotalExperience(player));
-                    playerIsland.getBank().removeXp(exp);
-                    IslandBankGui.instance.openBankIslandMenu(player);
                     return;
                 }
-                if (e.getClick() == ClickType.RIGHT &&
+                if (e.getClick() == ClickType.LEFT &&
                         playerIsland.hasPerms(playerIsland.getIslandRankFromUUID(player.getUniqueId()), IslandPerms.BANK_REMOVE, player)) {
-                    Integer exp = PlayerUtils.instance.getTotalExperience(player);
-                    if (exp <= 0) {
-                        return;
+                    if (bankAmountWaiting.containsKey(player.getUniqueId()) && bankAmountWaiting.get(player.getUniqueId()).equalsIgnoreCase("xp") &&
+                            bankAmountWaitingBoolean.get(player.getUniqueId()) == false) {
+                        bankAmountWaitingBoolean.remove(player.getUniqueId());
+                        bankAmountWaiting.remove(player.getUniqueId());
+                        player.sendMessage("§6§lIles §8» §cDésactivation §fdu mode séléction du montant pour §cretirer §fde l'expérience à la banque.");
+                        IslandBankGui.instance.openBankIslandMenu(player);
+                    } else {
+                        player.closeInventory();
+                        bankAmountWaiting.put(player.getUniqueId(), "xp");
+                        bankAmountWaitingBoolean.put(player.getUniqueId(), false);
+                        player.sendMessage("§6§lIles §8» §aActivation §fdu mode séléction du montant pour §cretirer §fde l'expérience à la banque.");
                     }
-                    playerIsland.getBank().addXp(exp);
-                    PlayerUtils.instance.setTotalExperience(player, 0);
-                    IslandBankGui.instance.openBankIslandMenu(player);
                     return;
                 }
             }
