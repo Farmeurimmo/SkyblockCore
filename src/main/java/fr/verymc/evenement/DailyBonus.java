@@ -14,7 +14,7 @@ public class DailyBonus {
     public static DailyBonus instance;
     public ArrayList<Integer> hours = new ArrayList<>(Arrays.asList(16, 19, 22));
     public boolean active = false;
-    long duration = 20 * 60 * 10;
+    long duration = 60 * 10;
     long lastAct = 0;
 
     public DailyBonus() {
@@ -40,7 +40,7 @@ public class DailyBonus {
         lastAct = System.currentTimeMillis();
         active = true;
         IslandChallengesGuis.boost = 2;
-        Bukkit.broadcastMessage("§6§lBonus §8» §fUn bonus x2 a été activé pour les challenges. Il expirera dans §e" + duration / 20 + "§f secondes.");
+        Bukkit.broadcastMessage("§6§lBonus §8» §fUn bonus x2 a été activé pour les challenges. Il se termine dans §e" + duration / 60 + " minutes§f.");
         Bukkit.getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
             @Override
             public void run() {
@@ -48,6 +48,6 @@ public class DailyBonus {
                 active = false;
                 Bukkit.broadcastMessage("§6§lBonus §8» §fLe bonus a été désactivé.");
             }
-        }, duration);
+        }, 20 * duration);
     }
 }

@@ -46,7 +46,7 @@ public class BlocBreakerContest {
 
         Bukkit.broadcastMessage("§6§lBlocBreakerContest §8» §fLe concours de cassage blocs a commencé, le bloc choisit est "
                 + material.toString() + ". Minez en le plus possible et obtenez des récompenses en fonction de votre position " +
-                "dans le classement.");
+                "dans le classement. Il se terminera dans §e" + duration / 60 + " minutes§f.");
 
         Bukkit.getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
             @Override
@@ -85,7 +85,9 @@ public class BlocBreakerContest {
                 if (uuidsPositionned.contains(entry.getKey())) continue;
                 if (entry.getValue() > best) {
                     best = entry.getValue();
-                    if (last != null) {uuidsPositionned.remove(last);}
+                    if (last != null) {
+                        uuidsPositionned.remove(last);
+                    }
                     last = entry.getKey();
                     position.put(currentPos, entry.getKey());
                     uuidsPositionned.add(entry.getKey());
@@ -112,7 +114,7 @@ public class BlocBreakerContest {
             EcoAccountsManager.instance.addFoundsUUID(player.getUniqueId(), moneyWon, true);
             if (player != null) {
                 player.sendMessage("§6§lBlocBreakerContest §8» §fVous avez été classé §6#" + entry.getKey() +
-                        " §favec §e" + pointMap.get(entry.getValue()) + " points§f. Vous avez cassé §6" + NumberFormat.getInstance().format(wonPerCent*100) +
+                        " §favec §e" + pointMap.get(entry.getValue()) + " points§f. Vous avez cassé §6" + NumberFormat.getInstance().format(wonPerCent * 100) +
                         "% §fdu total des blocs cassés. Vous avez donc gagné §6" + NumberFormat.getInstance().format(moneyWon) + "$§f.\n");
             }
         }
