@@ -31,27 +31,35 @@ public class EventManager {
         } else {
             int next = -1;
             int max = 0;
+            int lowest = 24;
             for (Integer i : DailyBonus.instance.hours) {
                 if (i > max) {
                     max = i;
                 }
-            }
-            for (Integer i : DailyBonus.instance.hours) {
-                if (i <= calendar.getTime().getHours()) {
-                    continue;
+                if (i < lowest) {
+                    lowest = i;
                 }
-                if (i == 16) {
+            }
+            if (calendar.getTime().getHours() >= max) {
+                for (Integer i : DailyBonus.instance.hours) {
+                    if (i <= calendar.getTime().getHours()) {
+                        continue;
+                    }
+                    if (i == 16) {
+                        next = i;
+                        break;
+                    }
+                    if (i == 19) {
+                        next = i;
+                        break;
+                    }
                     next = i;
                     break;
                 }
-                if (i == 19) {
-                    next = i;
-                    break;
-                }
-                next = i;
-                break;
+                return "§7Prochain x2 /c: §c" + returnFormattedTime((int) TimeUnit.MILLISECONDS.toSeconds(getTimeBeforeReset(next, 0)));
+            } else {
+                return "§7Prochain x2 /c: §c" + returnFormattedTime((int) TimeUnit.MILLISECONDS.toSeconds(getTimeBeforeReset(lowest, 0)));
             }
-            return "§7Prochain x2 /c: §c" + returnFormattedTime((int) TimeUnit.MILLISECONDS.toSeconds(getTimeBeforeReset(next, 0)));
         }
     }
 
