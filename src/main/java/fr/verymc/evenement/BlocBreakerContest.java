@@ -17,7 +17,7 @@ public class BlocBreakerContest {
     public boolean isActive = false;
     public int hour = 18;
     public int min = 30;
-    public int duration = 20;
+    public int duration = 60 * 10;
     public long timeStarting = 0;
 
     public BlocBreakerContest() {
