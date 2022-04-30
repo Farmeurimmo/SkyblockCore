@@ -258,7 +258,7 @@ public class ChestListener implements Listener {
                                 p.sendMessage("§6§lPlayerShop §8» §cVotre inventaire n'a pas assez d'items'.");
                                 return;
                             }
-                            if (InventoryUtils.instance.hasPlaceWithStackCo(c.getItemToBuySell(), inv, p) < amount) {
+                            if (InventoryUtils.instance.hasPlaceWithStackCo(c.getItemToBuySell(), inv, null) < amount) {
                                 p.sendMessage("§6§lPlayerShop §8» §cLe coffre n'a pas assez de place.");
                                 return;
                             }
