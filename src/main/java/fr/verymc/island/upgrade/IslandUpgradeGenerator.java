@@ -89,32 +89,37 @@ public class IslandUpgradeGenerator {
     public void setGenValues(int level) {
         if (level == 0) {
             materials.clear();
-            materials.put(Material.COBBLESTONE, 88); // 88%
+            materials.put(Material.COBBLESTONE, 78); // 78%
+            materials.put(Material.COAL_ORE, 10); // 10%
             materials.put(Material.IRON_ORE, 9); // 9%
             materials.put(Material.DIAMOND_ORE, 3); // 3%
         } else if (level == 1) {
             materials.clear();
-            materials.put(Material.COBBLESTONE, 83); // 83%
+            materials.put(Material.COBBLESTONE, 73); // 73%
+            materials.put(Material.COAL_ORE, 10); // 10%
             materials.put(Material.IRON_ORE, 10); // 10%
             materials.put(Material.GOLD_ORE, 2); // 2%
             materials.put(Material.DIAMOND_ORE, 5); // 5%
         } else if (level == 2) {
             materials.clear();
-            materials.put(Material.COBBLESTONE, 78); // 78%
+            materials.put(Material.COBBLESTONE, 70); // 70%
+            materials.put(Material.COAL_ORE, 8); // 8%
             materials.put(Material.IRON_ORE, 10); // 10%
             materials.put(Material.GOLD_ORE, 5); // 5%
             materials.put(Material.LAPIS_ORE, 2); // 2%
             materials.put(Material.DIAMOND_ORE, 5); // 5%
         } else if (level == 3) {
             materials.clear();
-            materials.put(Material.COBBLESTONE, 70); // 70%
+            materials.put(Material.COBBLESTONE, 63); // 63%
+            materials.put(Material.COAL_ORE, 7); // 7%
             materials.put(Material.IRON_ORE, 11); // 11%
             materials.put(Material.GOLD_ORE, 8); // 8%
             materials.put(Material.LAPIS_ORE, 3); // 5%
             materials.put(Material.DIAMOND_ORE, 7); // 7%
         } else if (level == 4) {
             materials.clear();
-            materials.put(Material.COBBLESTONE, 60); // 60%
+            materials.put(Material.COBBLESTONE, 55); // 55%
+            materials.put(Material.COAL_ORE, 5); // 5%
             materials.put(Material.IRON_ORE, 12); // 12%
             materials.put(Material.GOLD_ORE, 10); // 10%
             materials.put(Material.LAPIS_ORE, 5); // 5%
@@ -123,7 +128,8 @@ public class IslandUpgradeGenerator {
 
         } else if (level == 5) {
             materials.clear();
-            materials.put(Material.COBBLESTONE, 50); // 50%
+            materials.put(Material.COBBLESTONE, 50); // 45%
+            materials.put(Material.COAL_ORE, 5); // 5%
             materials.put(Material.IRON_ORE, 13); // 13%
             materials.put(Material.GOLD_ORE, 12); // 12%
             materials.put(Material.LAPIS_ORE, 6); // 6%
