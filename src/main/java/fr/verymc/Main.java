@@ -80,8 +80,14 @@ public class Main extends JavaPlugin implements Listener {
     static LuckPerms api;
     private final HashMap<String, Integer> spawncooldown = new HashMap<>();
     public ArrayList<Player> pending = new ArrayList<Player>();
+
+    public ArrayList<Player> pendingTrade = new ArrayList<Player>();
     public ArrayList<Player> haverequest = new ArrayList<Player>();
+
+    public ArrayList<Player> haveTradeRequest = new ArrayList<Player>();
     public HashMap<String, String> tpatarget = new HashMap<>();
+
+    public HashMap<String, String> tradeTarget = new HashMap<>();
 
     public void setTarget(String uuid, String aaa) {
         if (aaa == null)
@@ -91,10 +97,7 @@ public class Main extends JavaPlugin implements Listener {
     }
 
     public String getTarget(String player) {
-        if (tpatarget.containsKey(player))
-            return tpatarget.get(player);
-        else
-            return null;
+        return tpatarget.getOrDefault(player, null);
     }
 
     public void setCooldown(String uuid, Integer time) {
@@ -106,6 +109,17 @@ public class Main extends JavaPlugin implements Listener {
 
     public int getCooldown(String player) {
         return (spawncooldown.get(player) == null ? 0 : spawncooldown.get(player));
+    }
+
+    public void setTradeTarget(String uuid, String uuid_second_player) {
+        if (uuid_second_player == null)
+            tradeTarget.remove(uuid);
+        else
+            tradeTarget.put(uuid, uuid_second_player);
+    }
+
+    public String getTradeTarget(String player) {
+        return tradeTarget.getOrDefault(player, null);
     }
 
     @Override
@@ -330,6 +344,10 @@ public class Main extends JavaPlugin implements Listener {
         this.getCommand("is").setExecutor(new IslandCmd());
         this.getCommand("invest").setExecutor(new InvestCmd());
         this.getCommand("playerwarp").setExecutor(new PlayerWarpCmd());
+        this.getCommand("trade").setExecutor(new TradeCmd());
+        this.getCommand("tradeyes").setExecutor(new TradeYesCmd());
+        this.getCommand("tradeno").setExecutor(new TradeNoCmd());
+        this.getCommand("tradecancel").setExecutor(new TradeCancelCmd());
     }
 
 }
