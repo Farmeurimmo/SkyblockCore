@@ -49,7 +49,6 @@ public class IslandChallengesListener implements Listener {
 
     @EventHandler
     public void blockPlaceEvent(BlockPlaceEvent e) {
-        Bukkit.broadcastMessage(e.getBlock().getType().toString());
         if (!excluded.contains(e.getBlock().getType())) {
             e.getBlock().setMetadata("placed", new FixedMetadataValue(Main.instance, e.getPlayer().getName()));
         }
@@ -77,7 +76,6 @@ public class IslandChallengesListener implements Listener {
                 return;
             }
         }
-        Bukkit.broadcastMessage("aaa");
         if (!e.isCancelled() && !BuildCmd.Build.contains(player)) {
             if (BlocBreakerContest.instance.isActive) {
                 if (e.getBlock().getType().equals(BlocBreakerContest.instance.material)) {
