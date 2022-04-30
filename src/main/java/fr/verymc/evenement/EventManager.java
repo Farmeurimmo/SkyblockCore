@@ -40,7 +40,7 @@ public class EventManager {
                     lowest = i;
                 }
             }
-            if (calendar.getTime().getHours() >= max) {
+            if (calendar.getTime().getHours() <= max) {
                 for (Integer i : DailyBonus.instance.hours) {
                     if (i <= calendar.getTime().getHours()) {
                         continue;
