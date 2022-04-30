@@ -29,7 +29,7 @@ public class TradeCancelCmd implements CommandExecutor, TabCompleter {
         }
         Main.instance.pendingTrade.remove(player);
         player.sendMessage("§§6§lTrade §8» §fVous avez §cannulé §fvotre demande d'échange à "
-        + Main.instance.getTradeTarget(player.getName()) + ".");
+                + Main.instance.getTradeTarget(player.getName()) + ".");
         Main.instance.haveTradeRequest.remove(Main.instance.getTradeTarget(player.getName()));
         Main.instance.tradeTarget.remove(player);
         return false;

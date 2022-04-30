@@ -51,7 +51,7 @@ public class TradeCmd implements CommandExecutor, TabCompleter {
         }
         if (Main.instance.pending.contains(player)) {
             player.sendMessage("§6§lTrade §8» §fVous avez déjà une demande en cours, §cannulez §fla avec §c/tradecancel"
-            + " §fpour pouvoir en relancer une.");
+                    + " §fpour pouvoir en relancer une.");
             return false;
         }
         if (Bukkit.getPlayer(args[0]).getName().equalsIgnoreCase(player.getName())) {

@@ -31,7 +31,7 @@ public class TradeNoCmd implements CommandExecutor, TabCompleter {
         Main.instance.haveTradeRequest.remove(player);
         for (Player p : Bukkit.getOnlinePlayers()) {
             if (Main.instance.getTradeTarget(p.getName()) != null
-            && Main.instance.getTradeTarget(p.getName()).equalsIgnoreCase(player.getName())) {
+                    && Main.instance.getTradeTarget(p.getName()).equalsIgnoreCase(player.getName())) {
                 Main.instance.pendingTrade.remove(player.getName());
                 Main.instance.tradeTarget.remove(player.getName());
                 p.sendMessage("§6§lTrade §8» §a" + player.getName() + " §fa refusé votre demande d'échange.");
