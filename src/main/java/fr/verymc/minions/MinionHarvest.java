@@ -29,7 +29,7 @@ public class MinionHarvest {
         instance = this;
         autoHarvest();
         blockBreakable.addAll(Arrays.asList(Material.ANCIENT_DEBRIS, Material.COBBLESTONE, Material.IRON_ORE, Material.COAL_ORE, Material.GOLD_ORE
-                , Material.DIAMOND_ORE, Material.EMERALD_ORE, Material.STONE));
+                , Material.DIAMOND_ORE, Material.EMERALD_ORE, Material.STONE, Material.LAPIS_ORE));
     }
 
     public void autoHarvest() {
