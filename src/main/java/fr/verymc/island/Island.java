@@ -115,6 +115,45 @@ public class Island {
         id++;
         challenges.add(new IslandChallenge("Miner de l'ancient débris", 0, Material.ANCIENT_DEBRIS, 0, id,
                 true, IslandChallengesListener.debris, 0, null));
+        id++;
+        challenges.add(new IslandChallenge("Casser des bûches de chêne", 0, Material.OAK_LOG, 0, id,
+                true, IslandChallengesListener.oak_log, 0, null));
+        id++;
+        challenges.add(new IslandChallenge("Casser des bûches de bouleau", 0, Material.BIRCH_LOG, 0, id,
+                true, IslandChallengesListener.birch_log, 0, null));
+        id++;
+        challenges.add(new IslandChallenge("Casser des bûches d'acacia", 0, Material.ACACIA_LOG, 0, id,
+                true, IslandChallengesListener.acacia_log, 0, null));
+        id++;
+        challenges.add(new IslandChallenge("Casser des bûches de chêne noir", 0, Material.DARK_OAK_LOG, 0, id,
+                true, IslandChallengesListener.dark_oak_log, 0, null));
+        id++;
+        challenges.add(new IslandChallenge("Casser des bûches de jungle", 0, Material.JUNGLE_LOG, 0, id,
+                true, IslandChallengesListener.jungle_log, 0, null));
+        id++;
+        challenges.add(new IslandChallenge("Casser des bûches de sapin", 0, Material.SPRUCE_LOG, 0, id,
+                true, IslandChallengesListener.spruce_log, 0, null));
+        id++;
+        challenges.add(new IslandChallenge("Récolter du blé", 0, Material.WHEAT, 0, id,
+                true, IslandChallengesListener.wheat, 0, null));
+        id++;
+        challenges.add(new IslandChallenge("Récolter du cacao", 0, Material.COCOA, 0, id,
+                true, IslandChallengesListener.cocoa, 0, null));
+        id++;
+        challenges.add(new IslandChallenge("Récolter des patates", 0, Material.POTATOES, 0, id,
+                true, IslandChallengesListener.potato, 0, null));
+        id++;
+        challenges.add(new IslandChallenge("Récolter des carottes", 0, Material.CARROTS, 0, id,
+                true, IslandChallengesListener.carrot, 0, null));
+        id++;
+        challenges.add(new IslandChallenge("Récolter de la nether wart", 0, Material.NETHER_WART, 0, id,
+                true, IslandChallengesListener.nether_wart, 0, null));
+        id++;
+        challenges.add(new IslandChallenge("Récolter du melon", 0, Material.MELON, 0, id,
+                true, IslandChallengesListener.melon, 0, null));
+        id++;
+        challenges.add(new IslandChallenge("Récolter de la citrouille", 0, Material.PUMPKIN, 0, id,
+                true, IslandChallengesListener.pumpkin, 0, null));
     }
 
     public IslandBank getBank() {

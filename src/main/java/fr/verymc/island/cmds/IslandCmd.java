@@ -338,6 +338,10 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
                         }
                         return true;
                     } else if (args[0].equalsIgnoreCase("rename")) {
+                        if (!p.hasPermission("is.rename")) {
+                            p.sendMessage("§6§lIles §8» §fVous n'avez pas la permission.");
+                            return true;
+                        }
                         Island playerIsland = IslandManager.instance.getPlayerIsland(p);
                         if (playerIsland.hasPerms(playerIsland.getIslandRankFromUUID(p.getUniqueId()), IslandPerms.SET_ISLAND_NAME, p)) {
                             if (args[1].length() >= 4 && args[1].length() <= 32) {

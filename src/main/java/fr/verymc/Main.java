@@ -17,6 +17,7 @@ import main.java.fr.verymc.cmd.moderation.*;
 import main.java.fr.verymc.crates.CratesManager;
 import main.java.fr.verymc.crates.KeyCmd;
 import main.java.fr.verymc.eco.EcoAccountsManager;
+import main.java.fr.verymc.entities.EntityListener;
 import main.java.fr.verymc.evenement.ChatReaction;
 import main.java.fr.verymc.evenement.EventManager;
 import main.java.fr.verymc.events.*;
@@ -279,6 +280,7 @@ public class Main extends JavaPlugin implements Listener {
         getServer().getPluginManager().registerEvents(new IslandPlayerMove(), this);
         getServer().getPluginManager().registerEvents(new IslandGeneratorForm(), this);
         getServer().getPluginManager().registerEvents(new PlayerWarpGuiManager(), this);
+        getServer().getPluginManager().registerEvents(new EntityListener(), this);
         PluginManager pm = getServer().getPluginManager();
         pm.registerEvents(this, this);
     }
