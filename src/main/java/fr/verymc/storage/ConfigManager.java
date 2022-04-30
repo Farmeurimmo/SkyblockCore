@@ -93,9 +93,9 @@ public class ConfigManager {
 
         dataChests = YamlConfiguration.loadConfiguration(chestsFile);
 
-        subdir = new File(Main.instance.getDataFolder().getPath() + System.getProperty("file.separator") +
+        /*subdir = new File(Main.instance.getDataFolder().getPath() + System.getProperty("file.separator") +
                 "backups");
-        subdir.mkdir();
+        subdir.mkdir();*/
 
 
     }

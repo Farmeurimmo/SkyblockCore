@@ -5,7 +5,6 @@ import main.java.fr.verymc.cmd.moderation.BuildCmd;
 import main.java.fr.verymc.evenement.BlocBreakerContest;
 import main.java.fr.verymc.island.Island;
 import main.java.fr.verymc.island.IslandManager;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.Ageable;

@@ -23,8 +23,6 @@ public class IslandChallengesGuis implements Listener {
 
     public static void CompleteChallenge(Player player, IslandChallenge challenge) {
         //poppy
-        //player shop 5 slots restent vide
-        //bug storage minions
         double wonCrys = 5.0 * boost * challenge.getPalier();
         double wonMoney = 5000.0 * boost * challenge.getPalier();
         int keys = 1 * boost;
