@@ -86,7 +86,7 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
                             p.sendMessage("§6§lIles §8» §fTu dois être sur ton île pour définir le home de ton île.");
                             return true;
                         }
-                        if (playerIsland.getPerms(playerIsland.getIslandRankFromUUID(p.getUniqueId())).contains(IslandPerms.SET_HOME)) {
+                        if (playerIsland.hasPerms(playerIsland.getIslandRankFromUUID(p.getUniqueId()), IslandPerms.SET_HOME, p)) {
                             playerIsland.setHome(p.getLocation());
                             p.sendMessage("§6§lIles §8» §fNouveau home d'île définit !");
                         } else {

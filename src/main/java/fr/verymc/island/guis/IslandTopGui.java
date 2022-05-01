@@ -80,7 +80,7 @@ public class IslandTopGui {
 
         int slot = 9;
         int currentNum = 1;
-        for (int i = 1; i <= 23; i++) {
+        for (int i = 1; i <= 22; i++) {
             for (Map.Entry<Island, Integer> entry : getTopIsland().entrySet()) {
                 if (currentNum != entry.getValue()) continue;
                 slot++;
