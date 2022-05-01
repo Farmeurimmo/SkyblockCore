@@ -71,7 +71,7 @@ public class HolosSetup implements Listener {
         holodieu.appendTextLine("§c§lGRADE INTERMÉDIAIRE");
         holodieu.appendTextLine("");
         holodieu.appendTextLine("§6§lPRIX IG: §e§l7 500 000$");
-        holodieu.appendTextLine("§6§lPRIX BOUTIQUE: §e§lNon achetable");
+        holodieu.appendTextLine("§6§lPRIX BOUTIQUE: §e§l10.79€");
         holodieu.appendTextLine("");
         holodieu.appendTextLine("§6§lAvantages du Grade §9§lDieu");
         holodieu.appendTextLine("");
