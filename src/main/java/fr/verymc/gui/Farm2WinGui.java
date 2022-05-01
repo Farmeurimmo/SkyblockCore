@@ -70,6 +70,7 @@ public class Farm2WinGui implements Listener {
             event.setCancelled(true);
             if (current.getType() == Material.ARROW) {
                 Farm2WinGui.MainBoutiqueGUI(player);
+                return;
             }
             if (current.getType() == Material.DRAGON_BREATH) {
                 if (EcoAccountsManager.instance.getMoney(player.getUniqueId()) >= 25000) {
@@ -78,6 +79,7 @@ public class Farm2WinGui implements Listener {
                 } else {
                     player.sendMessage("§cErreur, vous n'avez pas assez d'argent.");
                 }
+                return;
             }
             if (current.getType() == Material.HOPPER) {
                 if (EcoAccountsManager.instance.getMoney(player.getUniqueId()) >= 500000) {
@@ -86,6 +88,7 @@ public class Farm2WinGui implements Listener {
                 } else {
                     player.sendMessage("§cErreur, vous n'avez pas assez d'argent.");
                 }
+                return;
             }
             if (current.getType() == Material.TRAPPED_CHEST) {
                 if (EcoAccountsManager.instance.getMoney(player.getUniqueId()) >= 1000000) {
@@ -94,6 +97,7 @@ public class Farm2WinGui implements Listener {
                 } else {
                     player.sendMessage("§cErreur, vous n'avez pas assez d'argent.");
                 }
+                return;
             }
             if (current.getType() == Material.NETHERITE_HOE) {
                 if (EcoAccountsManager.instance.getMoney(player.getUniqueId()) >= 500000) {
@@ -102,12 +106,24 @@ public class Farm2WinGui implements Listener {
                 } else {
                     player.sendMessage("§cErreur, vous n'avez pas assez d'argent.");
                 }
+                return;
             }
+            if (current.getType() == Material.CHEST) {
+                if (EcoAccountsManager.instance.getMoney(player.getUniqueId()) >= 75000) {
+                    EcoAccountsManager.instance.removeFounds(player, (double) 75000, true);
+                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "chests " + player.getName() + " PlayerShop");
+                } else {
+                    player.sendMessage("§cErreur, vous n'avez pas assez d'argent.");
+                }
+                return;
+            }
+            return;
         }
         if (event.getView().getTitle().equalsIgnoreCase("§6Boutique des grades Farm2Win")) {
             event.setCancelled(true);
             if (current.getType() == Material.ARROW) {
                 MainBoutiqueGUI(player);
+                return;
             }
             if (current.getType() == Material.IRON_BLOCK) {
                 if (!player.hasPermission("group.legende")) {
@@ -134,6 +150,7 @@ public class Farm2WinGui implements Listener {
                         }, 60);
                     }
                 }
+                return;
             }
             if (current.getType() == Material.GOLD_BLOCK) {
                 if (!player.hasPermission("group.dieu")) {
@@ -174,6 +191,7 @@ public class Farm2WinGui implements Listener {
                         }, 60);
                     }
                 }
+                return;
             }
             if (current.getType() == Material.NETHERITE_BLOCK) {
                 if (!player.hasPermission("group.zeus")) {
@@ -214,6 +232,7 @@ public class Farm2WinGui implements Listener {
                         }, 60);
                     }
                 }
+                return;
             }
         }
         if (event.getView().getTitle().equalsIgnoreCase("§6Boutique des commandes Farm2Win")) {
@@ -222,6 +241,7 @@ public class Farm2WinGui implements Listener {
 
             if (current.getType() == Material.ARROW) {
                 MainBoutiqueGUI(player);
+                return;
             }
             if (current.getType() == Material.LEATHER_HELMET) {
                 if (!player.hasPermission("hat")) {
@@ -248,6 +268,7 @@ public class Farm2WinGui implements Listener {
                         }, 60);
                     }
                 }
+                return;
             }
             if (current.getType() == Material.OAK_SIGN) {
                 if (!player.hasPermission("economyshopgui.sellall")) {
@@ -274,6 +295,7 @@ public class Farm2WinGui implements Listener {
                         }, 60);
                     }
                 }
+                return;
             }
             if (current.getType() == Material.FEATHER) {
                 if (!player.hasPermission("fly")) {
@@ -300,6 +322,7 @@ public class Farm2WinGui implements Listener {
                         }, 60);
                     }
                 }
+                return;
             }
             if (current.getType() == Material.COOKED_BEEF) {
                 if (!player.hasPermission("feed")) {
@@ -326,6 +349,7 @@ public class Farm2WinGui implements Listener {
                         }, 60);
                     }
                 }
+                return;
             }
             if (current.getType() == Material.CRAFTING_TABLE) {
                 if (!player.hasPermission("craft")) {
@@ -352,6 +376,7 @@ public class Farm2WinGui implements Listener {
                         }, 60);
                     }
                 }
+                return;
             }
             if (current.getType() == Material.NAME_TAG) {
                 if (!player.hasPermission("iridiumskyblock.rename")) {
@@ -378,6 +403,7 @@ public class Farm2WinGui implements Listener {
                         }, 60);
                     }
                 }
+                return;
             }
             if (current.getType() == Material.ENCHANTING_TABLE) {
                 if (!player.hasPermission("enchantement")) {
@@ -404,6 +430,7 @@ public class Farm2WinGui implements Listener {
                         }, 60);
                     }
                 }
+                return;
             }
         }
     }
