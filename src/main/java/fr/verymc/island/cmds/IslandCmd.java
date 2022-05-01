@@ -68,6 +68,9 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
                             }
                         }
                         return true;
+                    } else if (args[0].equalsIgnoreCase("top")) {
+                        IslandTopGui.instance.openTopIslandMenu(p);
+                        return true;
                     }
                     if (IslandManager.instance.getPlayerIsland(p) == null) {
                         p.sendMessage("§6§lIles §8» §fTu n'es pas dans une île !");
@@ -113,9 +116,6 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
                         } else {
                             p.sendMessage("§6§lIles §8» §fTu ne peux pas détruire cette île, tu n'es pas le propriétaire.");
                         }
-                        return true;
-                    } else if (args[0].equalsIgnoreCase("top")) {
-                        IslandTopGui.instance.openTopIslandMenu(p);
                         return true;
                     } else if (args[0].equalsIgnoreCase("recalc")) {
                         if (p.hasPermission("*")) {
