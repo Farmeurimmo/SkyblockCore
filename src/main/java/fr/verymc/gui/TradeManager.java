@@ -11,21 +11,26 @@ public class TradeManager {
     public static TradeManager instance;
     public Player playerOne;
     public Player playerTwo;
-    public int moneyAmount;
 
-    public TradeManager(Player playerOneParam, Player playerTwoParam, int moneyAmountParam) {
+    public Inventory tradeInv;
+    public int playerOneMoneyAmount;
+    public int playerTwoMoneyAmount;
+
+    public TradeManager(Player playerOneParam, Player playerTwoParam, Inventory tradeInvParam, int moneyAmountParam) {
         playerOne = playerOneParam;
         playerTwo = playerTwoParam;
-        moneyAmount = moneyAmountParam;
+        playerOneMoneyAmount = moneyAmountParam;
+        playerTwoMoneyAmount = moneyAmountParam;
+        tradeInv = tradeInvParam;
         instance = this;
     }
 
-    public static Inventory TradeGuiBuilder() {
+    public static Inventory TradeGuiBuilder(int moneyAmount) {
         Inventory inv = Bukkit.createInventory(null, 54, "§6Echange");
         ItemStack yellowStainedGlass = (new ItemStackBuilder(Material.YELLOW_STAINED_GLASS_PANE)).setName("§a").getItemStack();
         ItemStack greenStainedGlass = (new ItemStackBuilder(Material.GREEN_STAINED_GLASS_PANE)).setName("§aConfirmer").getItemStack();
         ItemStack redStainedGlass = (new ItemStackBuilder(Material.RED_STAINED_GLASS_PANE)).setName("§cAnnuler").getItemStack();
-        ItemStack goldIngot = (new ItemStackBuilder(Material.GOLD_INGOT)).setName("§eBalance de l'échange").setLore("§6    >> 0$").getItemStack();
+        ItemStack goldIngot = (new ItemStackBuilder(Material.GOLD_INGOT)).setName("§eBalance de l'échange").setLore("§6    >> " + moneyAmount + "$").getItemStack();
         for (int i = 0; i < 10; i++) {
             inv.setItem(i, yellowStainedGlass);
         }

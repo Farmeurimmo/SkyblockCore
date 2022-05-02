@@ -35,8 +35,8 @@ public class TradeYesCmd implements CommandExecutor, TabCompleter {
             if (Main.instance.getTradeTarget(p.getName()) != null
                     && Main.instance.getTradeTarget(p.getName()).equalsIgnoreCase(player.getName())) {
                 player.sendMessage("§6§lTrade §8» §fVous avez §aaccepté §fla demande d'échange de §6" + p.getName() + "§f.");
-                Main.instance.tradeInProcess.add(new TradeManager(p, player, 0));
-                Inventory tradeInv = TradeManager.TradeGuiBuilder();
+                Inventory tradeInv = TradeManager.TradeGuiBuilder(0);
+                Main.instance.tradeInProcess.add(new TradeManager(p, player, tradeInv, 0));
                 player.openInventory(tradeInv);
                 p.openInventory(tradeInv);
                 Main.instance.pendingTrade.remove(p);

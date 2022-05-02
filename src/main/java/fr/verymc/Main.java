@@ -293,6 +293,7 @@ public class Main extends JavaPlugin implements Listener {
         getServer().getPluginManager().registerEvents(new IslandGeneratorForm(), this);
         getServer().getPluginManager().registerEvents(new PlayerWarpGuiManager(), this);
         getServer().getPluginManager().registerEvents(new TradeGui(), this);
+        getServer().getPluginManager().registerEvents(new MoneyTradeGui(), this);
         PluginManager pm = getServer().getPluginManager();
         pm.registerEvents(this, this);
     }

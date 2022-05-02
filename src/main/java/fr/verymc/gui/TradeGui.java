@@ -1,6 +1,7 @@
 package main.java.fr.verymc.gui;
 
 import main.java.fr.verymc.Main;
+import main.java.fr.verymc.eco.EcoAccountsManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -13,6 +14,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class TradeGui implements Listener {
+
+    public static boolean balanceGui = false;
+
     @EventHandler
     public void onInventoryDragEvent(InventoryDragEvent e) {
         if (!e.getView().getTitle().equals("§6Echange")) {
@@ -31,6 +35,9 @@ public class TradeGui implements Listener {
     @EventHandler
     public void onCloseInventory(InventoryCloseEvent e) {
         if (!e.getView().getTitle().equals("§6Echange")) {
+            return;
+        }
+        if (balanceGui) {
             return;
         }
         if (e.getInventory().getItem(39).getType() == Material.GREEN_STAINED_GLASS_PANE
@@ -99,6 +106,10 @@ public class TradeGui implements Listener {
                 playerTwo.closeInventory();
                 playerTwo.sendMessage("§6§lTrade §8» §fEchange annulez par §a" + playerOne.getName());
             }
+            if (e.getRawSlot() == 38) {
+                balanceGui = true;
+                playerOne.openInventory(new MoneyTradeGui().getBalanceGui(e));
+            }
         } else if (e.getWhoClicked() == playerTwo) {
             if (slotPlayerTwo.contains(e.getSlot())) {
                 e.setCancelled(false);
@@ -130,6 +141,10 @@ public class TradeGui implements Listener {
                 playerTwo.sendMessage("§6§lTrade §8» §fVous avez annulez l'échange");
                 Main.instance.tradeInProcess.remove(trade);
             }
+            if (e.getRawSlot() == 42) {
+                balanceGui = true;
+                playerTwo.openInventory(new MoneyTradeGui().getBalanceGui(e));
+            }
         }
         if (e.getInventory().getItem(37).getType() == Material.GREEN_STAINED_GLASS_PANE
                 && e.getInventory().getItem(39).getType() == Material.GREEN_STAINED_GLASS_PANE
@@ -147,6 +162,10 @@ public class TradeGui implements Listener {
                     playerTwo.getInventory().addItem(item);
                 }
             }
+            EcoAccountsManager.instance.addFounds(playerOne, trade.playerTwoMoneyAmount, false);
+            EcoAccountsManager.instance.addFounds(playerTwo, trade.playerOneMoneyAmount, false);
+            EcoAccountsManager.instance.removeFounds(playerOne, trade.playerOneMoneyAmount, false);
+            EcoAccountsManager.instance.removeFounds(playerTwo, trade.playerTwoMoneyAmount, false);
             Main.instance.tradeInProcess.remove(trade);
             playerOne.closeInventory();
             playerTwo.closeInventory();
