@@ -1,12 +1,14 @@
 package main.java.fr.verymc.cmd.base;
 
 import main.java.fr.verymc.Main;
+import main.java.fr.verymc.gui.TradeManager;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -33,8 +35,13 @@ public class TradeYesCmd implements CommandExecutor, TabCompleter {
             if (Main.instance.getTradeTarget(p.getName()) != null
                     && Main.instance.getTradeTarget(p.getName()).equalsIgnoreCase(player.getName())) {
                 player.sendMessage("§6§lTrade §8» §fVous avez §aaccepté §fla demande d'échange de §6" + p.getName() + "§f.");
-                Main.instance.pendingTrade.remove(player);
+                Main.instance.tradeInProcess.add(new TradeManager(p, player, 0));
+                Inventory tradeInv = TradeManager.TradeGuiBuilder();
+                player.openInventory(tradeInv);
+                p.openInventory(tradeInv);
+                Main.instance.pendingTrade.remove(p);
                 Main.instance.haveTradeRequest.remove(player);
+                Main.instance.setTradeTarget(p.getName(), null);
             }
         }
         return false;

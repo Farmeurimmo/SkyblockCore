@@ -24,10 +24,7 @@ import main.java.fr.verymc.featherfly.CountdownFly;
 import main.java.fr.verymc.featherfly.DailyFlyCmd;
 import main.java.fr.verymc.featherfly.FeatherFlyCmd;
 import main.java.fr.verymc.featherfly.FeatherFlyInteract;
-import main.java.fr.verymc.gui.AfkMineCaptchaGui;
-import main.java.fr.verymc.gui.Farm2WinGui;
-import main.java.fr.verymc.gui.MenuGui;
-import main.java.fr.verymc.gui.WarpGui;
+import main.java.fr.verymc.gui.*;
 import main.java.fr.verymc.holos.HolosSetup;
 import main.java.fr.verymc.invest.InvestCmd;
 import main.java.fr.verymc.invest.InvestManager;
@@ -88,6 +85,8 @@ public class Main extends JavaPlugin implements Listener {
     public HashMap<String, String> tpatarget = new HashMap<>();
 
     public HashMap<String, String> tradeTarget = new HashMap<>();
+
+    public ArrayList<TradeManager> tradeInProcess = new ArrayList<>();
 
     public void setTarget(String uuid, String aaa) {
         if (aaa == null)
@@ -293,6 +292,7 @@ public class Main extends JavaPlugin implements Listener {
         getServer().getPluginManager().registerEvents(new IslandPlayerMove(), this);
         getServer().getPluginManager().registerEvents(new IslandGeneratorForm(), this);
         getServer().getPluginManager().registerEvents(new PlayerWarpGuiManager(), this);
+        getServer().getPluginManager().registerEvents(new TradeGui(), this);
         PluginManager pm = getServer().getPluginManager();
         pm.registerEvents(this, this);
     }

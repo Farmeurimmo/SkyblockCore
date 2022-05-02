@@ -61,7 +61,6 @@ public class TradeCmd implements CommandExecutor, TabCompleter {
         Player p = Bukkit.getPlayer(args[0]);
         Main.instance.haveTradeRequest.remove(p);
         Main.instance.haveTradeRequest.add(p);
-        System.out.println(Main.instance.haveTradeRequest.contains(p));
         Main.instance.pendingTrade.add(player);
         Main.instance.setTradeTarget(player.getName(), p.getName());
         tradeExpiration(player, p);
