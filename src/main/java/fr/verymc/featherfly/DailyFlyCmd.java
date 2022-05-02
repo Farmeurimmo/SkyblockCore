@@ -24,12 +24,12 @@ public class DailyFlyCmd implements CommandExecutor {
                     return true;
                 }
                 if (player.hasPermission("dailyfly.dieu")) {
-                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "featherfly give " + player.getName() + " 1heur");
+                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "featherfly give " + player.getName() + " 3heur");
                     player.sendMessage("§aVous avez récupéré votre plûme de fly journalier.");
                     AlreadyRedeem.add(player.getUniqueId());
                     return true;
                 } else if (player.hasPermission("dailyfly.legende")) {
-                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "featherfly give " + player.getName() + " 30min");
+                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "featherfly give " + player.getName() + " 90min");
                     player.sendMessage("§aVous avez récupéré votre plûme de fly journalier.");
                     AlreadyRedeem.add(player.getUniqueId());
                     return true;

@@ -149,7 +149,7 @@ public class IslandManager {
 
     public void setWorldBorder(Player p, Location loc) {
         Island i = getIslandByLoc(loc);
-        if (p.getWorld().getName().equalsIgnoreCase("world")) {
+        if (loc.getWorld().getName().equalsIgnoreCase("world")) {
             return;
         }
         if (i != null) {
