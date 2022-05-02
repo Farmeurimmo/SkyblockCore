@@ -8,7 +8,7 @@ import org.bukkit.event.entity.EntitySpawnEvent;
 public class EntityListener implements Listener {
 
     @EventHandler
-    public void onEntityDamage(EntitySpawnEvent e) {
+    public void onEntitySpawn(EntitySpawnEvent e) {
         if (e.getEntityType() == EntityType.PHANTOM) {
             e.setCancelled(true);
         }

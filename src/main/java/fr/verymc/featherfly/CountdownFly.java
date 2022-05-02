@@ -49,53 +49,82 @@ public class CountdownFly implements Listener {
                 if (player.isOnline()) {
                     int timeLeft = skyblockUser.getFlyLeft();
 
-                    if (!skyblockUser.isActive()) {
-                        break;
-                    }
-
                     if (timeLeft - 1 != -1 && timeLeft > 0) {
 
                         if (!player.getWorld().getName().equalsIgnoreCase("world")) {
                             timeLeft -= 1;
-                        }
 
-                        if (player.getAllowFlight() == false && !player.getWorld().getName().equalsIgnoreCase("world")) {
-                            player.setAllowFlight(true);
-                        }
+                            if (player.getAllowFlight() == false && !player.getWorld().getName().equalsIgnoreCase("world")) {
+                                player.setAllowFlight(true);
+                            }
 
-                        int timeforconv = timeLeft;
-                        int nHours = (timeforconv % 86400) / 3600;
-                        int nMin = ((timeforconv % 86400) % 3600) / 60;
-                        int nSec = (((timeforconv % 86400) % 3600) % 60);
+                            int timeforconv = timeLeft;
+                            int nHours = (timeforconv % 86400) / 3600;
+                            int nMin = ((timeforconv % 86400) % 3600) / 60;
+                            int nSec = (((timeforconv % 86400) % 3600) % 60);
 
-                        String nhoursnew;
-                        String nminnew;
-                        String nsecnew;
-                        if (nHours <= 9) {
-                            nhoursnew = "0" + nHours;
+                            String nhoursnew;
+                            String nminnew;
+                            String nsecnew;
+                            if (nHours <= 9) {
+                                nhoursnew = "0" + nHours;
+                            } else {
+                                nhoursnew = "" + nHours;
+                            }
+                            if (nMin <= 9) {
+                                nminnew = "0" + nMin;
+                            } else {
+                                nminnew = "" + nMin;
+                            }
+                            if (nSec <= 9) {
+                                nsecnew = "0" + nSec;
+                            } else {
+                                nsecnew = "" + nSec;
+                            }
+
+                            String messagetimeleft = "§aFly restant: " + nhoursnew + ":" + nminnew + ":" + nsecnew;
+                            skyblockUser.setFlyLeft(timeLeft);
+                            player.sendActionBar(messagetimeleft);
                         } else {
-                            nhoursnew = "" + nHours;
-                        }
-                        if (nMin <= 9) {
-                            nminnew = "0" + nMin;
-                        } else {
-                            nminnew = "" + nMin;
-                        }
-                        if (nSec <= 9) {
-                            nsecnew = "0" + nSec;
-                        } else {
-                            nsecnew = "" + nSec;
-                        }
+                            int timeforconv = timeLeft;
+                            int nHours = (timeforconv % 86400) / 3600;
+                            int nMin = ((timeforconv % 86400) % 3600) / 60;
+                            int nSec = (((timeforconv % 86400) % 3600) % 60);
 
-                        String messagetimeleft = "§aFly restant: " + nhoursnew + ":" + nminnew + ":" + nsecnew;
-                        skyblockUser.setFlyLeft(timeLeft);
-                        player.sendActionBar(messagetimeleft);
+                            String nhoursnew;
+                            String nminnew;
+                            String nsecnew;
+                            if (nHours <= 9) {
+                                nhoursnew = "0" + nHours;
+                            } else {
+                                nhoursnew = "" + nHours;
+                            }
+                            if (nMin <= 9) {
+                                nminnew = "0" + nMin;
+                            } else {
+                                nminnew = "" + nMin;
+                            }
+                            if (nSec <= 9) {
+                                nsecnew = "0" + nSec;
+                            } else {
+                                nsecnew = "" + nSec;
+                            }
+
+                            String messagetimeleft = "§aFly restant: " + nhoursnew + ":" + nminnew + ":" + nsecnew;
+                            skyblockUser.setFlyLeft(timeLeft);
+                            player.sendActionBar(messagetimeleft);
+                            skyblockUser.setActive(true);
+                            continue;
+                        }
 
                     } else {
-                        player.setAllowFlight(false);
-                        player.setFlying(false);
-                        player.sendActionBar("§6Fin du fly.");
-                        skyblockUser.setFlyLeft(0);
+                        if (skyblockUser.isActive()) {
+                            skyblockUser.setActive(false);
+                            player.setAllowFlight(false);
+                            player.setFlying(false);
+                            player.sendActionBar("§6Fin du fly.");
+                            skyblockUser.setFlyLeft(0);
+                        }
                     }
                 }
             }

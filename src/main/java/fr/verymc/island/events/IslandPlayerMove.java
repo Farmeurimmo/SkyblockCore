@@ -1,6 +1,7 @@
 package main.java.fr.verymc.island.events;
 
 import main.java.fr.verymc.cmd.base.SpawnCmd;
+import main.java.fr.verymc.island.Island;
 import main.java.fr.verymc.island.IslandManager;
 import main.java.fr.verymc.utils.PlayerUtils;
 import org.bukkit.event.EventHandler;
@@ -12,8 +13,13 @@ public class IslandPlayerMove implements Listener {
 
     @EventHandler
     public void playerTeleport(PlayerTeleportEvent e) {
-        if (IslandManager.instance.isAnIslandByLoc(e.getTo())) {
-            if (!IslandManager.instance.getIslandByLoc(e.getTo()).getMembers().containsKey(e.getPlayer().getUniqueId())) {
+        Island island = IslandManager.instance.getIslandByLoc(e.getTo());
+        if (island != null) {
+            if (!island.getMembers().containsKey(e.getPlayer().getUniqueId())) {
+                if (IslandManager.instance.bypasser.contains(e.getPlayer().getUniqueId())) {
+                    e.setCancelled(false);
+                    return;
+                }
                 if (!IslandManager.instance.getIslandByLoc(e.getTo()).isPublic()) {
                     e.getPlayer().sendMessage("§6§lIles §8» §cVous n'avez pas accès à cette île car elle privée.");
                     e.setCancelled(true);
@@ -25,8 +31,15 @@ public class IslandPlayerMove implements Listener {
                     return;
                 }
             }
+        }
+    }
+
+    @EventHandler
+    public void playerTeleportNoCancelled(PlayerTeleportEvent e) {
+        if (!e.isCancelled()) {
             IslandManager.instance.setWorldBorder(e.getPlayer(), e.getTo());
         }
+
     }
 
     @EventHandler
