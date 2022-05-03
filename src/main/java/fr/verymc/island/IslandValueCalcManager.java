@@ -22,7 +22,7 @@ public class IslandValueCalcManager {
 
     public void makeCountForAllIsland() {
         CompletableFuture.runAsync(() -> {
-            final ArrayList<Material> keys = new ArrayList<>(IslandBlockValues.instance.getMaterials());
+            final ArrayList<Material> keys = new ArrayList<>(IslandBlocsValues.instance.getMaterials());
             Long startmills = System.currentTimeMillis();
 
             for (Island island : IslandManager.instance.islands) {
@@ -55,7 +55,7 @@ public class IslandValueCalcManager {
                     }
                     for (Material material : keys) {
                         if (blocks.containsKey(material)) {
-                            value += blocks.get(material) * IslandBlockValues.instance.getBlockValue(material);
+                            value += blocks.get(material) * IslandBlocsValues.instance.getBlockValue(material);
                         }
                     }
 

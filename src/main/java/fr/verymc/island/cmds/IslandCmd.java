@@ -71,6 +71,12 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
                     } else if (args[0].equalsIgnoreCase("top")) {
                         IslandTopGui.instance.openTopIslandMenu(p);
                         return true;
+                    } else if (args[0].equalsIgnoreCase("blocvalues")) {
+                        IslandBlocsValueGui.instance.openBlocsValueGui(p);
+                        return true;
+                    } else if (args[0].equalsIgnoreCase("settings")) {
+                        IslandSettingsGui.instance.openIslandSettingsGui(p);
+                        return true;
                     }
                     if (IslandManager.instance.getPlayerIsland(p) == null) {
                         p.sendMessage("§6§lIles §8» §fTu n'es pas dans une île !");
@@ -418,7 +424,7 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
             if (args.length == 1) {
                 subcmd.addAll(Arrays.asList("go", "home", "invite", "accept", "kick", "promote", "demote", "sethome", "upgrade", "bank",
                         "border", "bordure", "leave", "delete", "top", "coop", "uncoop", "chat", "public", "private", "bypass", "spy",
-                        "transfer", "ban", "unban", "expel", "cancelinvites", "rename"));
+                        "transfer", "ban", "unban", "expel", "cancelinvites", "rename", "settings", "blocvalues"));
             } else {
                 if (IslandManager.instance.asAnIsland((Player) sender)) {
                     Island playerIsland = IslandManager.instance.getPlayerIsland((Player) sender);

@@ -14,6 +14,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockFormEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.metadata.FixedMetadataValue;
 
 import java.util.ArrayList;
@@ -114,4 +115,24 @@ public class IslandChallengesListener implements Listener {
             return;
         }
     }
+
+    @EventHandler
+    public void onPickup(PlayerPickupItemEvent e) {
+        Player player = e.getPlayer();
+        Island playerIsland = IslandManager.instance.getPlayerIsland(player);
+        for (IslandChallenge islandChallenge : playerIsland.getChallenges()) {
+            if (islandChallenge.getType() != 1) continue;
+            if (islandChallenge.getToGet().contains(e.getItem().getItemStack().getType())) {
+                islandChallenge.addProgress(1);
+                islandChallenge.getToGet().remove(e.getItem().getItemStack().getType());
+                if (islandChallenge.getToGet().size() == 0) {
+                    islandChallenge.setActive(false);
+                    IslandChallengesGuis.CompleteChallenge(player, islandChallenge);
+                    return;
+                }
+            }
+        }
+    }
+
+
 }

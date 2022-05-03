@@ -3,6 +3,8 @@ package main.java.fr.verymc.blocks;
 import main.java.fr.verymc.Main;
 import main.java.fr.verymc.eco.EcoAccountsManager;
 import main.java.fr.verymc.shopgui.BuyShopItem;
+import main.java.fr.verymc.storage.AsyncConfig;
+import main.java.fr.verymc.storage.ConfigManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -38,8 +40,6 @@ public class ChestManager {
             }
             Inventory ed = ((Chest) e).getBlockInventory();
             if (!((Chest) e).getCustomName().contains("§6SellChest")) {
-
-
                 continue;
             }
             double total = 0;
@@ -117,6 +117,8 @@ public class ChestManager {
                 chests.remove(chest);
                 HashMap<String, Object> toEdit = new HashMap<>();
                 toEdit.put(chest.getId() + "", null);
+                AsyncConfig.instance.setAndSaveAsync(toEdit, ConfigManager.instance.getDataChests(),
+                        ConfigManager.instance.chestsFile);
                 return;
             }
         }

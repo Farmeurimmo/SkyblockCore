@@ -1,7 +1,6 @@
 package main.java.fr.verymc.events;
 
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
+import main.java.fr.verymc.cmd.base.SpawnCmd;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -10,6 +9,7 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.ExplosionPrimeEvent;
 import org.bukkit.event.player.PlayerPortalEvent;
+import org.bukkit.event.weather.LightningStrikeEvent;
 
 
 public class AntiExplo implements Listener {
@@ -22,6 +22,14 @@ public class AntiExplo implements Listener {
     }
 
     @EventHandler
+    public void lightning(LightningStrikeEvent e) {
+        if (e.getLightning().getLocation().getWorld().getName().equalsIgnoreCase("world")) {
+            e.setCancelled(true);
+            return;
+        }
+    }
+
+    @EventHandler
     public void Explo1(EntityExplodeEvent e) {
         if (e.getLocation().getWorld().getName().equalsIgnoreCase("world")) {
             e.setCancelled(true);
@@ -29,15 +37,22 @@ public class AntiExplo implements Listener {
     }
 
     @EventHandler
-    public void OnDmage(EntityDamageEvent e) {
-        if (e.getEntity().getWorld().getName().equalsIgnoreCase("world") && e.getEntity() instanceof Player) {
-            e.setCancelled(true);
-        }
-        if (e.getEntity().getLocation().getY() < 10 && e.getEntity().getWorld().getName().equalsIgnoreCase("world") && e.getEntity() instanceof Player) {
-            final Location Spawn = new Location(Bukkit.getServer().getWorld("world"), -186.5, 110, -63.5, 0, 0);
-            if (e.getEntity() instanceof Player) {
-                Player player = (Player) e.getEntity();
-                player.teleport(Spawn);
+    public void OnDamage(EntityDamageEvent e) {
+        if (e.getEntity() instanceof Player) {
+            if (e.getEntity().getWorld().getName().equalsIgnoreCase("world")) {
+                e.setCancelled(true);
+                if (e.getEntity().getLocation().getY() < -1) {
+                    Player player = (Player) e.getEntity();
+                    player.teleport(SpawnCmd.Spawn);
+                }
+                return;
+            }
+            Player player = (Player) e.getEntity();
+            if (!e.isCancelled() && player.getHealth() < e.getFinalDamage()) {
+                e.setCancelled(true);
+                player.teleport(SpawnCmd.Spawn);
+                player.sendMessage("§6§lIles §8» §cTu es mort, tu as donc été téléporté au spawn.");
+                return;
             }
         }
     }

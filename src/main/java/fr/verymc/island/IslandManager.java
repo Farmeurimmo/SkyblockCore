@@ -45,7 +45,7 @@ public class IslandManager {
 
     public static IslandManager instance;
     public static int distanceBetweenIslands = 400;
-    public static IslandBlockValues islandBockValues;
+    public IslandBlocsValues islandBockValues;
     public World mainWorld;
     public ArrayList<Island> islands = new ArrayList<>();
     public ArrayList<UUID> bypasser = new ArrayList<>();
@@ -74,13 +74,15 @@ public class IslandManager {
         new IslandTopGui();
         new IslandRankEditGui();
         new IslandCoopGui();
-        HashMap<Material, Double> blocks = new HashMap<>();
+        new IslandSettingsGui();
+        new IslandBlocsValueGui();
+        LinkedHashMap<Material, Double> blocks = new LinkedHashMap<>();
         blocks.put(Material.IRON_BLOCK, 10.0);
         blocks.put(Material.GOLD_BLOCK, 20.0);
         blocks.put(Material.DIAMOND_BLOCK, 50.0);
         blocks.put(Material.EMERALD_BLOCK, 100.0);
         blocks.put(Material.NETHERITE_BLOCK, 250.0);
-        islandBockValues = new IslandBlockValues(blocks);
+        islandBockValues = new IslandBlocsValues(blocks);
         new IslandValueCalcManager();
     }
 
@@ -560,7 +562,7 @@ public class IslandManager {
                                 home.setYaw(130);
                                 islands.add(new Island("Ile de " + p.getName(), home, finalToReturn1, finalId + 1, members,
                                         islandUpgradeSize, islandUpgradeMember, WorldBorderUtil.Color.BLUE, islandBank, islandUpgradeGenerator, banneds, challenges,
-                                        true, null, true, 0.0));
+                                        true, null, true, 0.0, null));
                                 p.sendMessage("§6§lIles §8» §aVous avez généré une nouvelle île avec succès (en " + (System.currentTimeMillis() - start) + "ms).");
                                 teleportPlayerToIslandSafe(p);
                                 return;

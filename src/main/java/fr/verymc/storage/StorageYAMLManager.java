@@ -9,6 +9,7 @@ import main.java.fr.verymc.island.bank.IslandBank;
 import main.java.fr.verymc.island.challenges.IslandChallenge;
 import main.java.fr.verymc.island.perms.IslandPerms;
 import main.java.fr.verymc.island.perms.IslandRanks;
+import main.java.fr.verymc.island.protections.IslandSettings;
 import main.java.fr.verymc.island.upgrade.IslandUpgradeGenerator;
 import main.java.fr.verymc.island.upgrade.IslandUpgradeMember;
 import main.java.fr.verymc.island.upgrade.IslandUpgradeSize;
@@ -147,6 +148,17 @@ public class StorageYAMLManager {
                         }
                     }
 
+                    ArrayList<IslandSettings> settings = new ArrayList<>();
+                    if (ConfigManager.instance.getDataIslands().getString(str + ".settings") != null) {
+                        for (String par : ConfigManager.instance.getDataIslands().getString(str + ".settings").split(",")) {
+                            if (par == null) continue;
+                            if (par.length() < 4) continue;
+                            settings.add(IslandSettings.valueOf(par));
+                        }
+                    } else {
+                        settings = null;
+                    }
+
                     ArrayList<IslandChallenge> list = new ArrayList<>();
                     if (ConfigManager.instance.getDataIslands().contains(str + ".c")) {
                         for (String part : ConfigManager.instance.getDataIslands().getConfigurationSection(str + ".c").getKeys(false)) {
@@ -191,7 +203,7 @@ public class StorageYAMLManager {
 
                     islands.add(new Island(name, home, center, id, members, islandUpgradeSize, islandUpgradeMember,
                             color, islandBank, islandUpgradeGenerator, banneds, list, false,
-                            permsPerRanks, isPublic, value));
+                            permsPerRanks, isPublic, value, settings));
                 } catch (Exception e) {
                     e.printStackTrace();
                     continue;
@@ -347,6 +359,8 @@ public class StorageYAMLManager {
                     toSendIsland.put(island.getId() + ".isPublic", island.isPublic());
                     toSendIsland.put(island.getId() + ".upgradeGeneratorLevel", island.getGeneratorUpgrade().getLevel());
                     toSendIsland.put(island.getId() + ".banneds", island.getBanneds().toString().
+                            replace("[", "").replace("]", "").replace(" ", ""));
+                    toSendIsland.put(island.getId() + ".settings", island.getActivatedSettings().toString().
                             replace("[", "").replace("]", "").replace(" ", ""));
                     for (IslandChallenge islandChallenge : island.getChallenges()) {
                         toSendIsland.put(island.getId() + ".c." + islandChallenge.getId() + ".prog", islandChallenge.getProgress());

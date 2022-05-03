@@ -25,7 +25,6 @@ import java.util.concurrent.TimeUnit;
 public class ScoreBoard implements Listener {
 
     public static ScoreBoard acces;
-    static String Grade = "";
     public int cPassed = 0;
 
     public ScoreBoard() {
@@ -37,11 +36,6 @@ public class ScoreBoard implements Listener {
         Objective obj = board.registerNewObjective("VeryMc", "dummy");
         obj.setDisplaySlot(DisplaySlot.SIDEBAR);
         obj.setDisplayName("§6VeryMc");
-
-        User user = LuckPermsProvider.get().getUserManager().getUser(player.getUniqueId());
-        if (user.getCachedData().getMetaData().getPrefix() != null) {
-            Grade = user.getCachedData().getMetaData().getPrefix().replace("&", "§");
-        }
 
         obj.getScore("§6play.verymc.fr").setScore(1);
         obj.getScore("§g").setScore(15);
@@ -111,7 +105,7 @@ public class ScoreBoard implements Listener {
             for (Player player : Bukkit.getOnlinePlayers()) {
                 Scoreboard board = player.getScoreboard();
 
-                Grade = "§fN/A";
+                String Grade;
                 User user = LuckPermsProvider.get().getUserManager().getUser(player.getUniqueId());
                 if (user.getCachedData().getMetaData().getPrefix() != null) {
                     Grade = user.getCachedData().getMetaData().getPrefix().replace("&", "§");
