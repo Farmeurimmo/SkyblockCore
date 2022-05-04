@@ -2,7 +2,6 @@ package main.java.fr.verymc.island.protections;
 
 import main.java.fr.verymc.island.Island;
 import main.java.fr.verymc.island.IslandManager;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -23,8 +22,12 @@ public class EntityListener implements Listener {
             return;
         }
     }
+
     @EventHandler
     public void creatureSpawn(CreatureSpawnEvent e) {
+        if (e.getEntityType() == EntityType.ARMOR_STAND) {
+            return;
+        }
         Island island = IslandManager.instance.getIslandByLoc(e.getLocation());
         if (island != null) {
             if (!island.hasSettingActivated(IslandSettings.MOB_SPAWNING)) {

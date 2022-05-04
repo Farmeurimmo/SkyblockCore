@@ -120,6 +120,9 @@ public class IslandChallengesListener implements Listener {
     public void onPickup(PlayerPickupItemEvent e) {
         Player player = e.getPlayer();
         Island playerIsland = IslandManager.instance.getPlayerIsland(player);
+        if (playerIsland == null) {
+            return;
+        }
         for (IslandChallenge islandChallenge : playerIsland.getChallenges()) {
             if (islandChallenge.getType() != 1) continue;
             if (islandChallenge.getToGet().contains(e.getItem().getItemStack().getType())) {

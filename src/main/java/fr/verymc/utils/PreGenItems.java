@@ -7,6 +7,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 
@@ -32,6 +33,7 @@ public class PreGenItems {
         return custom10;
     }
 
+    @NotNull
     public ItemStack getHead(Player player) {
         ItemStack custom10 = new ItemStack(Material.PLAYER_HEAD, 1);
         SkullMeta customi = (SkullMeta) custom10.getItemMeta();

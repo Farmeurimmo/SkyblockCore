@@ -35,7 +35,7 @@ public class LegCrateManager {
         }
         if (n >= 16 && n <= 20) {
             loot = "x1 Epée légendaire";
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "itemleg give " + player.getName() + " §p§e");
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "itemleg give " + player.getName() + " épée");
             return loot;
         }
         if (n >= 21 && n <= 31) {
@@ -44,9 +44,9 @@ public class LegCrateManager {
             return loot;
         }
         if (n >= 32 && n <= 33) {
-            if (!player.hasPermission("legende")) {
+            if (!player.hasPermission("group.legende")) {
                 loot = "Grade §eLégende";
-                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + player.getName() + " parent set legende server=skyblock");
+                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lpv user " + player.getName() + " parent add legende server=skyblock");
             } else {
                 loot = "reroll";
             }

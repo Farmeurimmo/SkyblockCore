@@ -110,7 +110,7 @@ public class CratesManager implements Listener {
                             }
                         } else {
                             player.sendMessage("§6§lCrates §8» §fVous avez reçu un grade que vous possèdez "
-                                    + "déjà dans la boxe légendaire, la Clée ne vous a donc pas été enlev§ !");
+                                    + "déjà dans la boxe légendaire, la Clée ne vous a donc pas été enlevé !");
                             return;
                         }
                     }

@@ -89,6 +89,49 @@ public class MinionsCmd implements CommandExecutor {
             }
 
         }
+        if (args[1].equalsIgnoreCase("repopnearest")) {
+            for (Minion minion : MinionManager.instance.minions) {
+                if (minion.getBlocLocation().getBlock().equals(ptarget.getLocation().getBlock())) {
+                    final ArmorStand stand = (ArmorStand) minion.getBlocLocation().getWorld().spawnEntity(minion.getBlocLocation(), EntityType.ARMOR_STAND);
+                    final EntityEquipment equipment = stand.getEquipment();
+                    stand.setMetadata("minion", new FixedMetadataValue(Main.instance, true));
+                    stand.setVisible(true);
+                    stand.setCustomName("§eMinion " + minion.getMinionType());
+                    stand.setCustomNameVisible(true);
+                    stand.setGravity(false);
+                    stand.setArms(true);
+                    stand.setSmall(true);
+                    stand.setBasePlate(false);
+                    stand.setInvulnerable(true);
+                    final ItemStack chestPlate = new ItemStack(Material.LEATHER_CHESTPLATE, 1);
+                    final LeatherArmorMeta lam3 = (LeatherArmorMeta) chestPlate.getItemMeta();
+                    lam3.setColor(Color.fromRGB(249, 128, 29));
+                    chestPlate.setItemMeta(lam3);
+                    equipment.setChestplate(chestPlate);
+                    final ItemStack pants = new ItemStack(Material.LEATHER_LEGGINGS, 1);
+                    final LeatherArmorMeta lam4 = (LeatherArmorMeta) pants.getItemMeta();
+                    lam4.setColor(Color.fromRGB(249, 128, 29));
+                    pants.setItemMeta(lam4);
+                    equipment.setLeggings(pants);
+                    final ItemStack boots = new ItemStack(Material.LEATHER_BOOTS, 1);
+                    final LeatherArmorMeta lam5 = (LeatherArmorMeta) boots.getItemMeta();
+                    lam5.setColor(Color.fromRGB(249, 128, 29));
+                    boots.setItemMeta(lam5);
+                    equipment.setBoots(boots);
+                    equipment.setItemInMainHand(new ItemStack(Material.DIAMOND_PICKAXE));
+
+                    equipment.setHelmet(PreGenItems.instance.getHead(ptarget));
+
+                    stand.setRightLegPose(new EulerAngle(0.0, 0.0, -50.0));
+                    stand.setLeftLegPose(new EulerAngle(0.0, 0.0, 50.0));
+                    stand.setRightArmPose(new EulerAngle(206.0, 0.0, 0.0));
+
+                    ptarget.sendMessage("§6§lMinions §8» §aRepoped nearest minion, loc: " + minion.getBlocLocation().getX() + " " + minion.getBlocLocation().getY() + " " + minion.getBlocLocation().getZ());
+                    break;
+                }
+            }
+            return true;
+        }
 
         sender.sendMessage("Minions disponibles: Piocheur");
 

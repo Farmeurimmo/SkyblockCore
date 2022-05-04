@@ -215,6 +215,7 @@ public class Main extends JavaPlugin implements Listener {
         }
         for (Island island : IslandManager.instance.islands) {
             island.toggleTimeAndWeather();
+            island.setBorderColor(island.getBorderColor());
         }
         ScoreBoard.acces.updateScoreBoard();
 

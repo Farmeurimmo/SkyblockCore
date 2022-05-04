@@ -21,6 +21,58 @@ public class IslandValueCalcManager {
     }
 
     public void makeCountForAllIsland() {
+        /*CompletableFuture.runAsync(() -> {
+            Long startMillis = System.currentTimeMillis();
+            HashMap<Material, Double> materialDoubleHashMap = IslandBlocsValues.instance.getBlockValues();
+
+            Bukkit.broadcastMessage("§6§lIles §8» §fRecalcul de toutes les îles lancé. Cette opération peut prendre plusieurs minutes" +
+                    " mais n'affectera pas votre expérience de jeu.");
+
+            for (Island island : IslandManager.instance.islands) {
+
+                CompletableFuture.runAsync(() -> {
+
+                    final World world = IslandManager.instance.getMainWorld();
+                    final int minx = island.getCenter().getBlockX() - island.getSizeUpgrade().getSize();
+                    final int minz = island.getCenter().getBlockZ() - island.getSizeUpgrade().getSize();
+                    final int maxx = island.getCenter().getBlockX() + island.getSizeUpgrade().getSize();
+                    final int maxz = island.getCenter().getBlockZ() + island.getSizeUpgrade().getSize();
+
+                    AtomicDouble total = new AtomicDouble(0);
+                    AtomicInteger totalThreads = new AtomicInteger();
+                    for (int x = minx; x <= maxx; x++) {
+                        int finalX = x;
+                        Bukkit.broadcastMessage("x : " + x);
+                            for (int z = minz; z < maxz; z++) {
+                                for (int y = 0; y <= world.getHighestBlockAt(finalX, z).getY(); y++) {
+                                    final Block block = world.getBlockAt(finalX, y, z);
+                                    if (block.getType() == Material.AIR) {
+                                        continue;
+                                    }
+                                    if (materialDoubleHashMap.containsKey(block.getType())) {
+                                        total.getAndAdd(materialDoubleHashMap.get(block.getType()));
+                                        continue;
+                                    }
+                                }
+                            }
+                    }
+                    CompletableFuture.runAsync(() -> {
+                        while (totalThreads.get() < maxx - minx) {
+                            try {
+                                Bukkit.broadcastMessage("Waiting for the island " + island.getName() + " to be calculated | current:" + totalThreads.get() + " | max:" + (maxx - minx));
+                                Thread.sleep(5000);
+                            } catch (InterruptedException e) {}
+                        }
+                            }).join();
+
+                    IslandManager.instance.getIslandByLoc(island.getCenter()).setValue(total.doubleValue());
+                    Long elapsed = (System.currentTimeMillis() - startMillis);
+
+                    IslandManager.instance.getIslandByLoc(island.getCenter()).sendMessageToEveryMember("§6§lIles §8» §fRecalcul de votre île terminé. (en " + elapsed + " ms)");
+                }).join();
+            }
+        });
+    }*/
         CompletableFuture.runAsync(() -> {
             final ArrayList<Material> keys = new ArrayList<>(IslandBlocsValues.instance.getMaterials());
             Long startmills = System.currentTimeMillis();

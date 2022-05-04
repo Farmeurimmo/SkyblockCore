@@ -6,6 +6,10 @@
     <version>0.1.0-SNAPSHOT</version>
     <name>SkyblockCore VeryMc</name>
     <description>Farmeurimmo has all right reserved</description>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    </properties>
     <repositories>
         <repository>
             <id>net.luckperms</id>

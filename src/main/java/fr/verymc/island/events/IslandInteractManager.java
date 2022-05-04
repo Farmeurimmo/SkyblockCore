@@ -21,9 +21,7 @@ public class IslandInteractManager implements Listener {
         Player player = e.getPlayer();
 
         if (e.getItem() == null) return;
-        if (e.getItem().getType() == null) return;
         if (e.getItem().getItemMeta() == null) return;
-        if (e.getItem().getItemMeta().getDisplayName() == null) return;
         if (e.getItem().getLore() == null) return;
 
         ItemStack currentItem = e.getItem();
