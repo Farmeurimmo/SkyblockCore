@@ -95,7 +95,7 @@ public class IslandValueCalcManager {
                             if (world.getBlockAt(x, 0, z).getLightFromSky() == 15) {
                                 continue;
                             }
-                            for (int y = 0; y < world.getHighestBlockYAt(x, z); y++) {
+                            for (int y = 0; y <= world.getHighestBlockYAt(x, z); y++) {
                                 final Block block = world.getBlockAt(x, y, z);
                                 if (blocks.containsKey(block.getType())) {
                                     blocks.put(block.getType(), blocks.get(block.getType()) + 1);
