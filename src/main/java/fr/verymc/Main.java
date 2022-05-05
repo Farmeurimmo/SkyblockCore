@@ -297,13 +297,14 @@ public class Main extends JavaPlugin implements Listener {
         getServer().getPluginManager().registerEvents(new IslandPlayerMove(), this);
         getServer().getPluginManager().registerEvents(new IslandGeneratorForm(), this);
         getServer().getPluginManager().registerEvents(new PlayerWarpGuiManager(), this);
-<<<<<<< HEAD
         getServer().getPluginManager().registerEvents(new EntityListener(), this);
         getServer().getPluginManager().registerEvents(new BlockListener(), this);
-=======
         getServer().getPluginManager().registerEvents(new TradeGui(), this);
         getServer().getPluginManager().registerEvents(new MoneyTradeGui(), this);
->>>>>>> TradeCmd
+        getServer().getPluginManager().registerEvents(new TradeGui(), this);
+        getServer().getPluginManager().registerEvents(new MoneyTradeGui(), this);
+        getServer().getPluginManager().registerEvents(new EntityListener(), this);
+        getServer().getPluginManager().registerEvents(new BlockListener(), this);
         PluginManager pm = getServer().getPluginManager();
         pm.registerEvents(this, this);
     }
@@ -355,14 +356,11 @@ public class Main extends JavaPlugin implements Listener {
         this.getCommand("is").setExecutor(new IslandCmd());
         this.getCommand("invest").setExecutor(new InvestCmd());
         this.getCommand("playerwarp").setExecutor(new PlayerWarpCmd());
-<<<<<<< HEAD
         this.getCommand("claim").setExecutor(new ClaimCmd());
-=======
         this.getCommand("trade").setExecutor(new TradeCmd());
         this.getCommand("tradeyes").setExecutor(new TradeYesCmd());
         this.getCommand("tradeno").setExecutor(new TradeNoCmd());
         this.getCommand("tradecancel").setExecutor(new TradeCancelCmd());
->>>>>>> TradeCmd
     }
 
 }
