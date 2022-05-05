@@ -42,7 +42,7 @@ public class IslandBankGui {
         ItemMeta meta2 = custom2.getItemMeta();
         meta2.setDisplayName("§6Crystaux");
         meta2.setLore(Arrays.asList("§7Crystaux en banque: §6" + DecimalFormat.getNumberInstance().format(playerIsland.getBank().getCrystaux()),
-                "§7Clic gauche pour retirer", "§7Clic droit pour ajouter"));
+                "§7Clic gauche pour retirer", "§7Clic droit avec des cystaux dans la main pour ajouter"));
         custom2.setItemMeta(meta2);
         inv.setItem(13, custom2);
 

@@ -49,6 +49,7 @@ public class FeedCmd implements CommandExecutor, TabCompleter {
         }
         if (!cooldowns.containsKey(player.getUniqueId())) {
             player.setFoodLevel(20);
+            player.setSaturation(14.4F);
             player.sendActionBar("§aVous avez été rassasié.");
             int timeLeft = getCooldown(player.getUniqueId());
             if (timeLeft == 0) {

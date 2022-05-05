@@ -153,11 +153,12 @@ public class MinionsListener implements Listener {
             }
             int plcount = 0;
             for (Minion minion : MinionManager.instance.minions) {
-                if (minion.getOwnerUUID() == e.getPlayer().getUniqueId()) {
+                if (minion.getOwnerUUID().equals(e.getPlayer().getUniqueId())) {
                     plcount += 1;
                 }
             }
             if (plcount >= 3) {
+                e.getPlayer().sendMessage("§6§lMinions §8» §fVous ne pouvez pas poser plus de 3 minions.");
                 return;
             }
             for (Minion minions : MinionManager.instance.minions) {

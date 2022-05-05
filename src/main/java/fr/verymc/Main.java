@@ -28,6 +28,7 @@ import main.java.fr.verymc.gui.*;
 import main.java.fr.verymc.holos.HolosSetup;
 import main.java.fr.verymc.invest.InvestCmd;
 import main.java.fr.verymc.invest.InvestManager;
+import main.java.fr.verymc.island.Island;
 import main.java.fr.verymc.island.IslandManager;
 import main.java.fr.verymc.island.challenges.ChallengesCmd;
 import main.java.fr.verymc.island.challenges.IslandChallengesGuis;
@@ -38,6 +39,8 @@ import main.java.fr.verymc.island.events.IslandGeneratorForm;
 import main.java.fr.verymc.island.events.IslandInteractManager;
 import main.java.fr.verymc.island.events.IslandPlayerMove;
 import main.java.fr.verymc.island.guis.IslandGuiManager;
+import main.java.fr.verymc.island.protections.BlockListener;
+import main.java.fr.verymc.island.protections.EntityListener;
 import main.java.fr.verymc.items.FarmHoeCmd;
 import main.java.fr.verymc.items.FarmHoeGui;
 import main.java.fr.verymc.items.FarmHoeManager;
@@ -203,6 +206,12 @@ public class Main extends JavaPlugin implements Listener {
         GenAmoutShopGui.GenAmoutShopGuiStartup();
         GenMultiStacksBuyGui.GenMultiShopGuiStartup();
 
+        System.out.println("Initialization of locations, holos, npc, crates...");
+        WineSpawn.SpawnPnj(new Location(Bukkit.getServer().getWorld("world"), -184.5, 70.5, -77.5, -90, 0));
+        HolosSetup.SpawnPnj2(new Location(Bukkit.getServer().getWorld("world"), -155.5, 71, -60.5, 90, 0),
+                new Location(Bukkit.getServer().getWorld("world"), -172.5, 71, -64.5, 90, 0));
+        HolosSetup.SpawnCrates();
+        CratesManager.SpawnCrates();
 
         System.out.println("Starting loops...");
         ChatReaction.StartChatReaction();
@@ -213,22 +222,18 @@ public class Main extends JavaPlugin implements Listener {
         new InvestManager();
         new PlayerWarpManager();
         new EventManager();
-        ScoreBoard.acces.updateScoreBoard();
-
-        System.out.println("Initialization of locations, holos, npc, crates...");
-        WineSpawn.SpawnPnj(new Location(Bukkit.getServer().getWorld("world"), -184.5, 70.5, -77.5, -90, 0));
-        HolosSetup.SpawnPnj2(new Location(Bukkit.getServer().getWorld("world"), -155.5, 71, -60.5, 90, 0),
-                new Location(Bukkit.getServer().getWorld("world"), -172.5, 71, -64.5, 90, 0));
-        HolosSetup.SpawnCrates();
-        CratesManager.SpawnCrates();
-
-        System.out.println("§aDémarrage du plugin TERMINE!");
-        System.out.println("-----------------------------------------------------------------------------------------------------");
-
         for (Player player : Bukkit.getOnlinePlayers()) {
             SkyblockUserManager.instance.checkForAccount(player);
             ScoreBoard.acces.setScoreBoard(player);
         }
+        for (Island island : IslandManager.instance.islands) {
+            island.toggleTimeAndWeather();
+            island.setBorderColor(island.getBorderColor());
+        }
+        ScoreBoard.acces.updateScoreBoard();
+
+        System.out.println("§aDémarrage du plugin TERMINE!");
+        System.out.println("-----------------------------------------------------------------------------------------------------");
     }
 
     @Override
@@ -294,6 +299,8 @@ public class Main extends JavaPlugin implements Listener {
         getServer().getPluginManager().registerEvents(new PlayerWarpGuiManager(), this);
         getServer().getPluginManager().registerEvents(new TradeGui(), this);
         getServer().getPluginManager().registerEvents(new MoneyTradeGui(), this);
+        getServer().getPluginManager().registerEvents(new EntityListener(), this);
+        getServer().getPluginManager().registerEvents(new BlockListener(), this);
         PluginManager pm = getServer().getPluginManager();
         pm.registerEvents(this, this);
     }

@@ -4,13 +4,14 @@ import org.bukkit.Material;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
-public class IslandBlockValues {
+public class IslandBlocsValues {
 
-    public static IslandBlockValues instance;
-    private HashMap<Material, Double> blockValues;
+    public static IslandBlocsValues instance;
+    private LinkedHashMap<Material, Double> blockValues;
 
-    public IslandBlockValues(HashMap<Material, Double> blockValues) {
+    public IslandBlocsValues(LinkedHashMap<Material, Double> blockValues) {
         this.blockValues = blockValues;
         instance = this;
     }
@@ -23,7 +24,7 @@ public class IslandBlockValues {
         return blockValues;
     }
 
-    public void setBlockValues(HashMap<Material, Double> blockValues) {
+    public void setBlockValues(LinkedHashMap<Material, Double> blockValues) {
         this.blockValues = blockValues;
     }
 

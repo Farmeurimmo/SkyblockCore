@@ -1,7 +1,7 @@
 package main.java.fr.verymc.island.events;
 
 import main.java.fr.verymc.island.Island;
-import main.java.fr.verymc.island.IslandBlockValues;
+import main.java.fr.verymc.island.IslandBlocsValues;
 import main.java.fr.verymc.island.IslandManager;
 import main.java.fr.verymc.island.perms.IslandPerms;
 import org.bukkit.Material;
@@ -21,9 +21,7 @@ public class IslandInteractManager implements Listener {
         Player player = e.getPlayer();
 
         if (e.getItem() == null) return;
-        if (e.getItem().getType() == null) return;
         if (e.getItem().getItemMeta() == null) return;
-        if (e.getItem().getItemMeta().getDisplayName() == null) return;
         if (e.getItem().getLore() == null) return;
 
         ItemStack currentItem = e.getItem();
@@ -51,8 +49,8 @@ public class IslandInteractManager implements Listener {
         Island island = IslandManager.instance.getIslandByLoc(e.getBlock().getLocation());
         if (island != null) {
             if (island.hasPerms(island.getIslandRankFromUUID(player.getUniqueId()), IslandPerms.BREAK, player)) {
-                if (IslandBlockValues.instance.hasBlockValue(e.getBlock().getType())) {
-                    island.removeValue(IslandBlockValues.instance.getBlockValue(e.getBlock().getType()));
+                if (IslandBlocsValues.instance.hasBlockValue(e.getBlock().getType())) {
+                    island.removeValue(IslandBlocsValues.instance.getBlockValue(e.getBlock().getType()));
                 }
                 return;
             }
@@ -66,8 +64,8 @@ public class IslandInteractManager implements Listener {
         Island island = IslandManager.instance.getIslandByLoc(e.getBlock().getLocation());
         if (island != null) {
             if (island.hasPerms(island.getIslandRankFromUUID(player.getUniqueId()), IslandPerms.BUILD, player)) {
-                if (IslandBlockValues.instance.hasBlockValue(e.getBlock().getType())) {
-                    island.addValue(IslandBlockValues.instance.getBlockValue(e.getBlock().getType()));
+                if (IslandBlocsValues.instance.hasBlockValue(e.getBlock().getType())) {
+                    island.addValue(IslandBlocsValues.instance.getBlockValue(e.getBlock().getType()));
                 }
                 return;
             }

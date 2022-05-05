@@ -3,6 +3,8 @@ package main.java.fr.verymc.blocks;
 import main.java.fr.verymc.Main;
 import main.java.fr.verymc.eco.EcoAccountsManager;
 import main.java.fr.verymc.shopgui.BuyShopItem;
+import main.java.fr.verymc.storage.AsyncConfig;
+import main.java.fr.verymc.storage.ConfigManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -32,36 +34,42 @@ public class ChestManager {
     public void autoSellForVeryChest() {
         HashMap<UUID, Double> reward = new HashMap<>();
         for (main.java.fr.verymc.blocks.Chest chest : chests) {
-            BlockState e = chest.getBlock().getBlock().getState();
-            if (e.getType() != Material.CHEST) {
-                continue;
-            }
-            Inventory ed = ((Chest) e).getBlockInventory();
-            if (!((Chest) e).getCustomName().contains("§6SellChest")) {
-
-
-                continue;
-            }
-            double total = 0;
-            for (ItemStack sd : ed) {
-                if (sd == null) continue;
-                if (sd.getType() == null) continue;
-                ItemStack searched = new ItemStack(sd.getType());
-                searched.setAmount(sd.getAmount());
-                if (BuyShopItem.pricessell.get(new ItemStack(sd.getType())) != null && BuyShopItem.pricessell.get(new ItemStack(sd.getType())) > 0) {
-                    int amount = BuyShopItem.GetAmountInInvNo(searched, ed);
-                    Double price = BuyShopItem.pricessell.get(new ItemStack(sd.getType()));
-                    price = amount * price;
-                    BuyShopItem.removeItems(ed, searched.getType(), amount);
-                    total += price;
+            try {
+                BlockState e = chest.getBlock().getBlock().getState();
+                if (e.getType() != Material.CHEST) {
+                    continue;
                 }
-            }
-            ((Chest) e).getBlockInventory().setContents(ed.getContents());
-            UUID playername = chest.getOwner();
-            if (reward.containsKey(playername)) {
-                reward.put(playername, reward.get(playername) + total);
-            } else {
-                reward.put(playername, total);
+                Inventory ed = ((Chest) e).getBlockInventory();
+                if (((Chest) e).getCustomName() == null) {
+                    continue;
+                }
+                if (!((Chest) e).getCustomName().contains("§6SellChest")) {
+                    continue;
+                }
+                double total = 0;
+                for (ItemStack sd : ed) {
+                    if (sd == null) continue;
+                    if (sd.getType() == null) continue;
+                    ItemStack searched = new ItemStack(sd.getType());
+                    searched.setAmount(sd.getAmount());
+                    if (BuyShopItem.pricessell.get(new ItemStack(sd.getType())) != null && BuyShopItem.pricessell.get(new ItemStack(sd.getType())) > 0) {
+                        int amount = BuyShopItem.GetAmountInInvNo(searched, ed);
+                        Double price = BuyShopItem.pricessell.get(new ItemStack(sd.getType()));
+                        price = amount * price;
+                        BuyShopItem.removeItems(ed, searched.getType(), amount);
+                        total += price;
+                    }
+                }
+                ((Chest) e).getBlockInventory().setContents(ed.getContents());
+                UUID playername = chest.getOwner();
+                if (reward.containsKey(playername)) {
+                    reward.put(playername, reward.get(playername) + total);
+                } else {
+                    reward.put(playername, total);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                continue;
             }
         }
         for (Entry<UUID, Double> tosend : reward.entrySet()) {
@@ -117,6 +125,8 @@ public class ChestManager {
                 chests.remove(chest);
                 HashMap<String, Object> toEdit = new HashMap<>();
                 toEdit.put(chest.getId() + "", null);
+                AsyncConfig.instance.setAndSaveAsync(toEdit, ConfigManager.instance.getDataChests(),
+                        ConfigManager.instance.chestsFile);
                 return;
             }
         }

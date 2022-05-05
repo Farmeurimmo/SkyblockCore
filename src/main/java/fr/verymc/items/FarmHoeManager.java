@@ -1,5 +1,10 @@
 package main.java.fr.verymc.items;
 
+import main.java.fr.verymc.evenement.BlocBreakerContest;
+import main.java.fr.verymc.island.Island;
+import main.java.fr.verymc.island.IslandManager;
+import main.java.fr.verymc.island.challenges.IslandChallenge;
+import main.java.fr.verymc.island.challenges.IslandChallengesGuis;
 import main.java.fr.verymc.shopgui.BuyShopItem;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -148,6 +153,7 @@ public class FarmHoeManager implements Listener {
             e.setCancelled(true);
 
             World world = player.getWorld();
+            int gained = 0;
             for (Block rf : getNearbyBlocks(clicloc, tier)) {
                 if (!replantableblocks.contains(rf.getType().toString())) {
                     continue;
@@ -178,9 +184,45 @@ public class FarmHoeManager implements Listener {
                         world.dropItemNaturally(rf.getLocation(), eed);
                     }
                     ageable.setAge(0);
+                    gained++;
                     bltmp.setBlockData(ageable);
                     bltmp.getState().update(true);
                     AddBlockHaversted(player, farmhoe);
+                    if (BlocBreakerContest.instance.isActive) {
+                        if (bltmp.getType().equals(BlocBreakerContest.instance.material)) {
+                            BlocBreakerContest.instance.addBlock(player.getUniqueId());
+                        }
+                    }
+                    if (!IslandManager.instance.asAnIsland(player)) {
+                        return;
+                    }
+                    Island playerIsland = IslandManager.instance.getPlayerIsland(player);
+                    IslandChallenge challenge = null;
+
+                    for (IslandChallenge c : playerIsland.getChallenges()) {
+                        if (c.getMaterial() == bltmp.getType()) {
+                            challenge = c;
+                            break;
+                        }
+                    }
+                    if (challenge == null) {
+                        continue;
+                    }
+
+                    if (!challenge.isActive()) {
+                        continue;
+                    }
+
+                    challenge.addProgress(1);
+
+                    if (challenge.getProgress() >= challenge.getMaxProgress() * (challenge.getPalier() + 1) * playerIsland.getMembers().size()) {
+                        challenge.setProgress(0);
+                        if (challenge.getPalier() == 4) {
+                            challenge.setActive(false);
+                        }
+                        challenge.setPalier(challenge.getPalier() + 1);
+                        IslandChallengesGuis.CompleteChallenge(player, challenge);
+                    }
                 } else {
                     continue;
                 }

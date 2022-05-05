@@ -68,6 +68,15 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
                             }
                         }
                         return true;
+                    } else if (args[0].equalsIgnoreCase("top")) {
+                        IslandTopGui.instance.openTopIslandMenu(p);
+                        return true;
+                    } else if (args[0].equalsIgnoreCase("blocvalues")) {
+                        IslandBlocsValueGui.instance.openBlocsValueGui(p);
+                        return true;
+                    } else if (args[0].equalsIgnoreCase("settings")) {
+                        IslandSettingsGui.instance.openIslandSettingsGui(p);
+                        return true;
                     }
                     if (IslandManager.instance.getPlayerIsland(p) == null) {
                         p.sendMessage("§6§lIles §8» §fTu n'es pas dans une île !");
@@ -83,7 +92,7 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
                             p.sendMessage("§6§lIles §8» §fTu dois être sur ton île pour définir le home de ton île.");
                             return true;
                         }
-                        if (playerIsland.getPerms(playerIsland.getIslandRankFromUUID(p.getUniqueId())).contains(IslandPerms.SET_HOME)) {
+                        if (playerIsland.hasPerms(playerIsland.getIslandRankFromUUID(p.getUniqueId()), IslandPerms.SET_HOME, p)) {
                             playerIsland.setHome(p.getLocation());
                             p.sendMessage("§6§lIles §8» §fNouveau home d'île définit !");
                         } else {
@@ -113,9 +122,6 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
                         } else {
                             p.sendMessage("§6§lIles §8» §fTu ne peux pas détruire cette île, tu n'es pas le propriétaire.");
                         }
-                        return true;
-                    } else if (args[0].equalsIgnoreCase("top")) {
-                        IslandTopGui.instance.openTopIslandMenu(p);
                         return true;
                     } else if (args[0].equalsIgnoreCase("recalc")) {
                         if (p.hasPermission("*")) {
@@ -338,6 +344,10 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
                         }
                         return true;
                     } else if (args[0].equalsIgnoreCase("rename")) {
+                        if (!p.hasPermission("is.rename")) {
+                            p.sendMessage("§6§lIles §8» §fVous n'avez pas la permission.");
+                            return true;
+                        }
                         Island playerIsland = IslandManager.instance.getPlayerIsland(p);
                         if (playerIsland.hasPerms(playerIsland.getIslandRankFromUUID(p.getUniqueId()), IslandPerms.SET_ISLAND_NAME, p)) {
                             if (args[1].length() >= 4 && args[1].length() <= 32) {
@@ -414,7 +424,7 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
             if (args.length == 1) {
                 subcmd.addAll(Arrays.asList("go", "home", "invite", "accept", "kick", "promote", "demote", "sethome", "upgrade", "bank",
                         "border", "bordure", "leave", "delete", "top", "coop", "uncoop", "chat", "public", "private", "bypass", "spy",
-                        "transfer", "ban", "unban", "expel", "cancelinvites", "rename"));
+                        "transfer", "ban", "unban", "expel", "cancelinvites", "rename", "settings", "blocvalues"));
             } else {
                 if (IslandManager.instance.asAnIsland((Player) sender)) {
                     Island playerIsland = IslandManager.instance.getPlayerIsland((Player) sender);

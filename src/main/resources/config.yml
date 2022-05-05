@@ -363,7 +363,7 @@ Shops:
       sell: 5
     33:
       material: HAY_BLOCK
-      buy: 60
+      buy: 160
       sell: 105
     34:
       material: BEETROOT

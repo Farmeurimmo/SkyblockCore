@@ -9,6 +9,7 @@ import main.java.fr.verymc.island.bank.IslandBank;
 import main.java.fr.verymc.island.challenges.IslandChallenge;
 import main.java.fr.verymc.island.perms.IslandPerms;
 import main.java.fr.verymc.island.perms.IslandRanks;
+import main.java.fr.verymc.island.protections.IslandSettings;
 import main.java.fr.verymc.island.upgrade.IslandUpgradeGenerator;
 import main.java.fr.verymc.island.upgrade.IslandUpgradeMember;
 import main.java.fr.verymc.island.upgrade.IslandUpgradeSize;
@@ -70,7 +71,10 @@ public class StorageYAMLManager {
                     BlockFace blockFace = BlockFace.valueOf(ConfigManager.instance.getDataMinions().getString(str + ".blFace"));
                     int lvl = ConfigManager.instance.getDataMinions().getInt(str + ".lvl");
                     Location loc = ConfigManager.instance.getDataMinions().getLocation(str + ".loc");
-                    Location locChest = ConfigManager.instance.getDataMinions().getLocation(str + ".locChest");
+                    Location locChest = null;
+                    if (ConfigManager.instance.getDataMinions().getLocation(str + ".locChest") != null) {
+                        locChest = ConfigManager.instance.getDataMinions().getLocation(str + ".locChest");
+                    }
                     boolean linked = ConfigManager.instance.getDataMinions().getBoolean(str + ".linked");
                     boolean smelft = ConfigManager.instance.getDataMinions().getBoolean(str + ".smelt");
                     long id = Long.parseLong(str.replace("'", ""));
@@ -144,6 +148,17 @@ public class StorageYAMLManager {
                         }
                     }
 
+                    ArrayList<IslandSettings> settings = new ArrayList<>();
+                    if (ConfigManager.instance.getDataIslands().getString(str + ".settings") != null) {
+                        for (String par : ConfigManager.instance.getDataIslands().getString(str + ".settings").split(",")) {
+                            if (par == null) continue;
+                            if (par.length() < 4) continue;
+                            settings.add(IslandSettings.valueOf(par));
+                        }
+                    } else {
+                        settings = null;
+                    }
+
                     ArrayList<IslandChallenge> list = new ArrayList<>();
                     if (ConfigManager.instance.getDataIslands().contains(str + ".c")) {
                         for (String part : ConfigManager.instance.getDataIslands().getConfigurationSection(str + ".c").getKeys(false)) {
@@ -188,7 +203,7 @@ public class StorageYAMLManager {
 
                     islands.add(new Island(name, home, center, id, members, islandUpgradeSize, islandUpgradeMember,
                             color, islandBank, islandUpgradeGenerator, banneds, list, false,
-                            permsPerRanks, isPublic, value));
+                            permsPerRanks, isPublic, value, settings));
                 } catch (Exception e) {
                     e.printStackTrace();
                     continue;
@@ -299,9 +314,13 @@ public class StorageYAMLManager {
                     toSendMinion.put(minion.getID() + ".lvl", minion.getLevelInt());
                     toSendMinion.put(minion.getID() + ".blFace", minion.getBlockFace().toString());
                     toSendMinion.put(minion.getID() + ".loc", minion.getBlocLocation());
-                    toSendMinion.put(minion.getID() + ".locChest", minion.getChestBloc());
                     toSendMinion.put(minion.getID() + ".linked", minion.isChestLinked());
                     toSendMinion.put(minion.getID() + ".smelt", minion.isAutoSmelt());
+                    if (minion.getChestBloc() != null) {
+                        toSendMinion.put(minion.getID() + ".locChest", minion.getChestBloc().getLocation());
+                    } else {
+                        toSendMinion.put(minion.getID() + ".locChest", null);
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                     Bukkit.broadcastMessage("§6§lData §8§l» §c§lErreur lors de la lecture du minion #" + minion.getID());
@@ -340,6 +359,8 @@ public class StorageYAMLManager {
                     toSendIsland.put(island.getId() + ".isPublic", island.isPublic());
                     toSendIsland.put(island.getId() + ".upgradeGeneratorLevel", island.getGeneratorUpgrade().getLevel());
                     toSendIsland.put(island.getId() + ".banneds", island.getBanneds().toString().
+                            replace("[", "").replace("]", "").replace(" ", ""));
+                    toSendIsland.put(island.getId() + ".settings", island.getActivatedSettings().toString().
                             replace("[", "").replace("]", "").replace(" ", ""));
                     for (IslandChallenge islandChallenge : island.getChallenges()) {
                         toSendIsland.put(island.getId() + ".c." + islandChallenge.getId() + ".prog", islandChallenge.getProgress());

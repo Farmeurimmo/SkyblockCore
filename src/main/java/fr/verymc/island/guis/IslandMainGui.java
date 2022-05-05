@@ -82,6 +82,18 @@ public class IslandMainGui {
         custom9.setItemMeta(meta9);
         inv.setItem(20, custom9);
 
+        ItemStack custom12 = new ItemStack(Material.EMERALD_BLOCK, 1);
+        ItemMeta meta12 = custom12.getItemMeta();
+        meta12.setDisplayName("§6Valeur des blocs §8| §7(clic gauche)");
+        custom12.setItemMeta(meta12);
+        inv.setItem(14, custom12);
+
+        ItemStack custom13 = new ItemStack(Material.COMPARATOR, 1);
+        ItemMeta meta13 = custom13.getItemMeta();
+        meta13.setDisplayName("§6Paramètres d'îles §8| §7(clic gauche)");
+        custom13.setItemMeta(meta13);
+        inv.setItem(23, custom13);
+
         ItemStack custom11 = new ItemStack(Material.SPRUCE_SAPLING, 1);
         ItemMeta meta11 = custom11.getItemMeta();
         meta11.setDisplayName("§6Biome §8| §7(clic gauche)");

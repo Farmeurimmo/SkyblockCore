@@ -24,31 +24,38 @@ public class MakeItemGui {
 
         ItemStack custom10 = new ItemStack(Material.DRAGON_BREATH, 1);
         ItemMeta customi = custom10.getItemMeta();
-        customi.setDisplayName("§eMinion piocheur");
+        customi.setDisplayName("§6Minion PIOCHEUR");
         customi.setLore(Arrays.asList("§6Prix: 25000$"));
         custom10.setItemMeta(customi);
         invboutiquefarm2win.setItem(10, custom10);
 
         ItemStack custom11 = new ItemStack(Material.TRAPPED_CHEST, 1);
         ItemMeta customj = custom11.getItemMeta();
-        customj.setDisplayName("§dSellChest");
+        customj.setDisplayName("§6SellChest");
         customj.setLore(Arrays.asList("§6Prix: 1000000$"));
         custom11.setItemMeta(customj);
         invboutiquefarm2win.setItem(12, custom11);
 
         ItemStack custom12 = new ItemStack(Material.HOPPER, 1);
         ItemMeta customk = custom12.getItemMeta();
-        customk.setDisplayName("§eCollecteur de chunk (chunkhopper)");
+        customk.setDisplayName("§6Collecteur de chunk (chunkhopper)");
         customk.setLore(Arrays.asList("§6Prix: 500000$"));
         custom12.setItemMeta(customk);
         invboutiquefarm2win.setItem(14, custom12);
 
         ItemStack custom13 = new ItemStack(Material.NETHERITE_HOE, 1);
         ItemMeta customl = custom13.getItemMeta();
-        customl.setDisplayName("§eFarmHoe §cTier I (1x1)");
+        customl.setDisplayName("§6FarmHoe Tier §cI (1x1)");
         customl.setLore(Arrays.asList("§6Prix: 500000$"));
         custom13.setItemMeta(customl);
         invboutiquefarm2win.setItem(16, custom13);
+
+        ItemStack custom14 = new ItemStack(Material.CHEST, 1);
+        ItemMeta customm = custom14.getItemMeta();
+        customm.setDisplayName("§6PlayerShop");
+        customm.setLore(Arrays.asList("§6Prix: 75000$"));
+        custom14.setItemMeta(customm);
+        invboutiquefarm2win.setItem(13, custom14);
 
         invboutiquefarm2win.setItem(26, custom8);
         invboutiquefarm2win.setItem(22, PreGenItems.instance.getOwnerHead(player));

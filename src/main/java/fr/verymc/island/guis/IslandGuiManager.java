@@ -6,6 +6,7 @@ import main.java.fr.verymc.island.IslandManager;
 import main.java.fr.verymc.island.challenges.IslandChallengesGuis;
 import main.java.fr.verymc.island.perms.IslandPerms;
 import main.java.fr.verymc.island.perms.IslandRank;
+import main.java.fr.verymc.island.protections.IslandSettings;
 import main.java.fr.verymc.utils.WorldBorderUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -37,9 +38,6 @@ public class IslandGuiManager implements Listener {
         ItemStack current = e.getCurrentItem();
 
         if (current == null) {
-            return;
-        }
-        if (current.getType() == null) {
             return;
         }
         Island playerIsland = IslandManager.instance.getPlayerIsland(player);
@@ -87,6 +85,15 @@ public class IslandGuiManager implements Listener {
             }
             if (current.getType() == Material.PAPER) {
                 IslandChallengesGuis.MakeMainGui(player);
+                return;
+            }
+            if (current.getType() == Material.COMPARATOR) {
+                IslandSettingsGui.instance.openIslandSettingsGui(player);
+                return;
+            }
+            if (current.getType() == Material.EMERALD_BLOCK) {
+                IslandBlocsValueGui.instance.openBlocsValueGui(player);
+                return;
             }
             return;
         }
@@ -174,7 +181,7 @@ public class IslandGuiManager implements Listener {
                 if (e.getClick() == ClickType.RIGHT &&
                         playerIsland.hasPerms(playerIsland.getIslandRankFromUUID(player.getUniqueId()), IslandPerms.BANK_ADD, player)) {
                     if (bankAmountWaiting.containsKey(player.getUniqueId()) && bankAmountWaiting.get(player.getUniqueId()).equals("money")
-                            && bankAmountWaitingBoolean.get(player.getUniqueId()) == true) {
+                            && bankAmountWaitingBoolean.get(player.getUniqueId())) {
                         bankAmountWaitingBoolean.remove(player.getUniqueId());
                         bankAmountWaiting.remove(player.getUniqueId());
                         player.sendMessage("§6§lIles §8» §cDésactivation §fdu mode séléction du montant pour §aajouter§f de l'argent à la banque.");
@@ -189,7 +196,7 @@ public class IslandGuiManager implements Listener {
                 } else if (e.getClick() == ClickType.LEFT &&
                         playerIsland.hasPerms(playerIsland.getIslandRankFromUUID(player.getUniqueId()), IslandPerms.BANK_REMOVE, player)) {
                     if (bankAmountWaiting.containsKey(player.getUniqueId()) && bankAmountWaiting.get(player.getUniqueId()).equalsIgnoreCase("money")
-                            && bankAmountWaitingBoolean.get(player.getUniqueId()) == false) {
+                            && !bankAmountWaitingBoolean.get(player.getUniqueId())) {
                         bankAmountWaitingBoolean.remove(player.getUniqueId());
                         bankAmountWaiting.remove(player.getUniqueId());
                         player.sendMessage("§6§lIles §8» §cDésactivation §fdu mode séléction du montant pour §cretirer §fde l'argent de la banque.");
@@ -228,7 +235,7 @@ public class IslandGuiManager implements Listener {
                 if (e.getClick() == ClickType.RIGHT &&
                         playerIsland.hasPerms(playerIsland.getIslandRankFromUUID(player.getUniqueId()), IslandPerms.BANK_ADD, player)) {
                     if (bankAmountWaiting.containsKey(player.getUniqueId()) && bankAmountWaiting.get(player.getUniqueId()).equalsIgnoreCase("xp") &&
-                            bankAmountWaitingBoolean.get(player.getUniqueId()) == true) {
+                            bankAmountWaitingBoolean.get(player.getUniqueId())) {
                         bankAmountWaitingBoolean.remove(player.getUniqueId());
                         bankAmountWaiting.remove(player.getUniqueId());
                         player.sendMessage("§6§lIles §8» §cDésactivation §fdu mode séléction du montant pour §aajouter §fde l'expérience à la banque.");
@@ -244,7 +251,7 @@ public class IslandGuiManager implements Listener {
                 if (e.getClick() == ClickType.LEFT &&
                         playerIsland.hasPerms(playerIsland.getIslandRankFromUUID(player.getUniqueId()), IslandPerms.BANK_REMOVE, player)) {
                     if (bankAmountWaiting.containsKey(player.getUniqueId()) && bankAmountWaiting.get(player.getUniqueId()).equalsIgnoreCase("xp") &&
-                            bankAmountWaitingBoolean.get(player.getUniqueId()) == false) {
+                            !bankAmountWaitingBoolean.get(player.getUniqueId())) {
                         bankAmountWaitingBoolean.remove(player.getUniqueId());
                         bankAmountWaiting.remove(player.getUniqueId());
                         player.sendMessage("§6§lIles §8» §cDésactivation §fdu mode séléction du montant pour §cretirer §fde l'expérience à la banque.");
@@ -358,6 +365,58 @@ public class IslandGuiManager implements Listener {
                 }
             }
 
+        }
+        if (e.getView().getTitle().equalsIgnoreCase("§6Valeur des blocs")) {
+            e.setCancelled(true);
+            if (current.getType() == Material.ARROW) {
+                IslandMainGui.instance.openMainIslandMenu(player);
+                return;
+            }
+        }
+        if (e.getView().getTitle().equalsIgnoreCase("§6Paramètres de l'île")) {
+            e.setCancelled(true);
+            if (current.getType() == Material.ARROW) {
+                IslandMainGui.instance.openMainIslandMenu(player);
+                return;
+            }
+            if (current.getType() == Material.DAYLIGHT_DETECTOR) {
+                player.sendMessage("§6§lIles §8» §cIndisponible pour le moment.");
+                return;
+            }
+            if (current.getType() == Material.CLOCK) {
+                player.sendMessage("§6§lIles §8» §cIndisponible pour le moment.");
+                return;
+            }
+
+            boolean clod = current.getType() == Material.DAYLIGHT_DETECTOR;
+            for (IslandSettings settings : IslandSettings.values()) {
+                if (IslandSettings.getItemForSetting(settings).getType() != current.getType()) {
+                    continue;
+                }
+                if (!clod) {
+                    if (playerIsland.hasSettingActivated(settings)) {
+                        playerIsland.removeSettingActived(settings);
+                        playerIsland.sendMessageToEveryMember("§6§lIles §8» §fLe paramètre '" + settings.getDesc() + "'§f a été §cdésactivé§f par "
+                                + player.getName() + ".");
+                    } else {
+                        playerIsland.addSettingActivated(settings);
+                        playerIsland.sendMessageToEveryMember("§6§lIles §8» §fLe paramètre '" + settings.getDesc() + "'§f a été §aactivé§f par "
+                                + player.getName() + ".");
+                    }
+                    IslandSettingsGui.instance.openIslandSettingsGui(player);
+                    return;
+                }
+                if (playerIsland.hasSettingActivated(settings)) {
+                    playerIsland.removeSettingActived(settings);
+                    IslandSettings islandSettings = IslandSettings.getNext(settings);
+                    playerIsland.addSettingActivated(islandSettings);
+                    playerIsland.sendMessageToEveryMember("§6§lIles §8» §fLe paramètre '" + settings.getDesc() + "'§f a été §6changé§f en "
+                            + islandSettings.getDesc() + "§f par " + player.getName() + ".");
+                    playerIsland.toggleTimeAndWeather();
+                    IslandSettingsGui.instance.openIslandSettingsGui(player);
+                    return;
+                }
+            }
         }
     }
 }
