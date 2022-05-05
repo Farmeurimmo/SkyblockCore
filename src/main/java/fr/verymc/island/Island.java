@@ -474,7 +474,9 @@ public class Island {
     }
 
     public void removeValue(Double value) {
-        this.value -= value;
+        if (this.value - value >= 0) {
+            this.value -= value;
+        }
     }
 
     public boolean isCoop(UUID uuid) {
