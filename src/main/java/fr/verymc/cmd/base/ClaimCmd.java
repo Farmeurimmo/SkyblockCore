@@ -9,7 +9,6 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
-import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -40,6 +39,7 @@ public class ClaimCmd implements CommandExecutor, TabCompleter {
             }
         }.runTaskTimer(Main.instance, 20, 20);
     }
+
     public void sendPendingMessage(Player player, String kitName) {
         int numSecond = cooldowns.get(player.getUniqueId()).get(kitName);
         int numMin = numSecond / 60;
@@ -51,6 +51,7 @@ public class ClaimCmd implements CommandExecutor, TabCompleter {
         player.sendMessage("§cErreur, il reste " + numDay + " jour(s), " + numHour + " heure(s), "
                 + numMin + " minute(s), " + numSecond + " seconde(s) avant réutilisation du kit §6" + kitName);
     }
+
     public void claimDaily(Player player) {
         if (cooldowns.get(player.getUniqueId()).containsKey("daily")) {
             sendPendingMessage(player, "daily");
@@ -63,6 +64,7 @@ public class ClaimCmd implements CommandExecutor, TabCompleter {
         CratesKeyManager.GiveCrateKey(player, 2, "challenge");
         cooldowns.get(player.getUniqueId()).put("daily", 86400);
     }
+
     public void claimWeekly(Player player) {
         if (cooldowns.get(player.getUniqueId()).containsKey("weekly")) {
             sendPendingMessage(player, "weekly");
@@ -76,7 +78,12 @@ public class ClaimCmd implements CommandExecutor, TabCompleter {
         CratesKeyManager.GiveCrateKey(player, 2, "légendaire");
         cooldowns.get(player.getUniqueId()).put("weekly", 604800);
     }
+
     public void claimLegend(Player player) {
+        if (!player.hasPermission("group.legende")) {
+            player.sendMessage("§6Vous n'avez pas le rôle légende.");
+            return;
+        }
         if (cooldowns.get(player.getUniqueId()).containsKey("legend")) {
             sendPendingMessage(player, "legend");
             return;
@@ -89,7 +96,12 @@ public class ClaimCmd implements CommandExecutor, TabCompleter {
         CratesKeyManager.GiveCrateKey(player, 2, "légendaire");
         cooldowns.get(player.getUniqueId()).put("legend", 604800);
     }
+
     public void claimGod(Player player) {
+        if (!player.hasPermission("group.dieu")) {
+            player.sendMessage("§6Vous n'avez pas le rôle dieu.");
+            return;
+        }
         if (cooldowns.get(player.getUniqueId()).containsKey("god")) {
             sendPendingMessage(player, "god");
             return;
@@ -102,7 +114,12 @@ public class ClaimCmd implements CommandExecutor, TabCompleter {
         player.sendMessage("§aVous avez récupérer avec succès le kit §6god");
         cooldowns.get(player.getUniqueId()).put("god", 604800);
     }
+
     public void claimZeus(Player player) {
+        if (!player.hasPermission("group.zeus")) {
+            player.sendMessage("§6Vous n'avez pas le rôle zeus.");
+            return;
+        }
         if (cooldowns.get(player.getUniqueId()).containsKey("zeus")) {
             sendPendingMessage(player, "zeus");
             return;
@@ -115,6 +132,7 @@ public class ClaimCmd implements CommandExecutor, TabCompleter {
         player.sendMessage("§aVous avez récupérer avec succès le kit §6zeus");
         cooldowns.get(player.getUniqueId()).put("zeus", 604800);
     }
+
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if (!(sender instanceof Player player)) {
@@ -175,10 +193,16 @@ public class ClaimCmd implements CommandExecutor, TabCompleter {
             } else {
                 subcmd.add("daily");
                 subcmd.add("weekly");
-                subcmd.add("legend");
-                subcmd.add("god");
-                subcmd.add("zeus");
                 subcmd.add("all");
+                if (sender.hasPermission("group.legende")) {
+                    subcmd.add("legend");
+                }
+                if (sender.hasPermission("group.dieu")) {
+                    subcmd.add("god");
+                }
+                if (sender.hasPermission("group.zeus")) {
+                    subcmd.add("zeus");
+                }
             }
         }
         Collections.sort(subcmd);
