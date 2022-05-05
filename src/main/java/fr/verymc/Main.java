@@ -24,10 +24,7 @@ import main.java.fr.verymc.featherfly.CountdownFly;
 import main.java.fr.verymc.featherfly.DailyFlyCmd;
 import main.java.fr.verymc.featherfly.FeatherFlyCmd;
 import main.java.fr.verymc.featherfly.FeatherFlyInteract;
-import main.java.fr.verymc.gui.AfkMineCaptchaGui;
-import main.java.fr.verymc.gui.Farm2WinGui;
-import main.java.fr.verymc.gui.MenuGui;
-import main.java.fr.verymc.gui.WarpGui;
+import main.java.fr.verymc.gui.*;
 import main.java.fr.verymc.holos.HolosSetup;
 import main.java.fr.verymc.invest.InvestCmd;
 import main.java.fr.verymc.invest.InvestManager;
@@ -83,8 +80,16 @@ public class Main extends JavaPlugin implements Listener {
     static LuckPerms api;
     private final HashMap<String, Integer> spawncooldown = new HashMap<>();
     public ArrayList<Player> pending = new ArrayList<Player>();
+
+    public ArrayList<Player> pendingTrade = new ArrayList<Player>();
     public ArrayList<Player> haverequest = new ArrayList<Player>();
+
+    public ArrayList<Player> haveTradeRequest = new ArrayList<Player>();
     public HashMap<String, String> tpatarget = new HashMap<>();
+
+    public HashMap<String, String> tradeTarget = new HashMap<>();
+
+    public ArrayList<TradeManager> tradeInProcess = new ArrayList<>();
 
     public void setTarget(String uuid, String aaa) {
         if (aaa == null)
@@ -94,10 +99,7 @@ public class Main extends JavaPlugin implements Listener {
     }
 
     public String getTarget(String player) {
-        if (tpatarget.containsKey(player))
-            return tpatarget.get(player);
-        else
-            return null;
+        return tpatarget.getOrDefault(player, null);
     }
 
     public void setCooldown(String uuid, Integer time) {
@@ -109,6 +111,17 @@ public class Main extends JavaPlugin implements Listener {
 
     public int getCooldown(String player) {
         return (spawncooldown.get(player) == null ? 0 : spawncooldown.get(player));
+    }
+
+    public void setTradeTarget(String uuid, String uuid_second_player) {
+        if (uuid_second_player == null)
+            tradeTarget.remove(uuid);
+        else
+            tradeTarget.put(uuid, uuid_second_player);
+    }
+
+    public String getTradeTarget(String player) {
+        return tradeTarget.getOrDefault(player, null);
     }
 
     @Override
@@ -284,8 +297,13 @@ public class Main extends JavaPlugin implements Listener {
         getServer().getPluginManager().registerEvents(new IslandPlayerMove(), this);
         getServer().getPluginManager().registerEvents(new IslandGeneratorForm(), this);
         getServer().getPluginManager().registerEvents(new PlayerWarpGuiManager(), this);
+<<<<<<< HEAD
         getServer().getPluginManager().registerEvents(new EntityListener(), this);
         getServer().getPluginManager().registerEvents(new BlockListener(), this);
+=======
+        getServer().getPluginManager().registerEvents(new TradeGui(), this);
+        getServer().getPluginManager().registerEvents(new MoneyTradeGui(), this);
+>>>>>>> TradeCmd
         PluginManager pm = getServer().getPluginManager();
         pm.registerEvents(this, this);
     }
@@ -337,7 +355,14 @@ public class Main extends JavaPlugin implements Listener {
         this.getCommand("is").setExecutor(new IslandCmd());
         this.getCommand("invest").setExecutor(new InvestCmd());
         this.getCommand("playerwarp").setExecutor(new PlayerWarpCmd());
+<<<<<<< HEAD
         this.getCommand("claim").setExecutor(new ClaimCmd());
+=======
+        this.getCommand("trade").setExecutor(new TradeCmd());
+        this.getCommand("tradeyes").setExecutor(new TradeYesCmd());
+        this.getCommand("tradeno").setExecutor(new TradeNoCmd());
+        this.getCommand("tradecancel").setExecutor(new TradeCancelCmd());
+>>>>>>> TradeCmd
     }
 
 }
