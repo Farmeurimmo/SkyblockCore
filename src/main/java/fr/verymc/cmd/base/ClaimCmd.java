@@ -1,11 +1,17 @@
 package main.java.fr.verymc.cmd.base;
 
 import main.java.fr.verymc.Main;
+import main.java.fr.verymc.crates.CratesKeyManager;
+import main.java.fr.verymc.eco.EcoAccountsManager;
+import main.java.fr.verymc.utils.ItemStackBuilder;
+import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -43,7 +49,7 @@ public class ClaimCmd implements CommandExecutor, TabCompleter {
         int numDay = numHour / 24;
         numHour %= 24;
         player.sendMessage("§cErreur, il reste " + numDay + " jour(s), " + numHour + " heure(s), "
-                + numMin + " minute(s), " + numSecond + " seconde(s) avant réutilisation du kit " + kitName);
+                + numMin + " minute(s), " + numSecond + " seconde(s) avant réutilisation du kit §6" + kitName);
     }
     public void claimDaily(Player player) {
         if (cooldowns.get(player.getUniqueId()).containsKey("daily")) {
@@ -51,6 +57,10 @@ public class ClaimCmd implements CommandExecutor, TabCompleter {
             return;
         }
         player.sendMessage("§aVous avez récupérer avec succès le kit §6daily");
+        ItemStack diamondBlock = (new ItemStackBuilder(Material.DIAMOND_BLOCK, 16)).getItemStack();
+        player.getInventory().addItem(diamondBlock);
+        EcoAccountsManager.instance.addFounds(player, 15000, false);
+        CratesKeyManager.GiveCrateKey(player, 2, "challenge");
         cooldowns.get(player.getUniqueId()).put("daily", 86400);
     }
     public void claimWeekly(Player player) {
@@ -59,6 +69,11 @@ public class ClaimCmd implements CommandExecutor, TabCompleter {
             return;
         }
         player.sendMessage("§aVous avez récupérer avec succès le kit §6weekly");
+        ItemStack netheriteBlock = (new ItemStackBuilder(Material.NETHERITE_BLOCK, 16)).getItemStack();
+        player.getInventory().addItem(netheriteBlock);
+        EcoAccountsManager.instance.addFounds(player, 25000, false);
+        CratesKeyManager.GiveCrateKey(player, 4, "challenge");
+        CratesKeyManager.GiveCrateKey(player, 2, "légendaire");
         cooldowns.get(player.getUniqueId()).put("weekly", 604800);
     }
     public void claimLegend(Player player) {
@@ -67,6 +82,11 @@ public class ClaimCmd implements CommandExecutor, TabCompleter {
             return;
         }
         player.sendMessage("§aVous avez récupérer avec succès le kit §6legend");
+        ItemStack netheriteBlock = (new ItemStackBuilder(Material.NETHERITE_BLOCK, 16)).getItemStack();
+        player.getInventory().addItem(netheriteBlock);
+        EcoAccountsManager.instance.addFounds(player, 25000, false);
+        CratesKeyManager.GiveCrateKey(player, 4, "challenge");
+        CratesKeyManager.GiveCrateKey(player, 2, "légendaire");
         cooldowns.get(player.getUniqueId()).put("legend", 604800);
     }
     public void claimGod(Player player) {
@@ -74,6 +94,11 @@ public class ClaimCmd implements CommandExecutor, TabCompleter {
             sendPendingMessage(player, "god");
             return;
         }
+        ItemStack netheriteBlock = (new ItemStackBuilder(Material.NETHERITE_BLOCK, 16)).getItemStack();
+        player.getInventory().addItem(netheriteBlock);
+        EcoAccountsManager.instance.addFounds(player, 25000, false);
+        CratesKeyManager.GiveCrateKey(player, 4, "challenge");
+        CratesKeyManager.GiveCrateKey(player, 2, "légendaire");
         player.sendMessage("§aVous avez récupérer avec succès le kit §6god");
         cooldowns.get(player.getUniqueId()).put("god", 604800);
     }
@@ -82,6 +107,11 @@ public class ClaimCmd implements CommandExecutor, TabCompleter {
             sendPendingMessage(player, "zeus");
             return;
         }
+        ItemStack netheriteBlock = (new ItemStackBuilder(Material.NETHERITE_BLOCK, 16)).getItemStack();
+        player.getInventory().addItem(netheriteBlock);
+        EcoAccountsManager.instance.addFounds(player, 25000, false);
+        CratesKeyManager.GiveCrateKey(player, 4, "challenge");
+        CratesKeyManager.GiveCrateKey(player, 2, "légendaire");
         player.sendMessage("§aVous avez récupérer avec succès le kit §6zeus");
         cooldowns.get(player.getUniqueId()).put("zeus", 604800);
     }
