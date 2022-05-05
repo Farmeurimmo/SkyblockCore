@@ -337,6 +337,7 @@ public class Main extends JavaPlugin implements Listener {
         this.getCommand("is").setExecutor(new IslandCmd());
         this.getCommand("invest").setExecutor(new InvestCmd());
         this.getCommand("playerwarp").setExecutor(new PlayerWarpCmd());
+        this.getCommand("claim").setExecutor(new ClaimCmd());
     }
 
 }
