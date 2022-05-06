@@ -1,13 +1,12 @@
 package main.java.fr.verymc.island;
 
 import main.java.fr.verymc.Main;
+import main.java.fr.verymc.blocks.Chest;
+import main.java.fr.verymc.blocks.ChestManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.World;
-import org.bukkit.block.Block;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.concurrent.CompletableFuture;
 
 public class IslandValueCalcManager {
@@ -81,7 +80,6 @@ public class IslandValueCalcManager {
 
                 CompletableFuture.runAsync(() -> {
 
-                    final World world = IslandManager.instance.getMainWorld();
                     int minx = island.getCenter().getBlockX() - island.getSizeUpgrade().getSize();
                     int minz = island.getCenter().getBlockZ() - island.getSizeUpgrade().getSize();
                     int maxx = island.getCenter().getBlockX() + island.getSizeUpgrade().getSize();
@@ -89,25 +87,11 @@ public class IslandValueCalcManager {
 
                     double value = 0;
 
-                    HashMap<Material, Integer> blocks = new HashMap<>();
-                    for (int x = minx; x <= maxx; x++) {
-                        for (int z = minz; z < maxz; z++) {
-                            if (world.getBlockAt(x, 0, z).getLightFromSky() == 15) {
-                                continue;
-                            }
-                            for (int y = 0; y <= world.getHighestBlockYAt(x, z); y++) {
-                                final Block block = world.getBlockAt(x, y, z);
-                                if (blocks.containsKey(block.getType())) {
-                                    blocks.put(block.getType(), blocks.get(block.getType()) + 1);
-                                } else {
-                                    blocks.put(block.getType(), 1);
-                                }
-                            }
-                        }
-                    }
-                    for (Material material : keys) {
-                        if (blocks.containsKey(material)) {
-                            value += blocks.get(material) * IslandBlocsValues.instance.getBlockValue(material);
+                    for (Chest chest : ChestManager.instance.chests) {
+                        if (chest.getType() != 3) continue;
+                        if (chest.getBlock().getX() >= minx && chest.getBlock().getX() <= maxx && chest.getBlock().getZ() >= minz &&
+                                chest.getBlock().getZ() <= maxz) {
+                            value += IslandBlocsValues.instance.getBlockValue(chest.getStacked()) * chest.getAmount();
                         }
                     }
 
@@ -128,6 +112,6 @@ public class IslandValueCalcManager {
             public void run() {
                 makeCountForAllIsland();
             }
-        }, 20 * 60 * 60);
+        }, 20 * 60 * 30);
     }
 }

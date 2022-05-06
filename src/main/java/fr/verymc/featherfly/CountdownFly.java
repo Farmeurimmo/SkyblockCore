@@ -1,6 +1,7 @@
 package main.java.fr.verymc.featherfly;
 
 import main.java.fr.verymc.Main;
+import main.java.fr.verymc.cmd.base.SpawnCmd;
 import main.java.fr.verymc.storage.SkyblockUser;
 import main.java.fr.verymc.storage.SkyblockUserManager;
 import org.bukkit.Bukkit;
@@ -119,6 +120,7 @@ public class CountdownFly implements Listener {
 
                     } else {
                         if (skyblockUser.isActive()) {
+                            player.teleport(SpawnCmd.Spawn);
                             skyblockUser.setActive(false);
                             player.setAllowFlight(false);
                             player.setFlying(false);

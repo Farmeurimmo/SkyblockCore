@@ -417,7 +417,7 @@ Shops:
     9:
       material: COOKED_BEEF
       buy: 20
-      sell: 9
+      sell: 7.2
     10:
       material: COOKED_CHICKEN
       buy: 20
@@ -437,7 +437,7 @@ Shops:
     14:
       material: BEEF
       buy: 10
-      sell: 6
+      sell: 5
     15:
       material: CHICKEN
       buy: 10
@@ -541,7 +541,7 @@ Shops:
     18:
       material: LEATHER
       buy: 60
-      sell: 9
+      sell: 5
     19:
       material: ENDER_PEARL
       buy: 60

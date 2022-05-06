@@ -268,8 +268,16 @@ public class StorageYAMLManager {
                     long chunk = ConfigManager.instance.getDataChests().getLong(str + ".chunk");
                     double price = ConfigManager.instance.getDataChests().getDouble(str + ".price");
                     boolean active = ConfigManager.instance.getDataChests().getBoolean(str + ".active");
+                    double amount = 0;
+                    if (ConfigManager.instance.getDataChests().get(str + ".amount") != null) {
+                        amount = ConfigManager.instance.getDataChests().getDouble(str + ".amount");
+                    }
+                    Material stacked = null;
+                    if (ConfigManager.instance.getDataChests().get(str + ".stacked") != null) {
+                        stacked = Material.getMaterial(ConfigManager.instance.getDataChests().getString(str + ".stacked"));
+                    }
 
-                    chests.add(new Chest(type, loc, uuid, chunk, itemStack, price, isSell, active, id));
+                    chests.add(new Chest(type, loc, uuid, chunk, itemStack, price, isSell, active, id, amount, stacked));
                 } catch (Exception e) {
                     e.printStackTrace();
                     continue;
@@ -452,6 +460,10 @@ public class StorageYAMLManager {
                     toSendChest.put(chest.getId() + ".price", chest.getPrice());
                     toSendChest.put(chest.getId() + ".item", chest.getItemToBuySell());
                     toSendChest.put(chest.getId() + ".chunk", chest.getChunkKey());
+                    toSendChest.put(chest.getId() + ".amount", chest.getAmount());
+                    if (chest.getStacked() != null) {
+                        toSendChest.put(chest.getId() + ".stacked", chest.getStacked().toString());
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                     Bukkit.broadcastMessage("§6§lData §8§l» §cUne erreur est survenue lors de la sauvegarde du coffre #" + chest.getId());
@@ -479,7 +491,7 @@ public class StorageYAMLManager {
                 public void run() {
                     sendDataToAPIAuto(false);
                 }
-            }, 20 * 60 * 10);
+            }, 20 * 60 * 5);
             return true;
         }).join(); //makes it blocking
     }

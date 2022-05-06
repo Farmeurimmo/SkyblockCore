@@ -2,6 +2,7 @@ package main.java.fr.verymc.blocks;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -19,9 +20,11 @@ public class Chest {
     private boolean isSell;
     private boolean activeSellOrBuy;
     private long id;
+    private double amount;
+    private Material stacked;
 
     public Chest(int type, Location block, UUID owner, Long chunkKey, ItemStack itemToBuySell, double price, boolean isSell,
-                 boolean activeSellOrBuy, long id) {
+                 boolean activeSellOrBuy, long id, double amount, Material stacked) {
         this.type = type;
         this.block = block;
         this.owner = owner;
@@ -34,6 +37,8 @@ public class Chest {
         this.activeSellOrBuy = activeSellOrBuy;
         this.isSell = isSell;
         this.id = id;
+        this.amount = amount;
+        this.stacked = stacked;
     }
 
     public int getType() {
@@ -103,6 +108,43 @@ public class Chest {
 
     public long getId() {
         return id;
+    }
+
+    public double getAmount() {
+        return amount;
+    }
+
+    public void setAmount(double amount) {
+        this.amount = amount;
+    }
+
+    public void addOneToAmount() {
+        this.amount++;
+    }
+
+    public void removeOneToAmount() {
+        if (this.amount-- >= 1) {
+            this.amount--;
+        }
+    }
+
+    public void removeAmount(double amount) {
+        this.amount -= amount;
+        if (this.amount < 1) {
+            this.amount = 0;
+        }
+    }
+
+    public void addAmount(double amount) {
+        this.amount += amount;
+    }
+
+    public Material getStacked() {
+        return stacked;
+    }
+
+    public void setStacked(Material stacked) {
+        this.stacked = stacked;
     }
 
 }

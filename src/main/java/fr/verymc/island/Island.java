@@ -1,5 +1,6 @@
 package main.java.fr.verymc.island;
 
+import main.java.fr.verymc.Main;
 import main.java.fr.verymc.island.bank.IslandBank;
 import main.java.fr.verymc.island.challenges.IslandChallenge;
 import main.java.fr.verymc.island.challenges.IslandChallengesListener;
@@ -73,6 +74,12 @@ public class Island {
         } else {
             this.activatedSettings = activatedSettings;
         }
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.instance, new Runnable() {
+            @Override
+            public void run() {
+                IslandManager.instance.setWorldBorderForAllPlayerOnIsland(Island.this);
+            }
+        }, 0, 100L);
     }
 
     public void setDefaultPerms() {

@@ -221,6 +221,8 @@ public class TchatManager implements Listener {
             isIslandChat = playerIsland.isIslandChatToggled(player.getUniqueId());
         }
 
+        String color = (player.hasPermission("staff") ? "§f" : "§7");
+
         User user = LuckPermsProvider.get().getUserManager().getUser(player.getUniqueId());
         if (user.getCachedData().getMetaData().getPrefix() != null) {
             Prefix = user.getCachedData().getMetaData().getPrefix();
@@ -238,7 +240,7 @@ public class TchatManager implements Listener {
                 if (IslandTopGui.instance.getTopIsland().containsKey(playerIsland)) {
                     classement = "#" + IslandTopGui.instance.getTopIsland().get(playerIsland);
                 }
-                message.setText("§7[" + classement + "] " + Prefix + " " + player.getName() + Suffix + "§7: " + e.getMessage());
+                message.setText("§7[" + classement + "] " + Prefix + " " + player.getName() + Suffix + "§7: " + color + e.getMessage());
             }
             symbole.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("§cCliquez ici pour report le message de " +
                     player.getName()).create()));
@@ -252,7 +254,7 @@ public class TchatManager implements Listener {
             TextComponent message = new TextComponent();
             TextComponent symbole = new TextComponent();
             message.setText("§6§lTchat d'île §8» §f[§a" + playerIsland.getMembers().get(player.getUniqueId()) + "§f] " + Prefix + " " + player.getName() +
-                    Suffix + "§7: " + e.getMessage());
+                    Suffix + "§7: " + color + e.getMessage());
             symbole.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("§cCliquez ici pour report le message de " +
                     player.getName()).create()));
             message.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("").create()));

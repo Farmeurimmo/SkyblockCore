@@ -79,7 +79,9 @@ public class JoinLeave implements Listener {
         }
 
         IslandManager.instance.setWorldBorder(player);
-        playerIsland.toggleTimeAndWeather();
+        if (playerIsland != null) {
+            playerIsland.toggleTimeAndWeather();
+        }
     }
 
     @EventHandler
