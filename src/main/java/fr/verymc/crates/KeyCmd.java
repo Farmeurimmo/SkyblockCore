@@ -16,7 +16,6 @@ public class KeyCmd implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 
-        if (sender instanceof Player) {
             if (sender.hasPermission("*")) {
                 if (args.length == 3) {
                     if (Bukkit.getPlayer(args[0]) != null) {
@@ -47,7 +46,6 @@ public class KeyCmd implements CommandExecutor, TabCompleter {
             } else {
                 sender.sendMessage("§cVous n'avez pas la permission !");
             }
-        }
 
         return false;
     }
