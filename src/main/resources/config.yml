@@ -465,15 +465,15 @@ Shops:
     21:
       material: TROPICAL_FISH
       buy: 100
-      sell: 15
+      sell: 10
     22:
       material: COD
       buy: 15
-      sell: 7.5
+      sell: 5.8
     23:
       material: SALMON
       buy: 15
-      sell: 9
+      sell: 7
 
   #######################
   Drops:
@@ -549,7 +549,7 @@ Shops:
     20:
       material: INK_SAC
       buy: 30
-      sell: 6
+      sell: 3
 
   ###################
   Minerais:
