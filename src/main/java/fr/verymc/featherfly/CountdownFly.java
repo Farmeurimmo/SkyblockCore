@@ -50,7 +50,7 @@ public class CountdownFly implements Listener {
                 if (player.isOnline()) {
                     int timeLeft = skyblockUser.getFlyLeft();
 
-                    if (timeLeft - 1 != -1 && timeLeft > 0) {
+                    if (timeLeft > 0) {
 
                         if (!player.getWorld().getName().equalsIgnoreCase("world")) {
                             timeLeft -= 1;
@@ -85,6 +85,7 @@ public class CountdownFly implements Listener {
 
                             String messagetimeleft = "§aFly restant: " + nhoursnew + ":" + nminnew + ":" + nsecnew;
                             skyblockUser.setFlyLeft(timeLeft);
+                            skyblockUser.setActive(true);
                             player.sendActionBar(messagetimeleft);
                         } else {
                             int timeforconv = timeLeft;
@@ -114,12 +115,12 @@ public class CountdownFly implements Listener {
                             String messagetimeleft = "§aFly restant: " + nhoursnew + ":" + nminnew + ":" + nsecnew;
                             skyblockUser.setFlyLeft(timeLeft);
                             player.sendActionBar(messagetimeleft);
-                            skyblockUser.setActive(true);
+                            skyblockUser.setActive(false);
                             continue;
                         }
+                    }
 
-                    } else {
-                        if (skyblockUser.isActive()) {
+                        if (skyblockUser.isActive() && skyblockUser.getFlyLeft() <= 0) {
                             player.teleport(SpawnCmd.Spawn);
                             skyblockUser.setActive(false);
                             player.setAllowFlight(false);
@@ -127,7 +128,6 @@ public class CountdownFly implements Listener {
                             player.sendActionBar("§6Fin du fly.");
                             skyblockUser.setFlyLeft(0);
                         }
-                    }
                 }
             }
         }
