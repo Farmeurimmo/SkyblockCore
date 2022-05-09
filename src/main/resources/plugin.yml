@@ -85,3 +85,7 @@ commands:
   is:
   invest:
   playerwarp:
+  trade:
+  tradeyes:
+  tradeno:
+  tradecancel:

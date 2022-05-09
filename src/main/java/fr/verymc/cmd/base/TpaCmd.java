@@ -1,6 +1,7 @@
 package main.java.fr.verymc.cmd.base;
 
 import main.java.fr.verymc.Main;
+import main.java.fr.verymc.cmd.utils.UtilsCmd;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -76,20 +77,12 @@ public class TpaCmd implements CommandExecutor, TabCompleter {
         return false;
     }
 
-    public void get_all_player_for_tab_complete(ArrayList<String> subcmd, CommandSender sender) {
-        for (Player p : Bukkit.getOnlinePlayers()) {
-            if (!p.getName().equals(sender.getName())) {
-                subcmd.add(p.getName());
-            }
-        }
-    }
-
     @Override
     public List<String> onTabComplete(CommandSender sender, Command cmd, String commandLabel, String[] args) {
         ArrayList<String> subcmd = new ArrayList<>();
         if (cmd.getName().equalsIgnoreCase("tpa")) {
             if (args.length == 1) {
-                get_all_player_for_tab_complete(subcmd, sender);
+                UtilsCmd.set_all_player_in_subcmd_without_me(subcmd, sender);
                 Collections.sort(subcmd);
             } else if (args.length >= 2) {
                 subcmd.add("");
