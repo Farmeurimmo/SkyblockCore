@@ -63,6 +63,9 @@ public class ClaimCmdSaver {
                             }
                         }
                         timeMap.put(k2, timeLeft - 1);
+                        if (timeLeft <= 0) {
+                            timeMap.remove(k2);
+                        }
                     });
                     cooldowns.put(k, timeMap);
                 });
