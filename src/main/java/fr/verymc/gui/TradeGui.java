@@ -89,15 +89,18 @@ public class TradeGui implements Listener {
             return;
         }
         if (e.getWhoClicked() == playerOne) {
+            if (e.getInventory().getItem(37) == e.getInventory().getItem(39)) {
+                e.setCancelled(true);
+                return;
+            }
             if (slotPlayerOne.contains(e.getSlot())) {
                 e.setCancelled(false);
                 return;
             }
             if (e.getSlot() == 39) {
                 e.getInventory().setItem(37, e.getInventory().getItem(39));
-            }
-            if (e.getInventory().getItem(37) == e.getInventory().getItem(39)) {
                 e.setCancelled(true);
+                return;
             }
             if (e.getSlot() == 37 && e.getInventory().getItem(37).getType().equals(Material.RED_STAINED_GLASS_PANE)) {
                 e.getInventory().setItem(39, e.getInventory().getItem(37));
@@ -111,15 +114,18 @@ public class TradeGui implements Listener {
                 playerOne.openInventory(new MoneyTradeGui().getBalanceGui(e));
             }
         } else if (e.getWhoClicked() == playerTwo) {
+            if (e.getInventory().getItem(41) == e.getInventory().getItem(43)) {
+                e.setCancelled(true);
+                return;
+            }
             if (slotPlayerTwo.contains(e.getSlot())) {
                 e.setCancelled(false);
                 return;
             }
             if (e.getSlot() == 43) {
                 e.getInventory().setItem(41, e.getInventory().getItem(43));
-            }
-            if (e.getInventory().getItem(41) == e.getInventory().getItem(43)) {
                 e.setCancelled(true);
+                return;
             }
             if (e.getSlot() == 41 && e.getInventory().getItem(41).getType().equals(Material.RED_STAINED_GLASS_PANE)) {
                 e.getInventory().setItem(43, e.getInventory().getItem(41));

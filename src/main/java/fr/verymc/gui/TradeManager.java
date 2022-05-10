@@ -1,6 +1,7 @@
 package main.java.fr.verymc.gui;
 
 import main.java.fr.verymc.utils.ItemStackBuilder;
+import main.java.fr.verymc.utils.PreGenItems;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -25,7 +26,7 @@ public class TradeManager {
         instance = this;
     }
 
-    public static Inventory TradeGuiBuilder(int moneyAmount) {
+    public static Inventory TradeGuiBuilder(int moneyAmount, Player playerOne, Player playerTwo) {
         Inventory inv = Bukkit.createInventory(null, 54, "§6Echange");
         ItemStack yellowStainedGlass = (new ItemStackBuilder(Material.YELLOW_STAINED_GLASS_PANE)).setName("§a").getItemStack();
         ItemStack greenStainedGlass = (new ItemStackBuilder(Material.GREEN_STAINED_GLASS_PANE)).setName("§aConfirmer").getItemStack();
@@ -34,6 +35,8 @@ public class TradeManager {
         for (int i = 0; i < 10; i++) {
             inv.setItem(i, yellowStainedGlass);
         }
+        inv.setItem(2, PreGenItems.instance.getHead(playerOne));
+        inv.setItem(6, PreGenItems.instance.getHead(playerTwo));
         inv.setItem(13, yellowStainedGlass);
         inv.setItem(17, yellowStainedGlass);
         inv.setItem(18, yellowStainedGlass);
