@@ -52,10 +52,10 @@ public class IslandSettingsGui {
                 continue;
             if (custom.getType() == Material.DAYLIGHT_DETECTOR && playerIsland.hasSettingActivated(setting)) {
                 custom.setDisplayName("§6" + setting.getDesc());
-                custom.setLore(Arrays.asList("§7Statut: §aActif", "", "§7Clic pour changer"));
+                custom.setLore(Arrays.asList("", "§7Clic pour changer"));
             } else if (custom.getType() == Material.CLOCK && playerIsland.hasSettingActivated(setting)) {
                 custom.setDisplayName("§6" + setting.getDesc());
-                custom.setLore(Arrays.asList("§7Statut: §aActif", "", "§7Clic pour changer"));
+                custom.setLore(Arrays.asList("", "§7Clic pour changer"));
             } else {
                 custom.setDisplayName("§6" + setting.getDesc());
                 custom.setLore(Arrays.asList("§7Statut: " + (playerIsland.hasSettingActivated(setting) ? "§aActivé" :

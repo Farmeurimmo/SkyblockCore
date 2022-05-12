@@ -379,21 +379,14 @@ public class IslandGuiManager implements Listener {
                 IslandMainGui.instance.openMainIslandMenu(player);
                 return;
             }
-            if (current.getType() == Material.DAYLIGHT_DETECTOR) {
-                player.sendMessage("§6§lIles §8» §cIndisponible pour le moment.");
-                return;
-            }
-            if (current.getType() == Material.CLOCK) {
-                player.sendMessage("§6§lIles §8» §cIndisponible pour le moment.");
-                return;
-            }
 
             boolean clod = current.getType() == Material.DAYLIGHT_DETECTOR;
+            boolean clock = current.getType() == Material.CLOCK;
             for (IslandSettings settings : IslandSettings.values()) {
                 if (IslandSettings.getItemForSetting(settings).getType() != current.getType()) {
                     continue;
                 }
-                if (!clod) {
+                if (!clod && !clock) {
                     if (playerIsland.hasSettingActivated(settings)) {
                         playerIsland.removeSettingActived(settings);
                         playerIsland.sendMessageToEveryMember("§6§lIles §8» §fLe paramètre '" + settings.getDesc() + "'§f a été §cdésactivé§f par "

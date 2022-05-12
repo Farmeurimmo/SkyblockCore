@@ -103,7 +103,7 @@ public class ScoreBoard implements Listener {
 
             int online = Bukkit.getOnlinePlayers().size() - Vanished.size();
             for (Player player : Bukkit.getOnlinePlayers()) {
-                    Scoreboard board = player.getScoreboard();
+                Scoreboard board = player.getScoreboard();
 
                 try {
 
@@ -151,18 +151,21 @@ public class ScoreBoard implements Listener {
                             Objects.requireNonNull(board.getTeam("ismembre")).setPrefix("§7Membres: §3" + ismembre + "/" + maxMembers);
                         if (board.getTeam("iscrystaux") != null)
                             Objects.requireNonNull(board.getTeam("iscrystaux")).setPrefix("§7Crystaux: §d" + DecimalFormat.getNumberInstance().format(iscristal));
-                        if (board.getTeam("ismoney") != null) Objects.requireNonNull(board.getTeam("ismoney")).setPrefix("§7Argent: §d" +
-                                DecimalFormat.getNumberInstance().format(ismoney));
+                        if (board.getTeam("ismoney") != null)
+                            Objects.requireNonNull(board.getTeam("ismoney")).setPrefix("§7Argent: §d" +
+                                    DecimalFormat.getNumberInstance().format(ismoney));
 
                     } else {
                         if (board.getTeam("gradeis") != null)
                             Objects.requireNonNull(board.getTeam("gradeis")).setPrefix("§7Grade d'ile: §6N/A");
                         if (board.getTeam("classementis") != null)
                             Objects.requireNonNull(board.getTeam("classementis")).setPrefix("§7Classement: §2N/A");
-                        if (board.getTeam("ismembre") != null) Objects.requireNonNull(board.getTeam("ismembre")).setPrefix("§7Membres: §3N/A");
+                        if (board.getTeam("ismembre") != null)
+                            Objects.requireNonNull(board.getTeam("ismembre")).setPrefix("§7Membres: §3N/A");
                         if (board.getTeam("iscrystaux") != null)
                             Objects.requireNonNull(board.getTeam("iscrystaux")).setPrefix("§7Crystaux: §dN/A");
-                        if (board.getTeam("ismoney") != null) Objects.requireNonNull(Objects.requireNonNull(board.getTeam("ismoney"))).setPrefix("§7Argent: §dN/A");
+                        if (board.getTeam("ismoney") != null)
+                            Objects.requireNonNull(Objects.requireNonNull(board.getTeam("ismoney"))).setPrefix("§7Argent: §dN/A");
                     }
                     if (board.getTeam("challenges") != null) {
                         Objects.requireNonNull(Objects.requireNonNull(board.getTeam("challenges"))).setPrefix("§7" + cMsg);
