@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.*;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ public class TradeGui implements Listener {
 
     @EventHandler
     public void onInventoryDragEvent(InventoryDragEvent e) {
-        if (!e.getView().getTitle().equals("§6Echange")) {
+        if (!e.getView().getTitle().equalsIgnoreCase("§6Echange")) {
             return;
         }
         int size = e.getRawSlots().size();
@@ -34,7 +35,7 @@ public class TradeGui implements Listener {
 
     @EventHandler
     public void onCloseInventory(InventoryCloseEvent e) {
-        if (!e.getView().getTitle().equals("§6Echange")) {
+        if (!e.getView().getTitle().equalsIgnoreCase("§6Echange")) {
             return;
         }
         if (balanceGui) {
@@ -55,7 +56,7 @@ public class TradeGui implements Listener {
 
     @EventHandler
     public void onInventoryClick(InventoryClickEvent e) {
-        if (!e.getView().getTitle().equals("§6Echange")) {
+        if (!e.getView().getTitle().equalsIgnoreCase("§6Echange")) {
             return;
         }
         Player playerOne = null;
@@ -88,8 +89,14 @@ public class TradeGui implements Listener {
             e.setCancelled(false);
             return;
         }
+        if (e.getInventory().getItem(37).getType() == Material.GREEN_STAINED_GLASS_PANE
+                && e.getInventory().getItem(39).getType() == Material.GREEN_STAINED_GLASS_PANE
+                && e.getInventory().getItem(41).getType() == Material.GREEN_STAINED_GLASS_PANE
+                && e.getInventory().getItem(43).getType() == Material.GREEN_STAINED_GLASS_PANE) {
+            completeExchange(playerOne, playerTwo, slotPlayerOne, slotPlayerTwo, e.getClickedInventory(), trade);
+        }
         if (e.getWhoClicked() == playerOne) {
-            if (e.getInventory().getItem(37) == e.getInventory().getItem(39)) {
+            if (e.getInventory().getItem(37).equals(e.getInventory().getItem(39))) {
                 e.setCancelled(true);
                 return;
             }
@@ -100,6 +107,12 @@ public class TradeGui implements Listener {
             if (e.getSlot() == 39) {
                 e.getInventory().setItem(37, e.getInventory().getItem(39));
                 e.setCancelled(true);
+                if (e.getInventory().getItem(37).getType() == Material.GREEN_STAINED_GLASS_PANE
+                        && e.getInventory().getItem(39).getType() == Material.GREEN_STAINED_GLASS_PANE
+                        && e.getInventory().getItem(41).getType() == Material.GREEN_STAINED_GLASS_PANE
+                        && e.getInventory().getItem(43).getType() == Material.GREEN_STAINED_GLASS_PANE) {
+                    completeExchange(playerOne, playerTwo, slotPlayerOne, slotPlayerTwo, e.getClickedInventory(), trade);
+                }
                 return;
             }
             if (e.getSlot() == 37 && e.getInventory().getItem(37).getType().equals(Material.RED_STAINED_GLASS_PANE)) {
@@ -114,7 +127,7 @@ public class TradeGui implements Listener {
                 playerOne.openInventory(new MoneyTradeGui().getBalanceGui(e));
             }
         } else if (e.getWhoClicked() == playerTwo) {
-            if (e.getInventory().getItem(41) == e.getInventory().getItem(43)) {
+            if (e.getInventory().getItem(41).equals(e.getInventory().getItem(43))) {
                 e.setCancelled(true);
                 return;
             }
@@ -125,6 +138,12 @@ public class TradeGui implements Listener {
             if (e.getSlot() == 43) {
                 e.getInventory().setItem(41, e.getInventory().getItem(43));
                 e.setCancelled(true);
+                if (e.getInventory().getItem(37).getType() == Material.GREEN_STAINED_GLASS_PANE
+                        && e.getInventory().getItem(39).getType() == Material.GREEN_STAINED_GLASS_PANE
+                        && e.getInventory().getItem(41).getType() == Material.GREEN_STAINED_GLASS_PANE
+                        && e.getInventory().getItem(43).getType() == Material.GREEN_STAINED_GLASS_PANE) {
+                    completeExchange(playerOne, playerTwo, slotPlayerOne, slotPlayerTwo, e.getClickedInventory(), trade);
+                }
                 return;
             }
             if (e.getSlot() == 41 && e.getInventory().getItem(41).getType().equals(Material.RED_STAINED_GLASS_PANE)) {
@@ -144,7 +163,7 @@ public class TradeGui implements Listener {
                 playerOne.closeInventory();
                 playerOne.sendMessage("§6§lTrade §8» §fEchange annulez par §a" + playerOne.getName());
                 playerTwo.closeInventory();
-                playerTwo.sendMessage("§6§lTrade §8» §fVous avez annulez l'échange");
+                playerTwo.sendMessage("§6§lTrade §8» §fVous avez annulé l'échange");
                 Main.instance.tradeInProcess.remove(trade);
             }
             if (e.getRawSlot() == 42) {
@@ -152,31 +171,30 @@ public class TradeGui implements Listener {
                 playerTwo.openInventory(new MoneyTradeGui().getBalanceGui(e));
             }
         }
-        if (e.getInventory().getItem(37).getType() == Material.GREEN_STAINED_GLASS_PANE
-                && e.getInventory().getItem(39).getType() == Material.GREEN_STAINED_GLASS_PANE
-                && e.getInventory().getItem(41).getType() == Material.GREEN_STAINED_GLASS_PANE
-                && e.getInventory().getItem(43).getType() == Material.GREEN_STAINED_GLASS_PANE) {
-            for (Integer value : slotPlayerTwo) {
-                ItemStack item = e.getInventory().getItem(value);
-                if (item != null) {
-                    playerOne.getInventory().addItem(item);
-                }
+    }
+
+    public void completeExchange(Player playerOne, Player playerTwo, ArrayList<Integer> slotPlayerOne, ArrayList<Integer> slotPlayerTwo,
+                                 Inventory inv, TradeManager trade) {
+        for (Integer value : slotPlayerTwo) {
+            ItemStack item = inv.getItem(value);
+            if (item != null) {
+                playerOne.getInventory().addItem(item);
             }
-            for (Integer value : slotPlayerOne) {
-                ItemStack item = e.getInventory().getItem(value);
-                if (item != null) {
-                    playerTwo.getInventory().addItem(item);
-                }
-            }
-            EcoAccountsManager.instance.addFounds(playerOne, trade.playerTwoMoneyAmount, false);
-            EcoAccountsManager.instance.addFounds(playerTwo, trade.playerOneMoneyAmount, false);
-            EcoAccountsManager.instance.removeFounds(playerOne, trade.playerOneMoneyAmount, false);
-            EcoAccountsManager.instance.removeFounds(playerTwo, trade.playerTwoMoneyAmount, false);
-            Main.instance.tradeInProcess.remove(trade);
-            playerOne.closeInventory();
-            playerTwo.closeInventory();
-            playerOne.sendMessage("§6§lTrade §8» §fEchange terminé aver succès");
-            playerTwo.sendMessage("§6§lTrade §8» §fEchange terminé aver succès");
         }
+        for (Integer value : slotPlayerOne) {
+            ItemStack item = inv.getItem(value);
+            if (item != null) {
+                playerTwo.getInventory().addItem(item);
+            }
+        }
+        EcoAccountsManager.instance.addFounds(playerOne, trade.playerTwoMoneyAmount, false);
+        EcoAccountsManager.instance.addFounds(playerTwo, trade.playerOneMoneyAmount, false);
+        EcoAccountsManager.instance.removeFounds(playerOne, trade.playerOneMoneyAmount, false);
+        EcoAccountsManager.instance.removeFounds(playerTwo, trade.playerTwoMoneyAmount, false);
+        Main.instance.tradeInProcess.remove(trade);
+        playerOne.closeInventory();
+        playerTwo.closeInventory();
+        playerOne.sendMessage("§6§lTrade §8» §fEchange terminé aver succès");
+        playerTwo.sendMessage("§6§lTrade §8» §fEchange terminé aver succès");
     }
 }

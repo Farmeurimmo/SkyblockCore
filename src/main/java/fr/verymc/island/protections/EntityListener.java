@@ -25,6 +25,9 @@ public class EntityListener implements Listener {
 
     @EventHandler
     public void creatureSpawn(CreatureSpawnEvent e) {
+        if (e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.SPAWNER) {
+            return;
+        }
         if (e.getEntityType() == EntityType.ARMOR_STAND) {
             return;
         }

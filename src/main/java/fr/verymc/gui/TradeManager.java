@@ -35,8 +35,12 @@ public class TradeManager {
         for (int i = 0; i < 10; i++) {
             inv.setItem(i, yellowStainedGlass);
         }
-        inv.setItem(2, PreGenItems.instance.getHead(playerOne));
-        inv.setItem(6, PreGenItems.instance.getHead(playerTwo));
+        ItemStack head1 = PreGenItems.instance.getHead(playerOne);
+        ItemStack head2 = PreGenItems.instance.getHead(playerTwo);
+        head1.setDisplayName("§6" + playerOne.getName());
+        head2.setDisplayName("§6" + playerTwo.getName());
+        inv.setItem(2, head1);
+        inv.setItem(6, head2);
         inv.setItem(13, yellowStainedGlass);
         inv.setItem(17, yellowStainedGlass);
         inv.setItem(18, yellowStainedGlass);

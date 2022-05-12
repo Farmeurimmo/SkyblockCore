@@ -86,6 +86,10 @@ commands:
   invest:
   playerwarp:
   trade:
+    permission: trade
   tradeyes:
+    permission: trade
   tradeno:
+    permission: trade
   tradecancel:
+    permission: trade
