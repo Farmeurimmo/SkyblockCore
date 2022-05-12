@@ -107,6 +107,10 @@ public class ChestListener implements Listener {
             Chest c = PlayerShopGuis.instance.opened.get(p);
             if (PlayerShopGuis.instance.itemEditing.containsKey(p)) {
                 if (PlayerShopGuis.instance.itemEditing.get(p).equals(c)) {
+                    if (!p.getOpenInventory().getTitle().contains("§6Player shop")) {
+                        PlayerShopGuis.instance.itemEditing.remove(p);
+                        return;
+                    }
                     if (e.getClickedInventory().getType() == InventoryType.PLAYER) {
                         if (current == null) {
                             return;
@@ -168,7 +172,7 @@ public class ChestListener implements Listener {
                         } else {
                             PlayerShopGuis.instance.itemEditing.put(p, c);
                             PlayerShopGuis.instance.mainShopGui(c, p);
-                            p.sendMessage("§6§lPlayerShop §8» §fCliquez dans votre inventaire pour choisir un item à vendre.");
+                            p.sendMessage("§6§lPlayerShop §8» §fCliquez dans votre inventaire pour choisir un item");
                         }
                     }
                     if (current.getType().toString().contains("CONCRETE") && e.getSlot() == 22) {
@@ -415,7 +419,7 @@ public class ChestListener implements Listener {
     }
 
     @EventHandler
-    public void onInventoryClick(BlockFormEvent e) {
+    public void onBlockForm(BlockFormEvent e) {
         Chest chest = ChestManager.instance.getChestFromLoc(e.getBlock().getLocation());
         if (chest != null) {
             e.setCancelled(true);
