@@ -234,7 +234,7 @@ public class TchatManager implements Listener {
             TextComponent message = new TextComponent();
             TextComponent symbole = new TextComponent();
             if (playerIsland == null) {
-                message.setText(Prefix + " " + player.getName() + Suffix + "§7: " + e.getMessage());
+                message.setText(Prefix + " " + player.getName() + Suffix + "§7: " + color + e.getMessage());
             } else {
                 String classement = "#N/A";
                 if (IslandTopGui.instance.getTopIsland().containsKey(playerIsland)) {
