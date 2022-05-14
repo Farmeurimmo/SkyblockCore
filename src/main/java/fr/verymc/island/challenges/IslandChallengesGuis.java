@@ -23,7 +23,7 @@ public class IslandChallengesGuis implements Listener {
 
     public static void CompleteChallenge(Player player, IslandChallenge challenge) {
         //poppy
-        double wonCrys = 5.0 * boost * challenge.getPalier();
+        double wonCrys = 3 * boost * challenge.getPalier();
         double wonMoney = 5000.0 * boost * challenge.getPalier();
         int keys = 1 * boost;
         IslandManager.instance.getPlayerIsland(player).getBank().addCrystaux(wonCrys);
@@ -99,7 +99,7 @@ public class IslandChallengesGuis implements Listener {
                 customa.setDisplayName("§6" + challenge.getName());
                 ArrayList<String> lore = new ArrayList<>();
                 lore.add("§7Progression: " + challenge.getProgress() + "/" + challenge.getMaxProgress() * (challenge.getPalier() + 1) * playerIsland.getMembers().size());
-                lore.add("§7Palier: " + challenge.getPalier() + "/5");
+                lore.add("§7Palier: " + challenge.getPalier() + "/2");
                 lore.add("§7Actif: " + (challenge.isActive() ? "§aOui" : "§cNon"));
                 customa.setLore(lore);
                 custom.setItemMeta(customa);

@@ -180,7 +180,7 @@ public class IslandGuiManager implements Listener {
             if (current.getType() == Material.SUNFLOWER) {
                 if (e.getClick() == ClickType.RIGHT &&
                         playerIsland.hasPerms(playerIsland.getIslandRankFromUUID(player.getUniqueId()), IslandPerms.BANK_ADD, player)) {
-                    if (bankAmountWaiting.containsKey(player.getUniqueId()) && bankAmountWaiting.get(player.getUniqueId()).equals("money")
+                    if (bankAmountWaiting.containsKey(player.getUniqueId()) && bankAmountWaiting.get(player.getUniqueId()).equalsIgnoreCase("money")
                             && bankAmountWaitingBoolean.get(player.getUniqueId())) {
                         bankAmountWaitingBoolean.remove(player.getUniqueId());
                         bankAmountWaiting.remove(player.getUniqueId());
