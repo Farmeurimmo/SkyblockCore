@@ -63,7 +63,7 @@ public class MoneyTradeGui implements Listener {
 
     @EventHandler
     public void onInventoryDragEvent(InventoryDragEvent e) {
-        if (!e.getView().getTitle().equals("§6Balance")) {
+        if (!e.getView().getTitle().equalsIgnoreCase("§6Balance")) {
             return;
         }
         int size = e.getRawSlots().size();
@@ -78,7 +78,7 @@ public class MoneyTradeGui implements Listener {
 
     @EventHandler
     public void onCloseInventory(InventoryCloseEvent e) {
-        if (!e.getView().getTitle().equals("§6Balance")) {
+        if (!e.getView().getTitle().equalsIgnoreCase("§6Balance")) {
             return;
         }
         if (!TradeGui.balanceGui) {
@@ -146,7 +146,7 @@ public class MoneyTradeGui implements Listener {
 
     @EventHandler
     public void onInventoryClick(InventoryClickEvent e) {
-        if (!e.getView().getTitle().equals("§6Balance")) {
+        if (!e.getView().getTitle().equalsIgnoreCase("§6Balance")) {
             return;
         }
         e.setCancelled(true);

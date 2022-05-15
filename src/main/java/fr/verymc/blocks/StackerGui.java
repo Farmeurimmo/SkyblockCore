@@ -19,7 +19,7 @@ public class StackerGui {
     public HashMap<Player, Chest> opened = new HashMap<>();
     public HashMap<Player, Boolean> addOrRemove = new HashMap<>();
 
-    public StackerGui(){
+    public StackerGui() {
         instance = this;
     }
 

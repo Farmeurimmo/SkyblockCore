@@ -22,10 +22,10 @@ import java.util.Arrays;
 
 public class IslandChallengesListener implements Listener {
 
-    public static int cobble = 128;
-    public static int coal = 96;
+    public static int cobble = 96;
+    public static int coal = 48;
     public static int iron = 64;
-    public static int gold = 64;
+    public static int gold = 32;
     public static int diamond = 64;
     public static int emerald = 16;
     public static int debris = 16;
@@ -106,7 +106,7 @@ public class IslandChallengesListener implements Listener {
 
             if (challenge.getProgress() >= challenge.getMaxProgress() * (challenge.getPalier() + 1) * playerIsland.getMembers().size()) {
                 challenge.setProgress(0);
-                if (challenge.getPalier() == 4) {
+                if (challenge.getPalier() == 2) {
                     challenge.setActive(false);
                 }
                 challenge.setPalier(challenge.getPalier() + 1);

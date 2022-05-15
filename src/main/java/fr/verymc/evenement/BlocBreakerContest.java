@@ -20,6 +20,9 @@ public class BlocBreakerContest {
     public int duration = 60 * 10;
     public long timeStarting = 0;
 
+    public ArrayList<Material> materialArrayList = new ArrayList<>(Arrays.asList(Material.COBBLESTONE, Material.OAK_WOOD, Material.ACACIA_WOOD,
+            Material.BIRCH_WOOD, Material.DARK_OAK_WOOD, Material.JUNGLE_WOOD, Material.SPRUCE_WOOD));
+
     public BlocBreakerContest() {
         instance = this;
         checkForIt();
@@ -41,11 +44,12 @@ public class BlocBreakerContest {
 
     public void startContest() {
         isActive = true;
-        material = Material.COBBLESTONE;
+        Random random = new Random();
+        material = materialArrayList.get(random.nextInt(materialArrayList.size()));
         timeStarting = System.currentTimeMillis();
 
-        Bukkit.broadcastMessage("§6§lBlocBreakerContest §8» §fLe concours de cassage blocs a commencé, le bloc choisit est "
-                + material.toString() + ". Minez en le plus possible et obtenez des récompenses en fonction de votre position " +
+        Bukkit.broadcastMessage("§6§lBlocBreakerContest §8» §fLe concours de cassage blocs a commencé, le bloc choisit est §e"
+                + material.toString() + "§f. Minez en le plus possible et obtenez des récompenses en fonction de votre position " +
                 "dans le classement. Il se terminera dans §e" + duration / 60 + " minutes§f.");
 
         Bukkit.getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
@@ -105,7 +109,7 @@ public class BlocBreakerContest {
         }
         Bukkit.broadcastMessage(toSend);
         final int totalPlayers = position.size();
-        double toGive = totalPlayers * 12000;
+        double toGive = totalPlayers * 18000;
         for (Map.Entry<Integer, UUID> entry : position.entrySet()) {
             Player player = Bukkit.getPlayer(entry.getValue());
             double breaked = pointMap.get(entry.getValue());

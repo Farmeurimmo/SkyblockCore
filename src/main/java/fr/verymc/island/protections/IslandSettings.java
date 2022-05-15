@@ -15,11 +15,10 @@ public enum IslandSettings {
     BLOCK_EXPLOSION("§7Explosions des blocs"),
     TIME_DEFAULT("§7Temps par défaut"),
     TIME_DAY("§7Jour permanant"),
-    TIME_CREPUSCULE("§7Crépuscul permanant"),
+    TIME_CREPUSCULE("§7Crépuscule permanant"),
     TIME_NIGHT("§7Nuit permanante"),
     WEATHER_DEFAULT("§7Météo par défaut"),
     WEATHER_RAIN("§7Météo pluvieuse/neigeuse"),
-    WEATHER_STORM("§7Météo tempête"),
     WEATHER_CLEAR("§7Météo claire");
 
     private final String desc;
@@ -36,24 +35,31 @@ public enum IslandSettings {
             case LIGHTNING_STRIKE -> new ItemStack(Material.ANVIL);
             case BLOCK_EXPLOSION -> new ItemStack(Material.TNT);
             case TIME_DEFAULT, TIME_CREPUSCULE, TIME_DAY, TIME_NIGHT -> new ItemStack(Material.DAYLIGHT_DETECTOR);
-            case WEATHER_CLEAR, WEATHER_DEFAULT, WEATHER_RAIN, WEATHER_STORM -> new ItemStack(Material.CLOCK);
+            case WEATHER_CLEAR, WEATHER_DEFAULT, WEATHER_RAIN -> new ItemStack(Material.CLOCK);
         };
     }
 
     public static IslandSettings getNext(IslandSettings setting) {
-        return switch (setting) {
-            case TIME_DEFAULT -> TIME_DAY;
-            case TIME_DAY -> TIME_CREPUSCULE;
-            case TIME_CREPUSCULE -> TIME_NIGHT;
-            default -> TIME_DEFAULT;
-        };
+        if (setting.toString().contains("TIME")) {
+            return switch (setting) {
+                case TIME_DEFAULT -> TIME_DAY;
+                case TIME_DAY -> TIME_CREPUSCULE;
+                case TIME_CREPUSCULE -> TIME_NIGHT;
+                default -> TIME_DEFAULT;
+            };
+        } else {
+            return switch (setting) {
+                case WEATHER_DEFAULT -> WEATHER_RAIN;
+                case WEATHER_RAIN -> WEATHER_CLEAR;
+                default -> WEATHER_DEFAULT;
+            };
+        }
     }
 
     public static IslandSettings getNextWeather(IslandSettings setting) {
         return switch (setting) {
             case WEATHER_DEFAULT -> WEATHER_RAIN;
-            case WEATHER_RAIN -> WEATHER_STORM;
-            case WEATHER_STORM -> WEATHER_CLEAR;
+            case WEATHER_RAIN -> WEATHER_CLEAR;
             default -> WEATHER_DEFAULT;
         };
     }
@@ -71,7 +77,7 @@ public enum IslandSettings {
     @NotNull
     public static IslandSettings getWeatherSetting(ArrayList<IslandSettings> settings) {
         for (IslandSettings setting : settings) {
-            if (setting == WEATHER_CLEAR || setting == WEATHER_DEFAULT || setting == WEATHER_RAIN || setting == WEATHER_STORM) {
+            if (setting == WEATHER_CLEAR || setting == WEATHER_DEFAULT || setting == WEATHER_RAIN) {
                 return setting;
             }
         }

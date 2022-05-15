@@ -48,9 +48,6 @@ public class IslandInteractManager implements Listener {
         Player player = e.getPlayer();
         Island island = IslandManager.instance.getIslandByLoc(e.getBlock().getLocation());
         if (island != null) {
-            if (IslandManager.instance.isBypassing(player.getUniqueId())) {
-                return;
-            }
             if (island.hasPerms(island.getIslandRankFromUUID(player.getUniqueId()), IslandPerms.BREAK, player)) {
                 if (IslandBlocsValues.instance.hasBlockValue(e.getBlock().getType())) {
                     island.removeValue(IslandBlocsValues.instance.getBlockValue(e.getBlock().getType()));

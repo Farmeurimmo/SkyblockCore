@@ -120,14 +120,14 @@ public class CountdownFly implements Listener {
                         }
                     }
 
-                        if (skyblockUser.isActive() && skyblockUser.getFlyLeft() <= 0) {
-                            player.teleport(SpawnCmd.Spawn);
-                            skyblockUser.setActive(false);
-                            player.setAllowFlight(false);
-                            player.setFlying(false);
-                            player.sendActionBar("§6Fin du fly.");
-                            skyblockUser.setFlyLeft(0);
-                        }
+                    if (skyblockUser.isActive() && skyblockUser.getFlyLeft() <= 0) {
+                        player.teleport(SpawnCmd.Spawn);
+                        skyblockUser.setActive(false);
+                        player.setAllowFlight(false);
+                        player.setFlying(false);
+                        player.sendActionBar("§6Fin du fly.");
+                        skyblockUser.setFlyLeft(0);
+                    }
                 }
             }
         }

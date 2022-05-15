@@ -9,6 +9,8 @@ import main.java.fr.verymc.utils.PlayerUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+import java.text.NumberFormat;
+
 public class InvestManager {
 
     public static InvestManager instance;
@@ -30,12 +32,12 @@ public class InvestManager {
     }
 
     public void giveReward(SkyblockUser skyblockUser) {
-        double gained = skyblockUser.getTimeInvest() * 1.6;
+        double gained = skyblockUser.getTimeInvest() * 1.75;
         EcoAccountsManager.instance.addFoundsUUID(skyblockUser.getUserUUID(), gained, false);
         if (Bukkit.getPlayer(skyblockUser.getUserUUID()) != null) {
             Bukkit.getPlayer(skyblockUser.getUserUUID()).sendMessage("§6§lInvest §8» §fVous êtes sortis du mode invest. Vous avez gagné §6" +
-                    gained + "$§f en " + getConverted((int) skyblockUser.getTimeInvest()) + "§f.");
-            Bukkit.getPlayer(skyblockUser.getUserUUID()).sendTitle("§6Invest terminé", "§fVous avez gagné " + gained + "$");
+                    NumberFormat.getInstance().format(gained) + "$§f en " + getConverted((int) skyblockUser.getTimeInvest()) + "§f.");
+            Bukkit.getPlayer(skyblockUser.getUserUUID()).sendTitle("§6Invest terminé", "§fVous avez gagné " + NumberFormat.getInstance().format(gained) + "$");
         }
         skyblockUser.setTimeInvest(0);
         skyblockUser.setInInvestMode(false);

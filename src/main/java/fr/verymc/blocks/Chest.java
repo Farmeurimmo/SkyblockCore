@@ -147,4 +147,8 @@ public class Chest {
         this.stacked = stacked;
     }
 
+    public boolean isStacker() {
+        return this.type == 3;
+    }
+
 }
