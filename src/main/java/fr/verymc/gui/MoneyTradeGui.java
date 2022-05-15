@@ -81,7 +81,7 @@ public class MoneyTradeGui implements Listener {
         if (!e.getView().getTitle().equalsIgnoreCase("§6Balance")) {
             return;
         }
-        if (!TradeGui.balanceGui) {
+        if (TradeGui.balanceGui.contains(Bukkit.getPlayer(e.getPlayer().getUniqueId()))) {
             return;
         }
         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
@@ -106,7 +106,7 @@ public class MoneyTradeGui implements Listener {
                 if (EcoAccountsManager.instance.getMoney(playerOne.getUniqueId()) >= trade.playerOneMoneyAmount + howMuch) {
                     trade.playerOneMoneyAmount += howMuch;
                 } else {
-                    trade.playerTwoMoneyAmount = (int) EcoAccountsManager.instance.getMoney(playerOne.getUniqueId());
+                    trade.playerOneMoneyAmount = (int) EcoAccountsManager.instance.getMoney(playerOne.getUniqueId());
                     playerOne.sendMessage("§6§lTrade §8» §4Vous n'avez pas les fonds nécessaires");
                 }
             }
@@ -115,7 +115,7 @@ public class MoneyTradeGui implements Listener {
                     trade.playerTwoMoneyAmount += howMuch;
                 } else {
                     trade.playerTwoMoneyAmount = (int) EcoAccountsManager.instance.getMoney(playerTwo.getUniqueId());
-                    playerOne.sendMessage("§6§lTrade §8» §4Vous n'avez pas les fonds nécessaires");
+                    playerTwo.sendMessage("§6§lTrade §8» §4Vous n'avez pas les fonds nécessaires");
                 }
             }
         }
@@ -178,26 +178,29 @@ public class MoneyTradeGui implements Listener {
         if (e.getRawSlot() == 21) {
             trade.playerOneMoneyAmount = previousAmountOne;
             trade.playerTwoMoneyAmount = previousAmountTwo;
-            TradeGui.balanceGui = false;
+            TradeGui.balanceGui.add(Bukkit.getPlayer(e.getWhoClicked().getUniqueId()));
             e.getWhoClicked().openInventory(trade.tradeInv);
+            TradeGui.balanceGui.remove(Bukkit.getPlayer(e.getWhoClicked().getUniqueId()));
         }
         if (e.getRawSlot() == 23 && e.getWhoClicked() == playerOne) {
-            TradeGui.balanceGui = false;
+            TradeGui.balanceGui.add(playerOne);
             ItemStack item = trade.tradeInv.getItem(38);
             ItemMeta meta = item.getItemMeta();
             meta.setLore(Arrays.asList("§6    >> " + NumberFormat.getInstance().format(trade.playerOneMoneyAmount) + "$"));
             item.setItemMeta(meta);
             trade.tradeInv.setItem(38, item);
             playerOne.openInventory(trade.tradeInv);
+            TradeGui.balanceGui.remove(playerOne);
         }
         if (e.getRawSlot() == 23 && e.getWhoClicked() == playerTwo) {
-            TradeGui.balanceGui = false;
+            TradeGui.balanceGui.add(playerTwo);
             ItemStack item = trade.tradeInv.getItem(42);
             ItemMeta meta = item.getItemMeta();
             meta.setLore(Arrays.asList("§6    >> " + NumberFormat.getInstance().format(trade.playerTwoMoneyAmount) + "$"));
             item.setItemMeta(meta);
             trade.tradeInv.setItem(42, item);
             playerTwo.openInventory(trade.tradeInv);
+            TradeGui.balanceGui.remove(playerTwo);
         }
     }
 }
