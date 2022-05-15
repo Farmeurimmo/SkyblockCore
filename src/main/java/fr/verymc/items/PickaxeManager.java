@@ -23,37 +23,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class FarmHoeManager implements Listener {
-
-    public static ArrayList<String> replantableblocks = new ArrayList<String>(Arrays.asList("WHEAT", "CARROTS", "POTATOES",
-            "NETHER_WART", "BEETROOTS"));
-
-    public static List<Block> getNearbyBlocks(Location location, int radius) {
-        List<Block> blocks = new ArrayList<Block>();
-        if (radius == 0) {
-            blocks.add(location.getWorld().getBlockAt(location.getBlockX(), location.getBlockY(), location.getBlockZ()));
-            return blocks;
-        }
-        int y = location.getBlockY();
-        for (int x = location.getBlockX() - radius; x <= location.getBlockX() + radius; x++) {
-            for (int z = location.getBlockZ() - radius; z <= location.getBlockZ() + radius; z++) {
-                blocks.add(location.getWorld().getBlockAt(x, y, z));
-            }
-        }
-        return blocks;
-    }
+public class PickaxeManager implements Listener {
+    public static ArrayList<Material> breakingBlock = new ArrayList<Material>(Arrays.asList(Material.STONE, Material.COAL_ORE, Material.IRON_ORE, Material.DIAMOND_ORE, Material.EMERALD_ORE, Material.LAPIS_ORE, Material.REDSTONE_ORE));
 
     public static void AddBlockHaversted(Player player, ItemStack a) {
         String tosearch = a.getLore().get(0).replace("§7", "");
-        boolean digit = false;
-        try {
-            @SuppressWarnings("unused")
-            int intValue = Integer.parseInt(tosearch);
-            digit = true;
-        } catch (NumberFormatException e) {
-            digit = false;
-        }
-        if (!tosearch.contains(".") && digit == true) {
+        if (!tosearch.contains(".")) {
             int num = Integer.parseInt(tosearch);
             num += 1;
             List<String> lores = a.getLore();
@@ -108,37 +83,33 @@ public class FarmHoeManager implements Listener {
     }
 
     @EventHandler
-    public void HoeClic(PlayerInteractEvent e) {
+    public void PickaxeClick(PlayerInteractEvent e) {
         if (e.getPlayer().getLocation().getWorld().getName().equalsIgnoreCase("world")) {
             return;
         }
         if (e.getAction() == Action.LEFT_CLICK_BLOCK) {
-            ItemStack farmhoe = e.getPlayer().getItemInHand();
-            if (farmhoe == null) {
+            ItemStack itemInHand = e.getPlayer().getItemInHand();
+            if (itemInHand.getType() == Material.AIR) {
                 return;
             }
-            if (farmhoe.getType() == Material.AIR) {
+            if (itemInHand.getItemMeta() == null) {
                 return;
             }
-            if (farmhoe.getItemMeta() == null) {
+            if (itemInHand.getType() != Material.NETHERITE_PICKAXE) {
                 return;
             }
-            if (farmhoe.getType() != Material.NETHERITE_HOE) {
+            if (!itemInHand.isUnbreakable()) {
                 return;
             }
-            if (!farmhoe.isUnbreakable()) {
-                return;
-            }
-
             Player player = e.getPlayer();
             Location clicloc = e.getClickedBlock().getLocation();
 
-            int tier = 0;
-            if (farmhoe.getDisplayName().contains("§cIII")) {
+            int tier;
+            if (itemInHand.getDisplayName().contains("§cIII")) {
                 tier = 2;
-            } else if (farmhoe.getDisplayName().contains("§cII")) {
+            } else if (itemInHand.getDisplayName().contains("§cII")) {
                 tier = 1;
-            } else if (farmhoe.getDisplayName().contains("§cI")) {
+            } else if (itemInHand.getDisplayName().contains("§cI")) {
                 tier = 0;
             } else {
                 return;
@@ -146,48 +117,28 @@ public class FarmHoeManager implements Listener {
             if (e.getPlayer().getItemInHand().getLore() == null) {
                 return;
             }
-            if (!farmhoe.getLore().get(0).contains("§")) {
+            if (!itemInHand.getLore().get(0).contains("§")) {
                 return;
             }
 
-            e.setCancelled(true);
-
             World world = player.getWorld();
             int gained = 0;
-            for (Block rf : getNearbyBlocks(clicloc, tier)) {
-                if (!replantableblocks.contains(rf.getType().toString())) {
+            for (Block rf : FarmHoeManager.getNearbyBlocks(clicloc, tier)) {
+                if (!breakingBlock.contains(rf.getType())) {
                     continue;
                 }
                 Block bltmp = Bukkit.getWorld(world.getName()).getBlockAt(rf.getLocation());
-                final Ageable ageable = (Ageable) bltmp.getState().getBlockData();
-                int age = ageable.getAge();
                 int fd = 1;
-                if (age == ageable.getMaximumAge()) {
                     for (ItemStack eed : bltmp.getDrops(e.getItem())) {
-                        if (eed.getType().toString().contains("SEED") || eed.getType() == Material.CARROT
-                                || eed.getType() == Material.POTATO || eed.getType() == Material.NETHER_WART) {
-                            if (fd == 1) {
-                                fd = 0;
-                                for (ItemStack redse : player.getInventory().getStorageContents()) {
-                                    if (redse == null) continue;
-                                    if (redse.getType() == eed.getType()) {
-                                        redse.setAmount(redse.getAmount() - 1);
-                                        break;
-                                    }
-                                }
-                            }
-                        }
                         if (BuyShopItem.GetAmountToFillInInv(eed, player) > 0) {
                             player.getInventory().addItem(eed);
                             continue;
                         }
                         world.dropItemNaturally(rf.getLocation(), eed);
                     }
-                    ageable.setAge(0);
                     gained++;
-                    bltmp.setBlockData(ageable);
                     bltmp.getState().update(true);
-                    AddBlockHaversted(player, farmhoe);
+                    AddBlockHaversted(player, itemInHand);
                     if (BlocBreakerContest.instance.isActive) {
                         if (bltmp.getType().equals(BlocBreakerContest.instance.material)) {
                             BlocBreakerContest.instance.addBlock(player.getUniqueId());
@@ -223,9 +174,6 @@ public class FarmHoeManager implements Listener {
                         challenge.setPalier(challenge.getPalier() + 1);
                         IslandChallengesGuis.CompleteChallenge(player, challenge);
                     }
-                } else {
-                    continue;
-                }
             }
         }
         if (e.getAction() == Action.RIGHT_CLICK_AIR) {
@@ -249,5 +197,4 @@ public class FarmHoeManager implements Listener {
             }
         }
     }
-
 }
