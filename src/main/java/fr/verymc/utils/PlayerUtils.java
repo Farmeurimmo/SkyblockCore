@@ -147,6 +147,29 @@ public class PlayerUtils {
         return exp;
     }
 
+    public int levelsToXp(int levels) {
+        if (levels <= 16) {
+            return (int) (Math.pow(levels, 2) + (6 * levels));
+        } else if (levels >= 17 && levels <= 31) {
+            return (int) ((2.5 * Math.pow(levels, 2)) + (-40.5 * levels) + 360);
+        } else if (levels >= 32) {
+            return (int) ((4.5 * Math.pow(levels, 2)) + (-162.5 * levels) + 2220);
+        }
+        return -1;
+    }
+
+    public int XpToLevels(int xp) {
+        if (xp <= 352) {
+            return (int) (Math.sqrt(xp + 9) - 3);
+        } else if (xp >= 394 && xp <= 1507) {
+            return (int) ((Math.sqrt(40 * xp - 7839) + 81) * 0.1);
+        } else if (xp >= 1628) {
+            return (int) ((Math.sqrt(72 * xp - 54215) + 325) / 18);
+        }
+        return -1;
+    }
+
+
     public void setTotalExperience(final Player player, final int exp) {
         if (exp < 0) {
             return;
