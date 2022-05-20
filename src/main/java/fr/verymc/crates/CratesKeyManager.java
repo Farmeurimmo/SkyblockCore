@@ -32,7 +32,6 @@ public class CratesKeyManager {
             return;
         }
         player.sendMessage("§6§lCrates §8» §fVous avez reçu x" + nombre + " " + custom1.getDisplayName() + " !");
-        player.getInventory().addItem(custom1);
         if (InventoryUtils.instance.hasPlaceWithStackCo(custom1, player.getInventory(), player) >= 1) {
             player.getInventory().addItem(custom1);
         } else {
