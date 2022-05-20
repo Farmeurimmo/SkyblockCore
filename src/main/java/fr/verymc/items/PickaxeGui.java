@@ -42,19 +42,21 @@ public class PickaxeGui implements Listener {
         ItemStack custom13;
         if (pickaxe.getEnchantments().containsKey(Enchantment.SILK_TOUCH)) {
             custom13 = (new ItemStackBuilder(Material.ENCHANTED_BOOK, 1))
-                    .setName("§eDésactivé touchée de soie")
-                    .setLore("§6Désactivé touchée de soie §8| §aClic gauche",
+                    .setName("§eDésactivez toucher de soie")
+                    .setLore("§6Désactivez toucher de soie §8| §aClic gauche",
                             "§6Cout : §a10 000 §6utilisations").getItemStack();
             if (player.getItemInHand().hasItemFlag(ItemFlag.HIDE_PLACED_ON)) {
                 custom13.getLore().set(1, "");
             }
         } else {
             custom13 = (new ItemStackBuilder(Material.ENCHANTED_BOOK, 1))
-                    .setName("§eActivé touchée de soie")
-                    .setLore("§6Activé touchée de soie §8| §aClic gauche",
+                    .setName("§eActivez toucher de soie")
+                    .setLore("§6Activez toucher de soie §8| §aClic gauche",
                             "§6Cout : §a10 000 §6utilisations").getItemStack();
             if (player.getItemInHand().hasItemFlag(ItemFlag.HIDE_PLACED_ON)) {
                 custom13.getLore().set(1, "");
+            } else {
+                custom13.setDisplayName("§eDébloquez l'activation / désactivation du toucher de soie");
             }
         }
         custom13.addEnchant(Enchantment.SILK_TOUCH, 1, false);
@@ -117,6 +119,11 @@ public class PickaxeGui implements Listener {
                 player.sendMessage("Son nouveau niveau d'efficacité est : §a" + enchantementLevel);
                 return;
             }
+            if (enchantementLevel > 15) {
+                player.sendMessage("§cErreur, votre pioche a atteint le niveau maximum d'éfficacité.");
+            } else {
+                player.sendMessage("§cErreur, vous n'avez pas assez d'utilisation.");
+            }
         }
         if (current.getEnchantments().containsKey(Enchantment.LOOT_BONUS_BLOCKS)) {
             int enchantementLevel = current.getEnchantLevel(Enchantment.LOOT_BONUS_BLOCKS);
@@ -128,24 +135,31 @@ public class PickaxeGui implements Listener {
                 player.sendMessage("Son nouveau niveau de fortune est : §a" + enchantementLevel);
                 return;
             }
+            if (enchantementLevel > 6) {
+                player.sendMessage("§cErreur, votre pioche a atteint le niveau maximum de fortune.");
+            } else {
+                player.sendMessage("§cErreur, vous n'avez pas assez d'utilisation.");
+            }
         }
         if (current.getEnchantments().containsKey(Enchantment.SILK_TOUCH)) {
             if (player.getItemInHand().hasItemFlag(ItemFlag.HIDE_PLACED_ON)) {
                 if (player.getItemInHand().getEnchantments().containsKey(Enchantment.SILK_TOUCH)) {
                     player.getItemInHand().removeEnchant(Enchantment.SILK_TOUCH);
                     player.closeInventory();
-                    player.sendMessage("§6§lPioche §8» §fTouchée de soie désactivé.");
+                    player.sendMessage("§6§lPioche §8» §fToucher de soie désactivé.");
                 } else {
                     player.getItemInHand().addEnchant(Enchantment.SILK_TOUCH, 1, false);
                     player.closeInventory();
-                    player.sendMessage("§6§lPioche §8» §fTouchée de soie activé.");
+                    player.sendMessage("§6§lPioche §8» §fToucher de soie activé.");
                 }
             } else {
                 if (getUsageNumber(player.getItemInHand()) >= 10000) {
                     addNumber(player.getItemInHand(), -10000);
                     player.getItemInHand().addItemFlags(ItemFlag.HIDE_PLACED_ON);
                     player.closeInventory();
-                    player.sendMessage("§6§lPioche §8» §fVous avez débloqué la possibilité d'activé touchée de soie.");
+                    player.sendMessage("§6§lPioche §8» §fVous avez débloqué la possibilitée d'activer toucher de soie.");
+                } else {
+                    player.sendMessage("§cErreur, vous n'avez pas assez d'utilisation.");
                 }
             }
         }

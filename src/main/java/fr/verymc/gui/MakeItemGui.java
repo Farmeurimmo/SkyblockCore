@@ -1,5 +1,6 @@
 package main.java.fr.verymc.gui;
 
+import main.java.fr.verymc.utils.ItemStackBuilder;
 import main.java.fr.verymc.utils.PreGenItems;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -13,7 +14,6 @@ import java.util.Arrays;
 public class MakeItemGui {
 
     public static void MakeRankGui(Player player) {
-
 
         Inventory invboutiquefarm2win = Bukkit.createInventory(null, 27, "§6Boutique des items Farm2Win");
 
@@ -49,6 +49,10 @@ public class MakeItemGui {
         customl.setLore(Arrays.asList("§6Prix: 500000$"));
         custom13.setItemMeta(customl);
         invboutiquefarm2win.setItem(16, custom13);
+
+        ItemStack evoPickaxe = new ItemStackBuilder(Material.NETHERITE_PICKAXE)
+                .setName("§6Gros Cailloux").setLore("§6Prix: 500000$").getItemStack();
+        invboutiquefarm2win.setItem(4, evoPickaxe);
 
         ItemStack custom14 = new ItemStack(Material.CHEST, 1);
         ItemMeta customm = custom14.getItemMeta();
