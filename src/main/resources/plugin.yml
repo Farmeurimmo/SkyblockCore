@@ -72,6 +72,8 @@ commands:
     permission: chests.give
   farmhoe:
     permission: farmhoe.give
+  pickaxe:
+    permission: pickaxe.give
   reboot:
     permission: reboot
   ah:
@@ -93,4 +95,3 @@ commands:
     permission: trade
   tradecancel:
     permission: trade
-  pickaxe:
