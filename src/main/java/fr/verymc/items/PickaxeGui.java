@@ -1,6 +1,5 @@
 package main.java.fr.verymc.items;
 
-import main.java.fr.verymc.eco.EcoAccountsManager;
 import main.java.fr.verymc.utils.ItemStackBuilder;
 import main.java.fr.verymc.utils.PreGenItems;
 import org.bukkit.Bukkit;
@@ -13,9 +12,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class PickaxeGui implements Listener {
@@ -27,36 +24,35 @@ public class PickaxeGui implements Listener {
         ItemStack custom10 = (new ItemStackBuilder(Material.ENCHANTED_BOOK, 1))
                 .setName("§eAmélioration de l'efficacité")
                 .setLore("§6Ajoutez un niveau d'éfficacité | §aClic gauche",
-                "§6Niveau Maximum : §c15 §8| §6Niveau Actuelle : §a"
-                + pickaxe.getEnchantLevel(Enchantment.DIG_SPEED),
-                "§6Cout : §a1 000 §6utilisations") .getItemStack();
+                        "§6Niveau Maximum : §c15 §8| §6Niveau Actuelle : §a"
+                                + pickaxe.getEnchantLevel(Enchantment.DIG_SPEED),
+                        "§6Cout : §a1 000 §6utilisations").getItemStack();
         custom10.addEnchant(Enchantment.DIG_SPEED, pickaxe.getEnchantLevel(Enchantment.DIG_SPEED) + 1, true);
         invPickaxe.setItem(10, custom10);
 
         ItemStack custom12 = (new ItemStackBuilder(Material.ENCHANTED_BOOK, 1))
                 .setName("§eAmélioration de la fortune")
                 .setLore("§6Ajoutez un niveau de fortune | §aClic gauche",
-                "§6Niveau Maximum : §c6 §8| §6Niveau Actuelle : §a"
-                + pickaxe.getEnchantLevel(Enchantment.LOOT_BONUS_BLOCKS),
-                "§6Cout : §a1 000 §6utilisations").getItemStack();
+                        "§6Niveau Maximum : §c6 §8| §6Niveau Actuelle : §a"
+                                + pickaxe.getEnchantLevel(Enchantment.LOOT_BONUS_BLOCKS),
+                        "§6Cout : §a1 000 §6utilisations").getItemStack();
         custom12.addEnchant(Enchantment.LOOT_BONUS_BLOCKS, pickaxe.getEnchantLevel(Enchantment.LOOT_BONUS_BLOCKS) + 1, true);
         invPickaxe.setItem(13, custom12);
 
         ItemStack custom13;
         if (pickaxe.getEnchantments().containsKey(Enchantment.SILK_TOUCH)) {
             custom13 = (new ItemStackBuilder(Material.ENCHANTED_BOOK, 1))
-            .setName("§eDésactivé touchée de soie")
-            .setLore("§6Désactivé touchée de soie §8| §aClic gauche",
-            "§6Cout : §a10 000 §6utilisations").getItemStack();
+                    .setName("§eDésactivé touchée de soie")
+                    .setLore("§6Désactivé touchée de soie §8| §aClic gauche",
+                            "§6Cout : §a10 000 §6utilisations").getItemStack();
             if (player.getItemInHand().hasItemFlag(ItemFlag.HIDE_PLACED_ON)) {
                 custom13.getLore().set(1, "");
             }
-        }
-        else {
+        } else {
             custom13 = (new ItemStackBuilder(Material.ENCHANTED_BOOK, 1))
-            .setName("§eActivé touchée de soie")
-            .setLore("§6Activé touchée de soie §8| §aClic gauche",
-            "§6Cout : §a10 000 §6utilisations").getItemStack();
+                    .setName("§eActivé touchée de soie")
+                    .setLore("§6Activé touchée de soie §8| §aClic gauche",
+                            "§6Cout : §a10 000 §6utilisations").getItemStack();
             if (player.getItemInHand().hasItemFlag(ItemFlag.HIDE_PLACED_ON)) {
                 custom13.getLore().set(1, "");
             }
@@ -95,7 +91,7 @@ public class PickaxeGui implements Listener {
         lore.set(0, "§7" + nbrUsage);
         pickaxe.setLore(lore);
     }
-    
+
     @EventHandler
     public void InventoryClickEvent(InventoryClickEvent e) {
         if (!e.getView().getTitle().equalsIgnoreCase("§6Tiers de la pioche évolutive")) {

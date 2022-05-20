@@ -1,18 +1,12 @@
 package main.java.fr.verymc.items;
 
 import main.java.fr.verymc.evenement.BlocBreakerContest;
-import main.java.fr.verymc.events.Interact;
 import main.java.fr.verymc.island.Island;
 import main.java.fr.verymc.island.IslandManager;
 import main.java.fr.verymc.island.challenges.IslandChallenge;
 import main.java.fr.verymc.island.challenges.IslandChallengesGuis;
-import main.java.fr.verymc.shopgui.BuyShopItem;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.World;
 import org.bukkit.block.Block;
-import org.bukkit.block.data.Ageable;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -23,14 +17,13 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 
 public class PickaxeManager implements Listener {
     public static ArrayList<Material> breakingBlock = new ArrayList<>(
             Arrays.asList(Material.STONE, Material.COAL_ORE, Material.IRON_ORE,
-            Material.DIAMOND_ORE, Material.ANCIENT_DEBRIS, Material.EMERALD_ORE,
-            Material.LAPIS_ORE, Material.REDSTONE_ORE, Material.COBBLESTONE));
+                    Material.DIAMOND_ORE, Material.ANCIENT_DEBRIS, Material.EMERALD_ORE,
+                    Material.LAPIS_ORE, Material.REDSTONE_ORE, Material.COBBLESTONE));
 
     public static void AddBlockHaversted(Player player, ItemStack a, int amount) {
         String tosearch = a.getLore().get(0).replace("§7", "");
@@ -51,7 +44,7 @@ public class PickaxeManager implements Listener {
             case DIAMOND_ORE, EMERALD_ORE -> {
                 return 5;
             }
-            case COAL_ORE, IRON_ORE, GOLD_ORE, REDSTONE_ORE, LAPIS_ORE-> {
+            case COAL_ORE, IRON_ORE, GOLD_ORE, REDSTONE_ORE, LAPIS_ORE -> {
                 return 3;
             }
             default -> {
@@ -135,7 +128,7 @@ public class PickaxeManager implements Listener {
             return;
         }
         if (e.getAction() != Action.RIGHT_CLICK_AIR
-        && e.getAction() != Action.RIGHT_CLICK_BLOCK) {
+                && e.getAction() != Action.RIGHT_CLICK_BLOCK) {
             return;
         }
         if (!e.getPlayer().getItemInHand().isUnbreakable()) {

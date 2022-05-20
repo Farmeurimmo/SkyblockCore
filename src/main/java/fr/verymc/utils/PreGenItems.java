@@ -24,8 +24,7 @@ public class PreGenItems {
         String Grade = user.getCachedData().getMetaData().getPrefix();
         if (Grade != null) {
             Grade.replace("&", "§");
-        }
-        else {
+        } else {
             Grade = "[]";
         }
         ItemStack custom10 = new ItemStack(Material.PLAYER_HEAD, 1);

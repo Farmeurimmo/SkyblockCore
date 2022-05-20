@@ -1,7 +1,6 @@
 package main.java.fr.verymc.blocks;
 
 import main.java.fr.verymc.Main;
-import main.java.fr.verymc.eco.EcoAccountsManager;
 import main.java.fr.verymc.island.IslandManager;
 import main.java.fr.verymc.shopgui.BuyShopItem;
 import main.java.fr.verymc.storage.AsyncConfig;
