@@ -2,15 +2,20 @@ package main.java.fr.verymc.items;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.event.enchantment.EnchantItemEvent;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
+import java.util.jar.Attributes;
 
 public class PickaxeCmd implements CommandExecutor {
     @Override
@@ -26,7 +31,7 @@ public class PickaxeCmd implements CommandExecutor {
         Player p = Bukkit.getPlayer(args[0]);
         ItemStack custom6 = new ItemStack(Material.NETHERITE_PICKAXE, 1);
         ItemMeta customf = custom6.getItemMeta();
-        customf.setDisplayName("§6Gros Cailloux Tier §cI (1X1)");
+        customf.setDisplayName("§6Gros Cailloux");
         customf.setLore(Arrays.asList("§70", "§7", "§6Clic droit pour ouvrir le menu d'amélioration"));
         customf.setUnbreakable(true);
         custom6.setItemMeta(customf);

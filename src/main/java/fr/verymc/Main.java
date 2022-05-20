@@ -297,6 +297,7 @@ public class Main extends JavaPlugin implements Listener {
         getServer().getPluginManager().registerEvents(new EntityListener(), this);
         getServer().getPluginManager().registerEvents(new BlockListener(), this);
         getServer().getPluginManager().registerEvents(new PickaxeManager(), this);
+        getServer().getPluginManager().registerEvents(new PickaxeGui(), this);
         PluginManager pm = getServer().getPluginManager();
         pm.registerEvents(this, this);
     }

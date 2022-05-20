@@ -21,8 +21,13 @@ public class PreGenItems {
 
     public ItemStack getOwnerHead(Player player) {
         User user = LuckPermsProvider.get().getUserManager().getUser(player.getName());
-        String Grade = user.getCachedData().getMetaData().getPrefix().replace("&", "§");
-
+        String Grade = user.getCachedData().getMetaData().getPrefix();
+        if (Grade != null) {
+            Grade.replace("&", "§");
+        }
+        else {
+            Grade = "[]";
+        }
         ItemStack custom10 = new ItemStack(Material.PLAYER_HEAD, 1);
         SkullMeta customi = (SkullMeta) custom10.getItemMeta();
         customi.setOwner(player.getName());
