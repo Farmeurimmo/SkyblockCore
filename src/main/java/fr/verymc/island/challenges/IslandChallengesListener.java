@@ -106,13 +106,12 @@ public class IslandChallengesListener implements Listener {
 
             if (challenge.getProgress() >= challenge.getMaxProgress() * (challenge.getPalier() + 1) * playerIsland.getMembers().size()) {
                 challenge.setProgress(0);
-                if (challenge.getPalier() == 2) {
+                if (challenge.getPalier() >= IslandChallengesReset.maxPalier) {
                     challenge.setActive(false);
                 }
                 challenge.setPalier(challenge.getPalier() + 1);
                 IslandChallengesGuis.CompleteChallenge(player, challenge);
             }
-            return;
         }
     }
 

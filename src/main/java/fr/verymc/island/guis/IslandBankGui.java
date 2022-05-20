@@ -49,7 +49,7 @@ public class IslandBankGui {
         ItemStack custom3 = new ItemStack(Material.EXPERIENCE_BOTTLE, 1);
         ItemMeta meta3 = custom3.getItemMeta();
         meta3.setDisplayName("§6Expérience");
-        meta3.setLore(Arrays.asList("§7Expérience en banque: §6" + DecimalFormat.getNumberInstance().format(playerIsland.getBank().getXp()),
+        meta3.setLore(Arrays.asList("§7Orbe d'Expérience en banque: §6" + DecimalFormat.getNumberInstance().format(playerIsland.getBank().getXp()),
                 "§7Clic gauche pour retirer", "§7Clic droit pour ajouter"));
         custom3.setItemMeta(meta3);
         inv.setItem(16, custom3);

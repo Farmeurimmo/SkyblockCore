@@ -411,7 +411,8 @@ public class ChestListener implements Listener {
                             p.sendMessage("§6§6Stacker §8» §cVous n'avez pas assez de place dans votre inventaire");
                         }
                     } else {
-                        p.sendMessage("§6§lStacker §8» §cVous ne pouvez pas enlever le dernier bloc du stacker !");
+                        p.sendMessage("§6§lStacker §8» §cVous ne pouvez pas enlever le dernier bloc du stacker, "
+                                + "pour le casser, merci de sneak + casser deux fois.");
                     }
                 }
             }

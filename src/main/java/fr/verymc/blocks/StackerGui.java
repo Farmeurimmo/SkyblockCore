@@ -1,5 +1,6 @@
 package main.java.fr.verymc.blocks;
 
+import main.java.fr.verymc.island.IslandManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -25,8 +26,8 @@ public class StackerGui {
 
     public void openStackerGui(Player player, Chest chest) {
         if (chest.getType() != 3) return;
-        if (!chest.getOwner().equals(player.getUniqueId())) {
-            player.sendMessage("§6§lStacker §8» §fVous devez être le propriétaire du stacker pour le modifier.");
+        if (!IslandManager.instance.getIslandByLoc(chest.getBlock()).getMembers().containsKey(player.getUniqueId())) {
+            player.sendMessage("§6§lStacker §8» §fVous devez être un membre de l'île pour modifier le stacker.");
             return;
         }
 
