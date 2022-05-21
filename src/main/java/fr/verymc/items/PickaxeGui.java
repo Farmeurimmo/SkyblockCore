@@ -71,13 +71,14 @@ public class PickaxeGui implements Listener {
         if (pickaxe.getLore() == null) {
             return -1;
         }
-        if (!pickaxe.getLore().get(0).contains("§")) {
+        if (!pickaxe.getLore().get(0).contains("§7")) {
             return -1;
         }
         String tosearch = pickaxe.getLore().get(0).replace("§7", "");
         try {
             Integer.parseInt(tosearch);
         } catch (NumberFormatException ede) {
+            ede.printStackTrace();
             return -1;
         }
         return Integer.parseInt(tosearch);
@@ -111,6 +112,7 @@ public class PickaxeGui implements Listener {
         }
         if (current.getEnchantments().containsKey(Enchantment.DIG_SPEED)) {
             int enchantementLevel = current.getEnchantLevel(Enchantment.DIG_SPEED);
+            player.sendMessage(getUsageNumber(player.getItemInHand()) + " utilisations restantes " + enchantementLevel);
             if (getUsageNumber(player.getItemInHand()) >= 1000 && enchantementLevel <= 15) {
                 addNumber(player.getItemInHand(), -1000);
                 player.getItemInHand().addEnchant(Enchantment.DIG_SPEED, enchantementLevel, true);
@@ -124,6 +126,7 @@ public class PickaxeGui implements Listener {
             } else {
                 player.sendMessage("§cErreur, vous n'avez pas assez d'utilisation.");
             }
+            return;
         }
         if (current.getEnchantments().containsKey(Enchantment.LOOT_BONUS_BLOCKS)) {
             int enchantementLevel = current.getEnchantLevel(Enchantment.LOOT_BONUS_BLOCKS);
@@ -140,6 +143,7 @@ public class PickaxeGui implements Listener {
             } else {
                 player.sendMessage("§cErreur, vous n'avez pas assez d'utilisation.");
             }
+            return;
         }
         if (current.getEnchantments().containsKey(Enchantment.SILK_TOUCH)) {
             if (player.getItemInHand().hasItemFlag(ItemFlag.HIDE_PLACED_ON)) {

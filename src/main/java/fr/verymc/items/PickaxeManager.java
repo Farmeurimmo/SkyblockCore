@@ -55,7 +55,7 @@ public class PickaxeManager implements Listener {
 
     @EventHandler
     public void PickaxeClick(BlockBreakEvent e) {
-        if (e.getPlayer().getLocation().getWorld().getName().equalsIgnoreCase("world")) {
+        if (e.isCancelled()) {
             return;
         }
         ItemStack itemInHand = e.getPlayer().getItemInHand();
@@ -75,7 +75,7 @@ public class PickaxeManager implements Listener {
         if (e.getPlayer().getItemInHand().getLore() == null) {
             return;
         }
-        if (!itemInHand.getLore().get(0).contains("§")) {
+        if (!itemInHand.getLore().get(0).contains("§7")) {
             return;
         }
         Block rf = e.getBlock();

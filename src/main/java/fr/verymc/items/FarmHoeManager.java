@@ -105,9 +105,6 @@ public class FarmHoeManager implements Listener {
 
     @EventHandler
     public void HoeClic(PlayerInteractEvent e) {
-        if (e.getPlayer().getLocation().getWorld().getName().equalsIgnoreCase("world")) {
-            return;
-        }
         if (e.isCancelled()) {
             return;
         }
