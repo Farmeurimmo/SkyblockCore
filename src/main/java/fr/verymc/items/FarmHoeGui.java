@@ -24,15 +24,12 @@ public class FarmHoeGui implements Listener {
             return false;
         }
         String tosearch = farmhoe.getLore().get(0).replace("§7", "");
-        boolean digit = false;
         try {
-            @SuppressWarnings("unused")
-            int intValue = Integer.parseInt(tosearch);
-            digit = true;
+            Integer.parseInt(tosearch);
         } catch (NumberFormatException ede) {
-            digit = false;
+            return false;
         }
-        if (!tosearch.contains(".") && digit == true) {
+        if (!tosearch.contains(".")) {
             if (farmhoe == null) {
                 return false;
             }
@@ -60,7 +57,6 @@ public class FarmHoeGui implements Listener {
     }
 
     public static void MakeGui(Player player, int tier) {
-
 
         Inventory invboutiquefarm2win = Bukkit.createInventory(null, 27, "§6Tiers de farmhoe");
 

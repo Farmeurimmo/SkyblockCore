@@ -64,36 +64,32 @@ public class FarmHoeManager implements Listener {
 
     public static Integer GetBlockHaversted(ItemStack a) {
         String tosearch = a.getLore().get(0).replace("§7", "");
-        boolean digit = false;
         try {
-            @SuppressWarnings("unused")
-            int intValue = Integer.parseInt(tosearch);
-            digit = true;
+            Integer.parseInt(tosearch);
         } catch (NumberFormatException e) {
-            digit = false;
+            return 0;
         }
-        if (!tosearch.contains(".") && digit == true) {
-            int num = Integer.parseInt(tosearch);
-            return num;
+        if (!tosearch.contains(".")) {
+            return Integer.parseInt(tosearch);
         }
         return 0;
     }
 
     public static Integer GetTier(ItemStack farmhoe) {
         if (farmhoe == null) {
-            return null;
+            return -1;
         }
         if (farmhoe.getType() == Material.AIR) {
-            return null;
+            return -1;
         }
         if (farmhoe.getItemMeta() == null) {
-            return null;
+            return -1;
         }
         if (farmhoe.getType() != Material.NETHERITE_HOE) {
-            return null;
+            return -1;
         }
         if (!farmhoe.isUnbreakable()) {
-            return null;
+            return -1;
         }
 
         if (farmhoe.getDisplayName().contains("§cIII")) {
@@ -103,23 +99,17 @@ public class FarmHoeManager implements Listener {
         } else if (farmhoe.getDisplayName().contains("§cI")) {
             return 0;
         } else {
-            return null;
+            return -1;
         }
     }
 
     @EventHandler
     public void HoeClic(PlayerInteractEvent e) {
-        if (e.getPlayer().getLocation().getWorld().getName().equalsIgnoreCase("world")) {
-            return;
-        }
         if (e.isCancelled()) {
             return;
         }
         if (e.getAction() == Action.LEFT_CLICK_BLOCK) {
             ItemStack farmhoe = e.getPlayer().getItemInHand();
-            if (farmhoe == null) {
-                return;
-            }
             if (farmhoe.getType() == Material.AIR) {
                 return;
             }
@@ -136,14 +126,8 @@ public class FarmHoeManager implements Listener {
             Player player = e.getPlayer();
             Location clicloc = e.getClickedBlock().getLocation();
 
-            int tier = 0;
-            if (farmhoe.getDisplayName().contains("§cIII")) {
-                tier = 2;
-            } else if (farmhoe.getDisplayName().contains("§cII")) {
-                tier = 1;
-            } else if (farmhoe.getDisplayName().contains("§cI")) {
-                tier = 0;
-            } else {
+            int tier = GetTier(farmhoe);
+            if (tier < 0) {
                 return;
             }
             if (e.getPlayer().getItemInHand().getLore() == null) {

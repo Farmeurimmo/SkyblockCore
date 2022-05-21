@@ -42,10 +42,7 @@ import main.java.fr.verymc.island.events.IslandPlayerMove;
 import main.java.fr.verymc.island.guis.IslandGuiManager;
 import main.java.fr.verymc.island.protections.BlockListener;
 import main.java.fr.verymc.island.protections.EntityListener;
-import main.java.fr.verymc.items.FarmHoeCmd;
-import main.java.fr.verymc.items.FarmHoeGui;
-import main.java.fr.verymc.items.FarmHoeManager;
-import main.java.fr.verymc.items.ItemLegCmd;
+import main.java.fr.verymc.items.*;
 import main.java.fr.verymc.minions.*;
 import main.java.fr.verymc.playerwarps.PlayerWarpCmd;
 import main.java.fr.verymc.playerwarps.PlayerWarpGuiManager;
@@ -307,6 +304,8 @@ public class Main extends JavaPlugin implements Listener {
         getServer().getPluginManager().registerEvents(new MoneyTradeGui(), this);
         getServer().getPluginManager().registerEvents(new EntityListener(), this);
         getServer().getPluginManager().registerEvents(new BlockListener(), this);
+        getServer().getPluginManager().registerEvents(new PickaxeManager(), this);
+        getServer().getPluginManager().registerEvents(new PickaxeGui(), this);
         PluginManager pm = getServer().getPluginManager();
         pm.registerEvents(this, this);
     }
@@ -363,6 +362,7 @@ public class Main extends JavaPlugin implements Listener {
         this.getCommand("tradeyes").setExecutor(new TradeYesCmd());
         this.getCommand("tradeno").setExecutor(new TradeNoCmd());
         this.getCommand("tradecancel").setExecutor(new TradeCancelCmd());
+        this.getCommand("pickaxe").setExecutor(new PickaxeCmd());
     }
 
 }

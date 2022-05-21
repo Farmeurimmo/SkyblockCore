@@ -289,6 +289,15 @@ public class IslandManager {
         return null;
     }
 
+    public Island getIslandFromUUID(UUID id) {
+        for (Island i : islands) {
+            if (i.getMembers().containsKey(id)) {
+                return i;
+            }
+        }
+        return null;
+    }
+
     public void createMainWorld() {
         WorldCreator wc = new WorldCreator("Island_world");
         wc.generator(new EmptyChunkGenerator());

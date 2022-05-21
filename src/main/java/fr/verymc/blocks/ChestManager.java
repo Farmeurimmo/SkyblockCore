@@ -1,7 +1,7 @@
 package main.java.fr.verymc.blocks;
 
 import main.java.fr.verymc.Main;
-import main.java.fr.verymc.eco.EcoAccountsManager;
+import main.java.fr.verymc.island.IslandManager;
 import main.java.fr.verymc.shopgui.BuyShopItem;
 import main.java.fr.verymc.storage.AsyncConfig;
 import main.java.fr.verymc.storage.ConfigManager;
@@ -74,7 +74,8 @@ public class ChestManager {
             }
         }
         for (Entry<UUID, Double> tosend : reward.entrySet()) {
-            EcoAccountsManager.instance.addFoundsUUID(tosend.getKey(), tosend.getValue(), false);
+            IslandManager.instance.getIslandFromUUID(
+                    tosend.getKey()).getBank().addMoney(tosend.getValue());
         }
         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
             public void run() {

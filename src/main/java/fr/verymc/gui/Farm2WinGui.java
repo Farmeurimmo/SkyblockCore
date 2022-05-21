@@ -35,6 +35,7 @@ public class Farm2WinGui implements Listener {
     static boolean sellallcmd = true;
     static boolean enchantementcmd = true;
     static boolean legendeachat = true;
+
     static boolean dieueachat = true;
 
     @EventHandler
@@ -103,6 +104,15 @@ public class Farm2WinGui implements Listener {
                 if (EcoAccountsManager.instance.getMoney(player.getUniqueId()) >= 500000) {
                     EcoAccountsManager.instance.removeFounds(player, (double) 500000, true);
                     Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "farmhoe " + player.getName());
+                } else {
+                    player.sendMessage("§cErreur, vous n'avez pas assez d'argent.");
+                }
+                return;
+            }
+            if (current.getType() == Material.NETHERITE_PICKAXE) {
+                if (EcoAccountsManager.instance.getMoney(player.getUniqueId()) >= 500000) {
+                    EcoAccountsManager.instance.removeFounds(player, (double) 500000, true);
+                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "pickaxe " + player.getName());
                 } else {
                     player.sendMessage("§cErreur, vous n'avez pas assez d'argent.");
                 }
