@@ -39,13 +39,13 @@ public class PickaxeManager implements Listener {
     public static int getAmountToAdd(Block breakingBlock) {
         switch (breakingBlock.getType()) {
             case ANCIENT_DEBRIS -> {
-                return 10;
-            }
-            case DIAMOND_ORE, EMERALD_ORE -> {
                 return 5;
             }
-            case COAL_ORE, IRON_ORE, GOLD_ORE, REDSTONE_ORE, LAPIS_ORE -> {
+            case DIAMOND_ORE, EMERALD_ORE -> {
                 return 3;
+            }
+            case COAL_ORE, IRON_ORE, GOLD_ORE, REDSTONE_ORE, LAPIS_ORE -> {
+                return 2;
             }
             default -> {
                 return 1;
