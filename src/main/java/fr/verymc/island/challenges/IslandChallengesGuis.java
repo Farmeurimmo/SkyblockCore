@@ -32,8 +32,8 @@ public class IslandChallengesGuis implements Listener {
 
         player.playSound(player.getLocation(), Sound.UI_TOAST_CHALLENGE_COMPLETE, 5, 1);
         player.sendMessage("§6§lChallenges §8» §fVous venez de compléter le challenge journalier n°§6" + challenge.getId() +
-                " §fau palier " + challenge.getPalier() + "/5.");
-        player.sendMessage("§6§lChallenges §8» §fVous avez reçu " + (int) wonCrys + " crystaux, " + wonMoney + "$ et x" + keys + " Clée Challenge.");
+                " §fau palier " + challenge.getPalier() + "/" + (IslandChallengesReset.maxPalier + 1) + ".");
+        player.sendMessage("§6§lChallenges §8» §fVous avez reçu " + (int) wonCrys + " crystaux, " + wonMoney + "$ et x" + keys + " Clée Challenge§f.");
     }
 
     public static void MakeMainGui(Player player) {
@@ -99,7 +99,7 @@ public class IslandChallengesGuis implements Listener {
                 customa.setDisplayName("§6" + challenge.getName());
                 ArrayList<String> lore = new ArrayList<>();
                 lore.add("§7Progression: " + challenge.getProgress() + "/" + challenge.getMaxProgress() * (challenge.getPalier() + 1) * playerIsland.getMembers().size());
-                lore.add("§7Palier: " + challenge.getPalier() + "/2");
+                lore.add("§7Palier: " + challenge.getPalier() + "/" + (IslandChallengesReset.maxPalier + 1));
                 lore.add("§7Actif: " + (challenge.isActive() ? "§aOui" : "§cNon"));
                 customa.setLore(lore);
                 custom.setItemMeta(customa);

@@ -176,6 +176,14 @@ Shops:
       material: TNT
       buy: 40
       sell: 6
+    42:
+      material: WARPED_STEM
+      buy: 40
+      sell: 6
+    43:
+      material: CRIMSON_STEM
+      buy: 40
+      sell: 6
 
   ####################
 

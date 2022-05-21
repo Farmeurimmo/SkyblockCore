@@ -3,10 +3,15 @@ package main.java.fr.verymc.island;
 import main.java.fr.verymc.Main;
 import main.java.fr.verymc.blocks.Chest;
 import main.java.fr.verymc.blocks.ChestManager;
+import main.java.fr.verymc.island.guis.IslandTopGui;
+import main.java.fr.verymc.utils.DiscordUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 public class IslandValueCalcManager {
@@ -17,6 +22,7 @@ public class IslandValueCalcManager {
         instance = this;
         makeCountForAllIsland();
         checkForUpdate();
+        checkForUpdateWebHook();
     }
 
     public void makeCountForAllIsland() {
@@ -111,7 +117,57 @@ public class IslandValueCalcManager {
             @Override
             public void run() {
                 makeCountForAllIsland();
+                checkForUpdate();
             }
         }, 20 * 60 * 30);
+    }
+
+    public void checkForUpdateWebHook() {
+        Bukkit.getScheduler().scheduleAsyncDelayedTask(Main.instance, new Runnable() {
+            @Override
+            public void run() {
+                Calendar cal = Calendar.getInstance();
+                if (cal.getTime().getHours() == 21) {
+                    if (cal.getTime().getMinutes() == 0) {
+                        if (cal.getTime().getSeconds() == 0) {
+                            sendWebHookTop();
+                        }
+                    }
+                }
+                checkForUpdateWebHook();
+            }
+        }, 20);
+    }
+
+
+    public void sendWebHookTop() {
+        CompletableFuture.runAsync(() -> {
+            Calendar cal = Calendar.getInstance();
+            long start = System.currentTimeMillis();
+            HashMap<Island, Integer> pos = IslandTopGui.instance.getTopIsland();
+            final DiscordUtils webhook = new DiscordUtils("https://discord.com/api/webhooks/977574291103158304/sIkg_XdYxEPb3b3BRPRhdzE4Fe0B-G7IvlufmvII1sbyKg4FMa5j-iXFBCN_IzO5Z5Xu");
+            webhook.setAvatarUrl("https://cdn.discordapp.com/attachments/567693189142675467/977562122357731358/logo_64x64.png");
+            webhook.setUsername("Skyblock");
+            String toSend = "";
+            for (int i = 0; i < pos.size(); i++) {
+                if (i > 9) break;
+                for (Map.Entry<Island, Integer> entry : pos.entrySet()) {
+                    if ((i + 1) == entry.getValue()) {
+                        toSend += "**" + (i + 1) + ".**  " + entry.getKey().getName().replace("\n", "") + "  **" + entry.getKey().getValue() + " points**\\n";
+                        break;
+                    }
+                }
+            }
+            DiscordUtils.EmbedObject embed = new DiscordUtils.EmbedObject();
+            embed.setTitle("Classement des îles");
+            embed.setDescription(toSend);
+            webhook.addEmbed(embed);
+            try {
+                webhook.execute();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            System.out.println("Island top sended in " + (System.currentTimeMillis() - start) + "ms");
+        });
     }
 }

@@ -10,9 +10,8 @@ import java.util.TimeZone;
 
 public class IslandChallengesReset {
 
+    public static final int maxPalier = 2; // 2 = 3 vu qu'on part de 0
     public static IslandChallengesReset instance;
-
-    public static int maxPalier = 2; // 2 = 3 vu qu'on part de 0
 
     public IslandChallengesReset() {
         instance = this;
