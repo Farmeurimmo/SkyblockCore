@@ -87,10 +87,10 @@ public class ClaimCmdSaver {
             timer = config.getInt(s + ".weekly");
             if (timer != 0)
                 timeMap.put("weekly", timer);
-            timer = config.getInt(s + ".legend");
+            timer = config.getInt(s + ".legende");
             if (timer != 0)
-                timeMap.put("legend", timer);
-            timer = config.getInt(s + ".god");
+                timeMap.put("legende", timer);
+            timer = config.getInt(s + ".dieu");
             if (timer != 0)
                 timeMap.put("god", timer);
             timer = config.getInt(s + ".zeus");
