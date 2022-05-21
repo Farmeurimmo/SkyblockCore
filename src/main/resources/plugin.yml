@@ -85,6 +85,7 @@ commands:
   is:
   invest:
   playerwarp:
+  claim:
   trade:
     permission: trade
   tradeyes:

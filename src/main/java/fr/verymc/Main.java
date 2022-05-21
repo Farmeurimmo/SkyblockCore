@@ -92,6 +92,8 @@ public class Main extends JavaPlugin implements Listener {
 
     public ArrayList<TradeManager> tradeInProcess = new ArrayList<>();
 
+    public ClaimCmdSaver saver;
+
     public void setTarget(String uuid, String aaa) {
         if (aaa == null)
             tpatarget.remove(uuid);
@@ -129,6 +131,7 @@ public class Main extends JavaPlugin implements Listener {
     public void onEnable() {
         saveDefaultConfig();
         instance = this;
+        saver = new ClaimCmdSaver();
         Bukkit.getPluginManager().isPluginEnabled("LuckPerms");
         Bukkit.getPluginManager().isPluginEnabled("Citizens");
         RegisteredServiceProvider<LuckPerms> provider = Bukkit.getServicesManager().getRegistration(LuckPerms.class);
@@ -252,6 +255,7 @@ public class Main extends JavaPlugin implements Listener {
         for (NPC npc : CitizensAPI.getNPCRegistry().sorted()) {
             npc.destroy();
         }
+        saver.saveCooldown();
         System.out.println("-----------------------------------------------------------------------------------------------------");
         System.out.println("Plugin stoppé !");
         System.out.println("-----------------------------------------------------------------------------------------------------");
@@ -295,6 +299,10 @@ public class Main extends JavaPlugin implements Listener {
         getServer().getPluginManager().registerEvents(new IslandPlayerMove(), this);
         getServer().getPluginManager().registerEvents(new IslandGeneratorForm(), this);
         getServer().getPluginManager().registerEvents(new PlayerWarpGuiManager(), this);
+        getServer().getPluginManager().registerEvents(new EntityListener(), this);
+        getServer().getPluginManager().registerEvents(new BlockListener(), this);
+        getServer().getPluginManager().registerEvents(new TradeGui(), this);
+        getServer().getPluginManager().registerEvents(new MoneyTradeGui(), this);
         getServer().getPluginManager().registerEvents(new TradeGui(), this);
         getServer().getPluginManager().registerEvents(new MoneyTradeGui(), this);
         getServer().getPluginManager().registerEvents(new EntityListener(), this);
@@ -350,6 +358,7 @@ public class Main extends JavaPlugin implements Listener {
         this.getCommand("is").setExecutor(new IslandCmd());
         this.getCommand("invest").setExecutor(new InvestCmd());
         this.getCommand("playerwarp").setExecutor(new PlayerWarpCmd());
+        this.getCommand("claim").setExecutor(new ClaimCmd(saver));
         this.getCommand("trade").setExecutor(new TradeCmd());
         this.getCommand("tradeyes").setExecutor(new TradeYesCmd());
         this.getCommand("tradeno").setExecutor(new TradeNoCmd());
