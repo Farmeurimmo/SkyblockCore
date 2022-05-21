@@ -176,6 +176,14 @@ Shops:
       material: TNT
       buy: 40
       sell: 6
+    42:
+      material: WARPED_STEM
+      buy: 40
+      sell: 6
+    43:
+      material: CRIMSON_STEM
+      buy: 40
+      sell: 6
 
   ####################
 
@@ -272,7 +280,7 @@ Shops:
     1:
       material: BAMBOO
       buy: 45
-      sell: 2.5
+      sell: 2.7
     5:
       material: BROWN_MUSHROOM
       buy: 36
@@ -280,7 +288,7 @@ Shops:
     6:
       material: CACTUS
       buy: 32
-      sell: 2.5
+      sell: 2.2
     7:
       material: CARROT
       buy: 40
@@ -296,19 +304,19 @@ Shops:
     13:
       material: KELP
       buy: 25
-      sell: 2.5
+      sell: 2.6
     14:
       material: DRIED_KELP
       buy: 25
-      sell: 3.7
+      sell: 3.9
     15:
       material: MELON
       buy: 59
-      sell: 16
+      sell: 7
     17:
       material: MELON_SLICE
       buy: 15
-      sell: 1.6
+      sell: 1.5
     18:
       material: NETHER_WART
       buy: 60
@@ -320,7 +328,7 @@ Shops:
     20:
       material: PUMPKIN
       buy: 60
-      sell: 6.4
+      sell: 6
     22:
       material: RED_MUSHROOM
       buy: 60
@@ -332,7 +340,7 @@ Shops:
     25:
       material: WHEAT
       buy: 60
-      sell: 10
+      sell: 8.8
     26:
       material: WHEAT_SEEDS
       buy: 20
@@ -364,11 +372,11 @@ Shops:
     33:
       material: HAY_BLOCK
       buy: 160
-      sell: 105
+      sell: 97
     34:
       material: BEETROOT
       buy: 60
-      sell: 10.2
+      sell: 9.6
     35:
       material: VINE
       buy: 40
@@ -380,7 +388,7 @@ Shops:
     40:
       material: SWEET_BERRIES
       buy: 130
-      sell: 2.5
+      sell: 2.8
 
     ####################
 
@@ -389,7 +397,7 @@ Shops:
     1:
       material: APPLE
       buy: 15
-      sell: 12
+      sell: 13
     2:
       material: BREAD
       buy: 20
@@ -405,7 +413,7 @@ Shops:
     5:
       material: COOKIE
       buy: 20
-      sell: 3.8
+      sell: 5
     7:
       material: HONEY_BOTTLE
       buy: 15
@@ -417,43 +425,43 @@ Shops:
     9:
       material: COOKED_BEEF
       buy: 20
-      sell: 9
+      sell: 7
     10:
       material: COOKED_CHICKEN
       buy: 20
-      sell: 9
+      sell: 7
     11:
       material: COOKED_MUTTON
       buy: 20
-      sell: 9
+      sell: 7
     12:
       material: COOKED_PORKCHOP
       buy: 20
-      sell: 9
+      sell: 7
     13:
       material: COOKED_RABBIT
       buy: 20
-      sell: 9
+      sell: 7
     14:
       material: BEEF
       buy: 10
-      sell: 6
+      sell: 4
     15:
       material: CHICKEN
       buy: 10
-      sell: 6
+      sell: 4
     16:
       material: MUTTON
       buy: 10
-      sell: 6
+      sell: 4
     17:
       material: PORKCHOP
       buy: 10
-      sell: 6
+      sell: 4
     18:
       material: RABBIT
       buy: 10
-      sell: 6
+      sell: 4
     19:
       material: PUMPKIN_PIE
       buy: 20
@@ -465,15 +473,15 @@ Shops:
     21:
       material: TROPICAL_FISH
       buy: 100
-      sell: 50
+      sell: 10
     22:
       material: COD
       buy: 15
-      sell: 10
+      sell: 5.8
     23:
       material: SALMON
       buy: 15
-      sell: 10
+      sell: 7
 
   #######################
   Drops:
@@ -481,15 +489,15 @@ Shops:
     1:
       material: ARROW
       buy: 40
-      sell: 7
+      sell: 8
     3:
       material: BLAZE_ROD
       buy: 55
-      sell: 13
+      sell: 12
     4:
       material: BONE
       buy: 60
-      sell: 7
+      sell: 6
     5:
       material: FEATHER
       buy: 65
@@ -505,11 +513,11 @@ Shops:
     9:
       material: MAGMA_CREAM
       buy: 40
-      sell: 12
+      sell: 11
     10:
       material: NAUTILUS_SHELL
       buy: 180
-      sell: 45
+      sell: 40
     11:
       material: PHANTOM_MEMBRANE
       buy: 140
@@ -541,7 +549,7 @@ Shops:
     18:
       material: LEATHER
       buy: 60
-      sell: 9
+      sell: 5
     19:
       material: ENDER_PEARL
       buy: 60
@@ -549,7 +557,7 @@ Shops:
     20:
       material: INK_SAC
       buy: 30
-      sell: 9
+      sell: 3
 
   ###################
   Minerais:
@@ -604,7 +612,7 @@ Shops:
 
     1:
       material: WITHER_SKELETON_SKULL
-      buy: 25000
+      buy: 2500
       sell: -1
     3:
       material: BELL
@@ -612,7 +620,7 @@ Shops:
       sell: -1
     8:
       material: ENDER_CHEST
-      buy: 273.12
+      buy: 200
       sell: -1
     10:
       material: EXPERIENCE_BOTTLE
@@ -648,7 +656,7 @@ Shops:
       sell: -1
     28:
       material: SHULKER_SHELL
-      buy: 2500
+      buy: 2000
       sell: -1
     32:
       material: SPONGE
@@ -656,7 +664,7 @@ Shops:
       sell: -1
     34:
       material: TOTEM_OF_UNDYING
-      buy: 50000
+      buy: 10000
       sell: -1
     35:
       material: TRIDENT
@@ -751,7 +759,7 @@ Shops:
       material: SPAWNER
       spawnertype: BLAZE
       name: "\u00a7fG\u00e9n\u00e9rateur \u00e0 \u00a7eBlaze"
-      buy: 80000
+      buy: 60000
       sell: -1
     3:
       material: SPAWNER
@@ -763,19 +771,19 @@ Shops:
       material: SPAWNER
       spawnertype: COW
       name: "\u00a7fG\u00e9n\u00e9rateur \u00e0 \u00a7eVache"
-      buy: 40000
+      buy: 50000
       sell: -1
     5:
       material: SPAWNER
       spawnertype: CREEPER
       name: "\u00a7fG\u00e9n\u00e9rateur \u00e0 \u00a7eCreeper"
-      buy: 60000
+      buy: 40000
       sell: -1
     6:
       material: SPAWNER
       spawnertype: ENDERMAN
       name: "\u00a7fG\u00e9n\u00e9rateur \u00e0 \u00a7eEnderman"
-      buy: 60000
+      buy: 50000
       sell: -1
     11:
       material: SPAWNER
@@ -793,29 +801,29 @@ Shops:
       material: SPAWNER
       spawnertype: SHEEP
       name: "\u00a7fG\u00e9n\u00e9rateur \u00e0 \u00a7eMouton"
-      buy: 30000
+      buy: 25000
       sell: -1
     20:
       material: SPAWNER
       spawnertype: SKELETON
       name: "\u00a7fG\u00e9n\u00e9rateur \u00e0 \u00a7eSquelette"
-      buy: 40000
+      buy: 30000
       sell: -1
     22:
       material: SPAWNER
       spawnertype: SPIDER
       name: "\u00a7fG\u00e9n\u00e9rateur \u00e0 \u00a7eAraign\u00e9e"
-      buy: 45000
+      buy: 40000
       sell: -1
     25:
       material: SPAWNER
       spawnertype: WITCH
       name: "\u00a7fG\u00e9n\u00e9rateur \u00e0 \u00a7eSorci\u00e8re"
-      buy: 100000
+      buy: 75000
       sell: -1
     27:
       material: SPAWNER
       spawnertype: ZOMBIE
       name: "\u00a7fG\u00e9n\u00e9rateur \u00e0 \u00a7eZombie"
-      buy: 35000
+      buy: 25000
       sell: -1

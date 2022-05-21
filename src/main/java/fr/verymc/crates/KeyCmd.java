@@ -16,37 +16,35 @@ public class KeyCmd implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 
-        if (sender instanceof Player) {
-            if (sender.hasPermission("*")) {
-                if (args.length == 3) {
-                    if (Bukkit.getPlayer(args[0]) != null) {
-                        if (Bukkit.getPlayer(args[0]).isOnline()) {
-                            Player p = Bukkit.getPlayer(args[0]);
-                            String sample = args[2];
-                            char[] chars = sample.toCharArray();
-                            StringBuilder sb = new StringBuilder();
-                            for (char c : chars) {
-                                if (Character.isDigit(c)) {
-                                    sb.append(c);
-                                }
-                            }
-                            if (!sb.isEmpty()) {
-                                int nombre = Integer.parseInt(sb.toString());
-                                if (args[1].equalsIgnoreCase("légendaire")) {
-                                    CratesKeyManager.GiveCrateKey(p, nombre, "légendaire");
-                                }
-                                if (args[1].equalsIgnoreCase("Challenge")) {
-                                    CratesKeyManager.GiveCrateKey(p, nombre, "Challenge");
-                                }
+        if (sender.hasPermission("*")) {
+            if (args.length == 3) {
+                if (Bukkit.getPlayer(args[0]) != null) {
+                    if (Bukkit.getPlayer(args[0]).isOnline()) {
+                        Player p = Bukkit.getPlayer(args[0]);
+                        String sample = args[2];
+                        char[] chars = sample.toCharArray();
+                        StringBuilder sb = new StringBuilder();
+                        for (char c : chars) {
+                            if (Character.isDigit(c)) {
+                                sb.append(c);
                             }
                         }
-                    } else {
-                        sender.sendMessage("§cJoueur invalide !");
+                        if (!sb.isEmpty()) {
+                            int nombre = Integer.parseInt(sb.toString());
+                            if (args[1].equalsIgnoreCase("légendaire")) {
+                                CratesKeyManager.GiveCrateKey(p, nombre, "légendaire");
+                            }
+                            if (args[1].equalsIgnoreCase("Challenge")) {
+                                CratesKeyManager.GiveCrateKey(p, nombre, "Challenge");
+                            }
+                        }
                     }
+                } else {
+                    sender.sendMessage("§cJoueur invalide !");
                 }
-            } else {
-                sender.sendMessage("§cVous n'avez pas la permission !");
             }
+        } else {
+            sender.sendMessage("§cVous n'avez pas la permission !");
         }
 
         return false;

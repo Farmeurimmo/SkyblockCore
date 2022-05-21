@@ -47,11 +47,28 @@ public class TchatManager implements Listener {
                 return;
             }
             double price;
+            int numL = 0;
+            if (e.getMessage().endsWith("l") || e.getMessage().endsWith("L")) {
+                for (Character character : e.getMessage().toCharArray()) {
+                    if (character.equals('l')) {
+                        numL++;
+                    }
+                }
+            }
             try {
                 price = Double.parseDouble(e.getMessage());
             } catch (NumberFormatException ex) {
                 player.sendMessage("§6§lIles §8» §cVeuillez entrer un nombre valide.");
-                return;
+                if (numL != 1) {
+                    return;
+                } else {
+                    try {
+                        price = Double.parseDouble(e.getMessage().substring(0, e.getMessage().length() - 1));
+                    } catch (NumberFormatException ex2) {
+                        player.sendMessage("§6§lIles §8» §cVeuillez entrer un nombre valide.");
+                        return;
+                    }
+                }
             }
             if (IslandGuiManager.instance.bankAmountWaiting.get(player.getUniqueId()).equalsIgnoreCase("money")) {
                 if (!EcoAccountsManager.instance.checkForFounds(player, price)) {
@@ -65,6 +82,23 @@ public class TchatManager implements Listener {
                 player.sendMessage("§6§lIles §8» §fVous avez §aajouté §6" + NumberFormat.getInstance().format(price) + "$§f à votre banque.");
                 player.sendMessage("§6§lIles §8» §cDésactivation §fdu mode séléction du montant pour §aajouter§f de l'argent à la banque.");
             } else if (IslandGuiManager.instance.bankAmountWaiting.get(player.getUniqueId()).equalsIgnoreCase("xp")) {
+                /*if (numL == 1) {
+                    int old = player.getTotalExperience();
+                    if (player.getLevel() >= price) {
+                        int newLevel = player.getLevel() - (int) price;
+                        player.setLevel(newLevel);
+                        int newTotalExp = player.getTotalExperience();
+                        playerIsland.getBank().addXp(old - newTotalExp);
+                        IslandGuiManager.instance.bankAmountWaiting.remove(player.getUniqueId());
+                        IslandGuiManager.instance.bankAmountWaitingBoolean.remove(player.getUniqueId());
+                        player.sendMessage("§6§lIles §8» §fVous avez §aajouté §6" + NumberFormat.getInstance().format(price) + "level(s) xp§f à votre banque.");
+                        player.sendMessage("§6§lIles §8» §cDésactivation §fdu mode séléction du montant pour §aajouter§f de l'xp à la banque.");
+                        IslandBankGui.instance.openBankIslandMenu(player);
+                    } else {
+                        player.sendMessage("§6§lIles §8» §cVous n'avez pas assez de level d'xp sur vous.");
+                    }
+                    return;
+                }*/
                 if (PlayerUtils.instance.getTotalExperience(player) < price) {
                     player.sendMessage("§6§lIles §8» §cVous n'avez pas assez d'xp sur vous.");
                     return;
@@ -84,11 +118,28 @@ public class TchatManager implements Listener {
                 return;
             }
             double price;
+            int numL = 0;
+            if (e.getMessage().endsWith("l") || e.getMessage().endsWith("L")) {
+                for (Character character : e.getMessage().toCharArray()) {
+                    if (character.equals('l')) {
+                        numL++;
+                    }
+                }
+            }
             try {
                 price = Double.parseDouble(e.getMessage());
             } catch (NumberFormatException ex) {
                 player.sendMessage("§6§lIles §8» §cVeuillez entrer un nombre valide.");
-                return;
+                if (numL != 1) {
+                    return;
+                } else {
+                    try {
+                        price = Double.parseDouble(e.getMessage().substring(0, e.getMessage().length() - 1));
+                    } catch (NumberFormatException ex2) {
+                        player.sendMessage("§6§lIles §8» §cVeuillez entrer un nombre valide.");
+                        return;
+                    }
+                }
             }
             if (IslandGuiManager.instance.bankAmountWaiting.get(player.getUniqueId()).equalsIgnoreCase("money")) {
                 if (playerIsland.getBank().getMoney() < price) {
@@ -102,6 +153,21 @@ public class TchatManager implements Listener {
                 player.sendMessage("§6§lIles §8» §fVous avez §cretiré §6" + NumberFormat.getInstance().format(price) + "$§f de votre banque.");
                 player.sendMessage("§6§lIles §8» §cDésactivation §fdu mode séléction du montant pour §cretirer§f de l'argent de la banque.");
             } else if (IslandGuiManager.instance.bankAmountWaiting.get(player.getUniqueId()).equalsIgnoreCase("xp")) {
+                /*if (numL == 1) {
+                    int level = PlayerUtils.instance.XpToLevels(playerIsland.getBank().getXp());
+                    if (level >= price) {
+                        playerIsland.getBank().removeXp(PlayerUtils.instance.levelsToXp((int) price));
+                        player.setLevel(player.getLevel() + level);
+                        IslandGuiManager.instance.bankAmountWaiting.remove(player.getUniqueId());
+                        IslandGuiManager.instance.bankAmountWaitingBoolean.remove(player.getUniqueId());
+                        player.sendMessage("§6§lIles §8» §fVous avez §cretiré §6" + NumberFormat.getInstance().format(price) + "level(s) xp§f à votre banque.");
+                        player.sendMessage("§6§lIles §8» §cDésactivation §fdu mode séléction du montant pour §cretirer§f de l'xp à la banque.");
+                        IslandBankGui.instance.openBankIslandMenu(player);
+                    } else {
+                        player.sendMessage("§6§lIles §8» §cVous n'avez pas assez de level d'xp dans votre banque.");
+                    }
+                    return;
+                }*/
                 if (playerIsland.getBank().getXp() < price) {
                     player.sendMessage("§6§lIles §8» §cVous n'avez pas assez d'xp dans votre banque.");
                     return;
@@ -112,6 +178,8 @@ public class TchatManager implements Listener {
                 IslandGuiManager.instance.bankAmountWaitingBoolean.remove(player.getUniqueId());
                 player.sendMessage("§6§lIles §8» §fVous avez §cretiré §6" + NumberFormat.getInstance().format(price) + "xp§f de votre banque.");
                 player.sendMessage("§6§lIles §8» §cDésactivation §fdu mode séléction du montant pour §cretirer§f de l'xp de la banque.");
+
+
             }
             IslandBankGui.instance.openBankIslandMenu(player);
             return;
@@ -221,6 +289,8 @@ public class TchatManager implements Listener {
             isIslandChat = playerIsland.isIslandChatToggled(player.getUniqueId());
         }
 
+        String color = (player.hasPermission("staff") ? "§f" : "§7");
+
         User user = LuckPermsProvider.get().getUserManager().getUser(player.getUniqueId());
         if (user.getCachedData().getMetaData().getPrefix() != null) {
             Prefix = user.getCachedData().getMetaData().getPrefix();
@@ -232,13 +302,13 @@ public class TchatManager implements Listener {
             TextComponent message = new TextComponent();
             TextComponent symbole = new TextComponent();
             if (playerIsland == null) {
-                message.setText(Prefix + " " + player.getName() + Suffix + "§7: " + e.getMessage());
+                message.setText(Prefix + " " + player.getName() + Suffix + "§7: " + color + e.getMessage());
             } else {
                 String classement = "#N/A";
                 if (IslandTopGui.instance.getTopIsland().containsKey(playerIsland)) {
                     classement = "#" + IslandTopGui.instance.getTopIsland().get(playerIsland);
                 }
-                message.setText("§7[" + classement + "] " + Prefix + " " + player.getName() + Suffix + "§7: " + e.getMessage());
+                message.setText("§7[" + classement + "] " + Prefix + " " + player.getName() + Suffix + "§7: " + color + e.getMessage());
             }
             symbole.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("§cCliquez ici pour report le message de " +
                     player.getName()).create()));
@@ -252,7 +322,7 @@ public class TchatManager implements Listener {
             TextComponent message = new TextComponent();
             TextComponent symbole = new TextComponent();
             message.setText("§6§lTchat d'île §8» §f[§a" + playerIsland.getMembers().get(player.getUniqueId()) + "§f] " + Prefix + " " + player.getName() +
-                    Suffix + "§7: " + e.getMessage());
+                    Suffix + "§7: " + color + e.getMessage());
             symbole.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("§cCliquez ici pour report le message de " +
                     player.getName()).create()));
             message.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("").create()));

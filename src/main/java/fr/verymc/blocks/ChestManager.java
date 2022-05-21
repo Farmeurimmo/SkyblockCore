@@ -29,6 +29,7 @@ public class ChestManager {
         instance = this;
 
         new PlayerShopGuis();
+        new StackerGui();
     }
 
     public void autoSellForVeryChest() {
@@ -114,9 +115,9 @@ public class ChestManager {
         player.getInventory().addItem(aa);
     }
 
-    public void placeChest(Player player, Location block, int type, ItemStack item, double price) {
+    public void placeChest(Player player, Location block, int type, ItemStack item, double price, Material stacked) {
         chests.add(new main.java.fr.verymc.blocks.Chest(type, block, player.getUniqueId(), block.getChunk().getChunkKey(),
-                item, price, false, false, System.currentTimeMillis()));
+                item, price, false, false, System.currentTimeMillis(), 1, stacked));
     }
 
     public void removeChestFromLoc(Location block) {

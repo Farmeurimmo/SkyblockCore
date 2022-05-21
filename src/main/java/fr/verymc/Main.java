@@ -25,6 +25,7 @@ import main.java.fr.verymc.featherfly.DailyFlyCmd;
 import main.java.fr.verymc.featherfly.FeatherFlyCmd;
 import main.java.fr.verymc.featherfly.FeatherFlyInteract;
 import main.java.fr.verymc.gui.*;
+import main.java.fr.verymc.holos.HoloBlocManager;
 import main.java.fr.verymc.holos.HolosSetup;
 import main.java.fr.verymc.invest.InvestCmd;
 import main.java.fr.verymc.invest.InvestManager;
@@ -234,6 +235,7 @@ public class Main extends JavaPlugin implements Listener {
             island.setBorderColor(island.getBorderColor());
         }
         ScoreBoard.acces.updateScoreBoard();
+        new HoloBlocManager();
 
         System.out.println("§aDémarrage du plugin TERMINE!");
         System.out.println("-----------------------------------------------------------------------------------------------------");
@@ -247,10 +249,6 @@ public class Main extends JavaPlugin implements Listener {
             }
         }
         StorageYAMLManager.instance.sendDataToAPIAuto(true);
-        HolosSetup.RemoveBoxeHolo();
-        CratesManager.RemoveBoxeHolo();
-        HolosSetup.RemoveNpc();
-        WineSpawn.DestroyPnj();
         for (Hologram hologram : HologramsAPI.getHolograms(this)) {
             hologram.delete();
         }

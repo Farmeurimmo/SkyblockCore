@@ -1,5 +1,6 @@
 package main.java.fr.verymc.island;
 
+import main.java.fr.verymc.Main;
 import main.java.fr.verymc.island.bank.IslandBank;
 import main.java.fr.verymc.island.challenges.IslandChallenge;
 import main.java.fr.verymc.island.challenges.IslandChallengesListener;
@@ -73,6 +74,13 @@ public class Island {
         } else {
             this.activatedSettings = activatedSettings;
         }
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.instance, new Runnable() {
+            @Override
+            public void run() {
+                IslandManager.instance.setWorldBorderForAllPlayerOnIsland(Island.this);
+                toggleTimeAndWeather();
+            }
+        }, 0, 100L);
     }
 
     public void setDefaultPerms() {
@@ -629,23 +637,28 @@ public class Island {
         switch (islandSettings) {
             case TIME_DEFAULT:
                 applyTimeForMembers(members.keySet(), 0, true);
+                break;
             case TIME_DAY:
                 applyTimeForMembers(members.keySet(), 6000, false);
+                break;
             case TIME_CREPUSCULE:
-                applyTimeForMembers(members.keySet(), 12000, false);
+                applyTimeForMembers(members.keySet(), 13000, false);
+                break;
             case TIME_NIGHT:
                 applyTimeForMembers(members.keySet(), 18000, false);
+                break;
         }
         IslandSettings islandSettings1 = IslandSettings.getWeatherSetting(activatedSettings);
         switch (islandSettings1) {
             case WEATHER_DEFAULT:
                 applyWeatherForMembers(members.keySet(), WeatherType.CLEAR, true);
+                break;
             case WEATHER_RAIN:
                 applyWeatherForMembers(members.keySet(), WeatherType.DOWNFALL, false);
-            case WEATHER_STORM:
-                applyWeatherForMembers(members.keySet(), WeatherType.DOWNFALL, false);
+                break;
             case WEATHER_CLEAR:
                 applyWeatherForMembers(members.keySet(), WeatherType.CLEAR, false);
+                break;
         }
     }
 

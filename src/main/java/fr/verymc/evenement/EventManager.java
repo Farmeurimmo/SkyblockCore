@@ -27,7 +27,7 @@ public class EventManager {
         TimeZone.setDefault(TimeZone.getTimeZone("Europe/Paris"));
         Calendar calendar = Calendar.getInstance();
         if (DailyBonus.instance.active) {
-            return "§7x2 /c: §a" + ((DailyBonus.instance.lastAct + 1000 * 60 * 10) - System.currentTimeMillis()) / 1000 + "s restantes";
+            return "§7x2 /c: §a" + ((DailyBonus.instance.lastAct + 1000 * 60 * 15) - System.currentTimeMillis()) / 1000 + "s restantes";
         } else {
             int next = -1;
             int max = 0;

@@ -46,11 +46,6 @@ public class HolosSetup implements Listener {
         npcb.spawn(loc2);
     }
 
-    public static void RemoveNpc() {
-        npca.destroy();
-        npcb.destroy();
-    }
-
     public static void SpawnCrates() {
         hololegende.appendTextLine("§c§lPREMIER GRADE");
         hololegende.appendTextLine("");
@@ -109,13 +104,6 @@ public class HolosSetup implements Listener {
         hologram1.appendTextLine("§6Zone Enchantmenents");
         hologram1.appendTextLine("§7Vous souhaitez rajouter un peu piquant à votre stuff?");
         hologram1.appendTextLine("§7Cette zone est pour vous !");
-    }
-
-    public static void RemoveBoxeHolo() {
-        hologram1.clearLines();
-        hololegende.clearLines();
-        holodieu.clearLines();
-        holozeus.clearLines();
     }
 
     @EventHandler

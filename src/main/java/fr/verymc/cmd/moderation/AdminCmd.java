@@ -1,5 +1,6 @@
 package main.java.fr.verymc.cmd.moderation;
 
+import main.java.fr.verymc.island.IslandValueCalcManager;
 import main.java.fr.verymc.island.challenges.IslandChallengesReset;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -15,6 +16,13 @@ public class AdminCmd implements CommandExecutor {
                     sender.sendMessage("Challenges reset !");
                     return false;
                 }
+            }
+        }
+        if (args.length == 1) {
+            if (args[0].equalsIgnoreCase("classement")) {
+                IslandValueCalcManager.instance.sendWebHookTop();
+                sender.sendMessage("Top envoyé !");
+                return false;
             }
         }
         sender.sendMessage("Usage /admin <action> <truc>");

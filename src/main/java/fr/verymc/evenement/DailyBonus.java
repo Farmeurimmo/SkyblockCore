@@ -14,7 +14,7 @@ public class DailyBonus {
     public static DailyBonus instance;
     public ArrayList<Integer> hours = new ArrayList<>(Arrays.asList(16, 19, 22));
     public boolean active = false;
-    long duration = 60 * 10;
+    long duration = 60 * 15;
     long lastAct = 0;
 
     public DailyBonus() {

@@ -46,7 +46,7 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
                                 p.sendMessage("§6§lIles §8» §fTu peux maintenant bypasser les îles !");
                             }
                         } else {
-                            p.sendMessage("§6§lIles §8» §f§6mission de faire ceci !");
+                            p.sendMessage("§6§lIles §8» §cVous n'avez pas les permissions de faire ceci !");
                             if (IslandManager.instance.isBypassing(p.getUniqueId())) {
                                 IslandManager.instance.removeBypassing(p.getUniqueId());
                             }
@@ -166,6 +166,12 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
                             } else {
                                 p.sendMessage("§6§lIles §8» §fVous n'avez pas d'invitations en cours.");
                             }
+                        }
+                    } else if (args[0].equalsIgnoreCase("permissions")) {
+                        Island playerIsland = IslandManager.instance.getPlayerIsland(p);
+                        if (playerIsland.hasPerms(playerIsland.getIslandRankFromUUID(p.getUniqueId()), IslandPerms.CHANGE_PERMS, p)) {
+                            IslandRankEditGui.instance.openEditRankIslandMenu(p);
+                            return true;
                         }
                     }
 
@@ -424,7 +430,7 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
             if (args.length == 1) {
                 subcmd.addAll(Arrays.asList("go", "home", "invite", "accept", "kick", "promote", "demote", "sethome", "upgrade", "bank",
                         "border", "bordure", "leave", "delete", "top", "coop", "uncoop", "chat", "public", "private", "bypass", "spy",
-                        "transfer", "ban", "unban", "expel", "cancelinvites", "rename", "settings", "blocvalues"));
+                        "transfer", "ban", "unban", "expel", "cancelinvites", "rename", "settings", "blocvalues", "permissions"));
             } else {
                 if (IslandManager.instance.asAnIsland((Player) sender)) {
                     Island playerIsland = IslandManager.instance.getPlayerIsland((Player) sender);

@@ -26,10 +26,10 @@ import java.util.List;
 public class FarmHoeManager implements Listener {
 
     public static ArrayList<String> replantableblocks = new ArrayList<String>(Arrays.asList("WHEAT", "CARROTS", "POTATOES",
-            "NETHER_WART", "BEETROOTS"));
+            "NETHER_WART", "BEETROOTS", "COCOA"));
 
     public static List<Block> getNearbyBlocks(Location location, int radius) {
-        List<Block> blocks = new ArrayList<Block>();
+        List<Block> blocks = new ArrayList<>();
         if (radius == 0) {
             blocks.add(location.getWorld().getBlockAt(location.getBlockX(), location.getBlockY(), location.getBlockZ()));
             return blocks;
@@ -112,6 +112,9 @@ public class FarmHoeManager implements Listener {
         if (e.getPlayer().getLocation().getWorld().getName().equalsIgnoreCase("world")) {
             return;
         }
+        if (e.isCancelled()) {
+            return;
+        }
         if (e.getAction() == Action.LEFT_CLICK_BLOCK) {
             ItemStack farmhoe = e.getPlayer().getItemInHand();
             if (farmhoe == null) {
@@ -153,7 +156,6 @@ public class FarmHoeManager implements Listener {
             e.setCancelled(true);
 
             World world = player.getWorld();
-            int gained = 0;
             for (Block rf : getNearbyBlocks(clicloc, tier)) {
                 if (!replantableblocks.contains(rf.getType().toString())) {
                     continue;
@@ -162,10 +164,12 @@ public class FarmHoeManager implements Listener {
                 final Ageable ageable = (Ageable) bltmp.getState().getBlockData();
                 int age = ageable.getAge();
                 int fd = 1;
+                int gained = 0;
                 if (age == ageable.getMaximumAge()) {
                     for (ItemStack eed : bltmp.getDrops(e.getItem())) {
                         if (eed.getType().toString().contains("SEED") || eed.getType() == Material.CARROT
-                                || eed.getType() == Material.POTATO || eed.getType() == Material.NETHER_WART) {
+                                || eed.getType() == Material.POTATO || eed.getType() == Material.NETHER_WART
+                                || eed.getType() == Material.COCOA) {
                             if (fd == 1) {
                                 fd = 0;
                                 for (ItemStack redse : player.getInventory().getStorageContents()) {
