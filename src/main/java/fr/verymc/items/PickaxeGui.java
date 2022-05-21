@@ -112,7 +112,6 @@ public class PickaxeGui implements Listener {
         }
         if (current.getEnchantments().containsKey(Enchantment.DIG_SPEED)) {
             int enchantementLevel = current.getEnchantLevel(Enchantment.DIG_SPEED);
-            player.sendMessage(getUsageNumber(player.getItemInHand()) + " utilisations restantes " + enchantementLevel);
             if (getUsageNumber(player.getItemInHand()) >= 1000 && enchantementLevel <= 15) {
                 addNumber(player.getItemInHand(), -1000);
                 player.getItemInHand().addEnchant(Enchantment.DIG_SPEED, enchantementLevel, true);
