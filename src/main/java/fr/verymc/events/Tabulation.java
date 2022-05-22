@@ -15,7 +15,7 @@ public class Tabulation implements Listener {
             e.getCommands().clear();
             e.getCommands().addAll(Arrays.asList("is", "shop", "sellall", "warp", "warps", "menu", "farm2win", "spawn", "hat", "feed", "fly", "dailyfly"
                     , "craft", "enchantement", "money", "baltop", "tpa", "tpacancel", "tpyes", "tpno", "pay", "challenges", "c", "atout",
-                    "atouts", "ah", "playerwarp", "trade", "tradeyes", "tradeno"));
+                    "atouts", "ah", "playerwarp", "trade", "tradeyes", "tradeno", "invest", "claim"));
         }
     }
 }
