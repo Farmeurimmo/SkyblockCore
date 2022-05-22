@@ -22,9 +22,9 @@ public class HolosSetup implements Listener {
     static NPC npcb = CitizensAPI.getNPCRegistry().createNPC(EntityType.PLAYER, "§6Menu du skyblock");
 
     static Location holo1 = new Location(Bukkit.getServer().getWorld("world"), -33.5, 101, -130.5);
-    static Location legende = new Location(Bukkit.getServer().getWorld("world"), -157.5, 75.5, -67.5);
-    static Location dieu = new Location(Bukkit.getServer().getWorld("world"), -159.5, 75.5, -73.5);
-    static Location zeus = new Location(Bukkit.getServer().getWorld("world"), -164.5, 75.5, -77.5);
+    static Location legende = new Location(Bukkit.getServer().getWorld("world"), -157.5, 75.8, -67.5);
+    static Location dieu = new Location(Bukkit.getServer().getWorld("world"), -159.5, 75.8, -73.5);
+    static Location zeus = new Location(Bukkit.getServer().getWorld("world"), -164.5, 75.8, -77.5);
     static Hologram hologram1 = HologramsAPI.createHologram(Main.instance, holo1);
     static Hologram hololegende = HologramsAPI.createHologram(Main.instance, legende);
     static Hologram holodieu = HologramsAPI.createHologram(Main.instance, dieu);
@@ -64,6 +64,7 @@ public class HolosSetup implements Listener {
         hololegende.appendTextLine("§c§mAccès au /enchantement");
         hololegende.appendTextLine("§c§mAccès au /is rename");
         hololegende.appendTextLine("§c§mAccès au /sellall");
+        hololegende.appendTextLine("§aAccès au /claim §elegende");
 
         holodieu.appendTextLine("§c§lGRADE INTERMÉDIAIRE");
         holodieu.appendTextLine("");
@@ -82,6 +83,7 @@ public class HolosSetup implements Listener {
         holodieu.appendTextLine("§aAccès au /enchantement");
         holodieu.appendTextLine("§c§mAccès au /is rename");
         holodieu.appendTextLine("§c§mAccès au /sellall");
+        holodieu.appendTextLine("§aAccès au /claim §9dieu§a, §elegende");
 
         holozeus.appendTextLine("§c§lMEILLEUR GRADE");
         holozeus.appendTextLine("");
@@ -100,6 +102,7 @@ public class HolosSetup implements Listener {
         holozeus.appendTextLine("§aAccès au /enchantement");
         holozeus.appendTextLine("§aAccès au /is rename");
         holozeus.appendTextLine("§aAccès au /sellall");
+        holozeus.appendTextLine("§aAccès au /claim §bzeus§a, §9dieu§a, §elegende");
 
         hologram1.appendTextLine("§6Zone Enchantmenents");
         hologram1.appendTextLine("§7Vous souhaitez rajouter un peu piquant à votre stuff?");
