@@ -82,9 +82,7 @@ public class PickaxeManager implements Listener {
         if (!breakingBlock.contains(rf.getType())) {
             return;
         }
-        e.setCancelled(true);
         if (rf.hasMetadata("placed")) {
-            rf.breakNaturally(itemInHand);
             return;
         }
         AddBlockHaversted(player, itemInHand, getAmountToAdd(rf));
@@ -119,7 +117,6 @@ public class PickaxeManager implements Listener {
             challenge.setPalier(challenge.getPalier() + 1);
             IslandChallengesGuis.CompleteChallenge(player, challenge);
         }
-        rf.breakNaturally(itemInHand);
     }
 
     @EventHandler
