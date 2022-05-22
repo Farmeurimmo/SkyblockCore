@@ -24,7 +24,7 @@ public class PickaxeGui implements Listener {
         ItemStack custom10 = (new ItemStackBuilder(Material.ENCHANTED_BOOK, 1))
                 .setName("§eAmélioration de l'efficacité")
                 .setLore("§6Ajoutez un niveau d'éfficacité | §aClic gauche",
-                        "§6Niveau Maximum : §c15 §8| §6Niveau Actuelle : §a"
+                        "§6Niveau Maximum : §c15 §8| §6Niveau Actuel : §a"
                                 + pickaxe.getEnchantLevel(Enchantment.DIG_SPEED),
                         "§6Cout : §a1 000 §6utilisations").getItemStack();
         custom10.addEnchant(Enchantment.DIG_SPEED, pickaxe.getEnchantLevel(Enchantment.DIG_SPEED) + 1, true);
@@ -33,7 +33,7 @@ public class PickaxeGui implements Listener {
         ItemStack custom12 = (new ItemStackBuilder(Material.ENCHANTED_BOOK, 1))
                 .setName("§eAmélioration de la fortune")
                 .setLore("§6Ajoutez un niveau de fortune | §aClic gauche",
-                        "§6Niveau Maximum : §c6 §8| §6Niveau Actuelle : §a"
+                        "§6Niveau Maximum : §c6 §8| §6Niveau Actuel : §a"
                                 + pickaxe.getEnchantLevel(Enchantment.LOOT_BONUS_BLOCKS),
                         "§6Cout : §a1 000 §6utilisations").getItemStack();
         custom12.addEnchant(Enchantment.LOOT_BONUS_BLOCKS, pickaxe.getEnchantLevel(Enchantment.LOOT_BONUS_BLOCKS) + 1, true);

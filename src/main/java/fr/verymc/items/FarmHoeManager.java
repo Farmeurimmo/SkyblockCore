@@ -105,10 +105,30 @@ public class FarmHoeManager implements Listener {
 
     @EventHandler
     public void HoeClic(PlayerInteractEvent e) {
+        if (e.getAction().equals(Action.RIGHT_CLICK_AIR)) {
+            if (e.getPlayer().getItemInHand().getLore() == null) {
+                return;
+            }
+            if (!e.getPlayer().getItemInHand().getLore().get(0).contains("§")) {
+                return;
+            }
+            String tosearch = e.getPlayer().getItemInHand().getLore().get(0).replace("§7", "");
+            boolean digit = false;
+            try {
+                @SuppressWarnings("unused")
+                int intValue = Integer.parseInt(tosearch);
+                digit = true;
+            } catch (NumberFormatException ede) {
+            }
+            if (!tosearch.contains(".") && digit) {
+                FarmHoeGui.MakeGui(e.getPlayer(), GetTier(e.getPlayer().getItemInHand()));
+            }
+            return;
+        }
         if (e.isCancelled()) {
             return;
         }
-        if (e.getAction() == Action.LEFT_CLICK_BLOCK) {
+        if (e.getAction().equals(Action.LEFT_CLICK_BLOCK)) {
             ItemStack farmhoe = e.getPlayer().getItemInHand();
             if (farmhoe.getType() == Material.AIR) {
                 return;
@@ -211,29 +231,7 @@ public class FarmHoeManager implements Listener {
                         challenge.setPalier(challenge.getPalier() + 1);
                         IslandChallengesGuis.CompleteChallenge(player, challenge);
                     }
-                } else {
-                    continue;
                 }
-            }
-        }
-        if (e.getAction() == Action.RIGHT_CLICK_AIR) {
-            if (e.getPlayer().getItemInHand().getLore() == null) {
-                return;
-            }
-            if (!e.getPlayer().getItemInHand().getLore().get(0).contains("§")) {
-                return;
-            }
-            String tosearch = e.getPlayer().getItemInHand().getLore().get(0).replace("§7", "");
-            boolean digit = false;
-            try {
-                @SuppressWarnings("unused")
-                int intValue = Integer.parseInt(tosearch);
-                digit = true;
-            } catch (NumberFormatException ede) {
-                digit = false;
-            }
-            if (!tosearch.contains(".") && digit == true) {
-                FarmHoeGui.MakeGui(e.getPlayer(), GetTier(e.getPlayer().getItemInHand()));
             }
         }
     }
