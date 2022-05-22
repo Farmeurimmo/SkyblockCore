@@ -83,9 +83,11 @@ public class PickaxeManager implements Listener {
             return;
         }
         if (rf.hasMetadata("placed")) {
+            rf.breakNaturally(itemInHand);
             return;
         }
         AddBlockHaversted(player, itemInHand, getAmountToAdd(rf));
+        rf.breakNaturally(itemInHand);
         if (BlocBreakerContest.instance.isActive) {
             if (rf.getType().equals(BlocBreakerContest.instance.material)) {
                 BlocBreakerContest.instance.addBlock(player.getUniqueId());
