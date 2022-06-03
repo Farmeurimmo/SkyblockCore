@@ -1,6 +1,7 @@
 package main.java.fr.verymc.blocks;
 
 import main.java.fr.verymc.Main;
+import main.java.fr.verymc.island.Island;
 import main.java.fr.verymc.island.IslandManager;
 import main.java.fr.verymc.shopgui.BuyShopItem;
 import main.java.fr.verymc.storage.AsyncConfig;
@@ -33,7 +34,7 @@ public class ChestManager {
     }
 
     public void autoSellForVeryChest() {
-        HashMap<UUID, Double> reward = new HashMap<>();
+        HashMap<main.java.fr.verymc.blocks.Chest, Double> reward = new HashMap<>();
         for (main.java.fr.verymc.blocks.Chest chest : chests) {
             try {
                 BlockState e = chest.getBlock().getBlock().getState();
@@ -62,7 +63,7 @@ public class ChestManager {
                     }
                 }
                 ((Chest) e).getBlockInventory().setContents(ed.getContents());
-                UUID playername = chest.getOwner();
+                main.java.fr.verymc.blocks.Chest playername = chest;
                 if (reward.containsKey(playername)) {
                     reward.put(playername, reward.get(playername) + total);
                 } else {
@@ -73,9 +74,10 @@ public class ChestManager {
                 continue;
             }
         }
-        for (Entry<UUID, Double> tosend : reward.entrySet()) {
-            IslandManager.instance.getIslandFromUUID(
-                    tosend.getKey()).getBank().addMoney(tosend.getValue());
+        for (Entry<main.java.fr.verymc.blocks.Chest, Double> tosend : reward.entrySet()) {
+            Island island = IslandManager.instance.getIslandByLoc(tosend.getKey().getBlock());
+            if (island == null) continue;
+            island.getBank().addMoney(tosend.getValue());
         }
         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
             public void run() {
