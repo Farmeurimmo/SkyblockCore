@@ -1,0 +1,12 @@
+- stockage des "chests" / "minions" avec les îles
+- menu de confirmation pour le /is delete
+- intégrer l'api du stockage
+- On pourrait en effet mettre en place plusieurs serveurs qui gère chacun plusieurs îles. On aurait de cette manière :
+  ▫️ 1 (ou plusieurs) lobby (avec la map spawn)
+  ▫️ Des instances pour la gestion des îles -> serveur avec map vide où l'on recup le schem de l'île et on le paste dans le monde vide, de temps en temps OU à l'arrêt du serveur
+  on send ce schématique à l'api qui le stocke
+- serveur dynamique avec l'api:
+  API worker (avec l'api docker) pour le lancement/arrêt des serveurs (c'est un petit truc)
+  API principale qui gère les serveurs dynamiques (à lancer, à stoper etc)
+- faire en sorte que le plugin s'adapte en fonction du type de serveur (spawn, île, dungeon(si ya le temps))
+- partie velocity qui add / suppr les serveurs et s'occupe d'envoyer les joueurs sur le serveur demandé (spawn ou île ou autre)
