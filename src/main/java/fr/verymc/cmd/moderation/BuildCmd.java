@@ -9,10 +9,11 @@ import org.bukkit.entity.Player;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 
 public class BuildCmd implements CommandExecutor, TabCompleter {
 
-    public static ArrayList<Player> Build = new ArrayList<Player>();
+    public static ArrayList<UUID> Build = new ArrayList<>();
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
@@ -24,11 +25,11 @@ public class BuildCmd implements CommandExecutor, TabCompleter {
                 player.sendActionBar("§cPermissions insuffisantes !");
                 return false;
             }
-            if (Build.contains(player)) {
-                Build.remove(player);
+            if (Build.contains(player.getUniqueId())) {
+                Build.remove(player.getUniqueId());
                 player.sendActionBar("§6Mode buildeur désactivé !");
             } else {
-                Build.add(player);
+                Build.add(player.getUniqueId());
                 player.sendActionBar("§6Mode buildeur activé !");
             }
         }

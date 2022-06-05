@@ -76,7 +76,8 @@ public class CratesManager implements Listener {
         if (aaa == null) {
             return;
         }
-        if (aaa.getType() == Material.END_ROD && aaa.getLocation().getWorld().getName().equalsIgnoreCase("world")) {
+        if (!aaa.getLocation().getWorld().getName().equalsIgnoreCase("world")) return;
+        if (aaa.getType() == Material.END_ROD) {
             if (aaa.getLocation().getX() == BoxLegendaire.getX() && aaa.getLocation().getZ() == BoxLegendaire.getZ()) {
                 if (e.getAction() == Action.LEFT_CLICK_BLOCK) {
                     e.setCancelled(true);
@@ -117,7 +118,7 @@ public class CratesManager implements Listener {
                 }
             }
         }
-        if (aaa.getType() == Material.END_ROD && aaa.getLocation().getWorld().getName().equalsIgnoreCase("world")) {
+        if (aaa.getType() == Material.END_ROD) {
             if (aaa.getLocation().getX() == BoxChallenge.getX() && aaa.getLocation().getZ() == BoxChallenge.getZ()) {
                 if (e.getAction() == Action.LEFT_CLICK_BLOCK) {
                     ChallengeCrateManager.ChallengeCratePreview(player);
@@ -153,7 +154,7 @@ public class CratesManager implements Listener {
                 }
             }
         }
-        if (aaa.getType() == Material.END_ROD && aaa.getLocation().getWorld().getName().equalsIgnoreCase("world")) {
+        if (aaa.getType() == Material.END_ROD) {
             if (aaa.getLocation().getX() == BoxVote.getX() && aaa.getLocation().getZ() == BoxVote.getZ()) {
                 if (e.getAction() == Action.LEFT_CLICK_BLOCK) {
                     VoteCrateManager.VoteCratePreview(player);

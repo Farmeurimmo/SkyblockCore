@@ -17,10 +17,15 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.UUID;
 
 public class Interact implements Listener {
 
-    public static ArrayList<Player> Build = BuildCmd.Build;
+    public static ArrayList<UUID> Build = BuildCmd.Build;
+
+    public ArrayList<Material> allowedBlocks = new ArrayList<>(Arrays.asList(Material.ENDER_CHEST, Material.ENCHANTING_TABLE,
+            Material.CRAFTING_TABLE, Material.ANVIL));
 
     @EventHandler
     public void OnInteract(PlayerInteractEvent e) {
@@ -28,24 +33,19 @@ public class Interact implements Listener {
         if (!player.getWorld().getName().equalsIgnoreCase("world")) {
             return;
         }
-        if (player.getItemInHand().getType() == Material.FLINT_AND_STEEL) {
-            e.setCancelled(true);
-            return;
-        }
+        if (!Build.contains(player.getUniqueId())) e.setCancelled(true);
         if (e.getClickedBlock() == null) {
             return;
         }
-        if (e.getClickedBlock().getType() == Material.ENDER_CHEST || e.getClickedBlock().getType() == Material.ENCHANTING_TABLE
-                || e.getClickedBlock().getType() == Material.CRAFTING_TABLE || e.getClickedBlock().getType() == Material.ANVIL) {
-            return;
+        if (allowedBlocks.contains(e.getClickedBlock().getType())) {
+            e.setCancelled(false);
         }
-        if (!Build.contains(player)) e.setCancelled(true);
     }
 
     @EventHandler
     public void BucketEmpty(PlayerBucketEmptyEvent e) {
         if (e.getBlock().getWorld().getName().equalsIgnoreCase("world")) {
-            if (Build.contains(e.getPlayer())) {
+            if (Build.contains(e.getPlayer().getUniqueId())) {
                 return;
             } else {
                 e.setCancelled(true);
@@ -56,7 +56,7 @@ public class Interact implements Listener {
     @EventHandler
     public void BucketFill(PlayerBucketFillEvent e) {
         if (e.getBlock().getWorld().getName().equalsIgnoreCase("world")) {
-            if (Build.contains(e.getPlayer())) {
+            if (Build.contains(e.getPlayer().getUniqueId())) {
                 return;
             } else {
                 e.setCancelled(true);
@@ -67,7 +67,7 @@ public class Interact implements Listener {
     @EventHandler
     public void BlockBreak(BlockBreakEvent e) {
         if (e.getBlock().getLocation().getWorld().getName().equalsIgnoreCase("world")) {
-            if (Build.contains(e.getPlayer())) {
+            if (Build.contains(e.getPlayer().getUniqueId())) {
                 return;
             } else {
                 e.setCancelled(true);
@@ -78,7 +78,7 @@ public class Interact implements Listener {
     @EventHandler
     public void BlockPlace(BlockPlaceEvent e) {
         if (e.getBlock().getLocation().getWorld().getName().equalsIgnoreCase("world")) {
-            if (Build.contains(e.getPlayer())) {
+            if (Build.contains(e.getPlayer().getUniqueId())) {
                 return;
             } else {
                 e.setCancelled(true);
@@ -94,14 +94,12 @@ public class Interact implements Listener {
                 return;
             }
         }
-        e.setCancelled(false);
-        return;
     }
 
     @EventHandler
     public void Bucketevent(PlayerItemConsumeEvent e) {
         if (e.getItem().getType().toString().contains("BUCKET")) {
-            if (Build.contains(e.getPlayer())) {
+            if (Build.contains(e.getPlayer().getUniqueId())) {
                 return;
             } else {
                 e.setCancelled(true);

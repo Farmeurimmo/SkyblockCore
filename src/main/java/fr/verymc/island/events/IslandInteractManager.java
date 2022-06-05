@@ -45,6 +45,7 @@ public class IslandInteractManager implements Listener {
 
     @EventHandler
     public void blockBreakEvent(BlockBreakEvent e) {
+        if (e.isCancelled()) return;
         Player player = e.getPlayer();
         Island island = IslandManager.instance.getIslandByLoc(e.getBlock().getLocation());
         if (island != null) {
@@ -54,12 +55,13 @@ public class IslandInteractManager implements Listener {
                 }
                 return;
             }
+            e.setCancelled(true);
         }
-        e.setCancelled(true);
     }
 
     @EventHandler
     public void blockPlaceEvent(BlockPlaceEvent e) {
+        if (e.isCancelled()) return;
         Player player = e.getPlayer();
         Island island = IslandManager.instance.getIslandByLoc(e.getBlock().getLocation());
         if (island != null) {
@@ -69,12 +71,13 @@ public class IslandInteractManager implements Listener {
                 }
                 return;
             }
+            e.setCancelled(true);
         }
-        e.setCancelled(true);
     }
 
     @EventHandler
     public void interactEvent(PlayerInteractEvent e) {
+        if (e.isCancelled()) return;
         Player player = e.getPlayer();
         if (e.getClickedBlock() == null) return;
         if (e.getClickedBlock().getLocation() == null) return;

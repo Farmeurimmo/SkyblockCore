@@ -460,6 +460,7 @@ public class ChestListener implements Listener {
 
     @EventHandler
     public void breakEvent(BlockBreakEvent e) {
+        if (e.isCancelled()) return;
         int type = -1;
         if (e.getBlock().getType() == Material.HOPPER) {
             Hopper blhopper = (Hopper) e.getBlock().getState();
