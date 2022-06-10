@@ -15,6 +15,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -410,6 +411,33 @@ public class IslandGuiManager implements Listener {
                     return;
                 }
             }
+        }
+        if (e.getView().getTitle().contains("§6Confirmation de ")) {
+            e.setCancelled(true);
+            if (!IslandConfirmationGui.instance.confirmations.containsKey(player.getUniqueId())) {
+                player.closeInventory();
+                return;
+            }
+            String confirmation = IslandConfirmationGui.instance.confirmations.get(player.getUniqueId());
+            boolean isDelete = e.getView().getTitle().contains(confirmation);
+            if (isDelete) {
+                if (current.getType() == Material.GREEN_STAINED_GLASS_PANE) {
+                    IslandConfirmationGui.instance.confirmations.remove(player.getUniqueId());
+                    player.closeInventory();
+                    IslandManager.instance.deleteIsland(player);
+                    return;
+                } else if (current.getType() == Material.RED_STAINED_GLASS_PANE) {
+                    IslandConfirmationGui.instance.removeConfirmation(player);
+                    return;
+                }
+            }
+        }
+    }
+
+    @EventHandler
+    public void inventoryClose(InventoryCloseEvent e) {
+        if (e.getView().getTitle().contains("§6Confirmation de ")) {
+            IslandConfirmationGui.instance.removeConfirmation((Player) e.getPlayer());
         }
     }
 }

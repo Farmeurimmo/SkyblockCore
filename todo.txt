@@ -1,5 +1,4 @@
 - stockage des "chests" / "minions" avec les îles
-- menu de confirmation pour le /is delete
 - intégrer l'api du stockage
 - On pourrait en effet mettre en place plusieurs serveurs qui gère chacun plusieurs îles. On aurait de cette manière :
   ▫️ 1 (ou plusieurs) lobby (avec la map spawn)

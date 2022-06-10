@@ -77,6 +77,7 @@ public class IslandManager {
         new IslandCoopGui();
         new IslandSettingsGui();
         new IslandBlocsValueGui();
+        new IslandConfirmationGui();
         LinkedHashMap<Material, Double> blocks = new LinkedHashMap<>();
         blocks.put(Material.IRON_BLOCK, 10.0);
         blocks.put(Material.GOLD_BLOCK, 20.0);
