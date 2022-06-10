@@ -26,7 +26,7 @@ public class Island {
     private Location home;
     private Location center;
     private int id;
-    private HashMap<UUID, IslandRanks> members = new HashMap<>();
+    private HashMap<UUID, IslandRanks> members;
     private HashMap<IslandRanks, ArrayList<IslandPerms>> permsPerRanks = new HashMap<>();
     private IslandUpgradeSize sizeUpgrade;
     private IslandUpgradeMember memberUpgrade;
@@ -36,10 +36,10 @@ public class Island {
     private Double value;
     private ArrayList<UUID> coops = new ArrayList<>();
     private ArrayList<UUID> chatToggled = new ArrayList<>();
-    private ArrayList<UUID> banneds = new ArrayList<>();
+    private ArrayList<UUID> banneds;
     private boolean isPublic;
-    private ArrayList<IslandChallenge> challenges = new ArrayList<>();
-    private ArrayList<IslandSettings> activatedSettings = new ArrayList<>();
+    private ArrayList<IslandChallenge> challenges;
+    private ArrayList<IslandSettings> activatedSettings;
 
     public Island(String name, Location home, Location center, int id, HashMap<UUID, IslandRanks> members,
                   IslandUpgradeSize upgradeSize, IslandUpgradeMember upgradeMember, WorldBorderUtil.Color borderColor,

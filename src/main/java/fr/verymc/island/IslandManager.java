@@ -5,12 +5,12 @@ import com.sk89q.worldedit.WorldEdit;
 import com.sk89q.worldedit.WorldEditException;
 import com.sk89q.worldedit.bukkit.BukkitAdapter;
 import com.sk89q.worldedit.extent.clipboard.Clipboard;
-import com.sk89q.worldedit.extent.clipboard.io.ClipboardFormat;
-import com.sk89q.worldedit.extent.clipboard.io.ClipboardFormats;
-import com.sk89q.worldedit.extent.clipboard.io.ClipboardReader;
+import com.sk89q.worldedit.extent.clipboard.io.*;
 import com.sk89q.worldedit.function.operation.Operation;
 import com.sk89q.worldedit.function.operation.Operations;
 import com.sk89q.worldedit.math.BlockVector3;
+import com.sk89q.worldedit.regions.CuboidRegion;
+import com.sk89q.worldedit.regions.Region;
 import com.sk89q.worldedit.session.ClipboardHolder;
 import main.java.fr.verymc.Main;
 import main.java.fr.verymc.blocks.Chest;
@@ -38,6 +38,7 @@ import org.bukkit.event.inventory.ClickType;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.*;
 
@@ -589,6 +590,63 @@ public class IslandManager {
             }
         }, 0);
 
+    }
+
+    public void pasteIsland(File file, Location pos) {
+
+        Bukkit.getScheduler().scheduleAsyncDelayedTask(Main.instance, new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    com.sk89q.worldedit.world.World adaptedWorld = BukkitAdapter.adapt(mainWorld);
+                    ClipboardFormat format = ClipboardFormats.findByFile(file);
+                    ClipboardReader reader = format.getReader(new FileInputStream(file));
+
+                    Clipboard clipboard = reader.read();
+                    EditSession editSession = WorldEdit.getInstance().getEditSessionFactory().getEditSession(adaptedWorld,
+                            -1);
+
+                    Operation operation = new ClipboardHolder(clipboard).createPaste(editSession)
+                            .to(BlockVector3.at(pos.getBlockX(), pos.getBlockY(), pos.getBlockZ())).ignoreAirBlocks(true).build();
+
+                    try {
+                        Operations.complete(operation);
+                        editSession.flushSession();
+                    } catch (Exception e1) {
+                        e1.printStackTrace();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, 0);
+    }
+
+    /*IslandManager.instance.saveSchem("aaaa", island.getCenter().clone().add(50, -15, 50),
+                        island.getCenter().clone().add(-50, 40, -50), island.getCenter().getWorld(), island.getCenter().clone());*/
+
+    public void saveSchem(String filename, Location loc1, Location loc2, World world, Location origin) {
+        Bukkit.getScheduler().scheduleAsyncDelayedTask(Main.instance, new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    com.sk89q.worldedit.world.World weWorld = BukkitAdapter.adapt(world);
+                    BlockVector3 pos1 = BlockVector3.at(loc1.getBlockX(), loc1.getBlockY(), loc1.getBlockZ());
+                    BlockVector3 pos2 = BlockVector3.at(loc2.getBlockX(), loc2.getBlockY(), loc2.getBlockZ());
+                    Region cReg = new CuboidRegion(weWorld, pos1, pos2);
+                    File file = new File(Main.instance.getDataFolder(), filename + ".schem");
+                    Clipboard clipboard = Clipboard.create(cReg);
+
+                    try (ClipboardWriter writer = BuiltInClipboardFormat.FAST.getWriter(new FileOutputStream(file))) {
+                        writer.write(clipboard);
+                    }
+
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }, 0);
     }
 
 }

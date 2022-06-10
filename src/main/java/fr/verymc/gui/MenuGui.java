@@ -89,11 +89,10 @@ public class MenuGui implements Listener {
             if (current.getType() == Material.GRASS_BLOCK) {
                 if (IslandManager.instance.asAnIsland(player)) {
                     IslandMainGui.instance.openMainIslandMenu(player);
-                    return;
                 } else {
                     IslandManager.instance.genIsland(player);
-                    return;
                 }
+                return;
             }
             if (current.getType() == Material.DIAMOND_SWORD) {
                 Farm2WinGui.MainBoutiqueGUI(player);
