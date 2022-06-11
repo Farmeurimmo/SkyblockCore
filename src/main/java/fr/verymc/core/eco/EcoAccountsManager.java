@@ -1,7 +1,7 @@
 package main.java.fr.verymc.core.eco;
 
-import main.java.fr.verymc.storage.SkyblockUser;
-import main.java.fr.verymc.storage.SkyblockUserManager;
+import main.java.fr.verymc.core.storage.SkyblockUser;
+import main.java.fr.verymc.core.storage.SkyblockUserManager;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 

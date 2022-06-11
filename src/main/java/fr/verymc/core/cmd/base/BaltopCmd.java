@@ -1,7 +1,7 @@
 package main.java.fr.verymc.core.cmd.base;
 
 import main.java.fr.verymc.core.eco.BaltopManager;
-import main.java.fr.verymc.storage.SkyblockUserManager;
+import main.java.fr.verymc.core.storage.SkyblockUserManager;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;

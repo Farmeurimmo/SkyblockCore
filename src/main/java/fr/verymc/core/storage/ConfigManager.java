@@ -1,4 +1,4 @@
-package main.java.fr.verymc.storage;
+package main.java.fr.verymc.core.storage;
 
 import main.java.fr.verymc.Main;
 import org.bukkit.configuration.InvalidConfigurationException;

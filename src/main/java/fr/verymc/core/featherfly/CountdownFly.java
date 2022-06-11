@@ -2,8 +2,8 @@ package main.java.fr.verymc.core.featherfly;
 
 import main.java.fr.verymc.Main;
 import main.java.fr.verymc.core.cmd.base.SpawnCmd;
-import main.java.fr.verymc.storage.SkyblockUser;
-import main.java.fr.verymc.storage.SkyblockUserManager;
+import main.java.fr.verymc.core.storage.SkyblockUser;
+import main.java.fr.verymc.core.storage.SkyblockUserManager;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;

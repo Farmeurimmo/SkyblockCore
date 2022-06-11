@@ -1,7 +1,7 @@
 package main.java.fr.verymc.core.cmd.moderation;
 
 import main.java.fr.verymc.core.cmd.utils.UtilsCmd;
-import main.java.fr.verymc.storage.SkyblockUserManager;
+import main.java.fr.verymc.core.storage.SkyblockUserManager;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

@@ -1,8 +1,8 @@
 package main.java.fr.verymc.island.minions;
 
 import main.java.fr.verymc.Main;
-import main.java.fr.verymc.storage.AsyncConfig;
-import main.java.fr.verymc.storage.ConfigManager;
+import main.java.fr.verymc.core.storage.AsyncConfig;
+import main.java.fr.verymc.core.storage.ConfigManager;
 import main.java.fr.verymc.utils.PreGenItems;
 import org.bukkit.Bukkit;
 import org.bukkit.Color;

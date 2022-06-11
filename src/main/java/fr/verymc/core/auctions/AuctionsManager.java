@@ -2,8 +2,8 @@ package main.java.fr.verymc.core.auctions;
 
 import main.java.fr.verymc.Main;
 import main.java.fr.verymc.core.eco.EcoAccountsManager;
-import main.java.fr.verymc.storage.AsyncConfig;
-import main.java.fr.verymc.storage.ConfigManager;
+import main.java.fr.verymc.core.storage.AsyncConfig;
+import main.java.fr.verymc.core.storage.ConfigManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;

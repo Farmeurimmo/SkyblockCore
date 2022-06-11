@@ -11,7 +11,7 @@ import main.java.fr.verymc.island.guis.IslandBankGui;
 import main.java.fr.verymc.island.guis.IslandGuiManager;
 import main.java.fr.verymc.island.guis.IslandTopGui;
 import main.java.fr.verymc.island.perms.IslandPerms;
-import main.java.fr.verymc.storage.SkyblockUserManager;
+import main.java.fr.verymc.core.storage.SkyblockUserManager;
 import main.java.fr.verymc.utils.PlayerUtils;
 import net.luckperms.api.LuckPermsProvider;
 import net.luckperms.api.model.user.User;
