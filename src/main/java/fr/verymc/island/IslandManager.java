@@ -230,7 +230,7 @@ public class IslandManager {
                                     }
                                 }
                                 ArrayList<Chest> chests = new ArrayList<>();
-                                for (Chest c : ChestManager.instance.chests) {
+                                for (Chest c : playerIsland.getChests()) {
                                     chests.add(c);
                                 }
                                 for (Chest c : chests) {
@@ -573,7 +573,7 @@ public class IslandManager {
                                 home.setYaw(130);
                                 islands.add(new Island("Ile de " + p.getName(), home, finalToReturn1, finalId + 1, members,
                                         islandUpgradeSize, islandUpgradeMember, WorldBorderUtil.Color.BLUE, islandBank, islandUpgradeGenerator, banneds, challenges,
-                                        true, null, true, 0.0, null));
+                                        true, null, true, 0.0, null, null));
                                 p.sendMessage("§6§lIles §8» §aVous avez généré une nouvelle île avec succès (en " + (System.currentTimeMillis() - start) + "ms).");
                                 teleportPlayerToIslandSafe(p);
                                 return;

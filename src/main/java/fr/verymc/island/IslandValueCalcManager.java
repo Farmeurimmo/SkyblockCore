@@ -2,7 +2,6 @@ package main.java.fr.verymc.island;
 
 import main.java.fr.verymc.Main;
 import main.java.fr.verymc.blocks.Chest;
-import main.java.fr.verymc.blocks.ChestManager;
 import main.java.fr.verymc.island.guis.IslandTopGui;
 import main.java.fr.verymc.utils.DiscordUtils;
 import org.bukkit.Bukkit;
@@ -93,7 +92,7 @@ public class IslandValueCalcManager {
 
                     double value = 0;
 
-                    for (Chest chest : ChestManager.instance.chests) {
+                    for (Chest chest : island.getChests()) {
                         if (chest.getType() != 3) continue;
                         if (chest.getBlock().getX() >= minx && chest.getBlock().getX() <= maxx && chest.getBlock().getZ() >= minz &&
                                 chest.getBlock().getZ() <= maxz) {

@@ -42,11 +42,13 @@ public class ChestListener implements Listener {
                 return;
             }
             if (hopper.getCustomName().contains("§6Player shop")) {
-                for (Chest c : ChestManager.instance.chests) {
-                    if (c.getType() == 2 && c.getBlock().equals(e.getClickedBlock().getLocation())) {
-                        PlayerShopGuis.instance.mainShopGui(c, e.getPlayer());
-                        e.setCancelled(true);
-                        return;
+                for (Island island : IslandManager.instance.islands) {
+                    for (Chest c : island.getChests()) {
+                        if (c.getType() == 2 && c.getBlock().equals(e.getClickedBlock().getLocation())) {
+                            PlayerShopGuis.instance.mainShopGui(c, e.getPlayer());
+                            e.setCancelled(true);
+                            return;
+                        }
                     }
                 }
             }
@@ -70,19 +72,27 @@ public class ChestListener implements Listener {
         if (e.getEntity().getLocation().getWorld().getName().equalsIgnoreCase("world")) {
             return;
         }
-        for (Chest c : ChestManager.instance.chests) {
-            if (c.getType() == 0) {
-                if (c.getChunkKey().equals(e.getLocation().getChunk().getChunkKey())) {
-                    if (c.getBlock().getBlock().getType() == Material.HOPPER) {
-                        Hopper blhopper = (Hopper) c.getBlock().getBlock().getState();
-                        if (!blhopper.getCustomName().contains("§6Chunk Hoppeur")) {
-                            continue;
-                        }
-                        ItemStack a = e.getEntity().getItemStack();
-                        if (InventoryUtils.instance.getAmountToFillInInv(a, blhopper.getInventory()) > 0) {
-                            e.getEntity().remove();
-                            blhopper.getInventory().addItem(a);
-                            break;
+        if (!IslandManager.instance.isAnIslandByLoc(e.getEntity().getLocation())) {
+            return;
+        }
+        for (Island island : IslandManager.instance.islands) {
+            for (Chest c : island.getChests()) {
+                if (c.getType() == 0) {
+                    if (c.getChunkKey().equals(e.getLocation().getChunk().getChunkKey())) {
+                        if (c.getBlock().getBlock().getType() == Material.HOPPER) {
+                            Hopper blhopper = (Hopper) c.getBlock().getBlock().getState();
+                            if (blhopper.getCustomName() == null) {
+                                return;
+                            }
+                            if (!blhopper.getCustomName().contains("§6Chunk Hoppeur")) {
+                                continue;
+                            }
+                            ItemStack a = e.getEntity().getItemStack();
+                            if (InventoryUtils.instance.getAmountToFillInInv(a, blhopper.getInventory()) > 0) {
+                                e.getEntity().remove();
+                                blhopper.getInventory().addItem(a);
+                                break;
+                            }
                         }
                     }
                 }

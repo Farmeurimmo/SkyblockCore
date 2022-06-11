@@ -1,6 +1,7 @@
 package main.java.fr.verymc.island;
 
 import main.java.fr.verymc.Main;
+import main.java.fr.verymc.blocks.Chest;
 import main.java.fr.verymc.island.bank.IslandBank;
 import main.java.fr.verymc.island.challenges.IslandChallenge;
 import main.java.fr.verymc.island.challenges.IslandChallengesListener;
@@ -22,6 +23,7 @@ import java.util.*;
 
 public class Island {
 
+    public ArrayList<main.java.fr.verymc.blocks.Chest> chests;
     private String name;
     private Location home;
     private Location center;
@@ -45,7 +47,7 @@ public class Island {
                   IslandUpgradeSize upgradeSize, IslandUpgradeMember upgradeMember, WorldBorderUtil.Color borderColor,
                   IslandBank bank, IslandUpgradeGenerator generatorUpgrade, ArrayList<UUID> banneds, ArrayList<IslandChallenge> challenges,
                   boolean isDefaultChallenges, HashMap<IslandRanks, ArrayList<IslandPerms>> permsPerRanks,
-                  boolean isPublic, double value, ArrayList<IslandSettings> activatedSettings) {
+                  boolean isPublic, double value, ArrayList<IslandSettings> activatedSettings, ArrayList<Chest> chests) {
         this.name = name;
         this.home = home;
         this.center = center;
@@ -73,6 +75,11 @@ public class Island {
             this.activatedSettings = new ArrayList<>(Arrays.asList(IslandSettings.TIME_DEFAULT, IslandSettings.WEATHER_DEFAULT));
         } else {
             this.activatedSettings = activatedSettings;
+        }
+        if (chests == null) {
+            this.chests = new ArrayList<>();
+        } else {
+            this.chests = chests;
         }
         Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.instance, new Runnable() {
             @Override
@@ -664,6 +671,18 @@ public class Island {
 
     public ArrayList<IslandSettings> getActivatedSettings() {
         return activatedSettings;
+    }
+
+    public ArrayList<Chest> getChests() {
+        return chests;
+    }
+
+    public void addChest(Chest chest) {
+        chests.add(chest);
+    }
+
+    public void removeChest(Chest chest) {
+        chests.remove(chest);
     }
 
 }

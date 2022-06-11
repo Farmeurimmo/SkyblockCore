@@ -2,7 +2,6 @@ package main.java.fr.verymc.storage;
 
 import main.java.fr.verymc.Main;
 import main.java.fr.verymc.blocks.Chest;
-import main.java.fr.verymc.blocks.ChestManager;
 import main.java.fr.verymc.island.Island;
 import main.java.fr.verymc.island.IslandManager;
 import main.java.fr.verymc.island.bank.IslandBank;
@@ -57,7 +56,6 @@ public class StorageYAMLManager {
             ArrayList<Minion> minions = new ArrayList<>();
             ArrayList<Island> islands = new ArrayList<>();
             ArrayList<SkyblockUser> skyblockUsers = new ArrayList<>();
-            ArrayList<Chest> chests = new ArrayList<>();
 
             for (String str : ConfigManager.instance.getDataMinions().getKeys(false)) {
                 if (str == null) continue;
@@ -200,10 +198,39 @@ public class StorageYAMLManager {
                             permsPerRanks.put(IslandRanks.valueOf(part), perms);
                         }
                     }
+                    ArrayList<Chest> chests = new ArrayList<>();
+                    if (ConfigManager.instance.getDataIslands().getConfigurationSection(str + ".chests") != null) {
+                        for (String str1 : ConfigManager.instance.getDataIslands().getConfigurationSection(str + ".chests").getKeys(false)) {
+                            if (str1 == null) continue;
+                            String uuidString = ConfigManager.instance.getDataIslands().getString(str + ".chests." + str1 + ".uuid");
+                            if (uuidString == null || uuidString.length() != 36) {
+                                continue;
+                            }
+                            UUID uuid = UUID.fromString(uuidString);
+                            long idChest = Long.parseLong(str1.replace("'", ""));
+                            ItemStack itemStack = ConfigManager.instance.getDataIslands().getItemStack(str + ".chests." + str1 + ".item");
+                            int type = ConfigManager.instance.getDataIslands().getInt(str + ".chests." + str1 + ".type");
+                            Location loc = ConfigManager.instance.getDataIslands().getLocation(str + ".chests." + str1 + ".loc");
+                            boolean isSell = ConfigManager.instance.getDataIslands().getBoolean(str + ".chests." + str1 + ".isSell");
+                            long chunk = ConfigManager.instance.getDataIslands().getLong(str + ".chests." + str1 + ".chunk");
+                            double price = ConfigManager.instance.getDataIslands().getDouble(str + ".chests." + str1 + ".price");
+                            boolean active = ConfigManager.instance.getDataIslands().getBoolean(str + ".chests." + str1 + ".active");
+                            double amount = 0;
+                            if (ConfigManager.instance.getDataIslands().get(str + ".chests." + str1 + ".amount") != null) {
+                                amount = ConfigManager.instance.getDataIslands().getDouble(str + ".chests." + str1 + ".amount");
+                            }
+                            Material stacked = null;
+                            if (ConfigManager.instance.getDataIslands().get(str + ".chests." + str1 + ".stacked") != null) {
+                                stacked = Material.getMaterial(ConfigManager.instance.getDataIslands().getString(str + ".chests." + str1 + ".stacked"));
+                            }
+
+                            chests.add(new Chest(type, loc, uuid, chunk, itemStack, price, isSell, active, idChest, amount, stacked));
+                        }
+                    }
 
                     islands.add(new Island(name, home, center, id, members, islandUpgradeSize, islandUpgradeMember,
                             color, islandBank, islandUpgradeGenerator, banneds, list, false,
-                            permsPerRanks, isPublic, value, settings));
+                            permsPerRanks, isPublic, value, settings, chests));
                 } catch (Exception e) {
                     e.printStackTrace();
                     continue;
@@ -252,39 +279,6 @@ public class StorageYAMLManager {
             }
             //DATA USERS
 
-            for (String str : ConfigManager.instance.getDataChests().getKeys(false)) {
-                if (str == null) continue;
-                try {
-                    String uuidString = ConfigManager.instance.getDataChests().getString(str + ".uuid");
-                    if (uuidString == null || uuidString.length() != 36) {
-                        continue;
-                    }
-                    UUID uuid = UUID.fromString(uuidString);
-                    long id = Long.parseLong(str.replace("'", ""));
-                    ItemStack itemStack = ConfigManager.instance.getDataChests().getItemStack(str + ".item");
-                    int type = ConfigManager.instance.getDataChests().getInt(str + ".type");
-                    Location loc = ConfigManager.instance.getDataChests().getLocation(str + ".loc");
-                    boolean isSell = ConfigManager.instance.getDataChests().getBoolean(str + ".isSell");
-                    long chunk = ConfigManager.instance.getDataChests().getLong(str + ".chunk");
-                    double price = ConfigManager.instance.getDataChests().getDouble(str + ".price");
-                    boolean active = ConfigManager.instance.getDataChests().getBoolean(str + ".active");
-                    double amount = 0;
-                    if (ConfigManager.instance.getDataChests().get(str + ".amount") != null) {
-                        amount = ConfigManager.instance.getDataChests().getDouble(str + ".amount");
-                    }
-                    Material stacked = null;
-                    if (ConfigManager.instance.getDataChests().get(str + ".stacked") != null) {
-                        stacked = Material.getMaterial(ConfigManager.instance.getDataChests().getString(str + ".stacked"));
-                    }
-
-                    chests.add(new Chest(type, loc, uuid, chunk, itemStack, price, isSell, active, id, amount, stacked));
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    continue;
-                }
-            }
-            //DATA CHESTS
-
 
             Bukkit.getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
                 @Override
@@ -297,9 +291,6 @@ public class StorageYAMLManager {
 
                     //SEND SkyblockUser to -> SkyblockUserManager.instance.users
                     SkyblockUserManager.instance.users = skyblockUsers;
-
-                    //SEND Chests to -> ChestManager.instance.chests
-                    ChestManager.instance.chests = chests;
                 }
             }, 0);
             return true;
@@ -388,6 +379,20 @@ public class StorageYAMLManager {
                                 .replace("[", "").replace("]", "").
                                 replace(" ", ""));
                     }
+                    for (Chest chest : island.getChests()) {
+                        toSendIsland.put(island.getId() + ".chests." + chest.getId() + ".loc", chest.getBlock());
+                        toSendIsland.put(island.getId() + ".chests." + chest.getId() + ".uuid", chest.getOwner().toString());
+                        toSendIsland.put(island.getId() + ".chests." + chest.getId() + ".type", chest.getType());
+                        toSendIsland.put(island.getId() + ".chests." + chest.getId() + ".isSell", chest.isSell());
+                        toSendIsland.put(island.getId() + ".chests." + chest.getId() + ".active", chest.isActiveSellOrBuy());
+                        toSendIsland.put(island.getId() + ".chests." + chest.getId() + ".price", chest.getPrice());
+                        toSendIsland.put(island.getId() + ".chests." + chest.getId() + ".item", chest.getItemToBuySell());
+                        toSendIsland.put(island.getId() + ".chests." + chest.getId() + ".chunk", chest.getChunkKey());
+                        toSendIsland.put(island.getId() + ".chests." + chest.getId() + ".amount", chest.getAmount());
+                        if (chest.getStacked() != null) {
+                            toSendIsland.put(island.getId() + ".chests." + chest.getId() + ".stacked", chest.getStacked().toString());
+                        }
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                     Bukkit.broadcastMessage("§cErreur lors de la sauvegarde de l'île #" + island.getId());
@@ -444,41 +449,6 @@ public class StorageYAMLManager {
                     ConfigManager.instance.skyblockUserFile);
             AsyncConfig.instance.setAndSaveAsync(toSendSkyUsers, ConfigManager.instance.getDataSkyblockUser(),
                     ConfigManager.instance.skyblockUserFile);
-
-
-            ArrayList<Chest> chests = ChestManager.instance.chests;
-            HashMap<String, Object> toSendChests = new HashMap<>();
-            HashMap<String, Object> toRemoveChests = new HashMap<>();
-            for (Chest chest : chests) {
-                HashMap<String, Object> toSendChest = new HashMap<>();
-                try {
-                    toSendChest.put(chest.getId() + ".loc", chest.getBlock());
-                    toSendChest.put(chest.getId() + ".uuid", chest.getOwner().toString());
-                    toSendChest.put(chest.getId() + ".type", chest.getType());
-                    toSendChest.put(chest.getId() + ".isSell", chest.isSell());
-                    toSendChest.put(chest.getId() + ".active", chest.isActiveSellOrBuy());
-                    toSendChest.put(chest.getId() + ".price", chest.getPrice());
-                    toSendChest.put(chest.getId() + ".item", chest.getItemToBuySell());
-                    toSendChest.put(chest.getId() + ".chunk", chest.getChunkKey());
-                    toSendChest.put(chest.getId() + ".amount", chest.getAmount());
-                    if (chest.getStacked() != null) {
-                        toSendChest.put(chest.getId() + ".stacked", chest.getStacked().toString());
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    Bukkit.broadcastMessage("§6§lData §8§l» §cUne erreur est survenue lors de la sauvegarde du coffre #" + chest.getId());
-                    toSendChest.clear();
-                } finally {
-                    if (toSendChest.size() > 0) {
-                        toRemoveChests.put(chest.getId() + "", null);
-                        toSendChests.putAll(toSendChest);
-                    }
-                }
-            }
-            AsyncConfig.instance.setAndSaveAsyncBlockCurrentThread(toRemoveChests, ConfigManager.instance.getDataChests(),
-                    ConfigManager.instance.chestsFile);
-            AsyncConfig.instance.setAndSaveAsync(toSendChests, ConfigManager.instance.getDataChests(),
-                    ConfigManager.instance.chestsFile);
 
 
             Bukkit.broadcastMessage("§6§lData §8§l» §fMise à jour complète de la database en " + (System.currentTimeMillis()
