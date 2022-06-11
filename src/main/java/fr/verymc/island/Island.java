@@ -1,8 +1,8 @@
 package main.java.fr.verymc.island;
 
 import main.java.fr.verymc.Main;
-import main.java.fr.verymc.blocks.Chest;
 import main.java.fr.verymc.island.bank.IslandBank;
+import main.java.fr.verymc.island.blocks.Chest;
 import main.java.fr.verymc.island.challenges.IslandChallenge;
 import main.java.fr.verymc.island.challenges.IslandChallengesListener;
 import main.java.fr.verymc.island.perms.IslandPerms;
@@ -23,7 +23,7 @@ import java.util.*;
 
 public class Island {
 
-    public ArrayList<main.java.fr.verymc.blocks.Chest> chests;
+    public ArrayList<main.java.fr.verymc.island.blocks.Chest> chests;
     private String name;
     private Location home;
     private Location center;

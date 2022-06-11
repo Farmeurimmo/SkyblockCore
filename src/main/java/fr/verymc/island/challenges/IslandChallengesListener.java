@@ -1,10 +1,10 @@
 package main.java.fr.verymc.island.challenges;
 
 import main.java.fr.verymc.Main;
-import main.java.fr.verymc.cmd.moderation.BuildCmd;
-import main.java.fr.verymc.evenement.BlocBreakerContest;
+import main.java.fr.verymc.core.cmd.moderation.BuildCmd;
 import main.java.fr.verymc.island.Island;
 import main.java.fr.verymc.island.IslandManager;
+import main.java.fr.verymc.island.evenement.BlocBreakerContest;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.Ageable;

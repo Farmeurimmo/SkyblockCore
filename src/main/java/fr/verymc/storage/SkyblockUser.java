@@ -1,6 +1,6 @@
 package main.java.fr.verymc.storage;
 
-import main.java.fr.verymc.playerwarps.PlayerWarp;
+import main.java.fr.verymc.core.playerwarps.PlayerWarp;
 
 import java.util.UUID;
 

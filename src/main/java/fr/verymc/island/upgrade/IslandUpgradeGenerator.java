@@ -1,6 +1,6 @@
 package main.java.fr.verymc.island.upgrade;
 
-import main.java.fr.verymc.eco.EcoAccountsManager;
+import main.java.fr.verymc.core.eco.EcoAccountsManager;
 import main.java.fr.verymc.island.Island;
 import main.java.fr.verymc.island.IslandManager;
 import org.bukkit.Material;

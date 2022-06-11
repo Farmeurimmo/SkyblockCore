@@ -1,6 +1,6 @@
 package main.java.fr.verymc.utils;
 
-import main.java.fr.verymc.eco.EcoAccountsManager;
+import main.java.fr.verymc.core.eco.EcoAccountsManager;
 import net.luckperms.api.LuckPermsProvider;
 import net.luckperms.api.model.user.User;
 import org.bukkit.Material;

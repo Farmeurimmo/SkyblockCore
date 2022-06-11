@@ -1,6 +1,6 @@
 package main.java.fr.verymc.island.challenges;
 
-import main.java.fr.verymc.crates.CratesKeyManager;
+import main.java.fr.verymc.hub.crates.CratesKeyManager;
 import main.java.fr.verymc.island.Island;
 import main.java.fr.verymc.island.IslandManager;
 import main.java.fr.verymc.island.guis.IslandMainGui;

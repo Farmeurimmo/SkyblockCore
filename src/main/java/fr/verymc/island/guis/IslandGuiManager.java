@@ -1,6 +1,6 @@
 package main.java.fr.verymc.island.guis;
 
-import main.java.fr.verymc.gui.MenuGui;
+import main.java.fr.verymc.core.gui.MenuGui;
 import main.java.fr.verymc.island.Island;
 import main.java.fr.verymc.island.IslandManager;
 import main.java.fr.verymc.island.challenges.IslandChallengesGuis;

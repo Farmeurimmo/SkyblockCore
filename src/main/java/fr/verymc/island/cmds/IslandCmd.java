@@ -1,6 +1,6 @@
 package main.java.fr.verymc.island.cmds;
 
-import main.java.fr.verymc.cmd.base.SpawnCmd;
+import main.java.fr.verymc.core.cmd.base.SpawnCmd;
 import main.java.fr.verymc.island.Island;
 import main.java.fr.verymc.island.IslandManager;
 import main.java.fr.verymc.island.IslandValueCalcManager;

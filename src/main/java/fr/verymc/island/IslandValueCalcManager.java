@@ -1,7 +1,7 @@
 package main.java.fr.verymc.island;
 
 import main.java.fr.verymc.Main;
-import main.java.fr.verymc.blocks.Chest;
+import main.java.fr.verymc.island.blocks.Chest;
 import main.java.fr.verymc.island.guis.IslandTopGui;
 import main.java.fr.verymc.utils.DiscordUtils;
 import org.bukkit.Bukkit;
