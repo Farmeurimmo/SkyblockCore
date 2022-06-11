@@ -1,14 +1,14 @@
 package main.java.fr.verymc.hub.events;
 
 import main.java.fr.verymc.core.scoreboard.ScoreBoard;
+import main.java.fr.verymc.core.storage.SkyblockUser;
+import main.java.fr.verymc.core.storage.SkyblockUserManager;
+import main.java.fr.verymc.core.storage.StorageYAMLManager;
 import main.java.fr.verymc.hub.invest.InvestManager;
 import main.java.fr.verymc.island.Island;
 import main.java.fr.verymc.island.IslandManager;
 import main.java.fr.verymc.island.guis.IslandTopGui;
 import main.java.fr.verymc.island.perms.IslandRanks;
-import main.java.fr.verymc.core.storage.SkyblockUser;
-import main.java.fr.verymc.core.storage.SkyblockUserManager;
-import main.java.fr.verymc.core.storage.StorageYAMLManager;
 import net.luckperms.api.LuckPermsProvider;
 import net.luckperms.api.model.user.User;
 import org.bukkit.Bukkit;

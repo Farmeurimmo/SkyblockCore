@@ -2,10 +2,10 @@ package main.java.fr.verymc.island.blocks;
 
 import main.java.fr.verymc.Main;
 import main.java.fr.verymc.core.shopgui.BuyShopItem;
-import main.java.fr.verymc.island.Island;
-import main.java.fr.verymc.island.IslandManager;
 import main.java.fr.verymc.core.storage.AsyncConfig;
 import main.java.fr.verymc.core.storage.ConfigManager;
+import main.java.fr.verymc.island.Island;
+import main.java.fr.verymc.island.IslandManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
