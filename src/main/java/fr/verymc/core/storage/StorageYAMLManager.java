@@ -8,7 +8,6 @@ import main.java.fr.verymc.island.bank.IslandBank;
 import main.java.fr.verymc.island.blocks.Chest;
 import main.java.fr.verymc.island.challenges.IslandChallenge;
 import main.java.fr.verymc.island.minions.Minion;
-import main.java.fr.verymc.island.minions.MinionManager;
 import main.java.fr.verymc.island.minions.MinionType;
 import main.java.fr.verymc.island.perms.IslandPerms;
 import main.java.fr.verymc.island.perms.IslandRanks;
@@ -53,39 +52,8 @@ public class StorageYAMLManager {
 
             //API FETCH DATA
 
-            ArrayList<Minion> minions = new ArrayList<>();
             ArrayList<Island> islands = new ArrayList<>();
             ArrayList<SkyblockUser> skyblockUsers = new ArrayList<>();
-
-            for (String str : ConfigManager.instance.getDataMinions().getKeys(false)) {
-                if (str == null) continue;
-                try {
-                    String ownerUUIDstr = ConfigManager.instance.getDataMinions().getString(str + ".uuid");
-                    if (ownerUUIDstr == null || ownerUUIDstr.length() != 36) {
-                        continue;
-                    }
-                    UUID owner = UUID.fromString(ownerUUIDstr);
-                    MinionType minionType = MinionType.valueOf(ConfigManager.instance.getDataMinions().getString(str + ".type"));
-                    BlockFace blockFace = BlockFace.valueOf(ConfigManager.instance.getDataMinions().getString(str + ".blFace"));
-                    int lvl = ConfigManager.instance.getDataMinions().getInt(str + ".lvl");
-                    Location loc = ConfigManager.instance.getDataMinions().getLocation(str + ".loc");
-                    Location locChest = null;
-                    if (ConfigManager.instance.getDataMinions().getLocation(str + ".locChest") != null) {
-                        locChest = ConfigManager.instance.getDataMinions().getLocation(str + ".locChest");
-                    }
-                    boolean linked = ConfigManager.instance.getDataMinions().getBoolean(str + ".linked");
-                    boolean smelft = ConfigManager.instance.getDataMinions().getBoolean(str + ".smelt");
-                    long id = Long.parseLong(str.replace("'", ""));
-
-                    Block block = (locChest == null) ? null : locChest.getBlock();
-                    minions.add(new Minion(id, owner, lvl, loc, minionType, blockFace, linked, block, smelft));
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    Bukkit.broadcastMessage("§6§lData §8» §4§lErreur lors de la récupération des données de la base de donnée sur le minion #" + str);
-                    continue;
-                }
-            }
-            //DATA MINIONS
 
             for (String str : ConfigManager.instance.getDataIslands().getKeys(false)) {
                 if (str == null) continue;
@@ -202,35 +170,66 @@ public class StorageYAMLManager {
                     if (ConfigManager.instance.getDataIslands().getConfigurationSection(str + ".chests") != null) {
                         for (String str1 : ConfigManager.instance.getDataIslands().getConfigurationSection(str + ".chests").getKeys(false)) {
                             if (str1 == null) continue;
-                            String uuidString = ConfigManager.instance.getDataIslands().getString(str + ".chests." + str1 + ".uuid");
-                            if (uuidString == null || uuidString.length() != 36) {
+                            try {
+                                String uuidString = ConfigManager.instance.getDataIslands().getString(str + ".chests." + str1 + ".uuid");
+                                if (uuidString == null || uuidString.length() != 36) {
+                                    continue;
+                                }
+                                UUID uuid = UUID.fromString(uuidString);
+                                long idChest = Long.parseLong(str1.replace("'", ""));
+                                ItemStack itemStack = ConfigManager.instance.getDataIslands().getItemStack(str + ".chests." + str1 + ".item");
+                                int type = ConfigManager.instance.getDataIslands().getInt(str + ".chests." + str1 + ".type");
+                                Location loc = ConfigManager.instance.getDataIslands().getLocation(str + ".chests." + str1 + ".loc");
+                                boolean isSell = ConfigManager.instance.getDataIslands().getBoolean(str + ".chests." + str1 + ".isSell");
+                                long chunk = ConfigManager.instance.getDataIslands().getLong(str + ".chests." + str1 + ".chunk");
+                                double price = ConfigManager.instance.getDataIslands().getDouble(str + ".chests." + str1 + ".price");
+                                boolean active = ConfigManager.instance.getDataIslands().getBoolean(str + ".chests." + str1 + ".active");
+                                double amount = 0;
+                                if (ConfigManager.instance.getDataIslands().get(str + ".chests." + str1 + ".amount") != null) {
+                                    amount = ConfigManager.instance.getDataIslands().getDouble(str + ".chests." + str1 + ".amount");
+                                }
+                                Material stacked = null;
+                                if (ConfigManager.instance.getDataIslands().get(str + ".chests." + str1 + ".stacked") != null) {
+                                    stacked = Material.getMaterial(ConfigManager.instance.getDataIslands().getString(str + ".chests." + str1 + ".stacked"));
+                                }
+                                chests.add(new Chest(type, loc, uuid, chunk, itemStack, price, isSell, active, idChest, amount, stacked));
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                                Bukkit.broadcastMessage("§6§lData §8» §4§lErreur lors de la récupération des données de la base de donnée sur le chest #" + str);
                                 continue;
                             }
-                            UUID uuid = UUID.fromString(uuidString);
-                            long idChest = Long.parseLong(str1.replace("'", ""));
-                            ItemStack itemStack = ConfigManager.instance.getDataIslands().getItemStack(str + ".chests." + str1 + ".item");
-                            int type = ConfigManager.instance.getDataIslands().getInt(str + ".chests." + str1 + ".type");
-                            Location loc = ConfigManager.instance.getDataIslands().getLocation(str + ".chests." + str1 + ".loc");
-                            boolean isSell = ConfigManager.instance.getDataIslands().getBoolean(str + ".chests." + str1 + ".isSell");
-                            long chunk = ConfigManager.instance.getDataIslands().getLong(str + ".chests." + str1 + ".chunk");
-                            double price = ConfigManager.instance.getDataIslands().getDouble(str + ".chests." + str1 + ".price");
-                            boolean active = ConfigManager.instance.getDataIslands().getBoolean(str + ".chests." + str1 + ".active");
-                            double amount = 0;
-                            if (ConfigManager.instance.getDataIslands().get(str + ".chests." + str1 + ".amount") != null) {
-                                amount = ConfigManager.instance.getDataIslands().getDouble(str + ".chests." + str1 + ".amount");
-                            }
-                            Material stacked = null;
-                            if (ConfigManager.instance.getDataIslands().get(str + ".chests." + str1 + ".stacked") != null) {
-                                stacked = Material.getMaterial(ConfigManager.instance.getDataIslands().getString(str + ".chests." + str1 + ".stacked"));
-                            }
+                        }
+                    }
+                    ArrayList<Minion> minions = new ArrayList<>();
+                    if (ConfigManager.instance.getDataIslands().getConfigurationSection(str + ".minions") != null) {
+                        for (String str1 : ConfigManager.instance.getDataIslands().getConfigurationSection(str + ".minions").getKeys(false)) {
+                            if (str1 == null) continue;
+                            try {
+                                MinionType minionType = MinionType.valueOf(ConfigManager.instance.getDataIslands().getString(str + ".minions." + str1 + ".type"));
+                                BlockFace blockFace = BlockFace.valueOf(ConfigManager.instance.getDataIslands().getString(str + ".minions." + str1 + ".blFace"));
+                                int lvl = ConfigManager.instance.getDataIslands().getInt(str + ".minions." + str1 + ".lvl");
+                                Location loc = ConfigManager.instance.getDataIslands().getLocation(str + ".minions." + str1 + ".loc");
+                                Location locChest = null;
+                                if (ConfigManager.instance.getDataIslands().getLocation(str + ".minions." + str1 + ".locChest") != null) {
+                                    locChest = ConfigManager.instance.getDataIslands().getLocation(str + ".minions." + str1 + ".locChest");
+                                }
+                                boolean linked = ConfigManager.instance.getDataIslands().getBoolean(str + ".minions." + str1 + ".linked");
+                                boolean smelft = ConfigManager.instance.getDataIslands().getBoolean(str + ".minions." + str1 + ".smelt");
+                                long idMinion = Long.parseLong(str1.replace("'", ""));
 
-                            chests.add(new Chest(type, loc, uuid, chunk, itemStack, price, isSell, active, idChest, amount, stacked));
+                                Block block = (locChest == null) ? null : locChest.getBlock();
+                                minions.add(new Minion(idMinion, lvl, loc, minionType, blockFace, linked, block, smelft));
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                                Bukkit.broadcastMessage("§6§lData §8» §4§lErreur lors de la récupération des données de la base de donnée sur le minion #" + str);
+                                continue;
+                            }
                         }
                     }
 
                     islands.add(new Island(name, home, center, id, members, islandUpgradeSize, islandUpgradeMember,
                             color, islandBank, islandUpgradeGenerator, banneds, list, false,
-                            permsPerRanks, isPublic, value, settings, chests));
+                            permsPerRanks, isPublic, value, settings, chests, minions));
                 } catch (Exception e) {
                     e.printStackTrace();
                     continue;
@@ -283,9 +282,6 @@ public class StorageYAMLManager {
             Bukkit.getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
                 @Override
                 public void run() {
-                    //SEND Minions to -> MinionManager.instance.minions
-                    MinionManager.instance.minions = minions;
-
                     //SEND Islands to -> IslandManager.instance.islands
                     IslandManager.instance.islands = islands;
 
@@ -301,41 +297,6 @@ public class StorageYAMLManager {
     public void sendDataToAPIAuto(boolean force) {
         CompletableFuture.supplyAsync(() -> {
             long start = System.currentTimeMillis();
-
-            HashMap<String, Object> toSendMinions = new HashMap<>();
-            HashMap<String, Object> toRemoveMinions = new HashMap<>(); // NEED TO NULL Minion id because yaml don't support override data
-            ArrayList<Minion> minions = MinionManager.instance.minions;
-            for (Minion minion : minions) {
-                HashMap<String, Object> toSendMinion = new HashMap<>();
-                try {
-                    toSendMinion.put(minion.getID() + ".uuid", minion.getOwnerUUID().toString());
-                    toSendMinion.put(minion.getID() + ".type", minion.getMinionType().toString());
-                    toSendMinion.put(minion.getID() + ".lvl", minion.getLevelInt());
-                    toSendMinion.put(minion.getID() + ".blFace", minion.getBlockFace().toString());
-                    toSendMinion.put(minion.getID() + ".loc", minion.getBlocLocation());
-                    toSendMinion.put(minion.getID() + ".linked", minion.isChestLinked());
-                    toSendMinion.put(minion.getID() + ".smelt", minion.isAutoSmelt());
-                    if (minion.getChestBloc() != null) {
-                        toSendMinion.put(minion.getID() + ".locChest", minion.getChestBloc().getLocation());
-                    } else {
-                        toSendMinion.put(minion.getID() + ".locChest", null);
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    Bukkit.broadcastMessage("§6§lData §8§l» §c§lErreur lors de la lecture du minion #" + minion.getID());
-                    toSendMinion.clear();
-                } finally {
-                    if (toSendMinion.size() > 0) {
-                        toRemoveMinions.put(minion.getID() + "", null);
-                        toSendMinions.putAll(toSendMinion);
-                    }
-                }
-            }
-            AsyncConfig.instance.setAndSaveAsyncBlockCurrentThread(toRemoveMinions, ConfigManager.instance.getDataMinions(),
-                    ConfigManager.instance.minionsFile);
-            AsyncConfig.instance.setAndSaveAsync(toSendMinions, ConfigManager.instance.getDataMinions(),
-                    ConfigManager.instance.minionsFile);
-
 
             HashMap<String, Object> toSendIslands = new HashMap<>();
             HashMap<String, Object> toRemoveIslands = new HashMap<>(); // NEED TO NULL Island id because yaml don't support override data
@@ -391,6 +352,19 @@ public class StorageYAMLManager {
                         toSendIsland.put(island.getId() + ".chests." + chest.getId() + ".amount", chest.getAmount());
                         if (chest.getStacked() != null) {
                             toSendIsland.put(island.getId() + ".chests." + chest.getId() + ".stacked", chest.getStacked().toString());
+                        }
+                    }
+                    for (Minion minion : island.getMinions()) {
+                        toSendIsland.put(island.getId() + ".minions." + minion.getID() + ".type", minion.getMinionType().toString());
+                        toSendIsland.put(island.getId() + ".minions." + minion.getID() + ".lvl", minion.getLevelInt());
+                        toSendIsland.put(island.getId() + ".minions." + minion.getID() + ".blFace", minion.getBlockFace().toString());
+                        toSendIsland.put(island.getId() + ".minions." + minion.getID() + ".loc", minion.getBlocLocation());
+                        toSendIsland.put(island.getId() + ".minions." + minion.getID() + ".linked", minion.isChestLinked());
+                        toSendIsland.put(island.getId() + ".minions." + minion.getID() + ".smelt", minion.isAutoSmelt());
+                        if (minion.getChestBloc() != null) {
+                            toSendIsland.put(island.getId() + ".minions." + minion.getID() + ".locChest", minion.getChestBloc().getLocation());
+                        } else {
+                            toSendIsland.put(island.getId() + ".minions." + minion.getID() + ".locChest", null);
                         }
                     }
                 } catch (Exception e) {

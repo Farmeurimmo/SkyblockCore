@@ -1,6 +1,8 @@
 package main.java.fr.verymc.island.minions;
 
 import main.java.fr.verymc.Main;
+import main.java.fr.verymc.island.Island;
+import main.java.fr.verymc.island.IslandManager;
 import main.java.fr.verymc.utils.PreGenItems;
 import org.bukkit.Bukkit;
 import org.bukkit.Color;
@@ -17,6 +19,8 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.util.EulerAngle;
+
+import java.util.ArrayList;
 
 public class MinionsCmd implements CommandExecutor {
 
@@ -45,7 +49,11 @@ public class MinionsCmd implements CommandExecutor {
             return true;
         }
         if (args[1].equalsIgnoreCase("repop")) {
-            for (Minion minion : MinionManager.instance.minions) {
+            ArrayList<Minion> minions = new ArrayList<>();
+            for (Island island : IslandManager.instance.islands) {
+                minions.addAll(island.getMinions());
+            }
+            for (Minion minion : minions) {
                 if (!minion.getBlocLocation().isChunkLoaded()) {
                     minion.getBlocLocation().getChunk().load();
                 }
@@ -68,20 +76,16 @@ public class MinionsCmd implements CommandExecutor {
                 final ItemStack pants = new ItemStack(Material.LEATHER_LEGGINGS, 1);
                 final LeatherArmorMeta lam4 = (LeatherArmorMeta) pants.getItemMeta();
                 lam4.setColor(Color.fromRGB(249, 128, 29));
-                pants.setItemMeta((ItemMeta) lam4);
+                pants.setItemMeta(lam4);
                 equipment.setLeggings(pants);
                 final ItemStack boots = new ItemStack(Material.LEATHER_BOOTS, 1);
                 final LeatherArmorMeta lam5 = (LeatherArmorMeta) boots.getItemMeta();
                 lam5.setColor(Color.fromRGB(249, 128, 29));
-                boots.setItemMeta((ItemMeta) lam5);
+                boots.setItemMeta(lam5);
                 equipment.setBoots(boots);
                 equipment.setItemInMainHand(new ItemStack(Material.DIAMOND_PICKAXE));
 
-                if (Bukkit.getPlayer(minion.getOwnerUUID()) == null) {
-                    equipment.setHelmet(PreGenItems.instance.getHead(Bukkit.getPlayer(sender.getName())));
-                } else {
-                    equipment.setHelmet(PreGenItems.instance.getHead(Bukkit.getPlayer(minion.getOwnerUUID())));
-                }
+                equipment.setHelmet(PreGenItems.instance.getHeadMinion());
 
                 stand.setRightLegPose(new EulerAngle(0.0, 0.0, -50.0));
                 stand.setLeftLegPose(new EulerAngle(0.0, 0.0, 50.0));
@@ -90,7 +94,11 @@ public class MinionsCmd implements CommandExecutor {
 
         }
         if (args[1].equalsIgnoreCase("repopnearest")) {
-            for (Minion minion : MinionManager.instance.minions) {
+            ArrayList<Minion> minions = new ArrayList<>();
+            for (Island island : IslandManager.instance.islands) {
+                minions.addAll(island.getMinions());
+            }
+            for (Minion minion : minions) {
                 if (minion.getBlocLocation().getBlock().equals(ptarget.getLocation().getBlock())) {
                     final ArmorStand stand = (ArmorStand) minion.getBlocLocation().getWorld().spawnEntity(minion.getBlocLocation(), EntityType.ARMOR_STAND);
                     final EntityEquipment equipment = stand.getEquipment();

@@ -1,6 +1,9 @@
 package main.java.fr.verymc.island.minions;
 
 import main.java.fr.verymc.Main;
+import main.java.fr.verymc.island.Island;
+import main.java.fr.verymc.island.IslandManager;
+import main.java.fr.verymc.island.perms.IslandRanks;
 import main.java.fr.verymc.utils.InventoryUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Effect;
@@ -12,10 +15,7 @@ import org.bukkit.block.Chest;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
+import java.util.*;
 
 public class MinionHarvest {
 
@@ -36,33 +36,41 @@ public class MinionHarvest {
 
         Bukkit.getScheduler().scheduleAsyncRepeatingTask(Main.instance, new Runnable() {
             public void run() {
-                ArrayList<Minion> minions = new ArrayList<>();
-                minions.addAll(MinionManager.instance.minions);
+                HashMap<Minion, Island> minions = new HashMap<>();
+                for (Island island : IslandManager.instance.islands) {
+                    for (Minion minion : island.getMinions()) {
+                        minions.put(minion, island);
+                    }
+                }
                 Long millis = System.currentTimeMillis();
-                for (Minion minion : minions) {
-                    if (minion == null) continue;
-                    Location blocLoc = minion.getBlocLocation();
+                for (Map.Entry<Minion, Island> minion : minions.entrySet()) {
+                    if (minion.getKey() == null) continue;
+                    Location blocLoc = minion.getKey().getBlocLocation();
                     if (!Bukkit.getWorld(blocLoc.getWorld().getName()).
                             getChunkAt(blocLoc.getBlock()).isLoaded()) continue;
-                    if (!minion.isChestLinked()) {
-                        Player player = Bukkit.getPlayer(minion.getOwnerUUID());
-                        if (player != null && player.isOnline()) invalidChestProcess(player, minion);
+                    if (!minion.getKey().isChestLinked()) {
+                        for (Map.Entry<UUID, IslandRanks> entry : minion.getValue().getMembers().entrySet()) {
+                            Player player = Bukkit.getPlayer(entry.getKey());
+                            if (player != null && player.isOnline()) invalidChestProcess(player, minion.getKey());
+                        }
                         continue;
                     }
-                    if (minion.getChestBloc() == null) {
-                        Player player = Bukkit.getPlayer(minion.getOwnerUUID());
-                        if (player != null && player.isOnline()) invalidChestProcess(player, minion);
+                    if (minion.getKey().getChestBloc() == null) {
+                        for (Map.Entry<UUID, IslandRanks> entry : minion.getValue().getMembers().entrySet()) {
+                            Player player = Bukkit.getPlayer(entry.getKey());
+                            if (player != null && player.isOnline()) invalidChestProcess(player, minion.getKey());
+                        }
                         continue;
                     }
-                    Integer delay = MinionManager.instance.getMinerDelay(minion.getLevelInt());
-                    if (!lastAction.containsKey(minion)) {
-                        makeAction(minion);
-                        lastAction.put(minion, millis + delay * 1000);
+                    Integer delay = MinionManager.instance.getMinerDelay(minion.getKey().getLevelInt());
+                    if (!lastAction.containsKey(minion.getKey())) {
+                        makeAction(minion.getKey());
+                        lastAction.put(minion.getKey(), millis + delay * 1000);
                         continue;
                     }
-                    if (lastAction.get(minion) <= millis) {
-                        lastAction.put(minion, millis + delay * 1000);
-                        makeAction(minion);
+                    if (lastAction.get(minion.getKey()) <= millis) {
+                        lastAction.put(minion.getKey(), millis + delay * 1000);
+                        makeAction(minion.getKey());
                         continue;
                     }
                     continue;
@@ -122,8 +130,13 @@ public class MinionHarvest {
             public void run() {
                 if (finalBlockToBreak.getType() != null && finalBlockToBreak.getType() != Material.AIR) {
                     if (minion.getChestBloc().getType() != Material.CHEST) {
-                        Player player = Bukkit.getPlayer(minion.getOwnerUUID());
-                        if (player != null && player.isOnline()) invalidChestProcess(player, minion);
+                        Island island = IslandManager.instance.getIslandByLoc(minion.getBlocLocation());
+                        if (island != null) {
+                            for (Map.Entry<UUID, IslandRanks> entry : island.getMembers().entrySet()) {
+                                Player player = Bukkit.getPlayer(entry.getKey());
+                                if (player != null && player.isOnline()) invalidChestProcess(player, minion);
+                            }
+                        }
                         return;
                     }
                     Chest blhopper = (Chest) minion.getChestBloc().getState();

@@ -30,7 +30,10 @@ public enum IslandPerms {
     BUILD("§fConstruire"),
     BREAK("§fCasser"),
     INTERACT("§fIntéragir avec les blocs"),
-    CONTAINER("§fOuvrir les conteneurs");
+    CONTAINER("§fOuvrir les conteneurs"),
+    MINIONS_ADD("§6Ajouter un minion"),
+    MINIONS_REMOVE("§6Retirer un minion"),
+    MINIONS_INTERACT("§6Intéragir avec un minion");
 
     private String description;
 
@@ -119,6 +122,15 @@ public enum IslandPerms {
             }
             case EXPEL -> {
                 return new ItemStack(Material.DIAMOND_HOE);
+            }
+            case MINIONS_ADD -> {
+                return new ItemStack(Material.DRAGON_BREATH);
+            }
+            case MINIONS_REMOVE -> {
+                return new ItemStack(Material.DRAGON_EGG);
+            }
+            case MINIONS_INTERACT -> {
+                return new ItemStack(Material.DRAGON_HEAD);
             }
             default -> {
                 return new ItemStack(Material.AIR);

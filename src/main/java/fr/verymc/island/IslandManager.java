@@ -220,13 +220,9 @@ public class IslandManager {
                         Bukkit.getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
                             @Override
                             public void run() {
-                                ArrayList<Minion> minions = new ArrayList<>();
-                                for (Minion m : MinionManager.instance.minions) {
-                                    minions.add(m);
-                                }
-                                for (Minion m : minions) {
+                                for (Minion m : playerIsland.getMinions()) {
                                     if (getIslandByLoc(m.getBlocLocation()) == playerIsland) {
-                                        MinionManager.instance.removeMinion(m);
+                                        MinionManager.instance.removeMinion(m, playerIsland);
                                     }
                                 }
                                 ArrayList<Chest> chests = new ArrayList<>();
@@ -573,7 +569,7 @@ public class IslandManager {
                                 home.setYaw(130);
                                 islands.add(new Island("Ile de " + p.getName(), home, finalToReturn1, finalId + 1, members,
                                         islandUpgradeSize, islandUpgradeMember, WorldBorderUtil.Color.BLUE, islandBank, islandUpgradeGenerator, banneds, challenges,
-                                        true, null, true, 0.0, null, null));
+                                        true, null, true, 0.0, null, null, null));
                                 p.sendMessage("§6§lIles §8» §aVous avez généré une nouvelle île avec succès (en " + (System.currentTimeMillis() - start) + "ms).");
                                 teleportPlayerToIslandSafe(p);
                                 return;

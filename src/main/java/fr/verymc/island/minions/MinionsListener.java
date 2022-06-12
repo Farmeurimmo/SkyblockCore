@@ -2,6 +2,9 @@ package main.java.fr.verymc.island.minions;
 
 import main.java.fr.verymc.Main;
 import main.java.fr.verymc.core.eco.EcoAccountsManager;
+import main.java.fr.verymc.island.Island;
+import main.java.fr.verymc.island.IslandManager;
+import main.java.fr.verymc.island.perms.IslandPerms;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -29,8 +32,10 @@ public class MinionsListener implements Listener {
         if (currentType == null) return;
         if (e.getView().getTitle() == null) return;
         Player player = (Player) e.getWhoClicked();
+        Island island = IslandManager.instance.getPlayerIsland(player);
         if (e.getView().getTitle().contains("§6Menu du minion " + MinionType.PIOCHEUR.getName(MinionType.PIOCHEUR))) {
             e.setCancelled(true);
+            if (island == null) return;
             if (!MinionsGui.instance.minionOpened.containsKey(player.getName())) {
                 return;
             }
@@ -47,8 +52,12 @@ public class MinionsListener implements Listener {
                 return;
             }
             if (currentType == Material.DRAGON_BREATH) {
+                if (!island.hasPerms(island.getIslandRankFromUUID(player.getUniqueId()), IslandPerms.MINIONS_REMOVE, player)) {
+                    player.sendMessage("§6§lMinions §8» §fVous n'avez pas la permission de récupérer un minion.");
+                    return;
+                }
                 MinionManager.instance.giveMinionItemForExistingMinion(player, MinionsGui.instance.minionOpened.get(player.getName()));
-                MinionManager.instance.removeMinion(MinionsGui.instance.minionOpened.get(player.getName()));
+                MinionManager.instance.removeMinion(MinionsGui.instance.minionOpened.get(player.getName()), island);
                 Bukkit.getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
                     @Override
                     public void run() {
@@ -73,6 +82,7 @@ public class MinionsListener implements Listener {
         }
         if (e.getView().getTitle().contains("§6Améliorations du minion")) {
             e.setCancelled(true);
+            if (island == null) return;
             if (!MinionsGui.instance.minionOpened.containsKey(player.getName())) {
                 return;
             }
@@ -97,6 +107,7 @@ public class MinionsListener implements Listener {
         }
         if (e.getView().getTitle().contains("§6Paramètres du minion ")) {
             e.setCancelled(true);
+            if (island == null) return;
             if (!MinionsGui.instance.minionOpened.containsKey(player.getName())) {
                 return;
             }
@@ -128,6 +139,22 @@ public class MinionsListener implements Listener {
                 return;
             }
             if (locBloc.getBlock().getType() == Material.CHEST) {
+                if (e.isCancelled()) {
+                    return;
+                }
+                Island island = IslandManager.instance.getPlayerIsland(player);
+                if (island == null) {
+                    player.sendMessage("§6§lMinions §8» §fVous devez avoir une île pour lier un coffre.");
+                    return;
+                }
+                if (!island.hasPerms(island.getIslandRankFromUUID(player.getUniqueId()), IslandPerms.MINIONS_INTERACT, player)) {
+                    player.sendMessage("§6§lMinions §8» §fVous n'avez pas la permission d'intéragir avec un minion.");
+                    return;
+                }
+                if (island == IslandManager.instance.getIslandByLoc(locBloc)) {
+                    player.sendMessage("§6§lMinions §8» §fVous ne pouvez pas lier un coffre en dehors de votre île.");
+                    return;
+                }
                 MinionsGui.instance.minionOpened.get(player.getName()).setChestLinked(locBloc.getBlock());
                 MinionsGui.instance.minionOpened.remove(player.getName());
                 MinionsGui.instance.linking.remove(player);
@@ -147,46 +174,51 @@ public class MinionsListener implements Listener {
         if (!e.getItem().isUnbreakable()) {
             return;
         }
-        if (e.getItem().getType() == Material.DRAGON_BREATH && e.getPlayer().isSneaking()) {
-            if (e.getPlayer().getLocation().getWorld().getName().equalsIgnoreCase("world")) {
+        Player player = e.getPlayer();
+        if (e.isCancelled()) {
+            return;
+        }
+        if (e.getItem().getType() == Material.DRAGON_BREATH && player.isSneaking()) {
+            if (!e.getItem().getDisplayName().contains(MinionType.PIOCHEUR.getName(MinionType.PIOCHEUR))
+                    && !e.getItem().getDisplayName().contains("§6Minion")) {
                 return;
             }
-            int plcount = 0;
-            for (Minion minion : MinionManager.instance.minions) {
-                if (minion.getOwnerUUID().equals(e.getPlayer().getUniqueId())) {
-                    plcount += 1;
-                }
-            }
-            if (plcount >= 3) {
-                e.getPlayer().sendMessage("§6§lMinions §8» §fVous ne pouvez pas poser plus de 3 minions.");
+            Island island = IslandManager.instance.getPlayerIsland(player);
+            e.setCancelled(true);
+            if (island == null) {
+                e.getPlayer().sendMessage("§6§lMinions §8» §fVous devez avoir une île pour poser un minion.");
                 return;
             }
-            for (Minion minions : MinionManager.instance.minions) {
+            if (player.getLocation().getWorld().getName().equalsIgnoreCase("world")) {
+                return;
+            }
+            if (!island.hasPerms(island.getIslandRankFromUUID(player.getUniqueId()), IslandPerms.MINIONS_ADD, player)) {
+                player.sendMessage("§6§lMinions §8» §fVous n'avez pas la permission de poser un minion.");
+                return;
+            }
+            for (Minion minions : island.getMinions()) {
                 if (e.getClickedBlock().getLocation().getBlock().getLocation().add(0, 1, 0).equals(minions.getBlocLocation().getBlock().getLocation())) {
-                    e.setCancelled(true);
                     return;
                 }
             }
-            if (e.getItem().getDisplayName().contains(MinionType.PIOCHEUR.getName(MinionType.PIOCHEUR))
-                    && e.getItem().getDisplayName().contains("§6Minion")) {
-                Player player = e.getPlayer();
-                Integer levelInt = 0;
-                if (e.getItem().getLore().size() >= 1) {
-                    String lore1 = e.getItem().getLore().get(0);
-                    lore1 = lore1.replace("§6Niveau §e", "");
-                    levelInt = Integer.parseInt(lore1);
-                }
-                e.setCancelled(true);
-                if (!MinionManager.instance.faceBloc.contains(player.getFacing())) {
-                    player.sendMessage("§6§lMinions §8» §fVous devez placer un minion dans une direction précise; " +
-                            "sud, nord, est, ouest");
-                    return;
-                }
-                MinionManager.instance.addMinion(player, e.getClickedBlock().getLocation(),
-                        MinionType.PIOCHEUR, player.getFacing(), levelInt);
-                player.getItemInHand().setAmount(player.getItemInHand().getAmount() - 1);
+            if (island.getMinions().size() >= 3) {
+                player.sendMessage("§6§lMinions §8» §fVous ne pouvez pas poser plus de 3 minions.");
                 return;
             }
+            if (!MinionManager.instance.faceBloc.contains(player.getFacing())) {
+                player.sendMessage("§6§lMinions §8» §fVous devez placer un minion dans une direction précise; " +
+                        "sud, nord, est, ouest");
+                return;
+            }
+            Integer levelInt = 0;
+            if (e.getItem().getLore().size() >= 1) {
+                String lore1 = e.getItem().getLore().get(0);
+                lore1 = lore1.replace("§6Niveau §e", "");
+                levelInt = Integer.parseInt(lore1);
+            }
+            MinionManager.instance.addMinion(player, e.getClickedBlock().getLocation(),
+                    MinionType.PIOCHEUR, player.getFacing(), levelInt);
+            player.getItemInHand().setAmount(player.getItemInHand().getAmount() - 1);
         }
     }
 
@@ -205,7 +237,11 @@ public class MinionsListener implements Listener {
             Entity clicked = e.getRightClicked();
             if (clicked.isInvulnerable()) {
                 Minion minion = null;
-                for (Minion minions : MinionManager.instance.minions) {
+                Island island = IslandManager.instance.getIslandByLoc(clicked.getLocation());
+                if (island == null) {
+                    return;
+                }
+                for (Minion minions : island.getMinions()) {
                     if (!e.getRightClicked().getLocation().equals(minions.getBlocLocation())) {
                         continue;
                     }
@@ -214,17 +250,15 @@ public class MinionsListener implements Listener {
                 }
                 if (minion == null) return;
                 e.setCancelled(true);
-                if (minion.getOwnerUUID().equals(e.getPlayer().getUniqueId())) {
+                if (island.hasPerms(island.getIslandRankFromUUID(player.getUniqueId()), IslandPerms.MINIONS_INTERACT, player)) {
                     MinionsGui.instance.minionMainGui(player, minion);
                     return;
                 }
                 if (player.hasPermission("*")) {
                     MinionsGui.instance.minionMainGui(player, minion);
-                    player.sendMessage("§6§lMinions §8» §fVous venez d'entrer de force dans le minion de " + minion.getOwnerName() + ".");
+                    player.sendMessage("§6§lMinions §8» §fVous venez d'entrer de force dans le minion de: " + island.getName() + ".");
                     return;
                 }
-                player.sendMessage("§6§lMinions §8» §fCe minion ne vous appartient pas.");
-                return;
             }
         }
     }

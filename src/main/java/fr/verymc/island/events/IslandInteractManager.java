@@ -43,7 +43,7 @@ public class IslandInteractManager implements Listener {
         }
     }
 
-    @EventHandler
+    @EventHandler(priority = org.bukkit.event.EventPriority.HIGHEST)
     public void blockBreakEvent(BlockBreakEvent e) {
         if (e.isCancelled()) return;
         Player player = e.getPlayer();
@@ -59,7 +59,7 @@ public class IslandInteractManager implements Listener {
         }
     }
 
-    @EventHandler
+    @EventHandler(priority = org.bukkit.event.EventPriority.HIGHEST)
     public void blockPlaceEvent(BlockPlaceEvent e) {
         if (e.isCancelled()) return;
         Player player = e.getPlayer();
@@ -75,7 +75,7 @@ public class IslandInteractManager implements Listener {
         }
     }
 
-    @EventHandler
+    @EventHandler(priority = org.bukkit.event.EventPriority.HIGHEST)
     public void interactEvent(PlayerInteractEvent e) {
         if (e.isCancelled()) return;
         Player player = e.getPlayer();

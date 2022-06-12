@@ -1,4 +1,3 @@
-- stockage des "minions" avec les îles
 - intégrer l'api du stockage
 - On pourrait en effet mettre en place plusieurs serveurs qui gère chacun plusieurs îles. On aurait de cette manière :
   ▫️ 1 (ou plusieurs) lobby (avec la map spawn)

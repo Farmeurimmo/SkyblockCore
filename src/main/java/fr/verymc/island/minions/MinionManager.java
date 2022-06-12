@@ -3,6 +3,8 @@ package main.java.fr.verymc.island.minions;
 import main.java.fr.verymc.Main;
 import main.java.fr.verymc.core.storage.AsyncConfig;
 import main.java.fr.verymc.core.storage.ConfigManager;
+import main.java.fr.verymc.island.Island;
+import main.java.fr.verymc.island.IslandManager;
 import main.java.fr.verymc.utils.PreGenItems;
 import org.bukkit.Bukkit;
 import org.bukkit.Color;
@@ -33,7 +35,6 @@ public class MinionManager {
     public static Integer level4 = 150000;
     public static Integer level5 = 250000;
     public static Integer level6 = 500000;
-    public ArrayList<Minion> minions = new ArrayList<>();
     public ArrayList<BlockFace> faceBloc = new ArrayList<>();
 
 
@@ -119,7 +120,7 @@ public class MinionManager {
         blocLoc.add(0.5, 1, 0.5);
         blocLoc.setDirection(player.getLocation().getDirection());
 
-        Minion minion = new Minion(id, player.getUniqueId(), levelInt, blocLoc, minionType,
+        Minion minion = new Minion(id, levelInt, blocLoc, minionType,
                 blockFace, false, null, false);
 
         try {
@@ -127,7 +128,7 @@ public class MinionManager {
             final EntityEquipment equipment = stand.getEquipment();
             stand.setMetadata("minion", new FixedMetadataValue(Main.instance, true));
             stand.setVisible(true);
-            stand.setCustomName("§eMinion " + minionType.getName(minionType));
+            stand.setCustomName("§eMinion Piocheur");
             stand.setCustomNameVisible(true);
             stand.setGravity(false);
             stand.setArms(true);
@@ -160,13 +161,13 @@ public class MinionManager {
             e.printStackTrace();
         }
 
-        minions.add(minion);
+        IslandManager.instance.getPlayerIsland(player).addMinion(minion);
 
         player.sendMessage("§6§lMinions §8» §fMinion §aplacé§f, pour qu'il fonctionne, il faut lier un coffre au minion. " +
                 "(Aller dans l'inventaire du minion puis cliquer le coffre)");
     }
 
-    public void removeMinion(Minion minion) {
+    public void removeMinion(Minion minion, Island island) {
 
         for (Entity entity : Bukkit.getWorld(minion.getBlocLocation().getWorld().getName()).getEntities()) {
             if (!(entity instanceof ArmorStand)) continue;
@@ -176,10 +177,10 @@ public class MinionManager {
             }
         }
 
-        minions.remove(minion);
+        island.removeMinion(minion);
         HashMap<String, Object> toEdit = new HashMap<>();
-        toEdit.put(minion.getID() + "", null);
-        AsyncConfig.instance.setAndSaveAsync(toEdit, ConfigManager.instance.getDataMinions(), ConfigManager.instance.minionsFile);
+        toEdit.put(island.getId() + ".minions." + minion.getID() + "", null);
+        AsyncConfig.instance.setAndSaveAsync(toEdit, ConfigManager.instance.getDataIslands(), ConfigManager.instance.islandsFile);
     }
 
 }

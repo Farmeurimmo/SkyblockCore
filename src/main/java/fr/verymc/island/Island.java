@@ -5,6 +5,7 @@ import main.java.fr.verymc.island.bank.IslandBank;
 import main.java.fr.verymc.island.blocks.Chest;
 import main.java.fr.verymc.island.challenges.IslandChallenge;
 import main.java.fr.verymc.island.challenges.IslandChallengesListener;
+import main.java.fr.verymc.island.minions.Minion;
 import main.java.fr.verymc.island.perms.IslandPerms;
 import main.java.fr.verymc.island.perms.IslandRank;
 import main.java.fr.verymc.island.perms.IslandRanks;
@@ -23,7 +24,6 @@ import java.util.*;
 
 public class Island {
 
-    public ArrayList<main.java.fr.verymc.island.blocks.Chest> chests;
     private String name;
     private Location home;
     private Location center;
@@ -42,12 +42,14 @@ public class Island {
     private boolean isPublic;
     private ArrayList<IslandChallenge> challenges;
     private ArrayList<IslandSettings> activatedSettings;
+    private ArrayList<main.java.fr.verymc.island.blocks.Chest> chests;
+    private ArrayList<Minion> minions;
 
     public Island(String name, Location home, Location center, int id, HashMap<UUID, IslandRanks> members,
                   IslandUpgradeSize upgradeSize, IslandUpgradeMember upgradeMember, WorldBorderUtil.Color borderColor,
                   IslandBank bank, IslandUpgradeGenerator generatorUpgrade, ArrayList<UUID> banneds, ArrayList<IslandChallenge> challenges,
                   boolean isDefaultChallenges, HashMap<IslandRanks, ArrayList<IslandPerms>> permsPerRanks,
-                  boolean isPublic, double value, ArrayList<IslandSettings> activatedSettings, ArrayList<Chest> chests) {
+                  boolean isPublic, double value, ArrayList<IslandSettings> activatedSettings, ArrayList<Chest> chests, ArrayList<Minion> minions) {
         this.name = name;
         this.home = home;
         this.center = center;
@@ -81,6 +83,11 @@ public class Island {
         } else {
             this.chests = chests;
         }
+        if (minions == null) {
+            this.minions = new ArrayList<>();
+        } else {
+            this.minions = minions;
+        }
         Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.instance, new Runnable() {
             @Override
             public void run() {
@@ -94,23 +101,28 @@ public class Island {
         ArrayList<IslandPerms> permsVisit = new ArrayList<>();
         permsVisit.add(IslandPerms.INTERACT);
         permsPerRanks.put(IslandRanks.VISITEUR, permsVisit);
+
         ArrayList<IslandPerms> perms = new ArrayList<>();
         perms.addAll(permsVisit);
         perms.addAll(Arrays.asList(IslandPerms.BUILD, IslandPerms.BREAK));
         permsPerRanks.put(IslandRanks.COOP, perms);
+
         ArrayList<IslandPerms> permsMembre = new ArrayList<>();
         permsMembre.addAll(perms);
-        permsMembre.add(IslandPerms.CHANGE_BORDER_COLOR);
+        permsMembre.addAll(Arrays.asList(IslandPerms.CHANGE_BORDER_COLOR, IslandPerms.MINIONS_ADD, IslandPerms.MINIONS_INTERACT));
         permsPerRanks.put(IslandRanks.MEMBRE, permsMembre);
+
         ArrayList<IslandPerms> permsMod = new ArrayList<>();
         permsMod.addAll(permsMembre);
-        permsMod.addAll(Arrays.asList(IslandPerms.CHANGE_BORDER_COLOR, IslandPerms.KICK, IslandPerms.PROMOTE, IslandPerms.DEMOTE));
+        permsMod.addAll(Arrays.asList(IslandPerms.CHANGE_BORDER_COLOR, IslandPerms.KICK, IslandPerms.PROMOTE, IslandPerms.DEMOTE, IslandPerms.MINIONS_REMOVE));
         permsPerRanks.put(IslandRanks.MODERATEUR, permsMod);
+
         ArrayList<IslandPerms> permsCoChef = new ArrayList<>();
         permsCoChef.addAll(permsMod);
         permsCoChef.addAll(Arrays.asList(IslandPerms.CHANGE_BORDER_COLOR, IslandPerms.KICK, IslandPerms.PROMOTE, IslandPerms.DEMOTE,
                 IslandPerms.INVITE, IslandPerms.BAN));
         permsPerRanks.put(IslandRanks.COCHEF, permsCoChef);
+
         ArrayList<IslandPerms> permsChef = new ArrayList<>();
         permsChef.add(IslandPerms.ALL_PERMS);
         permsPerRanks.put(IslandRanks.CHEF, permsChef);
@@ -683,6 +695,18 @@ public class Island {
 
     public void removeChest(Chest chest) {
         chests.remove(chest);
+    }
+
+    public void addMinion(Minion minion) {
+        minions.add(minion);
+    }
+
+    public void removeMinion(Minion minion) {
+        minions.remove(minion);
+    }
+
+    public ArrayList<Minion> getMinions() {
+        return minions;
     }
 
 }

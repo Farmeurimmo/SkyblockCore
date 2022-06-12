@@ -47,6 +47,15 @@ public class PreGenItems {
     }
 
     @NotNull
+    public ItemStack getHeadMinion() {
+        ItemStack custom10 = new ItemStack(Material.PLAYER_HEAD, 1);
+        SkullMeta customi = (SkullMeta) custom10.getItemMeta();
+        customi.setOwner("Farmeurimmo");
+        custom10.setItemMeta(customi);
+        return custom10;
+    }
+
+    @NotNull
     public ItemStack getEvoPickaxe() {
         ItemStack evoPickaxe = (new ItemStackBuilder(Material.NETHERITE_PICKAXE, 1).setName("§6Gros Cailloux")
                 .setLore("§70", "§7", "§6Clic droit pour ouvrir le menu d'amélioration")).getItemStack();

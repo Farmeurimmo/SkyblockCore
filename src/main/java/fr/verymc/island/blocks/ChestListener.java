@@ -35,6 +35,9 @@ public class ChestListener implements Listener {
         if (e.getPlayer().isSneaking()) {
             return;
         }
+        if (e.isCancelled()) {
+            return;
+        }
         if (e.getClickedBlock().getType() == Material.CHEST) {
             BlockState bs = e.getClickedBlock().getState();
             org.bukkit.block.Chest hopper = (org.bukkit.block.Chest) bs;
@@ -472,6 +475,9 @@ public class ChestListener implements Listener {
     public void breakEvent(BlockBreakEvent e) {
         if (e.isCancelled()) return;
         int type = -1;
+        if (e.isCancelled()) {
+            return;
+        }
         if (e.getBlock().getType() == Material.HOPPER) {
             Hopper blhopper = (Hopper) e.getBlock().getState();
             if (blhopper.getCustomName() == null) {
@@ -541,6 +547,9 @@ public class ChestListener implements Listener {
         } else if (IslandBlocsValues.instance.hasBlockValue(e.getBlock().getType())) {
             type = 3;
         } else {
+            return;
+        }
+        if (e.isCancelled()) {
             return;
         }
         ChestManager.instance.placeChest(e.getPlayer(), e.getBlock().getLocation(), type, null, 0.0,
