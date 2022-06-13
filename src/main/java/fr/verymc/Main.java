@@ -56,7 +56,6 @@ import main.java.fr.verymc.island.guis.IslandGuiManager;
 import main.java.fr.verymc.island.minions.*;
 import main.java.fr.verymc.island.protections.BlockListener;
 import main.java.fr.verymc.island.protections.EntityListener;
-import main.java.fr.verymc.utils.ServerType;
 import main.java.fr.verymc.utils.UtilsManager;
 import main.java.fr.verymc.utils.WorldBorderUtil;
 import net.citizensnpcs.api.CitizensAPI;
@@ -89,7 +88,7 @@ public class Main extends JavaPlugin {
     public ArrayList<TradeManager> tradeInProcess = new ArrayList<>();
 
     public ClaimCmdSaver saver;
-    public ServerType serverType;
+    public main.java.fr.verymc.utils.enums.ServerType serverType;
 
     public void setTarget(String uuid, String aaa) {
         if (aaa == null)
@@ -332,7 +331,7 @@ public class Main extends JavaPlugin {
 
 
         //DUNGEON LISTENER
-        if (serverType == ServerType.DUNGEON) {
+        if (serverType == main.java.fr.verymc.utils.enums.ServerType.DUNGEON) {
 
         }
 
