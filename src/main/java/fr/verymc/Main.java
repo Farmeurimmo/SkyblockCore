@@ -2,7 +2,6 @@ package main.java.fr.verymc;
 
 import com.gmail.filoghost.holographicdisplays.api.Hologram;
 import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
-import main.java.fr.verymc.core.ServerType;
 import main.java.fr.verymc.core.antiafk.AntiAfk;
 import main.java.fr.verymc.core.atout.AtoutCmd;
 import main.java.fr.verymc.core.atout.AtoutGui;
@@ -57,6 +56,7 @@ import main.java.fr.verymc.island.guis.IslandGuiManager;
 import main.java.fr.verymc.island.minions.*;
 import main.java.fr.verymc.island.protections.BlockListener;
 import main.java.fr.verymc.island.protections.EntityListener;
+import main.java.fr.verymc.utils.ServerType;
 import main.java.fr.verymc.utils.UtilsManager;
 import main.java.fr.verymc.utils.WorldBorderUtil;
 import net.citizensnpcs.api.CitizensAPI;

@@ -1,3 +1,9 @@
 [submodule "Commons"]
 	path = Commons
 	url = https://github.com/VeryMC/Skyblock-Commons.git
+[submodule "src/main/java/fr/verymc/Commons"]
+	path = src/main/java/fr/verymc/Commons
+	url = https://github.com/VeryMC/Skyblock-Commons.git
+[submodule "src/main/java/fr/verymc/commons"]
+	path = src/main/java/fr/verymc/commons
+	url = https://github.com/VeryMC/Skyblock-Commons.git
