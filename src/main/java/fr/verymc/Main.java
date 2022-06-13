@@ -2,6 +2,7 @@ package main.java.fr.verymc;
 
 import com.gmail.filoghost.holographicdisplays.api.Hologram;
 import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
+import main.java.fr.verymc.commons.enums.ServerType;
 import main.java.fr.verymc.core.antiafk.AntiAfk;
 import main.java.fr.verymc.core.atout.AtoutCmd;
 import main.java.fr.verymc.core.atout.AtoutGui;
@@ -88,7 +89,7 @@ public class Main extends JavaPlugin {
     public ArrayList<TradeManager> tradeInProcess = new ArrayList<>();
 
     public ClaimCmdSaver saver;
-    public main.java.fr.verymc.utils.enums.ServerType serverType;
+    public ServerType serverType;
 
     public void setTarget(String uuid, String aaa) {
         if (aaa == null)
@@ -331,7 +332,7 @@ public class Main extends JavaPlugin {
 
 
         //DUNGEON LISTENER
-        if (serverType == main.java.fr.verymc.utils.enums.ServerType.DUNGEON) {
+        if (serverType == ServerType.DUNGEON) {
 
         }
 
