@@ -103,11 +103,9 @@ public class IslandValueCalcManager {
                     IslandManager.instance.getIslandByLoc(island.getCenter()).setValue(value);
                     Long elasped = (System.currentTimeMillis() - startmills);
 
-                    IslandManager.instance.getIslandByLoc(island.getCenter()).sendMessageToEveryMember("§6§lIles §8» §fRecalcul de votre île terminé. (en " + elasped + " ms)");
+                    //IslandManager.instance.getIslandByLoc(island.getCenter()).sendMessageToEveryMember("§6§lIles §8» §fRecalcul de votre île terminé. (en " + elasped + " ms)");
                 });
             }
-            Bukkit.broadcastMessage("§6§lIles §8» §fRecalcul de toutes les îles lancé. Cette opération peut prendre plusieurs minutes" +
-                    " mais n'affectera pas votre expérience de jeu.");
         });
     }
 

@@ -4,7 +4,7 @@ author: Farmeurimmo
 authors:
   - Farmeurimmo
 main: main.java.fr.verymc.Main
-depend: [ Citizens, HolographicDisplays ]
+depend: [ Citizens, HolographicDisplays, LuckPerms ]
 api-version: 1.16
 commands:
   spawn:
@@ -48,8 +48,6 @@ commands:
     permission: afkmine
   checkfly:
     permission: checkfly
-  redstone:
-    permission: redstone.admin
   tpa:
   tpacancel:
   tpyes:
