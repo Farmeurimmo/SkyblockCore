@@ -25,7 +25,7 @@ public class TABManager {
                 }
                 int online = Bukkit.getOnlinePlayers().size() - Vanished.size();
                 for (Player player : Bukkit.getOnlinePlayers()) {
-                    player.setPlayerListHeaderFooter("\n§f• §6§lVery§f§lMc §f•\n\n§7Connecté(s) §7▸ §a" + online +
+                    player.setPlayerListHeaderFooter("\n§f• §6§lVery§f§lMc §f•\n\n§7" + Main.instance.serverName + " §7▸ §a" + online +
                                     "\n§7Une question/problème ? contacte un §9§lSTAFF §7!\n",
                             "\n§7Serveur Mini-Jeux Francophone\n§7Vous êtes sur ▸ §fplay.§6§lvery§f§lmc§f.fr §7◂");
                 }

@@ -1,5 +1,7 @@
-package main.java.fr.verymc.hub.events;
+package main.java.fr.verymc.core.events;
 
+import main.java.fr.verymc.Main;
+import main.java.fr.verymc.commons.enums.ServerType;
 import main.java.fr.verymc.core.scoreboard.ScoreBoard;
 import main.java.fr.verymc.core.storage.SkyblockUser;
 import main.java.fr.verymc.core.storage.SkyblockUserManager;
@@ -45,7 +47,15 @@ public class JoinLeave implements Listener {
 
         player.setGameMode(GameMode.SURVIVAL);
 
-        Island playerIsland = IslandManager.instance.getPlayerIsland(player);
+
+        Island playerIsland = null;
+        if (Main.instance.serverType == ServerType.ISLAND) {
+            playerIsland = IslandManager.instance.getPlayerIsland(player);
+            IslandManager.instance.setWorldBorder(player);
+            if (playerIsland != null) {
+                playerIsland.toggleTimeAndWeather();
+            }
+        }
 
         //BossBar.AddBossBarForPlayer(player);
 
@@ -77,35 +87,33 @@ public class JoinLeave implements Listener {
         if (skyblockUser.hasJumpActive()) {
             player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 999999999, 2));
         }
-
-        IslandManager.instance.setWorldBorder(player);
-        if (playerIsland != null) {
-            playerIsland.toggleTimeAndWeather();
-        }
     }
 
     @EventHandler
     public void OnLeave(PlayerQuitEvent event) {
         Player player = event.getPlayer();
         SkyblockUser skyblockUser = SkyblockUserManager.instance.getUser(player.getUniqueId());
-        Island playerIsland = IslandManager.instance.getPlayerIsland(player);
-        if (playerIsland != null) {
-            int onlineIs = 0;
-            for (Map.Entry<UUID, IslandRanks> entry : playerIsland.getMembers().entrySet()) {
-                Player member = Bukkit.getPlayer(entry.getKey());
-                if (member != null) {
-                    if (member.isOnline()) {
-                        onlineIs++;
+        Island playerIsland = null;
+        if (Main.instance.serverType == ServerType.ISLAND) {
+            playerIsland = IslandManager.instance.getPlayerIsland(player);
+            if (playerIsland != null) {
+                int onlineIs = 0;
+                for (Map.Entry<UUID, IslandRanks> entry : playerIsland.getMembers().entrySet()) {
+                    Player member = Bukkit.getPlayer(entry.getKey());
+                    if (member != null) {
+                        if (member.isOnline()) {
+                            onlineIs++;
+                        }
                     }
                 }
-            }
-            if (onlineIs == 0) {
-                playerIsland.clearCoops();
-            }
-        } else {
-            for (Island island : IslandManager.instance.islands) {
-                if (island.getCoops().contains(player.getUniqueId())) {
-                    island.removeCoop(player.getUniqueId());
+                if (onlineIs == 0) {
+                    playerIsland.clearCoops();
+                }
+            } else {
+                for (Island island : IslandManager.instance.islands) {
+                    if (island.getCoops().contains(player.getUniqueId())) {
+                        island.removeCoop(player.getUniqueId());
+                    }
                 }
             }
         }

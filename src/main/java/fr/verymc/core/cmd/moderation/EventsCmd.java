@@ -1,7 +1,7 @@
 package main.java.fr.verymc.core.cmd.moderation;
 
-import main.java.fr.verymc.island.evenement.BlocBreakerContest;
-import main.java.fr.verymc.island.evenement.DailyBonus;
+import main.java.fr.verymc.core.evenement.BlocBreakerContest;
+import main.java.fr.verymc.core.evenement.DailyBonus;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;

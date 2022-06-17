@@ -1,6 +1,7 @@
 package main.java.fr.verymc.core.storage;
 
 import main.java.fr.verymc.Main;
+import main.java.fr.verymc.commons.enums.ServerType;
 import main.java.fr.verymc.core.playerwarps.PlayerWarp;
 import main.java.fr.verymc.island.Island;
 import main.java.fr.verymc.island.IslandManager;
@@ -283,7 +284,9 @@ public class StorageYAMLManager {
                 @Override
                 public void run() {
                     //SEND Islands to -> IslandManager.instance.islands
-                    IslandManager.instance.islands = islands;
+                    if (Main.instance.serverType == ServerType.ISLAND) {
+                        IslandManager.instance.islands = islands;
+                    }
 
                     //SEND SkyblockUser to -> SkyblockUserManager.instance.users
                     SkyblockUserManager.instance.users = skyblockUsers;
@@ -298,90 +301,92 @@ public class StorageYAMLManager {
         CompletableFuture.supplyAsync(() -> {
             long start = System.currentTimeMillis();
 
-            HashMap<String, Object> toSendIslands = new HashMap<>();
-            HashMap<String, Object> toRemoveIslands = new HashMap<>(); // NEED TO NULL Island id because yaml don't support override data
-            ArrayList<Island> islands = IslandManager.instance.islands;
-            for (Island island : islands) {
-                HashMap<String, Object> toSendIsland = new HashMap<>();
-                try {
-                    toSendIsland.put(island.getId() + ".name", island.getName());
-                    toSendIsland.put(island.getId() + ".home", island.getHome());
-                    toSendIsland.put(island.getId() + ".center", island.getCenter());
-                    toSendIsland.put(island.getId() + ".players", island.getMembers().toString());
-                    toSendIsland.put(island.getId() + ".upgradeSizeSize", island.getSizeUpgrade().getSize());
-                    toSendIsland.put(island.getId() + ".upgradeSizeLevel", island.getSizeUpgrade().getLevel());
-                    toSendIsland.put(island.getId() + ".upgradeMemberLevel", island.getMemberUpgrade().getLevel());
-                    toSendIsland.put(island.getId() + ".borderColor", island.getBorderColor().toString());
-                    toSendIsland.put(island.getId() + ".bank.money", island.getBank().getMoney());
-                    toSendIsland.put(island.getId() + ".bank.crystaux", island.getBank().getCrystaux());
-                    toSendIsland.put(island.getId() + ".bank.xp", island.getBank().getXp());
-                    toSendIsland.put(island.getId() + ".value", island.getValue());
-                    toSendIsland.put(island.getId() + ".isPublic", island.isPublic());
-                    toSendIsland.put(island.getId() + ".upgradeGeneratorLevel", island.getGeneratorUpgrade().getLevel());
-                    toSendIsland.put(island.getId() + ".banneds", island.getBanneds().toString().
-                            replace("[", "").replace("]", "").replace(" ", ""));
-                    toSendIsland.put(island.getId() + ".settings", island.getActivatedSettings().toString().
-                            replace("[", "").replace("]", "").replace(" ", ""));
-                    for (IslandChallenge islandChallenge : island.getChallenges()) {
-                        toSendIsland.put(island.getId() + ".c." + islandChallenge.getId() + ".prog", islandChallenge.getProgress());
-                        toSendIsland.put(island.getId() + ".c." + islandChallenge.getId() + ".pal", islandChallenge.getPalier());
-                        toSendIsland.put(island.getId() + ".c." + islandChallenge.getId() + ".act", islandChallenge.isActive());
-                        toSendIsland.put(island.getId() + ".c." + islandChallenge.getId() + ".mat", islandChallenge.getMaterial().toString());
-                        toSendIsland.put(island.getId() + ".c." + islandChallenge.getId() + ".max", islandChallenge.getMaxProgress());
-                        toSendIsland.put(island.getId() + ".c." + islandChallenge.getId() + ".name", islandChallenge.getName());
-                        toSendIsland.put(island.getId() + ".c." + islandChallenge.getId() + ".type", islandChallenge.getType());
-                        if (islandChallenge.getToGet() != null) {
-                            toSendIsland.put(island.getId() + ".c." + islandChallenge.getId() + ".mats", islandChallenge.getToGet().toString().
-                                    replace("[", "").replace("]", "").replace(" ", ""));
+            if (Main.instance.serverType == ServerType.ISLAND) {
+                HashMap<String, Object> toSendIslands = new HashMap<>();
+                HashMap<String, Object> toRemoveIslands = new HashMap<>(); // NEED TO NULL Island id because yaml don't support override data
+                ArrayList<Island> islands = IslandManager.instance.islands;
+                for (Island island : islands) {
+                    HashMap<String, Object> toSendIsland = new HashMap<>();
+                    try {
+                        toSendIsland.put(island.getId() + ".name", island.getName());
+                        toSendIsland.put(island.getId() + ".home", island.getHome());
+                        toSendIsland.put(island.getId() + ".center", island.getCenter());
+                        toSendIsland.put(island.getId() + ".players", island.getMembers().toString());
+                        toSendIsland.put(island.getId() + ".upgradeSizeSize", island.getSizeUpgrade().getSize());
+                        toSendIsland.put(island.getId() + ".upgradeSizeLevel", island.getSizeUpgrade().getLevel());
+                        toSendIsland.put(island.getId() + ".upgradeMemberLevel", island.getMemberUpgrade().getLevel());
+                        toSendIsland.put(island.getId() + ".borderColor", island.getBorderColor().toString());
+                        toSendIsland.put(island.getId() + ".bank.money", island.getBank().getMoney());
+                        toSendIsland.put(island.getId() + ".bank.crystaux", island.getBank().getCrystaux());
+                        toSendIsland.put(island.getId() + ".bank.xp", island.getBank().getXp());
+                        toSendIsland.put(island.getId() + ".value", island.getValue());
+                        toSendIsland.put(island.getId() + ".isPublic", island.isPublic());
+                        toSendIsland.put(island.getId() + ".upgradeGeneratorLevel", island.getGeneratorUpgrade().getLevel());
+                        toSendIsland.put(island.getId() + ".banneds", island.getBanneds().toString().
+                                replace("[", "").replace("]", "").replace(" ", ""));
+                        toSendIsland.put(island.getId() + ".settings", island.getActivatedSettings().toString().
+                                replace("[", "").replace("]", "").replace(" ", ""));
+                        for (IslandChallenge islandChallenge : island.getChallenges()) {
+                            toSendIsland.put(island.getId() + ".c." + islandChallenge.getId() + ".prog", islandChallenge.getProgress());
+                            toSendIsland.put(island.getId() + ".c." + islandChallenge.getId() + ".pal", islandChallenge.getPalier());
+                            toSendIsland.put(island.getId() + ".c." + islandChallenge.getId() + ".act", islandChallenge.isActive());
+                            toSendIsland.put(island.getId() + ".c." + islandChallenge.getId() + ".mat", islandChallenge.getMaterial().toString());
+                            toSendIsland.put(island.getId() + ".c." + islandChallenge.getId() + ".max", islandChallenge.getMaxProgress());
+                            toSendIsland.put(island.getId() + ".c." + islandChallenge.getId() + ".name", islandChallenge.getName());
+                            toSendIsland.put(island.getId() + ".c." + islandChallenge.getId() + ".type", islandChallenge.getType());
+                            if (islandChallenge.getToGet() != null) {
+                                toSendIsland.put(island.getId() + ".c." + islandChallenge.getId() + ".mats", islandChallenge.getToGet().toString().
+                                        replace("[", "").replace("]", "").replace(" ", ""));
+                            }
                         }
-                    }
-                    for (Map.Entry<IslandRanks, ArrayList<IslandPerms>> entry : island.getMapPerms().entrySet()) {
-                        toSendIsland.put(island.getId() + ".perm." + entry.getKey().toString(), entry.getValue().toString()
-                                .replace("[", "").replace("]", "").
-                                replace(" ", ""));
-                    }
-                    for (Chest chest : island.getChests()) {
-                        toSendIsland.put(island.getId() + ".chests." + chest.getId() + ".loc", chest.getBlock());
-                        toSendIsland.put(island.getId() + ".chests." + chest.getId() + ".uuid", chest.getOwner().toString());
-                        toSendIsland.put(island.getId() + ".chests." + chest.getId() + ".type", chest.getType());
-                        toSendIsland.put(island.getId() + ".chests." + chest.getId() + ".isSell", chest.isSell());
-                        toSendIsland.put(island.getId() + ".chests." + chest.getId() + ".active", chest.isActiveSellOrBuy());
-                        toSendIsland.put(island.getId() + ".chests." + chest.getId() + ".price", chest.getPrice());
-                        toSendIsland.put(island.getId() + ".chests." + chest.getId() + ".item", chest.getItemToBuySell());
-                        toSendIsland.put(island.getId() + ".chests." + chest.getId() + ".chunk", chest.getChunkKey());
-                        toSendIsland.put(island.getId() + ".chests." + chest.getId() + ".amount", chest.getAmount());
-                        if (chest.getStacked() != null) {
-                            toSendIsland.put(island.getId() + ".chests." + chest.getId() + ".stacked", chest.getStacked().toString());
+                        for (Map.Entry<IslandRanks, ArrayList<IslandPerms>> entry : island.getMapPerms().entrySet()) {
+                            toSendIsland.put(island.getId() + ".perm." + entry.getKey().toString(), entry.getValue().toString()
+                                    .replace("[", "").replace("]", "").
+                                    replace(" ", ""));
                         }
-                    }
-                    for (Minion minion : island.getMinions()) {
-                        toSendIsland.put(island.getId() + ".minions." + minion.getID() + ".type", minion.getMinionType().toString());
-                        toSendIsland.put(island.getId() + ".minions." + minion.getID() + ".lvl", minion.getLevelInt());
-                        toSendIsland.put(island.getId() + ".minions." + minion.getID() + ".blFace", minion.getBlockFace().toString());
-                        toSendIsland.put(island.getId() + ".minions." + minion.getID() + ".loc", minion.getBlocLocation());
-                        toSendIsland.put(island.getId() + ".minions." + minion.getID() + ".linked", minion.isChestLinked());
-                        toSendIsland.put(island.getId() + ".minions." + minion.getID() + ".smelt", minion.isAutoSmelt());
-                        if (minion.getChestBloc() != null) {
-                            toSendIsland.put(island.getId() + ".minions." + minion.getID() + ".locChest", minion.getChestBloc().getLocation());
-                        } else {
-                            toSendIsland.put(island.getId() + ".minions." + minion.getID() + ".locChest", null);
+                        for (Chest chest : island.getChests()) {
+                            toSendIsland.put(island.getId() + ".chests." + chest.getId() + ".loc", chest.getBlock());
+                            toSendIsland.put(island.getId() + ".chests." + chest.getId() + ".uuid", chest.getOwner().toString());
+                            toSendIsland.put(island.getId() + ".chests." + chest.getId() + ".type", chest.getType());
+                            toSendIsland.put(island.getId() + ".chests." + chest.getId() + ".isSell", chest.isSell());
+                            toSendIsland.put(island.getId() + ".chests." + chest.getId() + ".active", chest.isActiveSellOrBuy());
+                            toSendIsland.put(island.getId() + ".chests." + chest.getId() + ".price", chest.getPrice());
+                            toSendIsland.put(island.getId() + ".chests." + chest.getId() + ".item", chest.getItemToBuySell());
+                            toSendIsland.put(island.getId() + ".chests." + chest.getId() + ".chunk", chest.getChunkKey());
+                            toSendIsland.put(island.getId() + ".chests." + chest.getId() + ".amount", chest.getAmount());
+                            if (chest.getStacked() != null) {
+                                toSendIsland.put(island.getId() + ".chests." + chest.getId() + ".stacked", chest.getStacked().toString());
+                            }
                         }
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    Bukkit.broadcastMessage("§cErreur lors de la sauvegarde de l'île #" + island.getId());
-                    toSendIsland.clear();
-                } finally {
-                    if (toSendIsland.size() > 0) {
-                        toRemoveIslands.put(island.getId() + "", null);
-                        toSendIslands.putAll(toSendIsland);
+                        for (Minion minion : island.getMinions()) {
+                            toSendIsland.put(island.getId() + ".minions." + minion.getID() + ".type", minion.getMinionType().toString());
+                            toSendIsland.put(island.getId() + ".minions." + minion.getID() + ".lvl", minion.getLevelInt());
+                            toSendIsland.put(island.getId() + ".minions." + minion.getID() + ".blFace", minion.getBlockFace().toString());
+                            toSendIsland.put(island.getId() + ".minions." + minion.getID() + ".loc", minion.getBlocLocation());
+                            toSendIsland.put(island.getId() + ".minions." + minion.getID() + ".linked", minion.isChestLinked());
+                            toSendIsland.put(island.getId() + ".minions." + minion.getID() + ".smelt", minion.isAutoSmelt());
+                            if (minion.getChestBloc() != null) {
+                                toSendIsland.put(island.getId() + ".minions." + minion.getID() + ".locChest", minion.getChestBloc().getLocation());
+                            } else {
+                                toSendIsland.put(island.getId() + ".minions." + minion.getID() + ".locChest", null);
+                            }
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        Bukkit.broadcastMessage("§cErreur lors de la sauvegarde de l'île #" + island.getId());
+                        toSendIsland.clear();
+                    } finally {
+                        if (toSendIsland.size() > 0) {
+                            toRemoveIslands.put(island.getId() + "", null);
+                            toSendIslands.putAll(toSendIsland);
+                        }
                     }
                 }
+                AsyncConfig.instance.setAndSaveAsyncBlockCurrentThread(toRemoveIslands, ConfigManager.instance.getDataIslands(),
+                        ConfigManager.instance.islandsFile);
+                AsyncConfig.instance.setAndSaveAsync(toSendIslands, ConfigManager.instance.getDataIslands(),
+                        ConfigManager.instance.islandsFile);
             }
-            AsyncConfig.instance.setAndSaveAsyncBlockCurrentThread(toRemoveIslands, ConfigManager.instance.getDataIslands(),
-                    ConfigManager.instance.islandsFile);
-            AsyncConfig.instance.setAndSaveAsync(toSendIslands, ConfigManager.instance.getDataIslands(),
-                    ConfigManager.instance.islandsFile);
 
 
             ArrayList<SkyblockUser> skyblockUsers = SkyblockUserManager.instance.users;

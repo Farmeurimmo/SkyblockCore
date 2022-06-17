@@ -1,6 +1,7 @@
-package main.java.fr.verymc.island.evenement;
+package main.java.fr.verymc.core.evenement;
 
 import main.java.fr.verymc.Main;
+import main.java.fr.verymc.commons.enums.ServerType;
 import main.java.fr.verymc.core.eco.EcoAccountsManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -48,9 +49,14 @@ public class BlocBreakerContest {
         material = materialArrayList.get(random.nextInt(materialArrayList.size()));
         timeStarting = System.currentTimeMillis();
 
-        Bukkit.broadcastMessage("§6§lBlocBreakerContest §8» §fLe concours de cassage blocs a commencé, le bloc choisit est §e"
-                + material.toString() + "§f. Minez en le plus possible et obtenez des récompenses en fonction de votre position " +
-                "dans le classement. Il se terminera dans §e" + duration / 60 + " minutes§f.");
+        if (Main.instance.serverType == ServerType.ISLAND) {
+            Bukkit.broadcastMessage("§6§lBlocBreakerContest §8» §fLe concours de cassage blocs a commencé, le bloc choisit est §e"
+                    + material.toString() + "§f. Minez en le plus possible et obtenez des récompenses en fonction de votre position " +
+                    "dans le classement. Il se terminera dans §e" + duration / 60 + " minutes§f.");
+        } else {
+            Bukkit.broadcastMessage("§6§lBlocBreakerContest §8» §fLe concours de cassage blocs a commencé, merci de se rendre sur les serveurs d'îles " +
+                    "pour participer. Toutes les informations sont disponnibles vous seront données à votre connexion à ceux-ci.");
+        }
 
         Bukkit.getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
             @Override
@@ -71,6 +77,9 @@ public class BlocBreakerContest {
     }
 
     public void makeTopAndGiveReward() {
+        if (Main.instance.serverType != ServerType.ISLAND) {
+            return;
+        }
         HashMap<Integer, UUID> position = new HashMap<>();
 
         ArrayList<UUID> uuidsPositionned = new ArrayList<>();

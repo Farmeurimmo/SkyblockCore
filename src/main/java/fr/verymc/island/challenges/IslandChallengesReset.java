@@ -1,6 +1,7 @@
 package main.java.fr.verymc.island.challenges;
 
 import main.java.fr.verymc.Main;
+import main.java.fr.verymc.commons.enums.ServerType;
 import main.java.fr.verymc.island.Island;
 import main.java.fr.verymc.island.IslandManager;
 import org.bukkit.Bukkit;
@@ -52,9 +53,11 @@ public class IslandChallengesReset {
     }
 
     public void resetAllChallenges() {
-        for (Island island : IslandManager.instance.islands) {
-            island.getChallenges().clear();
-            island.addDefaultChallenges();
+        if (Main.instance.serverType == ServerType.ISLAND) {
+            for (Island island : IslandManager.instance.islands) {
+                island.getChallenges().clear();
+                island.addDefaultChallenges();
+            }
         }
         Bukkit.broadcastMessage("§6§lChallenges §8» §fTous les challenges journaliers ont été réinitialisé !");
     }

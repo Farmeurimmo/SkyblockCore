@@ -1,4 +1,4 @@
-package main.java.fr.verymc.island.evenement;
+package main.java.fr.verymc.core.evenement;
 
 import java.util.Calendar;
 import java.util.TimeZone;

@@ -1,6 +1,7 @@
-package main.java.fr.verymc.island.evenement;
+package main.java.fr.verymc.core.evenement;
 
 import main.java.fr.verymc.Main;
+import main.java.fr.verymc.commons.enums.ServerType;
 import main.java.fr.verymc.island.challenges.IslandChallengesGuis;
 import org.bukkit.Bukkit;
 
@@ -39,12 +40,21 @@ public class DailyBonus {
     public void startBonus() {
         lastAct = System.currentTimeMillis();
         active = true;
-        IslandChallengesGuis.boost = 2;
-        Bukkit.broadcastMessage("§6§lBonus §8» §fUn bonus x2 a été activé pour les challenges. Il se termine dans §e" + duration / 60 + " minutes§f.");
+        if (Main.instance.serverType == ServerType.ISLAND) {
+            IslandChallengesGuis.boost = 2;
+            Bukkit.broadcastMessage("§6§lBonus §8» §fUn bonus x2 a été activé pour les challenges. " +
+                    "Il se termine dans §e" + duration / 60 + " minutes§f.");
+        } else {
+            Bukkit.broadcastMessage("§6§lBonus §8» §fUn bonus x2 a été activé pour les challenges. " +
+                    "§cVous devez vous rendre sur les serveurs d'îles pour en profiter. " +
+                    "§fIl se termine dans §e" + duration / 60 + " minutes§f.");
+        }
         Bukkit.getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
             @Override
             public void run() {
-                IslandChallengesGuis.boost = 1;
+                if (Main.instance.serverType == ServerType.ISLAND) {
+                    IslandChallengesGuis.boost = 1;
+                }
                 active = false;
                 Bukkit.broadcastMessage("§6§lBonus §8» §fLe bonus a été désactivé.");
             }

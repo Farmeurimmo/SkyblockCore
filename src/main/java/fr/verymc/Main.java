@@ -13,6 +13,10 @@ import main.java.fr.verymc.core.auctions.AuctionsManager;
 import main.java.fr.verymc.core.cmd.base.*;
 import main.java.fr.verymc.core.cmd.moderation.*;
 import main.java.fr.verymc.core.eco.EcoAccountsManager;
+import main.java.fr.verymc.core.evenement.ChatReaction;
+import main.java.fr.verymc.core.evenement.EventManager;
+import main.java.fr.verymc.core.events.JoinLeave;
+import main.java.fr.verymc.core.events.TchatManager;
 import main.java.fr.verymc.core.featherfly.CountdownFly;
 import main.java.fr.verymc.core.featherfly.DailyFlyCmd;
 import main.java.fr.verymc.core.featherfly.FeatherFlyCmd;
@@ -33,7 +37,10 @@ import main.java.fr.verymc.core.storage.SkyblockUserManager;
 import main.java.fr.verymc.core.storage.StorageYAMLManager;
 import main.java.fr.verymc.hub.crates.CratesManager;
 import main.java.fr.verymc.hub.crates.KeyCmd;
-import main.java.fr.verymc.hub.events.*;
+import main.java.fr.verymc.hub.events.AntiExplo;
+import main.java.fr.verymc.hub.events.Interact;
+import main.java.fr.verymc.hub.events.SwitchWorld;
+import main.java.fr.verymc.hub.events.Tabulation;
 import main.java.fr.verymc.hub.invest.InvestCmd;
 import main.java.fr.verymc.hub.invest.InvestManager;
 import main.java.fr.verymc.hub.winelottery.WineGui;
@@ -48,8 +55,6 @@ import main.java.fr.verymc.island.challenges.IslandChallengesGuis;
 import main.java.fr.verymc.island.challenges.IslandChallengesListener;
 import main.java.fr.verymc.island.challenges.IslandChallengesReset;
 import main.java.fr.verymc.island.cmds.IslandCmd;
-import main.java.fr.verymc.island.evenement.ChatReaction;
-import main.java.fr.verymc.island.evenement.EventManager;
 import main.java.fr.verymc.island.events.IslandGeneratorForm;
 import main.java.fr.verymc.island.events.IslandInteractManager;
 import main.java.fr.verymc.island.events.IslandPlayerMove;
@@ -90,6 +95,7 @@ public class Main extends JavaPlugin {
 
     public ClaimCmdSaver saver;
     public ServerType serverType;
+    public String serverName;
 
     public void setTarget(String uuid, String aaa) {
         if (aaa == null)
@@ -128,6 +134,9 @@ public class Main extends JavaPlugin {
     public void onEnable() {
         System.out.println("------------------------------------------------");
         //server type ???
+
+        serverType = ServerType.HUB;
+        serverName = serverType.getDisplayName() + "#01";
 
         System.out.println("------------------------------------------------");
         //CORE INIT PART 1
@@ -183,56 +192,57 @@ public class Main extends JavaPlugin {
 
         startListenerModule();
 
+        new IslandChallengesReset();
+
         System.out.println("Starting core part 1 FINISHED");
         System.out.println("------------------------------------------------");
 
 
         //ISLAND ADDITIONNAL STARTUP
-        //if (serverType == ServerType.ISLAND) {
-        System.out.println("Starting Island ADDITIONNAL module...");
-        saveResource("ileworld.schem", true);
-        saveResource("clear.schem", true);
-        new IslandManager();
-        new WorldBorderUtil(this);
-        new IslandChallengesReset();
+        if (serverType == ServerType.ISLAND) {
+            System.out.println("Starting Island ADDITIONNAL module...");
+            saveResource("ileworld.schem", true);
+            saveResource("clear.schem", true);
+            new IslandManager();
+            new WorldBorderUtil(this);
 
-        new ChestManager();
-        ChestManager.instance.autoSellForVeryChest();
+            new ChestManager();
+            ChestManager.instance.autoSellForVeryChest();
 
-        new MinionManager();
-        new MinionsGui();
-        new MinionHarvest();
+            new MinionManager();
+            new MinionsGui();
+            new MinionHarvest();
 
-        new HoloBlocManager();
+            new HoloBlocManager();
 
-        for (Island island : IslandManager.instance.islands) {
-            island.toggleTimeAndWeather();
-            island.setBorderColor(island.getBorderColor());
+            for (Island island : IslandManager.instance.islands) {
+                island.toggleTimeAndWeather();
+                island.setBorderColor(island.getBorderColor());
+            }
         }
-        //}
 
 
         System.out.println("Starting Island ADDITIONNAL module FINISHED");
 
         //HUB ADDITIONNAL STARTUP
-        //if (serverType == ServerType.HUB) {
-        System.out.println("Starting Hub ADDITIONNAL module...");
-        WineSpawn.SpawnPnj(new Location(Bukkit.getServer().getWorld("world"), -184.5, 70.5, -77.5, -90, 0));
-        HolosSetup.SpawnPnj2(new Location(Bukkit.getServer().getWorld("world"), -155.5, 71, -60.5, 90, 0),
-                new Location(Bukkit.getServer().getWorld("world"), -172.5, 71, -64.5, 90, 0));
-        HolosSetup.SpawnCrates();
-        CratesManager.SpawnCrates();
-        new InvestManager();
-        System.out.println("Starting Hub ADDITIONNAL module FINISHED");
-        //}
+        if (serverType == ServerType.HUB) {
+            System.out.println("Starting Hub ADDITIONNAL module...");
+            WineSpawn.SpawnPnj(new Location(Bukkit.getServer().getWorld("world"), -184.5, 70.5, -77.5, -90, 0));
+            HolosSetup.SpawnPnj2(new Location(Bukkit.getServer().getWorld("world"), -155.5, 71, -60.5, 90, 0),
+                    new Location(Bukkit.getServer().getWorld("world"), -172.5, 71, -64.5, 90, 0));
+            HolosSetup.SpawnCrates();
+            CratesManager.SpawnCrates();
+            new InvestManager();
+            System.out.println("Starting Hub ADDITIONNAL module FINISHED");
+        }
 
 
         //Dungeon ADDITIONNAL STARTUP
-        /*if (serverType == ServerType.DUNGEON) {
-        System.out.println("Starting Dungeon ADDITIONNAL module...");
+        if (serverType == ServerType.DUNGEON) {
+            System.out.println("Starting Dungeon ADDITIONNAL module...");
 
-        System.out.println("Starting Dungeon ADDITIONNAL module FINISHED");
-        }*/
+            System.out.println("Starting Dungeon ADDITIONNAL module FINISHED");
+        }
 
 
         //CORE PART 2
@@ -304,31 +314,31 @@ public class Main extends JavaPlugin {
 
 
         //ISLAND LISTENER
-        //if (serverType == ServerType.ISLAND) {
-        getServer().getPluginManager().registerEvents(new Farm2WinGui(), this);
-        getServer().getPluginManager().registerEvents(new WineGui(), this);
-        getServer().getPluginManager().registerEvents(new WarpGui(), this);
-        getServer().getPluginManager().registerEvents(new IslandChallengesGuis(), this);
-        getServer().getPluginManager().registerEvents(new IslandChallengesListener(), this);
-        getServer().getPluginManager().registerEvents(new IslandGuiManager(), this);
-        getServer().getPluginManager().registerEvents(new IslandInteractManager(), this);
-        getServer().getPluginManager().registerEvents(new IslandPlayerMove(), this);
-        getServer().getPluginManager().registerEvents(new IslandGeneratorForm(), this);
-        getServer().getPluginManager().registerEvents(new EntityListener(), this);
-        getServer().getPluginManager().registerEvents(new BlockListener(), this);
-        getServer().getPluginManager().registerEvents(new CountdownFly(), this);
-        getServer().getPluginManager().registerEvents(new FeatherFlyInteract(), this);
-        getServer().getPluginManager().registerEvents(new SwitchWorld(), this);
-        //}
+        if (serverType == ServerType.ISLAND) {
+            getServer().getPluginManager().registerEvents(new Farm2WinGui(), this);
+            getServer().getPluginManager().registerEvents(new WineGui(), this);
+            getServer().getPluginManager().registerEvents(new WarpGui(), this);
+            getServer().getPluginManager().registerEvents(new IslandChallengesGuis(), this);
+            getServer().getPluginManager().registerEvents(new IslandChallengesListener(), this);
+            getServer().getPluginManager().registerEvents(new IslandGuiManager(), this);
+            getServer().getPluginManager().registerEvents(new IslandInteractManager(), this);
+            getServer().getPluginManager().registerEvents(new IslandPlayerMove(), this);
+            getServer().getPluginManager().registerEvents(new IslandGeneratorForm(), this);
+            getServer().getPluginManager().registerEvents(new EntityListener(), this);
+            getServer().getPluginManager().registerEvents(new BlockListener(), this);
+            getServer().getPluginManager().registerEvents(new CountdownFly(), this);
+            getServer().getPluginManager().registerEvents(new FeatherFlyInteract(), this);
+            getServer().getPluginManager().registerEvents(new SwitchWorld(), this);
+        }
 
 
         //HUB LISTENER
-        //if (serverType == ServerType.HUB) {
-        getServer().getPluginManager().registerEvents(new Interact(), this);
-        getServer().getPluginManager().registerEvents(new AntiExplo(), this);
-        getServer().getPluginManager().registerEvents(new CratesManager(), this);
-        getServer().getPluginManager().registerEvents(new HolosSetup(), this);
-        //}
+        if (serverType == ServerType.HUB) {
+            getServer().getPluginManager().registerEvents(new Interact(), this);
+            getServer().getPluginManager().registerEvents(new AntiExplo(), this);
+            getServer().getPluginManager().registerEvents(new CratesManager(), this);
+            getServer().getPluginManager().registerEvents(new HolosSetup(), this);
+        }
 
 
         //DUNGEON LISTENER

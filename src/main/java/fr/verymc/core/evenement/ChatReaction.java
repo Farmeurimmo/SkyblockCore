@@ -1,4 +1,4 @@
-package main.java.fr.verymc.island.evenement;
+package main.java.fr.verymc.core.evenement;
 
 import main.java.fr.verymc.Main;
 import main.java.fr.verymc.core.eco.EcoAccountsManager;

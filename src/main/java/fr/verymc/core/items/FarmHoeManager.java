@@ -1,11 +1,11 @@
 package main.java.fr.verymc.core.items;
 
+import main.java.fr.verymc.core.evenement.BlocBreakerContest;
 import main.java.fr.verymc.core.shopgui.BuyShopItem;
 import main.java.fr.verymc.island.Island;
 import main.java.fr.verymc.island.IslandManager;
 import main.java.fr.verymc.island.challenges.IslandChallenge;
 import main.java.fr.verymc.island.challenges.IslandChallengesGuis;
-import main.java.fr.verymc.island.evenement.BlocBreakerContest;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
