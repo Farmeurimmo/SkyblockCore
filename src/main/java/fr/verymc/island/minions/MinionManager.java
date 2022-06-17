@@ -1,6 +1,7 @@
 package main.java.fr.verymc.island.minions;
 
 import main.java.fr.verymc.Main;
+import main.java.fr.verymc.commons.enums.ServerType;
 import main.java.fr.verymc.core.storage.AsyncConfig;
 import main.java.fr.verymc.core.storage.ConfigManager;
 import main.java.fr.verymc.island.Island;
@@ -41,6 +42,11 @@ public class MinionManager {
     public MinionManager() {
         instance = this;
         faceBloc.addAll(Arrays.asList(BlockFace.EAST, BlockFace.NORTH, BlockFace.SOUTH, BlockFace.WEST));
+
+        if (Main.instance.serverType == ServerType.ISLAND) {
+            new MinionsGui();
+            new MinionHarvest();
+        }
     }
 
     public void giveMinionItem(Player player, String type) {

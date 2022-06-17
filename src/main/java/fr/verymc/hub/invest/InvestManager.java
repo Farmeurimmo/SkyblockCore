@@ -88,7 +88,7 @@ public class InvestManager {
                         Player player = Bukkit.getPlayer(skyblockUser.getUserUUID());
                         if (player != null) {
                             boolean add = false;
-                            if (player.isOnline() && player.getWorld().getName().equalsIgnoreCase("world")) {
+                            if (player.isOnline()) {
                                 add = true;
                             }
                             boolean finalAdd = add;

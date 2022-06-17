@@ -1,6 +1,7 @@
 package main.java.fr.verymc.island.blocks;
 
 import main.java.fr.verymc.Main;
+import main.java.fr.verymc.commons.enums.ServerType;
 import main.java.fr.verymc.core.shopgui.BuyShopItem;
 import main.java.fr.verymc.core.storage.AsyncConfig;
 import main.java.fr.verymc.core.storage.ConfigManager;
@@ -27,8 +28,12 @@ public class ChestManager {
     public ChestManager() {
         instance = this;
 
-        new PlayerShopGuis();
-        new StackerGui();
+        if (Main.instance.serverType == ServerType.ISLAND) {
+            new PlayerShopGuis();
+            new StackerGui();
+
+            autoSellForVeryChest();
+        }
     }
 
     public void autoSellForVeryChest() {

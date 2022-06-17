@@ -1,6 +1,7 @@
 package main.java.fr.verymc.island.minions;
 
 import main.java.fr.verymc.Main;
+import main.java.fr.verymc.commons.enums.ServerType;
 import main.java.fr.verymc.core.eco.EcoAccountsManager;
 import main.java.fr.verymc.island.Island;
 import main.java.fr.verymc.island.IslandManager;
@@ -26,11 +27,11 @@ public class MinionsListener implements Listener {
 
     @EventHandler
     public void onInventoryClicEvent(InventoryClickEvent e) {
+        if (Main.instance.serverType != ServerType.ISLAND) return;
         ItemStack current = e.getCurrentItem();
         if (current == null) return;
         Material currentType = current.getType();
-        if (currentType == null) return;
-        if (e.getView().getTitle() == null) return;
+        if (Main.instance.serverType != ServerType.ISLAND) return;
         Player player = (Player) e.getWhoClicked();
         Island island = IslandManager.instance.getPlayerIsland(player);
         if (e.getView().getTitle().contains("§6Menu du minion " + MinionType.PIOCHEUR.getName(MinionType.PIOCHEUR))) {
@@ -134,6 +135,7 @@ public class MinionsListener implements Listener {
         if (e.getClickedBlock().getLocation() == null) return;
         Location locBloc = e.getClickedBlock().getLocation();
         Player player = e.getPlayer();
+        if (Main.instance.serverType != ServerType.ISLAND) return;
         if (MinionsGui.instance.linking.contains(player) && MinionsGui.instance.minionOpened.containsKey(player.getName()) && player.isSneaking()) {
             if (e.getPlayer().getLocation().getWorld().getName().equalsIgnoreCase("world")) {
                 return;
@@ -176,6 +178,11 @@ public class MinionsListener implements Listener {
         }
         Player player = e.getPlayer();
         if (e.isCancelled()) {
+            return;
+        }
+        if (Main.instance.serverType != ServerType.ISLAND) {
+            player.sendMessage("§6§lMinions §8» §cLes minions sont désactivés sur ce serveur.");
+            e.setCancelled(true);
             return;
         }
         if (e.getItem().getType() == Material.DRAGON_BREATH && player.isSneaking()) {
@@ -233,6 +240,7 @@ public class MinionsListener implements Listener {
     @EventHandler
     public void onPlayerClick(PlayerInteractAtEntityEvent e) {
         Player player = e.getPlayer();
+        if (Main.instance.serverType != ServerType.ISLAND) return;
         if (e.getRightClicked().getType().equals(EntityType.ARMOR_STAND)) {
             Entity clicked = e.getRightClicked();
             if (clicked.isInvulnerable()) {

@@ -1,5 +1,7 @@
 package main.java.fr.verymc.island.blocks;
 
+import main.java.fr.verymc.Main;
+import main.java.fr.verymc.commons.enums.ServerType;
 import main.java.fr.verymc.core.eco.EcoAccountsManager;
 import main.java.fr.verymc.island.Island;
 import main.java.fr.verymc.island.IslandBlocsValues;
@@ -29,6 +31,7 @@ public class ChestListener implements Listener {
 
     @EventHandler
     public void playerInteract(PlayerInteractEvent e) {
+        if (Main.instance.serverType != ServerType.ISLAND) return;
         if (e.getClickedBlock() == null) {
             return;
         }
@@ -69,6 +72,7 @@ public class ChestListener implements Listener {
 
     @EventHandler
     public void checkForItem(ItemSpawnEvent e) {
+        if (Main.instance.serverType != ServerType.ISLAND) return;
         if (!(e.getEntity() instanceof Item)) {
             return;
         }
@@ -105,6 +109,7 @@ public class ChestListener implements Listener {
 
     @EventHandler
     public void inventoryClicEvent(InventoryClickEvent e) {
+        if (Main.instance.serverType != ServerType.ISLAND) return;
         if (e.getCurrentItem() == null) {
             return;
         }
@@ -434,6 +439,7 @@ public class ChestListener implements Listener {
 
     @EventHandler
     public void onBlockForm(BlockFormEvent e) {
+        if (Main.instance.serverType != ServerType.ISLAND) return;
         Chest chest = ChestManager.instance.getChestFromLoc(e.getBlock().getLocation());
         if (chest != null) {
             e.setCancelled(true);
@@ -442,6 +448,7 @@ public class ChestListener implements Listener {
 
     @EventHandler
     public void pistonExtend(BlockPistonExtendEvent e) {
+        if (Main.instance.serverType != ServerType.ISLAND) return;
         for (Block b : e.getBlocks()) {
             Chest chest = ChestManager.instance.getChestFromLoc(b.getLocation());
             if (chest != null) {
@@ -452,6 +459,7 @@ public class ChestListener implements Listener {
 
     @EventHandler
     public void pistonRetract(BlockPistonRetractEvent e) {
+        if (Main.instance.serverType != ServerType.ISLAND) return;
         for (Block b : e.getBlocks()) {
             Chest chest = ChestManager.instance.getChestFromLoc(b.getLocation());
             if (chest != null) {
@@ -462,6 +470,7 @@ public class ChestListener implements Listener {
 
     @EventHandler
     public void blocExplode(EntityExplodeEvent e) {
+        if (Main.instance.serverType != ServerType.ISLAND) return;
         for (Block b : e.blockList()) {
             Chest chest = ChestManager.instance.getChestFromLoc(b.getLocation());
             if (chest != null) {
@@ -473,6 +482,7 @@ public class ChestListener implements Listener {
 
     @EventHandler
     public void breakEvent(BlockBreakEvent e) {
+        if (Main.instance.serverType != ServerType.ISLAND) return;
         if (e.isCancelled()) return;
         int type = -1;
         if (e.isCancelled()) {
@@ -537,23 +547,40 @@ public class ChestListener implements Listener {
 
     @EventHandler
     public void placeEvent(BlockPlaceEvent e) {
+        if (!e.getItemInHand().isUnbreakable() && !e.getItemInHand().hasDisplayName()) {
+            return;
+        }
         int type;
-        if (e.getItemInHand().getDisplayName().contains("§6Chunk Hoppeur")) {
-            type = 0;
-        } else if (e.getItemInHand().getDisplayName().contains("§6SellChest")) {
-            type = 1;
-        } else if (e.getItemInHand().getDisplayName().contains("§6Player shop")) {
-            type = 2;
-        } else if (IslandBlocsValues.instance.hasBlockValue(e.getBlock().getType())) {
-            type = 3;
-        } else {
-            return;
+        boolean taked = false;
+        try {
+            if (e.getItemInHand().getDisplayName().contains("§6Chunk Hoppeur")) {
+                type = 0;
+                taked = true;
+            } else if (e.getItemInHand().getDisplayName().contains("§6SellChest")) {
+                type = 1;
+                taked = true;
+            } else if (e.getItemInHand().getDisplayName().contains("§6Player shop")) {
+                type = 2;
+                taked = true;
+            } else if (IslandBlocsValues.instance.hasBlockValue(e.getBlock().getType())) {
+                type = 3;
+                taked = true;
+            } else {
+                return;
+            }
+            if (e.isCancelled()) {
+                return;
+            }
+
+            ChestManager.instance.placeChest(e.getPlayer(), e.getBlock().getLocation(), type, null, 0.0,
+                    e.getBlock().getType());
+        } catch (Exception ex) {
+            if (taked && Main.instance.serverType != ServerType.ISLAND) {
+                e.getPlayer().sendMessage("§6§lChests §8» §cLes chests sont désactivés sur ce serveur.");
+                e.setCancelled(true);
+                return;
+            }
         }
-        if (e.isCancelled()) {
-            return;
-        }
-        ChestManager.instance.placeChest(e.getPlayer(), e.getBlock().getLocation(), type, null, 0.0,
-                e.getBlock().getType());
     }
 
 }

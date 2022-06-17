@@ -1,5 +1,7 @@
 package main.java.fr.verymc.core.cmd.base;
 
+import main.java.fr.verymc.Main;
+import main.java.fr.verymc.commons.enums.ServerType;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -37,11 +39,11 @@ public class FlyCmd implements CommandExecutor, TabCompleter {
             switch_fly_player(Bukkit.getPlayer(args[0]));
             return false;
         }
-        if (!player.getWorld().getName().equalsIgnoreCase("world")) {
+        if (Main.instance.serverType == ServerType.ISLAND) {
             switch_fly_player(player);
             return false;
         } else {
-            player.sendActionBar("§cImpossible de fly dans ce monde !");
+            player.sendActionBar("§cImpossible de fly sur ce serveur !");
         }
         return false;
     }

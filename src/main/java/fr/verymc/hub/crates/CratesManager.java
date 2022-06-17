@@ -21,18 +21,18 @@ import org.bukkit.inventory.ItemStack;
 
 public class CratesManager implements Listener {
 
-    public static final Location BoxLegendaire = new Location(Bukkit.getServer().getWorld("world"), -173, 71, -45);
-    public static final Location BoxChallenge = new Location(Bukkit.getServer().getWorld("world"), -177, 71, -46);
-    public static final Location BoxVote = new Location(Bukkit.getServer().getWorld("world"), -179, 71, -49);
+    public static final Location BoxLegendaire = new Location(Main.instance.mainWorld, -173, 71, -45);
+    public static final Location BoxChallenge = new Location(Main.instance.mainWorld, -177, 71, -46);
+    public static final Location BoxVote = new Location(Main.instance.mainWorld, -179, 71, -49);
 
-    static Location holo = new Location(Bukkit.getServer().getWorld("world"), BoxLegendaire.getX() + 0.5,
+    static Location holo = new Location(Main.instance.mainWorld, BoxLegendaire.getX() + 0.5,
             BoxLegendaire.getY() + 2.5, BoxLegendaire.getZ() + 0.5);
     static Hologram hologram = HologramsAPI.createHologram(Main.instance, holo);
-    static Location holoc = new Location(Bukkit.getServer().getWorld("world"), BoxChallenge.getX() + 0.5,
+    static Location holoc = new Location(Main.instance.mainWorld, BoxChallenge.getX() + 0.5,
             BoxChallenge.getY() + 2.5, BoxChallenge.getZ() + 0.5);
     static Hologram hologramc = HologramsAPI.createHologram(Main.instance, holoc);
 
-    static Location holod = new Location(Bukkit.getServer().getWorld("world"), BoxVote.getX() + 0.5,
+    static Location holod = new Location(Main.instance.mainWorld, BoxVote.getX() + 0.5,
             BoxVote.getY() + 2.5, BoxVote.getZ() + 0.5);
     static Hologram hologramd = HologramsAPI.createHologram(Main.instance, holod);
 

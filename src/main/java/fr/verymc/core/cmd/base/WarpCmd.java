@@ -1,5 +1,6 @@
 package main.java.fr.verymc.core.cmd.base;
 
+import main.java.fr.verymc.Main;
 import main.java.fr.verymc.utils.PlayerUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -20,9 +21,9 @@ public class WarpCmd implements CommandExecutor, TabCompleter {
         if (!(sender instanceof Player player)) {
             return false;
         }
-        final Location Crates = new Location(Bukkit.getServer().getWorld("world"), -172.5, 70.5, -50.5, 40, 0);
-        final Location Enchantement = new Location(Bukkit.getServer().getWorld("world"), -187.5, 64.5, -52.5, -125, 20);
-        final Location Bar = new Location(Bukkit.getServer().getWorld("world"), -180.5, 70.5, -77.5, 90, 0);
+        final Location Crates = new Location(Main.instance.mainWorld, -172.5, 70.5, -50.5, 40, 0);
+        final Location Enchantement = new Location(Main.instance.mainWorld, -187.5, 64.5, -52.5, -125, 20);
+        final Location Bar = new Location(Main.instance.mainWorld, -180.5, 70.5, -77.5, 90, 0);
         if (args.length == 1) {
             String str = args[0].toLowerCase();
             switch (str) {

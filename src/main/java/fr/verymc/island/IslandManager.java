@@ -14,13 +14,14 @@ import com.sk89q.worldedit.regions.Region;
 import com.sk89q.worldedit.session.ClipboardHolder;
 import main.java.fr.verymc.Main;
 import main.java.fr.verymc.core.cmd.base.SpawnCmd;
+import main.java.fr.verymc.core.holos.HoloBlocManager;
 import main.java.fr.verymc.core.storage.AsyncConfig;
 import main.java.fr.verymc.core.storage.ConfigManager;
 import main.java.fr.verymc.island.bank.IslandBank;
 import main.java.fr.verymc.island.blocks.Chest;
 import main.java.fr.verymc.island.blocks.ChestManager;
 import main.java.fr.verymc.island.challenges.IslandChallenge;
-import main.java.fr.verymc.island.generator.EmptyChunkGenerator;
+import main.java.fr.verymc.island.challenges.IslandChallengesReset;
 import main.java.fr.verymc.island.guis.*;
 import main.java.fr.verymc.island.minions.Minion;
 import main.java.fr.verymc.island.minions.MinionManager;
@@ -32,7 +33,10 @@ import main.java.fr.verymc.island.upgrade.IslandUpgradeMember;
 import main.java.fr.verymc.island.upgrade.IslandUpgradeSize;
 import main.java.fr.verymc.utils.PlayerUtils;
 import main.java.fr.verymc.utils.WorldBorderUtil;
-import org.bukkit.*;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 
@@ -47,7 +51,6 @@ public class IslandManager {
     public static IslandManager instance;
     public static int distanceBetweenIslands = 400;
     public IslandBlocsValues islandBockValues;
-    public World mainWorld;
     public ArrayList<Island> islands = new ArrayList<>();
     public ArrayList<UUID> bypasser = new ArrayList<>();
     public ArrayList<UUID> spying = new ArrayList<>();
@@ -57,7 +60,10 @@ public class IslandManager {
 
     public IslandManager() {
         instance = this;
-        createMainWorld();
+        new IslandChallengesReset();
+    }
+
+    public void load() {
         for (File file : Main.instance.getDataFolder().listFiles()) {
             if (file.getName().endsWith("world.schem")) {
                 fileSchematic = file;
@@ -86,6 +92,11 @@ public class IslandManager {
         blocks.put(Material.NETHERITE_BLOCK, 250.0);
         islandBockValues = new IslandBlocsValues(blocks);
         new IslandValueCalcManager();
+        Main.instance.saveResource("ileworld.schem", true);
+        Main.instance.saveResource("clear.schem", true);
+        new WorldBorderUtil(Main.instance);
+
+        new HoloBlocManager();
     }
 
     public boolean isAnIslandByLoc(Location loc) {
@@ -201,7 +212,7 @@ public class IslandManager {
             @Override
             public void run() {
                 try {
-                    com.sk89q.worldedit.world.World adaptedWorld = BukkitAdapter.adapt(mainWorld);
+                    com.sk89q.worldedit.world.World adaptedWorld = BukkitAdapter.adapt(Main.instance.mainWorld);
                     ClipboardFormat format = ClipboardFormats.findByFile(fileEmptyIsland);
                     ClipboardReader reader = format.getReader(new FileInputStream(fileEmptyIsland));
 
@@ -294,12 +305,6 @@ public class IslandManager {
             }
         }
         return null;
-    }
-
-    public void createMainWorld() {
-        WorldCreator wc = new WorldCreator("Island_world");
-        wc.generator(new EmptyChunkGenerator());
-        mainWorld = wc.createWorld();
     }
 
     public boolean acceptInvite(Player p, Player target) {
@@ -460,7 +465,7 @@ public class IslandManager {
     }
 
     public World getMainWorld() {
-        return mainWorld;
+        return Main.instance.mainWorld;
     }
 
     public void genIsland(Player p) {
@@ -470,7 +475,7 @@ public class IslandManager {
         Long start = System.currentTimeMillis();
 
         if (islands.size() == 0) {
-            toReturn = new Location(mainWorld, 0, 80, 0);
+            toReturn = new Location(Main.instance.mainWorld, 0, 80, 0);
         } else {
             int minx = 0;
             int minz = 0;
@@ -497,12 +502,12 @@ public class IslandManager {
             while (toReturn == null) {
                 for (int i = minz; i <= maxz; i += distanceBetweenIslands) {
                     if (toReturn != null) break;
-                    if (!isAnIslandByLoc(new Location(mainWorld, minx, 0, i))) {
-                        toReturn = new Location(mainWorld, minx, 80, i);
+                    if (!isAnIslandByLoc(new Location(Main.instance.mainWorld, minx, 0, i))) {
+                        toReturn = new Location(Main.instance.mainWorld, minx, 80, i);
                     }
                     for (int j = minx; j <= maxx; j += distanceBetweenIslands) {
-                        if (!isAnIslandByLoc(new Location(mainWorld, j, 0, i))) {
-                            toReturn = new Location(mainWorld, j, 80, i);
+                        if (!isAnIslandByLoc(new Location(Main.instance.mainWorld, j, 0, i))) {
+                            toReturn = new Location(Main.instance.mainWorld, j, 80, i);
                         }
                     }
                 }
@@ -521,7 +526,7 @@ public class IslandManager {
                 } else if (randint == 3) {
                     toSumz = -distanceBetweenIslands;
                 }
-                Location tmp = new Location(mainWorld, maxx + toSumx, 80, minz + toSumz);
+                Location tmp = new Location(Main.instance.mainWorld, maxx + toSumx, 80, minz + toSumz);
                 if (!isAnIslandByLoc(tmp)) {
                     toReturn = tmp;
                     break;
@@ -537,7 +542,7 @@ public class IslandManager {
             @Override
             public void run() {
                 try {
-                    com.sk89q.worldedit.world.World adaptedWorld = BukkitAdapter.adapt(mainWorld);
+                    com.sk89q.worldedit.world.World adaptedWorld = BukkitAdapter.adapt(Main.instance.mainWorld);
                     ClipboardFormat format = ClipboardFormats.findByFile(fileSchematic);
                     ClipboardReader reader = format.getReader(new FileInputStream(fileSchematic));
 
@@ -595,7 +600,7 @@ public class IslandManager {
             @Override
             public void run() {
                 try {
-                    com.sk89q.worldedit.world.World adaptedWorld = BukkitAdapter.adapt(mainWorld);
+                    com.sk89q.worldedit.world.World adaptedWorld = BukkitAdapter.adapt(Main.instance.mainWorld);
                     ClipboardFormat format = ClipboardFormats.findByFile(file);
                     ClipboardReader reader = format.getReader(new FileInputStream(file));
 

@@ -9,7 +9,6 @@ import net.citizensnpcs.api.CitizensAPI;
 import net.citizensnpcs.api.event.NPCRightClickEvent;
 import net.citizensnpcs.api.npc.NPC;
 import net.citizensnpcs.trait.SkinTrait;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -21,10 +20,10 @@ public class HolosSetup implements Listener {
     static NPC npca = CitizensAPI.getNPCRegistry().createNPC(EntityType.PLAYER, "§6Shop");
     static NPC npcb = CitizensAPI.getNPCRegistry().createNPC(EntityType.PLAYER, "§6Menu du skyblock");
 
-    static Location holo1 = new Location(Bukkit.getServer().getWorld("world"), -33.5, 101, -130.5);
-    static Location legende = new Location(Bukkit.getServer().getWorld("world"), -157.5, 75.8, -67.5);
-    static Location dieu = new Location(Bukkit.getServer().getWorld("world"), -159.5, 75.8, -73.5);
-    static Location zeus = new Location(Bukkit.getServer().getWorld("world"), -164.5, 75.8, -77.5);
+    static Location holo1 = new Location(Main.instance.mainWorld, -33.5, 101, -130.5);
+    static Location legende = new Location(Main.instance.mainWorld, -157.5, 75.8, -67.5);
+    static Location dieu = new Location(Main.instance.mainWorld, -159.5, 75.8, -73.5);
+    static Location zeus = new Location(Main.instance.mainWorld, -164.5, 75.8, -77.5);
     static Hologram hologram1 = HologramsAPI.createHologram(Main.instance, holo1);
     static Hologram hololegende = HologramsAPI.createHologram(Main.instance, legende);
     static Hologram holodieu = HologramsAPI.createHologram(Main.instance, dieu);

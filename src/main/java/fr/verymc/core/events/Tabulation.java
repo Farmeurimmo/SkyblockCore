@@ -1,4 +1,4 @@
-package main.java.fr.verymc.hub.events;
+package main.java.fr.verymc.core.events;
 
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;

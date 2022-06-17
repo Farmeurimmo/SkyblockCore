@@ -1,5 +1,6 @@
 package main.java.fr.verymc.island.cmds;
 
+import main.java.fr.verymc.Main;
 import main.java.fr.verymc.core.cmd.base.SpawnCmd;
 import main.java.fr.verymc.island.Island;
 import main.java.fr.verymc.island.IslandManager;
@@ -25,7 +26,7 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
 
         if (sender instanceof Player) {
             Player p = (Player) sender;
-            if (IslandManager.instance.mainWorld != null) {
+            if (Main.instance.mainWorld != null) {
                 if (args.length == 0) {
                     if (!IslandManager.instance.asAnIsland(p)) {
                         IslandManager.instance.genIsland(p);

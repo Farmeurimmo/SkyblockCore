@@ -16,13 +16,14 @@ import main.java.fr.verymc.core.eco.EcoAccountsManager;
 import main.java.fr.verymc.core.evenement.ChatReaction;
 import main.java.fr.verymc.core.evenement.EventManager;
 import main.java.fr.verymc.core.events.JoinLeave;
+import main.java.fr.verymc.core.events.ServerCoreMicellanous;
+import main.java.fr.verymc.core.events.Tabulation;
 import main.java.fr.verymc.core.events.TchatManager;
 import main.java.fr.verymc.core.featherfly.CountdownFly;
 import main.java.fr.verymc.core.featherfly.DailyFlyCmd;
 import main.java.fr.verymc.core.featherfly.FeatherFlyCmd;
 import main.java.fr.verymc.core.featherfly.FeatherFlyInteract;
 import main.java.fr.verymc.core.gui.*;
-import main.java.fr.verymc.core.holos.HoloBlocManager;
 import main.java.fr.verymc.core.holos.HolosSetup;
 import main.java.fr.verymc.core.items.*;
 import main.java.fr.verymc.core.playerwarps.PlayerWarpCmd;
@@ -39,8 +40,6 @@ import main.java.fr.verymc.hub.crates.CratesManager;
 import main.java.fr.verymc.hub.crates.KeyCmd;
 import main.java.fr.verymc.hub.events.AntiExplo;
 import main.java.fr.verymc.hub.events.Interact;
-import main.java.fr.verymc.hub.events.SwitchWorld;
-import main.java.fr.verymc.hub.events.Tabulation;
 import main.java.fr.verymc.hub.invest.InvestCmd;
 import main.java.fr.verymc.hub.invest.InvestManager;
 import main.java.fr.verymc.hub.winelottery.WineGui;
@@ -53,28 +52,33 @@ import main.java.fr.verymc.island.blocks.ChestsCmd;
 import main.java.fr.verymc.island.challenges.ChallengesCmd;
 import main.java.fr.verymc.island.challenges.IslandChallengesGuis;
 import main.java.fr.verymc.island.challenges.IslandChallengesListener;
-import main.java.fr.verymc.island.challenges.IslandChallengesReset;
 import main.java.fr.verymc.island.cmds.IslandCmd;
 import main.java.fr.verymc.island.events.IslandGeneratorForm;
 import main.java.fr.verymc.island.events.IslandInteractManager;
 import main.java.fr.verymc.island.events.IslandPlayerMove;
+import main.java.fr.verymc.island.generator.EmptyChunkGenerator;
 import main.java.fr.verymc.island.guis.IslandGuiManager;
-import main.java.fr.verymc.island.minions.*;
+import main.java.fr.verymc.island.minions.MinionManager;
+import main.java.fr.verymc.island.minions.MinionsCmd;
+import main.java.fr.verymc.island.minions.MinionsListener;
 import main.java.fr.verymc.island.protections.BlockListener;
 import main.java.fr.verymc.island.protections.EntityListener;
 import main.java.fr.verymc.utils.UtilsManager;
-import main.java.fr.verymc.utils.WorldBorderUtil;
 import net.citizensnpcs.api.CitizensAPI;
 import net.citizensnpcs.api.npc.NPC;
 import net.luckperms.api.LuckPerms;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.World;
+import org.bukkit.WorldCreator;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 
 public class Main extends JavaPlugin {
 
@@ -96,6 +100,7 @@ public class Main extends JavaPlugin {
     public ClaimCmdSaver saver;
     public ServerType serverType;
     public String serverName;
+    public World mainWorld;
 
     public void setTarget(String uuid, String aaa) {
         if (aaa == null)
@@ -132,6 +137,7 @@ public class Main extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        instance = this;
         System.out.println("------------------------------------------------");
         //server type ???
 
@@ -142,7 +148,6 @@ public class Main extends JavaPlugin {
         //CORE INIT PART 1
         System.out.println("Starting core part 1...");
         saveDefaultConfig();
-        instance = this;
         RegisteredServiceProvider<LuckPerms> provider = Bukkit.getServicesManager().getRegistration(LuckPerms.class);
         if (provider != null) {
             api = provider.getProvider();
@@ -163,6 +168,10 @@ public class Main extends JavaPlugin {
             getLogger().warning("Le plugin HolographicDisplays est manquant.");
             Bukkit.getPluginManager().disablePlugin(this);
         }
+
+        new IslandManager();
+        saveResource("spawn.schem", true);
+        createMainWorld();
 
         new SkyblockUserManager();
         new EcoAccountsManager();
@@ -187,12 +196,13 @@ public class Main extends JavaPlugin {
 
         new TABManager();
 
-        new PlayerWarpManager();
         new EventManager();
 
-        startListenerModule();
+        new ChestManager();
+        new MinionManager();
+        new PlayerWarpManager();
 
-        new IslandChallengesReset();
+        startListenerModule();
 
         System.out.println("Starting core part 1 FINISHED");
         System.out.println("------------------------------------------------");
@@ -201,37 +211,28 @@ public class Main extends JavaPlugin {
         //ISLAND ADDITIONNAL STARTUP
         if (serverType == ServerType.ISLAND) {
             System.out.println("Starting Island ADDITIONNAL module...");
-            saveResource("ileworld.schem", true);
-            saveResource("clear.schem", true);
-            new IslandManager();
-            new WorldBorderUtil(this);
-
-            new ChestManager();
-            ChestManager.instance.autoSellForVeryChest();
-
-            new MinionManager();
-            new MinionsGui();
-            new MinionHarvest();
-
-            new HoloBlocManager();
-
+            IslandManager.instance.load();
             for (Island island : IslandManager.instance.islands) {
                 island.toggleTimeAndWeather();
                 island.setBorderColor(island.getBorderColor());
             }
+
+            System.out.println("Starting Island ADDITIONNAL module FINISHED");
         }
-
-
-        System.out.println("Starting Island ADDITIONNAL module FINISHED");
 
         //HUB ADDITIONNAL STARTUP
         if (serverType == ServerType.HUB) {
             System.out.println("Starting Hub ADDITIONNAL module...");
-            WineSpawn.SpawnPnj(new Location(Bukkit.getServer().getWorld("world"), -184.5, 70.5, -77.5, -90, 0));
-            HolosSetup.SpawnPnj2(new Location(Bukkit.getServer().getWorld("world"), -155.5, 71, -60.5, 90, 0),
-                    new Location(Bukkit.getServer().getWorld("world"), -172.5, 71, -64.5, 90, 0));
-            HolosSetup.SpawnCrates();
-            CratesManager.SpawnCrates();
+            Bukkit.getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
+                @Override
+                public void run() {
+                    WineSpawn.SpawnPnj(new Location(Main.instance.mainWorld, -184.5, 70.5, -77.5, -90, 0));
+                    HolosSetup.SpawnPnj2(new Location(Main.instance.mainWorld, -155.5, 71, -60.5, 90, 0),
+                            new Location(Main.instance.mainWorld, -172.5, 71, -64.5, 90, 0));
+                    HolosSetup.SpawnCrates();
+                    CratesManager.SpawnCrates();
+                }
+            }, 20 * 5L);
             new InvestManager();
             System.out.println("Starting Hub ADDITIONNAL module FINISHED");
         }
@@ -311,6 +312,7 @@ public class Main extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new TradeGui(), this);
         getServer().getPluginManager().registerEvents(new MoneyTradeGui(), this);
         getServer().getPluginManager().registerEvents(new PlayerWarpGuiManager(), this);
+        getServer().getPluginManager().registerEvents(new ServerCoreMicellanous(), this);
 
 
         //ISLAND LISTENER
@@ -328,7 +330,6 @@ public class Main extends JavaPlugin {
             getServer().getPluginManager().registerEvents(new BlockListener(), this);
             getServer().getPluginManager().registerEvents(new CountdownFly(), this);
             getServer().getPluginManager().registerEvents(new FeatherFlyInteract(), this);
-            getServer().getPluginManager().registerEvents(new SwitchWorld(), this);
         }
 
 
@@ -404,6 +405,38 @@ public class Main extends JavaPlugin {
         this.getCommand("tradeno").setExecutor(new TradeNoCmd());
         this.getCommand("tradecancel").setExecutor(new TradeCancelCmd());
         this.getCommand("pickaxe").setExecutor(new PickaxeCmd());
+    }
+
+    public void createMainWorld() {
+        World oldWorld = Bukkit.getWorld(serverType.getDisplayName());
+        if (oldWorld != null) {
+            Bukkit.unloadWorld(oldWorld, false);
+            deleteWorld(oldWorld.getWorldFolder());
+        }
+        WorldCreator wc = new WorldCreator(serverType.getDisplayName());
+        wc.generator(new EmptyChunkGenerator());
+        mainWorld = wc.createWorld();
+        if (serverType == ServerType.HUB) {
+            for (File file : Main.instance.getDataFolder().listFiles()) {
+                if (file.getName().contains("spawn")) {
+                    IslandManager.instance.pasteIsland(file, SpawnCmd.Spawn.clone().add(0, -1, 0));
+                }
+            }
+        }
+    }
+
+    public void deleteWorld(File path) {
+        if (path.exists()) {
+            File[] files = path.listFiles();
+            for (int i = 0; i < Objects.requireNonNull(files).length; i++) {
+                if (files[i].isDirectory()) {
+                    deleteWorld(files[i]);
+                } else {
+                    files[i].delete();
+                }
+            }
+        }
+        path.delete();
     }
 
 }

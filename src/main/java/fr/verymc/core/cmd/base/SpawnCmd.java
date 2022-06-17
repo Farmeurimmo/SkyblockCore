@@ -1,6 +1,7 @@
 package main.java.fr.verymc.core.cmd.base;
 
 import main.java.fr.verymc.Main;
+import main.java.fr.verymc.commons.enums.ServerType;
 import main.java.fr.verymc.utils.PlayerUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -15,7 +16,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class SpawnCmd implements CommandExecutor, TabCompleter {
-    public static final Location Spawn = new Location(Bukkit.getServer().getWorld("world"), -187.5, 72.5, -63.5, -90, 0);
+    public static final Location Spawn = new Location(Main.instance.mainWorld, -187.5, 72.5, -63.5, -90, 0);
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
@@ -24,6 +25,11 @@ public class SpawnCmd implements CommandExecutor, TabCompleter {
         }
         if (args.length > 1) {
             player.sendActionBar("§c/spawn [Joueur]");
+            return false;
+        }
+        if (Main.instance.serverType != ServerType.HUB) {
+
+
             return false;
         }
         switch (args.length) {

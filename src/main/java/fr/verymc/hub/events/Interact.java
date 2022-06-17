@@ -30,9 +30,6 @@ public class Interact implements Listener {
     @EventHandler
     public void OnInteract(PlayerInteractEvent e) {
         Player player = e.getPlayer();
-        if (!player.getWorld().getName().equalsIgnoreCase("world")) {
-            return;
-        }
         if (!Build.contains(player.getUniqueId())) e.setCancelled(true);
         if (e.getClickedBlock() == null) {
             return;
@@ -44,76 +41,61 @@ public class Interact implements Listener {
 
     @EventHandler
     public void BucketEmpty(PlayerBucketEmptyEvent e) {
-        if (e.getBlock().getWorld().getName().equalsIgnoreCase("world")) {
-            if (Build.contains(e.getPlayer().getUniqueId())) {
-                return;
-            } else {
-                e.setCancelled(true);
-            }
+        if (Build.contains(e.getPlayer().getUniqueId())) {
+            return;
+        } else {
+            e.setCancelled(true);
         }
     }
 
     @EventHandler
     public void BucketFill(PlayerBucketFillEvent e) {
-        if (e.getBlock().getWorld().getName().equalsIgnoreCase("world")) {
-            if (Build.contains(e.getPlayer().getUniqueId())) {
-                return;
-            } else {
-                e.setCancelled(true);
-            }
+        if (Build.contains(e.getPlayer().getUniqueId())) {
+            return;
+        } else {
+            e.setCancelled(true);
         }
     }
 
     @EventHandler
     public void BlockBreak(BlockBreakEvent e) {
-        if (e.getBlock().getLocation().getWorld().getName().equalsIgnoreCase("world")) {
-            if (Build.contains(e.getPlayer().getUniqueId())) {
-                return;
-            } else {
-                e.setCancelled(true);
-            }
+        if (Build.contains(e.getPlayer().getUniqueId())) {
+            return;
+        } else {
+            e.setCancelled(true);
         }
     }
 
     @EventHandler
     public void BlockPlace(BlockPlaceEvent e) {
-        if (e.getBlock().getLocation().getWorld().getName().equalsIgnoreCase("world")) {
-            if (Build.contains(e.getPlayer().getUniqueId())) {
-                return;
-            } else {
-                e.setCancelled(true);
-            }
+        if (Build.contains(e.getPlayer().getUniqueId())) {
+            return;
+        } else {
+            e.setCancelled(true);
         }
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void EntitySpawnEvent(EntitySpawnEvent e) {
-        if (e.getLocation().getWorld().getName().equalsIgnoreCase("world")) {
-            if (!(e.getEntity() instanceof Item)) {
-                e.setCancelled(true);
-                return;
-            }
+        if (!(e.getEntity() instanceof Item)) {
+            e.setCancelled(true);
+            return;
         }
     }
 
     @EventHandler
     public void Bucketevent(PlayerItemConsumeEvent e) {
-        if (e.getItem().getType().toString().contains("BUCKET")) {
-            if (Build.contains(e.getPlayer().getUniqueId())) {
-                return;
-            } else {
-                e.setCancelled(true);
-            }
+        if (Build.contains(e.getPlayer().getUniqueId())) {
+            return;
+        } else {
+            e.setCancelled(true);
         }
     }
 
     @EventHandler
     public void playerlosefood(FoodLevelChangeEvent e) {
-        Player player = (Player) e.getEntity();
-        if (player.getWorld().getName().equalsIgnoreCase("world")) {
-            if (e.getItem() == null) {
-                e.setCancelled(true);
-            }
+        if (e.getItem() == null) {
+            e.setCancelled(true);
         }
     }
 }
