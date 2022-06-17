@@ -2,6 +2,7 @@ package main.java.fr.verymc.core.events;
 
 import main.java.fr.verymc.Main;
 import main.java.fr.verymc.commons.enums.ServerType;
+import main.java.fr.verymc.core.cmd.base.SpawnCmd;
 import main.java.fr.verymc.core.scoreboard.ScoreBoard;
 import main.java.fr.verymc.core.storage.SkyblockUser;
 import main.java.fr.verymc.core.storage.SkyblockUserManager;
@@ -40,6 +41,10 @@ public class JoinLeave implements Listener {
     @EventHandler
     public void OnJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
+
+        if (Main.instance.serverType == ServerType.HUB) {
+            player.teleport(SpawnCmd.Spawn);
+        }
 
         SkyblockUserManager.instance.checkForAccount(player);
 
