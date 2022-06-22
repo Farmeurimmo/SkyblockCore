@@ -227,10 +227,14 @@ public class StorageYAMLManager {
                             }
                         }
                     }
+                    boolean loadHere = false;
+                    if (Main.instance.serverType == ServerType.ISLAND) {
+                        loadHere = true;
+                    }
 
                     islands.add(new Island(name, home, center, id, members, islandUpgradeSize, islandUpgradeMember,
                             color, islandBank, islandUpgradeGenerator, banneds, list, false,
-                            permsPerRanks, isPublic, value, settings, chests, minions));
+                            permsPerRanks, isPublic, value, settings, chests, minions, loadHere));
                 } catch (Exception e) {
                     e.printStackTrace();
                     continue;

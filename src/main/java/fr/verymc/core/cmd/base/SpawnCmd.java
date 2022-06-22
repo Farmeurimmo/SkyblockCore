@@ -27,16 +27,11 @@ public class SpawnCmd implements CommandExecutor, TabCompleter {
             player.sendActionBar("§c/spawn [Joueur]");
             return false;
         }
-        if (Main.instance.serverType != ServerType.HUB) {
-
-
-            return false;
-        }
         switch (args.length) {
             case 0 -> {
                 final int timeLeft = Main.instance.getCooldown(player.getName());
                 if (timeLeft == 0) {
-                    PlayerUtils.instance.teleportPlayerFromRequest(player, Spawn, PlayerUtils.instance.getPlayerTeleportingdelay(player));
+                    PlayerUtils.instance.teleportPlayerFromRequest(player, Spawn, PlayerUtils.instance.getPlayerTeleportingdelay(player), ServerType.HUB);
                 }
             }
             case 1 -> {

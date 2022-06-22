@@ -3,6 +3,8 @@ package main.java.fr.verymc;
 import com.gmail.filoghost.holographicdisplays.api.Hologram;
 import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
 import main.java.fr.verymc.commons.enums.ServerType;
+import main.java.fr.verymc.commons.utils.HTTPUtils;
+import main.java.fr.verymc.core.ServersManager;
 import main.java.fr.verymc.core.antiafk.AntiAfk;
 import main.java.fr.verymc.core.atout.AtoutCmd;
 import main.java.fr.verymc.core.atout.AtoutGui;
@@ -52,7 +54,6 @@ import main.java.fr.verymc.island.blocks.ChestsCmd;
 import main.java.fr.verymc.island.challenges.ChallengesCmd;
 import main.java.fr.verymc.island.challenges.IslandChallengesGuis;
 import main.java.fr.verymc.island.challenges.IslandChallengesListener;
-import main.java.fr.verymc.island.cmds.IslandCmd;
 import main.java.fr.verymc.island.events.IslandGeneratorForm;
 import main.java.fr.verymc.island.events.IslandInteractManager;
 import main.java.fr.verymc.island.events.IslandPlayerMove;
@@ -76,6 +77,7 @@ import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
@@ -140,9 +142,33 @@ public class Main extends JavaPlugin {
         instance = this;
         System.out.println("------------------------------------------------");
         //server type ???
+        ArrayList<String> response = HTTPUtils.readFromUrl("get/all/tocreate");
+        if (response == null) {
+            System.out.println("§4§lError while getting server type, server going to sleep...");
+            Bukkit.shutdown();
+            return;
+        }
+        for (String str : response) {
+            for (ServerType serverType1 : ServerType.values()) {
+                if (str.contains(serverType1.toString())) {
+                    serverType = serverType1;
+                    serverName = serverType.getDisplayName() + str.replaceAll("[^\\d.]", "");
+                    break;
+                }
+            }
+            if (serverType != null)
+                break;
+        }
 
-        serverType = ServerType.HUB;
-        serverName = serverType.getDisplayName() + "#01";
+        System.out.println("§aServer type: " + serverType + " | " + serverType.getDisplayName());
+        System.out.println("§aServer name: " + serverName);
+
+        try {
+            HTTPUtils.postMethod("starting", serverName);
+        } catch (IOException e) {
+            Bukkit.shutdown();
+            throw new RuntimeException(e);
+        }
 
         System.out.println("------------------------------------------------");
         //CORE INIT PART 1
@@ -204,6 +230,8 @@ public class Main extends JavaPlugin {
 
         startListenerModule();
 
+        new ServersManager();
+
         System.out.println("Starting core part 1 FINISHED");
         System.out.println("------------------------------------------------");
 
@@ -260,6 +288,12 @@ public class Main extends JavaPlugin {
         }
         System.out.println("Starting core part 2 FINISHED");
 
+        try {
+            HTTPUtils.postMethod("created", serverName);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
         System.out.println("§aDémarrage du plugin TERMINE!");
         System.out.println("------------------------------------------------");
     }
@@ -279,6 +313,13 @@ public class Main extends JavaPlugin {
             npc.destroy();
         }
         saver.saveCooldown();
+
+        try {
+            HTTPUtils.postMethod("remove", serverName);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
         System.out.println("-----------------------------------------------------------------------------------------------------");
         System.out.println("Plugin stoppé !");
         System.out.println("-----------------------------------------------------------------------------------------------------");

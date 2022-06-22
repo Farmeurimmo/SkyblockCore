@@ -1,6 +1,8 @@
 package main.java.fr.verymc.utils;
 
 import main.java.fr.verymc.Main;
+import main.java.fr.verymc.commons.enums.ServerType;
+import main.java.fr.verymc.core.ServersManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -14,26 +16,42 @@ public class PlayerUtils {
         instance = this;
     }
 
-    public void teleportPlayerFromRequest(Player player, Location loc, int temp) {
+    public void teleportPlayer(Player player, Location location) {
+        player.teleport(location);
+    }
+
+    public void teleportPlayerFromRequest(Player player, Location loc, int temp, ServerType serverType) {
 
         final int timeLeft = Main.instance.getCooldown(player.getName());
         if (getPlayerTeleportingdelay(player) == 0) {
-            player.teleport(loc);
             player.sendActionBar("§6Téléportation effectuée !");
+            if (Main.instance.serverType != serverType) {
+                ServersManager.instance.sendToServer(ServersManager.instance.getServerOfType(serverType), player);
+                return;
+            }
+            teleportPlayer(player, loc);
             return;
         } else {
             if (timeLeft == 0) {
                 if (temp == 0) {
-                    player.teleport(loc);
                     player.sendActionBar("§6Téléportation effectuée !");
+                    if (Main.instance.serverType != ServerType.HUB) {
+                        ServersManager.instance.sendToServer(ServersManager.instance.getServerOfType(serverType), player);
+                        return;
+                    }
+                    teleportPlayer(player, loc);
                     return;
                 }
                 if (temp == 1) {
                     player.sendActionBar("§6Téléportation dans 1 seconde...");
                     Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
                         public void run() {
-                            player.teleport(loc);
                             player.sendActionBar("§6Téléportation effectuée !");
+                            if (Main.instance.serverType != ServerType.HUB) {
+                                ServersManager.instance.sendToServer(ServersManager.instance.getServerOfType(serverType), player);
+                                return;
+                            }
+                            teleportPlayer(player, loc);
                         }
                     }, 20);
                     return;
@@ -47,8 +65,12 @@ public class PlayerUtils {
                         int timeLeft = Main.instance.getCooldown(player.getName());
                         if (timeLeft <= 0) {
                             Main.instance.setCooldown(player.getName(), 0);
-                            player.teleport(loc);
                             player.sendActionBar("§6Téléportation effectuée !");
+                            if (Main.instance.serverType != ServerType.HUB) {
+                                ServersManager.instance.sendToServer(ServersManager.instance.getServerOfType(serverType), player);
+                                return;
+                            }
+                            teleportPlayer(player, loc);
                             this.cancel();
                             return;
                         }

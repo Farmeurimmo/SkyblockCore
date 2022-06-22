@@ -1,6 +1,7 @@
 package main.java.fr.verymc.hub.invest;
 
 import main.java.fr.verymc.Main;
+import main.java.fr.verymc.commons.enums.ServerType;
 import main.java.fr.verymc.core.cmd.base.SpawnCmd;
 import main.java.fr.verymc.core.eco.EcoAccountsManager;
 import main.java.fr.verymc.core.storage.SkyblockUser;
@@ -24,7 +25,7 @@ public class InvestManager {
         SkyblockUserManager.instance.checkForAccount(player);
         SkyblockUser skyblockUser = SkyblockUserManager.instance.getUser(player.getUniqueId());
         if (!skyblockUser.isInInvestMode()) {
-            PlayerUtils.instance.teleportPlayerFromRequest(player, SpawnCmd.Spawn, 0);
+            PlayerUtils.instance.teleportPlayerFromRequest(player, SpawnCmd.Spawn, 0, ServerType.HUB);
             skyblockUser.setInInvestMode(true);
         } else {
             giveReward(skyblockUser);

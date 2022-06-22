@@ -1,6 +1,7 @@
 package main.java.fr.verymc.core.cmd.base;
 
 import main.java.fr.verymc.Main;
+import main.java.fr.verymc.commons.enums.ServerType;
 import main.java.fr.verymc.utils.PlayerUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -28,13 +29,13 @@ public class WarpCmd implements CommandExecutor, TabCompleter {
             String str = args[0].toLowerCase();
             switch (str) {
                 case "boxes":
-                    PlayerUtils.instance.teleportPlayerFromRequest(player, Crates, PlayerUtils.instance.getPlayerTeleportingdelay(player));
+                    PlayerUtils.instance.teleportPlayerFromRequest(player, Crates, PlayerUtils.instance.getPlayerTeleportingdelay(player), ServerType.HUB);
                     break;
                 case "enchantement":
-                    PlayerUtils.instance.teleportPlayerFromRequest(player, Enchantement, PlayerUtils.instance.getPlayerTeleportingdelay(player));
+                    PlayerUtils.instance.teleportPlayerFromRequest(player, Enchantement, PlayerUtils.instance.getPlayerTeleportingdelay(player), ServerType.HUB);
                     break;
                 case "bar":
-                    PlayerUtils.instance.teleportPlayerFromRequest(player, Bar, PlayerUtils.instance.getPlayerTeleportingdelay(player));
+                    PlayerUtils.instance.teleportPlayerFromRequest(player, Bar, PlayerUtils.instance.getPlayerTeleportingdelay(player), ServerType.HUB);
                 default:
                     break;
             }

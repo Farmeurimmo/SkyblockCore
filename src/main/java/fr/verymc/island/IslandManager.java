@@ -13,6 +13,7 @@ import com.sk89q.worldedit.regions.CuboidRegion;
 import com.sk89q.worldedit.regions.Region;
 import com.sk89q.worldedit.session.ClipboardHolder;
 import main.java.fr.verymc.Main;
+import main.java.fr.verymc.commons.enums.ServerType;
 import main.java.fr.verymc.core.cmd.base.SpawnCmd;
 import main.java.fr.verymc.core.holos.HoloBlocManager;
 import main.java.fr.verymc.core.storage.AsyncConfig;
@@ -97,6 +98,16 @@ public class IslandManager {
         new WorldBorderUtil(Main.instance);
 
         new HoloBlocManager();
+    }
+
+    public ArrayList<UUID> getUUIDs() {
+        ArrayList<UUID> toReturn = new ArrayList<>();
+        for (Island island : islands) {
+            for (Map.Entry<UUID, IslandRanks> entry : island.getMembers().entrySet()) {
+                toReturn.add(entry.getKey());
+            }
+        }
+        return toReturn;
     }
 
     public boolean isAnIslandByLoc(Location loc) {
@@ -255,7 +266,7 @@ public class IslandManager {
                                     if (member == null) {
                                         member = Bukkit.getOfflinePlayer(entry.getKey()).getPlayer();
                                     }
-                                    PlayerUtils.instance.teleportPlayerFromRequest(member, SpawnCmd.Spawn, 0);
+                                    PlayerUtils.instance.teleportPlayerFromRequest(member, SpawnCmd.Spawn, 0, ServerType.HUB);
                                 }
                                 playerIsland.getMembers().clear();
                                 HashMap<String, Object> toEdit = new HashMap<>();
@@ -283,7 +294,7 @@ public class IslandManager {
                         i.getMembers().get(p.getUniqueId()).name() + ".");
                 i.getMembers().remove(p.getUniqueId());
                 p.sendMessage("§6§lIles §8» §fVous avez quitté l'île.");
-                PlayerUtils.instance.teleportPlayerFromRequest(p, SpawnCmd.Spawn, 0);
+                PlayerUtils.instance.teleportPlayerFromRequest(p, SpawnCmd.Spawn, 0, ServerType.HUB);
                 break;
             }
         }
@@ -574,7 +585,7 @@ public class IslandManager {
                                 home.setYaw(130);
                                 islands.add(new Island("Ile de " + p.getName(), home, finalToReturn1, finalId + 1, members,
                                         islandUpgradeSize, islandUpgradeMember, WorldBorderUtil.Color.BLUE, islandBank, islandUpgradeGenerator, banneds, challenges,
-                                        true, null, true, 0.0, null, null, null));
+                                        true, null, true, 0.0, null, null, null, true));
                                 p.sendMessage("§6§lIles §8» §aVous avez généré une nouvelle île avec succès (en " + (System.currentTimeMillis() - start) + "ms).");
                                 teleportPlayerToIslandSafe(p);
                                 return;

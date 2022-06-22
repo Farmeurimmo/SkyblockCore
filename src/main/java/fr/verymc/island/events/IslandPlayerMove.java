@@ -1,5 +1,6 @@
 package main.java.fr.verymc.island.events;
 
+import main.java.fr.verymc.commons.enums.ServerType;
 import main.java.fr.verymc.core.cmd.base.SpawnCmd;
 import main.java.fr.verymc.island.Island;
 import main.java.fr.verymc.island.IslandManager;
@@ -45,7 +46,7 @@ public class IslandPlayerMove implements Listener {
     @EventHandler
     public void playerMove(PlayerMoveEvent e) {
         if (e.getTo().getY() < -1) {
-            PlayerUtils.instance.teleportPlayerFromRequest(e.getPlayer(), SpawnCmd.Spawn, 0);
+            PlayerUtils.instance.teleportPlayerFromRequest(e.getPlayer(), SpawnCmd.Spawn, 0, ServerType.HUB);
             return;
         }
     }

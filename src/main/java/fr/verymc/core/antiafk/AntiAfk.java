@@ -1,6 +1,7 @@
 package main.java.fr.verymc.core.antiafk;
 
 import main.java.fr.verymc.Main;
+import main.java.fr.verymc.commons.enums.ServerType;
 import main.java.fr.verymc.core.cmd.base.SpawnCmd;
 import main.java.fr.verymc.core.gui.AfkMineCaptchaGui;
 import main.java.fr.verymc.utils.PlayerUtils;
@@ -56,7 +57,7 @@ public class AntiAfk implements Listener {
                             Bukkit.getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
                                 @Override
                                 public void run() {
-                                    PlayerUtils.instance.teleportPlayerFromRequest(p, SpawnCmd.Spawn, 0);
+                                    PlayerUtils.instance.teleportPlayerFromRequest(p, SpawnCmd.Spawn, 0, ServerType.HUB);
                                 }
                             }, 0);
                             countHashMap.remove(entry.getKey());

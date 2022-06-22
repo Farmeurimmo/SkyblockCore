@@ -1,5 +1,6 @@
 package main.java.fr.verymc.core.playerwarps;
 
+import main.java.fr.verymc.commons.enums.ServerType;
 import main.java.fr.verymc.island.Island;
 import main.java.fr.verymc.island.IslandManager;
 import main.java.fr.verymc.utils.PlayerUtils;
@@ -54,7 +55,7 @@ public class PlayerWarpGuiManager implements Listener {
                 }
                 if (current.getType() == Material.ENDER_PEARL) {
                     if (pw.getLocation() != null) {
-                        PlayerUtils.instance.teleportPlayerFromRequest(p, pw.getLocation(), PlayerUtils.instance.getPlayerTeleportingdelay(p));
+                        PlayerUtils.instance.teleportPlayerFromRequest(p, pw.getLocation(), PlayerUtils.instance.getPlayerTeleportingdelay(p), ServerType.ISLAND);
                     } else {
                         p.sendMessage("§6§lPlayerWarp §8» §fCe warp n'a pas de localisation valide.");
                     }
@@ -132,14 +133,14 @@ public class PlayerWarpGuiManager implements Listener {
                         if (island.getMembers().containsKey(PlayerWarpManager.instance.getOwnerUUIDFromPlayerWarp(pw))) {
                             if (island.isPublic()) {
                                 if (!island.getBanneds().contains(p.getUniqueId())) {
-                                    PlayerUtils.instance.teleportPlayerFromRequest(p, pw.getLocation(), 0);
+                                    PlayerUtils.instance.teleportPlayerFromRequest(p, pw.getLocation(), 0, ServerType.ISLAND);
                                     pw.addVue();
                                 } else {
                                     p.sendMessage("§6§lPlayerWarp §8» §fVous êtes banni de cette île.");
                                 }
                             } else {
                                 if (island.getMembers().containsKey(p.getUniqueId())) {
-                                    PlayerUtils.instance.teleportPlayerFromRequest(p, pw.getLocation(), 0);
+                                    PlayerUtils.instance.teleportPlayerFromRequest(p, pw.getLocation(), 0, ServerType.ISLAND);
                                     pw.addVue();
                                 } else {
                                     p.sendMessage("§6§lPlayerWarp §8» §fVous n'avez pas accès à ce warp car l'île est privée.");

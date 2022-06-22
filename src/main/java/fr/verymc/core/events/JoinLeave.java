@@ -42,10 +42,6 @@ public class JoinLeave implements Listener {
     public void OnJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
 
-        if (Main.instance.serverType == ServerType.HUB) {
-            player.teleport(SpawnCmd.Spawn);
-        }
-
         SkyblockUserManager.instance.checkForAccount(player);
 
         SkyblockUser skyblockUser = SkyblockUserManager.instance.getUser(player.getUniqueId());
@@ -53,12 +49,19 @@ public class JoinLeave implements Listener {
         player.setGameMode(GameMode.SURVIVAL);
 
 
+        if (Main.instance.serverType == ServerType.HUB) {
+            player.teleport(SpawnCmd.Spawn);
+        }
+
         Island playerIsland = null;
         if (Main.instance.serverType == ServerType.ISLAND) {
             playerIsland = IslandManager.instance.getPlayerIsland(player);
             IslandManager.instance.setWorldBorder(player);
             if (playerIsland != null) {
                 playerIsland.toggleTimeAndWeather();
+                player.chat("/is go");
+            } else {
+                IslandManager.instance.genIsland(player);
             }
         }
 
