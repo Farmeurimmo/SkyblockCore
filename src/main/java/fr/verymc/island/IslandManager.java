@@ -127,7 +127,7 @@ public class IslandManager {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        });
+        }).join();
     }
 
     public void saveAllIslands() {
