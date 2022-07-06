@@ -22,6 +22,7 @@ public class ServersManager {
     public static ServersManager instance;
     public HashMap<String, JSONArray> stringJSONArrayHashMap = new HashMap<>();
     public HashMap<String, ServerType> servers = new HashMap<>();
+
     public ServersManager() {
         instance = this;
 

@@ -146,7 +146,7 @@ public class Main extends JavaPlugin {
         if (response == null) {
             System.out.println("§4§lError while getting server type, server going to sleep...");
             Bukkit.shutdown();
-            return;
+            throw new RuntimeException();
         }
         for (String str : response) {
             for (ServerType serverType1 : ServerType.values()) {
@@ -232,6 +232,9 @@ public class Main extends JavaPlugin {
 
         new ServersManager();
 
+        new ConfigManager();
+        new StorageYAMLManager();
+
         System.out.println("Starting core part 1 FINISHED");
         System.out.println("------------------------------------------------");
 
@@ -276,8 +279,6 @@ public class Main extends JavaPlugin {
 
         //CORE PART 2
         System.out.println("Starting core part 2...");
-        new ConfigManager();
-        new StorageYAMLManager();
         saver = new ClaimCmdSaver();
         new AuctionsManager();
         ScoreBoard.acces.updateScoreBoard();
@@ -300,6 +301,9 @@ public class Main extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        if (serverType == ServerType.ISLAND) {
+            IslandManager.instance.saveAllIslands();
+        }
         for (SkyblockUser user : SkyblockUserManager.instance.users) {
             if (user.isInInvestMode()) {
                 InvestManager.instance.giveReward(user);
@@ -319,6 +323,9 @@ public class Main extends JavaPlugin {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
+        Bukkit.unloadWorld(mainWorld.getName(), false);
+        deleteWorld(mainWorld.getWorldFolder());
 
         System.out.println("-----------------------------------------------------------------------------------------------------");
         System.out.println("Plugin stoppé !");

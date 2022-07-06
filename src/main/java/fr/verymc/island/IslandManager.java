@@ -14,6 +14,7 @@ import com.sk89q.worldedit.regions.Region;
 import com.sk89q.worldedit.session.ClipboardHolder;
 import main.java.fr.verymc.Main;
 import main.java.fr.verymc.commons.enums.ServerType;
+import main.java.fr.verymc.commons.utils.HTTPUtils;
 import main.java.fr.verymc.core.cmd.base.SpawnCmd;
 import main.java.fr.verymc.core.holos.HoloBlocManager;
 import main.java.fr.verymc.core.storage.AsyncConfig;
@@ -40,12 +41,14 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.*;
+import java.util.concurrent.CompletableFuture;
 
 public class IslandManager {
 
@@ -98,6 +101,47 @@ public class IslandManager {
         new WorldBorderUtil(Main.instance);
 
         new HoloBlocManager();
+    }
+
+    public void pasteAndLoadIslands() {
+        CompletableFuture.runAsync(() -> {
+            ArrayList<String> getted = HTTPUtils.readFromUrl("islands/loaded");
+            ArrayList<String> loadeds = new ArrayList<>();
+            for (Island island : islands) {
+                if (getted.contains(island.getId())) {
+                    island.setLoadedHere(false);
+                    continue;
+                }
+                for (File file : Main.instance.getDataFolder().listFiles()) {
+                    if (file.getName().contains(island.getId() + ".schem")) {
+                        pasteIsland(file, island.getCenter().clone().add(250,
+                                0, 250));
+                        island.setLoadedHere(true);
+                        loadeds.add(String.valueOf(island.getId()));
+                        break;
+                    }
+                }
+            }
+            try {
+                HTTPUtils.postMethod("islands/setloaded", loadeds.toString());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+    public void saveAllIslands() {
+        for (Island island : islands) {
+            System.out.println(island.isLoadedHere());
+            if (island.isLoadedHere()) {
+                Location pos1 = island.getCenter().clone().add(250, 0, 250);
+                pos1.set(pos1.getBlockX(), 0, pos1.getBlockZ());
+                Location pos2 = island.getCenter().clone().add(-250, 0, -250);
+                pos2.set(pos2.getBlockX(), 256, pos2.getBlockZ());
+                saveSchem(String.valueOf(island.getId()), pos1,
+                        pos2, island.getCenter().getWorld(), island.getCenter().clone());
+            }
+        }
     }
 
     public ArrayList<UUID> getUUIDs() {
@@ -163,10 +207,8 @@ public class IslandManager {
     }
 
     public void setWorldBorder(Player p) {
+        if (Main.instance.serverType != ServerType.ISLAND) return;
         Island i = getIslandByLoc(p.getLocation());
-        if (p.getWorld().getName().equalsIgnoreCase("world")) {
-            return;
-        }
         if (i != null) {
             WorldBorderUtil.instanceClass.sendWorldBorder(p, i.getBorderColor(),
                     i.getSizeUpgrade().getSize(), i.getCenter());
@@ -174,10 +216,8 @@ public class IslandManager {
     }
 
     public void setWorldBorder(Player p, Location loc) {
+        if (Main.instance.serverType != ServerType.ISLAND) return;
         Island i = getIslandByLoc(loc);
-        if (loc.getWorld().getName().equalsIgnoreCase("world")) {
-            return;
-        }
         if (i != null) {
             WorldBorderUtil.instanceClass.sendWorldBorder(p, i.getBorderColor(),
                     i.getSizeUpgrade().getSize(), i.getCenter());
@@ -493,17 +533,17 @@ public class IslandManager {
             int maxx = 0;
             int maxz = 0;
             for (Island i : islands) {
-                if (minx > i.getHome().getBlockX()) {
-                    minx = i.getHome().getBlockX();
+                if (minx > i.getCenter().getBlockX()) {
+                    minx = i.getCenter().getBlockX();
                 }
-                if (minz > i.getHome().getBlockZ()) {
-                    minz = i.getHome().getBlockZ();
+                if (minz > i.getCenter().getBlockZ()) {
+                    minz = i.getCenter().getBlockZ();
                 }
-                if (maxx < i.getHome().getBlockX()) {
-                    maxx = i.getHome().getBlockX();
+                if (maxx < i.getCenter().getBlockX()) {
+                    maxx = i.getCenter().getBlockX();
                 }
-                if (maxz < i.getHome().getBlockZ()) {
-                    maxz = i.getHome().getBlockZ();
+                if (maxz < i.getCenter().getBlockZ()) {
+                    maxz = i.getCenter().getBlockZ();
                 }
                 if (i.getId() >= id) {
                     id = i.getId();
@@ -546,120 +586,87 @@ public class IslandManager {
 
         }
 
+        toReturn.setWorld(getMainWorld());
+
         Location finalToReturn = toReturn;
         Location finalToReturn1 = toReturn;
         int finalId = id;
-        Bukkit.getScheduler().scheduleAsyncDelayedTask(Main.instance, new Runnable() {
+
+        pasteIsland(fileSchematic, finalToReturn);
+
+        HashMap<UUID, IslandRanks> members = new HashMap<>();
+        members.put(p.getUniqueId(), IslandRanks.CHEF);
+        IslandBank islandBank = new IslandBank(0, 0, 0);
+        IslandUpgradeSize islandUpgradeSize = new IslandUpgradeSize(50, 0);
+        IslandUpgradeMember islandUpgradeMember = new IslandUpgradeMember(0);
+        IslandUpgradeGenerator islandUpgradeGenerator = new IslandUpgradeGenerator(0);
+        ArrayList<UUID> banneds = new ArrayList<>();
+        ArrayList<IslandChallenge> challenges = new ArrayList<>();
+        Location home = finalToReturn1.clone();
+        home.add(0.5, 0.1, 0.5);
+        home.setPitch(0);
+        home.setYaw(130);
+        islands.add(new Island("Ile de " + p.getName(), home, finalToReturn1, finalId + 1, members,
+                islandUpgradeSize, islandUpgradeMember, WorldBorderUtil.Color.BLUE, islandBank, islandUpgradeGenerator, banneds, challenges,
+                true, null, true, 0.0, null, null, null, true));
+        new BukkitRunnable() {
             @Override
             public void run() {
-                try {
-                    com.sk89q.worldedit.world.World adaptedWorld = BukkitAdapter.adapt(Main.instance.mainWorld);
-                    ClipboardFormat format = ClipboardFormats.findByFile(fileSchematic);
-                    ClipboardReader reader = format.getReader(new FileInputStream(fileSchematic));
-
-                    Clipboard clipboard = reader.read();
-                    EditSession editSession = WorldEdit.getInstance().getEditSessionFactory().getEditSession(adaptedWorld,
-                            -1);
-
-                    Operation operation = new ClipboardHolder(clipboard).createPaste(editSession)
-                            .to(BlockVector3.at(finalToReturn.getBlockX(), finalToReturn.getBlockY(), finalToReturn.getBlockZ())).ignoreAirBlocks(true).build();
-
-                    try {
-                        Operations.complete(operation);
-                        editSession.flushSession();
-
-                        Bukkit.getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
-                            @Override
-                            public void run() {
-                                HashMap<UUID, IslandRanks> members = new HashMap<>();
-                                members.put(p.getUniqueId(), IslandRanks.CHEF);
-                                IslandBank islandBank = new IslandBank(0, 0, 0);
-                                IslandUpgradeSize islandUpgradeSize = new IslandUpgradeSize(50, 0);
-                                IslandUpgradeMember islandUpgradeMember = new IslandUpgradeMember(0);
-                                IslandUpgradeGenerator islandUpgradeGenerator = new IslandUpgradeGenerator(0);
-                                ArrayList<UUID> banneds = new ArrayList<>();
-                                ArrayList<IslandChallenge> challenges = new ArrayList<>();
-                                Location home = finalToReturn1;
-                                home.add(0.5, 0.1, 0.5);
-                                home.setPitch(0);
-                                home.setYaw(130);
-                                islands.add(new Island("Ile de " + p.getName(), home, finalToReturn1, finalId + 1, members,
-                                        islandUpgradeSize, islandUpgradeMember, WorldBorderUtil.Color.BLUE, islandBank, islandUpgradeGenerator, banneds, challenges,
-                                        true, null, true, 0.0, null, null, null, true));
-                                p.sendMessage("§6§lIles §8» §aVous avez généré une nouvelle île avec succès (en " + (System.currentTimeMillis() - start) + "ms).");
-                                teleportPlayerToIslandSafe(p);
-                                return;
-                            }
-                        }, 0);
-
-                    } catch (WorldEditException e) {
-                        p.sendMessage("§6§lIles §8» §cUne erreur est survenue lors de la génération de l'île. Merci de réessayer.");
-                        return;
-                    }
-                } catch (IOException e) {
-                    p.sendMessage("§6§lIles §8» §cUne erreur est survenue lors de la lecture du schématic. Merci de contacter un administrateur.");
-                    return;
+                if (home.clone().add(0, -2, 0).getBlock().getType() != Material.AIR) {
+                    p.sendMessage("§6§lIles §8» §aVous avez généré une nouvelle île avec succès (en " + (System.currentTimeMillis() - start) + "ms).");
+                    teleportPlayerToIslandSafe(p);
+                    this.cancel();
                 }
             }
-        }, 0);
+        }.runTaskTimer(Main.instance, 0, 5L);
 
     }
 
     public void pasteIsland(File file, Location pos) {
 
-        Bukkit.getScheduler().scheduleAsyncDelayedTask(Main.instance, new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    com.sk89q.worldedit.world.World adaptedWorld = BukkitAdapter.adapt(Main.instance.mainWorld);
-                    ClipboardFormat format = ClipboardFormats.findByFile(file);
-                    ClipboardReader reader = format.getReader(new FileInputStream(file));
+        CompletableFuture.runAsync(() -> {
+            try {
+                com.sk89q.worldedit.world.World weWorld = BukkitAdapter.adapt(pos.getWorld());
+                ClipboardFormat format = ClipboardFormats.findByFile(file);
+                ClipboardReader reader = format.getReader(new FileInputStream(file));
 
-                    Clipboard clipboard = reader.read();
-                    EditSession editSession = WorldEdit.getInstance().getEditSessionFactory().getEditSession(adaptedWorld,
-                            -1);
+                Clipboard clipboard = reader.read();
+                EditSession editSession = WorldEdit.getInstance().getEditSessionFactory().getEditSession(weWorld,
+                        -1);
 
-                    Operation operation = new ClipboardHolder(clipboard).createPaste(editSession)
-                            .to(BlockVector3.at(pos.getBlockX(), pos.getBlockY(), pos.getBlockZ())).ignoreAirBlocks(true).build();
+                Operation operation = new ClipboardHolder(clipboard).createPaste(editSession)
+                        .to(BlockVector3.at(pos.getX(), pos.getY(), pos.getZ())).ignoreAirBlocks(true).copyBiomes(true).build();
 
-                    try {
-                        Operations.complete(operation);
-                        editSession.flushSession();
-                    } catch (Exception e1) {
-                        e1.printStackTrace();
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+
+                Operations.complete(operation);
+                editSession.flushSession();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        }, 0);
+        });
     }
 
     /*IslandManager.instance.saveSchem("aaaa", island.getCenter().clone().add(50, -15, 50),
                         island.getCenter().clone().add(-50, 40, -50), island.getCenter().getWorld(), island.getCenter().clone());*/
 
-    public void saveSchem(String filename, Location loc1, Location loc2, World world, Location origin) {
-        Bukkit.getScheduler().scheduleAsyncDelayedTask(Main.instance, new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    com.sk89q.worldedit.world.World weWorld = BukkitAdapter.adapt(world);
-                    BlockVector3 pos1 = BlockVector3.at(loc1.getBlockX(), loc1.getBlockY(), loc1.getBlockZ());
-                    BlockVector3 pos2 = BlockVector3.at(loc2.getBlockX(), loc2.getBlockY(), loc2.getBlockZ());
-                    Region cReg = new CuboidRegion(weWorld, pos1, pos2);
-                    File file = new File(Main.instance.getDataFolder(), filename + ".schem");
-                    Clipboard clipboard = Clipboard.create(cReg);
+    public void saveSchem(String filename, Location loc1, Location loc2, World world, Location center) {
+        try {
+            com.sk89q.worldedit.world.World weWorld = BukkitAdapter.adapt(world);
+            BlockVector3 pos1 = BlockVector3.at(loc1.getBlockX(), loc1.getBlockY(), loc1.getBlockZ());
+            BlockVector3 pos2 = BlockVector3.at(loc2.getBlockX(), loc2.getBlockY(), loc2.getBlockZ());
+            Region cReg = new CuboidRegion(weWorld, pos2, pos1);
+            File file = new File(Main.instance.getDataFolder(), filename + ".schem");
+            Clipboard clipboard = Clipboard.create(cReg);
+            clipboard.setOrigin(BlockVector3.at(center.getX(), center.getY(), center.getZ()));
 
-                    try (ClipboardWriter writer = BuiltInClipboardFormat.FAST.getWriter(new FileOutputStream(file))) {
-                        writer.write(clipboard);
-                    }
-
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+            try (ClipboardWriter writer = BuiltInClipboardFormat.FAST.getWriter(new FileOutputStream(file))) {
+                writer.write(clipboard);
             }
-        }, 0);
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }
