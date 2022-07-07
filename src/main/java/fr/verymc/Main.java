@@ -4,6 +4,7 @@ import com.gmail.filoghost.holographicdisplays.api.Hologram;
 import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
 import main.java.fr.verymc.commons.enums.ServerType;
 import main.java.fr.verymc.commons.utils.HTTPUtils;
+import main.java.fr.verymc.core.PluginMessageManager;
 import main.java.fr.verymc.core.ServersManager;
 import main.java.fr.verymc.core.antiafk.AntiAfk;
 import main.java.fr.verymc.core.atout.AtoutCmd;
@@ -297,6 +298,9 @@ public class Main extends JavaPlugin {
 
         System.out.println("§aDémarrage du plugin TERMINE!");
         System.out.println("------------------------------------------------");
+
+        this.getServer().getMessenger().registerOutgoingPluginChannel(this, "skyblock:toproxy");
+        this.getServer().getMessenger().registerIncomingPluginChannel(this, "skyblock:tospigot", new PluginMessageManager());
     }
 
     @Override

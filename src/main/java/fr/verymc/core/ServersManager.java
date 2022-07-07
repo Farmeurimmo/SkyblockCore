@@ -6,7 +6,9 @@ import main.java.fr.verymc.Main;
 import main.java.fr.verymc.commons.enums.ServerType;
 import main.java.fr.verymc.commons.utils.HTTPUtils;
 import main.java.fr.verymc.island.IslandManager;
+import main.java.fr.verymc.utils.ObjectConverter;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -80,11 +82,15 @@ public class ServersManager {
         }
     }
 
-    public void sendToServer(String serverName, Player player) {
+    public void sendToServer(String serverName, Player player, Location location) {
         if (serverName == null) {
-            player.sendMessage("§cErreur lors du changement de serveur, code STS null. Merci de réessayer ultérieurement.");
+            player.sendMessage("§cErreur lors du changement de serveur, code STS. Merci de réessayer ultérieurement.");
             return;
         }
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("coords", ObjectConverter.instance.locationToString(location));
+        jsonObject.put("serverName", serverName);
+        PluginMessageManager.instance.sendMessage(player, "subtp", jsonObject.toJSONString(), "skyblock:toproxy");
         final ByteArrayDataOutput out = ByteStreams.newDataOutput();
         Bukkit.getServer().getMessenger().registerOutgoingPluginChannel(Main.instance, "BungeeCord");
         out.writeUTF("Connect");

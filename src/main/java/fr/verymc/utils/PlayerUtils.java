@@ -26,7 +26,7 @@ public class PlayerUtils {
         if (getPlayerTeleportingdelay(player) == 0) {
             player.sendActionBar("§6Téléportation effectuée !");
             if (Main.instance.serverType != serverType) {
-                ServersManager.instance.sendToServer(ServersManager.instance.getServerOfType(serverType), player);
+                ServersManager.instance.sendToServer(ServersManager.instance.getServerOfType(serverType), player, loc);
                 return;
             }
             teleportPlayer(player, loc);
@@ -36,7 +36,7 @@ public class PlayerUtils {
                 if (temp == 0) {
                     player.sendActionBar("§6Téléportation effectuée !");
                     if (Main.instance.serverType != ServerType.HUB) {
-                        ServersManager.instance.sendToServer(ServersManager.instance.getServerOfType(serverType), player);
+                        ServersManager.instance.sendToServer(ServersManager.instance.getServerOfType(serverType), player, loc);
                         return;
                     }
                     teleportPlayer(player, loc);
@@ -48,7 +48,7 @@ public class PlayerUtils {
                         public void run() {
                             player.sendActionBar("§6Téléportation effectuée !");
                             if (Main.instance.serverType != ServerType.HUB) {
-                                ServersManager.instance.sendToServer(ServersManager.instance.getServerOfType(serverType), player);
+                                ServersManager.instance.sendToServer(ServersManager.instance.getServerOfType(serverType), player, loc);
                                 return;
                             }
                             teleportPlayer(player, loc);
@@ -67,7 +67,7 @@ public class PlayerUtils {
                             Main.instance.setCooldown(player.getName(), 0);
                             player.sendActionBar("§6Téléportation effectuée !");
                             if (Main.instance.serverType != ServerType.HUB) {
-                                ServersManager.instance.sendToServer(ServersManager.instance.getServerOfType(serverType), player);
+                                ServersManager.instance.sendToServer(ServersManager.instance.getServerOfType(serverType), player, loc);
                                 return;
                             }
                             teleportPlayer(player, loc);

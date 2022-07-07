@@ -6,5 +6,6 @@ public class UtilsManager {
         new PlayerUtils();
         new InventoryUtils();
         new PreGenItems();
+        new ObjectConverter();
     }
 }
