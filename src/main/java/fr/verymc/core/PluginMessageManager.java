@@ -26,7 +26,6 @@ public class PluginMessageManager implements PluginMessageListener {
         ByteArrayDataInput in = ByteStreams.newDataInput(message);
         String subchannel = in.readUTF();
         String data = in.readUTF();
-        System.out.println(channel + " " + player.getName() + " " + data);
         if (subchannel.equals("subtp")) {
             JSONParser parser = new JSONParser();
             JSONObject json = null;
@@ -37,17 +36,15 @@ public class PluginMessageManager implements PluginMessageListener {
             }
             Location location = ObjectConverter.instance.locationFromString(String.valueOf(json.get("coords")));
             String serverName = (String) json.get("serverName");
-            System.out.println(location.toString() + " " + serverName);
-            System.out.println(json);
             if (!Main.instance.serverName.equals(serverName)) return;
             if (location == null) return;
             if (!location.getWorld().equals(Main.instance.mainWorld)) location.setWorld(Main.instance.mainWorld);
-            player.sendMessage("aaa");
             player.teleport(location);
         }
     }
 
     public void sendMessage(Player player, String subchannel, String data, String mainChannel) {
+
         ByteArrayDataOutput out = ByteStreams.newDataOutput();
         out.writeUTF(subchannel);
         out.writeUTF(data);

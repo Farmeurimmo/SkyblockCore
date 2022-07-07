@@ -91,6 +91,7 @@ public class ServersManager {
         jsonObject.put("coords", ObjectConverter.instance.locationToString(location));
         jsonObject.put("serverName", serverName);
         PluginMessageManager.instance.sendMessage(player, "subtp", jsonObject.toJSONString(), "skyblock:toproxy");
+
         final ByteArrayDataOutput out = ByteStreams.newDataOutput();
         Bukkit.getServer().getMessenger().registerOutgoingPluginChannel(Main.instance, "BungeeCord");
         out.writeUTF("Connect");
