@@ -119,7 +119,29 @@ public class WorldBorderUtil {
         return Integer.parseInt(minecraftVersion.substring(1, getVersion().length() - 3).replace("_", ""));
     }
 
+    public String borderToString(WorldBorderUtil.Color color) {
+        switch (color) {
+            case RED:
+                return "RED";
+            case GREEN:
+                return "GREEN";
+            default:
+                return "BLUE";
+        }
+    }
+
+    public WorldBorderUtil.Color borderFromString(String str) {
+        switch (str) {
+            case "RED":
+                return WorldBorderUtil.Color.RED;
+            case "GREEN":
+                return WorldBorderUtil.Color.GREEN;
+            default:
+                return WorldBorderUtil.Color.BLUE;
+        }
+    }
+
     public enum Color {
-        BLUE, GREEN, RED, NONE
+        BLUE, GREEN, RED
     }
 }

@@ -1,5 +1,6 @@
 package main.java.fr.verymc.island.blocks;
 
+import main.java.fr.verymc.utils.ObjectConverter;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -20,11 +21,9 @@ public class Chest {
     private boolean isSell;
     private boolean activeSellOrBuy;
     private long id;
-    private double amount;
-    private Material stacked;
 
     public Chest(int type, Location block, UUID owner, Long chunkKey, ItemStack itemToBuySell, double price, boolean isSell,
-                 boolean activeSellOrBuy, long id, double amount, Material stacked) {
+                 boolean activeSellOrBuy, long id) {
         this.type = type;
         this.block = block;
         this.owner = owner;
@@ -37,8 +36,30 @@ public class Chest {
         this.activeSellOrBuy = activeSellOrBuy;
         this.isSell = isSell;
         this.id = id;
-        this.amount = amount;
-        this.stacked = stacked;
+    }
+
+    public static String toString(Chest c) {
+        return c.getType() + ObjectConverter.SEPARATOR + ObjectConverter.instance.locationToString(c.getBlock()) + ObjectConverter.SEPARATOR + c.getOwner().toString() +
+                ObjectConverter.SEPARATOR + c.getChunkKey() + ObjectConverter.SEPARATOR + ObjectConverter.instance.itemStackToString(c.getItemToBuySell() == null ?
+                new ItemStack(Material.AIR, 1) : c.getItemToBuySell()) + ObjectConverter.SEPARATOR + c.getPrice() + ObjectConverter.SEPARATOR
+                + c.isSell() + ObjectConverter.SEPARATOR + c.isActiveSellOrBuy() + ObjectConverter.SEPARATOR + c.getId();
+    }
+
+    public static Chest fromString(String str) {
+        String[] splited = str.split(ObjectConverter.SEPARATOR);
+        int type = Integer.parseInt(splited[0]);
+        Location block = ObjectConverter.instance.locationFromString(splited[1]);
+        UUID owner = UUID.fromString(splited[2]);
+        long chunkKey = Long.parseLong(splited[3]);
+        ItemStack itemToBuySell = ObjectConverter.instance.fromString(splited[4]);
+        if (itemToBuySell.getType() == Material.AIR) {
+            itemToBuySell = null;
+        }
+        double price = Double.parseDouble(splited[5]);
+        boolean isSell = Boolean.parseBoolean(splited[6]);
+        boolean activeSellOrBuy = Boolean.parseBoolean(splited[7]);
+        long id = Long.parseLong(splited[8]);
+        return new Chest(type, block, owner, chunkKey, itemToBuySell, price, isSell, activeSellOrBuy, id);
     }
 
     public int getType() {
@@ -108,47 +129,6 @@ public class Chest {
 
     public long getId() {
         return id;
-    }
-
-    public double getAmount() {
-        return amount;
-    }
-
-    public void setAmount(double amount) {
-        this.amount = amount;
-    }
-
-    public void addOneToAmount() {
-        this.amount++;
-    }
-
-    public void removeOneToAmount() {
-        if (this.amount-- >= 1) {
-            this.amount--;
-        }
-    }
-
-    public void removeAmount(double amount) {
-        this.amount -= amount;
-        if (this.amount < 1) {
-            this.amount = 0;
-        }
-    }
-
-    public void addAmount(double amount) {
-        this.amount += amount;
-    }
-
-    public Material getStacked() {
-        return stacked;
-    }
-
-    public void setStacked(Material stacked) {
-        this.stacked = stacked;
-    }
-
-    public boolean isStacker() {
-        return this.type == 3;
     }
 
 }

@@ -1,5 +1,6 @@
 package main.java.fr.verymc.island.minions;
 
+import main.java.fr.verymc.utils.ObjectConverter;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -25,6 +26,25 @@ public class Minion {
         this.chestLinked = chestLinked;
         this.chestBloc = chestBloc;
         this.isAutoSmelt = isAutoSmelt;
+    }
+
+    public static String toString(Minion m) {
+        return m.getID() + ObjectConverter.SEPARATOR + m.getLevelInt() + ObjectConverter.SEPARATOR + ObjectConverter.instance.locationToString(m.getBlocLocation()) +
+                ObjectConverter.SEPARATOR + m.getMinionType().toString() + ObjectConverter.SEPARATOR + m.getBlockFace().toString() + ObjectConverter.SEPARATOR +
+                m.isChestLinked() + ObjectConverter.SEPARATOR + ObjectConverter.instance.blockToString(m.getChestBloc()) + ObjectConverter.SEPARATOR + m.isAutoSmelt;
+    }
+
+    public static Minion fromString(String str) {
+        String[] splited = str.split(ObjectConverter.SEPARATOR);
+        Long id = Long.parseLong(splited[0]);
+        Integer levelInt = Integer.parseInt(splited[1]);
+        Location blocLocation = ObjectConverter.instance.locationFromString(splited[2]);
+        MinionType minionType = MinionType.valueOf(splited[3]);
+        BlockFace blockFace = BlockFace.valueOf(splited[4]);
+        Boolean chestLinked = Boolean.parseBoolean(splited[5]);
+        Block chestBloc = ObjectConverter.instance.blockFromString(splited[6]);
+        Boolean isAutoSmelt = Boolean.parseBoolean(splited[7]);
+        return new Minion(id, levelInt, blocLocation, minionType, blockFace, chestLinked, chestBloc, isAutoSmelt);
     }
 
     public Long getID() {

@@ -65,6 +65,7 @@ public class IslandManager {
     public IslandManager() {
         instance = this;
         new IslandChallengesReset();
+        new WorldBorderUtil(Main.instance);
     }
 
     public void load() {
@@ -98,7 +99,6 @@ public class IslandManager {
         new IslandValueCalcManager();
         Main.instance.saveResource("ileworld.schem", true);
         Main.instance.saveResource("clear.schem", true);
-        new WorldBorderUtil(Main.instance);
 
         new HoloBlocManager();
     }
@@ -156,8 +156,9 @@ public class IslandManager {
 
     public boolean isAnIslandByLoc(Location loc) {
         for (Island i : islands) {
-            if (i.getHome().getBlockX() + i.getSizeUpgrade().getSize() >= loc.getBlockX() && i.getHome().getBlockX() - i.getSizeUpgrade().getSize() <= loc.getBlockX()
-                    && i.getHome().getBlockZ() + i.getSizeUpgrade().getSize() >= loc.getBlockZ() && i.getHome().getBlockZ() - i.getSizeUpgrade().getSize() <= loc.getBlockZ()) {
+            final int size = IslandUpgradeSize.getSizeFromLevel(i.getSizeUpgrade().getLevel());
+            if (i.getHome().getBlockX() + size >= loc.getBlockX() && i.getHome().getBlockX() - size <= loc.getBlockX()
+                    && i.getHome().getBlockZ() + size >= loc.getBlockZ() && i.getHome().getBlockZ() - size <= loc.getBlockZ()) {
                 return true;
             }
         }
@@ -166,8 +167,9 @@ public class IslandManager {
 
     public Island getIslandByLoc(Location loc) {
         for (Island i : islands) {
-            if (i.getHome().getBlockX() + i.getSizeUpgrade().getSize() >= loc.getBlockX() && i.getHome().getBlockX() - i.getSizeUpgrade().getSize() <= loc.getBlockX()
-                    && i.getHome().getBlockZ() + i.getSizeUpgrade().getSize() >= loc.getBlockZ() && i.getHome().getBlockZ() - i.getSizeUpgrade().getSize() <= loc.getBlockZ()) {
+            final int size = IslandUpgradeSize.getSizeFromLevel(i.getSizeUpgrade().getLevel());
+            if (i.getHome().getBlockX() + size >= loc.getBlockX() && i.getHome().getBlockX() - size <= loc.getBlockX()
+                    && i.getHome().getBlockZ() + size >= loc.getBlockZ() && i.getHome().getBlockZ() - size <= loc.getBlockZ()) {
                 return i;
             }
         }
@@ -211,7 +213,7 @@ public class IslandManager {
         Island i = getIslandByLoc(p.getLocation());
         if (i != null) {
             WorldBorderUtil.instanceClass.sendWorldBorder(p, i.getBorderColor(),
-                    i.getSizeUpgrade().getSize(), i.getCenter());
+                    IslandUpgradeSize.getSizeFromLevel(i.getSizeUpgrade().getLevel()), i.getCenter());
         }
     }
 
@@ -220,7 +222,7 @@ public class IslandManager {
         Island i = getIslandByLoc(loc);
         if (i != null) {
             WorldBorderUtil.instanceClass.sendWorldBorder(p, i.getBorderColor(),
-                    i.getSizeUpgrade().getSize(), i.getCenter());
+                    IslandUpgradeSize.getSizeFromLevel(i.getSizeUpgrade().getLevel()), i.getCenter());
         }
     }
 
@@ -597,7 +599,7 @@ public class IslandManager {
         HashMap<UUID, IslandRanks> members = new HashMap<>();
         members.put(p.getUniqueId(), IslandRanks.CHEF);
         IslandBank islandBank = new IslandBank(0, 0, 0);
-        IslandUpgradeSize islandUpgradeSize = new IslandUpgradeSize(50, 0);
+        IslandUpgradeSize islandUpgradeSize = new IslandUpgradeSize(0);
         IslandUpgradeMember islandUpgradeMember = new IslandUpgradeMember(0);
         IslandUpgradeGenerator islandUpgradeGenerator = new IslandUpgradeGenerator(0);
         ArrayList<UUID> banneds = new ArrayList<>();

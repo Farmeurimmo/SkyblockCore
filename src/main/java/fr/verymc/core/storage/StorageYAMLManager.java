@@ -89,7 +89,6 @@ public class StorageYAMLManager {
                 }
 
                 IslandUpgradeSize islandUpgradeSize = new IslandUpgradeSize(
-                        ConfigManager.instance.getDataIslands().getInt(str + ".upgradeSizeSize"),
                         ConfigManager.instance.getDataIslands().getInt(str + ".upgradeSizePrice"));
 
                 IslandUpgradeMember islandUpgradeMember = new IslandUpgradeMember(
@@ -132,7 +131,7 @@ public class StorageYAMLManager {
                     for (String par : ConfigManager.instance.getDataIslands().getString(str + ".settings").split(",")) {
                         if (par == null) continue;
                         if (par.length() < 4) continue;
-                        settings.add(IslandSettings.valueOf(par));
+                        settings.add(IslandSettings.matchSettings(par));
                     }
                 } else {
                     settings = null;
@@ -197,19 +196,10 @@ public class StorageYAMLManager {
                             long chunk = ConfigManager.instance.getDataIslands().getLong(str + ".chests." + str1 + ".chunk");
                             double price = ConfigManager.instance.getDataIslands().getDouble(str + ".chests." + str1 + ".price");
                             boolean active = ConfigManager.instance.getDataIslands().getBoolean(str + ".chests." + str1 + ".active");
-                            double amount = 0;
-                            if (ConfigManager.instance.getDataIslands().get(str + ".chests." + str1 + ".amount") != null) {
-                                amount = ConfigManager.instance.getDataIslands().getDouble(str + ".chests." + str1 + ".amount");
-                            }
-                            Material stacked = null;
-                            if (ConfigManager.instance.getDataIslands().get(str + ".chests." + str1 + ".stacked") != null) {
-                                stacked = Material.getMaterial(ConfigManager.instance.getDataIslands().getString(str + ".chests." + str1 + ".stacked"));
-                            }
-                            chests.add(new Chest(type, loc, uuid, chunk, itemStack, price, isSell, active, idChest, amount, stacked));
+                            chests.add(new Chest(type, loc, uuid, chunk, itemStack, price, isSell, active, idChest));
                         } catch (Exception e) {
                             e.printStackTrace();
                             Bukkit.broadcastMessage("§6§lData §8» §4§lErreur lors de la récupération des données de la base de donnée sur le chest #" + str);
-                            continue;
                         }
                     }
                 }
@@ -325,7 +315,6 @@ public class StorageYAMLManager {
                         toSendIsland.put(island.getId() + ".home", island.getHome());
                         toSendIsland.put(island.getId() + ".center", island.getCenter());
                         toSendIsland.put(island.getId() + ".players", island.getMembers().toString());
-                        toSendIsland.put(island.getId() + ".upgradeSizeSize", island.getSizeUpgrade().getSize());
                         toSendIsland.put(island.getId() + ".upgradeSizeLevel", island.getSizeUpgrade().getLevel());
                         toSendIsland.put(island.getId() + ".upgradeMemberLevel", island.getMemberUpgrade().getLevel());
                         toSendIsland.put(island.getId() + ".borderColor", island.getBorderColor().toString());
@@ -366,10 +355,6 @@ public class StorageYAMLManager {
                             toSendIsland.put(island.getId() + ".chests." + chest.getId() + ".price", chest.getPrice());
                             toSendIsland.put(island.getId() + ".chests." + chest.getId() + ".item", chest.getItemToBuySell());
                             toSendIsland.put(island.getId() + ".chests." + chest.getId() + ".chunk", chest.getChunkKey());
-                            toSendIsland.put(island.getId() + ".chests." + chest.getId() + ".amount", chest.getAmount());
-                            if (chest.getStacked() != null) {
-                                toSendIsland.put(island.getId() + ".chests." + chest.getId() + ".stacked", chest.getStacked().toString());
-                            }
                         }
                         for (Minion minion : island.getMinions()) {
                             toSendIsland.put(island.getId() + ".minions." + minion.getID() + ".type", minion.getMinionType().toString());

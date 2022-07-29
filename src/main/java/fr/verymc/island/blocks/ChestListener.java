@@ -4,7 +4,6 @@ import main.java.fr.verymc.Main;
 import main.java.fr.verymc.commons.enums.ServerType;
 import main.java.fr.verymc.core.eco.EcoAccountsManager;
 import main.java.fr.verymc.island.Island;
-import main.java.fr.verymc.island.IslandBlocsValues;
 import main.java.fr.verymc.island.IslandManager;
 import main.java.fr.verymc.utils.InventoryUtils;
 import org.bukkit.Material;
@@ -24,7 +23,6 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import java.text.NumberFormat;
 import java.util.Arrays;
 
 public class ChestListener implements Listener {
@@ -58,14 +56,6 @@ public class ChestListener implements Listener {
                     }
                 }
             }
-            return;
-        }
-        if (IslandBlocsValues.instance.hasBlockValue(e.getClickedBlock().getType())) {
-            Chest chest = ChestManager.instance.getChestFromLoc(e.getClickedBlock().getLocation());
-            if (chest == null) {
-                return;
-            }
-            StackerGui.instance.openStackerGui(e.getPlayer(), chest);
             return;
         }
     }
@@ -342,7 +332,7 @@ public class ChestListener implements Listener {
                 }
             }
         }
-        if (e.getView().getTitle().equalsIgnoreCase("§6Stackeur de blocs")) {
+        /*if (e.getView().getTitle().equalsIgnoreCase("§6Stackeur de blocs")) {
             e.setCancelled(true);
             Chest chest = StackerGui.instance.opened.get(p);
             if (chest == null) {
@@ -434,7 +424,7 @@ public class ChestListener implements Listener {
                     }
                 }
             }
-        }
+        }*/
     }
 
     @EventHandler
@@ -510,24 +500,6 @@ public class ChestListener implements Listener {
             } else {
                 return;
             }
-        } else if (IslandManager.instance.islandBockValues.hasBlockValue(e.getBlock().getType())) {
-            Chest chest = ChestManager.instance.getChestFromLoc(e.getBlock().getLocation());
-            if (chest == null) {
-                return;
-            }
-            e.setCancelled(true);
-            if (!chest.getOwner().equals(e.getPlayer().getUniqueId())) {
-                e.getPlayer().sendMessage("§6§lStacker §8» §cCe stacker ne vous appartient pas !");
-                return;
-            }
-            if (chest.getAmount() != 1) {
-                e.getPlayer().sendMessage("§6§lStacker §8» §cVous devez enlever tous les blocs avant de détruire le stacker.");
-                return;
-            }
-            if (!e.isCancelled()) {
-                ChestManager.instance.removeChestFromLoc(e.getBlock().getLocation());
-                return;
-            }
         } else {
             return;
         }
@@ -562,9 +534,6 @@ public class ChestListener implements Listener {
             } else if (e.getItemInHand().getDisplayName().contains("§6Player shop")) {
                 type = 2;
                 taked = true;
-            } else if (IslandBlocsValues.instance.hasBlockValue(e.getBlock().getType())) {
-                type = 3;
-                taked = true;
             } else {
                 return;
             }
@@ -572,13 +541,11 @@ public class ChestListener implements Listener {
                 return;
             }
 
-            ChestManager.instance.placeChest(e.getPlayer(), e.getBlock().getLocation(), type, null, 0.0,
-                    e.getBlock().getType());
+            ChestManager.instance.placeChest(e.getPlayer(), e.getBlock().getLocation(), type, null, 0.0);
         } catch (Exception ex) {
             if (taked && Main.instance.serverType != ServerType.ISLAND) {
                 e.getPlayer().sendMessage("§6§lChests §8» §cLes chests sont désactivés sur ce serveur.");
                 e.setCancelled(true);
-                return;
             }
         }
     }

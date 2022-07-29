@@ -7,11 +7,9 @@ import org.bukkit.entity.Player;
 
 public class IslandUpgradeSize {
 
-    private int size;
     private int level;
 
-    public IslandUpgradeSize(int size, int level) {
-        this.size = size;
+    public IslandUpgradeSize(int level) {
         this.level = level;
     }
 
@@ -25,7 +23,6 @@ public class IslandUpgradeSize {
     }
 
     public static double getPriceMoneyFromLevel(int level) {
-        if (level == 0) return 0;
         if (level == 1) return 20000;
         if (level == 2) return 30000;
         if (level == 3) return 40000;
@@ -34,16 +31,11 @@ public class IslandUpgradeSize {
     }
 
     public static double getPriceCrytauxFromLevel(int level) {
-        if (level == 0) return 0;
         if (level == 1) return 50;
         if (level == 2) return 80;
         if (level == 3) return 120;
         if (level == 4) return 180;
         return 0;
-    }
-
-    public int getSize() {
-        return size;
     }
 
     public int getLevel() {
@@ -59,7 +51,6 @@ public class IslandUpgradeSize {
         if (!EcoAccountsManager.instance.checkForFounds(player, getPriceMoneyFromLevel((this.level + 1))) && !bankPayMoney)
             return false;
         this.level++;
-        this.size = getSizeFromLevel(this.level);
         if (bankPayMoney) {
             playerIsland.getBank().removeMoney(getPriceMoneyFromLevel(this.level));
         } else {
@@ -73,7 +64,6 @@ public class IslandUpgradeSize {
     public boolean setNewLevel(int level) {
         if (level > 4) return false;
         this.level = level;
-        this.size = getSizeFromLevel(level);
         return true;
     }
 }

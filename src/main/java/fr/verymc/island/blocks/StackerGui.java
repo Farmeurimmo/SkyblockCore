@@ -1,16 +1,7 @@
 package main.java.fr.verymc.island.blocks;
 
-import main.java.fr.verymc.island.IslandManager;
-import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
-import java.text.NumberFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 
 public class StackerGui {
@@ -24,7 +15,7 @@ public class StackerGui {
         instance = this;
     }
 
-    public void openStackerGui(Player player, Chest chest) {
+    /*public void openStackerGui(Player player, Chest chest) {
         if (chest.getType() != 3) return;
         if (!IslandManager.instance.getIslandByLoc(chest.getBlock()).getMembers().containsKey(player.getUniqueId())) {
             player.sendMessage("§6§lStacker §8» §fVous devez être un membre de l'île pour modifier le stacker.");
@@ -95,5 +86,5 @@ public class StackerGui {
         inv.setItem(26, retour);
 
         player.openInventory(inv);
-    }
+    }*/
 }

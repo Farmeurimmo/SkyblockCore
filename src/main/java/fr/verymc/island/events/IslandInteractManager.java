@@ -1,7 +1,6 @@
 package main.java.fr.verymc.island.events;
 
 import main.java.fr.verymc.island.Island;
-import main.java.fr.verymc.island.IslandBlocsValues;
 import main.java.fr.verymc.island.IslandManager;
 import main.java.fr.verymc.island.perms.IslandPerms;
 import org.bukkit.Material;
@@ -49,13 +48,9 @@ public class IslandInteractManager implements Listener {
         Player player = e.getPlayer();
         Island island = IslandManager.instance.getIslandByLoc(e.getBlock().getLocation());
         if (island != null) {
-            if (island.hasPerms(island.getIslandRankFromUUID(player.getUniqueId()), IslandPerms.BREAK, player)) {
-                if (IslandBlocsValues.instance.hasBlockValue(e.getBlock().getType())) {
-                    island.removeValue(IslandBlocsValues.instance.getBlockValue(e.getBlock().getType()));
-                }
-                return;
+            if (!island.hasPerms(island.getIslandRankFromUUID(player.getUniqueId()), IslandPerms.BREAK, player)) {
+                e.setCancelled(true);
             }
-            e.setCancelled(true);
         }
     }
 
@@ -65,13 +60,9 @@ public class IslandInteractManager implements Listener {
         Player player = e.getPlayer();
         Island island = IslandManager.instance.getIslandByLoc(e.getBlock().getLocation());
         if (island != null) {
-            if (island.hasPerms(island.getIslandRankFromUUID(player.getUniqueId()), IslandPerms.BUILD, player)) {
-                if (IslandBlocsValues.instance.hasBlockValue(e.getBlock().getType())) {
-                    island.addValue(IslandBlocsValues.instance.getBlockValue(e.getBlock().getType()));
-                }
-                return;
+            if (!island.hasPerms(island.getIslandRankFromUUID(player.getUniqueId()), IslandPerms.BUILD, player)) {
+                e.setCancelled(true);
             }
-            e.setCancelled(true);
         }
     }
 
@@ -94,7 +85,6 @@ public class IslandInteractManager implements Listener {
                 return;
             }
             e.setCancelled(true);
-            return;
         }
     }
 }

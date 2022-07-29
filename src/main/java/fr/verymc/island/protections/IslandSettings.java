@@ -27,6 +27,15 @@ public enum IslandSettings {
         this.desc = desc;
     }
 
+    public static IslandSettings matchSettings(String string) {
+        for (IslandSettings setting : values()) {
+            if (string.contains(setting.name())) {
+                return setting;
+            }
+        }
+        return null;
+    }
+
     public static ItemStack getItemForSetting(IslandSettings setting) {
         return switch (setting) {
             case MOB_GRIEFING -> new ItemStack(Material.CREEPER_SPAWN_EGG);

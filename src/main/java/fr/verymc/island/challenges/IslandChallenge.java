@@ -1,5 +1,6 @@
 package main.java.fr.verymc.island.challenges;
 
+import main.java.fr.verymc.utils.ObjectConverter;
 import org.bukkit.Material;
 
 import java.util.ArrayList;
@@ -27,6 +28,29 @@ public class IslandChallenge {
         this.maxProgress = maxProgress;
         this.type = type;
         this.toGet = toGet;
+    }
+
+    public static String toString(IslandChallenge isC) {
+        return isC.getName() + ObjectConverter.SEPARATOR + isC.getProgress() + ObjectConverter.SEPARATOR + isC.getMaterial().toString() + ObjectConverter.SEPARATOR +
+                isC.getPalier() + ObjectConverter.SEPARATOR + isC.getId() + ObjectConverter.SEPARATOR + isC.isActive() + ObjectConverter.SEPARATOR + isC.getMaxProgress()
+                + ObjectConverter.SEPARATOR + isC.getType() + ObjectConverter.SEPARATOR + (isC.getToGet() == null ? new ArrayList<>() : isC.getToGet().toString());
+    }
+
+    public static IslandChallenge fromString(String string) {
+        String[] splited = string.split(ObjectConverter.SEPARATOR);
+        String name = splited[0];
+        int progress = Integer.parseInt(splited[1]);
+        Material material = Material.valueOf(splited[2]);
+        int palier = Integer.parseInt(splited[3]);
+        int id = Integer.parseInt(splited[4]);
+        boolean isActive = Boolean.parseBoolean(splited[5]);
+        int maxProgress = Integer.parseInt(splited[6]);
+        int type = Integer.parseInt(splited[7]);
+        ArrayList<Material> toGet = new ArrayList<>();
+        for (String str : splited[8].replace("{", "").replace("}", "").split(",")) {
+            toGet.add(Material.valueOf(str));
+        }
+        return new IslandChallenge(name, progress, material, palier, id, isActive, maxProgress, type, toGet);
     }
 
     public String getName() {

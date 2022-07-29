@@ -32,7 +32,7 @@ public class IslandUpgradeGui {
         Inventory inv = Bukkit.createInventory(null, 27, "§6Améliorations de l'île");
 
         Island playerIsland = IslandManager.instance.getPlayerIsland(player);
-        int sizeIsland = playerIsland.getSizeUpgrade().getSize();
+        int sizeIsland = IslandUpgradeSize.getSizeFromLevel(playerIsland.getSizeUpgrade().getLevel());
 
         ItemStack custom1 = new ItemStack(Material.GRASS_BLOCK);
         ItemMeta custom1Meta = custom1.getItemMeta();

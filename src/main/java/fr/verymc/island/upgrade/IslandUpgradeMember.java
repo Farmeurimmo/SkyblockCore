@@ -7,11 +7,10 @@ import org.bukkit.entity.Player;
 
 public class IslandUpgradeMember {
 
-    private int maxMembers;
     private int level;
 
     public IslandUpgradeMember(int level) {
-        this.maxMembers = getMaxMembers(level);
+        ;
         this.level = level;
     }
 
@@ -33,7 +32,6 @@ public class IslandUpgradeMember {
     }
 
     public static double getPriceMoneyFromLevel(int level) {
-        if (level == 0) return 0;
         if (level == 1) return 20000;
         if (level == 2) return 30000;
         if (level == 3) return 40000;
@@ -43,7 +41,6 @@ public class IslandUpgradeMember {
     }
 
     public static double getPriceCrytauxFromLevel(int level) {
-        if (level == 0) return 0;
         if (level == 1) return 50;
         if (level == 2) return 80;
         if (level == 3) return 120;
@@ -65,7 +62,6 @@ public class IslandUpgradeMember {
         if (!EcoAccountsManager.instance.checkForFounds(player, getPriceMoneyFromLevel((this.level + 1))) && !bankPayMoney)
             return false;
         this.level++;
-        this.maxMembers = getMaxMembers(this.level);
         if (bankPayMoney) {
             playerIsland.getBank().removeMoney(getPriceMoneyFromLevel(this.level));
         } else {
@@ -76,11 +72,7 @@ public class IslandUpgradeMember {
     }
 
     public int getMaxMembers() {
-        return maxMembers;
-    }
-
-    public void setMaxMembers(int maxMembers) {
-        this.maxMembers = maxMembers;
+        return getMaxMembers(this.level);
     }
 
     public int getLevel() {

@@ -1,7 +1,6 @@
 package main.java.fr.verymc.island;
 
 import main.java.fr.verymc.Main;
-import main.java.fr.verymc.island.blocks.Chest;
 import main.java.fr.verymc.island.guis.IslandTopGui;
 import main.java.fr.verymc.utils.DiscordUtils;
 import org.bukkit.Bukkit;
@@ -83,22 +82,18 @@ public class IslandValueCalcManager {
 
             for (Island island : IslandManager.instance.islands) {
 
+                final int size = island.getSizeUpgrade().getLevel();
+
                 CompletableFuture.runAsync(() -> {
 
-                    int minx = island.getCenter().getBlockX() - island.getSizeUpgrade().getSize();
-                    int minz = island.getCenter().getBlockZ() - island.getSizeUpgrade().getSize();
-                    int maxx = island.getCenter().getBlockX() + island.getSizeUpgrade().getSize();
-                    int maxz = island.getCenter().getBlockZ() + island.getSizeUpgrade().getSize();
+                    int minx = island.getCenter().getBlockX() - size;
+                    int minz = island.getCenter().getBlockZ() - size;
+                    int maxx = island.getCenter().getBlockX() + size;
+                    int maxz = island.getCenter().getBlockZ() + size;
 
                     double value = 0;
 
-                    for (Chest chest : island.getChests()) {
-                        if (chest.getType() != 3) continue;
-                        if (chest.getBlock().getX() >= minx && chest.getBlock().getX() <= maxx && chest.getBlock().getZ() >= minz &&
-                                chest.getBlock().getZ() <= maxz) {
-                            value += IslandBlocsValues.instance.getBlockValue(chest.getStacked()) * chest.getAmount();
-                        }
-                    }
+                    //A MODIFIER AVEC LES NOUVEAUX GUI DE STOCKAGE DES BLOCS
 
                     IslandManager.instance.getIslandByLoc(island.getCenter()).setValue(value);
                     Long elasped = (System.currentTimeMillis() - startmills);

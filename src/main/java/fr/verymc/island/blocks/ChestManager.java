@@ -120,9 +120,9 @@ public class ChestManager {
         player.getInventory().addItem(aa);
     }
 
-    public void placeChest(Player player, Location block, int type, ItemStack item, double price, Material stacked) {
+    public void placeChest(Player player, Location block, int type, ItemStack item, double price) {
         IslandManager.instance.getPlayerIsland(player).addChest(new main.java.fr.verymc.island.blocks.Chest(type, block, player.getUniqueId(), block.getChunk().getChunkKey(),
-                item, price, false, false, System.currentTimeMillis(), 1, stacked));
+                item, price, false, false, System.currentTimeMillis()));
     }
 
     public void removeChestFromLoc(Location block) {

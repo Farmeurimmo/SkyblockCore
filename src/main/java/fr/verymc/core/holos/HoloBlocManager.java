@@ -1,15 +1,8 @@
 package main.java.fr.verymc.core.holos;
 
 import com.gmail.filoghost.holographicdisplays.api.Hologram;
-import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
-import main.java.fr.verymc.Main;
-import main.java.fr.verymc.island.Island;
-import main.java.fr.verymc.island.IslandManager;
-import main.java.fr.verymc.island.blocks.Chest;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 
-import java.text.NumberFormat;
 import java.util.ArrayList;
 
 public class HoloBlocManager {
@@ -19,7 +12,7 @@ public class HoloBlocManager {
 
     public HoloBlocManager() {
         instance = this;
-        checkForStackerHolo();
+        //checkForStackerHolo();
     }
 
     public Hologram getHoloAtLoc(Location location) {
@@ -31,7 +24,7 @@ public class HoloBlocManager {
         return null;
     }
 
-    public void checkForStackerHolo() {
+    /*public void checkForStackerHolo() {
         Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.instance, new Runnable() {
             @Override
             public void run() {
@@ -59,5 +52,5 @@ public class HoloBlocManager {
                 }
             }
         }, 0, 100L);
-    }
+    }*/
 }

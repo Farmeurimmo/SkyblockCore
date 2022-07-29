@@ -7,6 +7,7 @@ import main.java.fr.verymc.island.challenges.IslandChallengesGuis;
 import main.java.fr.verymc.island.perms.IslandPerms;
 import main.java.fr.verymc.island.perms.IslandRank;
 import main.java.fr.verymc.island.protections.IslandSettings;
+import main.java.fr.verymc.island.upgrade.IslandUpgradeSize;
 import main.java.fr.verymc.utils.WorldBorderUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -139,10 +140,10 @@ public class IslandGuiManager implements Listener {
             if (current.getType() == Material.GRASS_BLOCK) {
                 if (playerIsland.getSizeUpgrade().upOfOneLevel(player)) {
                     IslandUpgradeGui.instance.openUpgradeIslandMenu(player);
+                    final int size = IslandUpgradeSize.getSizeFromLevel(playerIsland.getSizeUpgrade().getLevel());
                     playerIsland.sendMessageToEveryMember(
                             "§6§lIles §8» §f" + player.getName() + " a amélioré la taille de l'île au niveau §6" + playerIsland.getSizeUpgrade().getLevel() +
-                                    "§f, la taille de l'île est maintenant de §6" + playerIsland.getSizeUpgrade().getSize() + "x" +
-                                    playerIsland.getSizeUpgrade().getSize() + "§f.");
+                                    "§f, la taille de l'île est maintenant de §6" + size + "x" + size + "§f.");
                     return;
                 } else {
                     player.sendMessage("§6§lIles §8» §fFonds insuffisants ou niveau maximum atteint.");
