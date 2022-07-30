@@ -41,7 +41,7 @@ public class DailyBonus {
         lastAct = System.currentTimeMillis();
         active = true;
         if (Main.instance.serverType == ServerType.ISLAND) {
-            IslandChallengesGuis.boost = 2;
+            IslandChallengesGuis.instance.boost = 2;
             Bukkit.broadcastMessage("§6§lBonus §8» §fUn bonus x2 a été activé pour les challenges. " +
                     "Il se termine dans §e" + duration / 60 + " minutes§f.");
         } else {
@@ -53,7 +53,7 @@ public class DailyBonus {
             @Override
             public void run() {
                 if (Main.instance.serverType == ServerType.ISLAND) {
-                    IslandChallengesGuis.boost = 1;
+                    IslandChallengesGuis.instance.boost = 1;
                 }
                 active = false;
                 Bukkit.broadcastMessage("§6§lBonus §8» §fLe bonus a été désactivé.");

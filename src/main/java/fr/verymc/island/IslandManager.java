@@ -23,6 +23,7 @@ import main.java.fr.verymc.island.bank.IslandBank;
 import main.java.fr.verymc.island.blocks.Chest;
 import main.java.fr.verymc.island.blocks.ChestManager;
 import main.java.fr.verymc.island.challenges.IslandChallenge;
+import main.java.fr.verymc.island.challenges.IslandChallengesListener;
 import main.java.fr.verymc.island.challenges.IslandChallengesReset;
 import main.java.fr.verymc.island.guis.*;
 import main.java.fr.verymc.island.minions.Minion;
@@ -58,12 +59,14 @@ public class IslandManager {
     public ArrayList<Island> islands = new ArrayList<>();
     public ArrayList<UUID> bypasser = new ArrayList<>();
     public ArrayList<UUID> spying = new ArrayList<>();
+    public ArrayList<IslandChallenge> challenges = new ArrayList<>();
     public File fileSchematic;
     public File fileEmptyIsland;
     public HashMap<Player, ArrayList<Player>> pendingInvites = new HashMap<>();
 
     public IslandManager() {
         instance = this;
+        challenges = getAvailableChallenges();
         new IslandChallengesReset();
         new WorldBorderUtil(Main.instance);
     }
@@ -142,6 +145,61 @@ public class IslandManager {
                         pos2, island.getCenter().getWorld(), island.getCenter().clone());
             }
         }
+    }
+
+    public IslandChallenge getById(int id) {
+        for (IslandChallenge islandChallenge : challenges) {
+            if (islandChallenge.getId() == id) {
+                return islandChallenge;
+            }
+        }
+        return null;
+    }
+
+    public ArrayList<IslandChallenge> getAvailableChallenges() {
+        ArrayList<IslandChallenge> toReturn = new ArrayList<>();
+        int id = 0;
+        toReturn.add(new IslandChallenge("Miner de la pierre", 0, Material.COBBLESTONE, 0, id, true, IslandChallengesListener.cobble));
+        id++;
+        toReturn.add(new IslandChallenge("Miner du charbon", 0, Material.COAL_ORE, 0, id, true, IslandChallengesListener.coal));
+        id++;
+        toReturn.add(new IslandChallenge("Miner du fer", 0, Material.IRON_ORE, 0, id, true, IslandChallengesListener.iron));
+        id++;
+        toReturn.add(new IslandChallenge("Miner de l'or", 0, Material.GOLD_ORE, 0, id, true, IslandChallengesListener.gold));
+        id++;
+        toReturn.add(new IslandChallenge("Miner du diamant", 0, Material.DIAMOND_ORE, 0, id, true, IslandChallengesListener.diamond));
+        id++;
+        toReturn.add(new IslandChallenge("Miner de l'émeraude", 0, Material.EMERALD_ORE, 0, id, true, IslandChallengesListener.emerald));
+        id++;
+        toReturn.add(new IslandChallenge("Miner de l'ancient débris", 0, Material.ANCIENT_DEBRIS, 0, id, true, IslandChallengesListener.debris));
+        id++;
+        toReturn.add(new IslandChallenge("Casser des bûches de chêne", 0, Material.OAK_LOG, 0, id, true, IslandChallengesListener.oak_log));
+        id++;
+        toReturn.add(new IslandChallenge("Casser des bûches de bouleau", 0, Material.BIRCH_LOG, 0, id, true, IslandChallengesListener.birch_log));
+        id++;
+        toReturn.add(new IslandChallenge("Casser des bûches d'acacia", 0, Material.ACACIA_LOG, 0, id, true, IslandChallengesListener.acacia_log));
+        id++;
+        toReturn.add(new IslandChallenge("Casser des bûches de chêne noir", 0, Material.DARK_OAK_LOG, 0, id, true, IslandChallengesListener.dark_oak_log));
+        id++;
+        toReturn.add(new IslandChallenge("Casser des bûches de jungle", 0, Material.JUNGLE_LOG, 0, id, true, IslandChallengesListener.jungle_log));
+        id++;
+        toReturn.add(new IslandChallenge("Casser des bûches de sapin", 0, Material.SPRUCE_LOG, 0, id, true, IslandChallengesListener.spruce_log));
+        id++;
+        toReturn.add(new IslandChallenge("Récolter du blé", 0, Material.WHEAT, 0, id, true, IslandChallengesListener.wheat));
+        id++;
+        toReturn.add(new IslandChallenge("Récolter du cacao", 0, Material.COCOA, 0, id, true, IslandChallengesListener.cocoa));
+        id++;
+        toReturn.add(new IslandChallenge("Récolter des patates", 0, Material.POTATOES, 0, id, true, IslandChallengesListener.potato));
+        id++;
+        toReturn.add(new IslandChallenge("Récolter des carottes", 0, Material.CARROTS, 0, id, true, IslandChallengesListener.carrot));
+        id++;
+        toReturn.add(new IslandChallenge("Récolter de la nether wart", 0, Material.NETHER_WART, 0, id, true, IslandChallengesListener.nether_wart));
+        id++;
+        toReturn.add(new IslandChallenge("Récolter du melon", 0, Material.MELON, 0, id, true, IslandChallengesListener.melon));
+        id++;
+        toReturn.add(new IslandChallenge("Récolter de la citrouille", 0, Material.PUMPKIN, 0, id,
+                true, IslandChallengesListener.pumpkin));
+        return toReturn;
     }
 
     public ArrayList<UUID> getUUIDs() {

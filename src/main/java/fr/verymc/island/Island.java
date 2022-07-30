@@ -4,7 +4,6 @@ import main.java.fr.verymc.Main;
 import main.java.fr.verymc.island.bank.IslandBank;
 import main.java.fr.verymc.island.blocks.Chest;
 import main.java.fr.verymc.island.challenges.IslandChallenge;
-import main.java.fr.verymc.island.challenges.IslandChallengesListener;
 import main.java.fr.verymc.island.minions.Minion;
 import main.java.fr.verymc.island.perms.IslandPerms;
 import main.java.fr.verymc.island.perms.IslandRank;
@@ -17,7 +16,6 @@ import main.java.fr.verymc.utils.ObjectConverter;
 import main.java.fr.verymc.utils.WorldBorderUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.WeatherType;
 import org.bukkit.entity.Player;
 import org.json.simple.JSONObject;
@@ -263,73 +261,7 @@ public class Island {
     }
 
     public void addDefaultChallenges() {
-        int id = 0;
-        addChallenge(new IslandChallenge("Miner de la pierre", 0, Material.COBBLESTONE, 0, id,
-                true, IslandChallengesListener.cobble, 0, null));
-        id++;
-        addChallenge(new IslandChallenge("Miner du charbon", 0, Material.COAL_ORE, 0, id,
-                true, IslandChallengesListener.coal, 0, null));
-        id++;
-        addChallenge(new IslandChallenge("Miner du fer", 0, Material.IRON_ORE, 0, id,
-                true, IslandChallengesListener.iron, 0, null));
-        id++;
-        addChallenge(new IslandChallenge("Miner de l'or", 0, Material.GOLD_ORE, 0, id,
-                true, IslandChallengesListener.gold, 0, null));
-        id++;
-        addChallenge(new IslandChallenge("Miner du diamant", 0, Material.DIAMOND_ORE, 0, id,
-                true, IslandChallengesListener.diamond, 0, null));
-        id++;
-        addChallenge(new IslandChallenge("Miner de l'émeraude", 0, Material.EMERALD_ORE, 0, id,
-                true, IslandChallengesListener.emerald, 0, null));
-        id++;
-        addChallenge(new IslandChallenge("Miner de l'ancient débris", 0, Material.ANCIENT_DEBRIS, 0, id,
-                true, IslandChallengesListener.debris, 0, null));
-        id++;
-        addChallenge(new IslandChallenge("Casser des bûches de chêne", 0, Material.OAK_LOG, 0, id,
-                true, IslandChallengesListener.oak_log, 0, null));
-        id++;
-        addChallenge(new IslandChallenge("Casser des bûches de bouleau", 0, Material.BIRCH_LOG, 0, id,
-                true, IslandChallengesListener.birch_log, 0, null));
-        id++;
-        addChallenge(new IslandChallenge("Casser des bûches d'acacia", 0, Material.ACACIA_LOG, 0, id,
-                true, IslandChallengesListener.acacia_log, 0, null));
-        id++;
-        addChallenge(new IslandChallenge("Casser des bûches de chêne noir", 0, Material.DARK_OAK_LOG, 0, id,
-                true, IslandChallengesListener.dark_oak_log, 0, null));
-        id++;
-        addChallenge(new IslandChallenge("Casser des bûches de jungle", 0, Material.JUNGLE_LOG, 0, id,
-                true, IslandChallengesListener.jungle_log, 0, null));
-        id++;
-        addChallenge(new IslandChallenge("Casser des bûches de sapin", 0, Material.SPRUCE_LOG, 0, id,
-                true, IslandChallengesListener.spruce_log, 0, null));
-        id++;
-        addChallenge(new IslandChallenge("Récolter du blé", 0, Material.WHEAT, 0, id,
-                true, IslandChallengesListener.wheat, 0, null));
-        id++;
-        addChallenge(new IslandChallenge("Récolter du cacao", 0, Material.COCOA, 0, id,
-                true, IslandChallengesListener.cocoa, 0, null));
-        id++;
-        addChallenge(new IslandChallenge("Récolter des patates", 0, Material.POTATOES, 0, id,
-                true, IslandChallengesListener.potato, 0, null));
-        id++;
-        addChallenge(new IslandChallenge("Récolter des carottes", 0, Material.CARROTS, 0, id,
-                true, IslandChallengesListener.carrot, 0, null));
-        id++;
-        addChallenge(new IslandChallenge("Récolter de la nether wart", 0, Material.NETHER_WART, 0, id,
-                true, IslandChallengesListener.nether_wart, 0, null));
-        id++;
-        addChallenge(new IslandChallenge("Récolter du melon", 0, Material.MELON, 0, id,
-                true, IslandChallengesListener.melon, 0, null));
-        id++;
-        addChallenge(new IslandChallenge("Récolter de la citrouille", 0, Material.PUMPKIN, 0, id,
-                true, IslandChallengesListener.pumpkin, 0, null));
-        //CHALLENGES NORMAUX
-        /*id++;
-        ArrayList<Material> materials = new ArrayList<>(Arrays.asList(Material.NETHERITE_SWORD, Material.NETHERITE_AXE,
-                Material.NETHERITE_PICKAXE, Material.NETHERITE_HOE, Material.NETHERITE_SHOVEL));
-        addChallenge(new IslandChallenge("Riche", 0, Material.NETHERITE_BLOCK, 0, id,
-                true, materials.size() - 1, 1, materials));*/
-
+        this.challenges = IslandManager.instance.getAvailableChallenges();
     }
 
     public IslandBank getBank() {

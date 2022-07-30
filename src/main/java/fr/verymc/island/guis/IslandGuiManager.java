@@ -86,7 +86,7 @@ public class IslandGuiManager implements Listener {
                 return;
             }
             if (current.getType() == Material.PAPER) {
-                IslandChallengesGuis.MakeMainGui(player);
+                IslandChallengesGuis.instance.makeChallengeGui(player);
                 return;
             }
             if (current.getType() == Material.COMPARATOR) {

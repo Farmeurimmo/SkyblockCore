@@ -365,6 +365,7 @@ public class Main extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new MoneyTradeGui(), this);
         getServer().getPluginManager().registerEvents(new PlayerWarpGuiManager(), this);
         getServer().getPluginManager().registerEvents(new ServerCoreMicellanous(), this);
+        getServer().getPluginManager().registerEvents(new IslandChallengesGuis(), this);
 
 
         //ISLAND LISTENER
@@ -372,7 +373,6 @@ public class Main extends JavaPlugin {
             getServer().getPluginManager().registerEvents(new Farm2WinGui(), this);
             getServer().getPluginManager().registerEvents(new WineGui(), this);
             getServer().getPluginManager().registerEvents(new WarpGui(), this);
-            getServer().getPluginManager().registerEvents(new IslandChallengesGuis(), this);
             getServer().getPluginManager().registerEvents(new IslandChallengesListener(), this);
             getServer().getPluginManager().registerEvents(new IslandGuiManager(), this);
             getServer().getPluginManager().registerEvents(new IslandInteractManager(), this);

@@ -117,7 +117,7 @@ public class PickaxeManager implements Listener {
                 challenge.setActive(false);
             }
             challenge.setPalier(challenge.getPalier() + 1);
-            IslandChallengesGuis.CompleteChallenge(player, challenge);
+            IslandChallengesGuis.instance.completeChallenge(player, challenge);
         }
     }
 

@@ -143,21 +143,12 @@ public class StorageYAMLManager {
                         if (part == null) continue;
                         int prog = ConfigManager.instance.getDataIslands().getInt(str + ".c." + part + ".prog");
                         int max = ConfigManager.instance.getDataIslands().getInt(str + ".c." + part + ".max");
-                        int type = ConfigManager.instance.getDataIslands().getInt(str + ".c." + part + ".type");
                         int palier = ConfigManager.instance.getDataIslands().getInt(str + ".c." + part + ".pal");
                         boolean act = ConfigManager.instance.getDataIslands().getBoolean(str + ".c." + part + ".act");
                         String nameC = ConfigManager.instance.getDataIslands().getString(str + ".c." + part + ".name");
                         Material material = Material.valueOf(ConfigManager.instance.getDataIslands().getString(str + ".c." + part + ".mat"));
-                        ArrayList<Material> mats = new ArrayList<>();
-                        if (ConfigManager.instance.getDataIslands().getString(str + ".c." + part + ".mats") != null) {
-                            for (String par : ConfigManager.instance.getDataIslands().getString(str + ".c." + part + ".mats").split(",")) {
-                                if (par != null && Material.matchMaterial(par) != null) {
-                                    mats.add(Material.valueOf(par));
-                                }
-                            }
-                        }
                         list.add(new IslandChallenge(nameC, prog, material, palier, Integer.parseInt(part)
-                                , act, max, type, mats));
+                                , act, max));
                     }
                 }
 
@@ -335,11 +326,6 @@ public class StorageYAMLManager {
                             toSendIsland.put(island.getId() + ".c." + islandChallenge.getId() + ".mat", islandChallenge.getMaterial().toString());
                             toSendIsland.put(island.getId() + ".c." + islandChallenge.getId() + ".max", islandChallenge.getMaxProgress());
                             toSendIsland.put(island.getId() + ".c." + islandChallenge.getId() + ".name", islandChallenge.getName());
-                            toSendIsland.put(island.getId() + ".c." + islandChallenge.getId() + ".type", islandChallenge.getType());
-                            if (islandChallenge.getToGet() != null) {
-                                toSendIsland.put(island.getId() + ".c." + islandChallenge.getId() + ".mats", islandChallenge.getToGet().toString().
-                                        replace("[", "").replace("]", "").replace(" ", ""));
-                            }
                         }
                         for (Map.Entry<IslandRanks, ArrayList<IslandPerms>> entry : island.getMapPerms().entrySet()) {
                             toSendIsland.put(island.getId() + ".perm." + entry.getKey().toString(), entry.getValue().toString()

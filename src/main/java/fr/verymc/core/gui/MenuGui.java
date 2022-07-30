@@ -111,7 +111,7 @@ public class MenuGui implements Listener {
                 return;
             }
             if (current.getType() == Material.IRON_SWORD) {
-                IslandChallengesGuis.MakeMainGui(player);
+                IslandChallengesGuis.instance.makeChallengeGui(player);
                 return;
             }
             if (current.getType() == Material.POTION) {
