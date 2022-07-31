@@ -113,8 +113,8 @@ public class Island {
         jsonObject.put("home", ObjectConverter.instance.locationToString(i.getHome()));
         jsonObject.put("center", ObjectConverter.instance.locationToString(i.getCenter()));
         jsonObject.put("id", i.getId());
-        jsonObject.put("members", new JSONObject(i.getMembers()).toJSONString());
-        jsonObject.put("rankPerms", new JSONObject(Island.getReducedMapPerms(i)).toJSONString());
+        jsonObject.put("members", new JSONObject(i.getMembers()).toString());
+        jsonObject.put("rankPerms", new JSONObject(Island.getReducedMapPerms(i)).toString());
         jsonObject.put("siUp", i.getSizeUpgrade().getLevel());
         jsonObject.put("mbUp", i.getMemberUpgrade().getLevel());
         jsonObject.put("genUp", i.getGeneratorUpgrade().getLevel());
@@ -270,6 +270,7 @@ public class Island {
             public void run() {
                 JSONObject jsonObject = Island.islandToJSON(island);
                 System.out.println(jsonObject);
+                Island.islandToJSON(Island.readFromJSON(jsonObject.toString()));
             }
         }, 20);
     }
