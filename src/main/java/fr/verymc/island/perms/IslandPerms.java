@@ -41,6 +41,15 @@ public enum IslandPerms {
         this.description = description;
     }
 
+    public static IslandPerms match(String str) {
+        for (IslandPerms islandPerms : values()) {
+            if (str.contains(islandPerms.name())) {
+                return islandPerms;
+            }
+        }
+        return valueOf(str);
+    }
+
     public static ArrayList<IslandPerms> getAllPerms() {
         ArrayList<IslandPerms> perms = new ArrayList<>();
         for (IslandPerms perm : IslandPerms.values()) {

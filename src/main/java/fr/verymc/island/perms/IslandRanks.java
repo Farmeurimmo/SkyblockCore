@@ -15,6 +15,15 @@ public enum IslandRanks {
         this.name = name;
     }
 
+    public static IslandRanks match(String str) {
+        for (IslandRanks islandRanks : values()) {
+            if (str.contains(islandRanks.name())) {
+                return islandRanks;
+            }
+        }
+        return valueOf(str);
+    }
+
     public String getName() {
         return name;
     }
