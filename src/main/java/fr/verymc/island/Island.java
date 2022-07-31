@@ -115,13 +115,13 @@ public class Island {
         jsonObject.put("id", i.getId());
         jsonObject.put("members", new JSONObject(i.getMembers()).toJSONString());
         jsonObject.put("rankPerms", new JSONObject(Island.getReducedMapPerms(i)).toJSONString());
-        jsonObject.put("sizeUpgrade", i.getSizeUpgrade().getLevel());
-        jsonObject.put("memberUpgrade", i.getMemberUpgrade().getLevel());
-        jsonObject.put("generatorUpgrade", i.getGeneratorUpgrade().getLevel());
-        jsonObject.put("borderColor", WorldBorderUtil.instanceClass.borderToString(i.getBorderColor()));
+        jsonObject.put("siUp", i.getSizeUpgrade().getLevel());
+        jsonObject.put("mbUp", i.getMemberUpgrade().getLevel());
+        jsonObject.put("genUp", i.getGeneratorUpgrade().getLevel());
+        jsonObject.put("border", WorldBorderUtil.instanceClass.borderToString(i.getBorderColor()));
         jsonObject.put("bank", i.getBank().getMoney() + ObjectConverter.SEPARATOR + i.getBank().getCrystaux() + ObjectConverter.SEPARATOR + i.getBank().getXp());
-        jsonObject.put("banneds", i.getBanneds().toString());
-        jsonObject.put("isPublic", i.isPublic);
+        jsonObject.put("bans", i.getBanneds().toString());
+        jsonObject.put("public", i.isPublic);
         String challenges = "";
         if (i.getChallenges() != null) {
             for (IslandChallenge islandChallenge : i.getChallenges()) {
@@ -129,7 +129,7 @@ public class Island {
             }
         }
         jsonObject.put("cha", challenges);
-        jsonObject.put("activatedSettings", i.getActivatedSettings().toString());
+        jsonObject.put("aS", i.getActivatedSettings().toString());
         String chestsString = "";
         for (Chest chest : i.getChests()) {
             chestsString += Chest.toString(chest) + ObjectConverter.SEPARATOR_ELEMENT;
@@ -187,10 +187,10 @@ public class Island {
                 }
             }
         }
-        IslandUpgradeSize sizeUpgrade = new IslandUpgradeSize(Integer.parseInt(String.valueOf(jsonObject.get("sizeUpgrade"))));
-        IslandUpgradeMember memberUpgrade = new IslandUpgradeMember(Integer.parseInt(String.valueOf(jsonObject.get("memberUpgrade"))));
-        IslandUpgradeGenerator generatorUpgrade = new IslandUpgradeGenerator(Integer.parseInt(String.valueOf(jsonObject.get("generatorUpgrade"))));
-        WorldBorderUtil.Color borderColor = WorldBorderUtil.instanceClass.borderFromString((String) jsonObject.get("borderColor"));
+        IslandUpgradeSize sizeUpgrade = new IslandUpgradeSize(Integer.parseInt(String.valueOf(jsonObject.get("siUp"))));
+        IslandUpgradeMember memberUpgrade = new IslandUpgradeMember(Integer.parseInt(String.valueOf(jsonObject.get("mbUp"))));
+        IslandUpgradeGenerator generatorUpgrade = new IslandUpgradeGenerator(Integer.parseInt(String.valueOf(jsonObject.get("genUp"))));
+        WorldBorderUtil.Color borderColor = WorldBorderUtil.instanceClass.borderFromString((String) jsonObject.get("border"));
         String bank = (String) jsonObject.get("bank");
         String[] bankSplit = bank.split(ObjectConverter.SEPARATOR);
         double money = Double.parseDouble(bankSplit[0]);
@@ -198,12 +198,12 @@ public class Island {
         int xp = Integer.parseInt(bankSplit[2]);
         IslandBank bank1 = new IslandBank(money, crystaux, xp);
         ArrayList<UUID> banneds = new ArrayList<>();
-        for (String str : ObjectConverter.instance.stringToArrayList((String) jsonObject.get("banneds"))) {
+        for (String str : ObjectConverter.instance.stringToArrayList((String) jsonObject.get("bans"))) {
             if (str.length() == 36) {
                 banneds.add(UUID.fromString(str));
             }
         }
-        boolean isPublic = Boolean.valueOf(String.valueOf(jsonObject.get("isPublic")));
+        boolean isPublic = Boolean.valueOf(String.valueOf(jsonObject.get("public")));
         ArrayList<IslandChallenge> islandChallenges = new ArrayList<>();
         String strCh = (String) jsonObject.get("cha");
         String[] challenges = strCh.split(ObjectConverter.SEPARATOR_ELEMENT);
@@ -213,7 +213,7 @@ public class Island {
             }
         }
         ArrayList<IslandSettings> activatedSettings = new ArrayList<>();
-        for (String str : ObjectConverter.instance.stringToArrayList((String) jsonObject.get("activatedSettings"))) {
+        for (String str : ObjectConverter.instance.stringToArrayList((String) jsonObject.get("aS"))) {
             IslandSettings islandSettings = IslandSettings.matchSettings(str);
             if (islandSettings != null) {
                 activatedSettings.add(islandSettings);
