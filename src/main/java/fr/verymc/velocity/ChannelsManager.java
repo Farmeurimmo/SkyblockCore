@@ -12,7 +12,9 @@ import org.slf4j.Logger;
 
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
+import java.util.HashMap;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 public class ChannelsManager {
@@ -21,6 +23,8 @@ public class ChannelsManager {
 
     private final ProxyServer server;
     private final Logger logger;
+
+    public HashMap<UUID, String> awaitingServerSwitch = new HashMap<>();
 
     public ChannelsManager(ProxyServer server, Logger logger) {
         instance = this;
@@ -56,7 +60,7 @@ public class ChannelsManager {
             if (subchannel.equals("subtp")) {
                 String rawData = in.readUTF();
                 System.out.println("raw: " + rawData);
-                sendPluginMessage(player, "subtp", null, rawData);
+                awaitingServerSwitch.put(player.getUniqueId(), rawData);
             }
         } catch (Exception e) {
             logger.error("Error while handling message", e);
@@ -79,11 +83,6 @@ public class ChannelsManager {
         if (serverName == null) {
             serverOp.get().sendPluginMessage(MinecraftChannelIdentifier.from("skyblock:topigot"), out.toByteArray());
         }
-        server.getScheduler()
-                .buildTask(Main.instance, () -> {
-                    player.getCurrentServer().get().sendPluginMessage(MinecraftChannelIdentifier.from("skyblock:tospigot"), out.toByteArray());
-                })
-                .delay(1L, TimeUnit.SECONDS)
-                .schedule();
+        player.getCurrentServer().get().sendPluginMessage(MinecraftChannelIdentifier.from("skyblock:tospigot"), out.toByteArray());
     }
 }
