@@ -20,7 +20,9 @@ public class ConnectionListener {
         if (!ChannelsManager.instance.awaitingServerSwitch.containsKey(e.getPlayer().getUniqueId())) {
             return;
         }
-        ChannelsManager.instance.sendPluginMessage(e.getPlayer(), "subtp", null, ChannelsManager.instance.awaitingServerSwitch.get(e.getPlayer().getUniqueId()));
+        ChannelsManager.instance.sendPluginMessage(e.getPlayer(), "subtp", null,
+                ChannelsManager.instance.awaitingServerSwitch.get(e.getPlayer().getUniqueId()));
+        ChannelsManager.instance.awaitingServerSwitch.remove(e.getPlayer().getUniqueId());
     }
 
 
