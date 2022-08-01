@@ -185,7 +185,7 @@ public class MinionManager {
 
         island.removeMinion(minion);
         HashMap<String, Object> toEdit = new HashMap<>();
-        toEdit.put(island.getId() + ".minions." + minion.getID() + "", null);
+        toEdit.put(island.getUUID().toString(), null);
         AsyncConfig.instance.setAndSaveAsync(toEdit, ConfigManager.instance.getDataIslands(), ConfigManager.instance.islandsFile);
     }
 

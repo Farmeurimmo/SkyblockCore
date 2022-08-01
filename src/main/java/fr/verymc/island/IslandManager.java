@@ -69,6 +69,7 @@ public class IslandManager {
         challenges = getAvailableChallenges();
         new IslandChallengesReset();
         new WorldBorderUtil(Main.instance);
+        new IslandRank();
     }
 
     public void load() {
@@ -80,7 +81,6 @@ public class IslandManager {
                 fileEmptyIsland = file;
             }
         }
-        new IslandRank();
         new IslandMainGui();
         new IslandMemberGui();
         new IslandUpgradeGui();
@@ -111,16 +111,16 @@ public class IslandManager {
             ArrayList<String> getted = HTTPUtils.readFromUrl("islands/loaded");
             ArrayList<String> loadeds = new ArrayList<>();
             for (Island island : islands) {
-                if (getted.contains(island.getId())) {
+                if (getted.contains(island.getUUID().toString())) {
                     island.setLoadedHere(false);
                     continue;
                 }
                 for (File file : Main.instance.getDataFolder().listFiles()) {
-                    if (file.getName().contains(island.getId() + ".schem")) {
+                    if (file.getName().contains(island.getUUID().toString() + ".schem")) {
                         pasteIsland(file, island.getCenter().clone().add(250,
                                 0, 250));
                         island.setLoadedHere(true);
-                        loadeds.add(String.valueOf(island.getId()));
+                        loadeds.add(island.getUUID().toString());
                         break;
                     }
                 }
@@ -141,7 +141,7 @@ public class IslandManager {
                 pos1.set(pos1.getBlockX(), 0, pos1.getBlockZ());
                 Location pos2 = island.getCenter().clone().add(-250, 0, -250);
                 pos2.set(pos2.getBlockX(), 256, pos2.getBlockZ());
-                saveSchem(String.valueOf(island.getId()), pos1,
+                saveSchem(String.valueOf(island.getUUID()), pos1,
                         pos2, island.getCenter().getWorld(), island.getCenter().clone());
             }
         }
@@ -370,7 +370,7 @@ public class IslandManager {
                                 }
                                 playerIsland.getMembers().clear();
                                 HashMap<String, Object> toEdit = new HashMap<>();
-                                toEdit.put(playerIsland.getId() + "", null);
+                                toEdit.put(playerIsland.getUUID().toString(), null);
                                 AsyncConfig.instance.setAndSaveAsync(toEdit, ConfigManager.instance.getDataIslands(), ConfigManager.instance.islandsFile);
                             }
                         }, 0);
@@ -581,7 +581,7 @@ public class IslandManager {
 
     public void genIsland(Player p) {
         Location toReturn = null;
-        int id = 0;
+        UUID uuid = UUID.randomUUID();
         p.sendMessage("§6§lIles §8» §aGénération de l'île en cours...");
         Long start = System.currentTimeMillis();
 
@@ -604,9 +604,6 @@ public class IslandManager {
                 }
                 if (maxz < i.getCenter().getBlockZ()) {
                     maxz = i.getCenter().getBlockZ();
-                }
-                if (i.getId() >= id) {
-                    id = i.getId();
                 }
             }
             Random rand = new Random();
@@ -650,7 +647,6 @@ public class IslandManager {
 
         Location finalToReturn = toReturn;
         Location finalToReturn1 = toReturn;
-        int finalId = id;
 
         pasteIsland(fileSchematic, finalToReturn);
 
@@ -666,7 +662,7 @@ public class IslandManager {
         home.add(0.5, 0.1, 0.5);
         home.setPitch(0);
         home.setYaw(130);
-        islands.add(new Island("Ile de " + p.getName(), home, finalToReturn1, finalId + 1, members,
+        islands.add(new Island("Ile de " + p.getName(), home, finalToReturn1, uuid, members,
                 islandUpgradeSize, islandUpgradeMember, WorldBorderUtil.Color.BLUE, islandBank, islandUpgradeGenerator, banneds, challenges,
                 true, null, true, 0.0, null, null, null, true));
         new BukkitRunnable() {

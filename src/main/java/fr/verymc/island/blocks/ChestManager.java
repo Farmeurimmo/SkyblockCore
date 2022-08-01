@@ -131,9 +131,8 @@ public class ChestManager {
                 if (chest.getBlock().getBlock().getLocation().equals(block)) {
                     island.removeChest(chest);
                     HashMap<String, Object> toEdit = new HashMap<>();
-                    toEdit.put(island.getId() + ".chests." + chest.getId() + "", null);
-                    AsyncConfig.instance.setAndSaveAsync(toEdit, ConfigManager.instance.getDataIslands(),
-                            ConfigManager.instance.islandsFile);
+                    toEdit.put(island.getUUID().toString(), null);
+                    AsyncConfig.instance.setAndSaveAsync(toEdit, ConfigManager.instance.getDataIslands(), ConfigManager.instance.islandsFile);
                     return;
                 }
             }

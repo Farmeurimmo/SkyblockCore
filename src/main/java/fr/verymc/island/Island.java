@@ -12,15 +12,11 @@ import main.java.fr.verymc.island.protections.IslandSettings;
 import main.java.fr.verymc.island.upgrade.IslandUpgradeGenerator;
 import main.java.fr.verymc.island.upgrade.IslandUpgradeMember;
 import main.java.fr.verymc.island.upgrade.IslandUpgradeSize;
-import main.java.fr.verymc.utils.ObjectConverter;
 import main.java.fr.verymc.utils.WorldBorderUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.WeatherType;
 import org.bukkit.entity.Player;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
 import java.util.*;
 
@@ -30,7 +26,7 @@ public class Island {
     private String name;
     private Location home;
     private Location center;
-    private int id;
+    private UUID uuid;
     private HashMap<UUID, IslandRanks> members;
     private HashMap<IslandRanks, ArrayList<IslandPerms>> permsPerRanks = new HashMap<>();
     private IslandUpgradeSize sizeUpgrade;
@@ -52,7 +48,7 @@ public class Island {
     private ArrayList<UUID> coops = new ArrayList<>();
     private ArrayList<UUID> chatToggled = new ArrayList<>();
 
-    public Island(String name, Location home, Location center, int id, HashMap<UUID, IslandRanks> members,
+    public Island(String name, Location home, Location center, UUID uuid, HashMap<UUID, IslandRanks> members,
                   IslandUpgradeSize upgradeSize, IslandUpgradeMember upgradeMember, WorldBorderUtil.Color borderColor,
                   IslandBank bank, IslandUpgradeGenerator generatorUpgrade, ArrayList<UUID> banneds, ArrayList<IslandChallenge> challenges,
                   boolean isDefaultChallenges, HashMap<IslandRanks, ArrayList<IslandPerms>> permsPerRanks,
@@ -61,7 +57,7 @@ public class Island {
         this.name = name;
         this.home = home;
         this.center = center;
-        this.id = id;
+        this.uuid = uuid;
         this.members = members;
         this.sizeUpgrade = upgradeSize;
         this.memberUpgrade = upgradeMember;
@@ -107,172 +103,7 @@ public class Island {
         }, 0, 100L);
     }
 
-    public static JSONObject islandToJSON(Island i) {
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("name", i.getName());
-        jsonObject.put("home", ObjectConverter.instance.locationToString(i.getHome()));
-        jsonObject.put("center", ObjectConverter.instance.locationToString(i.getCenter()));
-        jsonObject.put("id", i.getId());
-        jsonObject.put("members", new JSONObject(i.getMembers()).toString());
-        jsonObject.put("rankPerms", new JSONObject(Island.getReducedMapPerms(i)).toString());
-        jsonObject.put("siUp", i.getSizeUpgrade().getLevel());
-        jsonObject.put("mbUp", i.getMemberUpgrade().getLevel());
-        jsonObject.put("genUp", i.getGeneratorUpgrade().getLevel());
-        jsonObject.put("border", WorldBorderUtil.instanceClass.borderToString(i.getBorderColor()));
-        jsonObject.put("bank", i.getBank().getMoney() + ObjectConverter.SEPARATOR + i.getBank().getCrystaux() + ObjectConverter.SEPARATOR + i.getBank().getXp());
-        jsonObject.put("bans", i.getBanneds().toString());
-        jsonObject.put("public", i.isPublic);
-        String challenges = "";
-        if (i.getChallenges() != null) {
-            for (IslandChallenge islandChallenge : i.getChallenges()) {
-                challenges += IslandChallenge.toString(islandChallenge) + ObjectConverter.SEPARATOR_ELEMENT;
-            }
-        }
-        jsonObject.put("cha", challenges);
-        jsonObject.put("aS", i.getActivatedSettings().toString());
-        String chestsString = "";
-        for (Chest chest : i.getChests()) {
-            chestsString += Chest.toString(chest) + ObjectConverter.SEPARATOR_ELEMENT;
-        }
-        jsonObject.put("chests", chestsString);
-        String minionsString = "";
-        for (Minion minion : i.getMinions()) {
-            minionsString += Minion.toString(minion) + ObjectConverter.SEPARATOR_ELEMENT;
-        }
-        jsonObject.put("minions", minionsString);
-        return jsonObject;
-    }
-
-    public static Island readFromJSON(String strJSON) {
-        JSONObject jsonObject = null;
-        try {
-            jsonObject = (JSONObject) new JSONParser().parse(strJSON);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        String name = (String) jsonObject.get("name");
-        Location home = ObjectConverter.instance.locationFromString((String) jsonObject.get("home"));
-        Location center = ObjectConverter.instance.locationFromString((String) jsonObject.get("center"));
-        int id = Integer.parseInt(String.valueOf(jsonObject.get("id")));
-        HashMap<UUID, IslandRanks> members = new HashMap<>();
-        JSONObject jsonObjectMembers = new JSONObject(ObjectConverter.instance.stringToHashMap((String) jsonObject.get("members")));
-        for (Object o : jsonObjectMembers.keySet()) {
-            String key = (String) o;
-            String value = (String) jsonObjectMembers.get(key);
-            members.put(UUID.fromString(key), IslandRanks.match(value));
-        }
-        HashMap<IslandRanks, ArrayList<IslandPerms>> permsPerRanks = new HashMap<>();
-        JSONObject jsonObjectPerms = new JSONObject(ObjectConverter.instance.stringToHashMap((String) jsonObject.get("rankPerms")));
-        for (Object o : jsonObjectPerms.keySet()) {
-            String key = (String) o;
-            String value = (String) jsonObjectPerms.get(key);
-            ArrayList<IslandPerms> perms = new ArrayList<>();
-            for (String s : ObjectConverter.instance.stringToArrayList(value)) {
-                perms.add(IslandPerms.match(s));
-            }
-            permsPerRanks.put(IslandRanks.valueOf(key), perms);
-        }
-        int current = permsPerRanks.size() - 1;
-        ArrayList<IslandPerms> toHerit = new ArrayList<>();
-        while (current > 0) { //POUR LE CHEF PAS BESOIN DE LUI FAIRE HÉRITER LES PERMS VU QU'IL LES A TOUTES
-            for (Map.Entry<IslandRanks, ArrayList<IslandPerms>> e : permsPerRanks.entrySet()) {
-                for (Map.Entry<IslandRanks, Integer> entry : IslandRank.getIslandRankPos().entrySet()) {
-                    if (current == entry.getValue()) {
-                        for (IslandPerms islandPerms : e.getValue()) {
-                            if (!toHerit.contains(islandPerms)) toHerit.add(islandPerms);
-                        }
-                        permsPerRanks.put(entry.getKey(), toHerit);
-                        current--;
-                    }
-                }
-            }
-        }
-        IslandUpgradeSize sizeUpgrade = new IslandUpgradeSize(Integer.parseInt(String.valueOf(jsonObject.get("siUp"))));
-        IslandUpgradeMember memberUpgrade = new IslandUpgradeMember(Integer.parseInt(String.valueOf(jsonObject.get("mbUp"))));
-        IslandUpgradeGenerator generatorUpgrade = new IslandUpgradeGenerator(Integer.parseInt(String.valueOf(jsonObject.get("genUp"))));
-        WorldBorderUtil.Color borderColor = WorldBorderUtil.instanceClass.borderFromString((String) jsonObject.get("border"));
-        String bank = (String) jsonObject.get("bank");
-        String[] bankSplit = bank.split(ObjectConverter.SEPARATOR);
-        double money = Double.parseDouble(bankSplit[0]);
-        double crystaux = Double.parseDouble(bankSplit[1]);
-        int xp = Integer.parseInt(bankSplit[2]);
-        IslandBank bank1 = new IslandBank(money, crystaux, xp);
-        ArrayList<UUID> banneds = new ArrayList<>();
-        for (String str : ObjectConverter.instance.stringToArrayList((String) jsonObject.get("bans"))) {
-            if (str.length() == 36) {
-                banneds.add(UUID.fromString(str));
-            }
-        }
-        boolean isPublic = Boolean.valueOf(String.valueOf(jsonObject.get("public")));
-        ArrayList<IslandChallenge> islandChallenges = new ArrayList<>();
-        String strCh = (String) jsonObject.get("cha");
-        String[] challenges = strCh.split(ObjectConverter.SEPARATOR_ELEMENT);
-        for (String str : challenges) {
-            if (str.length() > 1) {
-                islandChallenges.add(IslandChallenge.fromString(str));
-            }
-        }
-        ArrayList<IslandSettings> activatedSettings = new ArrayList<>();
-        for (String str : ObjectConverter.instance.stringToArrayList((String) jsonObject.get("aS"))) {
-            IslandSettings islandSettings = IslandSettings.matchSettings(str);
-            if (islandSettings != null) {
-                activatedSettings.add(islandSettings);
-            }
-        }
-        ArrayList<Chest> chests = new ArrayList<>();
-        String strChest = (String) jsonObject.get("chests");
-        String[] chestsSplit = strChest.split(ObjectConverter.SEPARATOR_ELEMENT);
-        for (String str : chestsSplit) {
-            if (str.length() > 1) {
-                chests.add(Chest.fromString(str));
-            }
-        }
-        ArrayList<Minion> minions = new ArrayList<>();
-        String strMinion = (String) jsonObject.get("minions");
-        String[] minionsSplit = strMinion.split(ObjectConverter.SEPARATOR_ELEMENT);
-        for (String str : minionsSplit) {
-            if (str.length() > 1) {
-                minions.add(Minion.fromString(str));
-            }
-        }
-        return new Island(name, home, center, id, members, sizeUpgrade, memberUpgrade, borderColor,
-                bank1, generatorUpgrade, banneds, islandChallenges, false, permsPerRanks, isPublic, 0.0, activatedSettings, chests, minions, false);
-    }
-
-    public static HashMap<IslandRanks, ArrayList<IslandPerms>> getReducedMapPerms(Island island) {
-        HashMap<IslandRanks, ArrayList<IslandPerms>> map = new HashMap<>();
-        ArrayList<IslandPerms> toRemove = new ArrayList<>();
-        HashMap<IslandRanks, Integer> islandRanksIntegerHashMap = IslandRank.getIslandRankPos();
-        int current = islandRanksIntegerHashMap.size() - 1;
-        ArrayList<IslandRanks> done = new ArrayList<>();
-        while (done.size() != islandRanksIntegerHashMap.size()) {
-            for (Map.Entry<IslandRanks, Integer> entry : islandRanksIntegerHashMap.entrySet()) {
-                if (entry.getValue() == current) {
-                    ArrayList<IslandPerms> toAdd = new ArrayList<>();
-                    for (IslandPerms islandPerms : island.getPerms(entry.getKey())) {
-                        if (toRemove.contains(islandPerms)) continue;
-                        toAdd.add(islandPerms);
-                        toRemove.add(islandPerms);
-                    }
-                    map.put(entry.getKey(), toAdd);
-                    done.add(entry.getKey());
-                    current--;
-                }
-            }
-        }
-        return map;
-    }
-
     public void loadIsland() {
-        Island island = this;
-        Bukkit.getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
-            @Override
-            public void run() {
-                JSONObject jsonObject = Island.islandToJSON(island);
-                System.out.println(jsonObject);
-                Island.islandToJSON(Island.readFromJSON(jsonObject.toString()));
-            }
-        }, 20);
     }
 
     public void setDefaultPerms() {
@@ -350,12 +181,12 @@ public class Island {
         this.home = home;
     }
 
-    public int getId() {
-        return id;
+    public UUID getUUID() {
+        return uuid;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setUUID(UUID uuid) {
+        this.uuid = uuid;
     }
 
     public boolean promote(UUID uuid) {

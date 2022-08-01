@@ -6,7 +6,7 @@ import main.java.fr.verymc.core.cmd.base.SpawnCmd;
 import main.java.fr.verymc.core.scoreboard.ScoreBoard;
 import main.java.fr.verymc.core.storage.SkyblockUser;
 import main.java.fr.verymc.core.storage.SkyblockUserManager;
-import main.java.fr.verymc.core.storage.StorageYAMLManager;
+import main.java.fr.verymc.core.storage.StorageJSONManager;
 import main.java.fr.verymc.hub.invest.InvestManager;
 import main.java.fr.verymc.island.Island;
 import main.java.fr.verymc.island.IslandManager;
@@ -150,7 +150,7 @@ public class JoinLeave implements Listener {
 
     @EventHandler
     public void preLogin(AsyncPlayerPreLoginEvent event) {
-        if (StorageYAMLManager.instance.loading) {
+        if (StorageJSONManager.instance.loading) {
             event.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER,
                     "§cLe serveur est en cours de démarrage, veuillez patienter.");
         }

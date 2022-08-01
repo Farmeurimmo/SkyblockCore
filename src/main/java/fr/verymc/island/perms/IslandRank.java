@@ -8,28 +8,28 @@ public class IslandRank {
 
     public static IslandRank instance;
 
-    private HashMap<IslandRanks, Integer> islandRankPos = new HashMap<>();
+    private static HashMap<IslandRanks, Integer> islandRankPos = new HashMap<>();
 
     public IslandRank() {
         instance = this;
         for (IslandRanks rank : IslandRanks.values()) {
             if (rank == rank.CHEF) {
-                this.islandRankPos.put(rank, 0);
+                islandRankPos.put(rank, 0);
             }
             if (rank == IslandRanks.COCHEF) {
-                this.islandRankPos.put(rank, 1);
+                islandRankPos.put(rank, 1);
             }
             if (rank == IslandRanks.MODERATEUR) {
-                this.islandRankPos.put(rank, 2);
+                islandRankPos.put(rank, 2);
             }
             if (rank == IslandRanks.MEMBRE) {
-                this.islandRankPos.put(rank, 3);
+                islandRankPos.put(rank, 3);
             }
             if (rank == IslandRanks.COOP) {
-                this.islandRankPos.put(rank, 4);
+                islandRankPos.put(rank, 4);
             }
             if (rank == IslandRanks.VISITEUR) {
-                this.islandRankPos.put(rank, 5);
+                islandRankPos.put(rank, 5);
             }
         }
     }
@@ -73,7 +73,7 @@ public class IslandRank {
     }
 
     public static HashMap<IslandRanks, Integer> getIslandRankPos() {
-        return instance.islandRankPos;
+        return islandRankPos;
     }
 
     public IslandRanks getNextRankForPerm(IslandPerms perms, Island playerIsland) {

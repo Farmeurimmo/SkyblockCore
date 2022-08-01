@@ -38,7 +38,7 @@ import main.java.fr.verymc.core.shopgui.*;
 import main.java.fr.verymc.core.storage.ConfigManager;
 import main.java.fr.verymc.core.storage.SkyblockUser;
 import main.java.fr.verymc.core.storage.SkyblockUserManager;
-import main.java.fr.verymc.core.storage.StorageYAMLManager;
+import main.java.fr.verymc.core.storage.StorageJSONManager;
 import main.java.fr.verymc.hub.crates.CratesManager;
 import main.java.fr.verymc.hub.crates.KeyCmd;
 import main.java.fr.verymc.hub.events.AntiExplo;
@@ -82,6 +82,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
+import java.util.concurrent.CompletableFuture;
 
 public class Main extends JavaPlugin {
 
@@ -234,7 +235,7 @@ public class Main extends JavaPlugin {
         new ServersManager();
 
         new ConfigManager();
-        new StorageYAMLManager();
+        new StorageJSONManager();
 
         System.out.println("Starting core part 1 FINISHED");
         System.out.println("------------------------------------------------");
@@ -313,7 +314,9 @@ public class Main extends JavaPlugin {
                 InvestManager.instance.giveReward(user);
             }
         }
-        StorageYAMLManager.instance.sendDataToAPIAuto(true);
+        CompletableFuture.runAsync(() -> {
+            StorageJSONManager.instance.sendDataToAPIAuto(true);
+        }).join();
         for (Hologram hologram : HologramsAPI.getHolograms(this)) {
             hologram.delete();
         }
