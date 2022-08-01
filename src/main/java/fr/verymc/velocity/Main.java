@@ -5,6 +5,7 @@ import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.proxy.ProxyServer;
+import com.velocitypowered.api.proxy.messages.MinecraftChannelIdentifier;
 import com.velocitypowered.api.proxy.server.RegisteredServer;
 import main.java.fr.verymc.commons.enums.ServerType;
 import main.java.fr.verymc.velocity.events.ConnectionListener;
@@ -31,6 +32,9 @@ public class Main {
 
     @Subscribe
     public void onProxyInitialization(ProxyInitializeEvent e) {
+        server.getChannelRegistrar().register(MinecraftChannelIdentifier.create("skyblock", "tospigot"));
+        server.getChannelRegistrar().register(MinecraftChannelIdentifier.from("skyblock:toproxy"));
+
         server.getEventManager().register(this, new ConnectionListener());
         server.getEventManager().register(this, new ChannelsManager(server, logger));
 
