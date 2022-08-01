@@ -43,7 +43,7 @@ public class PlayerWarpManagingGui {
 
             ItemStack item4 = new ItemStack(Material.NETHERITE_BLOCK);
             item4.setDisplayName("§6Promouvoir le warp");
-            item4.setLore(Arrays.asList("§7Promu: " + (playerWarp.isPromoted() ? "§aOui" : "§cNon \n§7Clic pour changer le statut")));
+            item4.setLore(Arrays.asList("§7Promu: " + (playerWarp.getTimeLeftPromoted() > 0 ? "§aOui" : "§cNon \n§7Clic pour changer le statut")));
 
             ItemStack item5 = new ItemStack(Material.PAPER);
             item5.setDisplayName("§6Informations complémentaires");

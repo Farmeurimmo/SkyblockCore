@@ -80,37 +80,10 @@ public class StorageJSONManager {
         for (String str : ConfigManager.instance.getDataSkyblockUser().getKeys(false)) {
             if (str == null) continue;
             try {
-                UUID uuid = UUID.fromString(str);
-                double money = ConfigManager.instance.getDataSkyblockUser().getDouble(str + ".money");
-                int flyLeft = ConfigManager.instance.getDataSkyblockUser().getInt(str + ".flyLeft");
-                boolean hasHaste = ConfigManager.instance.getDataSkyblockUser().getBoolean(str + ".hasHaste");
-                boolean hasSpeed = ConfigManager.instance.getDataSkyblockUser().getBoolean(str + ".hasSpeed");
-                boolean hasJump = ConfigManager.instance.getDataSkyblockUser().getBoolean(str + ".hasJump");
-
-                PlayerWarp playerWarp = null;
-                if (ConfigManager.instance.getDataSkyblockUser().contains(str + ".pw")) {
-                    String name = ConfigManager.instance.getDataSkyblockUser().getString(str + ".pw.name");
-                    Location location = ConfigManager.instance.getDataSkyblockUser().getLocation(str + ".pw.loc");
-                    double note = ConfigManager.instance.getDataSkyblockUser().getDouble(str + ".pw.note");
-                    double vues = ConfigManager.instance.getDataSkyblockUser().getDouble(str + ".pw.vues");
-                    boolean promu = ConfigManager.instance.getDataSkyblockUser().getBoolean(str + ".pw.promu");
-                    double timeLeftPromu = ConfigManager.instance.getDataSkyblockUser().getDouble(str + ".pw.timeLeftPromu");
-                    ArrayList<UUID> alreadyVoted = new ArrayList<>();
-                    if (ConfigManager.instance.getDataSkyblockUser().get(str + ".pw.voted") != null) {
-                        for (String par : ConfigManager.instance.getDataSkyblockUser().getString(str + ".pw.voted").split(",")) {
-                            if (par == null || par.length() != 36) {
-                                continue;
-                            }
-                            alreadyVoted.add(UUID.fromString(par));
-                        }
-                    }
-                    playerWarp = new PlayerWarp(name, location, promu, timeLeftPromu, vues, note, alreadyVoted);
-
+                SkyblockUser skyblockUser = skyblockUserFromJSON((JSONObject) new JSONParser().parse(ConfigManager.instance.getDataSkyblockUser().getString(str)));
+                if (skyblockUser != null) {
+                    skyblockUsers.add(skyblockUser);
                 }
-
-                skyblockUsers.add(new SkyblockUser(Bukkit.getOfflinePlayer(uuid).getName(), uuid, money,
-                        hasHaste, hasHaste, hasSpeed, hasSpeed, hasJump, hasJump, flyLeft, false,
-                        false, 0, playerWarp));
             } catch (Exception e) {
                 e.printStackTrace();
                 continue;
@@ -160,34 +133,14 @@ public class StorageJSONManager {
         HashMap<String, Object> toSendSkyUsers = new HashMap<>();
         HashMap<String, Object> toRemoveSkyUsers = new HashMap<>();
         for (SkyblockUser skyblockUser : skyblockUsers) {
-            HashMap<String, Object> toSendSkyUser = new HashMap<>();
             try {
-                final String uuid = skyblockUser.getUserUUID().toString();
-                toSendSkyUser.put(uuid + ".flyLeft", skyblockUser.getFlyLeft());
-                toSendSkyUser.put(uuid + ".money", skyblockUser.getMoney());
-                toSendSkyUser.put(uuid + ".hasHaste", skyblockUser.hasHaste());
-                toSendSkyUser.put(uuid + ".hasSpeed", skyblockUser.hasSpeed());
-                toSendSkyUser.put(uuid + ".hasJump", skyblockUser.hasJump());
-                if (skyblockUser.getPlayerWarp() != null) {
-                    toSendSkyUser.put(uuid + ".pw.name", skyblockUser.getPlayerWarp().getName());
-                    toSendSkyUser.put(uuid + ".pw.loc", skyblockUser.getPlayerWarp().getLocation());
-                    toSendSkyUser.put(uuid + ".pw.note", skyblockUser.getPlayerWarp().getNote());
-                    toSendSkyUser.put(uuid + ".pw.vues", skyblockUser.getPlayerWarp().getVues());
-                    toSendSkyUser.put(uuid + ".pw.promu", skyblockUser.getPlayerWarp().isPromoted);
-                    toSendSkyUser.put(uuid + ".pw.timeLeftPromu", skyblockUser.getPlayerWarp().getTimeLeftPromoted());
-                    toSendSkyUser.put(uuid + ".pw.voted", skyblockUser.getPlayerWarp().getAlreadyVoted().toString()
-                            .replace("[", "").replace("]", "").replace(" ", ""));
-                }
+                toSendSkyUsers.put(skyblockUser.getUserUUID().toString(), skyblockUserToJSON(skyblockUser).toJSONString());
             } catch (Exception e) {
                 e.printStackTrace();
                 Bukkit.broadcastMessage("§6§lData §8§l» §cUne erreur est survenue lors de la sauvegarde des données des utilisateurs (uuid: " +
                         skyblockUser.getUserUUID().toString() + ")");
-                toSendSkyUser.clear();
             } finally {
-                if (toSendSkyUser.size() > 0) {
-                    toRemoveSkyUsers.put(skyblockUser.getUserUUID().toString(), null);
-                    toSendSkyUsers.putAll(toSendSkyUser);
-                }
+                toRemoveSkyUsers.put(skyblockUser.getUserUUID().toString(), null);
             }
         }
         AsyncConfig.instance.setAndSaveAsyncBlockCurrentThread(toRemoveSkyUsers, ConfigManager.instance.getDataSkyblockUser(),
@@ -207,6 +160,56 @@ public class StorageJSONManager {
                 sendDataToAPIAuto(false);
             }
         }, 20 * 60 * 5);
+    }
+
+
+    public JSONObject skyblockUserToJSON(SkyblockUser skyblockUser) {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("uuid", skyblockUser.getUserUUID().toString());
+        jsonObject.put("userN", skyblockUser.getUsername());
+        jsonObject.put("money", skyblockUser.getMoney());
+        if (skyblockUser.getFlyLeft() > 0) {
+            jsonObject.put("flyL", skyblockUser.getFlyLeft());
+            jsonObject.put("flyAc", skyblockUser.isActive());
+        }
+        jsonObject.put("hast", skyblockUser.hasHaste());
+        jsonObject.put("hastAct", skyblockUser.hasHasteActive());
+        jsonObject.put("speed", skyblockUser.hasSpeed());
+        jsonObject.put("speedAct", skyblockUser.hasSpeedActive());
+        jsonObject.put("jump", skyblockUser.hasJump());
+        jsonObject.put("jumpAct", skyblockUser.hasJumpActive());
+        if (skyblockUser.getPlayerWarp() != null) {
+            jsonObject.put("pw", PlayerWarp.playerWarpToString(skyblockUser.getPlayerWarp()));
+        }
+        return jsonObject;
+    }
+
+    public SkyblockUser skyblockUserFromJSON(JSONObject jsonObject) {
+        UUID uuid = UUID.fromString(String.valueOf(jsonObject.get("uuid")));
+        String username = String.valueOf(jsonObject.get("userN"));
+        double money = Double.parseDouble(String.valueOf(jsonObject.get("money")));
+        int flyLeft = -1;
+        boolean isActive = false;
+        if (jsonObject.get("flyL") != null) {
+            flyLeft = Integer.parseInt(String.valueOf(jsonObject.get("flyL")));
+            isActive = Boolean.parseBoolean(String.valueOf(jsonObject.get("flyAc")));
+        }
+        boolean hasHaste = Boolean.parseBoolean(String.valueOf(jsonObject.get("hast")));
+        boolean hasHasteActive = Boolean.parseBoolean(String.valueOf(jsonObject.get("hastAct")));
+        boolean hasSpeed = Boolean.parseBoolean(String.valueOf(jsonObject.get("speed")));
+        boolean hasSpeedActive = Boolean.parseBoolean(String.valueOf(jsonObject.get("speedAct")));
+        boolean hasJump = Boolean.parseBoolean(String.valueOf(jsonObject.get("jump")));
+        boolean hasJumpActive = Boolean.parseBoolean(String.valueOf(jsonObject.get("jumpAct")));
+        PlayerWarp playerWarp = null;
+        if (jsonObject.get("pw") != null) {
+            try {
+                playerWarp = PlayerWarp.playerWarpFromString(String.valueOf(jsonObject.get("pw")));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return new SkyblockUser(username, uuid, money, hasHaste, hasHasteActive, hasSpeed, hasSpeedActive,
+                hasJump, hasJumpActive, flyLeft, isActive, false, 0, playerWarp);
     }
 
     public JSONObject islandToJSON(Island i) {
@@ -270,6 +273,7 @@ public class StorageJSONManager {
             String value = (String) jsonObjectPerms.get(key);
             ArrayList<IslandPerms> perms = new ArrayList<>();
             for (String s : ObjectConverter.instance.stringToArrayList(value)) {
+                if (s.length() < 3) continue;
                 perms.add(IslandPerms.match(s));
             }
             permsPerRanks.put(IslandRanks.valueOf(key), perms);

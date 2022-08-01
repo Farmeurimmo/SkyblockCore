@@ -39,7 +39,7 @@ public class PlayerWarpGuiManager implements Listener {
             }
             if (pw == null) {
                 if (current.getType() == Material.BARRIER) {
-                    PlayerWarpManagingGui.instance.creationMode.put(p, new PlayerWarp(null, null, false,
+                    PlayerWarpManagingGui.instance.creationMode.put(p, new PlayerWarp(null, null,
                             0.0, 0.0, -1.0, new ArrayList<>()));
                     p.closeInventory();
                     p.sendMessage("§6§lPlayerWarp §8» §fVeuillez entrer le nom du warp puis dites OUI quand vous êtes à la localisation " +

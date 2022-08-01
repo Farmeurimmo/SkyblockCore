@@ -1,5 +1,6 @@
 package main.java.fr.verymc.core.playerwarps;
 
+import main.java.fr.verymc.utils.ObjectConverter;
 import org.bukkit.Location;
 
 import java.util.ArrayList;
@@ -9,21 +10,40 @@ public class PlayerWarp {
 
     public String name;
     public Location location;
-    public boolean isPromoted;
     public double timeLeftPromoted;
     public double vues;
     public double note;
     public ArrayList<UUID> alreadyVoted;
 
-    public PlayerWarp(String name, Location location, boolean isPromoted, double timeLeftPromoted, double vues,
+    public PlayerWarp(String name, Location location, double timeLeftPromoted, double vues,
                       double note, ArrayList<UUID> alreadyVoted) {
         this.name = name;
         this.location = location;
-        this.isPromoted = isPromoted;
         this.timeLeftPromoted = timeLeftPromoted;
         this.vues = vues;
         this.note = note;
         this.alreadyVoted = alreadyVoted;
+    }
+
+    public static String playerWarpToString(PlayerWarp playerWarp) {
+        return playerWarp.getName() + ObjectConverter.SEPARATOR + ObjectConverter.instance.locationToString(playerWarp.getLocation()) + ObjectConverter.SEPARATOR +
+                playerWarp.getVues() + ObjectConverter.SEPARATOR + playerWarp.getNote() + ObjectConverter.SEPARATOR + playerWarp.getTimeLeftPromoted() +
+                ObjectConverter.SEPARATOR + playerWarp.getAlreadyVoted().toString();
+    }
+
+    public static PlayerWarp playerWarpFromString(String string) {
+        String[] str = string.split(ObjectConverter.SEPARATOR);
+        String name = str[0];
+        Location location = ObjectConverter.instance.locationFromString(str[1]);
+        double vues = Double.parseDouble(str[2]);
+        double note = Double.parseDouble(str[3]);
+        double timeLeftPromoted = Double.parseDouble(str[4]);
+        ArrayList<UUID> alreadyVoted = new ArrayList<>();
+        for (String str1 : ObjectConverter.instance.stringToArrayList(str[5])) {
+            if (str1.length() != 36) continue;
+            alreadyVoted.add(UUID.fromString(str1));
+        }
+        return new PlayerWarp(name, location, timeLeftPromoted, vues, note, alreadyVoted);
     }
 
     public String getName() {
@@ -40,14 +60,6 @@ public class PlayerWarp {
 
     public void setLocation(Location location) {
         this.location = location;
-    }
-
-    public boolean isPromoted() {
-        return isPromoted;
-    }
-
-    public void setPromoted(boolean isPromoted) {
-        this.isPromoted = isPromoted;
     }
 
     public double getTimeLeftPromoted() {
