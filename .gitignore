@@ -1,3 +1,4 @@
 /target/
 /.idea/
 /Commons/
+/dependency-reduced-pom.xml

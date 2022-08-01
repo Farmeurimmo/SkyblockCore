@@ -3,7 +3,7 @@ version: 1.0
 author: Farmeurimmo
 authors:
   - Farmeurimmo
-main: main.java.fr.verymc.Main
+main: main.java.fr.verymc.spigot.Main
 depend: [ Citizens, HolographicDisplays, LuckPerms ]
 api-version: 1.16
 commands:
