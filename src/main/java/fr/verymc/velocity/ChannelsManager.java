@@ -15,7 +15,6 @@ import java.io.DataInputStream;
 import java.util.HashMap;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.concurrent.TimeUnit;
 
 public class ChannelsManager {
 
@@ -38,14 +37,14 @@ public class ChannelsManager {
     @Subscribe
     public void onPluginMessage(PluginMessageEvent e) {
 
-        if(e.getIdentifier().getId().equals("skyblock:tospigot")) {
+        if (e.getIdentifier().getId().equals("skyblock:tospigot")) {
             e.setResult(PluginMessageEvent.ForwardResult.handled());
             return;
         }
-        if(!e.getIdentifier().getId().equals("skyblock:toproxy")) return;
+        if (!e.getIdentifier().getId().equals("skyblock:toproxy")) return;
         e.setResult(PluginMessageEvent.ForwardResult.handled());
 
-        if(!(e.getTarget() instanceof Player)) return;
+        if (!(e.getTarget() instanceof Player)) return;
 
         handleMessage((Player) e.getTarget(), e.getData());
 
@@ -67,7 +66,7 @@ public class ChannelsManager {
         }
     }
 
-    //Usage sendPluginMessage(player, "island", nameofserver);
+    //sendPluginMessage(player, "pay", null, rawData);
 
     public void sendPluginMessage(Player player, String channel, String serverName, String... data) {
         if (player == null) return;
@@ -82,6 +81,7 @@ public class ChannelsManager {
         }
         if (serverName == null) {
             serverOp.get().sendPluginMessage(MinecraftChannelIdentifier.from("skyblock:topigot"), out.toByteArray());
+            return;
         }
         player.getCurrentServer().get().sendPluginMessage(MinecraftChannelIdentifier.from("skyblock:tospigot"), out.toByteArray());
     }

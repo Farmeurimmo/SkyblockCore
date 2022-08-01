@@ -26,7 +26,7 @@ public class TABManager {
     public void sendTabToPlayer(Player player) {
         player.sendPlayerListHeaderAndFooter(Component.text("\n§f• §6§lVery§f§lMc §f•\n\n§7Global §7▸ §a" +
                         server.getAllPlayers().size() + "\n§7En Skyblock §7▸ §a" + Main.instance.playerCountOfSkyblock() +
-                "\n\n§7Une question/problème ? contacte un §9§lSTAFF §7!\n"),
+                        "\n\n§7Une question/problème ? contacte un §9§lSTAFF §7!\n"),
                 Component.text("\n§7Serveur Mini-Jeux Francophone\n§7Vous êtes sur ▸ §fplay.§6§lvery§f§lmc§f.fr §7◂"));
     }
 
