@@ -15,6 +15,7 @@ import main.java.fr.verymc.spigot.island.upgrade.IslandUpgradeSize;
 import main.java.fr.verymc.spigot.utils.WorldBorderUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.WeatherType;
 import org.bukkit.entity.Player;
 
@@ -40,6 +41,7 @@ public class Island {
     private ArrayList<IslandSettings> activatedSettings;
     private ArrayList<Chest> chests;
     private ArrayList<Minion> minions;
+    private HashMap<Material, Double> valuesBlocs;
 
 
     //NE PAS STOCKER
@@ -53,7 +55,7 @@ public class Island {
                   IslandBank bank, IslandUpgradeGenerator generatorUpgrade, ArrayList<UUID> banneds, ArrayList<IslandChallenge> challenges,
                   boolean isDefaultChallenges, HashMap<IslandRanks, ArrayList<IslandPerms>> permsPerRanks,
                   boolean isPublic, double value, ArrayList<IslandSettings> activatedSettings, ArrayList<Chest> chests, ArrayList<Minion> minions,
-                  boolean loadedHere) {
+                  HashMap<Material, Double> stacked, boolean loadedHere) {
         this.name = name;
         this.home = home;
         this.center = center;
@@ -91,6 +93,11 @@ public class Island {
             this.minions = new ArrayList<>();
         } else {
             this.minions = minions;
+        }
+        if (stacked == null) {
+            this.valuesBlocs = new HashMap<>();
+        } else {
+            this.valuesBlocs = stacked;
         }
         this.loadedHere = loadedHere;
         if (loadedHere) loadIsland();
@@ -135,6 +142,14 @@ public class Island {
         ArrayList<IslandPerms> permsChef = new ArrayList<>();
         permsChef.add(IslandPerms.ALL_PERMS);
         permsPerRanks.put(IslandRanks.CHEF, permsChef);
+    }
+
+    public HashMap<Material, Double> getStackedBlocs() {
+        return valuesBlocs;
+    }
+
+    public void setStackedBlocs(HashMap<Material, Double> valuesBlocs) {
+        this.valuesBlocs = valuesBlocs;
     }
 
     public void addDefaultChallenges() {

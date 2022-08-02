@@ -2,12 +2,14 @@ package main.java.fr.verymc.spigot.island.guis;
 
 import main.java.fr.verymc.spigot.core.gui.MenuGui;
 import main.java.fr.verymc.spigot.island.Island;
+import main.java.fr.verymc.spigot.island.IslandBlocsValues;
 import main.java.fr.verymc.spigot.island.IslandManager;
 import main.java.fr.verymc.spigot.island.challenges.IslandChallengesGuis;
 import main.java.fr.verymc.spigot.island.perms.IslandPerms;
 import main.java.fr.verymc.spigot.island.perms.IslandRank;
 import main.java.fr.verymc.spigot.island.protections.IslandSettings;
 import main.java.fr.verymc.spigot.island.upgrade.IslandUpgradeSize;
+import main.java.fr.verymc.spigot.utils.InventoryUtils;
 import main.java.fr.verymc.spigot.utils.WorldBorderUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -97,6 +99,10 @@ public class IslandGuiManager implements Listener {
                 IslandBlocsValueGui.instance.openBlocsValueGui(player);
                 return;
             }
+            if (current.getType() == Material.DIAMOND_BLOCK) {
+                IslandValueStorageGui.instance.openMainGui(player, playerIsland);
+                return;
+            }
             return;
         }
         if (e.getView().getTitle().equalsIgnoreCase("§6Membres de l'île")) {
@@ -173,6 +179,7 @@ public class IslandGuiManager implements Listener {
                 }
                 return;
             }
+            return;
         }
         if (e.getView().getTitle().equalsIgnoreCase("§6Banque de l'île")) {
             e.setCancelled(true);
@@ -271,6 +278,7 @@ public class IslandGuiManager implements Listener {
                 IslandMainGui.instance.openMainIslandMenu(player);
                 return;
             }
+            return;
         }
         if (e.getView().getTitle().equalsIgnoreCase("§6Bordure de l'île")) {
             e.setCancelled(true);
@@ -299,6 +307,7 @@ public class IslandGuiManager implements Listener {
                 IslandBorderGui.instance.openBorderIslandMenu(player);
                 return;
             }
+            return;
         }
         if (e.getView().getTitle().equalsIgnoreCase("§6Classement des îles")) {
             e.setCancelled(true);
@@ -306,6 +315,7 @@ public class IslandGuiManager implements Listener {
                 IslandMainGui.instance.openMainIslandMenu(player);
                 return;
             }
+            return;
         }
         if (e.getView().getTitle().equalsIgnoreCase("§6Permissions des grades de l'île")) {
             e.setCancelled(true);
@@ -338,6 +348,7 @@ public class IslandGuiManager implements Listener {
                     break;
                 }
             }
+            return;
         }
         if (e.getView().getTitle().equalsIgnoreCase("§6Membres temporaires (coops)")) {
             e.setCancelled(true);
@@ -366,7 +377,7 @@ public class IslandGuiManager implements Listener {
                     }
                 }
             }
-
+            return;
         }
         if (e.getView().getTitle().equalsIgnoreCase("§6Valeur des blocs")) {
             e.setCancelled(true);
@@ -374,6 +385,7 @@ public class IslandGuiManager implements Listener {
                 IslandMainGui.instance.openMainIslandMenu(player);
                 return;
             }
+            return;
         }
         if (e.getView().getTitle().equalsIgnoreCase("§6Paramètres de l'île")) {
             e.setCancelled(true);
@@ -412,6 +424,7 @@ public class IslandGuiManager implements Listener {
                     return;
                 }
             }
+            return;
         }
         if (e.getView().getTitle().contains("§6Confirmation de ")) {
             e.setCancelled(true);
@@ -432,6 +445,116 @@ public class IslandGuiManager implements Listener {
                     return;
                 }
             }
+            return;
+        }
+        if (e.getView().getTitle().contains("§6Stacker bank")) {
+            e.setCancelled(true);
+            if (current.getType() == Material.ARROW) {
+                IslandMainGui.instance.openMainIslandMenu(player);
+                return;
+            }
+            if (IslandBlocsValues.instance.getMaterials().contains(current.getType())) {
+                if (e.getClick().isRightClick()) {
+                    IslandValueStorageGui.instance.openEditingAmountGui(player, playerIsland, true, current.getType());
+                    return;
+                }
+                if (e.getClick().isLeftClick()) {
+                    IslandValueStorageGui.instance.openEditingAmountGui(player, playerIsland, false, current.getType());
+                    return;
+                }
+            }
+            return;
+        }
+        if (e.getView().getTitle().contains("§6Edition du stacker bank")) {
+            e.setCancelled(true);
+            if (current.getType() == Material.ARROW) {
+                IslandValueStorageGui.instance.openMainGui(player, playerIsland);
+                return;
+            }
+            ItemStack item = e.getView().getItem(22);
+            if (item == null) return;
+            HashMap<Material, Double> stacked = playerIsland.getStackedBlocs();
+            double amount;
+            if (current.getType() == Material.GREEN_STAINED_GLASS_PANE) {
+                if (current.getDisplayName().contains("Tout")) {
+                    amount = InventoryUtils.instance.hasItemWithStackCo(new ItemStack(item.getType()), player.getInventory());
+                } else {
+                    amount = current.getAmount();
+                }
+                if (amount <= 0) {
+                    player.sendMessage("§6§lStacker bank §8» §cVotre inventaire n'a pas assez d'item.");
+                    return;
+                }
+                if (InventoryUtils.instance.hasItemWithStackCo(new ItemStack(item.getType()), player.getInventory()) < amount) {
+                    player.sendMessage("§6§lStacker bank §8» §cVotre inventaire n'a pas assez d'item.");
+                    return;
+                }
+                double leftToRemove = amount;
+                ItemStack[] itemStacks = player.getInventory().getContents().clone();
+                for (ItemStack stack : itemStacks) {
+                    if (stack == null) continue;
+                    if (stack.getType() == item.getType()) {
+                        if (leftToRemove > 64) {
+                            stack.setAmount(0);
+                            leftToRemove -= 64;
+                        } else if (leftToRemove > 0) {
+                            stack.setAmount((int) (stack.getAmount() - leftToRemove));
+                            leftToRemove = 0;
+                        } else {
+                            break;
+                        }
+                    }
+                }
+                player.getInventory().setContents(itemStacks);
+                if (stacked.containsKey(item.getType())) {
+                    stacked.put(item.getType(), stacked.get(item.getType()) + amount);
+                } else {
+                    stacked.put(item.getType(), amount);
+                }
+                player.sendMessage("§6§lStacker bank §8» §aVous avez ajouté x" + amount + " " + item.getType().toString() + " au stacker bank.");
+            } else if (current.getType() == Material.RED_STAINED_GLASS_PANE) {
+                double available = (stacked.containsKey(item.getType()) ? stacked.get(item.getType()) : 0);
+                if (available <= 0) {
+                    player.sendMessage("§6§lStacker bank §8» §cVous n'avez pas assez d'item dans le stacker bank.");
+                    return;
+                }
+                if (current.getDisplayName().contains("Tout")) {
+                    int spaceInPInv = InventoryUtils.instance.hasPlaceWithStackCo(new ItemStack(item.getType()), player.getInventory(), player);
+                    if (spaceInPInv >= available) {
+                        amount = available;
+                    } else {
+                        amount = spaceInPInv;
+                    }
+                } else {
+                    amount = current.getAmount();
+                }
+                if (available < amount) {
+                    player.sendMessage("§6§lStacker bank §8» §cLe stacker bank n'a pas assez d'items.");
+                    return;
+                }
+                if (InventoryUtils.instance.hasPlaceWithStackCo(new ItemStack(item.getType()), player.getInventory(), player) < amount) {
+                    player.sendMessage("§6§lStacker bank §8» §cVotre inventaire n'a pas assez de place.");
+                    return;
+                }
+                if (stacked.containsKey(item.getType())) {
+                    stacked.put(item.getType(), stacked.get(item.getType()) - amount);
+                } else {
+                    stacked.put(item.getType(), -amount);
+                }
+                double leftToAdd = amount;
+                if (leftToAdd > 64) {
+                    for (int i = 0; i < amount / 64; i++) {
+                        player.getInventory().addItem(new ItemStack(item.getType(), 64));
+                        leftToAdd = -64;
+                    }
+                }
+
+                if (leftToAdd > 0 && leftToAdd <= 64) {
+                    player.getInventory().addItem(new ItemStack(item.getType(), (int) leftToAdd));
+                }
+                player.sendMessage("§6§lStacker bank §8» §aVous avez retiré x" + amount + " " + item.getType() + " au stacker bank.");
+            }
+            IslandValueStorageGui.instance.openMainGui(player, playerIsland);
         }
     }
 

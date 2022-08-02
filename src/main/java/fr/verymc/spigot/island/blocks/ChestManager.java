@@ -7,6 +7,7 @@ import main.java.fr.verymc.spigot.core.storage.AsyncConfig;
 import main.java.fr.verymc.spigot.core.storage.ConfigManager;
 import main.java.fr.verymc.spigot.island.Island;
 import main.java.fr.verymc.spigot.island.IslandManager;
+import main.java.fr.verymc.spigot.island.guis.IslandValueStorageGui;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -30,7 +31,7 @@ public class ChestManager {
 
         if (Main.instance.serverType == ServerType.SKYBLOCK_ISLAND) {
             new PlayerShopGuis();
-            new StackerGui();
+            new IslandValueStorageGui();
 
             autoSellForVeryChest();
         }

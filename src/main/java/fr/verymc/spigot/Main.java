@@ -152,6 +152,8 @@ public class Main extends JavaPlugin {
         for (String str : response) {
             for (ServerType serverType1 : ServerType.values()) {
                 if (str.contains(serverType1.toString())) {
+                    if (serverType1 != ServerType.SKYBLOCK_HUB && serverType1 != ServerType.SKYBLOCK_ISLAND
+                            && serverType1 != ServerType.SKYBLOCk_DUNGEON) continue;
                     serverType = serverType1;
                     serverName = serverType.getDisplayName() + str.replaceAll("[^\\d.]", "");
                     break;

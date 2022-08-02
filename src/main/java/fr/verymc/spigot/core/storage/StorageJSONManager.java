@@ -20,6 +20,7 @@ import main.java.fr.verymc.spigot.utils.ObjectConverter;
 import main.java.fr.verymc.spigot.utils.WorldBorderUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -245,6 +246,7 @@ public class StorageJSONManager {
             minionsString += Minion.toString(minion) + ObjectConverter.SEPARATOR_ELEMENT;
         }
         jsonObject.put("minions", minionsString);
+        jsonObject.put("stacked", new JSONObject(i.getStackedBlocs()).toString());
         return jsonObject;
     }
 
@@ -341,8 +343,16 @@ public class StorageJSONManager {
                 minions.add(Minion.fromString(str));
             }
         }
-        return new Island(name, home, center, id, members, sizeUpgrade, memberUpgrade, borderColor,
-                bank1, generatorUpgrade, banneds, islandChallenges, false, permsPerRanks, isPublic, 0.0, activatedSettings, chests, minions, false);
+        HashMap<Material, Double> stacked = new HashMap<>();
+        JSONObject jsonObject1 = new JSONObject(ObjectConverter.instance.stringToHashMap((String) jsonObject.get("stacked")));
+        for (Object o : jsonObject1.keySet()) {
+            String key = (String) o;
+            Double value = Double.parseDouble(String.valueOf(jsonObject1.get(key)));
+            stacked.put(Material.matchMaterial(key), value);
+        }
+        return new Island(name, home, center, id, members, sizeUpgrade, memberUpgrade, borderColor, bank1, generatorUpgrade,
+                banneds, islandChallenges, false, permsPerRanks, isPublic, 0.0, activatedSettings, chests,
+                minions, stacked, false);
     }
 
     public HashMap<IslandRanks, ArrayList<IslandPerms>> getReducedMapPerms(Island island) {

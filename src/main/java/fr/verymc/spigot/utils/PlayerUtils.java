@@ -16,6 +16,14 @@ public class PlayerUtils {
         instance = this;
     }
 
+    public Location toCenter(Location center, Location toCenter) {
+        return new Location(center.getWorld(), toCenter.getX() - center.getX(), toCenter.getY() - center.getY(), toCenter.getZ() - center.getZ());
+    }
+
+    public Location addCenter(Location center, Location toCenter) {
+        return new Location(center.getWorld(), toCenter.getX() + center.getX(), toCenter.getY() + center.getY(), toCenter.getZ() + center.getZ());
+    }
+
     public void teleportPlayer(Player player, Location location) {
         player.teleport(location);
     }

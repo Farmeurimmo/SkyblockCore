@@ -6,7 +6,6 @@ import main.java.fr.verymc.spigot.utils.DiscordUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
@@ -76,32 +75,29 @@ public class IslandValueCalcManager {
             }
         });
     }*/
-        CompletableFuture.runAsync(() -> {
-            final ArrayList<Material> keys = new ArrayList<>(IslandBlocsValues.instance.getMaterials());
-            Long startmills = System.currentTimeMillis();
+        Long startmills = System.currentTimeMillis();
+        HashMap<Material, Double> islandBlocsValue = IslandBlocsValues.instance.getBlockValues();
 
-            for (Island island : IslandManager.instance.islands) {
+        for (Island island : IslandManager.instance.islands) {
 
-                final int size = island.getSizeUpgrade().getLevel();
+            island.setValue(countIslandPts(island, islandBlocsValue));
 
-                CompletableFuture.runAsync(() -> {
+            Long elasped = (System.currentTimeMillis() - startmills);
 
-                    int minx = island.getCenter().getBlockX() - size;
-                    int minz = island.getCenter().getBlockZ() - size;
-                    int maxx = island.getCenter().getBlockX() + size;
-                    int maxz = island.getCenter().getBlockZ() + size;
+            IslandManager.instance.getIslandByLoc(island.getCenter()).sendMessageToEveryMember("§6§lIles §8» §fRecalcul de votre île terminé. (en " + elasped + " ms)");
+        }
 
-                    double value = 0;
+    }
 
-                    //A MODIFIER AVEC LES NOUVEAUX GUI DE STOCKAGE DES BLOCS
+    public Double countIslandPts(Island island, HashMap<Material, Double> islandBlocsValue) {
+        double value = 0;
 
-                    IslandManager.instance.getIslandByLoc(island.getCenter()).setValue(value);
-                    Long elasped = (System.currentTimeMillis() - startmills);
-
-                    //IslandManager.instance.getIslandByLoc(island.getCenter()).sendMessageToEveryMember("§6§lIles §8» §fRecalcul de votre île terminé. (en " + elasped + " ms)");
-                });
+        for (Map.Entry<Material, Double> entry : island.getStackedBlocs().entrySet()) {
+            if (islandBlocsValue.containsKey(entry.getKey())) {
+                value += entry.getValue() * islandBlocsValue.get(entry.getKey());
             }
-        });
+        }
+        return value;
     }
 
     public void checkForUpdate() {

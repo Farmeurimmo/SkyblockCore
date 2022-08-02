@@ -25,7 +25,7 @@ public class IslandMainGui {
             return;
         }
 
-        Inventory inv = Bukkit.createInventory(null, 36, "§6Menu d'île");
+        Inventory inv = Bukkit.createInventory(null, 45, "§6Menu d'île");
 
         ItemStack custom1 = new ItemStack(Material.ENDER_EYE, 1);
         ItemMeta meta1 = custom1.getItemMeta();
@@ -99,12 +99,19 @@ public class IslandMainGui {
         meta11.setDisplayName("§6Biome §8| §7(clic gauche)");
         meta11.setLore(Arrays.asList("", "§c§lINDISPONIBLE POUR LE MOMENT"));
         custom11.setItemMeta(meta11);
+        inv.setItem(28, custom11);
+
+        ItemStack custom14 = new ItemStack(Material.DIAMOND_BLOCK, 1);
+        ItemMeta meta14 = custom14.getItemMeta();
+        meta14.setDisplayName("§6Stacker bank §8| §7(clic gauche)");
+        custom14.setItemMeta(meta14);
+        inv.setItem(29, custom14);
 
         ItemStack custom8 = new ItemStack(Material.ARROW, 1);
         ItemMeta customh = custom8.getItemMeta();
         customh.setDisplayName("§6Retour §8| §7(clic gauche)");
         custom8.setItemMeta(customh);
-        inv.setItem(35, custom8);
+        inv.setItem(44, custom8);
 
         player.openInventory(inv);
     }

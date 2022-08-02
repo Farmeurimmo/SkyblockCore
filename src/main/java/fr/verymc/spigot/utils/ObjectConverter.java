@@ -68,6 +68,9 @@ public class ObjectConverter {
 
     public HashMap<String, String> stringToHashMap(String str) {
         HashMap<String, String> toReturn = new HashMap<>();
+        if (str == null) {
+            return toReturn;
+        }
         JsonObject jsonObject = new JsonParser().parse(str).getAsJsonObject();
         for (Map.Entry<String, JsonElement> entry : jsonObject.entrySet()) {
             toReturn.put(entry.getKey(), entry.getValue().toString());
