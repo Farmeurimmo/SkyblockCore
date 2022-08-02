@@ -31,6 +31,9 @@ import main.java.fr.verymc.spigot.core.storage.ConfigManager;
 import main.java.fr.verymc.spigot.core.storage.SkyblockUser;
 import main.java.fr.verymc.spigot.core.storage.SkyblockUserManager;
 import main.java.fr.verymc.spigot.core.storage.StorageJSONManager;
+import main.java.fr.verymc.spigot.dungeon.DungeonManager;
+import main.java.fr.verymc.spigot.dungeon.cmd.DungeonCmd;
+import main.java.fr.verymc.spigot.dungeon.events.DungeonEntityListener;
 import main.java.fr.verymc.spigot.hub.crates.CratesManager;
 import main.java.fr.verymc.spigot.hub.crates.KeyCmd;
 import main.java.fr.verymc.spigot.hub.events.AntiExplo;
@@ -153,7 +156,7 @@ public class Main extends JavaPlugin {
             for (ServerType serverType1 : ServerType.values()) {
                 if (str.contains(serverType1.toString())) {
                     if (serverType1 != ServerType.SKYBLOCK_HUB && serverType1 != ServerType.SKYBLOCK_ISLAND
-                            && serverType1 != ServerType.SKYBLOCk_DUNGEON) continue;
+                            && serverType1 != ServerType.SKYBLOCK_DUNGEON) continue;
                     serverType = serverType1;
                     serverName = serverType.getDisplayName() + str.replaceAll("[^\\d.]", "");
                     break;
@@ -162,6 +165,9 @@ public class Main extends JavaPlugin {
             if (serverType != null)
                 break;
         }
+
+        //serverType = ServerType.SKYBLOCK_DUNGEON;
+        //serverName = serverType.getDisplayName();
 
         System.out.println("§aServer type: " + serverType + " | " + serverType.getDisplayName());
         System.out.println("§aServer name: " + serverName);
@@ -271,8 +277,10 @@ public class Main extends JavaPlugin {
 
 
         //Dungeon ADDITIONNAL STARTUP
-        if (serverType == ServerType.SKYBLOCk_DUNGEON) {
+        if (serverType == ServerType.SKYBLOCK_DUNGEON) {
             System.out.println("Starting Dungeon ADDITIONNAL module...");
+
+            new DungeonManager();
 
             System.out.println("Starting Dungeon ADDITIONNAL module FINISHED");
         }
@@ -293,6 +301,7 @@ public class Main extends JavaPlugin {
         try {
             HTTPUtils.postMethod("created", serverName);
         } catch (IOException e) {
+            Bukkit.shutdown();
             throw new RuntimeException(e);
         }
 
@@ -363,8 +372,6 @@ public class Main extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new PickaxeGui(), this);
         getServer().getPluginManager().registerEvents(new TradeGui(), this);
         getServer().getPluginManager().registerEvents(new MoneyTradeGui(), this);
-        getServer().getPluginManager().registerEvents(new TradeGui(), this);
-        getServer().getPluginManager().registerEvents(new MoneyTradeGui(), this);
         getServer().getPluginManager().registerEvents(new PlayerWarpGuiManager(), this);
         getServer().getPluginManager().registerEvents(new ServerCoreMicellanous(), this);
         getServer().getPluginManager().registerEvents(new IslandChallengesGuis(), this);
@@ -397,8 +404,8 @@ public class Main extends JavaPlugin {
 
 
         //DUNGEON LISTENER
-        if (serverType == ServerType.SKYBLOCk_DUNGEON) {
-
+        if (serverType == ServerType.SKYBLOCK_DUNGEON) {
+            getServer().getPluginManager().registerEvents(new DungeonEntityListener(), this);
         }
 
 
@@ -459,6 +466,7 @@ public class Main extends JavaPlugin {
         this.getCommand("tradeno").setExecutor(new TradeNoCmd());
         this.getCommand("tradecancel").setExecutor(new TradeCancelCmd());
         this.getCommand("pickaxe").setExecutor(new PickaxeCmd());
+        this.getCommand("dungeon").setExecutor(new DungeonCmd());
     }
 
     public void createMainWorld() {

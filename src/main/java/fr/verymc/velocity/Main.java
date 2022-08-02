@@ -57,7 +57,7 @@ public class Main {
         if (registeredServer.getServerInfo().getName().contains(ServerType.SKYBLOCK_HUB.getDisplayName())) return true;
         if (registeredServer.getServerInfo().getName().contains(ServerType.SKYBLOCK_ISLAND.getDisplayName()))
             return true;
-        if (registeredServer.getServerInfo().getName().contains(ServerType.SKYBLOCk_DUNGEON.getDisplayName()))
+        if (registeredServer.getServerInfo().getName().contains(ServerType.SKYBLOCK_DUNGEON.getDisplayName()))
             return true;
         return false;
     }
