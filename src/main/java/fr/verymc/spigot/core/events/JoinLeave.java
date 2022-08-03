@@ -2,6 +2,7 @@ package main.java.fr.verymc.spigot.core.events;
 
 import main.java.fr.verymc.commons.enums.ServerType;
 import main.java.fr.verymc.spigot.Main;
+import main.java.fr.verymc.spigot.core.InventorySyncManager;
 import main.java.fr.verymc.spigot.core.cmd.base.SpawnCmd;
 import main.java.fr.verymc.spigot.core.scoreboard.ScoreBoard;
 import main.java.fr.verymc.spigot.core.storage.SkyblockUser;
@@ -41,6 +42,8 @@ public class JoinLeave implements Listener {
     @EventHandler
     public void OnJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
+
+        InventorySyncManager.instance.playerJoin(player);
 
         SkyblockUserManager.instance.checkForAccount(player);
 
@@ -100,6 +103,7 @@ public class JoinLeave implements Listener {
     @EventHandler
     public void OnLeave(PlayerQuitEvent event) {
         Player player = event.getPlayer();
+        InventorySyncManager.instance.playerQuit(player);
         SkyblockUser skyblockUser = SkyblockUserManager.instance.getUser(player.getUniqueId());
         Island playerIsland = null;
         if (Main.instance.serverType == ServerType.SKYBLOCK_ISLAND) {

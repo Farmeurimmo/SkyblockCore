@@ -26,6 +26,15 @@ public class PluginMessageManager implements PluginMessageListener {
         ByteArrayDataInput in = ByteStreams.newDataInput(message);
         String subchannel = in.readUTF();
         String data = in.readUTF();
+
+        System.out.println(subchannel + " : " + data);
+
+        if (subchannel.equals("inv")) {
+            if (player.isOnline()) {
+                InventorySyncManager.instance.setInventory(player, data);
+            }
+            return;
+        }
         if (subchannel.equals("subtp")) {
             JSONParser parser = new JSONParser();
             JSONObject json = null;
@@ -40,8 +49,11 @@ public class PluginMessageManager implements PluginMessageListener {
             if (location == null) return;
             if (!location.getWorld().equals(Main.instance.mainWorld)) location.setWorld(Main.instance.mainWorld);
             player.teleport(location);
+            return;
         }
     }
+
+    //Usage PluginMessageManager.instance.sendMessage(player, "subtp", jsonObject.toJSONString(), "skyblock:toproxy");
 
     public void sendMessage(Player player, String subchannel, String data, String mainChannel) {
 

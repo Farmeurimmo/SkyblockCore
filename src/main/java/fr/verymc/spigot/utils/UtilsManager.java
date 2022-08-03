@@ -7,5 +7,6 @@ public class UtilsManager {
         new InventoryUtils();
         new PreGenItems();
         new ObjectConverter();
+        new InventorySyncUtils();
     }
 }

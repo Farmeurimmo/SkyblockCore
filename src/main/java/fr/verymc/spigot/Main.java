@@ -4,6 +4,8 @@ import com.gmail.filoghost.holographicdisplays.api.Hologram;
 import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
 import main.java.fr.verymc.commons.enums.ServerType;
 import main.java.fr.verymc.commons.utils.HTTPUtils;
+import main.java.fr.verymc.spigot.core.InventorySyncManager;
+import main.java.fr.verymc.spigot.core.JedisManager;
 import main.java.fr.verymc.spigot.core.PluginMessageManager;
 import main.java.fr.verymc.spigot.core.ServersManager;
 import main.java.fr.verymc.spigot.core.antiafk.AntiAfk;
@@ -92,17 +94,12 @@ public class Main extends JavaPlugin {
     static LuckPerms api;
     private final HashMap<String, Integer> spawncooldown = new HashMap<>();
     public ArrayList<Player> pending = new ArrayList<>();
-
     public ArrayList<Player> pendingTrade = new ArrayList<>();
     public ArrayList<Player> haverequest = new ArrayList<>();
-
     public ArrayList<Player> haveTradeRequest = new ArrayList<>();
     public HashMap<String, String> tpatarget = new HashMap<>();
-
     public HashMap<String, String> tradeTarget = new HashMap<>();
-
     public ArrayList<TradeManager> tradeInProcess = new ArrayList<>();
-
     public ClaimCmdSaver saver;
     public ServerType serverType;
     public String serverName;
@@ -141,43 +138,56 @@ public class Main extends JavaPlugin {
         return tradeTarget.getOrDefault(player, null);
     }
 
+
+    //DEV MODE /!\ ATTENTION CE MODE DÉSACTIVE L'API /!\
+    //Usage non recommandé pour les personnes ne le connaissant pas ce système ni les risques
+    //qui peuvent en émerger
+    public static boolean devMode = false;
+    public static ServerType devServerType = ServerType.SKYBLOCK_HUB;
+
     @Override
     public void onEnable() {
         instance = this;
         System.out.println("------------------------------------------------");
         //server type ???
-        ArrayList<String> response = HTTPUtils.readFromUrl("get/all/tocreate");
-        if (response == null) {
-            System.out.println("§4§lError while getting server type, server going to sleep...");
-            Bukkit.shutdown();
-            throw new RuntimeException();
-        }
-        for (String str : response) {
-            for (ServerType serverType1 : ServerType.values()) {
-                if (str.contains(serverType1.toString())) {
-                    if (serverType1 != ServerType.SKYBLOCK_HUB && serverType1 != ServerType.SKYBLOCK_ISLAND
-                            && serverType1 != ServerType.SKYBLOCK_DUNGEON) continue;
-                    serverType = serverType1;
-                    serverName = serverType.getDisplayName() + str.replaceAll("[^\\d.]", "");
-                    break;
-                }
+        if (!devMode) {
+            ArrayList<String> response = HTTPUtils.readFromUrl("get/all/tocreate");
+            if (response == null) {
+                System.out.println("§4§lError while getting server type, server going to sleep...");
+                Bukkit.shutdown();
+                throw new RuntimeException();
             }
-            if (serverType != null)
-                break;
+            for (String str : response) {
+                for (ServerType serverType1 : ServerType.values()) {
+                    if (str.contains(serverType1.toString())) {
+                        if (serverType1 != ServerType.SKYBLOCK_HUB && serverType1 != ServerType.SKYBLOCK_ISLAND
+                                && serverType1 != ServerType.SKYBLOCK_DUNGEON) continue;
+                        serverType = serverType1;
+                        serverName = serverType.getDisplayName() + str.replaceAll("[^\\d.]", "");
+                        break;
+                    }
+                }
+                if (serverType != null)
+                    break;
+            }
+        } else {
+            //serverType = ServerType.SKYBLOCK_ISLAND;
+            //serverName = serverType.getDisplayName();
+            serverType = devServerType;
+            serverName = serverType.getDisplayName() + "1";
         }
-
-        serverType = ServerType.SKYBLOCK_DUNGEON;
-        serverName = serverType.getDisplayName();
 
         System.out.println("§aServer type: " + serverType + " | " + serverType.getDisplayName());
         System.out.println("§aServer name: " + serverName);
 
-        /*try {
-            HTTPUtils.postMethod("starting", serverName);
-        } catch (IOException e) {
-            Bukkit.shutdown();
-            throw new RuntimeException(e);
-        }*/
+        if (!devMode) {
+            try {
+                HTTPUtils.postMethod("starting", serverName);
+            } catch (IOException e) {
+                Bukkit.shutdown();
+                throw new RuntimeException(e);
+            }
+        }
 
         System.out.println("------------------------------------------------");
         //CORE INIT PART 1
@@ -203,6 +213,8 @@ public class Main extends JavaPlugin {
             getLogger().warning("Le plugin HolographicDisplays est manquant.");
             Bukkit.getPluginManager().disablePlugin(this);
         }
+        new UtilsManager();
+
 
         new IslandManager();
         saveResource("spawn.schem", true);
@@ -210,8 +222,8 @@ public class Main extends JavaPlugin {
 
         new SkyblockUserManager();
         new EcoAccountsManager();
-
-        new UtilsManager();
+        new JedisManager();
+        new InventorySyncManager();
 
         BuyShopItem.GenPriceShopStartup();
         GenShopPage.GetNumberOfPage();
@@ -298,12 +310,14 @@ public class Main extends JavaPlugin {
         }
         System.out.println("Starting core part 2 FINISHED");
 
-        /*try {
-            HTTPUtils.postMethod("created", serverName);
-        } catch (IOException e) {
-            Bukkit.shutdown();
-            throw new RuntimeException(e);
-        }*/
+        if (!devMode) {
+            try {
+                HTTPUtils.postMethod("created", serverName);
+            } catch (IOException e) {
+                Bukkit.shutdown();
+                throw new RuntimeException(e);
+            }
+        }
 
         System.out.println("§aDémarrage du plugin TERMINE!");
         System.out.println("------------------------------------------------");
@@ -333,10 +347,12 @@ public class Main extends JavaPlugin {
         }
         saver.saveCooldown();
 
-        try {
-            HTTPUtils.postMethod("remove", serverName);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        if (!devMode) {
+            try {
+                HTTPUtils.postMethod("remove", serverName);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
 
         Bukkit.unloadWorld(mainWorld.getName(), false);

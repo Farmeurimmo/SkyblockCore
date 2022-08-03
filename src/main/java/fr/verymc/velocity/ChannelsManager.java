@@ -55,11 +55,13 @@ public class ChannelsManager {
         DataInputStream in = new DataInputStream(new ByteArrayInputStream(data));
         try {
             String subchannel = in.readUTF();
+            String rawData = in.readUTF();
+
+            System.out.println(subchannel + " : " + rawData);
 
             if (subchannel.equals("subtp")) {
-                String rawData = in.readUTF();
-                System.out.println("raw: " + rawData);
                 awaitingServerSwitch.put(player.getUniqueId(), rawData);
+                return;
             }
         } catch (Exception e) {
             logger.error("Error while handling message", e);
