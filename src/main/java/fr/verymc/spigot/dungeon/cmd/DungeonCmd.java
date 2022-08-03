@@ -1,6 +1,6 @@
 package main.java.fr.verymc.spigot.dungeon.cmd;
 
-import main.java.fr.verymc.spigot.dungeon.DungeonMobCreator;
+import main.java.fr.verymc.spigot.dungeon.mobs.DungeonMobCreator;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;

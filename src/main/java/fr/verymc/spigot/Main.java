@@ -166,18 +166,18 @@ public class Main extends JavaPlugin {
                 break;
         }
 
-        //serverType = ServerType.SKYBLOCK_DUNGEON;
-        //serverName = serverType.getDisplayName();
+        serverType = ServerType.SKYBLOCK_DUNGEON;
+        serverName = serverType.getDisplayName();
 
         System.out.println("§aServer type: " + serverType + " | " + serverType.getDisplayName());
         System.out.println("§aServer name: " + serverName);
 
-        try {
+        /*try {
             HTTPUtils.postMethod("starting", serverName);
         } catch (IOException e) {
             Bukkit.shutdown();
             throw new RuntimeException(e);
-        }
+        }*/
 
         System.out.println("------------------------------------------------");
         //CORE INIT PART 1
@@ -298,12 +298,12 @@ public class Main extends JavaPlugin {
         }
         System.out.println("Starting core part 2 FINISHED");
 
-        try {
+        /*try {
             HTTPUtils.postMethod("created", serverName);
         } catch (IOException e) {
             Bukkit.shutdown();
             throw new RuntimeException(e);
-        }
+        }*/
 
         System.out.println("§aDémarrage du plugin TERMINE!");
         System.out.println("------------------------------------------------");
