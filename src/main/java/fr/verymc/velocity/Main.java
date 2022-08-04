@@ -11,6 +11,7 @@ import com.velocitypowered.api.proxy.server.RegisteredServer;
 import main.java.fr.verymc.commons.enums.ServerType;
 import main.java.fr.verymc.velocity.cmd.DungeonCmd;
 import main.java.fr.verymc.velocity.events.ConnectionListener;
+import main.java.fr.verymc.velocity.events.PlayerListener;
 import main.java.fr.verymc.velocity.team.DungeonTeamManager;
 import net.kyori.adventure.text.Component;
 import org.slf4j.Logger;
@@ -44,6 +45,7 @@ public class Main {
 
         server.getEventManager().register(this, new ConnectionListener());
         server.getEventManager().register(this, new ChannelsManager(server, logger));
+        server.getEventManager().register(this, new PlayerListener());
 
         new TABManager(server, logger);
         new DungeonTeamManager(server, logger);

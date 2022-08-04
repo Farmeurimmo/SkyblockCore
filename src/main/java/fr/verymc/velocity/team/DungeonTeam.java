@@ -13,6 +13,7 @@ public class DungeonTeam {
     private DungeonFloors floor;
     private boolean isOpen;
     private ArrayList<UUID> pendingInvites = new ArrayList<>();
+    private ArrayList<UUID> tchatMode = new ArrayList<>();
 
     public DungeonTeam(ArrayList<Player> players, UUID owner, DungeonFloors floor, boolean isOpen) {
         this.players = players;
@@ -71,7 +72,6 @@ public class DungeonTeam {
 
     public void addPendingInvite(UUID uuid) {
         pendingInvites.add(uuid);
-
     }
 
     public void removePendingInvite(UUID uuid) {
@@ -81,5 +81,18 @@ public class DungeonTeam {
     public boolean isPendingInvite(UUID uuid) {
         return pendingInvites.contains(uuid);
     }
+
+    public void addTchatMode(UUID uuid) {
+        tchatMode.add(uuid);
+    }
+
+    public void removeTchatMode(UUID uuid) {
+        tchatMode.remove(uuid);
+    }
+
+    public boolean isTchatMode(UUID uuid) {
+        return tchatMode.contains(uuid);
+    }
+
 
 }

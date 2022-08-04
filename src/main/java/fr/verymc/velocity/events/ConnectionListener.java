@@ -1,7 +1,10 @@
 package main.java.fr.verymc.velocity.events;
 
 import com.velocitypowered.api.event.Subscribe;
-import com.velocitypowered.api.event.player.*;
+import com.velocitypowered.api.event.player.KickedFromServerEvent;
+import com.velocitypowered.api.event.player.ServerConnectedEvent;
+import com.velocitypowered.api.event.player.ServerPostConnectEvent;
+import com.velocitypowered.api.event.player.ServerPreConnectEvent;
 import com.velocitypowered.api.proxy.server.RegisteredServer;
 import main.java.fr.verymc.velocity.ChannelsManager;
 import main.java.fr.verymc.velocity.Main;
@@ -45,13 +48,5 @@ public class ConnectionListener {
         e.getPlayer().sendMessage(Component.text("Envoi sur " + registeredServer.getServerInfo().getName() +
                 " à la suite d'un kick pour " + e.getServerKickReason(), NamedTextColor.GRAY));
     }
-
-    @Subscribe
-    public void onPlayerChat(PlayerChooseInitialServerEvent e) {
-        if (!e.getInitialServer().isPresent()) {
-            e.setInitialServer(Main.instance.getServeurToLogin());
-        }
-    }
-
 
 }

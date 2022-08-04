@@ -27,6 +27,11 @@ public final class DungeonCmd implements SimpleCommand {
         Player player = (Player) source;
         String[] args = invocation.arguments();
 
+        if (!Main.instance.isSkyblockServer(player.getCurrentServer().get().getServer())) {
+            player.sendMessage(Component.text("§6§lDungeon §8» §cVous devez être sur un serveur Skyblock pour utiliser cette commande."));
+            return;
+        }
+
         DungeonTeam dungeonTeam = DungeonTeamManager.instance.getPlayerTeam(player);
         boolean haveATeam = (dungeonTeam != null);
 
@@ -96,6 +101,16 @@ public final class DungeonCmd implements SimpleCommand {
             }
             if (args[0].equalsIgnoreCase("kick")) {
                 player.sendMessage(Component.text("§6§lDungeon §8» §cMerci de préciser le nom d'un joueur à kick."));
+                return;
+            }
+            if (args[0].equalsIgnoreCase("tchat")) {
+                if (dungeonTeam.isTchatMode(player.getUniqueId())) {
+                    dungeonTeam.removeTchatMode(player.getUniqueId());
+                    player.sendMessage(Component.text("§6§lDungeon §8» §fVous avez désactivé le tchat de team."));
+                } else {
+                    dungeonTeam.addTchatMode(player.getUniqueId());
+                    player.sendMessage(Component.text("§6§lDungeon §8» §fVous avez activé le tchat de team."));
+                }
                 return;
             }
             if (args[0].equalsIgnoreCase("membres")) {
@@ -207,7 +222,7 @@ public final class DungeonCmd implements SimpleCommand {
     }
 
     public void sendErrorUsage(Player player) {
-        player.sendMessage(Component.text("§6§lDungeon §8» §cUsage: /dungeon <join|leave|create|delete|invite|invitation|kick|membres> [Joueur]"));
+        player.sendMessage(Component.text("§6§lDungeon §8» §cUsage: /dungeon <join|leave|create|delete|invite|invitation|kick||tchat> [Joueur]"));
     }
 
     /*@Override
@@ -227,7 +242,7 @@ public final class DungeonCmd implements SimpleCommand {
         boolean haveATeam = (dungeonTeam != null);
         switch (args.length) {
             case 1:
-                toReturn.addAll(Arrays.asList("join", "leave", "create", "delete", "invitation", "invite", "create", "kick", "membres"));
+                toReturn.addAll(Arrays.asList("join", "leave", "create", "delete", "invitation", "invite", "create", "kick", "membres", "tchat"));
                 break;
             case 2:
                 if (args[0].equalsIgnoreCase("join")) {

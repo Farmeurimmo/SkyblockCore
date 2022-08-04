@@ -54,6 +54,9 @@ public class DungeonTeamManager {
     public void removePlayerFromTeam(DungeonTeam dungeonTeam, Player player) {
         if (dungeonTeam.isPlayerInTeam(player)) {
             dungeonTeam.removePlayer(player);
+            if (dungeonTeam.isTchatMode(player.getUniqueId())) {
+                dungeonTeam.removeTchatMode(player.getUniqueId());
+            }
         }
     }
 
