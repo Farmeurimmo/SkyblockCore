@@ -14,7 +14,6 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -37,18 +36,30 @@ public class ServersManager {
                     }
                     autoReadServers();
                     autoReadPlayers();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
         }, 0L, 120L);
     }
 
-    public void autoSendPlayers() throws IOException {
+    public void autoSendPlayers() {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("serverName", Main.instance.serverName);
         jsonObject.put("players", IslandManager.instance.getUUIDs());
-        HTTPUtils.postMethod("players", jsonObject.toJSONString());
+        try {
+            HTTPUtils.postMethod("players", jsonObject.toJSONString());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void removeServerPlayersFromAPI() {
+        try {
+            HTTPUtils.postMethod("players/removeserver", Main.instance.serverName);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void autoReadPlayers() {

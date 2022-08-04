@@ -92,9 +92,6 @@ public class StorageJSONManager {
         }
         //DATA USERS
 
-        Bukkit.getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
-            @Override
-            public void run() {
                 //SEND Islands to -> IslandManager.instance.islands
                 if (Main.instance.serverType == ServerType.SKYBLOCK_ISLAND) {
                     IslandManager.instance.islands = islands;
@@ -102,8 +99,6 @@ public class StorageJSONManager {
 
                 //SEND SkyblockUser to -> SkyblockUserManager.instance.users
                 SkyblockUserManager.instance.users = skyblockUsers;
-            }
-        }, 0);
     }
 
     public void sendDataToAPIAuto(boolean stop) {

@@ -143,7 +143,7 @@ public class Main extends JavaPlugin {
     //Usage non recommandé pour les personnes ne le connaissant pas ce système ni les risques
     //qui peuvent en émerger
     public static boolean devMode = false;
-    public static ServerType devServerType = ServerType.SKYBLOCK_HUB;
+    public static ServerType devServerType = ServerType.SKYBLOCK_ISLAND;
 
     @Override
     public void onEnable() {
@@ -329,6 +329,7 @@ public class Main extends JavaPlugin {
     @Override
     public void onDisable() {
         if (serverType == ServerType.SKYBLOCK_ISLAND) {
+            ServersManager.instance.removeServerPlayersFromAPI();
             IslandManager.instance.saveAllIslands();
         }
         for (SkyblockUser user : SkyblockUserManager.instance.users) {

@@ -116,7 +116,8 @@ public class IslandManager {
                     continue;
                 }
                 for (File file : Main.instance.getDataFolder().listFiles()) {
-                    if (file.getName().contains(island.getUUID().toString() + ".schem")) {
+                    System.out.println(file.getName());
+                    if (file.getName().contains(island.getUUID().toString())) {
                         pasteIsland(file, island.getCenter().clone().add(250,
                                 0, 250));
                         island.setLoadedHere(true);
@@ -126,7 +127,7 @@ public class IslandManager {
                 }
             }
             try {
-                HTTPUtils.postMethod("islands/setloaded", loadeds.toString());
+                HTTPUtils.postMethod("islands/addloaded", loadeds.toString());
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -134,9 +135,12 @@ public class IslandManager {
     }
 
     public void saveAllIslands() {
+        ArrayList<String> loadedToRemoveFromAPI = new ArrayList<>();
         for (Island island : islands) {
-            System.out.println(island.isLoadedHere());
             if (island.isLoadedHere()) {
+
+                loadedToRemoveFromAPI.add(island.getUUID().toString());
+
                 Location pos1 = island.getCenter().clone().add(250, 0, 250);
                 pos1.set(pos1.getBlockX(), 0, pos1.getBlockZ());
                 Location pos2 = island.getCenter().clone().add(-250, 0, -250);
@@ -144,6 +148,12 @@ public class IslandManager {
                 saveSchem(String.valueOf(island.getUUID()), pos1,
                         pos2, island.getCenter().getWorld(), island.getCenter().clone());
             }
+        }
+        try {
+            System.out.println(loadedToRemoveFromAPI + " <- loadedToRemoveFromAPI");
+            HTTPUtils.postMethod("islands/removeloaded", loadedToRemoveFromAPI.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
