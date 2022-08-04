@@ -58,7 +58,7 @@ public class DungeonTeam {
     }
 
     public boolean isOwner(Player player) {
-        return !owner.equals(player);
+        return owner.equals(player.getUniqueId());
     }
 
     public void setIsOpen(boolean isOpen) {

@@ -72,7 +72,11 @@ public final class DungeonCmd implements SimpleCommand {
                     player.sendMessage(Component.text("§6§lDungeon §8» §cCette team n'accepte que les invitations."));
                     return;
                 }
+                for (Player player1 : targetTeam.getPlayers()) {
+                    player1.sendMessage(Component.text("§6§lDungeon §8» §f" + player.getUsername() + " a rejoint la team."));
+                }
                 DungeonTeamManager.instance.addPlayerToTeam(targetTeam, player);
+                player.sendMessage(Component.text("§6§lDungeon §8» §fVous avez rejoint la team de " + target.getUsername() + "."));
                 return;
             }
         }
@@ -87,13 +91,20 @@ public final class DungeonCmd implements SimpleCommand {
                 player.sendMessage(Component.text("§6§lDungeon §8» §cMerci de préciser le nom d'un joueur à inviter."));
                 return;
             }
+            if (args[0].equalsIgnoreCase("kick")) {
+                player.sendMessage(Component.text("§6§lDungeon §8» §cMerci de préciser le nom d'un joueur à kick."));
+                return;
+            }
             if (args[0].equalsIgnoreCase("leave")) {
                 if (dungeonTeam.isOwner(player)) {
                     player.sendMessage(Component.text("§6§lDungeon §8» §cVous ne pouvez pas quitter votre team car vous êtes le propriétaire," +
-                            " supprimer la avec /dungeon delete, vous avez §c10 §csecondes."));
+                            " supprimer la avec /dungeon delete."));
                     return;
                 }
                 DungeonTeamManager.instance.removePlayerFromTeam(dungeonTeam, player);
+                for (Player player1 : dungeonTeam.getPlayers()) {
+                    player1.sendMessage(Component.text("§6§lDungeon §8» §f" + player.getUsername() + " a quitté la team."));
+                }
                 player.sendMessage(Component.text("§6§lDungeon §8» §fVous avez quitté votre équipe."));
                 return;
             }
@@ -105,12 +116,15 @@ public final class DungeonCmd implements SimpleCommand {
                 if (DungeonTeamManager.instance.isPlayerInConfirmation(player)) {
                     DungeonTeamManager.instance.removeTeam(dungeonTeam);
                     DungeonTeamManager.instance.removePlayerFromConfirmation(player);
+                    for (Player player1 : dungeonTeam.getPlayers()) {
+                        player1.sendMessage(Component.text("§6§lDungeon §8» §f" + player.getUsername() + " a supprimé la team."));
+                    }
                     player.sendMessage(Component.text("§6§lDungeon §8» §fVous avez supprimé l'équipe."));
                     return;
                 }
                 DungeonTeamManager.instance.addPlayerToConfirmation(player);
                 player.sendMessage(Component.text("§6§lDungeon §8» §fVous avez demandé à supprimer la team, " +
-                        "tapez §c/dungeon delete §fpour confirmer."));
+                        "tapez §c/dungeon delete §fpour confirmer, vous avez §c10 §csecondes."));
                 return;
             }
             if (args[0].equalsIgnoreCase("invitation")) {
@@ -152,13 +166,34 @@ public final class DungeonCmd implements SimpleCommand {
                 DungeonTeamManager.instance.makeInviteExpireForPlayer(invitedPlayer, dungeonTeam);
                 return;
             }
+            if (args[0].equalsIgnoreCase("kick")) {
+                Player kickedPlayer = playerOptional.get();
+                if (!dungeonTeam.isPlayerInTeam(kickedPlayer)) {
+                    player.sendMessage(Component.text("§6§lDungeon §8» §cCe joueur n'est pas dans votre team."));
+                    return;
+                }
+                if (!dungeonTeam.isOwner(player)) {
+                    player.sendMessage(Component.text("§6§lDungeon §8» §cVous n'avez pas la permission de faire ceci."));
+                    return;
+                }
+                if (kickedPlayer.equals(player)) {
+                    player.sendMessage(Component.text("§6§lDungeon §8» §cVous ne pouvez pas vous expulser de votre team."));
+                    return;
+                }
+                DungeonTeamManager.instance.removePlayerFromTeam(dungeonTeam, kickedPlayer);
+                for (Player player1 : dungeonTeam.getPlayers()) {
+                    player1.sendMessage(Component.text("§6§lDungeon §8» §f" + player.getUsername() + " a kick " + kickedPlayer.getUsername() + "."));
+                }
+                kickedPlayer.sendMessage(Component.text("§6§lDungeon §8» §fVous avez été kick de la team par " + player.getUsername() + "."));
+                return;
+            }
         }
 
         sendErrorUsage(player);
     }
 
     public void sendErrorUsage(Player player) {
-        player.sendMessage(Component.text("§6§lDungeon §8» §cUsage: /dungeon <join|leave|create|delete|invite|invitation> [Joueur]"));
+        player.sendMessage(Component.text("§6§lDungeon §8» §cUsage: /dungeon <join|leave|create|delete|invite|invitation|kick> [Joueur]"));
     }
 
     /*@Override
@@ -178,15 +213,28 @@ public final class DungeonCmd implements SimpleCommand {
         boolean haveATeam = (dungeonTeam != null);
         switch (args.length) {
             case 1:
-                toReturn.addAll(Arrays.asList("join", "leave", "create", "delete", "invitation", "invite", "create"));
+                toReturn.addAll(Arrays.asList("join", "leave", "create", "delete", "invitation", "invite", "create", "kick"));
                 break;
             case 2:
-                if (!haveATeam) {
-                    return CompletableFuture.completedFuture(List.of());
+                if (args[0].equalsIgnoreCase("join")) {
+                    ArrayList<Player> hasTeam = DungeonTeamManager.instance.getPlayerWhoAreInATeam();
+                    hasTeam.forEach(player1 -> toReturn.add(player1.getUsername()));
+                    return CompletableFuture.completedFuture(toReturn);
                 }
-                if (args[1].equalsIgnoreCase("invite")) {
+
+                if (!haveATeam) return CompletableFuture.completedFuture(toReturn);
+
+                if (args[0].equalsIgnoreCase("invite")) {
                     ArrayList<Player> without = Main.instance.getPlayerWithout(dungeonTeam.getPlayers());
                     without.forEach(player1 -> toReturn.add(player1.getUsername()));
+                    return CompletableFuture.completedFuture(toReturn);
+                }
+
+                if (args[0].equalsIgnoreCase("kick")) {
+                    ArrayList<Player> inTeam = dungeonTeam.getPlayers();
+                    inTeam.forEach(player1 -> toReturn.add(player1.getUsername()));
+                    toReturn.remove(player.getUsername());
+                    return CompletableFuture.completedFuture(toReturn);
                 }
                 break;
         }

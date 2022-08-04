@@ -8,7 +8,6 @@ import net.kyori.adventure.text.Component;
 import org.slf4j.Logger;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
@@ -64,6 +63,14 @@ public class DungeonTeamManager {
         }
     }
 
+    public ArrayList<Player> getPlayerWhoAreInATeam() {
+        ArrayList<Player> toReturn = new ArrayList<>();
+        for (DungeonTeam team : dungeonTeams) {
+            toReturn.addAll(team.getPlayers());
+        }
+        return toReturn;
+    }
+
     public void addPlayerToConfirmation(Player player) {
         playerConfirmation.add(player.getUniqueId());
         server.getScheduler()
@@ -103,7 +110,9 @@ public class DungeonTeamManager {
     }
 
     public void createTeam(Player player) {
-        addTeam(new DungeonTeam(new ArrayList<>(Collections.singletonList(player)), player.getUniqueId(), DungeonFloors.FLOOR_1, true));
+        DungeonTeam dungeonTeam = new DungeonTeam(new ArrayList<>(), player.getUniqueId(), DungeonFloors.FLOOR_1, true);
+        dungeonTeam.addPlayer(player);
+        addTeam(dungeonTeam);
     }
 
 }
