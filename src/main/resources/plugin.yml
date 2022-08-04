@@ -94,5 +94,5 @@ commands:
     permission: trade
   tradecancel:
     permission: trade
-  dungeon:
-    permission: dungeon
+  dungeonadmin:
+    permission: dungeon.admin

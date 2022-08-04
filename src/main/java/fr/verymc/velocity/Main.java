@@ -4,15 +4,20 @@ import com.google.inject.Inject;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.plugin.Plugin;
+import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ProxyServer;
 import com.velocitypowered.api.proxy.messages.MinecraftChannelIdentifier;
 import com.velocitypowered.api.proxy.server.RegisteredServer;
 import main.java.fr.verymc.commons.enums.ServerType;
+import main.java.fr.verymc.velocity.cmd.DungeonCmd;
 import main.java.fr.verymc.velocity.events.ConnectionListener;
+import main.java.fr.verymc.velocity.team.DungeonTeamManager;
 import net.kyori.adventure.text.Component;
 import org.slf4j.Logger;
 
 import java.util.ArrayList;
+import java.util.Optional;
+import java.util.UUID;
 
 @Plugin(id = "skyblockcore", name = "SkyblockCoreVelocity", version = "0.1.0-SNAPSHOT",
         url = "https://verymc.fr", description = "Owned by VeryMc", authors = {"Farmeurimmo"})
@@ -41,6 +46,9 @@ public class Main {
         server.getEventManager().register(this, new ChannelsManager(server, logger));
 
         new TABManager(server, logger);
+        new DungeonTeamManager(server, logger);
+
+        server.getCommandManager().register("dungeon", new DungeonCmd());
 
         logger.info("§aLoading completed !");
     }
@@ -90,4 +98,22 @@ public class Main {
         }
         return null;
     }
+
+    public Optional<Player> getPlayer(String str) {
+        return server.getPlayer(str);
+    }
+
+    public Optional<Player> getPlayer(UUID uuid) {
+        return server.getPlayer(uuid);
+    }
+
+    public ArrayList<Player> getPlayerWithout(ArrayList<Player> without) {
+        ArrayList<Player> playersToReturn = new ArrayList<>();
+        for (Player player : server.getAllPlayers()) {
+            if (without.contains(player)) continue;
+            playersToReturn.add(player);
+        }
+        return playersToReturn;
+    }
+
 }

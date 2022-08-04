@@ -34,7 +34,7 @@ import main.java.fr.verymc.spigot.core.storage.SkyblockUser;
 import main.java.fr.verymc.spigot.core.storage.SkyblockUserManager;
 import main.java.fr.verymc.spigot.core.storage.StorageJSONManager;
 import main.java.fr.verymc.spigot.dungeon.DungeonManager;
-import main.java.fr.verymc.spigot.dungeon.cmd.DungeonCmd;
+import main.java.fr.verymc.spigot.dungeon.cmd.DungeonAdminCmd;
 import main.java.fr.verymc.spigot.dungeon.events.DungeonEntityListener;
 import main.java.fr.verymc.spigot.hub.crates.CratesManager;
 import main.java.fr.verymc.spigot.hub.crates.KeyCmd;
@@ -481,7 +481,7 @@ public class Main extends JavaPlugin {
         this.getCommand("tradeno").setExecutor(new TradeNoCmd());
         this.getCommand("tradecancel").setExecutor(new TradeCancelCmd());
         this.getCommand("pickaxe").setExecutor(new PickaxeCmd());
-        this.getCommand("dungeon").setExecutor(new DungeonCmd());
+        this.getCommand("dungeonadmin").setExecutor(new DungeonAdminCmd());
     }
 
     public void createMainWorld() {

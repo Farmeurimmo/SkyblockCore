@@ -10,7 +10,7 @@ import org.bukkit.entity.Player;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class DungeonCmd implements CommandExecutor, TabCompleter {
+public class DungeonAdminCmd implements CommandExecutor, TabCompleter {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -19,11 +19,6 @@ public class DungeonCmd implements CommandExecutor, TabCompleter {
             return false;
         }
         Player player = (Player) sender;
-
-        if (args.length == 0) {
-            player.sendMessage("§cUsage: /dungeon <create|join|spawnmob>");
-            return false;
-        }
 
         if (args.length == 1) {
             if (args[0].equalsIgnoreCase("spawnmob")) {
@@ -46,6 +41,7 @@ public class DungeonCmd implements CommandExecutor, TabCompleter {
             }
         }
 
+        player.sendMessage("§cUsage: /dungeon <team> <join|leave|create|delete> [nom]");
         return false;
     }
 
