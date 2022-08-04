@@ -96,16 +96,17 @@ public class DungeonTeamManager {
         return dungeonTeams.contains(dungeonTeam);
     }
 
-    public void makeInviteExpireForPlayer(Player player, DungeonTeam dungeonTeam) {
+    public void makeInviteExpireForPlayer(Player player, DungeonTeam dungeonTeam, String str) {
         server.getScheduler()
                 .buildTask(Main.instance, () -> {
                     if (DungeonTeamManager.instance.isATeam(dungeonTeam)) {
                         if (dungeonTeam.isPendingInvite(player.getUniqueId())) {
                             dungeonTeam.removePendingInvite(player.getUniqueId());
+                            player.sendMessage(Component.text("§6§lDungeon §8» §fL'invitation de " + str + " a expiré."));
                         }
                     }
                 })
-                .repeat(30L, TimeUnit.SECONDS)
+                .delay(30L, TimeUnit.SECONDS)
                 .schedule();
     }
 

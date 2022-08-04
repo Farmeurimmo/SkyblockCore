@@ -68,12 +68,15 @@ public final class DungeonCmd implements SimpleCommand {
                     player.sendMessage(Component.text("§6§lDungeon §8» §cCe joueur n'a pas de team."));
                     return;
                 }
-                if (!targetTeam.isOpen()) {
-                    player.sendMessage(Component.text("§6§lDungeon §8» §cCette team n'accepte que les invitations."));
+                if (!targetTeam.isOpen() && !targetTeam.isPendingInvite(player.getUniqueId())) {
+                    player.sendMessage(Component.text("§6§lDungeon §8» §cCette team n'accepte que les invitations et vous n'en avez pas reçu."));
                     return;
                 }
                 for (Player player1 : targetTeam.getPlayers()) {
                     player1.sendMessage(Component.text("§6§lDungeon §8» §f" + player.getUsername() + " a rejoint la team."));
+                }
+                if (targetTeam.isPendingInvite(player.getUniqueId())) {
+                    targetTeam.removePendingInvite(player.getUniqueId());
                 }
                 DungeonTeamManager.instance.addPlayerToTeam(targetTeam, player);
                 player.sendMessage(Component.text("§6§lDungeon §8» §fVous avez rejoint la team de " + target.getUsername() + "."));
@@ -163,7 +166,10 @@ public final class DungeonCmd implements SimpleCommand {
                     return;
                 }
                 dungeonTeam.addPendingInvite(invitedPlayer.getUniqueId());
-                DungeonTeamManager.instance.makeInviteExpireForPlayer(invitedPlayer, dungeonTeam);
+                DungeonTeamManager.instance.makeInviteExpireForPlayer(invitedPlayer, dungeonTeam, player.getUsername());
+                invitedPlayer.sendMessage(Component.text("§6§lDungeon §8» §f" + player.getUsername() + " vous a invité à rejoindre sa team. " +
+                        "Faites /is join " + player.getUsername() + " pour rejoindre sa team. L'invitation expire dans §c30 secondes."));
+                player.sendMessage(Component.text("§6§lDungeon §8» §fVous avez invité " + invitedPlayer.getUsername() + " à rejoindre votre team."));
                 return;
             }
             if (args[0].equalsIgnoreCase("kick")) {
