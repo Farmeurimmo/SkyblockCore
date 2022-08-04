@@ -1,6 +1,7 @@
 package main.java.fr.verymc.spigot.island;
 
 import main.java.fr.verymc.spigot.Main;
+import main.java.fr.verymc.spigot.core.PluginMessageManager;
 import main.java.fr.verymc.spigot.island.bank.IslandBank;
 import main.java.fr.verymc.spigot.island.blocks.Chest;
 import main.java.fr.verymc.spigot.island.challenges.IslandChallenge;
@@ -433,13 +434,8 @@ public class Island {
         return memberUpgrade;
     }
 
-    public void sendMessageToEveryMember(String message) {
-        for (UUID uuid : members.keySet()) {
-            Player p = Bukkit.getPlayer(uuid);
-            if (p != null) {
-                p.sendMessage(message);
-            }
-        }
+    public void sendMessageToEveryMember(String message, Player player) {
+        PluginMessageManager.instance.sendMessage(player, "messageToIsland", message, "skyblock:toproxy");
     }
 
     public Double getValue() {

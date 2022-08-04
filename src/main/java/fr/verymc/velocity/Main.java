@@ -12,6 +12,8 @@ import main.java.fr.verymc.velocity.events.ConnectionListener;
 import net.kyori.adventure.text.Component;
 import org.slf4j.Logger;
 
+import java.util.ArrayList;
+
 @Plugin(id = "skyblockcore", name = "SkyblockCoreVelocity", version = "0.1.0-SNAPSHOT",
         url = "https://verymc.fr", description = "Owned by VeryMc", authors = {"Farmeurimmo"})
 public class Main {
@@ -68,5 +70,24 @@ public class Main {
                 registeredServer.getPlayersConnected().forEach(player -> player.sendMessage(Component.text(message)));
             }
         }
+    }
+
+    public ArrayList<RegisteredServer> getSkyblockServers() {
+        ArrayList<RegisteredServer> toReturn = new ArrayList<>();
+        for (RegisteredServer registeredServer : server.getAllServers()) {
+            if (isSkyblockServer(registeredServer)) {
+                toReturn.add(registeredServer);
+            }
+        }
+        return toReturn;
+    }
+
+    public RegisteredServer getServeurToLogin() {
+        for (RegisteredServer registeredServer : getSkyblockServers()) {
+            if (registeredServer.getServerInfo().getName().contains(ServerType.SKYBLOCK_HUB.getDisplayName())) {
+                return registeredServer;
+            }
+        }
+        return null;
     }
 }

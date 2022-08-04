@@ -5,10 +5,10 @@ import redis.clients.jedis.JedisPool;
 
 public class JedisManager {
 
-    private String REDIS_PASSWORD = "1234";
-    private String REDIS_HOST = "127.0.0.1";
     public static JedisManager instance;
     JedisPool pool;
+    private String REDIS_PASSWORD = "1234";
+    private String REDIS_HOST = "127.0.0.1";
 
     public JedisManager() {
         instance = this;

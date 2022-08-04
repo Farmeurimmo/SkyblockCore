@@ -63,6 +63,11 @@ public class ChannelsManager {
                 awaitingServerSwitch.put(player.getUniqueId(), rawData);
                 return;
             }
+            if (subchannel.equals("messageToIsland")) {
+                sendPluginMessage(player, "messageToIsland", null,
+                        rawData);
+                return;
+            }
         } catch (Exception e) {
             logger.error("Error while handling message", e);
         }

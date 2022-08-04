@@ -170,7 +170,7 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
                     Island playerIsland = IslandManager.instance.getPlayerIsland(p);
                     if (!playerIsland.isPublic()) {
                         playerIsland.setPublic(true);
-                        playerIsland.sendMessageToEveryMember("§6§lIles §8» §fL'île est maintenant publique ! (Action de " + p.getName() + ")");
+                        playerIsland.sendMessageToEveryMember("§6§lIles §8» §fL'île est maintenant publique ! (Action de " + p.getName() + ")", p);
                     } else {
                         p.sendMessage("§6§lIles §8» §fL'île est déjà publique !");
                     }
@@ -179,7 +179,7 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
                     Island playerIsland = IslandManager.instance.getPlayerIsland(p);
                     if (playerIsland.isPublic()) {
                         playerIsland.setPublic(false);
-                        playerIsland.sendMessageToEveryMember("§6§lIles §8» §fL'île est maintenant privée ! (Action de " + p.getName() + ")");
+                        playerIsland.sendMessageToEveryMember("§6§lIles §8» §fL'île est maintenant privée ! (Action de " + p.getName() + ")", p);
                     } else {
                         p.sendMessage("§6§lIles §8» §fL'île est déjà privée !");
                     }
@@ -288,7 +288,7 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
                         playerIsland.addCoop(target.getUniqueId());
                         playerIsland.sendMessageToEveryMember("§6§lIles §8» §f" + target.getName() +
                                 " vient de rejoindre l'île en tant que membre temporaire par " + p.getName() + ", son status expirera quand" +
-                                " il se déconnectera ou que tous les membres de l'îles seront déconnectés.");
+                                " il se déconnectera ou que tous les membres de l'îles seront déconnectés.", p);
                         target.sendMessage("§6§lIles §8» §fTu viens d'être ajouté à l'île de " + p.getName() + " en tant que membre temporaire " +
                                 ", ton statut expirera quand tu déconnecteras ou quand tous les membres de l'îles seront déconnectés.");
                     } else {
@@ -304,7 +304,7 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
                     if (playerIsland.hasPerms(playerIsland.getIslandRankFromUUID(p.getUniqueId()), IslandPerms.REMOVE_COOP, p)) {
                         playerIsland.removeCoop(target.getUniqueId());
                         playerIsland.sendMessageToEveryMember("§6§lIles §8» §f" + target.getName() +
-                                " vient de perdre le status de membre temporaire par  " + p.getName() + ".");
+                                " vient de perdre le status de membre temporaire par  " + p.getName() + ".", p);
                         target.sendMessage("§6§lIles §8» §fVous avez été retiré du statut de coop par "
                                 + p.getName() + ".");
                     } else {
@@ -324,7 +324,7 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
                                     PlayerUtils.instance.teleportPlayerFromRequest(target, SpawnCmd.Spawn, 0, ServerType.SKYBLOCK_HUB);
                                 }
                                 playerIsland.sendMessageToEveryMember("§6§lIles §8» §f" + target.getName() +
-                                        " vient d'être banni de l'île par " + p.getName() + ".");
+                                        " vient d'être banni de l'île par " + p.getName() + ".", p);
                                 target.sendMessage("§6§lIles §8» §fVous avez été banni de l'île par " + p.getName() + ".");
                             } else {
                                 p.sendMessage("§6§lIles §8» §fImpossible de bannir " + target.getName() + ".");
@@ -340,7 +340,7 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
                         if (playerIsland.isBanned(target.getUniqueId())) {
                             if (playerIsland.removeBanned(target.getUniqueId())) {
                                 playerIsland.sendMessageToEveryMember("§6§lIles §8» §f" + target.getName() +
-                                        " vient de être débanni de l'île par " + p.getName() + ".");
+                                        " vient de être débanni de l'île par " + p.getName() + ".", p);
                             } else {
                                 p.sendMessage("§6§lIles §8» §fImpossible de débannir " + target.getName() + ".");
                             }
@@ -359,7 +359,7 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
                             PlayerUtils.instance.teleportPlayerFromRequest(target, SpawnCmd.Spawn, 0, ServerType.SKYBLOCK_HUB);
                             target.sendMessage("§6§lIles §8» §fVous avez été expulsé de l'île par " + p.getName() + ".");
                             playerIsland.sendMessageToEveryMember("§6§lIles §8» §f" + target.getName() +
-                                    " vient d'être expulsé de l'île par " + p.getName() + ".");
+                                    " vient d'être expulsé de l'île par " + p.getName() + ".", p);
                         } else {
                             p.sendMessage("§6§lIles §8» §f" + target.getName() + " n'est pas sur l'île.");
                         }
@@ -385,7 +385,7 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
                         if (args[1].length() >= 4 && args[1].length() <= 32) {
                             playerIsland.setName(args[1]);
                             playerIsland.sendMessageToEveryMember("§6§lIles §8» §fL'île a été renommée par " + p.getName() + " en " +
-                                    playerIsland.getName() + ".");
+                                    playerIsland.getName() + ".", p);
                         } else {
                             p.sendMessage("§6§lIles §8» §fLe nom de l'île doit contenir entre 4 et 32 caractères.");
                         }

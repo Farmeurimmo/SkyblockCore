@@ -149,7 +149,7 @@ public class IslandGuiManager implements Listener {
                     final int size = IslandUpgradeSize.getSizeFromLevel(playerIsland.getSizeUpgrade().getLevel());
                     playerIsland.sendMessageToEveryMember(
                             "§6§lIles §8» §f" + player.getName() + " a amélioré la taille de l'île au niveau §6" + playerIsland.getSizeUpgrade().getLevel() +
-                                    "§f, la taille de l'île est maintenant de §6" + size + "x" + size + "§f.");
+                                    "§f, la taille de l'île est maintenant de §6" + size + "x" + size + "§f.", player);
                     return;
                 } else {
                     player.sendMessage("§6§lIles §8» §fFonds insuffisants ou niveau maximum atteint.");
@@ -162,7 +162,7 @@ public class IslandGuiManager implements Listener {
                             " a amélioré le nombre de membres max de l'île au niveau §6" +
                             playerIsland.getMemberUpgrade().getLevel() +
                             "§f, le nombre de membres max de l'île est maintenant de §6" +
-                            playerIsland.getMemberUpgrade().getMaxMembers() + "§f.");
+                            playerIsland.getMemberUpgrade().getMaxMembers() + "§f.", player);
                 } else {
                     player.sendMessage("§6§lIles §8» §fFonds insuffisants ou niveau maximum atteint.");
                 }
@@ -172,7 +172,7 @@ public class IslandGuiManager implements Listener {
                 if (playerIsland.getGeneratorUpgrade().upOfOneLevel(player)) {
                     playerIsland.sendMessageToEveryMember("§6§lIles §8» §f" + player.getName() +
                             " a amélioré le générateur de l'île au niveau §6" +
-                            playerIsland.getGeneratorUpgrade().getLevel() + ". ");
+                            playerIsland.getGeneratorUpgrade().getLevel() + ". ", player);
                     IslandUpgradeGui.instance.openUpgradeIslandMenu(player);
                 } else {
                     player.sendMessage("§6§lIles §8» §fFonds insuffisants ou niveau maximum atteint.");
@@ -370,7 +370,7 @@ public class IslandGuiManager implements Listener {
                         playerIsland.removeCoop(target.getUniqueId());
                         IslandCoopGui.instance.openCoopIslandMenu(player);
                         playerIsland.sendMessageToEveryMember("§6§lIles §8» §f" + target.getName() + " a été retiré du statut de coop par "
-                                + player.getName() + ".");
+                                + player.getName() + ".", player);
                         target.sendMessage("§6§lIles §8» §fVous avez été retiré du statut de coop par "
                                 + player.getName() + ".");
                         return;
@@ -404,11 +404,11 @@ public class IslandGuiManager implements Listener {
                     if (playerIsland.hasSettingActivated(settings)) {
                         playerIsland.removeSettingActived(settings);
                         playerIsland.sendMessageToEveryMember("§6§lIles §8» §fLe paramètre '" + settings.getDesc() + "'§f a été §cdésactivé§f par "
-                                + player.getName() + ".");
+                                + player.getName() + ".", player);
                     } else {
                         playerIsland.addSettingActivated(settings);
                         playerIsland.sendMessageToEveryMember("§6§lIles §8» §fLe paramètre '" + settings.getDesc() + "'§f a été §aactivé§f par "
-                                + player.getName() + ".");
+                                + player.getName() + ".", player);
                     }
                     IslandSettingsGui.instance.openIslandSettingsGui(player);
                     return;
@@ -418,7 +418,7 @@ public class IslandGuiManager implements Listener {
                     IslandSettings islandSettings = IslandSettings.getNext(settings);
                     playerIsland.addSettingActivated(islandSettings);
                     playerIsland.sendMessageToEveryMember("§6§lIles §8» §fLe paramètre '" + settings.getDesc() + "'§f a été §6changé§f en "
-                            + islandSettings.getDesc() + "§f par " + player.getName() + ".");
+                            + islandSettings.getDesc() + "§f par " + player.getName() + ".", player);
                     playerIsland.toggleTimeAndWeather();
                     IslandSettingsGui.instance.openIslandSettingsGui(player);
                     return;

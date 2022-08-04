@@ -91,6 +91,11 @@ import java.util.concurrent.CompletableFuture;
 public class Main extends JavaPlugin {
 
     public static Main instance;
+    //DEV MODE /!\ ATTENTION CE MODE DÉSACTIVE L'API /!\
+    //Usage non recommandé pour les personnes ne le connaissant pas ce système ni les risques
+    //qui peuvent en émerger
+    public static boolean devMode = false;
+    public static ServerType devServerType = ServerType.SKYBLOCK_ISLAND;
     static LuckPerms api;
     private final HashMap<String, Integer> spawncooldown = new HashMap<>();
     public ArrayList<Player> pending = new ArrayList<>();
@@ -137,13 +142,6 @@ public class Main extends JavaPlugin {
     public String getTradeTarget(String player) {
         return tradeTarget.getOrDefault(player, null);
     }
-
-
-    //DEV MODE /!\ ATTENTION CE MODE DÉSACTIVE L'API /!\
-    //Usage non recommandé pour les personnes ne le connaissant pas ce système ni les risques
-    //qui peuvent en émerger
-    public static boolean devMode = false;
-    public static ServerType devServerType = ServerType.SKYBLOCK_ISLAND;
 
     @Override
     public void onEnable() {

@@ -84,7 +84,7 @@ public class IslandValueCalcManager {
 
             Long elasped = (System.currentTimeMillis() - startmills);
 
-            IslandManager.instance.getIslandByLoc(island.getCenter()).sendMessageToEveryMember("§6§lIles §8» §fRecalcul de votre île terminé. (en " + elasped + " ms)");
+            //IslandManager.instance.getIslandByLoc(island.getCenter()).sendMessageToEveryMember("§6§lIles §8» §fRecalcul de votre île terminé. (en " + elasped + " ms)");
         }
 
     }

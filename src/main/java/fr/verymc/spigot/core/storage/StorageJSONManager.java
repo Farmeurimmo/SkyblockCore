@@ -92,13 +92,13 @@ public class StorageJSONManager {
         }
         //DATA USERS
 
-                //SEND Islands to -> IslandManager.instance.islands
-                if (Main.instance.serverType == ServerType.SKYBLOCK_ISLAND) {
-                    IslandManager.instance.islands = islands;
-                }
+        //SEND Islands to -> IslandManager.instance.islands
+        if (Main.instance.serverType == ServerType.SKYBLOCK_ISLAND) {
+            IslandManager.instance.islands = islands;
+        }
 
-                //SEND SkyblockUser to -> SkyblockUserManager.instance.users
-                SkyblockUserManager.instance.users = skyblockUsers;
+        //SEND SkyblockUser to -> SkyblockUserManager.instance.users
+        SkyblockUserManager.instance.users = skyblockUsers;
     }
 
     public void sendDataToAPIAuto(boolean stop) {
