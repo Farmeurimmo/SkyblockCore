@@ -98,6 +98,14 @@ public final class DungeonCmd implements SimpleCommand {
                 player.sendMessage(Component.text("§6§lDungeon §8» §cMerci de préciser le nom d'un joueur à kick."));
                 return;
             }
+            if (args[0].equalsIgnoreCase("membres")) {
+                String players = "§7";
+                for (Player player1 : dungeonTeam.getPlayers()) {
+                    players += (dungeonTeam.isOwner(player1) ? "§a" : "§7") + player1.getUsername() + " ";
+                }
+                player.sendMessage(Component.text("§6§lDungeon §8» §fIl y a " + dungeonTeam.getPlayers().size() + " membres.\n" + players));
+                return;
+            }
             if (args[0].equalsIgnoreCase("leave")) {
                 if (dungeonTeam.isOwner(player)) {
                     player.sendMessage(Component.text("§6§lDungeon §8» §cVous ne pouvez pas quitter votre team car vous êtes le propriétaire," +
@@ -199,7 +207,7 @@ public final class DungeonCmd implements SimpleCommand {
     }
 
     public void sendErrorUsage(Player player) {
-        player.sendMessage(Component.text("§6§lDungeon §8» §cUsage: /dungeon <join|leave|create|delete|invite|invitation|kick> [Joueur]"));
+        player.sendMessage(Component.text("§6§lDungeon §8» §cUsage: /dungeon <join|leave|create|delete|invite|invitation|kick|membres> [Joueur]"));
     }
 
     /*@Override
@@ -219,7 +227,7 @@ public final class DungeonCmd implements SimpleCommand {
         boolean haveATeam = (dungeonTeam != null);
         switch (args.length) {
             case 1:
-                toReturn.addAll(Arrays.asList("join", "leave", "create", "delete", "invitation", "invite", "create", "kick"));
+                toReturn.addAll(Arrays.asList("join", "leave", "create", "delete", "invitation", "invite", "create", "kick", "membres"));
                 break;
             case 2:
                 if (args[0].equalsIgnoreCase("join")) {
