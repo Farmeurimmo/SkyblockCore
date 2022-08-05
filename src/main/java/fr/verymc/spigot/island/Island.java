@@ -181,6 +181,10 @@ public class Island {
         return center;
     }
 
+    public void setCenter(Location location) {
+        this.center = location;
+    }
+
     public String getName() {
         return name.replace("&", "§");
     }

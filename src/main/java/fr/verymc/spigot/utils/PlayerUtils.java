@@ -16,12 +16,14 @@ public class PlayerUtils {
         instance = this;
     }
 
-    public Location toCenter(Location center, Location toCenter) {
-        return new Location(center.getWorld(), toCenter.getX() - center.getX(), toCenter.getY() - center.getY(), toCenter.getZ() - center.getZ());
+    public Location toCenterOf(Location centerOfIsland, Location realLocation) {
+        return new Location(centerOfIsland.getWorld(), centerOfIsland.getX() + realLocation.getX(), realLocation.getY(),
+                centerOfIsland.getZ() + realLocation.getZ());
     }
 
-    public Location addCenter(Location center, Location toCenter) {
-        return new Location(center.getWorld(), toCenter.getX() + center.getX(), toCenter.getY() + center.getY(), toCenter.getZ() + center.getZ());
+    public Location addCenterTo(Location centerOfIsland, Location realLocation) {
+        return new Location(centerOfIsland.getWorld(), realLocation.getX() - centerOfIsland.getX(), realLocation.getY(),
+                realLocation.getZ() - centerOfIsland.getZ());
     }
 
     public void teleportPlayer(Player player, Location location) {

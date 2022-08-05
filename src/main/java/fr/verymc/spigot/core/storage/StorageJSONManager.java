@@ -17,6 +17,7 @@ import main.java.fr.verymc.spigot.island.upgrade.IslandUpgradeGenerator;
 import main.java.fr.verymc.spigot.island.upgrade.IslandUpgradeMember;
 import main.java.fr.verymc.spigot.island.upgrade.IslandUpgradeSize;
 import main.java.fr.verymc.spigot.utils.ObjectConverter;
+import main.java.fr.verymc.spigot.utils.PlayerUtils;
 import main.java.fr.verymc.spigot.utils.WorldBorderUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -71,7 +72,26 @@ public class StorageJSONManager {
             if (str == null) continue;
             Island island = islandFromJSON(ConfigManager.instance.getDataIslands().getString(str));
             if (island != null) {
-                islands.add(island);
+
+                island.setCenter(IslandManager.instance.getAFreeCenter());
+
+                island.setHome(PlayerUtils.instance.toCenterOf(island.getCenter(), island.getHome()));
+
+                for (Chest chest : island.getChests()) {
+                    chest.setBlock(PlayerUtils.instance.toCenterOf(island.getCenter(), chest.getBlock()));
+                }
+
+                for (Minion minion : island.getMinions()) {
+                    minion.setBlocLocation(PlayerUtils.instance.toCenterOf(island.getCenter(), minion.getBlocLocation()));
+                    if (minion.getChestBloc() != null) {
+                        minion.setChestBloc(PlayerUtils.instance.toCenterOf(island.getCenter(), minion.getChestBloc().getLocation()).getBlock());
+                    }
+                }
+
+                //SEND Islands to -> IslandManager.instance.islands
+                if (Main.instance.serverType == ServerType.SKYBLOCK_ISLAND) {
+                    IslandManager.instance.islands.add(island);
+                }
             }
         }
         //DATA ISLANDS
@@ -85,15 +105,9 @@ public class StorageJSONManager {
                 }
             } catch (Exception e) {
                 e.printStackTrace();
-                continue;
             }
         }
         //DATA USERS
-
-        //SEND Islands to -> IslandManager.instance.islands
-        if (Main.instance.serverType == ServerType.SKYBLOCK_ISLAND) {
-            IslandManager.instance.islands = islands;
-        }
 
         //SEND SkyblockUser to -> SkyblockUserManager.instance.users
         SkyblockUserManager.instance.users = skyblockUsers;
@@ -209,8 +223,7 @@ public class StorageJSONManager {
     public JSONObject islandToJSON(Island i) {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("name", i.getName());
-        jsonObject.put("home", ObjectConverter.instance.locationToString(i.getHome()));
-        jsonObject.put("center", ObjectConverter.instance.locationToString(i.getCenter()));
+        jsonObject.put("home", ObjectConverter.instance.locationToString(PlayerUtils.instance.addCenterTo(i.getCenter(), i.getHome())));
         jsonObject.put("id", i.getUUID().toString());
         jsonObject.put("members", new JSONObject(i.getMembers()).toString());
         jsonObject.put("rankPerms", new JSONObject(getReducedMapPerms(i)).toString());
@@ -231,11 +244,16 @@ public class StorageJSONManager {
         jsonObject.put("aS", i.getActivatedSettings().toString());
         String chestsString = "";
         for (Chest chest : i.getChests()) {
+            if (chest.getBlock() != null)
+                chest.setBlock(PlayerUtils.instance.addCenterTo(i.getCenter(), chest.getBlock()));
             chestsString += Chest.toString(chest) + ObjectConverter.SEPARATOR_ELEMENT;
         }
         jsonObject.put("chests", chestsString);
         String minionsString = "";
         for (Minion minion : i.getMinions()) {
+            if (minion.getChestBloc() != null)
+                minion.setChestBloc(PlayerUtils.instance.addCenterTo(i.getCenter(), minion.getChestBloc().getLocation()).getBlock());
+            minion.setBlocLocation(PlayerUtils.instance.addCenterTo(i.getCenter(), minion.getBlocLocation()));
             minionsString += Minion.toString(minion) + ObjectConverter.SEPARATOR_ELEMENT;
         }
         jsonObject.put("minions", minionsString);
@@ -253,7 +271,6 @@ public class StorageJSONManager {
         }
         String name = (String) jsonObject.get("name");
         Location home = ObjectConverter.instance.locationFromString((String) jsonObject.get("home"));
-        Location center = ObjectConverter.instance.locationFromString((String) jsonObject.get("center"));
         UUID id = UUID.fromString(String.valueOf(jsonObject.get("id")));
         HashMap<UUID, IslandRanks> members = new HashMap<>();
         JSONObject jsonObjectMembers = new JSONObject(ObjectConverter.instance.stringToHashMap((String) jsonObject.get("members")));
@@ -350,7 +367,7 @@ public class StorageJSONManager {
             Double value = Double.parseDouble(String.valueOf(jsonObject1.get(key)));
             stacked.put(Material.matchMaterial(key), value);
         }
-        return new Island(name, home, center, id, members, sizeUpgrade, memberUpgrade, borderColor, bank1, generatorUpgrade,
+        return new Island(name, home, null, id, members, sizeUpgrade, memberUpgrade, borderColor, bank1, generatorUpgrade,
                 banneds, islandChallenges, false, permsPerRanks, isPublic, 0.0, activatedSettings, chests,
                 minions, stacked, false);
     }

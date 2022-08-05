@@ -594,11 +594,8 @@ public class IslandManager {
         return Main.instance.mainWorld;
     }
 
-    public void genIsland(Player p) {
+    public Location getAFreeCenter() {
         Location toReturn = null;
-        UUID uuid = UUID.randomUUID();
-        p.sendMessage("§6§lIles §8» §aGénération de l'île en cours...");
-        Long start = System.currentTimeMillis();
 
         if (islands.size() == 0) {
             toReturn = new Location(Main.instance.mainWorld, 0, 80, 0);
@@ -622,6 +619,7 @@ public class IslandManager {
                 }
             }
             Random rand = new Random();
+
             while (toReturn == null) {
                 for (int i = minz; i <= maxz; i += distanceBetweenIslands) {
                     if (toReturn != null) break;
@@ -654,16 +652,23 @@ public class IslandManager {
                     toReturn = tmp;
                     break;
                 }
-            }
 
+            }
         }
+        return toReturn;
+    }
+
+    public void genIsland(Player p) {
+        p.sendMessage("§6§lIles §8» §aGénération de l'île en cours...");
+
+        Location toReturn = getAFreeCenter();
+        UUID uuid = UUID.randomUUID();
+        Long start = System.currentTimeMillis();
 
         toReturn.setWorld(getMainWorld());
 
-        Location finalToReturn = toReturn;
-        Location finalToReturn1 = toReturn;
 
-        pasteIsland(fileSchematic, finalToReturn);
+        pasteIsland(fileSchematic, toReturn);
 
         HashMap<UUID, IslandRanks> members = new HashMap<>();
         members.put(p.getUniqueId(), IslandRanks.CHEF);
@@ -673,11 +678,11 @@ public class IslandManager {
         IslandUpgradeGenerator islandUpgradeGenerator = new IslandUpgradeGenerator(0);
         ArrayList<UUID> banneds = new ArrayList<>();
         ArrayList<IslandChallenge> challenges = new ArrayList<>();
-        Location home = finalToReturn1.clone();
+        Location home = toReturn.clone();
         home.add(0.5, 0.1, 0.5);
         home.setPitch(0);
         home.setYaw(130);
-        islands.add(new Island("Ile de " + p.getName(), home, finalToReturn1, uuid, members,
+        islands.add(new Island("Ile de " + p.getName(), home, toReturn, uuid, members,
                 islandUpgradeSize, islandUpgradeMember, WorldBorderUtil.Color.BLUE, islandBank, islandUpgradeGenerator, banneds, challenges,
                 true, null, true, 0.0, null, null, null, null, true));
         new BukkitRunnable() {
@@ -689,7 +694,7 @@ public class IslandManager {
                     this.cancel();
                 }
             }
-        }.runTaskTimer(Main.instance, 0, 5L);
+        }.runTaskTimer(Main.instance, 0, 10L);
 
     }
 
