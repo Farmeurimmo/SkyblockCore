@@ -129,6 +129,15 @@ public class MinionManager {
         Minion minion = new Minion(id, levelInt, blocLoc, minionType,
                 blockFace, false, null, false);
 
+        spawnMinion(minion);
+
+        IslandManager.instance.getPlayerIsland(player).addMinion(minion);
+
+        player.sendMessage("§6§lMinions §8» §fMinion §aplacé§f, pour qu'il fonctionne, il faut lier un coffre au minion. " +
+                "(Aller dans l'inventaire du minion puis cliquer le coffre)");
+    }
+
+    public void spawnMinion(Minion minion) {
         try {
             final ArmorStand stand = (ArmorStand) minion.getBlocLocation().getWorld().spawnEntity(minion.getBlocLocation(), EntityType.ARMOR_STAND);
             final EntityEquipment equipment = stand.getEquipment();
@@ -158,7 +167,7 @@ public class MinionManager {
             equipment.setBoots(boots);
             equipment.setItemInMainHand(new ItemStack(Material.DIAMOND_PICKAXE));
 
-            equipment.setHelmet(PreGenItems.instance.getHead(player));
+            equipment.setHelmet(PreGenItems.instance.getHeadMinion());
 
             stand.setRightLegPose(new EulerAngle(0.0, 0.0, -50.0));
             stand.setLeftLegPose(new EulerAngle(0.0, 0.0, 50.0));
@@ -166,15 +175,9 @@ public class MinionManager {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        IslandManager.instance.getPlayerIsland(player).addMinion(minion);
-
-        player.sendMessage("§6§lMinions §8» §fMinion §aplacé§f, pour qu'il fonctionne, il faut lier un coffre au minion. " +
-                "(Aller dans l'inventaire du minion puis cliquer le coffre)");
     }
 
-    public void removeMinion(Minion minion, Island island) {
-
+    public void despawnMinion(Minion minion) {
         for (Entity entity : Bukkit.getWorld(minion.getBlocLocation().getWorld().getName()).getEntities()) {
             if (!(entity instanceof ArmorStand)) continue;
             if (entity.getLocation().getBlock().getLocation().equals(minion.getBlocLocation().getBlock().getLocation())
@@ -182,6 +185,10 @@ public class MinionManager {
                 entity.remove();
             }
         }
+    }
+
+    public void removeMinion(Minion minion, Island island) {
+        despawnMinion(minion);
 
         island.removeMinion(minion);
         HashMap<String, Object> toEdit = new HashMap<>();

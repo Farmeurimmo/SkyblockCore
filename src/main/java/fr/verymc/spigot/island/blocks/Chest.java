@@ -20,10 +20,9 @@ public class Chest {
     private double price;
     private boolean isSell;
     private boolean activeSellOrBuy;
-    private long id;
 
     public Chest(int type, Location block, UUID owner, Long chunkKey, ItemStack itemToBuySell, double price, boolean isSell,
-                 boolean activeSellOrBuy, long id) {
+                 boolean activeSellOrBuy) {
         this.type = type;
         this.block = block;
         this.owner = owner;
@@ -35,14 +34,13 @@ public class Chest {
         this.price = price;
         this.activeSellOrBuy = activeSellOrBuy;
         this.isSell = isSell;
-        this.id = id;
     }
 
     public static String toString(Chest c) {
         return c.getType() + ObjectConverter.SEPARATOR + ObjectConverter.instance.locationToString(c.getBlock()) + ObjectConverter.SEPARATOR + c.getOwner().toString() +
                 ObjectConverter.SEPARATOR + c.getChunkKey() + ObjectConverter.SEPARATOR + ObjectConverter.instance.itemStackToString(c.getItemToBuySell() == null ?
                 new ItemStack(Material.AIR, 1) : c.getItemToBuySell()) + ObjectConverter.SEPARATOR + c.getPrice() + ObjectConverter.SEPARATOR
-                + c.isSell() + ObjectConverter.SEPARATOR + c.isActiveSellOrBuy() + ObjectConverter.SEPARATOR + c.getId();
+                + c.isSell() + ObjectConverter.SEPARATOR + c.isActiveSellOrBuy();
     }
 
     public static Chest fromString(String str) {
@@ -58,8 +56,7 @@ public class Chest {
         double price = Double.parseDouble(splited[5]);
         boolean isSell = Boolean.parseBoolean(splited[6]);
         boolean activeSellOrBuy = Boolean.parseBoolean(splited[7]);
-        long id = Long.parseLong(splited[8]);
-        return new Chest(type, block, owner, chunkKey, itemToBuySell, price, isSell, activeSellOrBuy, id);
+        return new Chest(type, block, owner, chunkKey, itemToBuySell, price, isSell, activeSellOrBuy);
     }
 
     public int getType() {
@@ -125,10 +122,6 @@ public class Chest {
 
     public void setActiveSellOrBuy(boolean activeSellOrBuy) {
         this.activeSellOrBuy = activeSellOrBuy;
-    }
-
-    public long getId() {
-        return id;
     }
 
 }

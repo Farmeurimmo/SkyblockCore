@@ -31,7 +31,8 @@ public class Minion {
     public static String toString(Minion m) {
         return m.getID() + ObjectConverter.SEPARATOR + m.getLevelInt() + ObjectConverter.SEPARATOR + ObjectConverter.instance.locationToString(m.getBlocLocation()) +
                 ObjectConverter.SEPARATOR + m.getMinionType().toString() + ObjectConverter.SEPARATOR + m.getBlockFace().toString() + ObjectConverter.SEPARATOR +
-                m.isChestLinked() + ObjectConverter.SEPARATOR + ObjectConverter.instance.blockToString(m.getChestBloc()) + ObjectConverter.SEPARATOR + m.isAutoSmelt;
+                m.isChestLinked() + ObjectConverter.SEPARATOR + (m.getChestBloc() == null ? "a" : ObjectConverter.instance.blockToString(m.getChestBloc())) +
+                ObjectConverter.SEPARATOR + m.isAutoSmelt;
     }
 
     public static Minion fromString(String str) {
@@ -42,7 +43,7 @@ public class Minion {
         MinionType minionType = MinionType.valueOf(splited[3]);
         BlockFace blockFace = BlockFace.valueOf(splited[4]);
         Boolean chestLinked = Boolean.parseBoolean(splited[5]);
-        Block chestBloc = ObjectConverter.instance.blockFromString(splited[6]);
+        Block chestBloc = (splited[6].equalsIgnoreCase("a") ? null : ObjectConverter.instance.blockFromString(splited[6]));
         Boolean isAutoSmelt = Boolean.parseBoolean(splited[7]);
         return new Minion(id, levelInt, blocLocation, minionType, blockFace, chestLinked, chestBloc, isAutoSmelt);
     }

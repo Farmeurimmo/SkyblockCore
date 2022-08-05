@@ -50,10 +50,8 @@ public class StorageJSONManager {
 
     public void getData(boolean blockThread) {
         if (blockThread) {
-            CompletableFuture.runAsync(() -> {
-                getDataFromAPI();
-                IslandManager.instance.pasteAndLoadIslands();
-            }).join();
+            getDataFromAPI();
+            IslandManager.instance.pasteAndLoadIslands();
         } else {
             CompletableFuture.runAsync(() -> {
                 getDataFromAPI();
@@ -242,6 +240,7 @@ public class StorageJSONManager {
         }
         jsonObject.put("minions", minionsString);
         jsonObject.put("stacked", new JSONObject(i.getStackedBlocs()).toString());
+        System.out.println(jsonObject);
         return jsonObject;
     }
 
@@ -276,6 +275,7 @@ public class StorageJSONManager {
             permsPerRanks.put(IslandRanks.valueOf(key), perms);
         }
         int current = permsPerRanks.size() - 1;
+        int run = 0;
         ArrayList<IslandPerms> toHerit = new ArrayList<>();
         while (current > 0) { //POUR LE CHEF PAS BESOIN DE LUI FAIRE HÉRITER LES PERMS VU QU'IL LES A TOUTES
             for (Map.Entry<IslandRanks, ArrayList<IslandPerms>> e : permsPerRanks.entrySet()) {
@@ -289,6 +289,10 @@ public class StorageJSONManager {
                     }
                 }
             }
+            if (run > 12) {
+                break;
+            }
+            run++;
         }
         IslandUpgradeSize sizeUpgrade = new IslandUpgradeSize(Integer.parseInt(String.valueOf(jsonObject.get("siUp"))));
         IslandUpgradeMember memberUpgrade = new IslandUpgradeMember(Integer.parseInt(String.valueOf(jsonObject.get("mbUp"))));
@@ -325,10 +329,11 @@ public class StorageJSONManager {
         ArrayList<Chest> chests = new ArrayList<>();
         String strChest = (String) jsonObject.get("chests");
         String[] chestsSplit = strChest.split(ObjectConverter.SEPARATOR_ELEMENT);
-        for (String str : chestsSplit) {
-            if (str.length() > 1) {
-                chests.add(Chest.fromString(str));
-            }
+        System.out.println("§4" + strChest);
+        for (int i = 0; i < chestsSplit.length; i++) {
+            System.out.println("§2" + chestsSplit[i]);
+            if (chestsSplit[i].length() > 1)
+                chests.add(Chest.fromString(chestsSplit[i]));
         }
         ArrayList<Minion> minions = new ArrayList<>();
         String strMinion = (String) jsonObject.get("minions");

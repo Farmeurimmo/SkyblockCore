@@ -107,39 +107,44 @@ public class IslandManager {
     }
 
     public void pasteAndLoadIslands() {
-        CompletableFuture.runAsync(() -> {
-            ArrayList<String> getted = HTTPUtils.readFromUrl("islands/loaded");
-            ArrayList<String> loadeds = new ArrayList<>();
-            for (Island island : islands) {
-                if (getted.contains(island.getUUID().toString())) {
-                    island.setLoadedHere(false);
-                    continue;
-                }
-                for (File file : Main.instance.getDataFolder().listFiles()) {
-                    System.out.println(file.getName());
-                    if (file.getName().contains(island.getUUID().toString())) {
-                        pasteIsland(file, island.getCenter().clone().add(250,
-                                0, 250));
-                        island.setLoadedHere(true);
-                        loadeds.add(island.getUUID().toString());
-                        break;
+        ArrayList<String> getted = HTTPUtils.readFromUrl("islands/loaded");
+        ArrayList<String> loadeds = new ArrayList<>();
+        for (Island island : islands) {
+            if (getted.contains(island.getUUID().toString())) {
+                island.setLoadedHere(false);
+                continue;
+            }
+            for (File file : Main.instance.getDataFolder().listFiles()) {
+                System.out.println(file.getName());
+                if (file.getName().contains(island.getUUID().toString())) {
+                    pasteIsland(file, island.getCenter().clone().add(250,
+                            0, 250));
+                    island.setLoadedHere(true);
+                    for (Minion minion : island.getMinions()) {
+                        MinionManager.instance.spawnMinion(minion);
                     }
+                    loadeds.add(island.getUUID().toString());
+                    break;
                 }
             }
-            try {
-                HTTPUtils.postMethod("islands/addloaded", loadeds.toString());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }).join();
+        }
+        ChestManager.instance.makeChestRepop();
+        try {
+            HTTPUtils.postMethod("islands/addloaded", loadeds.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void saveAllIslands() {
         ArrayList<String> loadedToRemoveFromAPI = new ArrayList<>();
         for (Island island : islands) {
             if (island.isLoadedHere()) {
-
                 loadedToRemoveFromAPI.add(island.getUUID().toString());
+
+                for (Minion minion : island.getMinions()) {
+                    MinionManager.instance.despawnMinion(minion);
+                }
 
                 Location pos1 = island.getCenter().clone().add(250, 0, 250);
                 pos1.set(pos1.getBlockX(), 0, pos1.getBlockZ());

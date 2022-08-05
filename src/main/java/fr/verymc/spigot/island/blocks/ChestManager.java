@@ -11,8 +11,10 @@ import main.java.fr.verymc.spigot.island.guis.IslandValueStorageGui;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.Chest;
+import org.bukkit.block.Hopper;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -26,14 +28,48 @@ public class ChestManager {
 
     public static ChestManager instance;
 
+    public HashMap<Integer, Material> materialHashMap = new HashMap<>();
+
     public ChestManager() {
         instance = this;
+
+        materialHashMap.put(0, Material.HOPPER);
+        materialHashMap.put(1, Material.CHEST);
+        materialHashMap.put(2, Material.CHEST);
 
         if (Main.instance.serverType == ServerType.SKYBLOCK_ISLAND) {
             new PlayerShopGuis();
             new IslandValueStorageGui();
 
             autoSellForVeryChest();
+        }
+    }
+
+    public void makeChestRepop() {
+        for (Island island : IslandManager.instance.islands) {
+            for (main.java.fr.verymc.spigot.island.blocks.Chest chest : island.getChests()) {
+                Block block = chest.getBlock().getBlock();
+                block.getLocation().getChunk().load();
+                BlockState bs = block.getState();
+                if (bs instanceof Chest) {
+                    System.out.println("Chest instanceof");
+                    Chest c = (Chest) bs;
+                    if (chest.getType() == 1) {
+                        c.setCustomName("§6SellChest");
+                    } else if (chest.getType() == 2) {
+                        c.setCustomName("§6Player shop");
+                    }
+                }
+                if (bs instanceof Hopper) {
+                    Hopper h = (Hopper) bs;
+                    if (chest.getType() == 0) {
+                        h.setCustomName("§6Chunk Hoppeur");
+                    }
+                }
+                bs.update();
+                block.setBlockData(bs.getBlockData());
+                block.getLocation().getChunk().unload();
+            }
         }
     }
 
@@ -123,7 +159,7 @@ public class ChestManager {
 
     public void placeChest(Player player, Location block, int type, ItemStack item, double price) {
         IslandManager.instance.getPlayerIsland(player).addChest(new main.java.fr.verymc.spigot.island.blocks.Chest(type, block, player.getUniqueId(), block.getChunk().getChunkKey(),
-                item, price, false, false, System.currentTimeMillis()));
+                item, price, false, false));
     }
 
     public void removeChestFromLoc(Location block) {

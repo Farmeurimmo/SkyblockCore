@@ -153,8 +153,8 @@ public class MinionsListener implements Listener {
                     player.sendMessage("§6§lMinions §8» §fVous n'avez pas la permission d'intéragir avec un minion.");
                     return;
                 }
-                if (island == IslandManager.instance.getIslandByLoc(locBloc)) {
-                    player.sendMessage("§6§lMinions §8» §fVous ne pouvez pas lier un coffre en dehors de votre île.");
+                if (island != IslandManager.instance.getIslandByLoc(locBloc)) {
+                    player.sendMessage("§6§lMinions §8» §cVous ne pouvez pas lier un coffre en dehors de votre île.");
                     return;
                 }
                 MinionsGui.instance.minionOpened.get(player.getName()).setChestLinked(locBloc.getBlock());

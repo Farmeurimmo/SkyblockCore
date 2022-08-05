@@ -18,7 +18,8 @@ import java.util.Map;
 public class ObjectConverter {
 
     public static final String SEPARATOR = ";";
-    public static final String SEPARATOR_ELEMENT = "|";
+    public static final String ITEMSTACK_SEPARATOR = ",";
+    public static final String SEPARATOR_ELEMENT = "~";
     public static final String LOC_SEPARATOR = "µ";
     public static ObjectConverter instance;
 
@@ -42,11 +43,11 @@ public class ObjectConverter {
     }
 
     public String itemStackToString(ItemStack itemStack) {
-        return itemStack.getType() + SEPARATOR + itemStack.getAmount();
+        return itemStack.getType() + ITEMSTACK_SEPARATOR + itemStack.getAmount();
     }
 
     public ItemStack fromString(String str) {
-        String[] strings = str.split(SEPARATOR);
+        String[] strings = str.split(ITEMSTACK_SEPARATOR);
         if (Material.matchMaterial(strings[0]) == null) {
             return null;
         }

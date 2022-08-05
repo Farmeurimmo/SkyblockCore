@@ -94,7 +94,7 @@ public class Main extends JavaPlugin {
     //DEV MODE /!\ ATTENTION CE MODE DÉSACTIVE L'API /!\
     //Usage non recommandé pour les personnes ne le connaissant pas ce système ni les risques
     //qui peuvent en émerger
-    public static boolean devMode = false;
+    public static boolean devMode = true;
     public static ServerType devServerType = ServerType.SKYBLOCK_ISLAND;
     static LuckPerms api;
     private final HashMap<String, Integer> spawncooldown = new HashMap<>();
