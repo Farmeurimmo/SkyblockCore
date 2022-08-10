@@ -37,7 +37,7 @@ public class DungeonMobManager {
         toSpawn.add(lE);
 
         mobs.put(dungeon, toSpawn);
-        makeExpireMobsForDungeon(dungeon, 1);
+        makeExpireMobsForDungeon(dungeon, 10);
     }
 
     public void floor_2(Dungeon dungeon) {

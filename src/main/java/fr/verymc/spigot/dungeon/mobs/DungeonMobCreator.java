@@ -1,5 +1,6 @@
 package main.java.fr.verymc.spigot.dungeon.mobs;
 
+import main.java.fr.verymc.spigot.Main;
 import main.java.fr.verymc.spigot.dungeon.DungeonBossBarManager;
 import main.java.fr.verymc.spigot.dungeon.items.DungeonItemManager;
 import main.java.fr.verymc.spigot.dungeon.items.sets.ZombieSet;
@@ -10,6 +11,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Zombie;
 import org.bukkit.event.entity.CreatureSpawnEvent;
+import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -69,6 +71,7 @@ public class DungeonMobCreator {
 
         if (level == 10) {
             DungeonBossBarManager.instance.createBossBar(z, z.getCustomName());
+            z.setMetadata("boss", new FixedMetadataValue(Main.instance, "true"));
         }
 
         z.registerAttribute(Attribute.GENERIC_MOVEMENT_SPEED);

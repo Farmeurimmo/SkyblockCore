@@ -7,6 +7,7 @@ import main.java.fr.verymc.spigot.utils.FAWEUtils;
 import main.java.fr.verymc.spigot.utils.ObjectConverter;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -82,6 +83,25 @@ public class DungeonManager {
                 player.setAllowFlight(false);
             }
         }
+
+
+        Bukkit.getScheduler().scheduleSyncDelayedTask(Main.instance, () -> makeDungeonEnd(dungeon, true), 20 * 60 * 10);
+    }
+
+    public void makeDungeonEnd(Dungeon dungeon, boolean force) {
+        if (force) {
+
+        } else {
+
+        }
+        for (LivingEntity livingEntity : DungeonMobManager.instance.mobs.get(dungeon)) {
+            livingEntity.remove();
+        }
+        for (Player player : dungeon.getPlayers()) {
+            player.sendTitle("§aLe boss est mort", "§aEn %temps% secondes");
+            //plugin message
+        }
+
     }
 
     public void checkForFullTeam(List<String> players, DungeonFloors floor, int tries) {
@@ -186,6 +206,16 @@ public class DungeonManager {
             }
         }
         return toReturn;
+    }
+
+    public Dungeon getDungeonByLoc(Location loc) {
+        for (Dungeon dungeon : dungeons) {
+            if (dungeon.getLocDungeon().getX() - 300 < loc.getX() && dungeon.getLocDungeon().getX() + 300 > loc.getX() &&
+                    dungeon.getLocDungeon().getZ() - 300 < loc.getZ() && dungeon.getLocDungeon().getZ() + 300 > loc.getZ()) {
+                return dungeon;
+            }
+        }
+        return null;
     }
 
     public boolean isADungeonByLoc(Location loc) {

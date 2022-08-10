@@ -64,6 +64,10 @@ public final class DungeonCmd implements SimpleCommand {
         if (args.length == 2) {
             if (haveATeam) {
                 if (args[0].equalsIgnoreCase("floor")) {
+                    if (!dungeonTeam.isOwner(player)) {
+                        player.sendMessage(Component.text("§6§lDungeon §8» §cVous devez être le propriétaire de la team pour faire ceci."));
+                        return;
+                    }
                     if (DungeonFloors.valueOf(args[1]) != null) {
                         DungeonFloors floor = DungeonFloors.valueOf(args[1]);
                         dungeonTeam.setFloor(floor);
@@ -94,14 +98,14 @@ public final class DungeonCmd implements SimpleCommand {
                     player.sendMessage(Component.text("§6§lDungeon §8» §cCette team n'accepte que les invitations et vous n'en avez pas reçu."));
                     return;
                 }
-                if (dungeonTeam.isFullForFloor()) {
+                if (targetTeam.isFullForFloor()) {
                     player.sendMessage(Component.text("§6§lDungeon §8» §cCette team est déjà complète."));
                     return;
                 }
                 if (targetTeam.isPendingInvite(player.getUniqueId())) {
                     targetTeam.removePendingInvite(player.getUniqueId());
                 }
-                dungeonTeam.sendMessageToEveryone("§6§lDungeon §8» §f" + player.getUsername() + " a rejoint la team.");
+                targetTeam.sendMessageToEveryone("§6§lDungeon §8» §f" + player.getUsername() + " a rejoint la team.");
                 DungeonTeamManager.instance.addPlayerToTeam(targetTeam, player);
                 player.sendMessage(Component.text("§6§lDungeon §8» §fVous avez rejoint la team de " + target.getUsername() + "."));
                 return;
@@ -226,7 +230,7 @@ public final class DungeonCmd implements SimpleCommand {
                 dungeonTeam.addPendingInvite(invitedPlayer.getUniqueId());
                 DungeonTeamManager.instance.makeInviteExpireForPlayer(invitedPlayer, dungeonTeam, player.getUsername());
                 invitedPlayer.sendMessage(Component.text("§6§lDungeon §8» §f" + player.getUsername() + " vous a invité à rejoindre sa team. " +
-                        "Faites /is join " + player.getUsername() + " pour rejoindre sa team. L'invitation expire dans §c30 secondes."));
+                        "Faites /dungeon join " + player.getUsername() + " pour rejoindre sa team. L'invitation expire dans §c30 secondes."));
                 player.sendMessage(Component.text("§6§lDungeon §8» §fVous avez invité " + invitedPlayer.getUsername() + " à rejoindre votre team."));
                 return;
             }
@@ -275,7 +279,7 @@ public final class DungeonCmd implements SimpleCommand {
         boolean haveATeam = (dungeonTeam != null);
         switch (args.length) {
             case 1:
-                toReturn.addAll(Arrays.asList("join", "leave", "create", "delete", "invitation", "invite", "create", "kick", "membres", "tchat", "start", "floor"));
+                toReturn.addAll(Arrays.asList("join", "leave", "create", "delete", "invitation", "invite", "create", "kick", "membres", "tchat", "start", "floor", "invite"));
                 break;
             case 2:
                 if (args[0].equalsIgnoreCase("floor")) {
