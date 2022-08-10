@@ -13,7 +13,7 @@ import main.java.fr.verymc.spigot.island.protections.IslandSettings;
 import main.java.fr.verymc.spigot.island.upgrade.IslandUpgradeGenerator;
 import main.java.fr.verymc.spigot.island.upgrade.IslandUpgradeMember;
 import main.java.fr.verymc.spigot.island.upgrade.IslandUpgradeSize;
-import main.java.fr.verymc.spigot.utils.WorldBorderUtil;
+import main.java.fr.verymc.spigot.utils.WorldBorderUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -34,7 +34,7 @@ public class Island {
     private IslandUpgradeSize sizeUpgrade;
     private IslandUpgradeMember memberUpgrade;
     private IslandUpgradeGenerator generatorUpgrade;
-    private WorldBorderUtil.Color borderColor;
+    private WorldBorderUtils.Color borderColor;
     private IslandBank bank;
     private ArrayList<UUID> banneds;
     private boolean isPublic;
@@ -52,7 +52,7 @@ public class Island {
     private ArrayList<UUID> chatToggled = new ArrayList<>();
 
     public Island(String name, Location home, Location center, UUID uuid, HashMap<UUID, IslandRanks> members,
-                  IslandUpgradeSize upgradeSize, IslandUpgradeMember upgradeMember, WorldBorderUtil.Color borderColor,
+                  IslandUpgradeSize upgradeSize, IslandUpgradeMember upgradeMember, WorldBorderUtils.Color borderColor,
                   IslandBank bank, IslandUpgradeGenerator generatorUpgrade, ArrayList<UUID> banneds, ArrayList<IslandChallenge> challenges,
                   boolean isDefaultChallenges, HashMap<IslandRanks, ArrayList<IslandPerms>> permsPerRanks,
                   boolean isPublic, double value, ArrayList<IslandSettings> activatedSettings, ArrayList<Chest> chests, ArrayList<Minion> minions,
@@ -169,11 +169,11 @@ public class Island {
         return sizeUpgrade;
     }
 
-    public WorldBorderUtil.Color getBorderColor() {
+    public WorldBorderUtils.Color getBorderColor() {
         return borderColor;
     }
 
-    public WorldBorderUtil.Color setBorderColor(WorldBorderUtil.Color color) {
+    public WorldBorderUtils.Color setBorderColor(WorldBorderUtils.Color color) {
         return borderColor = color;
     }
 

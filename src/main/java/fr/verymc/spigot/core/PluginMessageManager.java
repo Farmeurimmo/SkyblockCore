@@ -35,9 +35,9 @@ public class PluginMessageManager implements PluginMessageListener {
             }
             return;
         }
+        JSONParser parser = new JSONParser();
+        JSONObject json = null;
         if (subchannel.equals("subtp")) {
-            JSONParser parser = new JSONParser();
-            JSONObject json = null;
             try {
                 json = (JSONObject) parser.parse(data);
             } catch (ParseException e) {

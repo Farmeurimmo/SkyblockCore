@@ -2,10 +2,10 @@ package main.java.fr.verymc.spigot;
 
 import com.gmail.filoghost.holographicdisplays.api.Hologram;
 import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
+import main.java.fr.verymc.JedisManager;
 import main.java.fr.verymc.commons.enums.ServerType;
 import main.java.fr.verymc.commons.utils.HTTPUtils;
 import main.java.fr.verymc.spigot.core.InventorySyncManager;
-import main.java.fr.verymc.spigot.core.JedisManager;
 import main.java.fr.verymc.spigot.core.PluginMessageManager;
 import main.java.fr.verymc.spigot.core.ServersManager;
 import main.java.fr.verymc.spigot.core.antiafk.AntiAfk;
@@ -69,6 +69,7 @@ import main.java.fr.verymc.spigot.island.playerwarps.PlayerWarpGuiManager;
 import main.java.fr.verymc.spigot.island.playerwarps.PlayerWarpManager;
 import main.java.fr.verymc.spigot.island.protections.BlockListener;
 import main.java.fr.verymc.spigot.island.protections.EntityListener;
+import main.java.fr.verymc.spigot.utils.FAWEUtils;
 import main.java.fr.verymc.spigot.utils.UtilsManager;
 import net.citizensnpcs.api.CitizensAPI;
 import net.citizensnpcs.api.npc.NPC;
@@ -95,7 +96,7 @@ public class Main extends JavaPlugin {
     //Usage non recommandé pour les personnes ne le connaissant pas ce système ni les risques
     //qui peuvent en émerger
     public static boolean devMode = true;
-    public static ServerType devServerType = ServerType.SKYBLOCK_ISLAND;
+    public static ServerType devServerType = ServerType.SKYBLOCK_DUNGEON;
     static LuckPerms api;
     private final HashMap<String, Integer> spawncooldown = new HashMap<>();
     public ArrayList<Player> pending = new ArrayList<>();
@@ -216,6 +217,7 @@ public class Main extends JavaPlugin {
 
         new IslandManager();
         saveResource("spawn.schem", true);
+        saveResource("FLOOR_1.schem", true);
         createMainWorld();
 
         new SkyblockUserManager();
@@ -320,8 +322,8 @@ public class Main extends JavaPlugin {
         System.out.println("§aDémarrage du plugin TERMINE!");
         System.out.println("------------------------------------------------");
 
-        this.getServer().getMessenger().registerOutgoingPluginChannel(this, "skyblock:toproxy");
-        this.getServer().getMessenger().registerIncomingPluginChannel(this, "skyblock:tospigot", new PluginMessageManager());
+        getServer().getMessenger().registerOutgoingPluginChannel(this, "skyblock:toproxy");
+        getServer().getMessenger().registerIncomingPluginChannel(this, "skyblock:tospigot", new PluginMessageManager());
     }
 
     @Override
@@ -496,7 +498,7 @@ public class Main extends JavaPlugin {
         if (serverType == ServerType.SKYBLOCK_HUB) {
             for (File file : Main.instance.getDataFolder().listFiles()) {
                 if (file.getName().contains("spawn")) {
-                    IslandManager.instance.pasteIsland(file, SpawnCmd.Spawn.clone().add(0, -1, 0));
+                    FAWEUtils.instance.pasteSchem(file, SpawnCmd.Spawn.clone().add(0, -1, 0));
                 }
             }
         }

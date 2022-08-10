@@ -1,5 +1,6 @@
 package main.java.fr.verymc.spigot.core;
 
+import main.java.fr.verymc.JedisManager;
 import main.java.fr.verymc.spigot.utils.InventorySyncUtils;
 import main.java.fr.verymc.spigot.utils.ObjectConverter;
 import org.bukkit.entity.Player;

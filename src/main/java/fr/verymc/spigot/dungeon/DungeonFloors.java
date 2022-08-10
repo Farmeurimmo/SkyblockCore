@@ -12,6 +12,30 @@ public enum DungeonFloors {
         this.name = name;
     }
 
+    public static int getSizeFromFloor(DungeonFloors floor) {
+        switch (floor) {
+            case FLOOR_1:
+                return 175;
+            case FLOOR_2:
+                return 200;
+            case FLOOR_3:
+                return 250;
+            default:
+                return 0;
+        }
+    }
+
+    public static int getPlayersRequiredForFloor(DungeonFloors floor) {
+        switch (floor) {
+            case FLOOR_2:
+                return 3;
+            case FLOOR_3:
+                return 4;
+            default:
+                return 2;
+        }
+    }
+
     public String getName() {
         return name;
     }

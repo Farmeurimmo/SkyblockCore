@@ -5,12 +5,12 @@ import com.sk89q.worldedit.WorldEdit;
 import com.sk89q.worldedit.WorldEditException;
 import com.sk89q.worldedit.bukkit.BukkitAdapter;
 import com.sk89q.worldedit.extent.clipboard.Clipboard;
-import com.sk89q.worldedit.extent.clipboard.io.*;
+import com.sk89q.worldedit.extent.clipboard.io.ClipboardFormat;
+import com.sk89q.worldedit.extent.clipboard.io.ClipboardFormats;
+import com.sk89q.worldedit.extent.clipboard.io.ClipboardReader;
 import com.sk89q.worldedit.function.operation.Operation;
 import com.sk89q.worldedit.function.operation.Operations;
 import com.sk89q.worldedit.math.BlockVector3;
-import com.sk89q.worldedit.regions.CuboidRegion;
-import com.sk89q.worldedit.regions.Region;
 import com.sk89q.worldedit.session.ClipboardHolder;
 import main.java.fr.verymc.commons.enums.ServerType;
 import main.java.fr.verymc.commons.utils.HTTPUtils;
@@ -34,8 +34,9 @@ import main.java.fr.verymc.spigot.island.perms.IslandRanks;
 import main.java.fr.verymc.spigot.island.upgrade.IslandUpgradeGenerator;
 import main.java.fr.verymc.spigot.island.upgrade.IslandUpgradeMember;
 import main.java.fr.verymc.spigot.island.upgrade.IslandUpgradeSize;
+import main.java.fr.verymc.spigot.utils.FAWEUtils;
 import main.java.fr.verymc.spigot.utils.PlayerUtils;
-import main.java.fr.verymc.spigot.utils.WorldBorderUtil;
+import main.java.fr.verymc.spigot.utils.WorldBorderUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -46,10 +47,8 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.*;
-import java.util.concurrent.CompletableFuture;
 
 public class IslandManager {
 
@@ -68,7 +67,7 @@ public class IslandManager {
         instance = this;
         challenges = getAvailableChallenges();
         new IslandChallengesReset();
-        new WorldBorderUtil(Main.instance);
+        new WorldBorderUtils(Main.instance);
         new IslandRank();
     }
 
@@ -117,7 +116,7 @@ public class IslandManager {
             for (File file : Main.instance.getDataFolder().listFiles()) {
                 System.out.println(file.getName());
                 if (file.getName().contains(island.getUUID().toString())) {
-                    pasteIsland(file, island.getCenter().clone().add(250,
+                    FAWEUtils.instance.pasteSchem(file, island.getCenter().clone().add(250,
                             0, 250));
                     island.setLoadedHere(true);
                     for (Minion minion : island.getMinions()) {
@@ -150,7 +149,7 @@ public class IslandManager {
                 pos1.set(pos1.getBlockX(), 0, pos1.getBlockZ());
                 Location pos2 = island.getCenter().clone().add(-250, 0, -250);
                 pos2.set(pos2.getBlockX(), 256, pos2.getBlockZ());
-                saveSchem(String.valueOf(island.getUUID()), pos1,
+                FAWEUtils.instance.saveSchem(String.valueOf(island.getUUID()), pos1,
                         pos2, island.getCenter().getWorld(), island.getCenter().clone());
             }
         }
@@ -285,7 +284,7 @@ public class IslandManager {
         if (Main.instance.serverType != ServerType.SKYBLOCK_ISLAND) return;
         Island i = getIslandByLoc(p.getLocation());
         if (i != null) {
-            WorldBorderUtil.instanceClass.sendWorldBorder(p, i.getBorderColor(),
+            WorldBorderUtils.instanceClass.sendWorldBorder(p, i.getBorderColor(),
                     IslandUpgradeSize.getSizeFromLevel(i.getSizeUpgrade().getLevel()), i.getCenter());
         }
     }
@@ -294,7 +293,7 @@ public class IslandManager {
         if (Main.instance.serverType != ServerType.SKYBLOCK_ISLAND) return;
         Island i = getIslandByLoc(loc);
         if (i != null) {
-            WorldBorderUtil.instanceClass.sendWorldBorder(p, i.getBorderColor(),
+            WorldBorderUtils.instanceClass.sendWorldBorder(p, i.getBorderColor(),
                     IslandUpgradeSize.getSizeFromLevel(i.getSizeUpgrade().getLevel()), i.getCenter());
         }
     }
@@ -668,7 +667,7 @@ public class IslandManager {
         toReturn.setWorld(getMainWorld());
 
 
-        pasteIsland(fileSchematic, toReturn);
+        FAWEUtils.instance.pasteSchem(fileSchematic, toReturn);
 
         HashMap<UUID, IslandRanks> members = new HashMap<>();
         members.put(p.getUniqueId(), IslandRanks.CHEF);
@@ -683,7 +682,7 @@ public class IslandManager {
         home.setPitch(0);
         home.setYaw(130);
         islands.add(new Island("Ile de " + p.getName(), home, toReturn, uuid, members,
-                islandUpgradeSize, islandUpgradeMember, WorldBorderUtil.Color.BLUE, islandBank, islandUpgradeGenerator, banneds, challenges,
+                islandUpgradeSize, islandUpgradeMember, WorldBorderUtils.Color.BLUE, islandBank, islandUpgradeGenerator, banneds, challenges,
                 true, null, true, 0.0, null, null, null, null, true));
         new BukkitRunnable() {
             @Override
@@ -696,53 +695,6 @@ public class IslandManager {
             }
         }.runTaskTimer(Main.instance, 0, 10L);
 
-    }
-
-    public void pasteIsland(File file, Location pos) {
-
-        CompletableFuture.runAsync(() -> {
-            try {
-                com.sk89q.worldedit.world.World weWorld = BukkitAdapter.adapt(pos.getWorld());
-                ClipboardFormat format = ClipboardFormats.findByFile(file);
-                ClipboardReader reader = format.getReader(new FileInputStream(file));
-
-                Clipboard clipboard = reader.read();
-                EditSession editSession = WorldEdit.getInstance().getEditSessionFactory().getEditSession(weWorld,
-                        -1);
-
-                Operation operation = new ClipboardHolder(clipboard).createPaste(editSession)
-                        .to(BlockVector3.at(pos.getX(), pos.getY(), pos.getZ())).ignoreAirBlocks(true).copyBiomes(true).build();
-
-
-                Operations.complete(operation);
-                editSession.flushSession();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
-    }
-
-    /*IslandManager.instance.saveSchem("aaaa", island.getCenter().clone().add(50, -15, 50),
-                        island.getCenter().clone().add(-50, 40, -50), island.getCenter().getWorld(), island.getCenter().clone());*/
-
-    public void saveSchem(String filename, Location loc1, Location loc2, World world, Location center) {
-        try {
-            com.sk89q.worldedit.world.World weWorld = BukkitAdapter.adapt(world);
-            BlockVector3 pos1 = BlockVector3.at(loc1.getBlockX(), loc1.getBlockY(), loc1.getBlockZ());
-            BlockVector3 pos2 = BlockVector3.at(loc2.getBlockX(), loc2.getBlockY(), loc2.getBlockZ());
-            Region cReg = new CuboidRegion(weWorld, pos2, pos1);
-            File file = new File(Main.instance.getDataFolder(), filename + ".schem");
-            Clipboard clipboard = Clipboard.create(cReg);
-            clipboard.setOrigin(BlockVector3.at(center.getX(), center.getY(), center.getZ()));
-
-            try (ClipboardWriter writer = BuiltInClipboardFormat.FAST.getWriter(new FileOutputStream(file))) {
-                writer.write(clipboard);
-            }
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
 }

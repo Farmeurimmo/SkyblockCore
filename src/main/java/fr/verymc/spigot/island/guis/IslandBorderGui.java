@@ -2,7 +2,7 @@ package main.java.fr.verymc.spigot.island.guis;
 
 import main.java.fr.verymc.spigot.island.Island;
 import main.java.fr.verymc.spigot.island.IslandManager;
-import main.java.fr.verymc.spigot.utils.WorldBorderUtil;
+import main.java.fr.verymc.spigot.utils.WorldBorderUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -32,7 +32,7 @@ public class IslandBorderGui {
 
         ItemStack custom1 = new ItemStack(Material.RED_STAINED_GLASS_PANE, 1);
         ItemMeta meta1 = custom1.getItemMeta();
-        if (playerIsland.getBorderColor() == WorldBorderUtil.Color.RED) {
+        if (playerIsland.getBorderColor() == WorldBorderUtils.Color.RED) {
             meta1.setDisplayName("§6Rouge §a(actif)");
         } else {
             meta1.setDisplayName("§6Rouge");
@@ -43,7 +43,7 @@ public class IslandBorderGui {
 
         ItemStack custom2 = new ItemStack(Material.GREEN_STAINED_GLASS_PANE, 1);
         ItemMeta meta2 = custom2.getItemMeta();
-        if (playerIsland.getBorderColor() == WorldBorderUtil.Color.GREEN) {
+        if (playerIsland.getBorderColor() == WorldBorderUtils.Color.GREEN) {
             meta2.setDisplayName("§6Vert §a(actif)");
         } else {
             meta2.setDisplayName("§6Vert");
@@ -54,7 +54,7 @@ public class IslandBorderGui {
 
         ItemStack custom3 = new ItemStack(Material.BLUE_STAINED_GLASS_PANE, 1);
         ItemMeta meta3 = custom3.getItemMeta();
-        if (playerIsland.getBorderColor() == WorldBorderUtil.Color.BLUE) {
+        if (playerIsland.getBorderColor() == WorldBorderUtils.Color.BLUE) {
             meta3.setDisplayName("§6Bleu §a(actif)");
         } else {
             meta3.setDisplayName("§6Bleu");

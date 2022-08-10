@@ -8,5 +8,6 @@ public class UtilsManager {
         new PreGenItems();
         new ObjectConverter();
         new InventorySyncUtils();
+        new FAWEUtils();
     }
 }

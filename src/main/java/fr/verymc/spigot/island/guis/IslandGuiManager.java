@@ -10,7 +10,7 @@ import main.java.fr.verymc.spigot.island.perms.IslandRank;
 import main.java.fr.verymc.spigot.island.protections.IslandSettings;
 import main.java.fr.verymc.spigot.island.upgrade.IslandUpgradeSize;
 import main.java.fr.verymc.spigot.utils.InventoryUtils;
-import main.java.fr.verymc.spigot.utils.WorldBorderUtil;
+import main.java.fr.verymc.spigot.utils.WorldBorderUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -290,19 +290,19 @@ public class IslandGuiManager implements Listener {
                 return;
             }
             if (current.getType() == Material.GREEN_STAINED_GLASS_PANE) {
-                playerIsland.setBorderColor(WorldBorderUtil.Color.GREEN);
+                playerIsland.setBorderColor(WorldBorderUtils.Color.GREEN);
                 IslandManager.instance.setWorldBorderForAllPlayerOnIsland(playerIsland);
                 IslandBorderGui.instance.openBorderIslandMenu(player);
                 return;
             }
             if (current.getType() == Material.RED_STAINED_GLASS_PANE) {
-                playerIsland.setBorderColor(WorldBorderUtil.Color.RED);
+                playerIsland.setBorderColor(WorldBorderUtils.Color.RED);
                 IslandManager.instance.setWorldBorderForAllPlayerOnIsland(playerIsland);
                 IslandBorderGui.instance.openBorderIslandMenu(player);
                 return;
             }
             if (current.getType() == Material.BLUE_STAINED_GLASS_PANE) {
-                playerIsland.setBorderColor(WorldBorderUtil.Color.BLUE);
+                playerIsland.setBorderColor(WorldBorderUtils.Color.BLUE);
                 IslandManager.instance.setWorldBorderForAllPlayerOnIsland(playerIsland);
                 IslandBorderGui.instance.openBorderIslandMenu(player);
                 return;

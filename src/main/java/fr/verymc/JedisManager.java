@@ -1,4 +1,4 @@
-package main.java.fr.verymc.spigot.core;
+package main.java.fr.verymc;
 
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
@@ -25,7 +25,6 @@ public class JedisManager {
 
     public void sendToRedis(String arg0, String data) {
         try (Jedis jedis = pool.getResource()) {
-            //jedis.auth(""); if password is set
             jedis.auth(REDIS_PASSWORD);
             jedis.set(arg0, data);
         }
@@ -33,9 +32,17 @@ public class JedisManager {
 
     public String getFromRedis(String arg0) {
         try (Jedis jedis = pool.getResource()) {
-            //jedis.auth(""); if password is set
             jedis.auth(REDIS_PASSWORD);
             return jedis.get(arg0);
+        }
+    }
+
+    public void removeFromRedis(String arg0) {
+        try (Jedis jedis = pool.getResource()) {
+            jedis.auth(REDIS_PASSWORD);
+            if (jedis.get(arg0) != null) {
+                jedis.del(arg0);
+            }
         }
     }
 

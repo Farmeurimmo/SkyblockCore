@@ -8,10 +8,10 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
-public class WorldBorderUtil {
+public class WorldBorderUtils {
 
 
-    public static WorldBorderUtil instanceClass;
+    public static WorldBorderUtils instanceClass;
     private Object worldBorder;
     private Method setCenter, setSize, setWarningTime, setWarningDistance, transistionSizeBetween;
     private Constructor<?> packetPlayOutWorldBorder;
@@ -20,7 +20,7 @@ public class WorldBorderUtil {
     private String minecraftVersion;
     private JavaPlugin instance;
 
-    public WorldBorderUtil(JavaPlugin instance) {
+    public WorldBorderUtils(JavaPlugin instance) {
         try {
             this.instance = instance;
             this.instanceClass = this;
@@ -119,7 +119,7 @@ public class WorldBorderUtil {
         return Integer.parseInt(minecraftVersion.substring(1, getVersion().length() - 3).replace("_", ""));
     }
 
-    public String borderToString(WorldBorderUtil.Color color) {
+    public String borderToString(WorldBorderUtils.Color color) {
         switch (color) {
             case RED:
                 return "RED";
@@ -130,14 +130,14 @@ public class WorldBorderUtil {
         }
     }
 
-    public WorldBorderUtil.Color borderFromString(String str) {
+    public WorldBorderUtils.Color borderFromString(String str) {
         switch (str) {
             case "RED":
-                return WorldBorderUtil.Color.RED;
+                return WorldBorderUtils.Color.RED;
             case "GREEN":
-                return WorldBorderUtil.Color.GREEN;
+                return WorldBorderUtils.Color.GREEN;
             default:
-                return WorldBorderUtil.Color.BLUE;
+                return WorldBorderUtils.Color.BLUE;
         }
     }
 

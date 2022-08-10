@@ -44,7 +44,7 @@ public class DungeonMobCreator {
         new DungeonItemManager();
     }
 
-    public void createAndSpawnZombie(Location spawnLoc, int level) {
+    public LivingEntity createAndSpawnZombie(Location spawnLoc, int level) {
         LivingEntity mob = (LivingEntity) spawnLoc.getWorld().spawnEntity(spawnLoc, EntityType.ZOMBIE, CreatureSpawnEvent.SpawnReason.SPAWNER_EGG);
         Zombie z = (Zombie) mob;
 
@@ -87,7 +87,8 @@ public class DungeonMobCreator {
         z.getEquipment().setLeggingsDropChance(100);
         z.getEquipment().setBootsDropChance(100);
         z.getEquipment().setItemInHandDropChance(100);
-        z.spawnAt(spawnLoc, CreatureSpawnEvent.SpawnReason.SPAWNER_EGG);
+
+        return mob;
     }
 
     public Integer checkForInvalidLevel(ArrayList<Integer> levelAva, int lvl) {
