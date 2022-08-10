@@ -64,8 +64,7 @@ public class ChannelsManager {
                 return;
             }
             if (subchannel.equals("messageToIsland")) {
-                sendPluginMessage(player, "messageToIsland", null,
-                        rawData);
+                sendPluginMessage(player, "messageToIsland", rawData);
                 return;
             }
         } catch (Exception e) {
@@ -75,7 +74,7 @@ public class ChannelsManager {
 
     //sendPluginMessage(player, "pay", null, rawData);
 
-    public void sendPluginMessage(Player player, String channel, String serverName, String... data) {
+    public void sendPluginMessage(Player player, String channel, String... data) {
         if (player == null) return;
         ByteArrayDataOutput out = ByteStreams.newDataOutput();
         out.writeUTF(channel);
@@ -86,10 +85,6 @@ public class ChannelsManager {
         if (!serverOp.isPresent()) {
             throw new IllegalStateException("No server to send data to");
         }
-        if (serverName == null) {
-            serverOp.get().sendPluginMessage(MinecraftChannelIdentifier.from("skyblock:topigot"), out.toByteArray());
-            return;
-        }
-        player.getCurrentServer().get().sendPluginMessage(MinecraftChannelIdentifier.from("skyblock:tospigot"), out.toByteArray());
+        serverOp.get().sendPluginMessage(MinecraftChannelIdentifier.from("skyblock:topigot"), out.toByteArray());
     }
 }

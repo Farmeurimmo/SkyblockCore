@@ -8,8 +8,10 @@ import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ProxyServer;
 import com.velocitypowered.api.proxy.messages.MinecraftChannelIdentifier;
 import com.velocitypowered.api.proxy.server.RegisteredServer;
+import main.java.fr.verymc.JedisManager;
 import main.java.fr.verymc.commons.enums.ServerType;
 import main.java.fr.verymc.velocity.cmd.DungeonCmd;
+import main.java.fr.verymc.velocity.cmd.SkyblockCmd;
 import main.java.fr.verymc.velocity.events.ConnectionListener;
 import main.java.fr.verymc.velocity.events.PlayerListener;
 import main.java.fr.verymc.velocity.team.DungeonTeamManager;
@@ -19,6 +21,7 @@ import org.slf4j.Logger;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 @Plugin(id = "skyblockcore", name = "SkyblockCoreVelocity", version = "0.1.0-SNAPSHOT",
         url = "https://verymc.fr", description = "Owned by VeryMc", authors = {"Farmeurimmo"})
@@ -27,6 +30,8 @@ public class Main {
     public static Main instance;
     private final ProxyServer server;
     private final Logger logger;
+    public boolean maintenance = false;
+    public String maintenance_perm = "skyblock.maintenance.acces";
 
     @Inject
     public Main(ProxyServer server, Logger logger) {
@@ -40,6 +45,8 @@ public class Main {
 
     @Subscribe
     public void onProxyInitialization(ProxyInitializeEvent e) {
+        new JedisManager();
+
         server.getChannelRegistrar().register(MinecraftChannelIdentifier.create("skyblock", "tospigot"));
         server.getChannelRegistrar().register(MinecraftChannelIdentifier.from("skyblock:toproxy"));
 
@@ -51,6 +58,7 @@ public class Main {
         new DungeonTeamManager(server, logger);
 
         server.getCommandManager().register("dungeon", new DungeonCmd());
+        server.getCommandManager().register("skyblock", new SkyblockCmd());
 
         logger.info("§aLoading completed !");
     }
@@ -63,6 +71,31 @@ public class Main {
             }
         }
         return count;
+    }
+
+    public void startMaintenanceModule() {
+        for (RegisteredServer server : server.getAllServers()) {
+            if (isSkyblockServer(server)) {
+                server.getPlayersConnected().forEach(player -> {
+                    if (!player.hasPermission(maintenance_perm))
+                        player.spoofChatInput("/hub");
+                    player.sendMessage(Component.text("§cLe serveur skyblock passe en maintenance !"));
+                });
+            }
+        }
+        server.getScheduler()
+                .buildTask(Main.instance, () -> {
+                    for (RegisteredServer registeredServer : server.getAllServers()) {
+                        if (isSkyblockServer(registeredServer)) {
+                            registeredServer.getPlayersConnected().forEach(player -> {
+                                if (!player.hasPermission(maintenance_perm))
+                                    player.disconnect(Component.text("§cLe serveur skyblock passe en maintenance !"));
+                            });
+                        }
+                    }
+                })
+                .delay(15L, TimeUnit.SECONDS)
+                .schedule();
     }
 
     public boolean isSkyblockServer(RegisteredServer registeredServer) {
@@ -80,6 +113,15 @@ public class Main {
                 registeredServer.getPlayersConnected().forEach(player -> player.sendMessage(Component.text(message)));
             }
         }
+    }
+
+    public RegisteredServer getServerByName(String str) {
+        for (RegisteredServer registeredServer : server.getAllServers()) {
+            if (registeredServer.getServerInfo().getName().equals(str)) {
+                return registeredServer;
+            }
+        }
+        return null;
     }
 
     public ArrayList<RegisteredServer> getSkyblockServers() {

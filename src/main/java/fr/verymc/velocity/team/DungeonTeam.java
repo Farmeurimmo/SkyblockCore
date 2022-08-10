@@ -2,6 +2,7 @@ package main.java.fr.verymc.velocity.team;
 
 import com.velocitypowered.api.proxy.Player;
 import main.java.fr.verymc.spigot.dungeon.DungeonFloors;
+import net.kyori.adventure.text.Component;
 
 import java.util.ArrayList;
 import java.util.UUID;
@@ -20,6 +21,16 @@ public class DungeonTeam {
         this.owner = owner;
         this.floor = floor;
         this.isOpen = isOpen;
+    }
+
+    public boolean isFullForFloor() {
+        return players.size() >= DungeonFloors.getPlayersRequiredForFloor(floor);
+    }
+
+    public void sendMessageToEveryone(String str) {
+        for (Player player : players) {
+            player.sendMessage(Component.text(str));
+        }
     }
 
     public ArrayList<Player> getPlayers() {

@@ -3,10 +3,14 @@ package main.java.fr.verymc.velocity.cmd;
 import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.command.SimpleCommand;
 import com.velocitypowered.api.proxy.Player;
+import com.velocitypowered.api.proxy.server.RegisteredServer;
+import main.java.fr.verymc.JedisManager;
+import main.java.fr.verymc.spigot.dungeon.DungeonFloors;
 import main.java.fr.verymc.velocity.Main;
 import main.java.fr.verymc.velocity.team.DungeonTeam;
 import main.java.fr.verymc.velocity.team.DungeonTeamManager;
 import net.kyori.adventure.text.Component;
+import org.json.simple.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -27,10 +31,10 @@ public final class DungeonCmd implements SimpleCommand {
         Player player = (Player) source;
         String[] args = invocation.arguments();
 
-        if (!Main.instance.isSkyblockServer(player.getCurrentServer().get().getServer())) {
+        /*if (!Main.instance.isSkyblockServer(player.getCurrentServer().get().getServer())) {
             player.sendMessage(Component.text("§6§lDungeon §8» §cVous devez être sur un serveur Skyblock pour utiliser cette commande."));
             return;
-        }
+        }*/
 
         DungeonTeam dungeonTeam = DungeonTeamManager.instance.getPlayerTeam(player);
         boolean haveATeam = (dungeonTeam != null);
@@ -43,7 +47,8 @@ public final class DungeonCmd implements SimpleCommand {
                     return;
                 }
                 DungeonTeamManager.instance.createTeam(player);
-                player.sendMessage(Component.text("§6§lDungeon §8» §fVous avez créé une team."));
+                player.sendMessage(Component.text("§6§lDungeon §8» §fVous avez créé une team. La floor la plus basse a été séléctionné par défaut," +
+                        " /dungeon floor <floor> pour la changer."));
                 return;
             }
             if (args[0].equalsIgnoreCase("join")) {
@@ -57,6 +62,18 @@ public final class DungeonCmd implements SimpleCommand {
             }
         }
         if (args.length == 2) {
+            if (haveATeam) {
+                if (args[0].equalsIgnoreCase("floor")) {
+                    if (DungeonFloors.valueOf(args[1]) != null) {
+                        DungeonFloors floor = DungeonFloors.valueOf(args[1]);
+                        dungeonTeam.setFloor(floor);
+                        player.sendMessage(Component.text("§6§lDungeon §8» §fVous avez changé la floor du dungeon en " + floor + " (" + floor.getName() + ")."));
+                    } else {
+                        player.sendMessage(Component.text("§6§lDungeon §8» §cCette floor n'existe pas."));
+                    }
+                    return;
+                }
+            }
             Optional<Player> playerOptional = Main.instance.getPlayer(args[1]);
             if (playerOptional.isEmpty()) {
                 player.sendMessage(Component.text("§6§lDungeon §8» §cCe joueur n'existe pas ou n'est pas en ligne."));
@@ -77,12 +94,14 @@ public final class DungeonCmd implements SimpleCommand {
                     player.sendMessage(Component.text("§6§lDungeon §8» §cCette team n'accepte que les invitations et vous n'en avez pas reçu."));
                     return;
                 }
-                for (Player player1 : targetTeam.getPlayers()) {
-                    player1.sendMessage(Component.text("§6§lDungeon §8» §f" + player.getUsername() + " a rejoint la team."));
+                if (dungeonTeam.isFullForFloor()) {
+                    player.sendMessage(Component.text("§6§lDungeon §8» §cCette team est déjà complète."));
+                    return;
                 }
                 if (targetTeam.isPendingInvite(player.getUniqueId())) {
                     targetTeam.removePendingInvite(player.getUniqueId());
                 }
+                dungeonTeam.sendMessageToEveryone("§6§lDungeon §8» §f" + player.getUsername() + " a rejoint la team.");
                 DungeonTeamManager.instance.addPlayerToTeam(targetTeam, player);
                 player.sendMessage(Component.text("§6§lDungeon §8» §fVous avez rejoint la team de " + target.getUsername() + "."));
                 return;
@@ -95,6 +114,27 @@ public final class DungeonCmd implements SimpleCommand {
         }
 
         if (args.length == 1) {
+            if (args[0].equalsIgnoreCase("start")) {
+                if (!dungeonTeam.isFullForFloor()) {
+                    player.sendMessage(Component.text("§6§lDungeon §8» §cVous n'avez pas assez de joueurs dans votre team pour cette floor."));
+                    return;
+                }
+                JSONObject jsonObject = new JSONObject();
+                String serverName = "lobby2";
+                ArrayList<String> playerNames = new ArrayList<>();
+                RegisteredServer registeredServer = Main.instance.getServerByName(serverName);
+                System.out.println(serverName);
+                System.out.println(registeredServer);
+                for (Player player1 : dungeonTeam.getPlayers()) {
+                    playerNames.add(player1.getUsername());
+                    player1.createConnectionRequest(registeredServer).fireAndForget();
+                }
+                jsonObject.put("players", playerNames);
+                jsonObject.put("floor", dungeonTeam.getFloor().toString());
+                JedisManager.instance.sendToRedis("tmpDungeonTeam", jsonObject.toString());
+                dungeonTeam.sendMessageToEveryone("§6§lDungeon §8» §fDungeon démarré, en attente de serveur...");
+                return;
+            }
             if (args[0].equalsIgnoreCase("invite")) {
                 player.sendMessage(Component.text("§6§lDungeon §8» §cMerci de préciser le nom d'un joueur à inviter."));
                 return;
@@ -128,9 +168,7 @@ public final class DungeonCmd implements SimpleCommand {
                     return;
                 }
                 DungeonTeamManager.instance.removePlayerFromTeam(dungeonTeam, player);
-                for (Player player1 : dungeonTeam.getPlayers()) {
-                    player1.sendMessage(Component.text("§6§lDungeon §8» §f" + player.getUsername() + " a quitté la team."));
-                }
+                dungeonTeam.sendMessageToEveryone("§6§lDungeon §8» §f" + player.getUsername() + " a quitté la team.");
                 player.sendMessage(Component.text("§6§lDungeon §8» §fVous avez quitté votre équipe."));
                 return;
             }
@@ -142,10 +180,7 @@ public final class DungeonCmd implements SimpleCommand {
                 if (DungeonTeamManager.instance.isPlayerInConfirmation(player)) {
                     DungeonTeamManager.instance.removeTeam(dungeonTeam);
                     DungeonTeamManager.instance.removePlayerFromConfirmation(player);
-                    for (Player player1 : dungeonTeam.getPlayers()) {
-                        player1.sendMessage(Component.text("§6§lDungeon §8» §f" + player.getUsername() + " a supprimé la team."));
-                    }
-                    player.sendMessage(Component.text("§6§lDungeon §8» §fVous avez supprimé l'équipe."));
+                    dungeonTeam.sendMessageToEveryone("§6§lDungeon §8» §f" + player.getUsername() + " a supprimé la team.");
                     return;
                 }
                 DungeonTeamManager.instance.addPlayerToConfirmation(player);
@@ -210,9 +245,7 @@ public final class DungeonCmd implements SimpleCommand {
                     return;
                 }
                 DungeonTeamManager.instance.removePlayerFromTeam(dungeonTeam, kickedPlayer);
-                for (Player player1 : dungeonTeam.getPlayers()) {
-                    player1.sendMessage(Component.text("§6§lDungeon §8» §f" + player.getUsername() + " a kick " + kickedPlayer.getUsername() + "."));
-                }
+                dungeonTeam.sendMessageToEveryone("§6§lDungeon §8» §f" + player.getUsername() + " a kick " + kickedPlayer.getUsername() + ".");
                 kickedPlayer.sendMessage(Component.text("§6§lDungeon §8» §fVous avez été kick de la team par " + player.getUsername() + "."));
                 return;
             }
@@ -222,7 +255,7 @@ public final class DungeonCmd implements SimpleCommand {
     }
 
     public void sendErrorUsage(Player player) {
-        player.sendMessage(Component.text("§6§lDungeon §8» §cUsage: /dungeon <join|leave|create|delete|invite|invitation|kick||tchat> [Joueur]"));
+        player.sendMessage(Component.text("§6§lDungeon §8» §cUsage: /dungeon <join|leave|create|delete|invite|invitation|kick|tchat|start|floor> [Joueur/Floor]"));
     }
 
     /*@Override
@@ -242,9 +275,15 @@ public final class DungeonCmd implements SimpleCommand {
         boolean haveATeam = (dungeonTeam != null);
         switch (args.length) {
             case 1:
-                toReturn.addAll(Arrays.asList("join", "leave", "create", "delete", "invitation", "invite", "create", "kick", "membres", "tchat"));
+                toReturn.addAll(Arrays.asList("join", "leave", "create", "delete", "invitation", "invite", "create", "kick", "membres", "tchat", "start", "floor"));
                 break;
             case 2:
+                if (args[0].equalsIgnoreCase("floor")) {
+                    for (DungeonFloors floor : DungeonFloors.values()) {
+                        toReturn.add(floor.toString());
+                    }
+                    return CompletableFuture.completedFuture(toReturn);
+                }
                 if (args[0].equalsIgnoreCase("join")) {
                     ArrayList<Player> hasTeam = DungeonTeamManager.instance.getPlayerWhoAreInATeam();
                     hasTeam.forEach(player1 -> toReturn.add(player1.getUsername()));
