@@ -14,6 +14,7 @@ import main.java.fr.verymc.velocity.cmd.DungeonCmd;
 import main.java.fr.verymc.velocity.cmd.SkyblockCmd;
 import main.java.fr.verymc.velocity.events.ConnectionListener;
 import main.java.fr.verymc.velocity.events.PlayerListener;
+import main.java.fr.verymc.velocity.team.DungeonTeam;
 import main.java.fr.verymc.velocity.team.DungeonTeamManager;
 import net.kyori.adventure.text.Component;
 import org.slf4j.Logger;
@@ -60,6 +61,8 @@ public class Main {
         server.getCommandManager().register("dungeon", new DungeonCmd());
         server.getCommandManager().register("skyblock", new SkyblockCmd());
 
+        messageOfStuffLose();
+
         logger.info("§aLoading completed !");
     }
 
@@ -71,6 +74,16 @@ public class Main {
             }
         }
         return count;
+    }
+
+    public void messageOfStuffLose() {
+        server.getScheduler().buildTask(Main.instance, () -> {
+            for (DungeonTeam dungeonTeam : DungeonTeamManager.instance.dungeonTeams) {
+                for (Player player : dungeonTeam.getPlayers()) {
+                    player.sendActionBar(Component.text("§c⚠ §lLa perte de stuff est active dans les dungeons§c ⚠"));
+                }
+            }
+        }).repeat(1L, TimeUnit.SECONDS).schedule();
     }
 
     public void startMaintenanceModule() {
