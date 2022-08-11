@@ -180,14 +180,14 @@ public class MinionsListener implements Listener {
         if (e.isCancelled()) {
             return;
         }
-        if (Main.instance.serverType != ServerType.SKYBLOCK_ISLAND) {
-            player.sendMessage("§6§lMinions §8» §cLes minions sont désactivés sur ce serveur.");
-            e.setCancelled(true);
-            return;
-        }
         if (e.getItem().getType() == Material.DRAGON_BREATH && player.isSneaking()) {
             if (!e.getItem().getDisplayName().contains(MinionType.PIOCHEUR.getName(MinionType.PIOCHEUR))
                     && !e.getItem().getDisplayName().contains("§6Minion")) {
+                return;
+            }
+            if (Main.instance.serverType != ServerType.SKYBLOCK_ISLAND) {
+                player.sendMessage("§6§lMinions §8» §cLes minions sont désactivés sur ce serveur.");
+                e.setCancelled(true);
                 return;
             }
             Island island = IslandManager.instance.getPlayerIsland(player);

@@ -45,9 +45,7 @@ public class DungeonManager {
     }
 
     public void makeAllDungeonsEnd() {
-        ArrayList<Dungeon> list = dungeons;
-        list.clone();
-        for (Dungeon dungeon : list) {
+        for (Dungeon dungeon : dungeons) {
             makeDungeonEnd(dungeon, true);
         }
     }
@@ -110,7 +108,6 @@ public class DungeonManager {
         if (!dungeons.contains(dungeon)) {
             return;
         }
-        dungeons.remove(dungeon);
         for (LivingEntity livingEntity : DungeonMobManager.instance.mobs.get(dungeon)) {
             livingEntity.remove();
         }
@@ -118,13 +115,14 @@ public class DungeonManager {
         for (Player player : dungeon.getPlayers()) {
             if (force) {
                 player.sendMessage("§6§lDungeon §l» §cVous n'avez pas terminé le dungeon !");
+                PlayerUtils.instance.teleportPlayerFromRequest(player, SpawnCmd.Spawn, 0, ServerType.SKYBLOCK_HUB);
             } else {
                 player.sendTitle("§aLe boss est mort", "§aEn " + TimeUnit.MILLISECONDS.toSeconds(duration) + " secondes");
-                player.sendMessage("§6§lDungeon §l» §aVous avez terminé le dungeon en " + TimeUnit.MILLISECONDS.toSeconds(duration) + " secondes");
+                player.sendMessage("§6§lDungeon §l» §aVous avez terminé le dungeon en " + TimeUnit.MILLISECONDS.toSeconds(duration) + " secondes.");
+                Bukkit.getScheduler().scheduleAsyncDelayedTask(Main.instance, () -> PlayerUtils.instance.teleportPlayerFromRequest(player, SpawnCmd.Spawn, 0, ServerType.SKYBLOCK_HUB), 20 * 20);
             }
-            PlayerUtils.instance.teleportPlayerFromRequest(player, SpawnCmd.Spawn, 0, ServerType.SKYBLOCK_HUB);
         }
-
+        dungeons.remove(dungeon);
     }
 
     public void checkForFullTeam(List<String> players, DungeonFloors floor, int tries) {

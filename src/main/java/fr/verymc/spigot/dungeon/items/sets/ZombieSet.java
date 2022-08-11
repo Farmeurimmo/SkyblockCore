@@ -45,6 +45,7 @@ public class ZombieSet {
                 helmet_health_boost, AttributeModifier.Operation.ADD_NUMBER));
 
         helmet.addEnchant(Enchantment.PROTECTION_FIRE, 10, true);
+        helmet.addEnchant(Enchantment.PROTECTION_PROJECTILE, 2, true);
 
         return applyCommonPart(helmet, color);
     }
@@ -60,6 +61,7 @@ public class ZombieSet {
                 chestplate_health_boost, AttributeModifier.Operation.ADD_NUMBER));
 
         chestplate.addEnchant(Enchantment.PROTECTION_FIRE, 10, true);
+        chestplate.addEnchant(Enchantment.PROTECTION_PROJECTILE, 2, true);
 
         return applyCommonPart(chestplate, color);
     }
@@ -75,6 +77,7 @@ public class ZombieSet {
                 legging_health_boost, AttributeModifier.Operation.ADD_NUMBER));
 
         leggings.addEnchant(Enchantment.PROTECTION_FIRE, 10, true);
+        leggings.addEnchant(Enchantment.PROTECTION_PROJECTILE, 2, true);
 
         return applyCommonPart(leggings, color);
     }
@@ -90,6 +93,7 @@ public class ZombieSet {
                 boots_health_boost, AttributeModifier.Operation.ADD_NUMBER));
 
         boots.addEnchant(Enchantment.PROTECTION_FIRE, 10, true);
+        boots.addEnchant(Enchantment.PROTECTION_PROJECTILE, 2, true);
 
         return applyCommonPart(boots, color);
     }
@@ -116,7 +120,7 @@ public class ZombieSet {
 
         itemStack.setLore(DungeonItemManager.instance.getStatsLore(itemStack));
 
-        itemStack.addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_UNBREAKABLE, ItemFlag.HIDE_UNBREAKABLE);
+        itemStack.addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_UNBREAKABLE);
 
         return itemStack;
     }
