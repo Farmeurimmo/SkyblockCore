@@ -8,6 +8,7 @@ import org.bukkit.boss.BossBar;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 
+import java.text.NumberFormat;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -43,6 +44,7 @@ public class DungeonBossBarManager {
                         livingEntityHashMap.remove(bossBar);
                     }
                     bossBar.setProgress(livingEntity.getHealth() / livingEntity.getMaxHealth());
+                    bossBar.setTitle(livingEntity.getCustomName() + "§7| §6Vie: " + NumberFormat.getInstance().format(livingEntity.getHealth()));
                 }
             }
         }, 0, 5L);

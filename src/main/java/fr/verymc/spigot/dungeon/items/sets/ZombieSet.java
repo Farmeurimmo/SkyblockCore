@@ -5,6 +5,7 @@ import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -12,20 +13,20 @@ import org.bukkit.inventory.meta.LeatherArmorMeta;
 
 public class ZombieSet {
 
-    public static final int helmet_defense = 3;
-    public static final int helmet_defense_toughness = 3;
+    public static final int helmet_defense = 4;
+    public static final int helmet_defense_toughness = 4;
     public static final double helmet_health_boost = 1;
     public static final int chestplate_defense = 8;
     public static final int chestplate_defense_toughness = 3;
-    public static final double chestplate_health_boost = 2.5;
+    public static final double chestplate_health_boost = 3;
     public static final int legging_defense = 6;
     public static final int legging_defense_toughness = 3;
-    public static final double legging_health_boost = 100.5;
-    public static final int boots_defense = 3;
-    public static final int boots_defense_toughness = 3;
-    public static final double boots_health_boost = 100;
-    public static final double sword_speed_attack_add = 0.8;
-    public static final double sword_attack_damage_add = 3;
+    public static final double legging_health_boost = 2;
+    public static final int boots_defense = 4;
+    public static final int boots_defense_toughness = 4;
+    public static final double boots_health_boost = 2;
+    public static final double sword_speed_attack_add = 1;
+    public static final double sword_attack_damage_add = 5;
     public static ZombieSet instance;
 
 
@@ -43,6 +44,8 @@ public class ZombieSet {
         helmet.addAttributeModifier(Attribute.GENERIC_MAX_HEALTH, new AttributeModifier(Attribute.GENERIC_MAX_HEALTH.toString(),
                 helmet_health_boost, AttributeModifier.Operation.ADD_NUMBER));
 
+        helmet.addEnchant(Enchantment.PROTECTION_FIRE, 10, true);
+
         return applyCommonPart(helmet, color);
     }
 
@@ -55,6 +58,8 @@ public class ZombieSet {
                 chestplate_defense, AttributeModifier.Operation.ADD_NUMBER));
         chestplate.addAttributeModifier(Attribute.GENERIC_MAX_HEALTH, new AttributeModifier(Attribute.GENERIC_MAX_HEALTH.toString(),
                 chestplate_health_boost, AttributeModifier.Operation.ADD_NUMBER));
+
+        chestplate.addEnchant(Enchantment.PROTECTION_FIRE, 10, true);
 
         return applyCommonPart(chestplate, color);
     }
@@ -69,6 +74,8 @@ public class ZombieSet {
         leggings.addAttributeModifier(Attribute.GENERIC_MAX_HEALTH, new AttributeModifier(Attribute.GENERIC_MAX_HEALTH.toString(),
                 legging_health_boost, AttributeModifier.Operation.ADD_NUMBER));
 
+        leggings.addEnchant(Enchantment.PROTECTION_FIRE, 10, true);
+
         return applyCommonPart(leggings, color);
     }
 
@@ -82,11 +89,13 @@ public class ZombieSet {
         boots.addAttributeModifier(Attribute.GENERIC_MAX_HEALTH, new AttributeModifier(Attribute.GENERIC_MAX_HEALTH.toString(),
                 boots_health_boost, AttributeModifier.Operation.ADD_NUMBER));
 
+        boots.addEnchant(Enchantment.PROTECTION_FIRE, 10, true);
+
         return applyCommonPart(boots, color);
     }
 
     public ItemStack getZombieSword() {
-        ItemStack sword = new ItemStack(Material.DIAMOND_SWORD);
+        ItemStack sword = new ItemStack(Material.NETHERITE_SWORD);
 
         sword.addAttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE, new AttributeModifier(Attribute.GENERIC_ATTACK_DAMAGE.toString(),
                 sword_attack_damage_add, AttributeModifier.Operation.ADD_NUMBER));
@@ -107,7 +116,7 @@ public class ZombieSet {
 
         itemStack.setLore(DungeonItemManager.instance.getStatsLore(itemStack));
 
-        itemStack.addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_UNBREAKABLE);
+        itemStack.addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_UNBREAKABLE, ItemFlag.HIDE_UNBREAKABLE);
 
         return itemStack;
     }
