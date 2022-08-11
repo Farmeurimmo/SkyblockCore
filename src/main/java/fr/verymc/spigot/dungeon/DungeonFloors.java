@@ -14,14 +14,12 @@ public enum DungeonFloors {
 
     public static int getSizeFromFloor(DungeonFloors floor) {
         switch (floor) {
-            case FLOOR_1:
-                return 175;
             case FLOOR_2:
                 return 200;
             case FLOOR_3:
                 return 250;
             default:
-                return 0;
+                return 175;
         }
     }
 
@@ -32,7 +30,7 @@ public enum DungeonFloors {
             case FLOOR_3:
                 return 4;
             default:
-                return 1;
+                return 2;
         }
     }
 

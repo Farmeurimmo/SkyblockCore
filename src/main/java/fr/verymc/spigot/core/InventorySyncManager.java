@@ -5,6 +5,8 @@ import main.java.fr.verymc.spigot.utils.InventorySyncUtils;
 import main.java.fr.verymc.spigot.utils.ObjectConverter;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -72,7 +74,14 @@ public class InventorySyncManager {
             return;
         }
         player.setTotalExperience(Integer.parseInt(strings[1]));
-        player.setHealth(Double.parseDouble(strings[2]));
+        double health = Double.parseDouble(strings[2]);
+        if (health > 20) {
+            player.setHealth(20);
+            health -= 20;
+            player.addPotionEffect(new PotionEffect(PotionEffectType.HEAL, 1 + (int) health / 4, 0));
+        } else {
+            player.setHealth(health);
+        }
         player.setFoodLevel(Integer.parseInt(strings[3]));
         if (isSync(player)) removeSync(player);
     }

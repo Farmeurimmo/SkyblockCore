@@ -20,10 +20,10 @@ public class ZombieSet {
     public static final double chestplate_health_boost = 2.5;
     public static final int legging_defense = 6;
     public static final int legging_defense_toughness = 3;
-    public static final double legging_health_boost = 1.5;
+    public static final double legging_health_boost = 100.5;
     public static final int boots_defense = 3;
     public static final int boots_defense_toughness = 3;
-    public static final double boots_health_boost = 1;
+    public static final double boots_health_boost = 100;
     public static final double sword_speed_attack_add = 0.8;
     public static final double sword_attack_damage_add = 3;
     public static ZombieSet instance;
@@ -41,7 +41,7 @@ public class ZombieSet {
         helmet.addAttributeModifier(Attribute.GENERIC_ARMOR, new AttributeModifier(Attribute.GENERIC_ARMOR.toString(),
                 helmet_defense, AttributeModifier.Operation.ADD_NUMBER));
         helmet.addAttributeModifier(Attribute.GENERIC_MAX_HEALTH, new AttributeModifier(Attribute.GENERIC_MAX_HEALTH.toString(),
-                1, AttributeModifier.Operation.ADD_NUMBER));
+                helmet_health_boost, AttributeModifier.Operation.ADD_NUMBER));
 
         return applyCommonPart(helmet, color);
     }
@@ -54,7 +54,7 @@ public class ZombieSet {
         chestplate.addAttributeModifier(Attribute.GENERIC_ARMOR, new AttributeModifier(Attribute.GENERIC_ARMOR.toString(),
                 chestplate_defense, AttributeModifier.Operation.ADD_NUMBER));
         chestplate.addAttributeModifier(Attribute.GENERIC_MAX_HEALTH, new AttributeModifier(Attribute.GENERIC_MAX_HEALTH.toString(),
-                2.5, AttributeModifier.Operation.ADD_NUMBER));
+                chestplate_health_boost, AttributeModifier.Operation.ADD_NUMBER));
 
         return applyCommonPart(chestplate, color);
     }
@@ -67,7 +67,7 @@ public class ZombieSet {
         leggings.addAttributeModifier(Attribute.GENERIC_ARMOR, new AttributeModifier(Attribute.GENERIC_ARMOR.toString(),
                 legging_defense, AttributeModifier.Operation.ADD_NUMBER));
         leggings.addAttributeModifier(Attribute.GENERIC_MAX_HEALTH, new AttributeModifier(Attribute.GENERIC_MAX_HEALTH.toString(),
-                1.5, AttributeModifier.Operation.ADD_NUMBER));
+                legging_health_boost, AttributeModifier.Operation.ADD_NUMBER));
 
         return applyCommonPart(leggings, color);
     }
@@ -80,7 +80,7 @@ public class ZombieSet {
         boots.addAttributeModifier(Attribute.GENERIC_ARMOR, new AttributeModifier(Attribute.GENERIC_ARMOR.toString(),
                 boots_defense, AttributeModifier.Operation.ADD_NUMBER));
         boots.addAttributeModifier(Attribute.GENERIC_MAX_HEALTH, new AttributeModifier(Attribute.GENERIC_MAX_HEALTH.toString(),
-                1, AttributeModifier.Operation.ADD_NUMBER));
+                boots_health_boost, AttributeModifier.Operation.ADD_NUMBER));
 
         return applyCommonPart(boots, color);
     }
