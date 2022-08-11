@@ -37,6 +37,7 @@ import main.java.fr.verymc.spigot.dungeon.DungeonManager;
 import main.java.fr.verymc.spigot.dungeon.cmd.DungeonAdminCmd;
 import main.java.fr.verymc.spigot.dungeon.events.DungeonEntityListener;
 import main.java.fr.verymc.spigot.dungeon.events.DungeonProtectionsListener;
+import main.java.fr.verymc.spigot.dungeon.mobs.DungeonMobManager;
 import main.java.fr.verymc.spigot.hub.crates.CratesManager;
 import main.java.fr.verymc.spigot.hub.crates.KeyCmd;
 import main.java.fr.verymc.spigot.hub.events.AntiExplo;
@@ -332,6 +333,10 @@ public class Main extends JavaPlugin {
         if (serverType == ServerType.SKYBLOCK_ISLAND) {
             ServersManager.instance.removeServerPlayersFromAPI();
             IslandManager.instance.saveAllIslands();
+        }
+        if (serverType == ServerType.SKYBLOCK_DUNGEON) {
+            DungeonManager.instance.makeAllDungeonsEnd();
+            DungeonMobManager.instance.removeAllMobs();
         }
         for (SkyblockUser user : SkyblockUserManager.instance.users) {
             if (user.isInInvestMode()) {

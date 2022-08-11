@@ -32,7 +32,18 @@ public enum DungeonFloors {
             case FLOOR_3:
                 return 4;
             default:
-                return 2;
+                return 1;
+        }
+    }
+
+    public static int getDurationFromFloor(DungeonFloors floor) {
+        switch (floor) {
+            case FLOOR_2:
+                return 12;
+            case FLOOR_3:
+                return 15;
+            default:
+                return 10;
         }
     }
 

@@ -4,6 +4,9 @@ import main.java.fr.verymc.commons.enums.ServerType;
 import main.java.fr.verymc.spigot.Main;
 import main.java.fr.verymc.spigot.core.eco.EcoAccountsManager;
 import main.java.fr.verymc.spigot.core.evenement.EventManager;
+import main.java.fr.verymc.spigot.dungeon.Dungeon;
+import main.java.fr.verymc.spigot.dungeon.DungeonManager;
+import main.java.fr.verymc.spigot.dungeon.mobs.DungeonMobManager;
 import main.java.fr.verymc.spigot.island.Island;
 import main.java.fr.verymc.spigot.island.IslandManager;
 import main.java.fr.verymc.spigot.island.challenges.IslandChallengesReset;
@@ -175,6 +178,38 @@ public class ScoreBoard implements Listener {
                                 Objects.requireNonNull(board.getTeam("iscrystaux")).setPrefix("§7Crystaux: §dN/A");
                             if (board.getTeam("ismoney") != null)
                                 Objects.requireNonNull(Objects.requireNonNull(board.getTeam("ismoney"))).setPrefix("§7Argent: §dN/A");
+                        }
+                    } else if (Main.instance.serverType == ServerType.SKYBLOCK_DUNGEON) {
+                        Dungeon dungeon = DungeonManager.instance.getDungeonByPlayer(player);
+                        if (dungeon != null) {
+                            if (board.getTeam("gradeis") != null)
+                                Objects.requireNonNull(board.getTeam("gradeis")).setPrefix("§7En dungeon: §6" + dungeon.getName() + " (" + dungeon.getFloor().toString() + ")");
+                            if (board.getTeam("classementis") != null)
+                                Objects.requireNonNull(board.getTeam("classementis")).setPrefix("§7Temps restant: §2" + TimeUnit.MILLISECONDS.toSeconds((
+                                        dungeon.getTime_of_start() + TimeUnit.MINUTES.toMillis(dungeon.getDuration_in_minutes())) - System.currentTimeMillis()) + "s");
+                            if (board.getTeam("ismembre") != null) {
+                                if (DungeonMobManager.instance.mobs.get(dungeon) != null) {
+                                    Objects.requireNonNull(board.getTeam("ismembre")).setPrefix("§7Mobs restants: §3" + DungeonMobManager.instance.mobs.get(dungeon).size());
+                                } else {
+                                    Objects.requireNonNull(board.getTeam("ismembre")).setPrefix("§7Mobs restants: §3N/A");
+                                }
+                            }
+                            if (board.getTeam("iscrystaux") != null)
+                                Objects.requireNonNull(board.getTeam("iscrystaux")).setPrefix("§7Boss: §dEn vie");
+                            if (board.getTeam("ismoney") != null)
+                                Objects.requireNonNull(Objects.requireNonNull(board.getTeam("ismoney"))).setPrefix("§7Alliés en vie: §d" +
+                                        (dungeon.getPlayers().size() - dungeon.getDeadPlayers().size()));
+                        } else {
+                            if (board.getTeam("gradeis") != null)
+                                Objects.requireNonNull(board.getTeam("gradeis")).setPrefix("§7En dungeon: §6N/A");
+                            if (board.getTeam("classementis") != null)
+                                Objects.requireNonNull(board.getTeam("classementis")).setPrefix("§7Temps écoulé: §2N/A");
+                            if (board.getTeam("ismembre") != null)
+                                Objects.requireNonNull(board.getTeam("ismembre")).setPrefix("§7Mobs restants: §3N/A");
+                            if (board.getTeam("iscrystaux") != null)
+                                Objects.requireNonNull(board.getTeam("iscrystaux")).setPrefix("§7Boss: §dN/A");
+                            if (board.getTeam("ismoney") != null)
+                                Objects.requireNonNull(Objects.requireNonNull(board.getTeam("ismoney"))).setPrefix("§7Alliés en vie: §dN/A");
                         }
                     }
                 } catch (Exception e) {

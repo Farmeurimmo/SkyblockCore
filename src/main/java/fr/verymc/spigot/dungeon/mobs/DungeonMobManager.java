@@ -2,11 +2,13 @@ package main.java.fr.verymc.spigot.dungeon.mobs;
 
 import main.java.fr.verymc.spigot.Main;
 import main.java.fr.verymc.spigot.dungeon.Dungeon;
+import main.java.fr.verymc.spigot.dungeon.DungeonFloors;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.LivingEntity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class DungeonMobManager {
 
@@ -18,6 +20,14 @@ public class DungeonMobManager {
         instance = this;
 
         new DungeonMobCreator();
+    }
+
+    public void removeAllMobs() {
+        for (Map.Entry<Dungeon, ArrayList<LivingEntity>> entry : mobs.entrySet()) {
+            for (LivingEntity entity : entry.getValue()) {
+                entity.remove();
+            }
+        }
     }
 
     public void spawnMobs(Dungeon dungeon) {
@@ -37,21 +47,21 @@ public class DungeonMobManager {
         toSpawn.add(lE);
 
         mobs.put(dungeon, toSpawn);
-        makeExpireMobsForDungeon(dungeon, 10);
+        makeExpireMobsForDungeon(dungeon, DungeonFloors.getDurationFromFloor(dungeon.getFloor()));
     }
 
     public void floor_2(Dungeon dungeon) {
         ArrayList<LivingEntity> toSpawn = new ArrayList<>();
 
         mobs.put(dungeon, toSpawn);
-        makeExpireMobsForDungeon(dungeon, 10);
+        makeExpireMobsForDungeon(dungeon, DungeonFloors.getDurationFromFloor(dungeon.getFloor()));
     }
 
     public void floor_3(Dungeon dungeon) {
         ArrayList<LivingEntity> toSpawn = new ArrayList<>();
 
         mobs.put(dungeon, toSpawn);
-        makeExpireMobsForDungeon(dungeon, 10);
+        makeExpireMobsForDungeon(dungeon, DungeonFloors.getDurationFromFloor(dungeon.getFloor()));
     }
 
     public void makeExpireMobsForDungeon(Dungeon dungeon, int minutes) {

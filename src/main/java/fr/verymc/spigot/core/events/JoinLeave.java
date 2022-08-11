@@ -8,6 +8,7 @@ import main.java.fr.verymc.spigot.core.scoreboard.ScoreBoard;
 import main.java.fr.verymc.spigot.core.storage.SkyblockUser;
 import main.java.fr.verymc.spigot.core.storage.SkyblockUserManager;
 import main.java.fr.verymc.spigot.core.storage.StorageJSONManager;
+import main.java.fr.verymc.spigot.dungeon.Dungeon;
 import main.java.fr.verymc.spigot.dungeon.DungeonManager;
 import main.java.fr.verymc.spigot.hub.invest.InvestManager;
 import main.java.fr.verymc.spigot.island.Island;
@@ -108,6 +109,12 @@ public class JoinLeave implements Listener {
     @EventHandler
     public void OnLeave(PlayerQuitEvent event) {
         Player player = event.getPlayer();
+        if (Main.instance.serverType == ServerType.SKYBLOCK_DUNGEON) {
+            Dungeon dungeon = DungeonManager.instance.getDungeonByPlayer(player);
+            if (dungeon != null) {
+                dungeon.addDeadPlayer(player);
+            }
+        }
         InventorySyncManager.instance.playerQuit(player);
         SkyblockUser skyblockUser = SkyblockUserManager.instance.getUser(player.getUniqueId());
         Island playerIsland = null;

@@ -1,10 +1,13 @@
 package main.java.fr.verymc.spigot.dungeon;
 
 import main.java.fr.verymc.JedisManager;
+import main.java.fr.verymc.commons.enums.ServerType;
 import main.java.fr.verymc.spigot.Main;
+import main.java.fr.verymc.spigot.core.cmd.base.SpawnCmd;
 import main.java.fr.verymc.spigot.dungeon.mobs.DungeonMobManager;
 import main.java.fr.verymc.spigot.utils.FAWEUtils;
 import main.java.fr.verymc.spigot.utils.ObjectConverter;
+import main.java.fr.verymc.spigot.utils.PlayerUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.LivingEntity;
@@ -18,6 +21,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class DungeonManager {
@@ -40,6 +44,20 @@ public class DungeonManager {
         //loadDungeons();
     }
 
+    public void makeAllDungeonsEnd() {
+        ArrayList<Dungeon> list = dungeons;
+        list.clone();
+        for (Dungeon dungeon : list) {
+            makeDungeonEnd(dungeon, true);
+        }
+    }
+
+    public void checkIfAllPlayersAreDead(Dungeon dungeon) {
+        if (dungeon.getDeadPlayers().size() >= dungeon.getPlayers().size()) {
+            makeDungeonEnd(dungeon, true);
+        }
+    }
+
     public void loadDungeon(List<String> players, DungeonFloors floor) {
         Location loc = getEmptyLocation();
 
@@ -55,9 +73,7 @@ public class DungeonManager {
             player.setFlying(true);
         }
 
-        System.out.println("players1: " + players1.size() + " players: " + players.size());
-
-        Dungeon dungeon = new Dungeon(floor.getName(), floor, players1, loc);
+        Dungeon dungeon = new Dungeon(floor.getName(), floor, players1, loc, DungeonFloors.getDurationFromFloor(floor));
         dungeons.add(dungeon);
 
         for (File file : Main.instance.getDataFolder().listFiles()) {
@@ -84,22 +100,29 @@ public class DungeonManager {
             }
         }
 
+        dungeon.setTime_of_start(System.currentTimeMillis());
+
 
         Bukkit.getScheduler().scheduleSyncDelayedTask(Main.instance, () -> makeDungeonEnd(dungeon, true), 20 * 60 * 10);
     }
 
     public void makeDungeonEnd(Dungeon dungeon, boolean force) {
-        if (force) {
-
-        } else {
-
+        if (!dungeons.contains(dungeon)) {
+            return;
         }
+        dungeons.remove(dungeon);
         for (LivingEntity livingEntity : DungeonMobManager.instance.mobs.get(dungeon)) {
             livingEntity.remove();
         }
+        long duration = System.currentTimeMillis() - dungeon.getTime_of_start();
         for (Player player : dungeon.getPlayers()) {
-            player.sendTitle("§aLe boss est mort", "§aEn %temps% secondes");
-            //plugin message
+            if (force) {
+                player.sendMessage("§6§lDungeon §l» §cVous n'avez pas terminé le dungeon !");
+            } else {
+                player.sendTitle("§aLe boss est mort", "§aEn " + TimeUnit.MILLISECONDS.toSeconds(duration) + " secondes");
+                player.sendMessage("§6§lDungeon §l» §aVous avez terminé le dungeon en " + TimeUnit.MILLISECONDS.toSeconds(duration) + " secondes");
+            }
+            PlayerUtils.instance.teleportPlayerFromRequest(player, SpawnCmd.Spawn, 0, ServerType.SKYBLOCK_HUB);
         }
 
     }
@@ -225,5 +248,14 @@ public class DungeonManager {
             }
         }
         return false;
+    }
+
+    public Dungeon getDungeonByPlayer(Player player) {
+        for (Dungeon dungeon : dungeons) {
+            if (dungeon.getPlayers().contains(player)) {
+                return dungeon;
+            }
+        }
+        return null;
     }
 }
