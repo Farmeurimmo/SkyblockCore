@@ -9,6 +9,7 @@ import org.bukkit.inventory.ItemStack;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 public class DungeonItemManager {
 
@@ -25,8 +26,8 @@ public class DungeonItemManager {
         new ZombieSet();
     }
 
-    public ArrayList<String> getStatsLore(ItemStack itemStack) {
-        ArrayList<String> stats = new ArrayList<>();
+    public List<String> getStatsLore(ItemStack itemStack) {
+        List<String> stats = (itemStack.hasLore() ? itemStack.getLore() : new ArrayList<String>());
         if (!itemStack.hasAttributeModifiers()) {
             stats.add("");
             return stats;
