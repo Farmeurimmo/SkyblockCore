@@ -23,11 +23,14 @@ public class SkyblockUser {
     private boolean isInInvestMode;
     private double timeInvest;
     private PlayerWarp playerWarp;
+    private Double exp;
+    private Double level;
 
 
     public SkyblockUser(String username, UUID userUUID, double money, boolean hasHaste, boolean hasHasteActvie,
                         boolean hasSpeed, boolean hasSpeedActive, boolean hasJump, boolean hasJumpActive, int flyLeft,
-                        boolean isActive, boolean isInInvestMode, double timeInvest, PlayerWarp playerWarp) {
+                        boolean isActive, boolean isInInvestMode, double timeInvest, PlayerWarp playerWarp,
+                        Double exp, Double level) {
         this.username = username;
         this.userUUID = userUUID;
         this.money = money;
@@ -41,6 +44,8 @@ public class SkyblockUser {
         this.isActive = isActive;
         this.isInInvestMode = isInInvestMode;
         this.timeInvest = timeInvest;
+        this.exp = exp;
+        this.level = level;
         if (playerWarp != null) {
             this.playerWarp = playerWarp;
         }
@@ -166,4 +171,30 @@ public class SkyblockUser {
         this.playerWarp = playerWarp;
     }
 
+    public Double getExp() {
+        return exp;
+    }
+
+    public void incrementLevel() {
+        this.level++;
+    }
+
+    public Double getLevel() {
+        return level;
+    }
+
+    public void setLevel(Double level) {
+        this.level = level;
+    }
+
+    public void addExp(Double exp) {
+        this.exp += exp;
+    }
+
+    public void removeExp(Double exp) {
+        this.exp -= exp;
+        if (this.exp < 0) {
+            this.exp = 0.0;
+        }
+    }
 }

@@ -44,7 +44,7 @@ public class SkyblockUserManager {
         SkyblockUser skyblockUser = SkyblockUserManager.instance.getUser(player.getUniqueId());
         if (skyblockUser == null) {
             skyblockUser = new SkyblockUser(player.getName(), player.getUniqueId(), 200.0, false, false, false,
-                    false, false, false, 0, false, false, 0, null);
+                    false, false, false, 0, false, false, 0, null, 0.0, 0.0);
             SkyblockUserManager.instance.addUser(skyblockUser);
         }
     }

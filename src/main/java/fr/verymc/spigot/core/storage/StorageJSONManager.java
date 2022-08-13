@@ -186,6 +186,8 @@ public class StorageJSONManager {
         jsonObject.put("speedAct", skyblockUser.hasSpeedActive());
         jsonObject.put("jump", skyblockUser.hasJump());
         jsonObject.put("jumpAct", skyblockUser.hasJumpActive());
+        jsonObject.put("exp", skyblockUser.getExp());
+        jsonObject.put("lvl", skyblockUser.getLevel());
         if (skyblockUser.getPlayerWarp() != null) {
             jsonObject.put("pw", PlayerWarp.playerWarpToString(skyblockUser.getPlayerWarp()));
         }
@@ -208,6 +210,8 @@ public class StorageJSONManager {
         boolean hasSpeedActive = Boolean.parseBoolean(String.valueOf(jsonObject.get("speedAct")));
         boolean hasJump = Boolean.parseBoolean(String.valueOf(jsonObject.get("jump")));
         boolean hasJumpActive = Boolean.parseBoolean(String.valueOf(jsonObject.get("jumpAct")));
+        double exp = Double.parseDouble(String.valueOf(jsonObject.get("exp")));
+        double lvl = Double.parseDouble(String.valueOf(jsonObject.get("lvl")));
         PlayerWarp playerWarp = null;
         if (jsonObject.get("pw") != null) {
             try {
@@ -217,7 +221,7 @@ public class StorageJSONManager {
             }
         }
         return new SkyblockUser(username, uuid, money, hasHaste, hasHasteActive, hasSpeed, hasSpeedActive,
-                hasJump, hasJumpActive, flyLeft, isActive, false, 0, playerWarp);
+                hasJump, hasJumpActive, flyLeft, isActive, false, 0, playerWarp, exp, lvl);
     }
 
     public JSONObject islandToJSON(Island i) {

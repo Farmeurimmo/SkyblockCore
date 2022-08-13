@@ -96,3 +96,4 @@ commands:
     permission: trade
   dungeonadmin:
     permission: dungeon.admin
+  level:
