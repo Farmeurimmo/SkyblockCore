@@ -210,13 +210,13 @@ public class DungeonManager {
                 int toSumz = 0;
                 int randint = rand.nextInt(4);
                 if (randint == 0) {
-                    toSumx = distanceBetweenDungeons;
+                    toSumx =+ distanceBetweenDungeons;
                 } else if (randint == 1) {
-                    toSumx = -distanceBetweenDungeons;
+                    toSumx =- distanceBetweenDungeons;
                 } else if (randint == 2) {
-                    toSumz = distanceBetweenDungeons;
+                    toSumz =+ distanceBetweenDungeons;
                 } else if (randint == 3) {
-                    toSumz = -distanceBetweenDungeons;
+                    toSumz =- distanceBetweenDungeons;
                 }
                 Location tmp = new Location(Main.instance.mainWorld, maxx + toSumx, 80, minz + toSumz);
                 if (!isADungeonByLoc(tmp)) {
@@ -231,8 +231,9 @@ public class DungeonManager {
 
     public Dungeon getDungeonByLoc(Location loc) {
         for (Dungeon dungeon : dungeons) {
-            if (dungeon.getLocDungeon().getX() - 300 < loc.getX() && dungeon.getLocDungeon().getX() + 300 > loc.getX() &&
-                    dungeon.getLocDungeon().getZ() - 300 < loc.getZ() && dungeon.getLocDungeon().getZ() + 300 > loc.getZ()) {
+            int size = DungeonFloors.getSizeFromFloor(dungeon.getFloor());
+            if (dungeon.getLocDungeon().getX() + size > loc.getX() && dungeon.getLocDungeon().getX() - size <= loc.getX()
+                    && dungeon.getLocDungeon().getZ() + size > loc.getZ() && dungeon.getLocDungeon().getZ() - size <= loc.getZ()) {
                 return dungeon;
             }
         }
@@ -240,12 +241,7 @@ public class DungeonManager {
     }
 
     public boolean isADungeonByLoc(Location loc) {
-        for (Dungeon i : dungeons) {
-            if (i.getLocDungeon().getBlockX() == loc.getBlockX() && i.getLocDungeon().getBlockZ() == loc.getBlockZ()) {
-                return true;
-            }
-        }
-        return false;
+        return (getDungeonByLoc(loc) != null);
     }
 
     public Dungeon getDungeonByPlayer(Player player) {
