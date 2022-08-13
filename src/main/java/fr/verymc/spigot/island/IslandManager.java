@@ -229,8 +229,8 @@ public class IslandManager {
     public boolean isAnIslandByLoc(Location loc) {
         for (Island i : islands) {
             final int size = IslandUpgradeSize.getSizeFromLevel(i.getSizeUpgrade().getLevel());
-            if (i.getHome().getBlockX() + size >= loc.getBlockX() && i.getHome().getBlockX() - size <= loc.getBlockX()
-                    && i.getHome().getBlockZ() + size >= loc.getBlockZ() && i.getHome().getBlockZ() - size <= loc.getBlockZ()) {
+            if (i.getCenter().getBlockX() + size >= loc.getBlockX() && i.getCenter().getBlockX() - size <= loc.getBlockX()
+                    && i.getCenter().getBlockZ() + size >= loc.getBlockZ() && i.getCenter().getBlockZ() - size <= loc.getBlockZ()) {
                 return true;
             }
         }
@@ -240,8 +240,8 @@ public class IslandManager {
     public Island getIslandByLoc(Location loc) {
         for (Island i : islands) {
             final int size = IslandUpgradeSize.getSizeFromLevel(i.getSizeUpgrade().getLevel());
-            if (i.getHome().getBlockX() + size >= loc.getBlockX() && i.getHome().getBlockX() - size <= loc.getBlockX()
-                    && i.getHome().getBlockZ() + size >= loc.getBlockZ() && i.getHome().getBlockZ() - size <= loc.getBlockZ()) {
+            if (i.getCenter().getBlockX() + size >= loc.getBlockX() && i.getCenter().getBlockX() - size <= loc.getBlockX()
+                    && i.getCenter().getBlockZ() + size >= loc.getBlockZ() && i.getCenter().getBlockZ() - size <= loc.getBlockZ()) {
                 return i;
             }
         }
