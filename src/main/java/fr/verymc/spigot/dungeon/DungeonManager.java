@@ -210,13 +210,13 @@ public class DungeonManager {
                 int toSumz = 0;
                 int randint = rand.nextInt(4);
                 if (randint == 0) {
-                    toSumx =+ distanceBetweenDungeons;
+                    toSumx = +distanceBetweenDungeons;
                 } else if (randint == 1) {
-                    toSumx =- distanceBetweenDungeons;
+                    toSumx = -distanceBetweenDungeons;
                 } else if (randint == 2) {
-                    toSumz =+ distanceBetweenDungeons;
+                    toSumz = +distanceBetweenDungeons;
                 } else if (randint == 3) {
-                    toSumz =- distanceBetweenDungeons;
+                    toSumz = -distanceBetweenDungeons;
                 }
                 Location tmp = new Location(Main.instance.mainWorld, maxx + toSumx, 80, minz + toSumz);
                 if (!isADungeonByLoc(tmp)) {

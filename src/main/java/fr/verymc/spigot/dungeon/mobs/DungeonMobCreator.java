@@ -28,7 +28,7 @@ public class DungeonMobCreator {
     public HashMap<Integer, Color> zombieColorFromLevel = new HashMap<>();
     public ArrayList<Integer> zombieLvlAvailable = new ArrayList<>();
     public double baseZombieHealth = 14;
-    public double default_speed_zombie = 0.5;
+    public double default_speed_zombie = 0.4;
 
     public DungeonMobCreator() {
         instance = this;
@@ -69,6 +69,7 @@ public class DungeonMobCreator {
         z.setHealth(z.getMaxHealth());
         z.addPotionEffect(new PotionEffect(PotionEffectType.HARM, 2, 10, false, false));
         z.setAI(true);
+        z.setConversionTime(99999999);
 
         z.registerAttribute(Attribute.GENERIC_MOVEMENT_SPEED);
         z.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(default_speed_zombie);
