@@ -1,6 +1,7 @@
 package main.java.fr.verymc.spigot.core.items;
 
 import main.java.fr.verymc.spigot.core.evenement.BlocBreakerContest;
+import main.java.fr.verymc.spigot.core.leveladv.LevelAdvManager;
 import main.java.fr.verymc.spigot.core.shopgui.BuyShopItem;
 import main.java.fr.verymc.spigot.island.Island;
 import main.java.fr.verymc.spigot.island.IslandManager;
@@ -191,6 +192,7 @@ public class FarmHoeManager implements Listener {
                         }
                         world.dropItemNaturally(rf.getLocation(), eed);
                     }
+                    LevelAdvManager.instance.blockEvent(bltmp, player);
                     ageable.setAge(0);
                     gained++;
                     bltmp.setBlockData(ageable);

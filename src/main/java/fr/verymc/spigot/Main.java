@@ -27,9 +27,9 @@ import main.java.fr.verymc.spigot.core.events.TchatManager;
 import main.java.fr.verymc.spigot.core.gui.*;
 import main.java.fr.verymc.spigot.core.holos.HolosSetup;
 import main.java.fr.verymc.spigot.core.items.*;
-import main.java.fr.verymc.spigot.core.leveladv.LevelAdvBlockListener;
 import main.java.fr.verymc.spigot.core.leveladv.LevelAdvCmd;
 import main.java.fr.verymc.spigot.core.leveladv.LevelAdvGui;
+import main.java.fr.verymc.spigot.core.leveladv.LevelAdvListener;
 import main.java.fr.verymc.spigot.core.leveladv.LevelAdvManager;
 import main.java.fr.verymc.spigot.core.scoreboard.ScoreBoard;
 import main.java.fr.verymc.spigot.core.shopgui.*;
@@ -102,7 +102,7 @@ public class Main extends JavaPlugin {
     //Usage non recommandé pour les personnes ne le connaissant pas ce système ni les risques
     //qui peuvent en émerger
     public static boolean devMode = true;
-    public static ServerType devServerType = ServerType.SKYBLOCK_HUB;
+    public static ServerType devServerType = ServerType.SKYBLOCK_DUNGEON;
     static LuckPerms api;
     private final HashMap<String, Integer> spawncooldown = new HashMap<>();
     public ArrayList<Player> pending = new ArrayList<>();
@@ -404,7 +404,7 @@ public class Main extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new ServerCoreMicellanous(), this);
         getServer().getPluginManager().registerEvents(new IslandChallengesGuis(), this);
         getServer().getPluginManager().registerEvents(new LevelAdvGui(), this);
-        getServer().getPluginManager().registerEvents(new LevelAdvBlockListener(), this);
+        getServer().getPluginManager().registerEvents(new LevelAdvListener(), this);
 
 
         //ISLAND LISTENER

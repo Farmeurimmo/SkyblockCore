@@ -3,17 +3,21 @@ package main.java.fr.verymc.spigot.core.leveladv;
 import main.java.fr.verymc.spigot.core.storage.SkyblockUser;
 import main.java.fr.verymc.spigot.core.storage.SkyblockUserManager;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
+import org.bukkit.block.data.Ageable;
 import org.bukkit.entity.Player;
 
 import java.text.NumberFormat;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 
 public class LevelAdvManager {
 
     public static final double exp_multiplier = 2.25;
     public static final double exp_base_for_level_0 = 500;
     public static final double exp_gained = 10;
+    public static final double exp_multiplier_in_dungeon = 5;
     public static LevelAdvManager instance;
     public static HashMap<Material, Double> matPer = new HashMap<>();
 
@@ -68,10 +72,10 @@ public class LevelAdvManager {
         return NumberFormat.getInstance().format(expToGetForNextLevel(level));
     }
 
-    public void addExpToPlayer(Player player) {
+    public void addExpToPlayer(Player player, Double exp) {
         SkyblockUser skyblockUser = SkyblockUserManager.instance.getUser(player);
-        skyblockUser.addExp(exp_gained);
-        player.sendActionBar("§a+" + exp_gained + " §6exp §7(§a" + getExpFormatted(skyblockUser) + "§7/§c" +
+        skyblockUser.addExp(exp);
+        player.sendActionBar("§a+" + exp + " §6exp §7(§a" + getExpFormatted(skyblockUser) + "§7/§c" +
                 (getExpToGetForNextLevelFormatted(skyblockUser.getLevel())) + "§7)");
         checkForLevelUp(skyblockUser, player);
     }
@@ -84,6 +88,32 @@ public class LevelAdvManager {
             player.sendActionBar("§a§lLevel up! §7(§a" + getLevelFormatted(skyblockUser) + "§7)");
             player.sendTitle("§aLevel up", "§6Prochain niveau " + getLevelFormatted(skyblockUser));
         }
+    }
+
+    public void blockEvent(Block block, Player player) {
+        if (!matPer.containsKey(block.getType())) return;
+        if (block.hasMetadata("placed")) {
+            final Ageable ageable = (Ageable) block.getState().getBlockData();
+            int age = ageable.getAge();
+            if (age != ageable.getMaximumAge()) {
+                return;
+            }
+        }
+        Double value = matPer.get(block.getType());
+        if (value == 1) {
+            addExpToPlayer(player, exp_gained);
+            return;
+        }
+        if (new Random().nextDouble() >= value) return;
+        addExpToPlayer(player, exp_gained);
+    }
+
+    public void entityEvent(Player player, Double exp) {
+        addExpToPlayer(player, (exp > 0.0 ? exp : exp_gained));
+    }
+
+    public void dungeonEnd(Player player, Double exp) {
+        addExpToPlayer(player, (exp > 0.0 ? exp : exp_gained));
     }
 
     public List<String> getRewardForNextLevel(Double level) {

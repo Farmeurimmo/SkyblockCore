@@ -45,6 +45,17 @@ public enum DungeonFloors {
         }
     }
 
+    public static int getFloorInt(DungeonFloors floor) {
+        switch (floor) {
+            case FLOOR_2:
+                return 2;
+            case FLOOR_3:
+                return 3;
+            default:
+                return 1;
+        }
+    }
+
     public String getName() {
         return name;
     }

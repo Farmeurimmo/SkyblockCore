@@ -51,6 +51,8 @@ public class DungeonMobCreator {
         LivingEntity mob = (LivingEntity) spawnLoc.getWorld().spawnEntity(spawnLoc, EntityType.ZOMBIE, CreatureSpawnEvent.SpawnReason.SPAWNER_EGG);
         Zombie z = (Zombie) mob;
 
+        z.setMetadata("lvl", new FixedMetadataValue(Main.instance, level));
+
         level = checkForInvalidLevel(zombieLvlAvailable, level);
 
         Color color = zombieColorFromLevel.get(level);
@@ -69,7 +71,6 @@ public class DungeonMobCreator {
         z.setHealth(z.getMaxHealth());
         z.addPotionEffect(new PotionEffect(PotionEffectType.HARM, 2, 10, false, false));
         z.setAI(true);
-        z.setConversionTime(99999999);
 
         z.registerAttribute(Attribute.GENERIC_MOVEMENT_SPEED);
         z.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(default_speed_zombie);
