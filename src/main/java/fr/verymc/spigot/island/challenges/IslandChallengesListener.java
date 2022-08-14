@@ -1,7 +1,6 @@
 package main.java.fr.verymc.spigot.island.challenges;
 
 import main.java.fr.verymc.spigot.Main;
-import main.java.fr.verymc.spigot.core.cmd.moderation.BuildCmd;
 import main.java.fr.verymc.spigot.core.evenement.BlocBreakerContest;
 import main.java.fr.verymc.spigot.island.Island;
 import main.java.fr.verymc.spigot.island.IslandManager;
@@ -15,9 +14,6 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockFormEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.metadata.FixedMetadataValue;
-
-import java.util.ArrayList;
-import java.util.Arrays;
 
 public class IslandChallengesListener implements Listener {
 

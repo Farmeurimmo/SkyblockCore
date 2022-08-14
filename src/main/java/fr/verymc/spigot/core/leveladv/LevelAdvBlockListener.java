@@ -1,7 +1,5 @@
 package main.java.fr.verymc.spigot.core.leveladv;
 
-import main.java.fr.verymc.spigot.core.storage.SkyblockUser;
-import main.java.fr.verymc.spigot.core.storage.SkyblockUserManager;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.Ageable;
 import org.bukkit.entity.Player;
