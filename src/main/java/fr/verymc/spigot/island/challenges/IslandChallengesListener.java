@@ -43,14 +43,9 @@ public class IslandChallengesListener implements Listener {
     public static int carrot = 64;
     public static int potato = 64;
 
-    public ArrayList<Material> excluded = new ArrayList<>(Arrays.asList(Material.WHEAT, Material.CARROTS, Material.POTATOES, Material.BEETROOT,
-            Material.NETHER_WART, Material.COCOA));
-
     @EventHandler
     public void blockPlaceEvent(BlockPlaceEvent e) {
-        if (!excluded.contains(e.getBlock().getType())) {
-            e.getBlock().setMetadata("placed", new FixedMetadataValue(Main.instance, e.getPlayer().getName()));
-        }
+        e.getBlock().setMetadata("placed", new FixedMetadataValue(Main.instance, e.getPlayer().getName()));
     }
 
     @EventHandler
@@ -66,16 +61,13 @@ public class IslandChallengesListener implements Listener {
         Material currenttype = e.getBlock().getType();
         Block block = e.getBlock();
         if (block.hasMetadata("placed")) {
-            if (!excluded.contains(currenttype)) {
-                return;
-            }
             final Ageable ageable = (Ageable) block.getState().getBlockData();
             int age = ageable.getAge();
             if (age != ageable.getMaximumAge()) {
                 return;
             }
         }
-        if (!e.isCancelled() && !BuildCmd.Build.contains(player.getUniqueId())) {
+        if (!e.isCancelled()) {
             if (BlocBreakerContest.instance.isActive) {
                 if (e.getBlock().getType().equals(BlocBreakerContest.instance.material)) {
                     BlocBreakerContest.instance.addBlock(player.getUniqueId());
