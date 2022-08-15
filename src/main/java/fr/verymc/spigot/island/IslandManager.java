@@ -16,7 +16,7 @@ import main.java.fr.verymc.commons.enums.ServerType;
 import main.java.fr.verymc.commons.utils.HTTPUtils;
 import main.java.fr.verymc.spigot.Main;
 import main.java.fr.verymc.spigot.core.cmd.base.SpawnCmd;
-import main.java.fr.verymc.spigot.core.holos.HoloBlocManager;
+import main.java.fr.verymc.spigot.core.holos.HoloManager;
 import main.java.fr.verymc.spigot.core.storage.AsyncConfig;
 import main.java.fr.verymc.spigot.core.storage.ConfigManager;
 import main.java.fr.verymc.spigot.island.bank.IslandBank;
@@ -102,7 +102,7 @@ public class IslandManager {
         Main.instance.saveResource("ileworld.schem", true);
         Main.instance.saveResource("clear.schem", true);
 
-        new HoloBlocManager();
+        new HoloManager();
     }
 
     public void pasteAndLoadIslands() {
@@ -683,7 +683,8 @@ public class IslandManager {
         home.setYaw(130);
         islands.add(new Island("Ile de " + p.getName(), home, toReturn, uuid, members,
                 islandUpgradeSize, islandUpgradeMember, WorldBorderUtils.Color.BLUE, islandBank, islandUpgradeGenerator, banneds, challenges,
-                true, null, true, 0.0, null, null, null, null, true));
+                true, null, true, 0.0, null, null, null, null, true,
+                new ArrayList<>()));
         new BukkitRunnable() {
             @Override
             public void run() {

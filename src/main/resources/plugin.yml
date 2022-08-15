@@ -97,3 +97,4 @@ commands:
   dungeonadmin:
     permission: dungeon.admin
   level:
+  spawner:

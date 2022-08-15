@@ -2,6 +2,8 @@ package main.java.fr.verymc.spigot.core.storage;
 
 import main.java.fr.verymc.commons.enums.ServerType;
 import main.java.fr.verymc.spigot.Main;
+import main.java.fr.verymc.spigot.core.spawners.Spawner;
+import main.java.fr.verymc.spigot.core.spawners.SpawnersManager;
 import main.java.fr.verymc.spigot.island.Island;
 import main.java.fr.verymc.spigot.island.IslandManager;
 import main.java.fr.verymc.spigot.island.bank.IslandBank;
@@ -87,6 +89,11 @@ public class StorageJSONManager {
                         minion.setChestBloc(PlayerUtils.instance.toCenterOf(island.getCenter(), minion.getChestBloc().getLocation()).getBlock());
                     }
                 }
+
+                for (Spawner spawner : island.getSpawners()) {
+                    spawner.setLoc(PlayerUtils.instance.toCenterOf(island.getCenter(), spawner.getLoc()));
+                }
+                SpawnersManager.instance.respawnAllSpawners();
 
                 //SEND Islands to -> IslandManager.instance.islands
                 if (Main.instance.serverType == ServerType.SKYBLOCK_ISLAND) {
@@ -262,6 +269,12 @@ public class StorageJSONManager {
         }
         jsonObject.put("minions", minionsString);
         jsonObject.put("stacked", new JSONObject(i.getStackedBlocs()).toString());
+        String spawners = "";
+        for (Spawner spawner : i.getSpawners()) {
+            spawner.setLoc(PlayerUtils.instance.addCenterTo(i.getCenter(), spawner.getLoc()));
+            spawners += Spawner.spawnerToString(spawner) + ObjectConverter.SEPARATOR_ELEMENT;
+        }
+        jsonObject.put("spawners", spawners);
         System.out.println(jsonObject);
         return jsonObject;
     }
@@ -371,9 +384,17 @@ public class StorageJSONManager {
             Double value = Double.parseDouble(String.valueOf(jsonObject1.get(key)));
             stacked.put(Material.matchMaterial(key), value);
         }
+        ArrayList<Spawner> spawners = new ArrayList<>();
+        String strSpawners = (String) jsonObject.get("spawners");
+        String[] spawnersSplit = strSpawners.split(ObjectConverter.SEPARATOR_ELEMENT);
+        for (String str : spawnersSplit) {
+            if (str.length() > 1) {
+                spawners.add(Spawner.stringToSpawner(str));
+            }
+        }
         return new Island(name, home, null, id, members, sizeUpgrade, memberUpgrade, borderColor, bank1, generatorUpgrade,
                 banneds, islandChallenges, false, permsPerRanks, isPublic, 0.0, activatedSettings, chests,
-                minions, stacked, false);
+                minions, stacked, false, spawners);
     }
 
     public HashMap<IslandRanks, ArrayList<IslandPerms>> getReducedMapPerms(Island island) {

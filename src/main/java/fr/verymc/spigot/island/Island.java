@@ -2,6 +2,7 @@ package main.java.fr.verymc.spigot.island;
 
 import main.java.fr.verymc.spigot.Main;
 import main.java.fr.verymc.spigot.core.PluginMessageManager;
+import main.java.fr.verymc.spigot.core.spawners.Spawner;
 import main.java.fr.verymc.spigot.island.bank.IslandBank;
 import main.java.fr.verymc.spigot.island.blocks.Chest;
 import main.java.fr.verymc.spigot.island.challenges.IslandChallenge;
@@ -43,6 +44,7 @@ public class Island {
     private ArrayList<Chest> chests;
     private ArrayList<Minion> minions;
     private HashMap<Material, Double> valuesBlocs;
+    private ArrayList<Spawner> spawners;
 
 
     //NE PAS STOCKER
@@ -56,7 +58,7 @@ public class Island {
                   IslandBank bank, IslandUpgradeGenerator generatorUpgrade, ArrayList<UUID> banneds, ArrayList<IslandChallenge> challenges,
                   boolean isDefaultChallenges, HashMap<IslandRanks, ArrayList<IslandPerms>> permsPerRanks,
                   boolean isPublic, double value, ArrayList<IslandSettings> activatedSettings, ArrayList<Chest> chests, ArrayList<Minion> minions,
-                  HashMap<Material, Double> stacked, boolean loadedHere) {
+                  HashMap<Material, Double> stacked, boolean loadedHere, ArrayList<Spawner> spawners) {
         this.name = name;
         this.home = home;
         this.center = center;
@@ -101,6 +103,7 @@ public class Island {
             this.valuesBlocs = stacked;
         }
         this.loadedHere = loadedHere;
+        this.spawners = spawners;
         if (loadedHere) loadIsland();
         Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.instance, new Runnable() {
             @Override
@@ -669,6 +672,19 @@ public class Island {
 
     public void setLoadedHere(boolean loadedHere) {
         this.loadedHere = loadedHere;
+    }
+
+    public ArrayList<Spawner> getSpawners() {
+        return spawners;
+    }
+
+    public void addSpawner(Spawner spawner) {
+        spawners.add(spawner);
+    }
+
+    public void removeSpawner(Spawner spawner) {
+        if (spawners.contains(spawner))
+            spawners.remove(spawner);
     }
 
 }

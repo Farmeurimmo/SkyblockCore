@@ -33,6 +33,9 @@ import main.java.fr.verymc.spigot.core.leveladv.LevelAdvListener;
 import main.java.fr.verymc.spigot.core.leveladv.LevelAdvManager;
 import main.java.fr.verymc.spigot.core.scoreboard.ScoreBoard;
 import main.java.fr.verymc.spigot.core.shopgui.*;
+import main.java.fr.verymc.spigot.core.spawners.SpawnerCmd;
+import main.java.fr.verymc.spigot.core.spawners.SpawnersListener;
+import main.java.fr.verymc.spigot.core.spawners.SpawnersManager;
 import main.java.fr.verymc.spigot.core.storage.ConfigManager;
 import main.java.fr.verymc.spigot.core.storage.SkyblockUser;
 import main.java.fr.verymc.spigot.core.storage.SkyblockUserManager;
@@ -102,7 +105,7 @@ public class Main extends JavaPlugin {
     //Usage non recommandé pour les personnes ne le connaissant pas ce système ni les risques
     //qui peuvent en émerger
     public static boolean devMode = true;
-    public static ServerType devServerType = ServerType.SKYBLOCK_DUNGEON;
+    public static ServerType devServerType = ServerType.SKYBLOCK_ISLAND;
     static LuckPerms api;
     private final HashMap<String, Integer> spawncooldown = new HashMap<>();
     public ArrayList<Player> pending = new ArrayList<>();
@@ -253,6 +256,7 @@ public class Main extends JavaPlugin {
         new ChestManager();
         new MinionManager();
         new PlayerWarpManager();
+        new SpawnersManager();
 
         startListenerModule();
 
@@ -405,6 +409,7 @@ public class Main extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new IslandChallengesGuis(), this);
         getServer().getPluginManager().registerEvents(new LevelAdvGui(), this);
         getServer().getPluginManager().registerEvents(new LevelAdvListener(), this);
+        getServer().getPluginManager().registerEvents(new SpawnersListener(), this);
 
 
         //ISLAND LISTENER
@@ -499,6 +504,7 @@ public class Main extends JavaPlugin {
         this.getCommand("pickaxe").setExecutor(new PickaxeCmd());
         this.getCommand("dungeonadmin").setExecutor(new DungeonAdminCmd());
         this.getCommand("level").setExecutor(new LevelAdvCmd());
+        this.getCommand("spawner").setExecutor(new SpawnerCmd());
     }
 
     public void createMainWorld() {
