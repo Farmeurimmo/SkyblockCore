@@ -25,6 +25,7 @@ import main.java.fr.verymc.spigot.core.events.ServerCoreMicellanous;
 import main.java.fr.verymc.spigot.core.events.Tabulation;
 import main.java.fr.verymc.spigot.core.events.TchatManager;
 import main.java.fr.verymc.spigot.core.gui.*;
+import main.java.fr.verymc.spigot.core.holos.HoloManager;
 import main.java.fr.verymc.spigot.core.holos.HolosSetup;
 import main.java.fr.verymc.spigot.core.items.*;
 import main.java.fr.verymc.spigot.core.leveladv.LevelAdvCmd;
@@ -222,6 +223,7 @@ public class Main extends JavaPlugin {
             Bukkit.getPluginManager().disablePlugin(this);
         }
         new UtilsManager();
+        new HoloManager();
 
 
         new IslandManager();

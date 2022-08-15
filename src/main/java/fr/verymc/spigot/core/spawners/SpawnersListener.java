@@ -10,8 +10,13 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockExplodeEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.entity.EntityExplodeEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.Objects;
 
 public class SpawnersListener implements Listener {
 
@@ -22,24 +27,58 @@ public class SpawnersListener implements Listener {
         if (e.isCancelled()) return;
 
         if (item.getType() != Material.SPAWNER) return;
+        e.setCancelled(true);
 
         Island island = IslandManager.instance.getIslandByLoc(e.getBlockPlaced().getLocation());
-        if (island == null) {
-            e.setCancelled(true);
+        if (island == null)
             return;
-        }
-        //lpepekozkp
 
-        Spawner spawner = new Spawner(e.getBlock().getLocation().getBlock().getLocation(), 1,
-                EntityType.valueOf(item.getItemMeta().getDisplayName().replace("§fGénérateur de §e", "")));
-        SpawnersManager.instance.placeSpawner(spawner, island);
-        SpawnersManager.instance.addSpawner(spawner, island);
+        EntityType entityType = EntityType.valueOf(item.getItemMeta().getDisplayName().replace("§fGénérateur de §e", ""));
+
+        if (e.getBlockAgainst().getType() == Material.SPAWNER) {
+            Spawner spawner = SpawnersManager.instance.getSpawner(e.getBlockAgainst().getLocation());
+            if (spawner == null) return;
+            if (spawner.getEntityType() == entityType) {
+                ItemStack temp = item.clone();
+                temp.setAmount(item.getAmount() - 1);
+                Objects.requireNonNull(e.getPlayer().getEquipment()).setItem(e.getHand(), temp);
+                spawner.incrementAmount();
+                return;
+            }
+        }
+
+        ItemStack temp = item.clone();
+        temp.setAmount(item.getAmount() - 1);
+        e.getPlayer().getEquipment().setItem(e.getHand(), temp);
+
+        Spawner spawner = new Spawner(e.getBlock().getLocation().getBlock().getLocation(), 1, entityType);
+        SpawnersManager.instance.placeSpawner(spawner, island, false);
     }
 
     @EventHandler
     public void blockDestroyEvent(BlockDestroyEvent e) {
         if (e.getBlock().getType() != Material.SPAWNER) return;
         e.setCancelled(true);
+    }
+
+    @EventHandler
+    public void blockExplodeEvent(BlockExplodeEvent e) {
+        e.blockList().removeIf(b -> b.getType() == Material.SPAWNER);
+    }
+
+    @EventHandler
+    public void entityExplodeEvent(EntityExplodeEvent e) {
+        e.blockList().removeIf(b -> b.getType() == Material.SPAWNER);
+    }
+
+    @EventHandler
+    public void interactAtSpawner(PlayerInteractEvent e) {
+        if (e.isCancelled()) return;
+        Block block = e.getClickedBlock();
+        if (block == null) return;
+        if (e.getItem() == null) return;
+        if (e.getItem().getType() == Material.SPAWNER) return;
+        if (block.getType() == Material.SPAWNER) e.setCancelled(true);
     }
 
     @EventHandler
@@ -56,12 +95,11 @@ public class SpawnersListener implements Listener {
             return;
         }
         if (spawner.getAmount() > 1) {
-            player.sendMessage("§cVous ne pouvez pas supprimer un générateur qui contient plusieurs générateur, retirez les puis réessayez.");
+            SpawnersManager.instance.giveSpawner(player, spawner.getEntityType(), 1);
+            spawner.setAmount(spawner.getAmount() - 1);
             return;
         }
-        SpawnersManager.instance.removeHolo(spawner);
-        SpawnersManager.instance.removeSpawner(spawner, island);
-        SpawnersManager.instance.destroySpawner(spawner, island);
+        SpawnersManager.instance.destroySpawner(spawner, island, false);
         SpawnersManager.instance.giveSpawner(player, spawner.getEntityType(), 1);
     }
 }

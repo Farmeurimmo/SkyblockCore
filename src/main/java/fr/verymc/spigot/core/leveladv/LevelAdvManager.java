@@ -91,6 +91,7 @@ public class LevelAdvManager {
     }
 
     public void blockEvent(Block block, Player player) {
+        if (!(block instanceof Ageable)) return;
         if (!matPer.containsKey(block.getType())) return;
         if (block.hasMetadata("placed")) {
             final Ageable ageable = (Ageable) block.getState().getBlockData();

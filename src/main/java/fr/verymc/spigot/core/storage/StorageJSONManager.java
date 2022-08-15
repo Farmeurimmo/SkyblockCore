@@ -3,7 +3,6 @@ package main.java.fr.verymc.spigot.core.storage;
 import main.java.fr.verymc.commons.enums.ServerType;
 import main.java.fr.verymc.spigot.Main;
 import main.java.fr.verymc.spigot.core.spawners.Spawner;
-import main.java.fr.verymc.spigot.core.spawners.SpawnersManager;
 import main.java.fr.verymc.spigot.island.Island;
 import main.java.fr.verymc.spigot.island.IslandManager;
 import main.java.fr.verymc.spigot.island.bank.IslandBank;
@@ -93,11 +92,10 @@ public class StorageJSONManager {
                 for (Spawner spawner : island.getSpawners()) {
                     spawner.setLoc(PlayerUtils.instance.toCenterOf(island.getCenter(), spawner.getLoc()));
                 }
-                SpawnersManager.instance.respawnAllSpawners();
 
                 //SEND Islands to -> IslandManager.instance.islands
                 if (Main.instance.serverType == ServerType.SKYBLOCK_ISLAND) {
-                    IslandManager.instance.islands.add(island);
+                    islands.add(island);
                 }
             }
         }
@@ -116,6 +114,7 @@ public class StorageJSONManager {
         }
         //DATA USERS
 
+        IslandManager.instance.islands = islands;
         //SEND SkyblockUser to -> SkyblockUserManager.instance.users
         SkyblockUserManager.instance.users = skyblockUsers;
     }

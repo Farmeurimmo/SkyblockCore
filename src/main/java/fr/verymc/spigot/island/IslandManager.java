@@ -16,7 +16,8 @@ import main.java.fr.verymc.commons.enums.ServerType;
 import main.java.fr.verymc.commons.utils.HTTPUtils;
 import main.java.fr.verymc.spigot.Main;
 import main.java.fr.verymc.spigot.core.cmd.base.SpawnCmd;
-import main.java.fr.verymc.spigot.core.holos.HoloManager;
+import main.java.fr.verymc.spigot.core.spawners.Spawner;
+import main.java.fr.verymc.spigot.core.spawners.SpawnersManager;
 import main.java.fr.verymc.spigot.core.storage.AsyncConfig;
 import main.java.fr.verymc.spigot.core.storage.ConfigManager;
 import main.java.fr.verymc.spigot.island.bank.IslandBank;
@@ -101,8 +102,6 @@ public class IslandManager {
         new IslandValueCalcManager();
         Main.instance.saveResource("ileworld.schem", true);
         Main.instance.saveResource("clear.schem", true);
-
-        new HoloManager();
     }
 
     public void pasteAndLoadIslands() {
@@ -128,6 +127,7 @@ public class IslandManager {
             }
         }
         ChestManager.instance.makeChestRepop();
+        SpawnersManager.instance.respawnAllSpawners();
         try {
             HTTPUtils.postMethod("islands/addloaded", loadeds.toString());
         } catch (IOException e) {
@@ -370,6 +370,10 @@ public class IslandManager {
                                         ChestManager.instance.removeChestFromLoc(c.getBlock());
                                     }
                                 }
+                                for (Spawner spawner : playerIsland.getSpawners()) {
+                                    SpawnersManager.instance.destroySpawner(spawner, playerIsland, true);
+                                }
+
                                 if (islands.contains(playerIsland)) {
                                     islands.remove(playerIsland);
                                 }

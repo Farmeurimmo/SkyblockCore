@@ -16,7 +16,7 @@ public class HoloManager {
 
     public Hologram getHoloAtLoc(Location location) {
         for (Hologram hologram : holograms) {
-            if (hologram.getLocation().equals(location)) {
+            if (hologram.getLocation().getBlock().getLocation().equals(location.getBlock().getLocation())) {
                 return hologram;
             }
         }

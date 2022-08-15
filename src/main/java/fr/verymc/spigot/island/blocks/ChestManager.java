@@ -52,7 +52,6 @@ public class ChestManager {
                 block.getLocation().getChunk().load();
                 BlockState bs = block.getState();
                 if (bs instanceof Chest) {
-                    System.out.println("Chest instanceof");
                     Chest c = (Chest) bs;
                     if (chest.getType() == 1) {
                         c.setCustomName("§6SellChest");

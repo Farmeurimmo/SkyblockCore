@@ -7,10 +7,10 @@ import org.bukkit.entity.EntityType;
 public class Spawner {
 
     private Location loc;
-    private double amount;
+    private int amount;
     private EntityType entityType;
 
-    public Spawner(Location loc, double amount, EntityType entityType) {
+    public Spawner(Location loc, int amount, EntityType entityType) {
         this.loc = loc;
         this.amount = amount;
         this.entityType = entityType;
@@ -23,7 +23,7 @@ public class Spawner {
 
     public static Spawner stringToSpawner(String string) {
         String[] split = string.split(ObjectConverter.SEPARATOR);
-        return new Spawner(ObjectConverter.instance.locationFromString(split[0]), Double.parseDouble(split[1]), EntityType.valueOf(split[2]));
+        return new Spawner(ObjectConverter.instance.locationFromString(split[0]), Integer.parseInt(split[1]), EntityType.valueOf(split[2]));
     }
 
     public Location getLoc() {
@@ -34,11 +34,11 @@ public class Spawner {
         this.loc = loc;
     }
 
-    public double getAmount() {
+    public Integer getAmount() {
         return amount;
     }
 
-    public void setAmount(double amount) {
+    public void setAmount(int amount) {
         this.amount = amount;
     }
 

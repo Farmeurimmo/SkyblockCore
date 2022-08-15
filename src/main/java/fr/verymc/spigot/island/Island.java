@@ -675,7 +675,7 @@ public class Island {
     }
 
     public ArrayList<Spawner> getSpawners() {
-        return spawners;
+        return this.spawners;
     }
 
     public void addSpawner(Spawner spawner) {
@@ -683,8 +683,9 @@ public class Island {
     }
 
     public void removeSpawner(Spawner spawner) {
-        if (spawners.contains(spawner))
+        if (spawners.contains(spawner)) {
             spawners.remove(spawner);
+        }
     }
 
 }
