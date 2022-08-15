@@ -57,6 +57,7 @@ public class IslandChallengesListener implements Listener {
         Material currenttype = e.getBlock().getType();
         Block block = e.getBlock();
         if (block.hasMetadata("placed")) {
+            if (!(block instanceof Ageable)) return;
             final Ageable ageable = (Ageable) block.getState().getBlockData();
             int age = ageable.getAge();
             if (age != ageable.getMaximumAge()) {
