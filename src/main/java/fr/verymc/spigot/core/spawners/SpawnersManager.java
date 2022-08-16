@@ -61,17 +61,13 @@ public class SpawnersManager {
 
     public void updateSpawner(Spawner spawner) {
         Block block = spawner.getLoc().getBlock();
+        block.getChunk().load();
         if (block.getType() != Material.SPAWNER) {
-            block.getChunk().load();
             block.setType(Material.SPAWNER);
         }
         CreatureSpawner creatureSpawner = (CreatureSpawner) block.getState();
-        if (creatureSpawner.getSpawnedType() != spawner.getEntityType()) {
-            if (!block.getChunk().isLoaded()) block.getChunk().load();
-            creatureSpawner.setSpawnedType(spawner.getEntityType());
-            creatureSpawner.setSpawnCount(spawner.getAmount());
-            creatureSpawner.update();
-        }
+        creatureSpawner.setSpawnedType(spawner.getEntityType());
+        creatureSpawner.update();
 
         Location loc = spawner.getLoc().clone().add(0.5, 1.5, 0.5);
         Hologram holo = HoloManager.instance.getHoloAtLoc(loc);

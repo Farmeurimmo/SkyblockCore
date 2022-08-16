@@ -1,6 +1,7 @@
 package main.java.fr.verymc.spigot.core.spawners;
 
 import com.destroystokyo.paper.event.block.BlockDestroyEvent;
+import main.java.fr.verymc.spigot.core.mobstacker.MobStackerManager;
 import main.java.fr.verymc.spigot.island.Island;
 import main.java.fr.verymc.spigot.island.IslandManager;
 import org.bukkit.Material;
@@ -13,6 +14,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockExplodeEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
+import org.bukkit.event.entity.SpawnerSpawnEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
@@ -43,6 +45,7 @@ public class SpawnersListener implements Listener {
                 temp.setAmount(item.getAmount() - 1);
                 Objects.requireNonNull(e.getPlayer().getEquipment()).setItem(e.getHand(), temp);
                 spawner.incrementAmount();
+                SpawnersManager.instance.updateSpawner(spawner);
                 return;
             }
         }
@@ -53,6 +56,15 @@ public class SpawnersListener implements Listener {
 
         Spawner spawner = new Spawner(e.getBlock().getLocation().getBlock().getLocation(), 1, entityType);
         SpawnersManager.instance.placeSpawner(spawner, island, false);
+    }
+
+    @EventHandler
+    public void spawnEvent(SpawnerSpawnEvent e) {
+        if (e.isCancelled()) return;
+        Spawner spawner = SpawnersManager.instance.getSpawner(e.getSpawner().getLocation());
+        if (spawner == null) return;
+        MobStackerManager.instance.spawnMobStacked(spawner.getEntityType(), e.getLocation(), spawner.getAmount());
+        e.setCancelled(true);
     }
 
     @EventHandler
@@ -97,6 +109,7 @@ public class SpawnersListener implements Listener {
         if (spawner.getAmount() > 1) {
             SpawnersManager.instance.giveSpawner(player, spawner.getEntityType(), 1);
             spawner.setAmount(spawner.getAmount() - 1);
+            SpawnersManager.instance.updateSpawner(spawner);
             return;
         }
         SpawnersManager.instance.destroySpawner(spawner, island, false);

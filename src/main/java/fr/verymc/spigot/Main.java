@@ -32,6 +32,8 @@ import main.java.fr.verymc.spigot.core.leveladv.LevelAdvCmd;
 import main.java.fr.verymc.spigot.core.leveladv.LevelAdvGui;
 import main.java.fr.verymc.spigot.core.leveladv.LevelAdvListener;
 import main.java.fr.verymc.spigot.core.leveladv.LevelAdvManager;
+import main.java.fr.verymc.spigot.core.mobstacker.MobStackerListener;
+import main.java.fr.verymc.spigot.core.mobstacker.MobStackerManager;
 import main.java.fr.verymc.spigot.core.scoreboard.ScoreBoard;
 import main.java.fr.verymc.spigot.core.shopgui.*;
 import main.java.fr.verymc.spigot.core.spawners.SpawnerCmd;
@@ -259,6 +261,7 @@ public class Main extends JavaPlugin {
         new MinionManager();
         new PlayerWarpManager();
         new SpawnersManager();
+        new MobStackerManager();
 
         startListenerModule();
 
@@ -412,6 +415,7 @@ public class Main extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new LevelAdvGui(), this);
         getServer().getPluginManager().registerEvents(new LevelAdvListener(), this);
         getServer().getPluginManager().registerEvents(new SpawnersListener(), this);
+        getServer().getPluginManager().registerEvents(new MobStackerListener(), this);
 
 
         //ISLAND LISTENER
