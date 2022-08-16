@@ -3,6 +3,7 @@ package main.java.fr.verymc.velocity;
 import com.google.inject.Inject;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
+import com.velocitypowered.api.plugin.Dependency;
 import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ProxyServer;
@@ -17,6 +18,9 @@ import main.java.fr.verymc.velocity.events.PlayerListener;
 import main.java.fr.verymc.velocity.team.DungeonTeam;
 import main.java.fr.verymc.velocity.team.DungeonTeamManager;
 import net.kyori.adventure.text.Component;
+import net.luckperms.api.LuckPerms;
+import net.luckperms.api.LuckPermsProvider;
+import net.luckperms.api.model.user.User;
 import org.slf4j.Logger;
 
 import java.util.ArrayList;
@@ -24,14 +28,23 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
-@Plugin(id = "skyblockcore", name = "SkyblockCoreVelocity", version = "0.1.0-SNAPSHOT",
-        url = "https://verymc.fr", description = "Owned by VeryMc", authors = {"Farmeurimmo"})
+@Plugin(id = "skyblockcore",
+        name = "SkyblockCoreVelocity",
+        version = "0.1.0-SNAPSHOT",
+        url = "https://verymc.fr",
+        description = "Owned by VeryMc",
+        authors = {"Farmeurimmo"},
+        dependencies = {
+                @Dependency(id = "luckperms")
+        })
 public class Main {
 
     public static Main instance;
     private final ProxyServer server;
     private final Logger logger;
     public boolean maintenance = false;
+
+    public LuckPerms luckPermsAPI;
     public String maintenance_perm = "skyblock.maintenance.acces";
 
     @Inject
@@ -63,6 +76,9 @@ public class Main {
 
         messageOfStuffLose();
 
+
+        luckPermsAPI = LuckPermsProvider.get();
+
         logger.info("§aLoading completed !");
     }
 
@@ -74,6 +90,14 @@ public class Main {
             }
         }
         return count;
+    }
+
+    public void sendConnectionMessage(Player player) {
+        Main.instance.sendMessageToSkyblock("§7[§a+§7] " + getPrefix(player.getUniqueId()) + player.getUsername() + getSuffix(player.getUniqueId()));
+    }
+
+    public void sendDeconnectionMessage(Player player) {
+        Main.instance.sendMessageToSkyblock("§7[§c-§7] " + getPrefix(player.getUniqueId()) + player.getUsername() + getSuffix(player.getUniqueId()));
     }
 
     public void messageOfStuffLose() {
@@ -171,6 +195,30 @@ public class Main {
             playersToReturn.add(player);
         }
         return playersToReturn;
+    }
+
+    public ArrayList<Player> getSkyblockPlayers() {
+        ArrayList<Player> toReturn = new ArrayList<>();
+        for (RegisteredServer registeredServer : getSkyblockServers()) {
+            toReturn.addAll(registeredServer.getPlayersConnected());
+        }
+        return toReturn;
+    }
+
+    public String getPrefix(UUID uuid) {
+        User user = Main.instance.luckPermsAPI.getUserManager().getUser(uuid);
+        if (user.getCachedData().getMetaData().getPrefix() != null) {
+            return user.getCachedData().getMetaData().getPrefix();
+        }
+        return "";
+    }
+
+    public String getSuffix(UUID uuid) {
+        User user = Main.instance.luckPermsAPI.getUserManager().getUser(uuid);
+        if (user.getCachedData().getMetaData().getSuffix() != null) {
+            return user.getCachedData().getMetaData().getSuffix();
+        }
+        return "";
     }
 
 }
