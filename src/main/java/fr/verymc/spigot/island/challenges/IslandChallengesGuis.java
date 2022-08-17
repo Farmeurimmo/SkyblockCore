@@ -15,6 +15,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 
 public class IslandChallengesGuis implements Listener {
@@ -27,18 +28,15 @@ public class IslandChallengesGuis implements Listener {
     }
 
     public void completeChallenge(Player player, IslandChallenge challenge) {
-        //poppy
-        double wonCrys = 3 * boost * challenge.getPalier();
         double wonMoney = 5000.0 * boost * challenge.getPalier();
         int keys = 1 * boost;
-        IslandManager.instance.getPlayerIsland(player).getBank().addCrystaux(wonCrys);
         IslandManager.instance.getPlayerIsland(player).getBank().addMoney(wonMoney);
         CratesKeyManager.GiveCrateKey(player, keys, "Challenge");
 
         player.playSound(player.getLocation(), Sound.UI_TOAST_CHALLENGE_COMPLETE, 5, 1);
         player.sendMessage("§6§lChallenges §8» §fVous venez de compléter le challenge journalier n°§6" + challenge.getId() +
-                " §fau palier " + challenge.getPalier() + "/" + (IslandChallengesReset.maxPalier + 1) + ".");
-        player.sendMessage("§6§lChallenges §8» §fVous avez reçu " + (int) wonCrys + " crystaux, " + wonMoney + "$ et x" + keys + " Clée Challenge§f.");
+                " §fau palier " + challenge.getPalier() + ".");
+        player.sendMessage("§6§lChallenges §8» §fVous avez reçu " + NumberFormat.getInstance().format(wonMoney) + "$ et x" + keys + " Clée Challenge§f.");
     }
 
     public void makeChallengeGui(Player player) {
@@ -71,7 +69,7 @@ public class IslandChallengesGuis implements Listener {
                 customa.setDisplayName("§6" + challenge.getName());
                 ArrayList<String> lore = new ArrayList<>();
                 lore.add("§7Progression: " + challenge.getProgress() + "/" + challenge.getMaxProgress() * (challenge.getPalier() + 1) * playerIsland.getMembers().size());
-                lore.add("§7Palier: " + challenge.getPalier() + "/" + (IslandChallengesReset.maxPalier + 1));
+                lore.add("§7Palier: " + challenge.getPalier());
                 lore.add("§7Actif: " + (challenge.isActive() ? "§aOui" : "§cNon"));
                 customa.setLore(lore);
                 custom.setItemMeta(customa);
