@@ -12,6 +12,7 @@ import java.text.NumberFormat;
 public class MobStackerManager {
 
     public static MobStackerManager instance;
+    public static final int max_par_stacker = 50;
 
     public MobStackerManager() {
         instance = this;

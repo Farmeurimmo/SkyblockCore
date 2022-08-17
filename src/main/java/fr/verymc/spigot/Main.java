@@ -415,7 +415,7 @@ public class Main extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new LevelAdvGui(), this);
         getServer().getPluginManager().registerEvents(new LevelAdvListener(), this);
         getServer().getPluginManager().registerEvents(new SpawnersListener(), this);
-        getServer().getPluginManager().registerEvents(new MobStackerListener(), this);
+        if (serverType != ServerType.SKYBLOCK_DUNGEON) getServer().getPluginManager().registerEvents(new MobStackerListener(), this);
 
 
         //ISLAND LISTENER
