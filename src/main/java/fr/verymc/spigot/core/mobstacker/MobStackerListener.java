@@ -45,10 +45,13 @@ public class MobStackerListener implements Listener {
             }
             if (entity.hasMetadata("stacker")) {
                 amount += entity.getMetadata("stacker").get(0).asInt();
+            } else {
+                amount++;
             }
             ent.remove();
             entity.setMetadata("stacker", new FixedMetadataValue(Main.instance, amount));
             entity.setCustomName(MobStackerManager.instance.mobName(entity.getType(), amount));
+            break;
         }
     }
 }
