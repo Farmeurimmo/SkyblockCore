@@ -1,11 +1,15 @@
 package main.java.fr.verymc.spigot.utils;
 
+import com.comphenix.protocol.PacketType;
+import com.comphenix.protocol.events.PacketContainer;
+import main.java.fr.verymc.spigot.Main;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 public class WorldBorderUtils {
@@ -24,7 +28,7 @@ public class WorldBorderUtils {
         try {
             this.instance = instance;
             this.instanceClass = this;
-            minecraftVersion = getVersion();
+            /*minecraftVersion = getVersion();
             versionNumber = getVersionNumber();
             worldBorder = getNMSClass("WorldBorder").getConstructor().newInstance();
             setCenter = worldBorder.getClass().getMethod("setCenter", double.class, double.class);
@@ -34,7 +38,7 @@ public class WorldBorderUtils {
             transistionSizeBetween = worldBorder.getClass().getMethod("transitionSizeBetween", double.class, double.class, long.class);
             packetPlayOutWorldBorder = getNMSClass("PacketPlayOutWorldBorder").getConstructor(getNMSClass("WorldBorder"),
                     getNMSClass("PacketPlayOutWorldBorder").getDeclaredClasses()[getVersionNumber() > 100 ? 0 : 1]);
-            craftWorldClass = getCraftClass("CraftWorld");
+            craftWorldClass = getCraftClass("CraftWorld");*/
 
 
         } catch (Exception ex) {
@@ -42,9 +46,33 @@ public class WorldBorderUtils {
         }
     }
 
-    public void sendWorldBorder(Player player, Color color, double size, Location centerLocation) {
+    public void sendWorldBorder(Player player, double size, Location centerLocation) {
         try {
-            Object craftWorld = craftWorldClass.cast(centerLocation.getWorld());
+            /*PacketContainer packet1 = Main.instance.manager.createPacket(PacketType.Play.Server.INITIALIZE_BORDER);
+            PacketContainer packet2 = Main.instance.manager.createPacket(PacketType.Play.Server.);
+            packet1.getWorldBorderActions().writeSafely(0, EnumWrappers.WorldBorderAction.SET_CENTER);
+            packet2.getWorldBorderActions().writeSafely(0, EnumWrappers.WorldBorderAction.SET_SIZE);
+            packet1.getDoubles().write(0, centerLocation.getX());
+            packet1.getDoubles().write(1, centerLocation.getZ());
+            packet2.getDoubles().write(0, size);
+            packet2.getDoubles().write(1, size);*/
+            PacketContainer packet1 = Main.instance.manager.createPacket(PacketType.Play.Server.SET_BORDER_CENTER);
+            packet1.getDoubles().write(0, centerLocation.getX());
+            packet1.getDoubles().write(1, centerLocation.getZ());
+            PacketContainer packet2 = Main.instance.manager.createPacket(PacketType.Play.Server.SET_BORDER_SIZE);
+            packet2.getDoubles().write(0, size);
+
+
+            try {
+                Main.instance.manager.sendServerPacket(player, packet1);
+                Main.instance.manager.sendServerPacket(player, packet2);
+                /*Main.instance.manager.sendServerPacket(player, packet1);
+                Main.instance.manager.sendServerPacket(player, packet2);*/
+            } catch (InvocationTargetException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            /*Object craftWorld = craftWorldClass.cast(centerLocation.getWorld());
             setField(worldBorder, "world", craftWorld.getClass().getMethod("getHandle").invoke(craftWorld), false);
 
             setCenter.invoke(worldBorder, centerLocation.getBlockX(), centerLocation.getBlockZ());
@@ -69,7 +97,7 @@ public class WorldBorderUtils {
             Object packetPlayOutWorldBorderPacket = packetPlayOutWorldBorder.newInstance(worldBorder,
                     Enum.valueOf((Class<Enum>) getNMSClass("PacketPlayOutWorldBorder").getDeclaredClasses()[versionNumber > 100 ? 0 : 1],
                             "INITIALIZE"));
-            sendPacket(player, packetPlayOutWorldBorderPacket);
+            sendPacket(player, packetPlayOutWorldBorderPacket);*/
         } catch (Exception e) {
             e.printStackTrace();
         }

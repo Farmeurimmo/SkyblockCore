@@ -67,8 +67,8 @@ public class IslandManager {
     public IslandManager() {
         instance = this;
         challenges = getAvailableChallenges();
-        new IslandChallengesReset();
         new WorldBorderUtils(Main.instance);
+        new IslandChallengesReset();
         new IslandRank();
     }
 
@@ -85,7 +85,6 @@ public class IslandManager {
         new IslandMemberGui();
         new IslandUpgradeGui();
         new IslandBankGui();
-        new IslandBorderGui();
         new IslandTopGui();
         new IslandRankEditGui();
         new IslandCoopGui();
@@ -148,9 +147,9 @@ public class IslandManager {
                 }
 
                 Location pos1 = island.getCenter().clone().add(250, 0, 250);
-                pos1.set(pos1.getBlockX(), 0, pos1.getBlockZ());
+                pos1.set(pos1.getBlockX(), -64, pos1.getBlockZ());
                 Location pos2 = island.getCenter().clone().add(-250, 0, -250);
-                pos2.set(pos2.getBlockX(), 256, pos2.getBlockZ());
+                pos2.set(pos2.getBlockX(), 319, pos2.getBlockZ());
                 FAWEUtils.instance.saveSchem(String.valueOf(island.getUUID()), pos1,
                         pos2, island.getCenter().getWorld(), island.getCenter().clone());
             }
@@ -288,7 +287,7 @@ public class IslandManager {
         if (Main.instance.serverType != ServerType.SKYBLOCK_ISLAND) return;
         Island i = getIslandByLoc(p.getLocation());
         if (i != null) {
-            WorldBorderUtils.instanceClass.sendWorldBorder(p, i.getBorderColor(),
+            WorldBorderUtils.instanceClass.sendWorldBorder(p,
                     IslandUpgradeSize.getSizeFromLevel(i.getSizeUpgrade().getLevel()), i.getCenter());
         }
     }
@@ -297,7 +296,7 @@ public class IslandManager {
         if (Main.instance.serverType != ServerType.SKYBLOCK_ISLAND) return;
         Island i = getIslandByLoc(loc);
         if (i != null) {
-            WorldBorderUtils.instanceClass.sendWorldBorder(p, i.getBorderColor(),
+            WorldBorderUtils.instanceClass.sendWorldBorder(p,
                     IslandUpgradeSize.getSizeFromLevel(i.getSizeUpgrade().getLevel()), i.getCenter());
         }
     }
@@ -690,7 +689,7 @@ public class IslandManager {
         home.setPitch(0);
         home.setYaw(130);
         islands.add(new Island("Ile de " + p.getName(), home, toReturn, uuid, members,
-                islandUpgradeSize, islandUpgradeMember, WorldBorderUtils.Color.BLUE, islandBank, islandUpgradeGenerator, banneds, challenges,
+                islandUpgradeSize, islandUpgradeMember, islandBank, islandUpgradeGenerator, banneds, challenges,
                 true, null, true, 0.0, null, null, null, null, true,
                 new ArrayList<>()));
         new BukkitRunnable() {

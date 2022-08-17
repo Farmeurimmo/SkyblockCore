@@ -28,7 +28,7 @@ public class ServerCoreMicellanous implements Listener {
             InventorySyncManager.instance.sendReasonForEventCancelled(e.getPlayer());
             return;
         }
-        if (e.getTo().getY() < -1) {
+        if (e.getTo().getY() < -66) {
             PlayerUtils.instance.teleportPlayerFromRequest(e.getPlayer(), SpawnCmd.Spawn, 0, ServerType.SKYBLOCK_HUB);
             e.setCancelled(true);
             return;

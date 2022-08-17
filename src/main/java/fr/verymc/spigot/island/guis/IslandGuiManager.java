@@ -10,7 +10,6 @@ import main.java.fr.verymc.spigot.island.perms.IslandRank;
 import main.java.fr.verymc.spigot.island.protections.IslandSettings;
 import main.java.fr.verymc.spigot.island.upgrade.IslandUpgradeSize;
 import main.java.fr.verymc.spigot.utils.InventoryUtils;
-import main.java.fr.verymc.spigot.utils.WorldBorderUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -69,10 +68,6 @@ public class IslandGuiManager implements Listener {
             }
             if (current.getType() == Material.CHEST) {
                 IslandBankGui.instance.openBankIslandMenu(player);
-                return;
-            }
-            if (current.getType() == Material.BARRIER) {
-                IslandBorderGui.instance.openBorderIslandMenu(player);
                 return;
             }
             if (current.getType() == Material.BEACON) {
@@ -276,35 +271,6 @@ public class IslandGuiManager implements Listener {
             }
             if (current.getType() == Material.ARROW) {
                 IslandMainGui.instance.openMainIslandMenu(player);
-                return;
-            }
-            return;
-        }
-        if (e.getView().getTitle().equalsIgnoreCase("§6Bordure de l'île")) {
-            e.setCancelled(true);
-            if (current.getType() == Material.ARROW) {
-                IslandMainGui.instance.openMainIslandMenu(player);
-                return;
-            }
-            if (!playerIsland.hasPerms(playerIsland.getIslandRankFromUUID(player.getUniqueId()), IslandPerms.CHANGE_BORDER_COLOR, player)) {
-                return;
-            }
-            if (current.getType() == Material.GREEN_STAINED_GLASS_PANE) {
-                playerIsland.setBorderColor(WorldBorderUtils.Color.GREEN);
-                IslandManager.instance.setWorldBorderForAllPlayerOnIsland(playerIsland);
-                IslandBorderGui.instance.openBorderIslandMenu(player);
-                return;
-            }
-            if (current.getType() == Material.RED_STAINED_GLASS_PANE) {
-                playerIsland.setBorderColor(WorldBorderUtils.Color.RED);
-                IslandManager.instance.setWorldBorderForAllPlayerOnIsland(playerIsland);
-                IslandBorderGui.instance.openBorderIslandMenu(player);
-                return;
-            }
-            if (current.getType() == Material.BLUE_STAINED_GLASS_PANE) {
-                playerIsland.setBorderColor(WorldBorderUtils.Color.BLUE);
-                IslandManager.instance.setWorldBorderForAllPlayerOnIsland(playerIsland);
-                IslandBorderGui.instance.openBorderIslandMenu(player);
                 return;
             }
             return;

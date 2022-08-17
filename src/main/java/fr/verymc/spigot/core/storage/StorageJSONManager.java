@@ -19,7 +19,6 @@ import main.java.fr.verymc.spigot.island.upgrade.IslandUpgradeMember;
 import main.java.fr.verymc.spigot.island.upgrade.IslandUpgradeSize;
 import main.java.fr.verymc.spigot.utils.ObjectConverter;
 import main.java.fr.verymc.spigot.utils.PlayerUtils;
-import main.java.fr.verymc.spigot.utils.WorldBorderUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -240,7 +239,6 @@ public class StorageJSONManager {
         jsonObject.put("siUp", i.getSizeUpgrade().getLevel());
         jsonObject.put("mbUp", i.getMemberUpgrade().getLevel());
         jsonObject.put("genUp", i.getGeneratorUpgrade().getLevel());
-        jsonObject.put("border", WorldBorderUtils.instanceClass.borderToString(i.getBorderColor()));
         jsonObject.put("bank", i.getBank().getMoney() + ObjectConverter.SEPARATOR + i.getBank().getCrystaux() + ObjectConverter.SEPARATOR + i.getBank().getXp());
         jsonObject.put("bans", i.getBanneds().toString());
         jsonObject.put("public", i.isPublic());
@@ -330,7 +328,6 @@ public class StorageJSONManager {
         IslandUpgradeSize sizeUpgrade = new IslandUpgradeSize(Integer.parseInt(String.valueOf(jsonObject.get("siUp"))));
         IslandUpgradeMember memberUpgrade = new IslandUpgradeMember(Integer.parseInt(String.valueOf(jsonObject.get("mbUp"))));
         IslandUpgradeGenerator generatorUpgrade = new IslandUpgradeGenerator(Integer.parseInt(String.valueOf(jsonObject.get("genUp"))));
-        WorldBorderUtils.Color borderColor = WorldBorderUtils.instanceClass.borderFromString((String) jsonObject.get("border"));
         String bank = (String) jsonObject.get("bank");
         String[] bankSplit = bank.split(ObjectConverter.SEPARATOR);
         double money = Double.parseDouble(bankSplit[0]);
@@ -391,7 +388,7 @@ public class StorageJSONManager {
                 spawners.add(Spawner.stringToSpawner(str));
             }
         }
-        return new Island(name, home, null, id, members, sizeUpgrade, memberUpgrade, borderColor, bank1, generatorUpgrade,
+        return new Island(name, home, null, id, members, sizeUpgrade, memberUpgrade, bank1, generatorUpgrade,
                 banneds, islandChallenges, false, permsPerRanks, isPublic, 0.0, activatedSettings, chests,
                 minions, stacked, false, spawners);
     }

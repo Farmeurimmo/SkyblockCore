@@ -14,7 +14,6 @@ import main.java.fr.verymc.spigot.island.protections.IslandSettings;
 import main.java.fr.verymc.spigot.island.upgrade.IslandUpgradeGenerator;
 import main.java.fr.verymc.spigot.island.upgrade.IslandUpgradeMember;
 import main.java.fr.verymc.spigot.island.upgrade.IslandUpgradeSize;
-import main.java.fr.verymc.spigot.utils.WorldBorderUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -35,7 +34,6 @@ public class Island {
     private IslandUpgradeSize sizeUpgrade;
     private IslandUpgradeMember memberUpgrade;
     private IslandUpgradeGenerator generatorUpgrade;
-    private WorldBorderUtils.Color borderColor;
     private IslandBank bank;
     private ArrayList<UUID> banneds;
     private boolean isPublic;
@@ -53,10 +51,9 @@ public class Island {
     private ArrayList<UUID> coops = new ArrayList<>();
     private ArrayList<UUID> chatToggled = new ArrayList<>();
 
-    public Island(String name, Location home, Location center, UUID uuid, HashMap<UUID, IslandRanks> members,
-                  IslandUpgradeSize upgradeSize, IslandUpgradeMember upgradeMember, WorldBorderUtils.Color borderColor,
-                  IslandBank bank, IslandUpgradeGenerator generatorUpgrade, ArrayList<UUID> banneds, ArrayList<IslandChallenge> challenges,
-                  boolean isDefaultChallenges, HashMap<IslandRanks, ArrayList<IslandPerms>> permsPerRanks,
+    public Island(String name, Location home, Location center, UUID uuid, HashMap<UUID, IslandRanks> members, IslandUpgradeSize upgradeSize,
+                  IslandUpgradeMember upgradeMember, IslandBank bank, IslandUpgradeGenerator generatorUpgrade, ArrayList<UUID> banneds,
+                  ArrayList<IslandChallenge> challenges, boolean isDefaultChallenges, HashMap<IslandRanks, ArrayList<IslandPerms>> permsPerRanks,
                   boolean isPublic, double value, ArrayList<IslandSettings> activatedSettings, ArrayList<Chest> chests, ArrayList<Minion> minions,
                   HashMap<Material, Double> stacked, boolean loadedHere, ArrayList<Spawner> spawners) {
         this.name = name;
@@ -66,7 +63,6 @@ public class Island {
         this.members = members;
         this.sizeUpgrade = upgradeSize;
         this.memberUpgrade = upgradeMember;
-        this.borderColor = borderColor;
         this.bank = bank;
         this.isPublic = isPublic;
         this.value = value;
@@ -129,17 +125,17 @@ public class Island {
 
         ArrayList<IslandPerms> permsMembre = new ArrayList<>();
         permsMembre.addAll(perms);
-        permsMembre.addAll(Arrays.asList(IslandPerms.CHANGE_BORDER_COLOR, IslandPerms.MINIONS_ADD, IslandPerms.MINIONS_INTERACT));
+        permsMembre.addAll(Arrays.asList(IslandPerms.MINIONS_ADD, IslandPerms.MINIONS_INTERACT));
         permsPerRanks.put(IslandRanks.MEMBRE, permsMembre);
 
         ArrayList<IslandPerms> permsMod = new ArrayList<>();
         permsMod.addAll(permsMembre);
-        permsMod.addAll(Arrays.asList(IslandPerms.CHANGE_BORDER_COLOR, IslandPerms.KICK, IslandPerms.PROMOTE, IslandPerms.DEMOTE, IslandPerms.MINIONS_REMOVE));
+        permsMod.addAll(Arrays.asList(IslandPerms.KICK, IslandPerms.PROMOTE, IslandPerms.DEMOTE, IslandPerms.MINIONS_REMOVE));
         permsPerRanks.put(IslandRanks.MODERATEUR, permsMod);
 
         ArrayList<IslandPerms> permsCoChef = new ArrayList<>();
         permsCoChef.addAll(permsMod);
-        permsCoChef.addAll(Arrays.asList(IslandPerms.CHANGE_BORDER_COLOR, IslandPerms.KICK, IslandPerms.PROMOTE, IslandPerms.DEMOTE,
+        permsCoChef.addAll(Arrays.asList(IslandPerms.KICK, IslandPerms.PROMOTE, IslandPerms.DEMOTE,
                 IslandPerms.INVITE, IslandPerms.BAN));
         permsPerRanks.put(IslandRanks.COCHEF, permsCoChef);
 
@@ -170,14 +166,6 @@ public class Island {
 
     public IslandUpgradeSize getSizeUpgrade() {
         return sizeUpgrade;
-    }
-
-    public WorldBorderUtils.Color getBorderColor() {
-        return borderColor;
-    }
-
-    public WorldBorderUtils.Color setBorderColor(WorldBorderUtils.Color color) {
-        return borderColor = color;
     }
 
     public Location getCenter() {

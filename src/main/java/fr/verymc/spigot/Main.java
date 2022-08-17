@@ -1,5 +1,7 @@
 package main.java.fr.verymc.spigot;
 
+import com.comphenix.protocol.ProtocolLibrary;
+import com.comphenix.protocol.ProtocolManager;
 import com.gmail.filoghost.holographicdisplays.api.Hologram;
 import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
 import main.java.fr.verymc.JedisManager;
@@ -122,6 +124,7 @@ public class Main extends JavaPlugin {
     public ServerType serverType;
     public String serverName;
     public World mainWorld;
+    public ProtocolManager manager;
 
     public void setTarget(String uuid, String aaa) {
         if (aaa == null)
@@ -224,7 +227,17 @@ public class Main extends JavaPlugin {
             getLogger().warning("Le plugin HolographicDisplays est manquant.");
             Bukkit.getPluginManager().disablePlugin(this);
         }
+
         new UtilsManager();
+
+        manager = ProtocolLibrary.getProtocolManager();
+        if (manager == null) {
+            System.out.println("§4§lError while getting ProtocolManager, server going to sleep...");
+            Bukkit.shutdown();
+            return;
+        }
+
+
         new HoloManager();
 
 
@@ -280,7 +293,6 @@ public class Main extends JavaPlugin {
             IslandManager.instance.load();
             for (Island island : IslandManager.instance.islands) {
                 island.toggleTimeAndWeather();
-                island.setBorderColor(island.getBorderColor());
             }
 
             System.out.println("Starting Island ADDITIONNAL module FINISHED");
@@ -323,6 +335,7 @@ public class Main extends JavaPlugin {
         for (Player player : Bukkit.getOnlinePlayers()) {
             SkyblockUserManager.instance.checkForAccount(player);
             ScoreBoard.acces.setScoreBoard(player);
+            IslandManager.instance.setWorldBorder(player);
         }
         System.out.println("Starting core part 2 FINISHED");
 

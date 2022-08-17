@@ -18,7 +18,6 @@ public enum IslandPerms {
     SET_ISLAND_NAME("§6Définir le nom de l'île"),
     PRIVATE("§6Définir la visibilité de l'île sur privée"),
     PUBLIC("§6Définir la visibilité de l'île sur publique"),
-    CHANGE_BORDER_COLOR("§6Changer la couleur de la bordure"),
     CHANGE_ISLAND_BIOME("§6Changer le biome de l'île"),
     SET_HOME("§6Définir le home de l'île"),
     CHANGE_PERMS("§6Définir les permissions jusqu'à son niveau de grade"),
@@ -65,9 +64,6 @@ public enum IslandPerms {
             }
             case CANCEL_INVITE -> {
                 return new ItemStack(Material.KNOWLEDGE_BOOK);
-            }
-            case CHANGE_BORDER_COLOR -> {
-                return new ItemStack(Material.BARRIER);
             }
             case CHANGE_ISLAND_BIOME -> {
                 return new ItemStack(Material.CLAY);

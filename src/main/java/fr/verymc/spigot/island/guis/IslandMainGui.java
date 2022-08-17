@@ -52,12 +52,6 @@ public class IslandMainGui {
         custom3.setItemMeta(meta3);
         inv.setItem(21, custom3);
 
-        ItemStack custom4 = new ItemStack(Material.BARRIER, 1);
-        ItemMeta meta4 = custom4.getItemMeta();
-        meta4.setDisplayName("§6Couleur de la bordure §8| §7(clic gauche)");
-        custom4.setItemMeta(meta4);
-        inv.setItem(22, custom4);
-
         ItemStack custom5 = new ItemStack(Material.BEACON, 1);
         ItemMeta meta5 = custom5.getItemMeta();
         meta5.setDisplayName("§6Classement §8| §7(clic gauche)");
@@ -105,7 +99,7 @@ public class IslandMainGui {
         ItemMeta meta14 = custom14.getItemMeta();
         meta14.setDisplayName("§6Stacker bank §8| §7(clic gauche)");
         custom14.setItemMeta(meta14);
-        inv.setItem(29, custom14);
+        inv.setItem(22, custom14);
 
         ItemStack custom8 = new ItemStack(Material.ARROW, 1);
         ItemMeta customh = custom8.getItemMeta();

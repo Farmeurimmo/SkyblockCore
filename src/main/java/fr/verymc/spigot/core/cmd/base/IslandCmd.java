@@ -131,9 +131,6 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
                 } else if (args[0].equalsIgnoreCase("bank")) {
                     IslandBankGui.instance.openBankIslandMenu(p);
                     return true;
-                } else if (args[0].equalsIgnoreCase("border") || args[0].equalsIgnoreCase("bordure")) {
-                    IslandBorderGui.instance.openBorderIslandMenu(p);
-                    return true;
                 } else if (args[0].equalsIgnoreCase("leave")) {
                     if (IslandManager.instance.getPlayerIsland(p).getOwnerUUID().equals(p.getUniqueId())) {
                         p.sendMessage("§6§lIles §8» §fTu ne peux pas quitter ton île, pour la quitter il faut d'abord la détruire," +
@@ -454,8 +451,8 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
         if (cmd.getName().equalsIgnoreCase("is")) {
             if (args.length == 1) {
                 subcmd.addAll(Arrays.asList("go", "home", "invite", "accept", "kick", "promote", "demote", "sethome", "upgrade", "bank",
-                        "border", "bordure", "leave", "delete", "top", "coop", "uncoop", "chat", "public", "private", "bypass", "spy",
-                        "transfer", "ban", "unban", "expel", "cancelinvites", "rename", "settings", "blocvalues", "permissions"));
+                        "leave", "delete", "top", "coop", "uncoop", "chat", "public", "private", "bypass", "spy", "transfer", "ban",
+                        "unban", "expel", "cancelinvites", "rename", "settings", "blocvalues", "permissions"));
             } else {
                 if (IslandManager.instance.asAnIsland((Player) sender)) {
                     Island playerIsland = IslandManager.instance.getPlayerIsland((Player) sender);
