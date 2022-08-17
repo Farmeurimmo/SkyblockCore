@@ -37,7 +37,6 @@ public class MobStackerListener implements Listener {
         if (!(ent instanceof Mob)) return;
         List<Entity> entities = ent.getNearbyEntities(8, 4, 8);
         for (Entity entity : entities) {
-            if (entity instanceof Player) continue;
             if (ent.getType() != entity.getType()) continue;
             if (entity.equals(ent)) continue;
             int amount = 1;
