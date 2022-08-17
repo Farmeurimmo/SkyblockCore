@@ -50,6 +50,9 @@ public class SpawnersListener implements Listener {
             }
         }
 
+        Spawner spaw = SpawnersManager.instance.getSpawner(e.getBlockPlaced().getLocation());
+        if (spaw != null) return;
+
         ItemStack temp = item.clone();
         temp.setAmount(item.getAmount() - 1);
         e.getPlayer().getEquipment().setItem(e.getHand(), temp);
@@ -63,7 +66,8 @@ public class SpawnersListener implements Listener {
         if (e.isCancelled()) return;
         Spawner spawner = SpawnersManager.instance.getSpawner(e.getSpawner().getLocation());
         if (spawner == null) return;
-        MobStackerManager.instance.spawnMobStacked(spawner.getEntityType(), e.getLocation(), spawner.getAmount());
+        int spawnCount = spawner.getAmount() / 2;
+        MobStackerManager.instance.spawnMobStacked(spawner.getEntityType(), e.getLocation(), (spawnCount <= 0 ? 1 : spawnCount));
         e.setCancelled(true);
     }
 

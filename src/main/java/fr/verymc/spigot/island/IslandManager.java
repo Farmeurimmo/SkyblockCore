@@ -128,10 +128,12 @@ public class IslandManager {
         }
         ChestManager.instance.makeChestRepop();
         SpawnersManager.instance.respawnAllSpawners();
-        try {
-            HTTPUtils.postMethod("islands/addloaded", loadeds.toString());
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (!Main.devMode) {
+            try {
+                HTTPUtils.postMethod("islands/addloaded", loadeds.toString());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -153,11 +155,13 @@ public class IslandManager {
                         pos2, island.getCenter().getWorld(), island.getCenter().clone());
             }
         }
-        try {
-            System.out.println(loadedToRemoveFromAPI + " <- loadedToRemoveFromAPI");
-            HTTPUtils.postMethod("islands/removeloaded", loadedToRemoveFromAPI.toString());
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (!Main.devMode) {
+            try {
+                System.out.println(loadedToRemoveFromAPI + " <- loadedToRemoveFromAPI");
+                HTTPUtils.postMethod("islands/removeloaded", loadedToRemoveFromAPI.toString());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 

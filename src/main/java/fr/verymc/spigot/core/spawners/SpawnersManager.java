@@ -61,7 +61,7 @@ public class SpawnersManager {
 
     public void updateSpawner(Spawner spawner) {
         Block block = spawner.getLoc().getBlock();
-        block.getChunk().load();
+        block.getChunk().load(false);
         if (block.getType() != Material.SPAWNER) {
             block.setType(Material.SPAWNER);
         }
