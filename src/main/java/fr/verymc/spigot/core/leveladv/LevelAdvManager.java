@@ -9,7 +9,6 @@ import org.bukkit.entity.Player;
 
 import java.text.NumberFormat;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Random;
 
 public class LevelAdvManager {
@@ -23,6 +22,8 @@ public class LevelAdvManager {
 
     public LevelAdvManager() {
         instance = this;
+
+        new LevelAdvRewardManager();
 
         matPer.put(Material.WHEAT, 0.2);
         matPer.put(Material.CARROTS, 0.2);
@@ -64,6 +65,10 @@ public class LevelAdvManager {
         return NumberFormat.getInstance().format(getPlayerLevel(skyblockUser));
     }
 
+    public String formatDouble(double d) {
+        return NumberFormat.getInstance().format(d);
+    }
+
     public String getExpFormatted(SkyblockUser skyblockUser) {
         return NumberFormat.getInstance().format(getPlayerExp(skyblockUser));
     }
@@ -84,16 +89,16 @@ public class LevelAdvManager {
         double expForNextLevel = expToGetForNextLevel(skyblockUser.getLevel());
         if (expForNextLevel <= skyblockUser.getExp()) {
             skyblockUser.removeExp(expForNextLevel);
+            LevelAdvRewardManager.instance.giveReward(player, skyblockUser.getLevel());
             skyblockUser.incrementLevel();
             player.sendActionBar("§a§lLevel up! §7(§a" + getLevelFormatted(skyblockUser) + "§7)");
-            player.sendTitle("§aLevel up", "§6Prochain niveau " + getLevelFormatted(skyblockUser));
+            player.sendTitle("§aLevel up", "§6Vous êtes niveau " + getLevelFormatted(skyblockUser));
         }
     }
 
     public void blockEvent(Block block, Player player) {
-        if (!(block instanceof Ageable)) return;
         if (!matPer.containsKey(block.getType())) return;
-        if (block.hasMetadata("placed")) {
+        if (block.hasMetadata("placed") && block instanceof Ageable) {
             final Ageable ageable = (Ageable) block.getState().getBlockData();
             int age = ageable.getAge();
             if (age != ageable.getMaximumAge()) {
@@ -115,9 +120,5 @@ public class LevelAdvManager {
 
     public void dungeonEnd(Player player, Double exp) {
         addExpToPlayer(player, (exp > 0.0 ? exp : exp_gained));
-    }
-
-    public List<String> getRewardForNextLevel(Double level) {
-        return null;
     }
 }

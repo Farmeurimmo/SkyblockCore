@@ -4,7 +4,6 @@ import io.papermc.paper.event.entity.EntityMoveEvent;
 import main.java.fr.verymc.spigot.Main;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Mob;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
@@ -53,7 +52,7 @@ public class MobStackerListener implements Listener {
             if (amount > MobStackerManager.max_par_stacker) {
                 int temp = 0;
                 sec_amount = 0;
-                for (int i=0; i<amount; i++) {
+                for (int i = 0; i < amount; i++) {
                     if (i < MobStackerManager.max_par_stacker) temp++;
                     else sec_amount++;
                 }

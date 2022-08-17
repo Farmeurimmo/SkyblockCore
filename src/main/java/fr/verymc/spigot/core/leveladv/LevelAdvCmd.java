@@ -38,7 +38,7 @@ public class LevelAdvCmd implements CommandExecutor {
                 return false;
             }
         }
-        LevelAdvGui.instance.openPlayerMainLevel(player);
+        LevelAdvGuis.instance.openPlayerMainLevel(player);
         return false;
     }
 }
