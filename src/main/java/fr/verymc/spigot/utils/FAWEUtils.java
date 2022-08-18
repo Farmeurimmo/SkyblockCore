@@ -37,29 +37,41 @@ public class FAWEUtils {
     }
 
     public void pasteSchem(File file, Location pos) {
+        try {
+            com.sk89q.worldedit.world.World weWorld = BukkitAdapter.adapt(pos.getWorld());
+            ClipboardFormat format = ClipboardFormats.findByFile(file);
+            ClipboardReader reader = format.getReader(new FileInputStream(file));
+
+            Clipboard clipboard = reader.read();
+            EditSession editSession = WorldEdit.getInstance().getEditSessionFactory().getEditSession(weWorld,
+                    -1);
+
+            Operation operation = new ClipboardHolder(clipboard).createPaste(editSession)
+                    .to(BlockVector3.at(pos.getX(), pos.getY(), pos.getZ())).ignoreAirBlocks(true).copyBiomes(true).build();
+
+
+            Operations.complete(operation);
+            editSession.flushSession();
+            if (Main.instance.serverType != ServerType.SKYBLOCK_DUNGEON) return;
+            Bukkit.getScheduler().scheduleSyncDelayedTask(Main.instance, () -> checkForDungeonsAwaiting(pos), 0);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void pasteSchemWithoutLockingThread(File file, Location pos) {
 
         CompletableFuture.runAsync(() -> {
-            try {
-                com.sk89q.worldedit.world.World weWorld = BukkitAdapter.adapt(pos.getWorld());
-                ClipboardFormat format = ClipboardFormats.findByFile(file);
-                ClipboardReader reader = format.getReader(new FileInputStream(file));
-
-                Clipboard clipboard = reader.read();
-                EditSession editSession = WorldEdit.getInstance().getEditSessionFactory().getEditSession(weWorld,
-                        -1);
-
-                Operation operation = new ClipboardHolder(clipboard).createPaste(editSession)
-                        .to(BlockVector3.at(pos.getX(), pos.getY(), pos.getZ())).ignoreAirBlocks(true).copyBiomes(true).build();
-
-
-                Operations.complete(operation);
-                editSession.flushSession();
-                if (Main.instance.serverType != ServerType.SKYBLOCK_DUNGEON) return;
-                Bukkit.getScheduler().scheduleSyncDelayedTask(Main.instance, () -> checkForDungeonsAwaiting(pos), 0);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            pasteSchem(file, pos);
         });
+
+    }
+
+    public void pasteSchemLockThread(File file, Location pos) {
+
+        CompletableFuture.runAsync(() -> {
+            pasteSchem(file, pos);
+        }).join();
     }
 
     public void checkForDungeonsAwaiting(Location loc) {

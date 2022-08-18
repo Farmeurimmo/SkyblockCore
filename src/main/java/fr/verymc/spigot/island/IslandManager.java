@@ -114,7 +114,7 @@ public class IslandManager {
             for (File file : Main.instance.getDataFolder().listFiles()) {
                 System.out.println(file.getName());
                 if (file.getName().contains(island.getUUID().toString())) {
-                    FAWEUtils.instance.pasteSchem(file, island.getCenter().clone().add(250,
+                    FAWEUtils.instance.pasteSchemWithoutLockingThread(file, island.getCenter().clone().add(250,
                             0, 250));
                     island.setLoadedHere(true);
                     for (Minion minion : island.getMinions()) {
@@ -304,8 +304,8 @@ public class IslandManager {
     public void teleportPlayerToIslandSafe(Player p) {
         for (Island i : islands) {
             if (i.getMembers().containsKey(p.getUniqueId())) {
-                p.teleport(i.getHome());
-                p.sendMessage("§6§lIles §8» §fTéléportation sur votre île.");
+                PlayerUtils.instance.teleportPlayer(p, i.getHome());
+                p.sendMessage("§6§lIles §8» §fTéléportation sur votre île...");
                 IslandManager.instance.setWorldBorder(p);
                 return;
             }
@@ -674,7 +674,7 @@ public class IslandManager {
         toReturn.setWorld(getMainWorld());
 
 
-        FAWEUtils.instance.pasteSchem(fileSchematic, toReturn);
+        FAWEUtils.instance.pasteSchemWithoutLockingThread(fileSchematic, toReturn);
 
         HashMap<UUID, IslandRanks> members = new HashMap<>();
         members.put(p.getUniqueId(), IslandRanks.CHEF);

@@ -5,6 +5,7 @@ import main.java.fr.verymc.spigot.Main;
 import main.java.fr.verymc.spigot.core.ServersManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -27,7 +28,22 @@ public class PlayerUtils {
     }
 
     public void teleportPlayer(Player player, Location location) {
-        player.teleport(location);
+        boolean hasFly = player.getAllowFlight();
+        boolean wasActive = player.isFlying();
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                if (location.clone().add(0, -2, 0).getBlock().getType() != Material.AIR) {
+                    if (player.isFlying() && !wasActive) player.setFlying(false);
+                    if (player.getAllowFlight() && !hasFly) player.setAllowFlight(false);
+                    player.teleportAsync(location);
+                    this.cancel();
+                } else {
+                    player.setAllowFlight(true);
+                    player.setFlying(true);
+                }
+            }
+        }.runTaskTimer(Main.instance, 0, 10L);
     }
 
     public void teleportPlayerFromRequest(Player player, Location loc, int temp, ServerType serverType) {
@@ -54,15 +70,13 @@ public class PlayerUtils {
                 }
                 if (temp == 1) {
                     player.sendActionBar("§6Téléportation dans 1 seconde...");
-                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
-                        public void run() {
-                            player.sendActionBar("§6Téléportation effectuée !");
-                            if (Main.instance.serverType != ServerType.SKYBLOCK_HUB) {
-                                ServersManager.instance.sendToServer(ServersManager.instance.getServerOfType(serverType), player, loc);
-                                return;
-                            }
-                            teleportPlayer(player, loc);
+                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, () -> {
+                        player.sendActionBar("§6Téléportation effectuée !");
+                        if (Main.instance.serverType != ServerType.SKYBLOCK_HUB) {
+                            ServersManager.instance.sendToServer(ServersManager.instance.getServerOfType(serverType), player, loc);
+                            return;
                         }
+                        teleportPlayer(player, loc);
                     }, 20);
                     return;
                 } else {
@@ -91,7 +105,6 @@ public class PlayerUtils {
                             player.sendActionBar("§6Téléportation dans " + timeLeft + " seconde...");
                         } else if (timeLeft <= 0) {
                             this.cancel();
-                            return;
                         }
                     }
                 }.runTaskTimer(Main.instance, 20, 20);

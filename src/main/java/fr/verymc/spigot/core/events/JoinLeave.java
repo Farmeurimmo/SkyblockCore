@@ -15,6 +15,7 @@ import main.java.fr.verymc.spigot.island.Island;
 import main.java.fr.verymc.spigot.island.IslandManager;
 import main.java.fr.verymc.spigot.island.guis.IslandTopGui;
 import main.java.fr.verymc.spigot.island.perms.IslandRanks;
+import main.java.fr.verymc.spigot.utils.PlayerUtils;
 import net.luckperms.api.LuckPermsProvider;
 import net.luckperms.api.model.user.User;
 import org.bukkit.Bukkit;
@@ -55,7 +56,7 @@ public class JoinLeave implements Listener {
 
 
         if (Main.instance.serverType == ServerType.SKYBLOCK_HUB) {
-            player.teleport(SpawnCmd.Spawn);
+            PlayerUtils.instance.teleportPlayer(player, SpawnCmd.Spawn);
         }
 
         Island playerIsland = null;

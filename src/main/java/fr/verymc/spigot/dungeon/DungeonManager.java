@@ -77,7 +77,7 @@ public class DungeonManager {
 
         for (File file : Main.instance.getDataFolder().listFiles()) {
             if (file.getName().contains(floor.toString())) {
-                FAWEUtils.instance.pasteSchem(file, dungeon.getLocDungeon());
+                FAWEUtils.instance.pasteSchemWithoutLockingThread(file, dungeon.getLocDungeon());
             }
         }
 

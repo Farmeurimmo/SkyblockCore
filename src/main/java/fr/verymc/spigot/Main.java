@@ -102,6 +102,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.TimeUnit;
 
 public class Main extends JavaPlugin {
 
@@ -110,7 +111,7 @@ public class Main extends JavaPlugin {
     //Usage non recommandé pour les personnes ne le connaissant pas ce système ni les risques
     //qui peuvent en émerger
     public static boolean devMode = true;
-    public static ServerType devServerType = ServerType.SKYBLOCK_ISLAND;
+    public static ServerType devServerType = ServerType.SKYBLOCK_HUB;
     public static LuckPerms api;
     private final HashMap<String, Integer> spawncooldown = new HashMap<>();
     public ArrayList<Player> pending = new ArrayList<>();
@@ -161,6 +162,7 @@ public class Main extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        long starting = System.currentTimeMillis();
         instance = this;
         System.out.println("------------------------------------------------");
         //server type ???
@@ -310,7 +312,7 @@ public class Main extends JavaPlugin {
                     HolosSetup.SpawnCrates();
                     CratesManager.SpawnCrates();
                 }
-            }, 20 * 5L);
+            }, 20 * 30L);
             new InvestManager();
             System.out.println("Starting Hub ADDITIONNAL module FINISHED");
         }
@@ -353,6 +355,8 @@ public class Main extends JavaPlugin {
 
         getServer().getMessenger().registerOutgoingPluginChannel(this, "skyblock:toproxy");
         getServer().getMessenger().registerIncomingPluginChannel(this, "skyblock:tospigot", new PluginMessageManager());
+
+        System.out.println("§6Démarré en " + TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis() - starting) + "s");
     }
 
     @Override
@@ -539,7 +543,7 @@ public class Main extends JavaPlugin {
         if (serverType == ServerType.SKYBLOCK_HUB) {
             for (File file : Main.instance.getDataFolder().listFiles()) {
                 if (file.getName().contains("spawn")) {
-                    FAWEUtils.instance.pasteSchem(file, SpawnCmd.Spawn.clone().add(0, -1, 0));
+                    FAWEUtils.instance.pasteSchemWithoutLockingThread(file, SpawnCmd.Spawn.clone().add(0, -1, 0));
                 }
             }
         }
