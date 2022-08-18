@@ -57,12 +57,28 @@ public class LevelAdvManager {
         return exp_base_for_level_0 * (level + 1) * exp_multiplier;
     }
 
+    public Double getLevelPercentage(Double exp, Double expToReach) {
+        return (exp / expToReach * 1000) / 10;
+    }
+
+    public Double getExpForLevel(Double currentLvl, Double targetted, Double expAct) {
+        Double toReturn = -expAct;
+        for (double i = currentLvl; i < targetted; i++) {
+            toReturn += expToGetForNextLevel(i);
+        }
+        return toReturn;
+    }
+
+    public String getExpForLevelFormatted(Double currentLvl, Double targetted, Double expAct) {
+        return formatDouble(getExpForLevel(currentLvl, targetted, expAct));
+    }
+
     public void setLevel(SkyblockUser skyblockUser, Double level) {
         skyblockUser.setLevel(level);
     }
 
     public String getLevelFormatted(SkyblockUser skyblockUser) {
-        return NumberFormat.getInstance().format(getPlayerLevel(skyblockUser));
+        return formatDouble(getPlayerLevel(skyblockUser));
     }
 
     public String formatDouble(double d) {
@@ -70,11 +86,11 @@ public class LevelAdvManager {
     }
 
     public String getExpFormatted(SkyblockUser skyblockUser) {
-        return NumberFormat.getInstance().format(getPlayerExp(skyblockUser));
+        return formatDouble(getPlayerExp(skyblockUser));
     }
 
     public String getExpToGetForNextLevelFormatted(Double level) {
-        return NumberFormat.getInstance().format(expToGetForNextLevel(level));
+        return formatDouble(expToGetForNextLevel(level));
     }
 
     public void addExpToPlayer(Player player, Double exp) {

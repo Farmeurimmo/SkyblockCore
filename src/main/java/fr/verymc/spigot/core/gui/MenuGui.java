@@ -2,6 +2,7 @@ package main.java.fr.verymc.spigot.core.gui;
 
 import main.java.fr.verymc.spigot.core.atout.AtoutGui;
 import main.java.fr.verymc.spigot.core.auctions.AuctionsManager;
+import main.java.fr.verymc.spigot.core.leveladv.LevelAdvGuis;
 import main.java.fr.verymc.spigot.core.shopgui.MainShopGui;
 import main.java.fr.verymc.spigot.island.IslandManager;
 import main.java.fr.verymc.spigot.island.challenges.IslandChallengesGuis;
@@ -34,17 +35,17 @@ public class MenuGui implements Listener {
         custom2.setItemMeta(meta2);
         inv.setItem(12, custom2);
 
-        ItemStack custom3 = new ItemStack(Material.BEDROCK, 1);
+        ItemStack custom3 = new ItemStack(Material.EXPERIENCE_BOTTLE, 1);
         ItemMeta meta3 = custom3.getItemMeta();
-        meta3.setDisplayName("§c????");
+        meta3.setDisplayName("§6Niveau d'aventure §8| §7(clic gauche)");
         custom3.setItemMeta(meta3);
-        inv.setItem(34, custom3);
+        inv.setItem(28, custom3);
 
         ItemStack custom7 = new ItemStack(Material.ENDER_EYE, 1);
         ItemMeta meta7 = custom7.getItemMeta();
         meta7.setDisplayName("§6Warps §8| §7(clic gauche)");
         custom7.setItemMeta(meta7);
-        inv.setItem(28, custom7);
+        inv.setItem(34, custom7);
 
         ItemStack custom4 = new ItemStack(Material.POTION, 1);
         ItemMeta meta4 = custom4.getItemMeta();
@@ -116,6 +117,10 @@ public class MenuGui implements Listener {
             }
             if (current.getType() == Material.POTION) {
                 AtoutGui.MakeAtoutGui(player);
+                return;
+            }
+            if (current.getType() == Material.EXPERIENCE_BOTTLE) {
+                LevelAdvGuis.instance.openPlayerMainLevel(player);
                 return;
             }
         }

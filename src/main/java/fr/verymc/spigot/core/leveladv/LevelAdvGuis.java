@@ -1,5 +1,6 @@
 package main.java.fr.verymc.spigot.core.leveladv;
 
+import main.java.fr.verymc.spigot.core.gui.MenuGui;
 import main.java.fr.verymc.spigot.core.storage.SkyblockUser;
 import main.java.fr.verymc.spigot.core.storage.SkyblockUserManager;
 import main.java.fr.verymc.spigot.utils.PreGenItems;
@@ -33,29 +34,37 @@ public class LevelAdvGuis implements Listener {
 
         ItemStack playerInfo = PreGenItems.instance.getHead(player);
         playerInfo.setDisplayName("§6" + player.getName());
-        playerInfo.setLore(Arrays.asList("§7Niveau: §6" + LevelAdvManager.instance.getLevelFormatted(skyblockUser), "§7Expérience: §a" +
-                LevelAdvManager.instance.getExpFormatted(skyblockUser) + "§7/§c" +
-                LevelAdvManager.instance.getExpToGetForNextLevelFormatted(skyblockUser.getLevel())));
+        playerInfo.setLore(Arrays.asList("§7Niveau: §6" + LevelAdvManager.instance.getLevelFormatted(skyblockUser)));
         inv.setItem(10, playerInfo);
 
         ItemStack nextReward = new ItemStack(Material.GOLD_BLOCK);
-        nextReward.setDisplayName("§6Récompense(s) du prochain niveau");
+        nextReward.setDisplayName("§6Prochain niveau (§e" + LevelAdvManager.instance.formatDouble(skyblockUser.getLevel() + 1) + "§6)");
         LevelAdvReward levelAdvReward = LevelAdvRewardManager.instance.getReward(skyblockUser.getLevel() + 1);
+        ArrayList<String> lore = new ArrayList<>();
+        lore.add("§7Expérience: §a" + skyblockUser.getExp() + "§7/§c" + LevelAdvManager.instance.getExpToGetForNextLevelFormatted(skyblockUser.getLevel()));
+        lore.add("§7Progression: §a" + LevelAdvManager.instance.formatDouble(LevelAdvManager.instance.getLevelPercentage(skyblockUser.getExp(),
+                LevelAdvManager.instance.expToGetForNextLevel(skyblockUser.getLevel()))) + "%");
+        lore.add("");
+        lore.add("§7Récompenses: ");
         try {
-            nextReward.setLore(LevelAdvRewardManager.instance.getLoreForReward(levelAdvReward));
+            lore.addAll(LevelAdvRewardManager.instance.getLoreForReward(levelAdvReward));
         } catch (Exception e) {
-            nextReward.setLore(Arrays.asList(""));
         }
+        nextReward.setLore(lore);
         inv.setItem(12, nextReward);
 
         ItemStack rewardsGui = new ItemStack(Material.CHEST);
-        rewardsGui.setDisplayName("§6Récompenses");
+        rewardsGui.setDisplayName("§6Niveaux d'aventure");
         inv.setItem(14, rewardsGui);
 
         ItemStack help = new ItemStack(Material.BOOK);
         help.setDisplayName("§6Aide");
         help.setLore(Arrays.asList("§7SOON"));
         inv.setItem(16, help);
+
+        ItemStack arrow = new ItemStack(Material.ARROW);
+        arrow.setDisplayName("§6Retour au menu principal §7(/menu)");
+        inv.setItem(26, arrow);
 
         player.openInventory(inv);
     }
@@ -72,17 +81,30 @@ public class LevelAdvGuis implements Listener {
         int pageCurrentLvl = 0;
         int currentPage = 0;
         boolean stop = false;
+
+        ItemStack home = new ItemStack(Material.IRON_DOOR);
+        home.setDisplayName("§6Retour au menu §7(/level)");
+
+        ItemStack next = new ItemStack(Material.ARROW);
+        next.setDisplayName("§6Page suivante");
+
+        ItemStack previous = new ItemStack(Material.ARROW);
+        previous.setDisplayName("§6Page précédente");
+
+        ItemStack current = new ItemStack(Material.PAPER);
+        current.setDisplayName("§6Page avec votre niveau");
+
         while (true) {
             ArrayList<Integer> slots = getSlotToFill();
-            Inventory inv = Bukkit.createInventory(null, 54, "§6Récompenses des niveaux " + LevelAdvManager.instance.formatDouble(currentLevel)
+            Inventory inv = Bukkit.createInventory(null, 54, "§6Niveaux d'aventure " + LevelAdvManager.instance.formatDouble(currentLevel)
                     + "-" + LevelAdvManager.instance.formatDouble(currentLevel + getSlotToFill().size() - 1));
 
             ItemStack itemStack = new ItemStack(Material.AIR);
             for (Integer integer : slots) {
-                if (skyblockUser.getLevel() > currentLevel) {
+                if (skyblockUser.getLevel() + 1 > currentLevel) {
                     itemStack.setType(Material.GREEN_STAINED_GLASS_PANE);
                     itemStack.setDisplayName("§a" + LevelAdvManager.instance.formatDouble(currentLevel));
-                } else if (skyblockUser.getLevel() == currentLevel) {
+                } else if (skyblockUser.getLevel() + 1 == currentLevel) {
                     itemStack.setType(Material.YELLOW_STAINED_GLASS_PANE);
                     itemStack.setDisplayName("§e" + LevelAdvManager.instance.formatDouble(currentLevel));
                     pageCurrentLvl = currentPage;
@@ -93,7 +115,14 @@ public class LevelAdvGuis implements Listener {
                 }
                 LevelAdvReward levelAdvReward = LevelAdvRewardManager.instance.getReward(currentLevel);
                 if (levelAdvReward != null) {
-                    itemStack.setLore(LevelAdvRewardManager.instance.getLoreForReward(levelAdvReward));
+                    ArrayList<String> lore = new ArrayList<>();
+                    if (levelAdvReward.getLevel() > skyblockUser.getLevel()) {
+                        lore.add("§7Expérience manquante: §c" + LevelAdvManager.instance.getExpForLevelFormatted(skyblockUser.getLevel(), currentLevel, skyblockUser.getExp()));
+                    }
+                    lore.add("§7Expérience du niveau: §6" + LevelAdvManager.instance.getExpToGetForNextLevelFormatted(currentLevel));
+                    lore.add("");
+                    lore.addAll(LevelAdvRewardManager.instance.getLoreForReward(levelAdvReward));
+                    itemStack.setLore(lore);
                     String colorAdd = (levelAdvReward.isMajorReward() ? "§l" : "") + (levelAdvReward.isSubReward() ? "§n" : "");
                     itemStack.setDisplayName(itemStack.getDisplayName().replace("§a", "§a" + colorAdd)
                             .replace("§e", "§e" + colorAdd).replace("§c", "§c" + colorAdd));
@@ -102,18 +131,11 @@ public class LevelAdvGuis implements Listener {
                 currentLevel++;
             }
 
-            ItemStack next = new ItemStack(Material.ARROW);
-            next.setDisplayName("§6Page suivante");
-
-            ItemStack previous = new ItemStack(Material.ARROW);
-            previous.setDisplayName("§6Page précédente");
-
-            ItemStack current = new ItemStack(Material.PAPER);
-            current.setDisplayName("§6Page avec votre niveau");
-
             inv.setItem(53, next);
             if (currentPage > 0) inv.setItem(45, previous);
-            inv.setItem(49, current);
+            inv.setItem(48, current);
+
+            inv.setItem(50, home);
 
             invs.put(currentPage, inv);
 
@@ -143,19 +165,27 @@ public class LevelAdvGuis implements Listener {
             e.setCancelled(true);
             ItemStack current = e.getCurrentItem();
             if (current == null) return;
+            if (current.getType() == Material.ARROW) {
+                MenuGui.OpenMainMenu((Player) e.getWhoClicked());
+                return;
+            }
             if (current.getType() == Material.CHEST) {
                 openPlayerRewardAtPage((Player) e.getWhoClicked(), true, 5);
                 return;
             }
             return;
         }
-        if (e.getView().getTitle().contains("§6Récompenses des niveaux ")) {
+        if (e.getView().getTitle().contains("§6Niveaux d'aventure ")) {
             e.setCancelled(true);
             ItemStack current = e.getCurrentItem();
             if (current == null) return;
             Player player = (Player) e.getWhoClicked();
             if (current.getType() == Material.PAPER) {
                 openPlayerRewardAtPage(player, true, 0);
+                return;
+            }
+            if (current.getType() == Material.IRON_DOOR) {
+                openPlayerMainLevel(player);
                 return;
             }
             if (current.getType() != Material.ARROW) return;
