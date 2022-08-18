@@ -63,12 +63,6 @@ public class CratesManager implements Listener {
         hologram.appendTextLine("§7Clic gauche pr§visualiser");
     }
 
-    public static void RemoveBoxeHolo() {
-        hologram.clearLines();
-        hologramc.clearLines();
-        hologramd.clearLines();
-    }
-
     @EventHandler(priority = EventPriority.MONITOR)
     public void OnInteract(PlayerInteractEvent e) {
         Player player = e.getPlayer();
@@ -76,7 +70,6 @@ public class CratesManager implements Listener {
         if (aaa == null) {
             return;
         }
-        if (!aaa.getLocation().getWorld().getName().equalsIgnoreCase("world")) return;
         if (aaa.getType() == Material.END_ROD) {
             if (aaa.getLocation().getX() == BoxLegendaire.getX() && aaa.getLocation().getZ() == BoxLegendaire.getZ()) {
                 if (e.getAction() == Action.LEFT_CLICK_BLOCK) {
