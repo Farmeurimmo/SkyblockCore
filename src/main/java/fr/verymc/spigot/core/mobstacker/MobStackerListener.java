@@ -2,6 +2,7 @@ package main.java.fr.verymc.spigot.core.mobstacker;
 
 import io.papermc.paper.event.entity.EntityMoveEvent;
 import main.java.fr.verymc.spigot.Main;
+import org.bukkit.entity.Boss;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Mob;
 import org.bukkit.event.EventHandler;
@@ -34,18 +35,23 @@ public class MobStackerListener implements Listener {
     public void checkForEntityToStack(EntityMoveEvent e) {
         Entity ent = e.getEntity();
         if (!(ent instanceof Mob)) return;
+        if (ent instanceof Boss) return;
         List<Entity> entities = ent.getNearbyEntities(8, 4, 8);
+        if (ent.getCustomName() != null && !ent.getCustomName().startsWith(MobStackerManager.start_of_name)) return;
         for (Entity entity : entities) {
             if (ent.getType() != entity.getType()) continue;
+            if (entity instanceof Boss) return;
             if (entity.equals(ent)) continue;
+            if (entity.getCustomName() != null && !entity.getCustomName().startsWith(MobStackerManager.start_of_name))
+                return;
             int amount = 1;
             int sec_amount = 1;
-            if (ent.hasMetadata("stacker")) {
-                amount = ent.getMetadata("stacker").get(0).asInt();
+            if (ent.hasMetadata(MobStackerManager.metadata_name)) {
+                amount = ent.getMetadata(MobStackerManager.metadata_name).get(0).asInt();
             }
             if (amount >= MobStackerManager.max_par_stacker) continue;
-            if (entity.hasMetadata("stacker")) {
-                sec_amount = entity.getMetadata("stacker").get(0).asInt();
+            if (entity.hasMetadata(MobStackerManager.metadata_name)) {
+                sec_amount = entity.getMetadata(MobStackerManager.metadata_name).get(0).asInt();
                 if (sec_amount >= MobStackerManager.max_par_stacker) continue;
             }
             amount += sec_amount;
@@ -57,12 +63,12 @@ public class MobStackerListener implements Listener {
                     else sec_amount++;
                 }
                 amount = temp;
-                ent.setMetadata("stacker", new FixedMetadataValue(Main.instance, sec_amount));
+                ent.setMetadata(MobStackerManager.metadata_name, new FixedMetadataValue(Main.instance, sec_amount));
                 ent.setCustomName(MobStackerManager.instance.mobName(entity.getType(), sec_amount));
             } else {
                 ent.remove();
             }
-            entity.setMetadata("stacker", new FixedMetadataValue(Main.instance, amount));
+            entity.setMetadata(MobStackerManager.metadata_name, new FixedMetadataValue(Main.instance, amount));
             entity.setCustomName(MobStackerManager.instance.mobName(entity.getType(), amount));
             break;
         }

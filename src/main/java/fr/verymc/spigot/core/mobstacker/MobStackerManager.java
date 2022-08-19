@@ -11,7 +11,9 @@ import java.text.NumberFormat;
 
 public class MobStackerManager {
 
-    public static final int max_par_stacker = 50;
+    public static final int max_par_stacker = 40;
+    public static final String start_of_name = "§6x";
+    public static final String metadata_name = "stacker";
     public static MobStackerManager instance;
 
     public MobStackerManager() {
@@ -20,12 +22,12 @@ public class MobStackerManager {
 
     public void spawnMobStacked(EntityType entityType, Location location, int amount) {
         Entity entity = location.getWorld().spawnEntity(location, entityType, CreatureSpawnEvent.SpawnReason.SPAWNER);
-        entity.setMetadata("stacker", new FixedMetadataValue(Main.instance, amount));
+        entity.setMetadata(metadata_name, new FixedMetadataValue(Main.instance, amount));
         entity.setCustomNameVisible(true);
         entity.setCustomName(mobName(entityType, amount));
     }
 
     public String mobName(EntityType entityType, int amount) {
-        return "§6x" + NumberFormat.getInstance().format(amount) + " §f" + entityType;
+        return start_of_name + NumberFormat.getInstance().format(amount) + " §f" + entityType;
     }
 }
