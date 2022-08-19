@@ -37,11 +37,11 @@ public class CratesManager implements Listener {
     static Hologram hologramd = HologramsAPI.createHologram(Main.instance, holod);
 
     public static void SpawnCrates() {
-        Bukkit.getWorld("world").getBlockAt(BoxLegendaire).setType(Material.END_ROD);
+        BoxLegendaire.getWorld().getBlockAt(BoxLegendaire).setType(Material.END_ROD);
 
-        Bukkit.getWorld("world").getBlockAt(BoxChallenge).setType(Material.END_ROD);
+        BoxChallenge.getWorld().getBlockAt(BoxChallenge).setType(Material.END_ROD);
 
-        Bukkit.getWorld("world").getBlockAt(BoxVote).setType(Material.END_ROD);
+        BoxVote.getWorld().getBlockAt(BoxVote).setType(Material.END_ROD);
 
 
         hologramc.appendTextLine("§6Boxe challenge");
@@ -93,9 +93,7 @@ public class CratesManager implements Listener {
                                 Bukkit.broadcastMessage("§6§lCrates §8» §f" + player.getName() + " ouvre une Clée légendaire "
                                         + "et obtient " + loot);
                                 for (Player p : Bukkit.getOnlinePlayers()) {
-                                    if (p.getWorld().getName().equalsIgnoreCase("world")) {
-                                        p.playSound(p.getLocation(), Sound.ENTITY_DRAGON_FIREBALL_EXPLODE, 5, 1);
-                                    }
+                                    p.playSound(p.getLocation(), Sound.ENTITY_DRAGON_FIREBALL_EXPLODE, 5, 1);
                                 }
                             } else {
                                 player.sendMessage("§6§lCrates §8» §fErreur lors de l'ouverture de la "
@@ -134,9 +132,7 @@ public class CratesManager implements Listener {
                                 player.sendMessage("§6§lCrates §8» §fVous avez ouvert une Clée challenge "
                                         + "et obtenez " + loot);
                                 for (Player p : Bukkit.getOnlinePlayers()) {
-                                    if (p.getWorld().getName().equalsIgnoreCase("world")) {
-                                        p.playSound(p.getLocation(), Sound.ENTITY_DRAGON_FIREBALL_EXPLODE, 5, 1);
-                                    }
+                                    p.playSound(p.getLocation(), Sound.ENTITY_DRAGON_FIREBALL_EXPLODE, 5, 1);
                                 }
                             } else {
                                 player.sendMessage("§6§lCrates §8» §fErreur lors de l'ouverture de la "
@@ -170,9 +166,7 @@ public class CratesManager implements Listener {
                                 player.sendMessage("§6§lCrates §8» §fVous avez ouvert une Clée vote "
                                         + "et obtenez " + loot);
                                 for (Player p : Bukkit.getOnlinePlayers()) {
-                                    if (p.getWorld().getName().equalsIgnoreCase("world")) {
-                                        p.playSound(p.getLocation(), Sound.ENTITY_DRAGON_FIREBALL_EXPLODE, 5, 1);
-                                    }
+                                    p.playSound(p.getLocation(), Sound.ENTITY_DRAGON_FIREBALL_EXPLODE, 5, 1);
                                 }
                             } else {
                                 player.sendMessage("§6§lCrates §8» §fErreur lors de l'ouverture de la "

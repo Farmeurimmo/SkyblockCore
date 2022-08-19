@@ -25,7 +25,7 @@ public class AntiAfk implements Listener {
     public HashMap<UUID, Integer> countHashMap = new HashMap<>();
 
     public AntiAfk() {
-        checkForAfk();
+        if (Main.instance.serverType != ServerType.SKYBLOCK_HUB) checkForAfk();
     }
 
     public void checkForAfk() {
@@ -33,9 +33,6 @@ public class AntiAfk implements Listener {
             @Override
             public void run() {
                 for (Player p : Bukkit.getOnlinePlayers()) {
-                    if (p.getLocation().getWorld().getName().equalsIgnoreCase("world")) {
-                        continue;
-                    }
                     Vector v = p.getLocation().getDirection();
                     if (locationHashMap.containsKey(p.getUniqueId())) {
                         if (locationHashMap.get(p.getUniqueId()).equals(v)) {

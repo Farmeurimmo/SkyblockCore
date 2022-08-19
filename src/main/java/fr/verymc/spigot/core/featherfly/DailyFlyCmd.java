@@ -1,4 +1,4 @@
-package main.java.fr.verymc.spigot.island.featherfly;
+package main.java.fr.verymc.spigot.core.featherfly;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;

@@ -66,9 +66,6 @@ public class ChestListener implements Listener {
         if (!(e.getEntity() instanceof Item)) {
             return;
         }
-        if (e.getEntity().getLocation().getWorld().getName().equalsIgnoreCase("world")) {
-            return;
-        }
         if (!IslandManager.instance.isAnIslandByLoc(e.getEntity().getLocation())) {
             return;
         }

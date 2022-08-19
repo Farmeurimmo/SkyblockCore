@@ -1,5 +1,6 @@
-package main.java.fr.verymc.spigot.island.featherfly;
+package main.java.fr.verymc.spigot.core.featherfly;
 
+import main.java.fr.verymc.commons.enums.ServerType;
 import main.java.fr.verymc.spigot.Main;
 import main.java.fr.verymc.spigot.core.cmd.base.SpawnCmd;
 import main.java.fr.verymc.spigot.core.storage.SkyblockUser;
@@ -36,10 +37,8 @@ public class CountdownFly implements Listener {
             skyblockUser.setFlyLeft(newtime);
         } else {
             skyblockUser.setFlyLeft(DurationInSec);
-            if (!player.getWorld().getName().equalsIgnoreCase("world")) {
-                player.setAllowFlight(true);
-                player.setFlying(true);
-            }
+            player.setAllowFlight(true);
+            player.setFlying(true);
         }
     }
 
@@ -52,67 +51,19 @@ public class CountdownFly implements Listener {
 
                     if (timeLeft > 0) {
 
-                        if (!player.getWorld().getName().equalsIgnoreCase("world")) {
+                        if (Main.instance.serverType == ServerType.SKYBLOCK_ISLAND) {
                             timeLeft -= 1;
 
-                            if (player.getAllowFlight() == false && !player.getWorld().getName().equalsIgnoreCase("world")) {
+                            if (!player.getAllowFlight()) {
                                 player.setAllowFlight(true);
                             }
 
-                            int timeforconv = timeLeft;
-                            int nHours = (timeforconv % 86400) / 3600;
-                            int nMin = ((timeforconv % 86400) % 3600) / 60;
-                            int nSec = (((timeforconv % 86400) % 3600) % 60);
-
-                            String nhoursnew;
-                            String nminnew;
-                            String nsecnew;
-                            if (nHours <= 9) {
-                                nhoursnew = "0" + nHours;
-                            } else {
-                                nhoursnew = "" + nHours;
-                            }
-                            if (nMin <= 9) {
-                                nminnew = "0" + nMin;
-                            } else {
-                                nminnew = "" + nMin;
-                            }
-                            if (nSec <= 9) {
-                                nsecnew = "0" + nSec;
-                            } else {
-                                nsecnew = "" + nSec;
-                            }
-
-                            String messagetimeleft = "§aFly restant: " + nhoursnew + ":" + nminnew + ":" + nsecnew;
+                            String messagetimeleft = "§aFly restant: " + getTimeLeft(timeLeft);
                             skyblockUser.setFlyLeft(timeLeft);
                             skyblockUser.setActive(true);
                             player.sendActionBar(messagetimeleft);
                         } else {
-                            int timeforconv = timeLeft;
-                            int nHours = (timeforconv % 86400) / 3600;
-                            int nMin = ((timeforconv % 86400) % 3600) / 60;
-                            int nSec = (((timeforconv % 86400) % 3600) % 60);
-
-                            String nhoursnew;
-                            String nminnew;
-                            String nsecnew;
-                            if (nHours <= 9) {
-                                nhoursnew = "0" + nHours;
-                            } else {
-                                nhoursnew = "" + nHours;
-                            }
-                            if (nMin <= 9) {
-                                nminnew = "0" + nMin;
-                            } else {
-                                nminnew = "" + nMin;
-                            }
-                            if (nSec <= 9) {
-                                nsecnew = "0" + nSec;
-                            } else {
-                                nsecnew = "" + nSec;
-                            }
-
-                            String messagetimeleft = "§aFly restant: " + nhoursnew + ":" + nminnew + ":" + nsecnew;
+                            String messagetimeleft = "§aFly restant: " + getTimeLeft(timeLeft);
                             skyblockUser.setFlyLeft(timeLeft);
                             player.sendActionBar(messagetimeleft);
                             skyblockUser.setActive(false);
@@ -136,5 +87,30 @@ public class CountdownFly implements Listener {
                 CountDown();
             }
         }, 20);
+    }
+
+    public String getTimeLeft(int timeLeft) {
+        int nHours = (timeLeft % 86400) / 3600;
+        int nMin = ((timeLeft % 86400) % 3600) / 60;
+        int nSec = (((timeLeft % 86400) % 3600) % 60);
+        String nhoursnew;
+        String nminnew;
+        String nsecnew;
+        if (nHours <= 9) {
+            nhoursnew = "0" + nHours;
+        } else {
+            nhoursnew = "" + nHours;
+        }
+        if (nMin <= 9) {
+            nminnew = "0" + nMin;
+        } else {
+            nminnew = "" + nMin;
+        }
+        if (nSec <= 9) {
+            nsecnew = "0" + nSec;
+        } else {
+            nsecnew = "" + nSec;
+        }
+        return nhoursnew + ":" + nminnew + ":" + nsecnew;
     }
 }

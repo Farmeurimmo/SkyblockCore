@@ -1,5 +1,7 @@
-package main.java.fr.verymc.spigot.island.featherfly;
+package main.java.fr.verymc.spigot.core.featherfly;
 
+import main.java.fr.verymc.commons.enums.ServerType;
+import main.java.fr.verymc.spigot.Main;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -50,9 +52,9 @@ public class FeatherFlyInteract implements Listener {
     public void OnToggleFly(PlayerToggleFlightEvent e) {
         Player player = e.getPlayer();
         if (player.getGameMode() != GameMode.CREATIVE && player.getGameMode() != GameMode.SPECTATOR) {
-            if (player.getWorld().getName().equalsIgnoreCase("world")) {
+            if (Main.instance.serverType != ServerType.SKYBLOCK_ISLAND) {
                 e.setCancelled(true);
-                player.sendActionBar("§cVous ne pouvez pas fly au spawn.");
+                player.setFlying(false);
                 player.setAllowFlight(false);
             } else {
                 e.setCancelled(false);

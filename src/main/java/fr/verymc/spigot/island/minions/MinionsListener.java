@@ -137,9 +137,6 @@ public class MinionsListener implements Listener {
         Player player = e.getPlayer();
         if (Main.instance.serverType != ServerType.SKYBLOCK_ISLAND) return;
         if (MinionsGui.instance.linking.contains(player) && MinionsGui.instance.minionOpened.containsKey(player.getName()) && player.isSneaking()) {
-            if (e.getPlayer().getLocation().getWorld().getName().equalsIgnoreCase("world")) {
-                return;
-            }
             if (locBloc.getBlock().getType() == Material.CHEST) {
                 if (e.isCancelled()) {
                     return;
@@ -194,9 +191,6 @@ public class MinionsListener implements Listener {
             e.setCancelled(true);
             if (island == null) {
                 e.getPlayer().sendMessage("§6§lMinions §8» §fVous devez avoir une île pour poser un minion.");
-                return;
-            }
-            if (player.getLocation().getWorld().getName().equalsIgnoreCase("world")) {
                 return;
             }
             if (!island.hasPerms(island.getIslandRankFromUUID(player.getUniqueId()), IslandPerms.MINIONS_ADD, player)) {
