@@ -115,9 +115,6 @@ public class IslandManager {
                     FAWEUtils.instance.pasteSchemWithoutLockingThread(file, island.getCenter().clone().add(250,
                             0, 250));
                     island.setLoadedHere(true);
-                    for (Minion minion : island.getMinions()) {
-                        MinionManager.instance.spawnMinion(minion);
-                    }
                     loadeds.add(island.getUUID().toString());
                     break;
                 }
@@ -125,6 +122,7 @@ public class IslandManager {
         }
         ChestManager.instance.makeChestRepop();
         SpawnersManager.instance.respawnAllSpawners();
+        MinionManager.instance.makeAllMinionRepop();
         if (!Main.devMode) {
             try {
                 HTTPUtils.postMethod("islands/addloaded", loadeds.toString());
@@ -136,13 +134,10 @@ public class IslandManager {
 
     public void saveAllIslands() {
         ArrayList<String> loadedToRemoveFromAPI = new ArrayList<>();
+        MinionManager.instance.makeAllMinionDepop();
         for (Island island : islands) {
             if (island.isLoadedHere()) {
                 loadedToRemoveFromAPI.add(island.getUUID().toString());
-
-                for (Minion minion : island.getMinions()) {
-                    MinionManager.instance.despawnMinion(minion);
-                }
 
                 Location pos1 = island.getCenter().clone().add(250, 0, 250);
                 pos1.set(pos1.getBlockX(), -64, pos1.getBlockZ());

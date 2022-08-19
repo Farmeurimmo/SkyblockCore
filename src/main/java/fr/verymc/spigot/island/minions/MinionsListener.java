@@ -237,21 +237,21 @@ public class MinionsListener implements Listener {
         if (Main.instance.serverType != ServerType.SKYBLOCK_ISLAND) return;
         if (e.getRightClicked().getType().equals(EntityType.ARMOR_STAND)) {
             Entity clicked = e.getRightClicked();
-            if (clicked.isInvulnerable()) {
+            if (clicked.isInvulnerable() && clicked.isCustomNameVisible() && !clicked.hasGravity()) {
                 Minion minion = null;
                 Island island = IslandManager.instance.getIslandByLoc(clicked.getLocation());
                 if (island == null) {
                     return;
                 }
                 for (Minion minions : island.getMinions()) {
-                    if (!e.getRightClicked().getLocation().equals(minions.getBlocLocation())) {
+                    if (!e.getRightClicked().getLocation().getBlock().equals(minions.getBlocLocation().getBlock())) {
                         continue;
                     }
                     minion = minions;
                     break;
                 }
-                if (minion == null) return;
                 e.setCancelled(true);
+                if (minion == null) return;
                 if (island.hasPerms(island.getIslandRankFromUUID(player.getUniqueId()), IslandPerms.MINIONS_INTERACT, player)) {
                     MinionsGui.instance.minionMainGui(player, minion);
                     return;

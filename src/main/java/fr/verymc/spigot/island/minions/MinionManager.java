@@ -26,6 +26,7 @@ import org.bukkit.util.EulerAngle;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Objects;
 
 public class MinionManager {
 
@@ -80,49 +81,58 @@ public class MinionManager {
     }
 
     public Integer getMinerDelay(Integer level) {
-        Integer toReturn = 12;
-        if (level == 0) toReturn = 10;
-        if (level == 1) toReturn = 9;
-        if (level == 2) toReturn = 8;
-        if (level == 3) toReturn = 7;
-        if (level == 4) toReturn = 6;
-        if (level == 5) toReturn = 5;
-        if (level == 6) toReturn = 4;
-        return toReturn;
+        return switch (level) {
+            case 1 -> 9;
+            case 2 -> 8;
+            case 3 -> 7;
+            case 4 -> 6;
+            case 5 -> 5;
+            case 6 -> 4;
+            default -> 10;
+        };
     }
 
     public Integer getNextUpgradeCost(Integer level, Integer currentLevel) {
         Integer toReturn = 0;
-        if (currentLevel == level) {
-            if (level == 1) toReturn = level1;
-            if (level == 2) toReturn = level2;
-            if (level == 3) toReturn = level3;
-            if (level == 4) toReturn = level4;
-            if (level == 5) toReturn = level5;
-            if (level == 6) toReturn = level6;
-        } else if (currentLevel + 1 == level) {
-            if (level == 1) toReturn = level1;
-            if (level == 2) toReturn = level2;
-            if (level == 3) toReturn = level3;
-            if (level == 4) toReturn = level4;
-            if (level == 5) toReturn = level5;
-            if (level == 6) toReturn = level6;
+        if (Objects.equals(currentLevel, level)) {
+            return switch (level) {
+                case 2 -> level2;
+                case 3 -> level3;
+                case 4 -> level4;
+                case 5 -> level5;
+                case 6 -> level6;
+                default -> level1;
+            };
         } else {
-            for (int i = 1; i <= level; i++) {
-                currentLevel += 1;
-                if (currentLevel == 1) toReturn += level1;
-                if (currentLevel == 2) toReturn += level2;
-                if (currentLevel == 3) toReturn += level3;
-                if (currentLevel == 4) toReturn += level4;
-                if (currentLevel == 5) toReturn += level5;
-                if (currentLevel == 6) toReturn += level6;
+            for (int i = currentLevel + 1; i <= level; i++) {
+                if (i == 1) toReturn += level1;
+                if (i == 2) toReturn += level2;
+                if (i == 3) toReturn += level3;
+                if (i == 4) toReturn += level4;
+                if (i == 5) toReturn += level5;
+                if (i == 6) toReturn += level6;
             }
         }
         return toReturn;
     }
 
+    public void makeAllMinionRepop() {
+        for (Island island : IslandManager.instance.islands) {
+            for (Minion minion : island.getMinions()) {
+                spawnMinion(minion);
+            }
+        }
+    }
+
+    public void makeAllMinionDepop() {
+        for (Island island : IslandManager.instance.islands) {
+            for (Minion minion : island.getMinions()) {
+                despawnMinion(minion);
+            }
+        }
+    }
+
     public void addMinion(Player player, Location blocLoc, MinionType minionType, BlockFace blockFace, Integer levelInt) {
-        Long id = System.currentTimeMillis();
         blocLoc.add(0.5, 1, 0.5);
         blocLoc.setDirection(player.getLocation().getDirection());
 
