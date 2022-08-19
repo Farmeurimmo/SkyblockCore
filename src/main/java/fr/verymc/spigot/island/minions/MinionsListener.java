@@ -202,7 +202,7 @@ public class MinionsListener implements Listener {
                     return;
                 }
             }
-            if (island.getMinions().size() >= 3) {
+            if (island.getMinions().size() >= 6) {
                 player.sendMessage("§6§lMinions §8» §fVous ne pouvez pas poser plus de 3 minions.");
                 return;
             }
