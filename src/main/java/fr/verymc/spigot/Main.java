@@ -111,7 +111,7 @@ public class Main extends JavaPlugin {
     //Usage non recommandé pour les personnes ne le connaissant pas ce système ni les risques
     //qui peuvent en émerger
     public static boolean devMode = true;
-    public static ServerType devServerType = ServerType.SKYBLOCK_HUB;
+    public static ServerType devServerType = ServerType.SKYBLOCK_ISLAND;
     public static LuckPerms api;
     private final HashMap<String, Integer> spawncooldown = new HashMap<>();
     public ArrayList<Player> pending = new ArrayList<>();
@@ -229,6 +229,10 @@ public class Main extends JavaPlugin {
             getLogger().warning("Le plugin HolographicDisplays est manquant.");
             Bukkit.getPluginManager().disablePlugin(this);
         }
+        saveResource("spawn.schem", true);
+        saveResource("FLOOR_1.schem", true);
+        saveResource("clear.schem", true);
+        saveResource("ileworld.schem", true);
 
         new UtilsManager();
 
@@ -244,8 +248,6 @@ public class Main extends JavaPlugin {
 
 
         new IslandManager();
-        saveResource("spawn.schem", true);
-        saveResource("FLOOR_1.schem", true);
         createMainWorld();
 
         new SkyblockUserManager();

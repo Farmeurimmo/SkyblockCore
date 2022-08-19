@@ -99,8 +99,6 @@ public class IslandManager {
         blocks.put(Material.NETHERITE_BLOCK, 250.0);
         islandBockValues = new IslandBlocsValues(blocks);
         new IslandValueCalcManager();
-        Main.instance.saveResource("ileworld.schem", true);
-        Main.instance.saveResource("clear.schem", true);
     }
 
     public void pasteAndLoadIslands() {
@@ -336,74 +334,71 @@ public class IslandManager {
 
         playerIsland.sendMessageToEveryMember("§6§lIles §8» §4L'île a commencé à être supprimée...", p);
 
-        Bukkit.getScheduler().scheduleAsyncDelayedTask(Main.instance, new Runnable() {
-            @Override
-            public void run() {
+        Bukkit.getScheduler().scheduleAsyncDelayedTask(Main.instance, () -> {
+            try {
+                com.sk89q.worldedit.world.World adaptedWorld = BukkitAdapter.adapt(Main.instance.mainWorld);
+                ClipboardFormat format = ClipboardFormats.findByFile(fileEmptyIsland);
+                ClipboardReader reader = format.getReader(new FileInputStream(fileEmptyIsland));
+
+                Clipboard clipboard = reader.read();
+                EditSession editSession = WorldEdit.getInstance().getEditSessionFactory().getEditSession(adaptedWorld,
+                        -1);
+
+                Operation operation = new ClipboardHolder(clipboard).createPaste(editSession)
+                        .to(BlockVector3.at(playerIsland.getCenter().getBlockX(), playerIsland.getCenter().getBlockY(),
+                                playerIsland.getCenter().getBlockZ())).build();
+
                 try {
-                    com.sk89q.worldedit.world.World adaptedWorld = BukkitAdapter.adapt(Main.instance.mainWorld);
-                    ClipboardFormat format = ClipboardFormats.findByFile(fileEmptyIsland);
-                    ClipboardReader reader = format.getReader(new FileInputStream(fileEmptyIsland));
+                    Operations.complete(operation);
+                    editSession.flushSession();
 
-                    Clipboard clipboard = reader.read();
-                    EditSession editSession = WorldEdit.getInstance().getEditSessionFactory().getEditSession(adaptedWorld,
-                            -1);
-
-                    Operation operation = new ClipboardHolder(clipboard).createPaste(editSession)
-                            .to(BlockVector3.at(playerIsland.getCenter().getBlockX(), playerIsland.getCenter().getBlockY(),
-                                    playerIsland.getCenter().getBlockZ())).build();
-
-                    try {
-                        Operations.complete(operation);
-                        editSession.flushSession();
-
-                        Bukkit.getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
-                            @Override
-                            public void run() {
-                                for (Minion m : playerIsland.getMinions()) {
-                                    if (getIslandByLoc(m.getBlocLocation()) == playerIsland) {
-                                        MinionManager.instance.removeMinion(m, playerIsland);
-                                    }
+                    Bukkit.getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
+                        @Override
+                        public void run() {
+                            for (Minion m : playerIsland.getMinions()) {
+                                if (getIslandByLoc(m.getBlocLocation()) == playerIsland) {
+                                    MinionManager.instance.removeMinion(m, playerIsland);
                                 }
-                                ArrayList<Chest> chests = new ArrayList<>();
-                                for (Chest c : playerIsland.getChests()) {
-                                    chests.add(c);
-                                }
-                                for (Chest c : chests) {
-                                    if (getIslandByLoc(c.getBlock()) == playerIsland) {
-                                        ChestManager.instance.removeChestFromLoc(c.getBlock());
-                                    }
-                                }
-                                for (Spawner spawner : playerIsland.getSpawners()) {
-                                    SpawnersManager.instance.destroySpawner(spawner, playerIsland, true);
-                                }
-
-                                if (islands.contains(playerIsland)) {
-                                    islands.remove(playerIsland);
-                                }
-                                Long currentMills = System.currentTimeMillis();
-                                playerIsland.sendMessageToEveryMember("§6§lIles §8» §4L'île a été §lsupprimée §4par le chef. §f(en " + (currentMills - start) + "ms)", p);
-                                for (Map.Entry<UUID, IslandRanks> entry : playerIsland.getMembers().entrySet()) {
-                                    Player member = Bukkit.getPlayer(entry.getKey());
-                                    if (member == null) {
-                                        member = Bukkit.getOfflinePlayer(entry.getKey()).getPlayer();
-                                    }
-                                    PlayerUtils.instance.teleportPlayerFromRequest(member, SpawnCmd.Spawn, 0, ServerType.SKYBLOCK_HUB);
-                                }
-                                playerIsland.getMembers().clear();
-                                HashMap<String, Object> toEdit = new HashMap<>();
-                                toEdit.put(playerIsland.getUUID().toString(), null);
-                                AsyncConfig.instance.setAndSaveAsync(toEdit, ConfigManager.instance.getDataIslands(), ConfigManager.instance.islandsFile);
                             }
-                        }, 0);
+                            ArrayList<Chest> chests = new ArrayList<>();
+                            for (Chest c : playerIsland.getChests()) {
+                                chests.add(c);
+                            }
+                            for (Chest c : chests) {
+                                if (getIslandByLoc(c.getBlock()) == playerIsland) {
+                                    ChestManager.instance.removeChestFromLoc(c.getBlock());
+                                }
+                            }
+                            for (Spawner spawner : playerIsland.getSpawners()) {
+                                SpawnersManager.instance.destroySpawner(spawner, playerIsland, true);
+                            }
 
-                    } catch (WorldEditException e) {
-                        p.sendMessage("§6§lIles §8» §cUne erreur est survenue lors de la suppression de l'île. Merci de réessayer.");
-                        return;
-                    }
-                } catch (IOException e) {
-                    p.sendMessage("§6§lIles §8» §cUne erreur est survenue lors de la lecture du schématic. Merci de contacter un administrateur.");
+                            if (islands.contains(playerIsland)) {
+                                islands.remove(playerIsland);
+                            }
+                            Long currentMills = System.currentTimeMillis();
+                            playerIsland.sendMessageToEveryMember("§6§lIles §8» §4L'île a été §lsupprimée §4par le chef. §f(en " + (currentMills - start) + "ms)", p);
+                            for (Map.Entry<UUID, IslandRanks> entry : playerIsland.getMembers().entrySet()) {
+                                Player member = Bukkit.getPlayer(entry.getKey());
+                                if (member == null) {
+                                    member = Bukkit.getOfflinePlayer(entry.getKey()).getPlayer();
+                                }
+                                PlayerUtils.instance.teleportPlayerFromRequest(member, SpawnCmd.Spawn, 0, ServerType.SKYBLOCK_HUB);
+                            }
+                            playerIsland.getMembers().clear();
+                            HashMap<String, Object> toEdit = new HashMap<>();
+                            toEdit.put(playerIsland.getUUID().toString(), null);
+                            AsyncConfig.instance.setAndSaveAsync(toEdit, ConfigManager.instance.getDataIslands(), ConfigManager.instance.islandsFile);
+                        }
+                    }, 0);
+
+                } catch (WorldEditException e) {
+                    p.sendMessage("§6§lIles §8» §cUne erreur est survenue lors de la suppression de l'île. Merci de réessayer.");
                     return;
                 }
+            } catch (IOException e) {
+                p.sendMessage("§6§lIles §8» §cUne erreur est survenue lors de la lecture du schématic. Merci de contacter un administrateur.");
+                return;
             }
         }, 0);
     }
