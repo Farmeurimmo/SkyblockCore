@@ -33,15 +33,16 @@ public class PlayerUtils {
         new BukkitRunnable() {
             @Override
             public void run() {
-                if (location.clone().add(0, -2, 0).getBlock().getType() != Material.AIR) {
-                    if (player.isFlying() && !wasActive) player.setFlying(false);
-                    if (player.getAllowFlight() && !hasFly) player.setAllowFlight(false);
-                    player.teleportAsync(location);
-                    this.cancel();
-                } else {
-                    player.setAllowFlight(true);
-                    player.setFlying(true);
+                player.teleportAsync(location);
+                for (int i = -2; i > -5; i--) {
+                    if (location.clone().add(0, i, 0).getBlock().getType() != Material.AIR) {
+                        if (player.isFlying() && !wasActive) player.setFlying(false);
+                        if (player.getAllowFlight() && !hasFly) player.setAllowFlight(false);
+                        this.cancel();
+                    }
                 }
+                player.setAllowFlight(true);
+                player.setFlying(true);
             }
         }.runTaskTimer(Main.instance, 0, 10L);
     }
