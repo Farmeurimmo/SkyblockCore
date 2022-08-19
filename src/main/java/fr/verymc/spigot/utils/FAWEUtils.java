@@ -24,6 +24,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 
 public class FAWEUtils {
@@ -40,7 +41,7 @@ public class FAWEUtils {
         try {
             com.sk89q.worldedit.world.World weWorld = BukkitAdapter.adapt(pos.getWorld());
             ClipboardFormat format = ClipboardFormats.findByFile(file);
-            ClipboardReader reader = format.getReader(new FileInputStream(file));
+            ClipboardReader reader = Objects.requireNonNull(format).getReader(new FileInputStream(file));
 
             Clipboard clipboard = reader.read();
             EditSession editSession = WorldEdit.getInstance().getEditSessionFactory().getEditSession(weWorld,
@@ -48,7 +49,6 @@ public class FAWEUtils {
 
             Operation operation = new ClipboardHolder(clipboard).createPaste(editSession)
                     .to(BlockVector3.at(pos.getX(), pos.getY(), pos.getZ())).ignoreAirBlocks(true).copyBiomes(true).build();
-
 
             Operations.complete(operation);
             editSession.flushSession();
@@ -60,7 +60,6 @@ public class FAWEUtils {
     }
 
     public void pasteSchemWithoutLockingThread(File file, Location pos) {
-
         CompletableFuture.runAsync(() -> {
             pasteSchem(file, pos);
         });
@@ -68,7 +67,6 @@ public class FAWEUtils {
     }
 
     public void pasteSchemLockThread(File file, Location pos) {
-
         CompletableFuture.runAsync(() -> {
             pasteSchem(file, pos);
         }).join();
@@ -100,7 +98,6 @@ public class FAWEUtils {
             try (ClipboardWriter writer = BuiltInClipboardFormat.FAST.getWriter(new FileOutputStream(file))) {
                 writer.write(clipboard);
             }
-
 
         } catch (Exception e) {
             e.printStackTrace();
