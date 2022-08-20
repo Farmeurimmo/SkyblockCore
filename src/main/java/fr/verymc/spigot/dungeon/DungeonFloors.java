@@ -2,9 +2,9 @@ package main.java.fr.verymc.spigot.dungeon;
 
 public enum DungeonFloors {
 
-    FLOOR_1("Zombie"),
-    FLOOR_2("Skelette"),
-    FLOOR_3("Arraignée");
+    ZOMBIE_1("Zombie"),
+    SKELETTE_2("Skelette"),
+    ARAIGNEE_3("Araignée");
 
     private String name;
 
@@ -14,9 +14,9 @@ public enum DungeonFloors {
 
     public static int getSizeFromFloor(DungeonFloors floor) {
         switch (floor) {
-            case FLOOR_2:
+            case SKELETTE_2:
                 return 200;
-            case FLOOR_3:
+            case ARAIGNEE_3:
                 return 250;
             default:
                 return 175;
@@ -25,20 +25,20 @@ public enum DungeonFloors {
 
     public static int getPlayersRequiredForFloor(DungeonFloors floor) {
         switch (floor) {
-            case FLOOR_2:
+            case SKELETTE_2:
                 return 3;
-            case FLOOR_3:
+            case ARAIGNEE_3:
                 return 4;
             default:
-                return 1;
+                return 2;
         }
     }
 
     public static int getDurationFromFloor(DungeonFloors floor) {
         switch (floor) {
-            case FLOOR_2:
+            case SKELETTE_2:
                 return 12;
-            case FLOOR_3:
+            case ARAIGNEE_3:
                 return 15;
             default:
                 return 10;
@@ -47,9 +47,9 @@ public enum DungeonFloors {
 
     public static int getFloorInt(DungeonFloors floor) {
         switch (floor) {
-            case FLOOR_2:
+            case SKELETTE_2:
                 return 2;
-            case FLOOR_3:
+            case ARAIGNEE_3:
                 return 3;
             default:
                 return 1;

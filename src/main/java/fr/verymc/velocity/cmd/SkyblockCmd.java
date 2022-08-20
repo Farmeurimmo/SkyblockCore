@@ -19,7 +19,7 @@ public class SkyblockCmd implements SimpleCommand {
     public void execute(Invocation invocation) {
         CommandSource source = invocation.source();
         if (!(source instanceof Player)) {
-            source.sendMessage(Component.text("§6§lDungeon §8» §cVous devez être un joueur pour utiliser cette commande."));
+            source.sendMessage(Component.text("§6§lDongeons §8» §cVous devez être un joueur pour utiliser cette commande."));
         }
 
         assert source instanceof Player;
@@ -29,7 +29,7 @@ public class SkyblockCmd implements SimpleCommand {
         if (args.length == 1) {
             if (args[0].equalsIgnoreCase("maintenance")) {
                 if (!player.hasPermission("skyblock.maintenance")) {
-                    player.sendMessage(Component.text("§6§lDungeon §8» §cVous n'avez pas la permission pour utiliser cette commande."));
+                    player.sendMessage(Component.text("§6§lDongeons §8» §cVous n'avez pas la permission pour utiliser cette commande."));
                     return;
                 }
                 if (Main.instance.maintenance) {

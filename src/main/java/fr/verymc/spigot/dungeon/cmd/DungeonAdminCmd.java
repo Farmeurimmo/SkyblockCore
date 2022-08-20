@@ -22,7 +22,7 @@ public class DungeonAdminCmd implements CommandExecutor, TabCompleter {
 
         if (args.length == 1) {
             if (args[0].equalsIgnoreCase("spawnmob")) {
-                player.sendMessage("§6§lDungeon §8» §cMerci de préciser un mob.");
+                player.sendMessage("§6§lDongeons §8» §cMerci de préciser un mob.");
                 return false;
             }
         }
@@ -31,24 +31,24 @@ public class DungeonAdminCmd implements CommandExecutor, TabCompleter {
             int level = Integer.parseInt(args[2]);
             if (args[1].equalsIgnoreCase("zombie")) {
                 if (!DungeonMobCreator.instance.zombieLvlAvailable.contains(level)) {
-                    player.sendMessage("§6§lDungeon §8» §cCe niveau de zombie n'est pas disponible.");
+                    player.sendMessage("§6§lDongeons §8» §cCe niveau de zombie n'est pas disponible.");
                     return false;
                 }
-                player.sendMessage("§6§lDungeon §8» §fLancement du processus de spawn...");
+                player.sendMessage("§6§lDongeons §8» §fLancement du processus de spawn...");
                 DungeonMobCreator.instance.spawnZombie(player.getLocation(), level);
-                player.sendMessage("§6§lDungeon §8» §aProcessus terminé.");
+                player.sendMessage("§6§lDongeons §8» §aProcessus terminé.");
                 return false;
             }
         }
 
-        player.sendMessage("§cUsage: /dungeon <team> <join|leave|create|delete> [nom]");
+        player.sendMessage("§cUsage: /dongeon <team> <join|leave|create|delete> [nom]");
         return false;
     }
 
     @Override
     public java.util.List<String> onTabComplete(CommandSender sender, Command cmd, String alias, String[] args) {
         ArrayList<String> subcmd = new ArrayList<>();
-        if (cmd.getName().equalsIgnoreCase("dungeon")) {
+        if (cmd.getName().equalsIgnoreCase("dongeon")) {
             if (args.length == 1) {
                 subcmd.add("create");
                 subcmd.add("join");

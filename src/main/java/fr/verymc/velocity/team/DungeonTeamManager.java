@@ -80,7 +80,7 @@ public class DungeonTeamManager {
                 .buildTask(Main.instance, () -> {
                     if (playerConfirmation.contains(player.getUniqueId())) {
                         playerConfirmation.remove(player.getUniqueId());
-                        player.sendMessage(Component.text("§6§lDungeon §8» §fVotre demande de suppression a été annulé."));
+                        player.sendMessage(Component.text("§6§lDongeons §8» §fVotre demande de suppression a été annulé."));
                     }
                 })
                 .delay(10L, TimeUnit.SECONDS)
@@ -105,7 +105,7 @@ public class DungeonTeamManager {
                     if (DungeonTeamManager.instance.isATeam(dungeonTeam)) {
                         if (dungeonTeam.isPendingInvite(player.getUniqueId())) {
                             dungeonTeam.removePendingInvite(player.getUniqueId());
-                            player.sendMessage(Component.text("§6§lDungeon §8» §fL'invitation de " + str + " a expiré."));
+                            player.sendMessage(Component.text("§6§lDongeons §8» §fL'invitation de " + str + " a expiré."));
                         }
                     }
                 })

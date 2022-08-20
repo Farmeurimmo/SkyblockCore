@@ -60,7 +60,7 @@ public class PlayerListener {
                 if (team.isTchatMode(e.getPlayer().getUniqueId())) {
                     e.setResult(PlayerChatEvent.ChatResult.denied());
                     for (Player player1 : team.getPlayers()) {
-                        player1.sendMessage(Component.text("§6§lDungeon §8» §a" + e.getPlayer().getUsername() + "§8: §f" + e.getMessage()));
+                        player1.sendMessage(Component.text("§6§lDongeons §8» §a" + e.getPlayer().getUsername() + "§8: §f" + e.getMessage()));
                     }
                 }
                 return;

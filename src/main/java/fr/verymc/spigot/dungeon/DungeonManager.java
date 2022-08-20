@@ -114,13 +114,13 @@ public class DungeonManager {
         long duration = System.currentTimeMillis() - dungeon.getTime_of_start();
         for (Player player : dungeon.getPlayers()) {
             if (force) {
-                player.sendMessage("§6§lDungeon §l» §cVous n'avez pas terminé le dungeon !");
+                player.sendMessage("§6§lDongeons §l» §cVous n'avez pas terminé le dungeon !");
                 PlayerUtils.instance.teleportPlayerFromRequest(player, SpawnCmd.Spawn, 0, ServerType.SKYBLOCK_HUB);
             } else {
                 LevelAdvManager.instance.dungeonEnd(player, (DungeonFloors.getFloorInt(dungeon.getFloor()) *
                         LevelAdvManager.exp_multiplier_in_dungeon * LevelAdvManager.exp_gained));
                 player.sendTitle("§aLe boss est mort", "§aEn " + TimeUnit.MILLISECONDS.toSeconds(duration) + " secondes");
-                player.sendMessage("§6§lDungeon §l» §aVous avez terminé le dungeon en " + TimeUnit.MILLISECONDS.toSeconds(duration) + " secondes.");
+                player.sendMessage("§6§lDongeons §l» §aVous avez terminé le dungeon en " + TimeUnit.MILLISECONDS.toSeconds(duration) + " secondes.");
                 Bukkit.getScheduler().scheduleAsyncDelayedTask(Main.instance, () -> PlayerUtils.instance.teleportPlayerFromRequest(player, SpawnCmd.Spawn, 0, ServerType.SKYBLOCK_HUB), 20 * 20);
             }
         }
