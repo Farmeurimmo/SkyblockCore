@@ -27,8 +27,8 @@ public class ZombieSet {
     public static final int boots_defense = 4;
     public static final int boots_defense_toughness = 4;
     public static final double boots_health_boost = 2;
-    public static final double sword_speed_attack_add = 1;
-    public static final double sword_attack_damage_add = 5;
+    public static final double sword_speed_attack_add = 1.8;
+    public static final double sword_attack_damage_add = 10;
     public static ZombieSet instance;
 
 
@@ -39,7 +39,7 @@ public class ZombieSet {
     public ItemStack getZombieHelmet(Color color) {
         ItemStack helmet = new ItemStack(Material.LEATHER_HELMET);
 
-        helmet.setDisplayName("§cCasque du zombie originel §7| §6✪");
+        helmet.setDisplayName("§cCasque du zombie originel");
 
         helmet.addAttributeModifier(Attribute.GENERIC_ARMOR_TOUGHNESS, new AttributeModifier(Attribute.GENERIC_ARMOR_TOUGHNESS.toString(),
                 helmet_defense_toughness, AttributeModifier.Operation.ADD_NUMBER));
@@ -57,7 +57,7 @@ public class ZombieSet {
     public ItemStack getZombieChestPlate(Color color) {
         ItemStack chestplate = new ItemStack(Material.LEATHER_CHESTPLATE);
 
-        chestplate.setDisplayName("§cPlastron du zombie originel §7| §6✪");
+        chestplate.setDisplayName("§cPlastron du zombie originel");
 
         chestplate.addAttributeModifier(Attribute.GENERIC_ARMOR_TOUGHNESS, new AttributeModifier(Attribute.GENERIC_ARMOR_TOUGHNESS.toString(),
                 chestplate_defense_toughness, AttributeModifier.Operation.ADD_NUMBER));
@@ -75,7 +75,7 @@ public class ZombieSet {
     public ItemStack getZombieLegging(Color color) {
         ItemStack leggings = new ItemStack(Material.LEATHER_LEGGINGS);
 
-        leggings.setDisplayName("§cJambières du zombie originel §7| §6✪");
+        leggings.setDisplayName("§cJambières du zombie originel");
 
         leggings.addAttributeModifier(Attribute.GENERIC_ARMOR_TOUGHNESS, new AttributeModifier(Attribute.GENERIC_ARMOR_TOUGHNESS.toString(),
                 legging_defense_toughness, AttributeModifier.Operation.ADD_NUMBER));
@@ -93,7 +93,7 @@ public class ZombieSet {
     public ItemStack getZombieBoots(Color color) {
         ItemStack boots = new ItemStack(Material.LEATHER_BOOTS);
 
-        boots.setDisplayName("§cBottes du zombie originel §7| §6✪");
+        boots.setDisplayName("§cBottes du zombie originel");
 
         boots.addAttributeModifier(Attribute.GENERIC_ARMOR_TOUGHNESS, new AttributeModifier(Attribute.GENERIC_ARMOR_TOUGHNESS.toString(),
                 boots_defense_toughness, AttributeModifier.Operation.ADD_NUMBER));
@@ -134,7 +134,7 @@ public class ZombieSet {
 
         itemStack.setLore(DungeonItemManager.instance.getStatsLore(itemStack));
 
-        itemStack.addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_UNBREAKABLE);
+        itemStack.addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_UNBREAKABLE, ItemFlag.HIDE_DYE);
 
         return itemStack;
     }

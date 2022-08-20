@@ -15,15 +15,14 @@ public class DungeonItemManager {
 
     public static DungeonItemManager instance;
 
-    public final NumberFormat numberFormat;
-
     public DungeonItemManager() {
         instance = this;
 
-        numberFormat = NumberFormat.getNumberInstance();
-
-
         new ZombieSet();
+    }
+
+    public String format(double value) {
+        return NumberFormat.getInstance().format(value);
     }
 
     public List<String> getStatsLore(ItemStack itemStack) {
@@ -64,17 +63,17 @@ public class DungeonItemManager {
         } else {
             toReturn += "-";
         }
-        return toReturn + numberFormat.format(amount);
+        return toReturn + format(amount);
     }
 
     public String getHealthString(Double amount) {
-        String toReturn = "§2✤ Vie ";
+        String toReturn = "§2❤ Vie ";
         if (amount >= 0) {
             toReturn += "+";
         } else {
             toReturn += "-";
         }
-        return toReturn + numberFormat.format(amount);
+        return toReturn + format(amount);
     }
 
     public String getAttackDamage(Double amount) {
@@ -84,7 +83,7 @@ public class DungeonItemManager {
         } else {
             toReturn += "-";
         }
-        return toReturn + numberFormat.format(amount);
+        return toReturn + format(amount);
     }
 
     public String getAttackSpeed(Double amount) {
@@ -94,7 +93,7 @@ public class DungeonItemManager {
         } else {
             toReturn += "-";
         }
-        return toReturn + numberFormat.format(amount);
+        return toReturn + format(amount);
     }
 
 }

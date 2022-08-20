@@ -42,6 +42,7 @@ public class DungeonBossBarManager {
                         bossBar.removeAll();
                         bossBar.hide();
                         livingEntityHashMap.remove(bossBar);
+                        continue;
                     }
                     bossBar.setProgress(livingEntity.getHealth() / livingEntity.getMaxHealth());
                     bossBar.setTitle(livingEntity.getCustomName() + " §7| §6Vie: " + NumberFormat.getInstance().format(livingEntity.getHealth()));
