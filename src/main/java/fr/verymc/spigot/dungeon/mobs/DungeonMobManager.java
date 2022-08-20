@@ -36,9 +36,9 @@ public class DungeonMobManager {
 
     public void startDungeon(Dungeon dungeon) {
         switch (dungeon.getFloor()) {
-            case FLOOR_1 -> floor_1(dungeon);
-            case FLOOR_2 -> floor_2(dungeon);
-            case FLOOR_3 -> floor_3(dungeon);
+            case ZOMBIE_1 -> floor_1(dungeon);
+            case SKELETTE_2 -> floor_2(dungeon);
+            case ARAIGNEE_3 -> floor_3(dungeon);
         }
 
     }
