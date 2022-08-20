@@ -111,7 +111,7 @@ public class Main extends JavaPlugin {
     //Usage non recommandé pour les personnes ne le connaissant pas ce système ni les risques
     //qui peuvent en émerger
     public static boolean devMode = true;
-    public static ServerType devServerType = ServerType.SKYBLOCK_ISLAND;
+    public static ServerType devServerType = ServerType.SKYBLOCK_DUNGEON;
     public static LuckPerms api;
     private final HashMap<String, Integer> spawncooldown = new HashMap<>();
     public ArrayList<Player> pending = new ArrayList<>();

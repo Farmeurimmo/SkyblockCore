@@ -53,7 +53,7 @@ public class DungeonEntityListener implements Listener {
         p.setGameMode(GameMode.SPECTATOR);
         p.sendTitle("§cVous êtes mort", "§fVous avez donc perdu votre stuff", 1, 120, 1);
         p.sendMessage(Component.text("§6§lDungeon §l» §cVous êtes mort, votre stuff vous a donc été retiré. " +
-                "( faut bien que je rentabilise mon dungeon <3 )"));
+                "( faut bien que je rentabilise mon dongeon <3 )"));
         dungeon.addDeadPlayer(p);
     }
 }

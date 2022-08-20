@@ -30,7 +30,7 @@ public enum DungeonFloors {
             case FLOOR_3:
                 return 4;
             default:
-                return 2;
+                return 1;
         }
     }
 

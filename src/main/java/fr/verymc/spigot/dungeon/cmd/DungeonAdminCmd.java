@@ -35,7 +35,7 @@ public class DungeonAdminCmd implements CommandExecutor, TabCompleter {
                     return false;
                 }
                 player.sendMessage("§6§lDungeon §8» §fLancement du processus de spawn...");
-                DungeonMobCreator.instance.createAndSpawnZombie(player.getLocation(), level);
+                DungeonMobCreator.instance.spawnZombie(player.getLocation(), level);
                 player.sendMessage("§6§lDungeon §8» §aProcessus terminé.");
                 return false;
             }

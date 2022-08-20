@@ -47,13 +47,13 @@ public class DungeonMobCreator {
         new DungeonItemManager();
     }
 
-    public LivingEntity createAndSpawnZombie(Location spawnLoc, int level) {
+    public LivingEntity spawnZombie(Location spawnLoc, int level) {
+        level = checkForInvalidLevel(zombieLvlAvailable, level);
+
         LivingEntity mob = (LivingEntity) spawnLoc.getWorld().spawnEntity(spawnLoc, EntityType.ZOMBIE, CreatureSpawnEvent.SpawnReason.SPAWNER_EGG);
         Zombie z = (Zombie) mob;
 
         z.setMetadata("lvl", new FixedMetadataValue(Main.instance, level));
-
-        level = checkForInvalidLevel(zombieLvlAvailable, level);
 
         Color color = zombieColorFromLevel.get(level);
 
@@ -71,6 +71,7 @@ public class DungeonMobCreator {
         z.setHealth(z.getMaxHealth());
         z.addPotionEffect(new PotionEffect(PotionEffectType.HARM, 2, 10, false, false));
         z.setAI(true);
+        z.setRemoveWhenFarAway(false);
 
         z.registerAttribute(Attribute.GENERIC_MOVEMENT_SPEED);
         z.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(default_speed_zombie);
@@ -81,7 +82,7 @@ public class DungeonMobCreator {
         z.registerAttribute(Attribute.GENERIC_ATTACK_SPEED);
         z.getAttribute(Attribute.GENERIC_ATTACK_SPEED).setBaseValue(0.02);
         z.registerAttribute(Attribute.GENERIC_FOLLOW_RANGE);
-        z.getAttribute(Attribute.GENERIC_FOLLOW_RANGE).setBaseValue(50);
+        z.getAttribute(Attribute.GENERIC_FOLLOW_RANGE).setBaseValue(35);
 
         if (level == 10) {
             DungeonBossBarManager.instance.createBossBar(z, z.getCustomName() + " §7| §6Vie: " +
@@ -100,6 +101,8 @@ public class DungeonMobCreator {
             z.getEquipment().setBootsDropChance(0);
             z.getEquipment().setItemInHandDropChance(0);
         }
+
+        mob.spawnAt(spawnLoc, CreatureSpawnEvent.SpawnReason.SPAWNER_EGG);
 
         return mob;
     }

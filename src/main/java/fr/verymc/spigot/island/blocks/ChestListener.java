@@ -10,7 +10,6 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.Hopper;
-import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -63,9 +62,6 @@ public class ChestListener implements Listener {
     @EventHandler
     public void checkForItem(ItemSpawnEvent e) {
         if (Main.instance.serverType != ServerType.SKYBLOCK_ISLAND) return;
-        if (!(e.getEntity() instanceof Item)) {
-            return;
-        }
         if (!IslandManager.instance.isAnIslandByLoc(e.getEntity().getLocation())) {
             return;
         }

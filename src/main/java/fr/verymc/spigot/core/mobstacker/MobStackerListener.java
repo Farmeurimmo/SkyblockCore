@@ -36,8 +36,8 @@ public class MobStackerListener implements Listener {
         Entity ent = e.getEntity();
         if (!(ent instanceof Mob)) return;
         if (ent instanceof Boss) return;
-        List<Entity> entities = ent.getNearbyEntities(8, 4, 8);
         if (ent.getCustomName() != null && !ent.getCustomName().startsWith(MobStackerManager.start_of_name)) return;
+        List<Entity> entities = ent.getNearbyEntities(8, 4, 8);
         for (Entity entity : entities) {
             if (ent.getType() != entity.getType()) continue;
             if (entity instanceof Boss) return;

@@ -33,7 +33,7 @@ public class DungeonManager {
 
     public DungeonManager() {
         instance = this;
-        ;
+
         new DungeonBossBarManager();
         new DungeonMobManager();
 
@@ -60,6 +60,8 @@ public class DungeonManager {
     public void loadDungeon(List<String> players, DungeonFloors floor) {
         Location loc = getEmptyLocation();
 
+        System.out.println("loc: " + loc);
+
         ArrayList<Player> players1 = new ArrayList<>();
         players.forEach(player -> players1.add(Bukkit.getPlayer(player.substring(1, player.length() - 1))));
 
@@ -85,15 +87,12 @@ public class DungeonManager {
     }
 
     public void secondPartLoad(Dungeon dungeon) {
-        DungeonMobManager.instance.spawnMobs(dungeon);
-        Location teleportLoc = dungeon.getLocDungeon().clone();
-        teleportLoc.add(0, 3, 0);
+        DungeonMobManager.instance.startDungeon(dungeon);
         for (Player player : dungeon.getPlayers()) {
             if (player.hasPotionEffect(PotionEffectType.BLINDNESS)) {
                 player.removePotionEffect(PotionEffectType.BLINDNESS);
                 player.removePotionEffect(PotionEffectType.SLOW);
                 player.clearTitle();
-                player.teleport(teleportLoc);
                 player.setFlying(false);
                 player.setAllowFlight(false);
             }
