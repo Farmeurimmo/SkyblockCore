@@ -104,6 +104,7 @@ public class ZombieSet {
 
         boots.addEnchant(Enchantment.PROTECTION_FIRE, 10, true);
         boots.addEnchant(Enchantment.PROTECTION_PROJECTILE, 2, true);
+        boots.addEnchant(Enchantment.DEPTH_STRIDER, 3, true);
 
         return applyCommonPart(boots, color);
     }

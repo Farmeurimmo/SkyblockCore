@@ -114,7 +114,7 @@ public class DungeonTeamManager {
     }
 
     public void createTeam(Player player) {
-        DungeonTeam dungeonTeam = new DungeonTeam(new ArrayList<>(), player.getUniqueId(), DungeonFloors.FLOOR_1, true);
+        DungeonTeam dungeonTeam = new DungeonTeam(new ArrayList<>(), player.getUniqueId(), DungeonFloors.ZOMBIE_1, true);
         dungeonTeam.addPlayer(player);
         addTeam(dungeonTeam);
     }

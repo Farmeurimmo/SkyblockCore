@@ -3,14 +3,12 @@ package main.java.fr.verymc.velocity.cmd;
 import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.command.SimpleCommand;
 import com.velocitypowered.api.proxy.Player;
-import com.velocitypowered.api.proxy.server.RegisteredServer;
-import main.java.fr.verymc.JedisManager;
 import main.java.fr.verymc.spigot.dungeon.DungeonFloors;
+import main.java.fr.verymc.velocity.DungeonQueueManager;
 import main.java.fr.verymc.velocity.Main;
 import main.java.fr.verymc.velocity.team.DungeonTeam;
 import main.java.fr.verymc.velocity.team.DungeonTeamManager;
 import net.kyori.adventure.text.Component;
-import org.json.simple.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -49,6 +47,7 @@ public final class DungeonCmd implements SimpleCommand {
                 DungeonTeamManager.instance.createTeam(player);
                 player.sendMessage(Component.text("§6§lDongeons §8» §fVous avez créé une team. L'étage le plus bas a été séléctionné par défaut," +
                         " /dongeon etage <étage> pour la changer."));
+                player.sendMessage(Component.text("§c⚠ §lLa perte de stuff est active dans les dungeons§c ⚠"));
                 return;
             }
             if (args[0].equalsIgnoreCase("join")) {
@@ -108,11 +107,12 @@ public final class DungeonCmd implements SimpleCommand {
                 targetTeam.sendMessageToEveryone("§6§lDongeons §8» §f" + player.getUsername() + " a rejoint la team.");
                 DungeonTeamManager.instance.addPlayerToTeam(targetTeam, player);
                 player.sendMessage(Component.text("§6§lDongeons §8» §fVous avez rejoint la team de " + target.getUsername() + "."));
+                player.sendMessage(Component.text("§c⚠ §lLa perte de stuff est active dans les dungeons§c ⚠"));
                 return;
             }
         }
         if (!haveATeam) {
-            player.sendMessage(Component.text("§6§lDongeons §8» §cVous n'avez pas de team. Merci d'en créer une avec /dungeon create."));
+            player.sendMessage(Component.text("§6§lDongeons §8» §cVous n'avez pas de team. Merci d'en créer une avec /dongeon create."));
             sendErrorUsage(player);
             return;
         }
@@ -123,20 +123,7 @@ public final class DungeonCmd implements SimpleCommand {
                     player.sendMessage(Component.text("§6§lDongeons §8» §cVous n'avez pas assez de joueurs dans votre team pour cet étage."));
                     return;
                 }
-                JSONObject jsonObject = new JSONObject();
-                String serverName = "lobby2";
-                ArrayList<String> playerNames = new ArrayList<>();
-                RegisteredServer registeredServer = Main.instance.getServerByName(serverName);
-                System.out.println(serverName);
-                System.out.println(registeredServer);
-                for (Player player1 : dungeonTeam.getPlayers()) {
-                    playerNames.add(player1.getUsername());
-                    player1.createConnectionRequest(registeredServer).fireAndForget();
-                }
-                jsonObject.put("players", playerNames);
-                jsonObject.put("floor", dungeonTeam.getFloor().toString());
-                JedisManager.instance.sendToRedis("tmpDungeonTeam", jsonObject.toString());
-                dungeonTeam.sendMessageToEveryone("§6§lDongeons §8» §fDungeon démarré, en attente de serveur...");
+                DungeonQueueManager.instance.queueTeam(dungeonTeam);
                 return;
             }
             if (args[0].equalsIgnoreCase("invite")) {
@@ -168,7 +155,7 @@ public final class DungeonCmd implements SimpleCommand {
             if (args[0].equalsIgnoreCase("leave")) {
                 if (dungeonTeam.isOwner(player)) {
                     player.sendMessage(Component.text("§6§lDongeons §8» §cVous ne pouvez pas quitter votre team car vous êtes le propriétaire," +
-                            " supprimer la avec /dungeon delete."));
+                            " supprimer la avec /dongeon delete."));
                     return;
                 }
                 DungeonTeamManager.instance.removePlayerFromTeam(dungeonTeam, player);
@@ -189,7 +176,7 @@ public final class DungeonCmd implements SimpleCommand {
                 }
                 DungeonTeamManager.instance.addPlayerToConfirmation(player);
                 player.sendMessage(Component.text("§6§lDongeons §8» §fVous avez demandé à supprimer la team, " +
-                        "tapez §c/dungeon delete §fpour confirmer, vous avez §c10 §csecondes."));
+                        "tapez §c/dongeon delete §fpour confirmer, vous avez §c10 §csecondes."));
                 return;
             }
             if (args[0].equalsIgnoreCase("invitation")) {
@@ -230,7 +217,7 @@ public final class DungeonCmd implements SimpleCommand {
                 dungeonTeam.addPendingInvite(invitedPlayer.getUniqueId());
                 DungeonTeamManager.instance.makeInviteExpireForPlayer(invitedPlayer, dungeonTeam, player.getUsername());
                 invitedPlayer.sendMessage(Component.text("§6§lDongeons §8» §f" + player.getUsername() + " vous a invité à rejoindre sa team. " +
-                        "Faites /dungeon join " + player.getUsername() + " pour rejoindre sa team. L'invitation expire dans §c30 secondes."));
+                        "Faites /dongeon join " + player.getUsername() + " pour rejoindre sa team. L'invitation expire dans §c30 secondes."));
                 player.sendMessage(Component.text("§6§lDongeons §8» §fVous avez invité " + invitedPlayer.getUsername() + " à rejoindre votre team."));
                 return;
             }
@@ -259,7 +246,7 @@ public final class DungeonCmd implements SimpleCommand {
     }
 
     public void sendErrorUsage(Player player) {
-        player.sendMessage(Component.text("§6§lDongeons §8» §cUsage: /dungeon <join|leave|create|delete|invite|invitation|kick|tchat|start|etage> [Joueur/Étage]"));
+        player.sendMessage(Component.text("§6§lDongeons §8» §cUsage: /dongeon <join|leave|create|delete|invite|invitation|kick|tchat|start|etage> [Joueur/Étage]"));
     }
 
     /*@Override

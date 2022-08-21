@@ -22,14 +22,16 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class DungeonManager {
 
     public static final int distanceBetweenDungeons = 400;
     public static DungeonManager instance;
     public ArrayList<Dungeon> dungeons = new ArrayList<>();
+    public ArrayList<UUID> blocked = new ArrayList<>();
+    public ArrayList<List<Player>> alStarted = new ArrayList<>();
 
     public DungeonManager() {
         instance = this;
@@ -60,7 +62,7 @@ public class DungeonManager {
     public void loadDungeon(List<String> players, DungeonFloors floor) {
         Location loc = getEmptyLocation();
 
-        System.out.println("loc: " + loc);
+        System.out.println("loc : " + loc);
 
         ArrayList<Player> players1 = new ArrayList<>();
         players.forEach(player -> players1.add(Bukkit.getPlayer(player.substring(1, player.length() - 1))));
@@ -72,6 +74,7 @@ public class DungeonManager {
             player.teleport(new Location(Main.instance.mainWorld, 0, 256, 0));
             player.setAllowFlight(true);
             player.setFlying(true);
+            blocked.add(player.getUniqueId());
         }
 
         Dungeon dungeon = new Dungeon(floor.getName(), floor, players1, loc, DungeonFloors.getDurationFromFloor(floor));
@@ -95,6 +98,7 @@ public class DungeonManager {
                 player.clearTitle();
                 player.setFlying(false);
                 player.setAllowFlight(false);
+                blocked.remove(player.getUniqueId());
             }
         }
 
@@ -114,46 +118,26 @@ public class DungeonManager {
         long duration = System.currentTimeMillis() - dungeon.getTime_of_start();
         for (Player player : dungeon.getPlayers()) {
             if (force) {
-                player.sendMessage("§6§lDongeons §l» §cVous n'avez pas terminé le dungeon !");
+                player.sendMessage("§6§lDongeons §l» §cVous n'avez pas terminé le dongeon !");
                 PlayerUtils.instance.teleportPlayerFromRequest(player, SpawnCmd.Spawn, 0, ServerType.SKYBLOCK_HUB);
             } else {
                 LevelAdvManager.instance.dungeonEnd(player, (DungeonFloors.getFloorInt(dungeon.getFloor()) *
                         LevelAdvManager.exp_multiplier_in_dungeon * LevelAdvManager.exp_gained));
                 player.sendTitle("§aLe boss est mort", "§aEn " + TimeUnit.MILLISECONDS.toSeconds(duration) + " secondes");
-                player.sendMessage("§6§lDongeons §l» §aVous avez terminé le dungeon en " + TimeUnit.MILLISECONDS.toSeconds(duration) + " secondes.");
+                player.sendMessage("§6§lDongeons §l» §aVous avez terminé le dongeon en " + TimeUnit.MILLISECONDS.toSeconds(duration) + " secondes.");
                 Bukkit.getScheduler().scheduleAsyncDelayedTask(Main.instance, () -> PlayerUtils.instance.teleportPlayerFromRequest(player, SpawnCmd.Spawn, 0, ServerType.SKYBLOCK_HUB), 20 * 20);
             }
         }
         dungeons.remove(dungeon);
     }
 
-    public void checkForFullTeam(List<String> players, DungeonFloors floor, int tries) {
-        AtomicInteger count = new AtomicInteger(tries);
-        Bukkit.getScheduler().scheduleSyncDelayedTask(Main.instance, () -> {
-            int size = 0;
-            for (Player player : Bukkit.getOnlinePlayers()) {
-                if (players.contains(player.getName())) {
-                    size++;
-                }
-            }
-            if (size >= players.size()) {
-                loadDungeon(players, floor);
-            }
-            count.getAndIncrement();
-            if (count.get() > 10) {
-                loadDungeon(players, floor);
-                return;
-            }
-            checkForFullTeam(players, floor, count.get());
-        }, 2);
-    }
-
-    public void playerLogged(Player player) {
+    public void checkLogged(Player player) {
         String redis = JedisManager.instance.getFromRedis("tmpDungeonTeam");
+        System.out.println("aaa: " + redis);
         if (redis == null) return;
         if (redis.contains(player.getName())) {
             JSONParser jsonParser = new JSONParser();
-            JSONObject jsonObject = null;
+            JSONObject jsonObject;
             try {
                 jsonObject = (JSONObject) jsonParser.parse(redis);
             } catch (Exception ex) {
@@ -162,8 +146,17 @@ public class DungeonManager {
             }
             List<String> list = ObjectConverter.instance.stringToArrayList(String.valueOf(jsonObject.get("players")));
             DungeonFloors floor = DungeonFloors.valueOf(String.valueOf(jsonObject.get("floor")));
-            JedisManager.instance.removeFromRedis("tmpDungeonTeam");
-            checkForFullTeam(list, floor, 0);
+            list.removeIf(str -> str.length() < 2);
+            int size = 0;
+            for (String p : list) {
+                if (Bukkit.getPlayer(p.substring(1, p.length() - 1)) != null) {
+                    size++;
+                }
+            }
+            if (size >= list.size()) {
+                loadDungeon(list, floor);
+                JedisManager.instance.removeFromRedis("tmpDungeonTeam");
+            }
         }
     }
 

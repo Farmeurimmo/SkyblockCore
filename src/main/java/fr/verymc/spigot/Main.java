@@ -52,6 +52,7 @@ import main.java.fr.verymc.spigot.core.storage.StorageJSONManager;
 import main.java.fr.verymc.spigot.dungeon.DungeonManager;
 import main.java.fr.verymc.spigot.dungeon.cmd.DungeonAdminCmd;
 import main.java.fr.verymc.spigot.dungeon.events.DungeonEntityListener;
+import main.java.fr.verymc.spigot.dungeon.events.DungeonPlayerListener;
 import main.java.fr.verymc.spigot.dungeon.events.DungeonProtectionsListener;
 import main.java.fr.verymc.spigot.dungeon.mobs.DungeonMobManager;
 import main.java.fr.verymc.spigot.hub.crates.CratesManager;
@@ -230,7 +231,7 @@ public class Main extends JavaPlugin {
             Bukkit.getPluginManager().disablePlugin(this);
         }
         saveResource("spawn.schem", true);
-        saveResource("FLOOR_1.schem", true);
+        saveResource("ZOMBIE_1.schem", true);
         saveResource("clear.schem", true);
         saveResource("ileworld.schem", true);
 
@@ -468,6 +469,7 @@ public class Main extends JavaPlugin {
         if (serverType == ServerType.SKYBLOCK_DUNGEON) {
             getServer().getPluginManager().registerEvents(new DungeonEntityListener(), this);
             getServer().getPluginManager().registerEvents(new DungeonProtectionsListener(), this);
+            getServer().getPluginManager().registerEvents(new DungeonPlayerListener(), this);
         }
 
 

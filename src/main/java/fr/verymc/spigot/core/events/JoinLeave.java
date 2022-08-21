@@ -72,7 +72,7 @@ public class JoinLeave implements Listener {
         }
 
         if (Main.instance.serverType == ServerType.SKYBLOCK_DUNGEON) {
-            DungeonManager.instance.playerLogged(event.getPlayer());
+            DungeonManager.instance.checkLogged(event.getPlayer());
         }
 
         //BossBar.AddBossBarForPlayer(player);

@@ -15,7 +15,6 @@ import main.java.fr.verymc.velocity.cmd.DungeonCmd;
 import main.java.fr.verymc.velocity.cmd.SkyblockCmd;
 import main.java.fr.verymc.velocity.events.ConnectionListener;
 import main.java.fr.verymc.velocity.events.PlayerListener;
-import main.java.fr.verymc.velocity.team.DungeonTeam;
 import main.java.fr.verymc.velocity.team.DungeonTeamManager;
 import net.kyori.adventure.text.Component;
 import net.luckperms.api.LuckPerms;
@@ -70,12 +69,10 @@ public class Main {
 
         new TABManager(server, logger);
         new DungeonTeamManager(server, logger);
+        new DungeonQueueManager(server, logger);
 
-        server.getCommandManager().register("dungeon", new DungeonCmd());
+        server.getCommandManager().register("dongeon", new DungeonCmd());
         server.getCommandManager().register("skyblock", new SkyblockCmd());
-
-        messageOfStuffLose();
-
 
         luckPermsAPI = LuckPermsProvider.get();
 
@@ -98,16 +95,6 @@ public class Main {
 
     public void sendDeconnectionMessage(Player player) {
         Main.instance.sendMessageToSkyblock("§7[§c-§7] " + getPrefix(player.getUniqueId()) + player.getUsername() + getSuffix(player.getUniqueId()));
-    }
-
-    public void messageOfStuffLose() {
-        server.getScheduler().buildTask(Main.instance, () -> {
-            for (DungeonTeam dungeonTeam : DungeonTeamManager.instance.dungeonTeams) {
-                for (Player player : dungeonTeam.getPlayers()) {
-                    player.sendActionBar(Component.text("§c⚠ §lLa perte de stuff est active dans les dungeons§c ⚠"));
-                }
-            }
-        }).repeat(1L, TimeUnit.SECONDS).schedule();
     }
 
     public void startMaintenanceModule() {
