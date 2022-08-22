@@ -1,7 +1,9 @@
 package main.java.fr.verymc.spigot.dungeon.mobs;
 
 import main.java.fr.verymc.spigot.Main;
+import main.java.fr.verymc.spigot.dungeon.Dungeon;
 import main.java.fr.verymc.spigot.dungeon.DungeonBossBarManager;
+import main.java.fr.verymc.spigot.dungeon.DungeonManager;
 import main.java.fr.verymc.spigot.dungeon.items.DungeonItemManager;
 import main.java.fr.verymc.spigot.dungeon.items.sets.ZombieSet;
 import org.bukkit.Color;
@@ -19,6 +21,7 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Random;
 
 public class DungeonMobCreator {
 
@@ -53,8 +56,6 @@ public class DungeonMobCreator {
         LivingEntity mob = (LivingEntity) spawnLoc.getWorld().spawnEntity(spawnLoc, EntityType.ZOMBIE, CreatureSpawnEvent.SpawnReason.SPAWNER_EGG);
         Zombie z = (Zombie) mob;
 
-        z.setMetadata("lvl", new FixedMetadataValue(Main.instance, level));
-
         Color color = zombieColorFromLevel.get(level);
 
         z.getEquipment().setHelmet(ZombieSet.instance.getZombieHelmet(color));
@@ -72,6 +73,9 @@ public class DungeonMobCreator {
         z.addPotionEffect(new PotionEffect(PotionEffectType.HARM, 2, 10, false, false));
         z.setAI(true);
         z.setRemoveWhenFarAway(false);
+
+        z.setMetadata("lvl", new FixedMetadataValue(Main.instance, level));
+        z.setMetadata("maxHealth", new FixedMetadataValue(Main.instance, z.getMaxHealth()));
 
         z.registerAttribute(Attribute.GENERIC_MOVEMENT_SPEED);
         z.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(default_speed_zombie);
@@ -105,6 +109,33 @@ public class DungeonMobCreator {
         mob.spawnAt(spawnLoc, CreatureSpawnEvent.SpawnReason.SPAWNER_EGG);
 
         return mob;
+    }
+
+    public void dispatchBossCheck(LivingEntity livingEntity, Double damage) {
+        if (livingEntity.getType() == EntityType.ZOMBIE) {
+            spawnExtraZombie(livingEntity, damage);
+        }
+    }
+
+    public void spawnExtraZombie(LivingEntity livingEntity, Double damage) {
+        double maxHealth = livingEntity.getMaxHealth();
+        double lifeDivided = maxHealth / 3;
+        if (lifeDivided * 3 >= livingEntity.getHealth() - damage && lifeDivided * 2 <= livingEntity.getHealth() - damage) {
+            spawnZombieRandom(1, livingEntity.getLocation());
+        } else if (lifeDivided >= livingEntity.getHealth() - damage && lifeDivided * 2 >= livingEntity.getHealth() - damage) {
+            spawnZombieRandom(5, livingEntity.getLocation());
+        } else {
+            spawnZombieRandom(3, livingEntity.getLocation());
+        }
+    }
+
+    public void spawnZombieRandom(Integer level, Location loc) {
+        Random random = new Random();
+        if (random.nextDouble() <= 0.09) {
+            Dungeon dungeon = DungeonManager.instance.getDungeonByLoc(loc);
+            LivingEntity livingEntity = spawnZombie(loc.clone().add(0, 1, 0), level);
+            DungeonMobManager.instance.mobs.get(dungeon).add(livingEntity);
+        }
     }
 
     public Integer checkForInvalidLevel(ArrayList<Integer> levelAva, int lvl) {

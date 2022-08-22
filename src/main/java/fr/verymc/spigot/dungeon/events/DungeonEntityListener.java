@@ -2,9 +2,11 @@ package main.java.fr.verymc.spigot.dungeon.events;
 
 import main.java.fr.verymc.spigot.dungeon.Dungeon;
 import main.java.fr.verymc.spigot.dungeon.DungeonManager;
+import main.java.fr.verymc.spigot.dungeon.mobs.DungeonMobCreator;
 import main.java.fr.verymc.spigot.dungeon.mobs.DungeonMobManager;
 import net.kyori.adventure.text.Component;
 import org.bukkit.GameMode;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -37,6 +39,12 @@ public class DungeonEntityListener implements Listener {
     @EventHandler
     public void playerDeath(EntityDamageEvent e) {
         if (!(e.getEntity() instanceof Player)) {
+            if (!(e.getEntity() instanceof LivingEntity)) {
+                return;
+            }
+            LivingEntity entity = (LivingEntity) e.getEntity();
+            if (!entity.hasMetadata("boss")) return;
+            DungeonMobCreator.instance.dispatchBossCheck(entity, e.getFinalDamage());
             return;
         }
         Player p = (Player) e.getEntity();
