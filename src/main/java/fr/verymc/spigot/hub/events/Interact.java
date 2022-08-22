@@ -11,10 +11,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntitySpawnEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
-import org.bukkit.event.player.PlayerBucketEmptyEvent;
-import org.bukkit.event.player.PlayerBucketFillEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerItemConsumeEvent;
+import org.bukkit.event.player.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -41,29 +38,22 @@ public class Interact implements Listener {
 
     @EventHandler
     public void BucketEmpty(PlayerBucketEmptyEvent e) {
-        if (Build.contains(e.getPlayer().getUniqueId())) {
-            return;
-        } else {
-            e.setCancelled(true);
-        }
+        if (!Build.contains(e.getPlayer().getUniqueId())) e.setCancelled(true);
     }
 
     @EventHandler
     public void BucketFill(PlayerBucketFillEvent e) {
-        if (Build.contains(e.getPlayer().getUniqueId())) {
-            return;
-        } else {
-            e.setCancelled(true);
-        }
+        if (!Build.contains(e.getPlayer().getUniqueId())) e.setCancelled(true);
+    }
+
+    @EventHandler
+    public void bucket(PlayerBucketEntityEvent e) {
+        if (!Build.contains(e.getPlayer().getUniqueId())) e.setCancelled(true);
     }
 
     @EventHandler
     public void BlockBreak(BlockBreakEvent e) {
-        if (Build.contains(e.getPlayer().getUniqueId())) {
-            return;
-        } else {
-            e.setCancelled(true);
-        }
+        if (!Build.contains(e.getPlayer().getUniqueId())) e.setCancelled(true);
     }
 
     @EventHandler
