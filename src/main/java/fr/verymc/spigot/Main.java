@@ -15,7 +15,7 @@ import main.java.fr.verymc.spigot.core.atout.AtoutCmd;
 import main.java.fr.verymc.spigot.core.atout.AtoutGui;
 import main.java.fr.verymc.spigot.core.atout.BuyAtoutGui;
 import main.java.fr.verymc.spigot.core.auctions.AhCmd;
-import main.java.fr.verymc.spigot.core.auctions.AuctionGui;
+import main.java.fr.verymc.spigot.core.auctions.AuctionGuis;
 import main.java.fr.verymc.spigot.core.auctions.AuctionsManager;
 import main.java.fr.verymc.spigot.core.cmd.base.*;
 import main.java.fr.verymc.spigot.core.cmd.moderation.*;
@@ -422,7 +422,7 @@ public class Main extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new ChestListener(), this);
         getServer().getPluginManager().registerEvents(new FarmHoeManager(), this);
         getServer().getPluginManager().registerEvents(new FarmHoeGui(), this);
-        getServer().getPluginManager().registerEvents(new AuctionGui(), this);
+        getServer().getPluginManager().registerEvents(new AuctionGuis(), this);
         getServer().getPluginManager().registerEvents(new AntiAfk(), this);
         getServer().getPluginManager().registerEvents(new MinionsListener(), this);
         getServer().getPluginManager().registerEvents(new PickaxeManager(), this);

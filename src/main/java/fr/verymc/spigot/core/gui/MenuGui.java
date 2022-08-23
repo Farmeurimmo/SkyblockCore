@@ -1,7 +1,7 @@
 package main.java.fr.verymc.spigot.core.gui;
 
 import main.java.fr.verymc.spigot.core.atout.AtoutGui;
-import main.java.fr.verymc.spigot.core.auctions.AuctionsManager;
+import main.java.fr.verymc.spigot.core.auctions.AuctionGuis;
 import main.java.fr.verymc.spigot.core.leveladv.LevelAdvGuis;
 import main.java.fr.verymc.spigot.core.shopgui.MainShopGui;
 import main.java.fr.verymc.spigot.island.IslandManager;
@@ -104,7 +104,7 @@ public class MenuGui implements Listener {
                 return;
             }
             if (current.getType() == Material.SADDLE) {
-                AuctionsManager.instance.openAuction(player, 1);
+                AuctionGuis.instance.openAuction(player, 0);
                 return;
             }
             if (current.getType() == Material.VILLAGER_SPAWN_EGG) {
