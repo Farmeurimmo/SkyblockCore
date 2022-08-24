@@ -6,68 +6,54 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
+
+import java.text.NumberFormat;
 
 public class AhCmd implements CommandExecutor {
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
 
-        if (sender instanceof Player) {
-            Player player = (Player) sender;
+        if (!(sender instanceof Player player)) {
+            sender.sendMessage("§cVous devez être un joueur pour utiliser cette commande.");
+            return true;
+        }
 
-            if (args.length == 0) {
-                AuctionsManager.instance.openAuction(player, 1);
+        if (args.length == 0) {
+            AuctionGuis.instance.openAuction(player, 0);
+            return true;
+        }
+
+        if (args.length != 2) {
+            player.sendMessage("§6§lAuctions §8» §fCommande inconnue, sous commandes disponible: sell");
+            return true;
+        }
+
+        if (args[0].equalsIgnoreCase("sell")) {
+            if (player.getItemInHand().getType() == Material.AIR) {
+                player.sendMessage("§6§lAuctions §8» §fVous n'avez pas d'item en main.");
                 return true;
             }
-            if (args.length == 2) {
-                if (player.getItemInHand() != null && player.getItemInHand().getType() != Material.AIR) {
-                    if (args[0].equalsIgnoreCase("sell")) {
-                        boolean digit = false;
-                        try {
-                            @SuppressWarnings("unused")
-                            float intValue = Float.parseFloat(args[1]);
-                            digit = true;
-                        } catch (NumberFormatException e) {
-                            digit = false;
-                        }
-                        if (!args[1].contains("-") && !args[1].contains(",") && digit == true) {
-                            if (args[1].length() <= 9) {
-                                if (AuctionsManager.instance.numberOfSelledItems(player) <= 10) {
-                                    ItemStack item = player.getItemInHand().clone();
-                                    Double aaa = Double.parseDouble(args[1]);
-                                    if (aaa < 5) {
-                                        player.sendMessage("§6§lAuctions §8» §fVous devez entrer un prix supérieur ou égal à 5.");
-                                        return true;
-                                    }
-                                    AuctionsManager.instance.addItemToAh(player, aaa, item);
-                                    player.sendMessage("§6§lAuctions §8» §fVous venez de mettre aux auctions §ax" + item.getAmount() + " " + item.getType()
-                                            + " §fpour §a" + aaa + "$ §f!");
-                                    player.getItemInHand().setAmount(0);
-                                    return true;
-                                } else {
-                                    player.sendMessage("§6§lAuctions §8» §fVous avez atteint la limite d'items que vous pouvez vendre.");
-                                    return true;
-                                }
-                            } else {
-                                player.sendMessage("§6§lAuctions §8» §fPrix trop grand.");
-                                return true;
-                            }
-                        } else {
-                            player.sendMessage("§6§lAuctions §8» §fCe n'est pas un nombre valide.");
-                            return true;
-                        }
-                    } else {
-                        player.sendMessage("§6§lAuctions §8» §fErreur dans la commande, commandes disponibles: sell");
-                        return true;
-                    }
-                } else {
-                    player.sendMessage("§6§lAuctions §8» §fVous n'avez pas d'item en main.");
-                    return true;
-                }
+            double value;
+            try {
+                value = Double.parseDouble(args[1]);
+            } catch (NumberFormatException e) {
+                player.sendMessage("§6§lAuctions §8» §fVous devez entrer un nombre valide.");
+                return true;
             }
-
-            player.sendMessage("§6§lAuctions §8» §fCommande inconnue, sous commandes disponible: sell");
-
+            if (value <= 5) {
+                player.sendMessage("§6§lAuctions §8» §fVous devez entrer un nombre strictement supérieur à 5.");
+                return true;
+            }
+            if (AuctionsManager.instance.numberOfSelledItems(player) > 10) {
+                player.sendMessage("§6§lAuctions §8» §fVous ne pouvez pas vendre plus de 10 items à la fois.");
+            }
+            ItemStack item = player.getItemInHand().clone();
+            AuctionsManager.instance.addItemToAh(player, value, item);
+            player.sendMessage("§6§lAuctions §8» §fVous venez de mettre aux auctions §ax" + item.getAmount() + " " + item.getType()
+                    + " §fpour §a" + NumberFormat.getInstance().format(value) + "$ §f!");
+            player.getItemInHand().setAmount(0);
         }
 
         return true;
