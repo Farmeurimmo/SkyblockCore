@@ -74,6 +74,7 @@ public class InventorySyncManager {
             return;
         }
         player.setTotalExperience(Integer.parseInt(strings[1]));
+        player.getActivePotionEffects().clear();
         double health = Double.parseDouble(strings[2]);
         if (health > 20) {
             player.setHealth(20);
@@ -83,6 +84,12 @@ public class InventorySyncManager {
             player.setHealth(health);
         }
         player.setFoodLevel(Integer.parseInt(strings[3]));
+        if (strings.length > 5) {
+            for (String s : strings[5].split(ObjectConverter.SEPARATOR)) {
+                String[] split = s.split(ObjectConverter.LOC_SEPARATOR);
+                player.addPotionEffect(new PotionEffect(PotionEffectType.getByName(split[0]), Integer.parseInt(split[1]), Integer.parseInt(split[2])));
+            }
+        }
         if (isSync(player)) removeSync(player);
     }
 
@@ -91,13 +98,20 @@ public class InventorySyncManager {
             removeSync(player);
             return;
         }
+        StringBuilder potionStr = new StringBuilder();
+        for (PotionEffect effect : player.getActivePotionEffects()) {
+            potionStr.append(effect.getType().getName()).append(ObjectConverter.LOC_SEPARATOR).append(effect.getDuration()).append(ObjectConverter.LOC_SEPARATOR).append(effect.getAmplifier()).append(ObjectConverter.LOC_SEPARATOR);
+        }
+        player.getActivePotionEffects().clear();
         JedisManager.instance.sendToRedis("sync:" + player.getUniqueId(), saveInventory(player.getInventory().getContents()) + ObjectConverter.SEPARATOR +
                 player.getTotalExperience() + ObjectConverter.SEPARATOR + player.getHealth() + ObjectConverter.SEPARATOR + player.getFoodLevel()
-                + ObjectConverter.SEPARATOR + saveInventory(player.getEnderChest().getContents()));
+                + ObjectConverter.SEPARATOR + saveInventory(player.getEnderChest().getContents()) + ObjectConverter.SEPARATOR + potionStr);
     }
 
     public void sendReasonForEventCancelled(Player player) {
-        player.sendMessage("§6§lSynchronisation §8» §cVotre inventaire est en synchronisation / n'a pas pu être chargé." +
-                "\n§cSi le problème persiste, merci de faire un ticket sur discord. \nhttps://discord.verymc.fr");
+        player.sendMessage("""
+                §6§lSynchronisation §8» §cVotre inventaire est en synchronisation / n'a pas pu être chargé.
+                §cSi le problème persiste, merci de faire un ticket sur discord.\s
+                https://discord.verymc.fr""");
     }
 }
