@@ -209,7 +209,6 @@ public class Main extends JavaPlugin {
         System.out.println("------------------------------------------------");
         //CORE INIT PART 1
         System.out.println("Starting core part 1...");
-        saveDefaultConfig();
         RegisteredServiceProvider<LuckPerms> provider = Bukkit.getServicesManager().getRegistration(LuckPerms.class);
         if (provider != null) {
             api = provider.getProvider();
@@ -230,6 +229,7 @@ public class Main extends JavaPlugin {
             getLogger().warning("Le plugin HolographicDisplays est manquant.");
             Bukkit.getPluginManager().disablePlugin(this);
         }
+        saveResource("config.yml", true);
         saveResource("spawn.schem", true);
         saveResource("ZOMBIE_1.schem", true);
         saveResource("clear.schem", true);

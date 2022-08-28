@@ -380,7 +380,7 @@ Shops:
     33:
       material: HAY_BLOCK
       buy: 160
-      sell: 97
+      sell: 80
     34:
       material: BEETROOT
       buy: 60
@@ -392,7 +392,7 @@ Shops:
     36:
       material: NETHER_WART_BLOCK
       buy: 130
-      sell: 40
+      sell: 38
     40:
       material: SWEET_BERRIES
       buy: 130
@@ -405,6 +405,10 @@ Shops:
       material: MOSS_BLOCK
       buy: 110
       sell: -1
+    43:
+      material: GLOW_BERRIES
+      buy: 100
+      sell: 2.8
 
     ####################
 
