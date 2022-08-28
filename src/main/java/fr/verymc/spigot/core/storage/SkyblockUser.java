@@ -55,16 +55,8 @@ public class SkyblockUser {
         return username;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
     public UUID getUserUUID() {
         return userUUID;
-    }
-
-    public void setUserUUID(UUID userUUID) {
-        this.userUUID = userUUID;
     }
 
     public double getMoney() {
@@ -73,6 +65,7 @@ public class SkyblockUser {
 
     public void setMoney(double money) {
         this.money = money;
+        StorageManager.instance.startUpdateUser(this, StoragePriorities.NORMAL);
     }
 
     public boolean hasHaste() {
@@ -104,7 +97,6 @@ public class SkyblockUser {
     }
 
     public void setFlyLeft(int flyLeft) {
-
         this.flyLeft = flyLeft;
         if (flyLeft == 0) {
             this.isActive = false;
@@ -113,30 +105,37 @@ public class SkyblockUser {
                 this.isActive = true;
             }
         }
+        StorageManager.instance.startUpdateUser(this, StoragePriorities.NORMAL);
     }
 
     public void setHaste(boolean hasHaste) {
         this.hasHaste = hasHaste;
+        StorageManager.instance.startUpdateUser(this, StoragePriorities.LOWEST);
     }
 
     public void setHasteActive(boolean hasHasteActvie) {
         this.hasHasteActive = hasHasteActvie;
+        StorageManager.instance.startUpdateUser(this, StoragePriorities.LOWEST);
     }
 
     public void setSpeed(boolean hasSpeed) {
         this.hasSpeed = hasSpeed;
+        StorageManager.instance.startUpdateUser(this, StoragePriorities.LOWEST);
     }
 
     public void setSpeedActive(boolean hasSpeedActive) {
         this.hasSpeedActive = hasSpeedActive;
+        StorageManager.instance.startUpdateUser(this, StoragePriorities.LOWEST);
     }
 
     public void setJump(boolean hasJump) {
         this.hasJump = hasJump;
+        StorageManager.instance.startUpdateUser(this, StoragePriorities.LOWEST);
     }
 
     public void setJumpActive(boolean hasJumpActive) {
         this.hasJumpActive = hasJumpActive;
+        StorageManager.instance.startUpdateUser(this, StoragePriorities.LOWEST);
     }
 
     public boolean isActive() {
@@ -145,6 +144,7 @@ public class SkyblockUser {
 
     public void setActive(boolean isActive) {
         this.isActive = isActive;
+        StorageManager.instance.startUpdateUser(this, StoragePriorities.LOWEST);
     }
 
     public boolean isInInvestMode() {
@@ -169,6 +169,7 @@ public class SkyblockUser {
 
     public void setPlayerWarp(PlayerWarp playerWarp) {
         this.playerWarp = playerWarp;
+        StorageManager.instance.startUpdateUser(this, StoragePriorities.NORMAL);
     }
 
     public Double getExp() {
@@ -177,6 +178,7 @@ public class SkyblockUser {
 
     public void incrementLevel() {
         this.level++;
+        StorageManager.instance.startUpdateUser(this, StoragePriorities.NORMAL);
     }
 
     public Double getLevel() {
@@ -185,10 +187,12 @@ public class SkyblockUser {
 
     public void setLevel(Double level) {
         this.level = level;
+        StorageManager.instance.startUpdateUser(this, StoragePriorities.NORMAL);
     }
 
     public void addExp(Double exp) {
         this.exp += exp;
+        StorageManager.instance.startUpdateUser(this, StoragePriorities.LOWEST);
     }
 
     public void removeExp(Double exp) {
@@ -196,5 +200,6 @@ public class SkyblockUser {
         if (this.exp < 0) {
             this.exp = 0.0;
         }
+        StorageManager.instance.startUpdateUser(this, StoragePriorities.LOWEST);
     }
 }
