@@ -622,6 +622,10 @@ Shops:
       material: NETHERITE_SCRAP
       buy: 500
       sell: 45
+    28:
+      material: COPPER_INGOT
+      buy: 70
+      sell: 12
 
     #################################
   Autres:
