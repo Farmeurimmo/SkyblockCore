@@ -3,8 +3,8 @@ package main.java.fr.verymc.spigot.core.storage;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -20,8 +20,8 @@ public class SkyblockUserManager {
         }
     }
 
-    public Collection<SkyblockUser> getUsers() {
-        return users.values();
+    public List<SkyblockUser> getUsers() {
+        return users.values().stream().toList();
     }
 
     public void addUser(SkyblockUser user) {

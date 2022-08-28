@@ -1,6 +1,7 @@
 package main.java.fr.verymc.spigot.core.storage;
 
 import main.java.fr.verymc.spigot.island.playerwarps.PlayerWarp;
+import org.json.simple.JSONObject;
 
 import java.util.UUID;
 
@@ -49,6 +50,59 @@ public class SkyblockUser {
         if (playerWarp != null) {
             this.playerWarp = playerWarp;
         }
+    }
+
+    public static JSONObject skyblockUserToJSON(SkyblockUser skyblockUser) {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("uuid", skyblockUser.getUserUUID().toString());
+        jsonObject.put("userN", skyblockUser.getUsername());
+        jsonObject.put("money", skyblockUser.getMoney());
+        if (skyblockUser.getFlyLeft() > 0) {
+            jsonObject.put("flyL", skyblockUser.getFlyLeft());
+            jsonObject.put("flyAc", skyblockUser.isActive());
+        }
+        jsonObject.put("hast", skyblockUser.hasHaste());
+        jsonObject.put("hastAct", skyblockUser.hasHasteActive());
+        jsonObject.put("speed", skyblockUser.hasSpeed());
+        jsonObject.put("speedAct", skyblockUser.hasSpeedActive());
+        jsonObject.put("jump", skyblockUser.hasJump());
+        jsonObject.put("jumpAct", skyblockUser.hasJumpActive());
+        jsonObject.put("exp", skyblockUser.getExp());
+        jsonObject.put("lvl", skyblockUser.getLevel());
+        if (skyblockUser.getPlayerWarp() != null) {
+            jsonObject.put("pw", PlayerWarp.playerWarpToString(skyblockUser.getPlayerWarp()));
+        }
+        return jsonObject;
+    }
+
+    public static SkyblockUser skyblockUserFromJSON(JSONObject jsonObject) {
+        UUID uuid = UUID.fromString(String.valueOf(jsonObject.get("uuid")));
+        String username = String.valueOf(jsonObject.get("userN"));
+        double money = Double.parseDouble(String.valueOf(jsonObject.get("money")));
+        int flyLeft = -1;
+        boolean isActive = false;
+        if (jsonObject.get("flyL") != null) {
+            flyLeft = Integer.parseInt(String.valueOf(jsonObject.get("flyL")));
+            isActive = Boolean.parseBoolean(String.valueOf(jsonObject.get("flyAc")));
+        }
+        boolean hasHaste = Boolean.parseBoolean(String.valueOf(jsonObject.get("hast")));
+        boolean hasHasteActive = Boolean.parseBoolean(String.valueOf(jsonObject.get("hastAct")));
+        boolean hasSpeed = Boolean.parseBoolean(String.valueOf(jsonObject.get("speed")));
+        boolean hasSpeedActive = Boolean.parseBoolean(String.valueOf(jsonObject.get("speedAct")));
+        boolean hasJump = Boolean.parseBoolean(String.valueOf(jsonObject.get("jump")));
+        boolean hasJumpActive = Boolean.parseBoolean(String.valueOf(jsonObject.get("jumpAct")));
+        double exp = Double.parseDouble(String.valueOf(jsonObject.get("exp")));
+        double lvl = Double.parseDouble(String.valueOf(jsonObject.get("lvl")));
+        PlayerWarp playerWarp = null;
+        if (jsonObject.get("pw") != null) {
+            try {
+                playerWarp = PlayerWarp.playerWarpFromString(String.valueOf(jsonObject.get("pw")));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return new SkyblockUser(username, uuid, money, hasHaste, hasHasteActive, hasSpeed, hasSpeedActive,
+                hasJump, hasJumpActive, flyLeft, isActive, false, 0, playerWarp, exp, lvl);
     }
 
     public String getUsername() {

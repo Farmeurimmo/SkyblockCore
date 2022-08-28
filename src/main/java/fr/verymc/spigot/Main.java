@@ -365,6 +365,7 @@ public class Main extends JavaPlugin {
     @Override
     public void onDisable() {
         StorageManager.instance.forceUpdateAllQueuedUsers();
+        StorageManager.instance.forceUpdateAllQueuedIslands();
         if (serverType == ServerType.SKYBLOCK_ISLAND) {
             ServersManager.instance.removeServerPlayersFromAPI();
             IslandManager.instance.saveAllIslands();
