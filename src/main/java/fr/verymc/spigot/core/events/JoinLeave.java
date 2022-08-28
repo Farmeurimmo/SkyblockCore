@@ -39,6 +39,7 @@ public class JoinLeave implements Listener {
     public void OnJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
 
+        SkyblockUserManager.instance.fetchUser(player);
         SkyblockUser skyblockUser = SkyblockUserManager.instance.getUser(player);
 
         InventorySyncManager.instance.playerJoin(player);

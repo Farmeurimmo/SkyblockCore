@@ -20,6 +20,7 @@ import main.java.fr.verymc.spigot.core.spawners.Spawner;
 import main.java.fr.verymc.spigot.core.spawners.SpawnersManager;
 import main.java.fr.verymc.spigot.core.storage.AsyncConfig;
 import main.java.fr.verymc.spigot.core.storage.ConfigManager;
+import main.java.fr.verymc.spigot.core.storage.StorageManager;
 import main.java.fr.verymc.spigot.island.bank.IslandBank;
 import main.java.fr.verymc.spigot.island.blocks.Chest;
 import main.java.fr.verymc.spigot.island.blocks.ChestManager;
@@ -50,6 +51,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.*;
+import java.util.concurrent.CompletableFuture;
 
 public class IslandManager {
 
@@ -315,11 +317,6 @@ public class IslandManager {
     }
 
     public boolean isOwner(Player p) {
-        for (Island i : islands) {
-            if (i.getOwnerUUID().equals(p.getUniqueId())) {
-                return true;
-            }
-        }
         return false;
     }
 
@@ -329,7 +326,7 @@ public class IslandManager {
 
         playerIsland.sendMessageToEveryMember("§6§lIles §8» §4L'île a commencé à être supprimée...", p);
 
-        Bukkit.getScheduler().scheduleAsyncDelayedTask(Main.instance, () -> {
+        CompletableFuture.runAsync(() -> {
             try {
                 com.sk89q.worldedit.world.World adaptedWorld = BukkitAdapter.adapt(Main.instance.mainWorld);
                 ClipboardFormat format = ClipboardFormats.findByFile(fileEmptyIsland);
@@ -347,55 +344,51 @@ public class IslandManager {
                     Operations.complete(operation);
                     editSession.flushSession();
 
-                    Bukkit.getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
-                        @Override
-                        public void run() {
-                            for (Minion m : playerIsland.getMinions()) {
-                                if (getIslandByLoc(m.getBlocLocation()) == playerIsland) {
-                                    MinionManager.instance.removeMinion(m, playerIsland);
-                                }
+                    Bukkit.getScheduler().scheduleSyncDelayedTask(Main.instance, () -> {
+                        for (Minion m : playerIsland.getMinions()) {
+                            if (getIslandByLoc(m.getBlocLocation()) == playerIsland) {
+                                MinionManager.instance.removeMinion(m, playerIsland);
                             }
-                            ArrayList<Chest> chests = new ArrayList<>();
-                            for (Chest c : playerIsland.getChests()) {
-                                chests.add(c);
-                            }
-                            for (Chest c : chests) {
-                                if (getIslandByLoc(c.getBlock()) == playerIsland) {
-                                    ChestManager.instance.removeChestFromLoc(c.getBlock());
-                                }
-                            }
-                            for (Spawner spawner : playerIsland.getSpawners()) {
-                                SpawnersManager.instance.destroySpawner(spawner, playerIsland, true);
-                            }
-
-                            if (islands.contains(playerIsland)) {
-                                islands.remove(playerIsland);
-                            }
-                            Long currentMills = System.currentTimeMillis();
-                            playerIsland.sendMessageToEveryMember("§6§lIles §8» §4L'île a été §lsupprimée §4par le chef. §f(en " + (currentMills - start) + "ms)", p);
-                            for (Map.Entry<UUID, IslandRanks> entry : playerIsland.getMembers().entrySet()) {
-                                Player member = Bukkit.getPlayer(entry.getKey());
-                                if (member == null) {
-                                    member = Bukkit.getOfflinePlayer(entry.getKey()).getPlayer();
-                                }
-                                PlayerUtils.instance.teleportPlayerFromRequest(member, SpawnCmd.Spawn, 0, ServerType.SKYBLOCK_HUB);
-                            }
-                            playerIsland.getMembers().clear();
-                            HashMap<String, Object> toEdit = new HashMap<>();
-                            toEdit.put(playerIsland.getUUID().toString(), null);
-                            AsyncConfig.instance.setAndSaveAsync(toEdit, ConfigManager.instance.getDataIslands(), ConfigManager.instance.islandsFile);
                         }
+                        ArrayList<Chest> chests = new ArrayList<>();
+                        for (Chest c : playerIsland.getChests()) {
+                            chests.add(c);
+                        }
+                        for (Chest c : chests) {
+                            if (getIslandByLoc(c.getBlock()) == playerIsland) {
+                                ChestManager.instance.removeChestFromLoc(c.getBlock());
+                            }
+                        }
+                        for (Spawner spawner : playerIsland.getSpawners()) {
+                            SpawnersManager.instance.destroySpawner(spawner, playerIsland, true);
+                        }
+
+                        if (islands.contains(playerIsland)) {
+                            islands.remove(playerIsland);
+                        }
+                        Long currentMills = System.currentTimeMillis();
+                        playerIsland.sendMessageToEveryMember("§6§lIles §8» §4L'île a été §lsupprimée §4par le chef. §f(en " + (currentMills - start) + "ms)", p);
+                        for (Map.Entry<UUID, IslandRanks> entry : playerIsland.getMembers().entrySet()) {
+                            Player member = Bukkit.getPlayer(entry.getKey());
+                            if (member == null) {
+                                member = Bukkit.getOfflinePlayer(entry.getKey()).getPlayer();
+                            }
+                            PlayerUtils.instance.teleportPlayerFromRequest(member, SpawnCmd.Spawn, 0, ServerType.SKYBLOCK_HUB);
+                        }
+                        playerIsland.getMembers().clear();
+                        HashMap<String, Object> toEdit = new HashMap<>();
+                        toEdit.put(playerIsland.getUUID().toString(), null);
+                        AsyncConfig.instance.setAndSaveAsync(toEdit, ConfigManager.instance.getDataIslands(), ConfigManager.instance.islandsFile);
+                        StorageManager.instance.deleteIsland(playerIsland.getUUID());
                     }, 0);
 
                 } catch (WorldEditException e) {
                     p.sendMessage("§6§lIles §8» §cUne erreur est survenue lors de la suppression de l'île. Merci de réessayer.");
-                    return;
                 }
             } catch (IOException e) {
                 p.sendMessage("§6§lIles §8» §cUne erreur est survenue lors de la lecture du schématic. Merci de contacter un administrateur.");
-                return;
             }
-        }, 0);
+        });
     }
 
     public void leaveIsland(Player p) {
@@ -412,21 +405,7 @@ public class IslandManager {
     }
 
     public Island getPlayerIsland(Player p) {
-        for (Island i : islands) {
-            if (i.getMembers().containsKey(p.getUniqueId())) {
-                return i;
-            }
-        }
-        return null;
-    }
-
-    public Island getIslandFromUUID(UUID id) {
-        for (Island i : islands) {
-            if (i.getMembers().containsKey(id)) {
-                return i;
-            }
-        }
-        return null;
+        return StorageManager.instance.getIslandByMember(p.getUniqueId());
     }
 
     public boolean acceptInvite(Player p, Player target) {
@@ -678,10 +657,12 @@ public class IslandManager {
         home.add(0.5, 0.1, 0.5);
         home.setPitch(0);
         home.setYaw(130);
-        islands.add(new Island("Ile de " + p.getName(), home, toReturn, uuid, members,
+        Island newIsland = new Island("Ile de " + p.getName(), home, toReturn, uuid, members,
                 islandUpgradeSize, islandUpgradeMember, islandBank, islandUpgradeGenerator, banneds, challenges,
                 true, null, true, 0.0, null, null, null, null, true,
-                new ArrayList<>()));
+                new ArrayList<>());
+        islands.add(newIsland);
+        StorageManager.instance.createIsland(newIsland);
         new BukkitRunnable() {
             @Override
             public void run() {

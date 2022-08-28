@@ -552,6 +552,7 @@ public class Island {
     }
 
     public HashMap<UUID, IslandRanks> getMembers() {
+        StorageManager.instance.startUpdateIsland(this, StoragePriorities.LOW);
         return members;
     }
 

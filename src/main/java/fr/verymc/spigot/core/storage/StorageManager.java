@@ -42,7 +42,13 @@ public class StorageManager {
     public void createIsland(Island island) {
     }
 
-    public Island getIsland(UUID uuid) {
+    public Island getIslandByUUID(UUID uuid) {
+        return null;
+    }
+
+    public Island getIslandByMember(UUID uuid) {
+        //if members map contains the uuid, return the island
+        //(c'est pour récupérer l'île d'un joueur qu'il soit membre ou chef de l'île)
         return null;
     }
 
@@ -66,6 +72,7 @@ public class StorageManager {
     }
 
     public void deleteUser(SkyblockUser skyblockUser) {
+        //PAS IMPLÉMENTÉ DANS LE PLUGIN DONC PAS NECESSAIRE
     }
 
 

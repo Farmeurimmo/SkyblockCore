@@ -49,7 +49,6 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
                         return true;
                     }
                 }
-
                 return true;
             }
             if (args.length == 0) {

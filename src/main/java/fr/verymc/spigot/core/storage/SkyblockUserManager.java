@@ -32,6 +32,13 @@ public class SkyblockUserManager {
         users.remove(user.getUserUUID());
     }
 
+    public void fetchUser(Player player) {
+        SkyblockUser skyblockUser = getUser(player.getUniqueId());
+        if (users.containsKey(skyblockUser)) {
+            users.replace(player.getUniqueId(), StorageManager.instance.getUser(player.getUniqueId()));
+        }
+    }
+
     public SkyblockUser getUser(UUID uuid) {
         for (Map.Entry<UUID, SkyblockUser> entry : users.entrySet()) {
             if (entry.getKey().equals(uuid)) {
