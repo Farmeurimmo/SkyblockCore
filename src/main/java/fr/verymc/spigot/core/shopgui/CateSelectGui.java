@@ -50,6 +50,14 @@ public class CateSelectGui implements Listener {
                 return;
             }
             if (e.getClick() == ClickType.LEFT) {
+                if (current.getType() == Material.ARROW) {
+                    if (current.getItemMeta().getDisplayName().contains("suivante")) {
+                        nextpage(player, "Agriculture");
+                    }
+                    if (current.getItemMeta().getDisplayName().contains("précédente")) {
+                        backpage(player, "Agriculture");
+                    }
+                }
                 if (current.getType() != Material.PLAYER_HEAD && current.getType() != Material.ARROW) {
                     if (BuyShopItem.isBuyable(new ItemStack(current.getType()))) {
                         GenAmoutShopGui.OpenPregenAmoutShop(player, current, true);
@@ -202,8 +210,10 @@ public class CateSelectGui implements Listener {
             int numberofpage = GenShopPage.maxpage.get(page);
             if (numberofpage == GenShopPage.numpages.get(player.getName())) {
                 player.sendMessage("§6§lShop §8» §fVous ne pouvez pas passer à la page suivante car elle n'existe pas !");
-            } else {
+            } else if (page.equals("Blocs")) {
                 GenShopPage.OpenPreGenPage(player, "Blocs", 2);
+            } else if (page.equals("Agriculture")) {
+                GenShopPage.OpenPreGenPage(player, "Agriculture", 2);
             }
         }
     }
@@ -213,8 +223,10 @@ public class CateSelectGui implements Listener {
             int numberofpage = GenShopPage.maxpage.get(page);
             if (GenShopPage.numpages.get(player.getName()) <= numberofpage && GenShopPage.numpages.get(player.getName()) == 1) {
                 player.sendMessage("§6§lShop §8» §fVous ne pouvez pas passer à la page pr§c§dente car elle n'existe pas !");
-            } else {
+            } else if (page.equals("Blocs")) {
                 GenShopPage.OpenPreGenPage(player, "Blocs", 1);
+            } else if (page.equals("Agriculture")) {
+                GenShopPage.OpenPreGenPage(player, "Agriculture", 1);
             }
         }
     }

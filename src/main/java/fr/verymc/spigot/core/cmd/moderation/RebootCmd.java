@@ -1,8 +1,8 @@
 package main.java.fr.verymc.spigot.core.cmd.moderation;
 
-import com.google.common.io.ByteArrayDataOutput;
-import com.google.common.io.ByteStreams;
+import main.java.fr.verymc.commons.enums.ServerType;
 import main.java.fr.verymc.spigot.Main;
+import main.java.fr.verymc.spigot.core.ServersManager;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -21,36 +21,26 @@ public class RebootCmd implements CommandExecutor {
             p.sendTitle("Restart du serveur", "Dans " + num + " secondes !");
         }
         Bukkit.broadcastMessage("\n§c§l RESTART DU SERVEUR DANS " + num + " SECONDES !\n");
-        Bukkit.getServer().getScheduler().scheduleAsyncDelayedTask(Main.instance, new Runnable() {
-            public void run() {
-                int numtoshow = num / 3 + num / 3;
-                for (Player p : Bukkit.getOnlinePlayers()) {
-                    p.sendTitle("Restart du serveur", "Dans " + numtoshow + " secondes !");
-                }
-                Bukkit.broadcastMessage("\n§c§l RESTART DU SERVEUR DANS " + numtoshow + " SECONDES !\n");
-                Bukkit.getServer().getScheduler().scheduleAsyncDelayedTask(Main.instance, new Runnable() {
-                    public void run() {
-                        int numtoshow = num / 3;
-                        for (Player p : Bukkit.getOnlinePlayers()) {
-                            p.sendTitle("Restart du serveur", "Dans " + numtoshow + " secondes !");
-                        }
-                        Bukkit.broadcastMessage("\n§c§l RESTART DU SERVEUR DANS " + numtoshow + " SECONDES !\n");
-                        Bukkit.getServer().getScheduler().scheduleAsyncDelayedTask(Main.instance, new Runnable() {
-                            public void run() {
-                                for (Player player : Bukkit.getOnlinePlayers()) {
-                                    player.sendTitle("Restart du serveur", "Téléportation au lobby..");
-                                    final ByteArrayDataOutput out = ByteStreams.newDataOutput();
-                                    Bukkit.getServer().getMessenger().registerOutgoingPluginChannel(Main.instance, "BungeeCord");
-                                    out.writeUTF("Connect");
-                                    out.writeUTF("lobby");
-                                    player.sendPluginMessage(Main.instance, "BungeeCord", out.toByteArray());
-                                }
-                                Bukkit.shutdown();
-                            }
-                        }, 20 * num / 3);
-                    }
-                }, 20 * num / 3);
+        Bukkit.getServer().getScheduler().scheduleAsyncDelayedTask(Main.instance, () -> {
+            int numtoshow = num / 3 + num / 3;
+            for (Player p : Bukkit.getOnlinePlayers()) {
+                p.sendTitle("Restart du serveur", "Dans " + numtoshow + " secondes !");
             }
+            Bukkit.broadcastMessage("\n§c§l RESTART DU SERVEUR DANS " + numtoshow + " SECONDES !\n");
+            Bukkit.getServer().getScheduler().scheduleAsyncDelayedTask(Main.instance, () -> {
+                int numtoshow1 = num / 3;
+                for (Player p : Bukkit.getOnlinePlayers()) {
+                    p.sendTitle("Restart du serveur", "Dans " + numtoshow1 + " secondes !");
+                }
+                Bukkit.broadcastMessage("\n§c§l RESTART DU SERVEUR DANS " + numtoshow1 + " SECONDES !\n");
+                Bukkit.getServer().getScheduler().scheduleAsyncDelayedTask(Main.instance, () -> {
+                    for (Player player : Bukkit.getOnlinePlayers()) {
+                        player.sendTitle("Restart du serveur", "Téléportation au hub..");
+                        ServersManager.instance.sendToServer("a", player, null, ServerType.SKYBLOCK_HUB);
+                    }
+                    Bukkit.shutdown();
+                }, 20 * num / 3);
+            }, 20 * num / 3);
         }, 20 * num / 3);
         return true;
     }

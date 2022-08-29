@@ -1,7 +1,5 @@
 package main.java.fr.verymc.spigot.core.cmd.base;
 
-import com.google.common.io.ByteArrayDataOutput;
-import com.google.common.io.ByteStreams;
 import main.java.fr.verymc.commons.enums.ServerType;
 import main.java.fr.verymc.spigot.Main;
 import main.java.fr.verymc.spigot.core.ServersManager;
@@ -18,11 +16,12 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
-import org.json.simple.JSONArray;
 
 import java.util.*;
 
 public class IslandCmd implements CommandExecutor, TabCompleter {
+
+    ArrayList<UUID> conf = new ArrayList<>();
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -31,24 +30,14 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
         if (sender instanceof Player) {
             Player p = (Player) sender;
             if (Main.instance.serverType != ServerType.SKYBLOCK_ISLAND) {
-                final ByteArrayDataOutput out = ByteStreams.newDataOutput();
-                Bukkit.getServer().getMessenger().registerOutgoingPluginChannel(Main.instance, "BungeeCord");
-                for (Map.Entry<String, JSONArray> entry : ServersManager.instance.stringJSONArrayHashMap.entrySet()) {
-                    if (entry.getValue().contains(p.getUniqueId())) {
-                        out.writeUTF("Connect");
-                        out.writeUTF(entry.getKey());
-                        p.sendPluginMessage(Main.instance, "BungeeCord", out.toByteArray());
-                        return true;
-                    }
+                if (conf.contains(p.getUniqueId())) {
+                    ServersManager.instance.sendToServer("a", p, null, ServerType.SKYBLOCK_ISLAND);
+                    conf.remove(p.getUniqueId());
+                    return true;
                 }
-                for (Map.Entry<String, JSONArray> entry : ServersManager.instance.stringJSONArrayHashMap.entrySet()) {
-                    if (entry.getKey().contains(ServerType.SKYBLOCK_ISLAND.getDisplayName())) {
-                        out.writeUTF("Connect");
-                        out.writeUTF(entry.getKey());
-                        p.sendPluginMessage(Main.instance, "BungeeCord", out.toByteArray());
-                        return true;
-                    }
-                }
+                conf.add(p.getUniqueId());
+                p.sendMessage("§6§lIles §8» §fMenu non disponible sur ce serveur. Merci de rataper la commande pour vous téléporter à votre île si vous en avez une." +
+                        " Sinon vous devrez attendre l'invitation d'un joueur pour en rejoindre une.");
                 return true;
             }
             if (args.length == 0) {
@@ -61,6 +50,11 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
 
 
             } else if (args.length == 1) {
+                if (args[0].equalsIgnoreCase("create")) {
+                    IslandManager.instance.genIsland(p);
+                    IslandManager.instance.removePlayerAwaiting(p);
+                    return true;
+                }
                 if (args[0].equalsIgnoreCase("bypass")) {
                     if (p.hasPermission("bypass")) {
                         if (IslandManager.instance.isBypassing(p.getUniqueId())) {
@@ -213,6 +207,7 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
                         if (IslandManager.instance.getPlayerIsland(target).getMaxMembers() > IslandManager.instance.getPlayerIsland(target).getMembers().size()) {
                             if (IslandManager.instance.acceptInvite(target, p)) {
                                 p.sendMessage("§6§lIles §8» §fVous avez accepté l'invitation de §6" + target.getName());
+                                IslandManager.instance.removePlayerAwaiting(p);
                             } else {
                                 p.sendMessage("§6§lIles §8» §fVous n'avez pas reçu d'invitation de §6" + target.getName());
                             }
@@ -451,7 +446,7 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
             if (args.length == 1) {
                 subcmd.addAll(Arrays.asList("go", "home", "invite", "accept", "kick", "promote", "demote", "sethome", "upgrade", "bank",
                         "leave", "delete", "top", "coop", "uncoop", "chat", "public", "private", "bypass", "spy", "transfer", "ban",
-                        "unban", "expel", "cancelinvites", "rename", "settings", "blocvalues", "permissions"));
+                        "unban", "expel", "cancelinvites", "rename", "settings", "blocvalues", "permissions", "create"));
             } else {
                 if (IslandManager.instance.asAnIsland((Player) sender)) {
                     Island playerIsland = IslandManager.instance.getPlayerIsland((Player) sender);

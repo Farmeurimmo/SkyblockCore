@@ -21,9 +21,9 @@ import org.bukkit.inventory.ItemStack;
 
 public class CratesManager implements Listener {
 
-    public static final Location BoxLegendaire = new Location(Main.instance.mainWorld, -173, 71, -45);
-    public static final Location BoxChallenge = new Location(Main.instance.mainWorld, -177, 71, -46);
-    public static final Location BoxVote = new Location(Main.instance.mainWorld, -179, 71, -49);
+    public static final Location BoxLegendaire = new Location(Main.instance.mainWorld, -224, 67, -94);
+    public static final Location BoxChallenge = new Location(Main.instance.mainWorld, -222, 67, -90);
+    public static final Location BoxVote = new Location(Main.instance.mainWorld, -218, 67, -88);
 
     static Location holo = new Location(Main.instance.mainWorld, BoxLegendaire.getX() + 0.5,
             BoxLegendaire.getY() + 2.5, BoxLegendaire.getZ() + 0.5);
@@ -37,10 +37,13 @@ public class CratesManager implements Listener {
     static Hologram hologramd = HologramsAPI.createHologram(Main.instance, holod);
 
     public static void SpawnCrates() {
+        BoxLegendaire.getChunk().load(true);
         BoxLegendaire.getWorld().getBlockAt(BoxLegendaire).setType(Material.END_ROD);
 
+        BoxChallenge.getChunk().load(true);
         BoxChallenge.getWorld().getBlockAt(BoxChallenge).setType(Material.END_ROD);
 
+        BoxVote.getChunk().load(true);
         BoxVote.getWorld().getBlockAt(BoxVote).setType(Material.END_ROD);
 
 

@@ -31,7 +31,6 @@ public class DungeonManager {
     public static DungeonManager instance;
     public ArrayList<Dungeon> dungeons = new ArrayList<>();
     public ArrayList<UUID> blocked = new ArrayList<>();
-    public ArrayList<List<Player>> alStarted = new ArrayList<>();
 
     public DungeonManager() {
         instance = this;
@@ -61,8 +60,6 @@ public class DungeonManager {
 
     public void loadDungeon(List<String> players, DungeonFloors floor) {
         Location loc = getEmptyLocation();
-
-        System.out.println("loc : " + loc);
 
         ArrayList<Player> players1 = new ArrayList<>();
         players.forEach(player -> players1.add(Bukkit.getPlayer(player.substring(1, player.length() - 1))));
@@ -133,7 +130,6 @@ public class DungeonManager {
 
     public void checkLogged(Player player) {
         String redis = JedisManager.instance.getFromRedis("tmpDungeonTeam");
-        System.out.println("aaa: " + redis);
         if (redis == null) return;
         if (redis.contains(player.getName())) {
             JSONParser jsonParser = new JSONParser();

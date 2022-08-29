@@ -68,8 +68,9 @@ public class PlayerListener {
             String color = (player.hasPermission("staff") ? "§f" : "§7");
             String Prefix = Main.instance.getPrefix(player.getUniqueId());
             String Suffix = Main.instance.getSuffix(player.getUniqueId());
-            String message = Prefix + " " + player.getUsername() + Suffix + "§7: " + color + e.getMessage();
-            e.setResult(PlayerChatEvent.ChatResult.message(message));
+            String message = Prefix + " " + player.getUsername() + " " + Suffix + "§7: " + color + e.getMessage();
+            e.setResult(PlayerChatEvent.ChatResult.denied());
+            Main.instance.sendMessageToSkyblock(message.replace("&", "§"));
         }
     }
 }

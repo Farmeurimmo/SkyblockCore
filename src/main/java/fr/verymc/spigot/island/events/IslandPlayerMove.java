@@ -4,6 +4,7 @@ import main.java.fr.verymc.spigot.island.Island;
 import main.java.fr.verymc.spigot.island.IslandManager;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 
 public class IslandPlayerMove implements Listener {
@@ -28,6 +29,13 @@ public class IslandPlayerMove implements Listener {
                     return;
                 }
             }
+        }
+    }
+
+    @EventHandler
+    public void playerMoveEvent(PlayerMoveEvent e) {
+        if (IslandManager.instance.awaiting.contains(e.getPlayer().getUniqueId())) {
+            e.setCancelled(true);
         }
     }
 

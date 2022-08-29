@@ -6,7 +6,6 @@ import com.gmail.filoghost.holographicdisplays.api.Hologram;
 import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
 import main.java.fr.verymc.JedisManager;
 import main.java.fr.verymc.commons.enums.ServerType;
-import main.java.fr.verymc.commons.utils.HTTPUtils;
 import main.java.fr.verymc.spigot.core.InventorySyncManager;
 import main.java.fr.verymc.spigot.core.PluginMessageManager;
 import main.java.fr.verymc.spigot.core.ServersManager;
@@ -97,7 +96,6 @@ import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
@@ -106,11 +104,11 @@ import java.util.concurrent.TimeUnit;
 public class Main extends JavaPlugin {
 
     public static Main instance;
-    //DEV MODE /!\ ATTENTION CE MODE DÉSACTIVE L'API /!\
+    //DEV MODE
     //Usage non recommandé pour les personnes ne le connaissant pas ce système ni les risques
     //qui peuvent en émerger
     public static boolean devMode = true;
-    public static ServerType devServerType = ServerType.SKYBLOCK_DUNGEON;
+    public static ServerType devServerType = ServerType.SKYBLOCK_HUB;
     public static LuckPerms api;
     private final HashMap<String, Integer> spawncooldown = new HashMap<>();
     public ArrayList<Player> pending = new ArrayList<>();
@@ -166,48 +164,23 @@ public class Main extends JavaPlugin {
         System.out.println("------------------------------------------------");
         //server type ???
         if (!devMode) {
-            ArrayList<String> response = HTTPUtils.readFromUrl("get/all/tocreate");
-            if (response == null) {
-                System.out.println("§4§lError while getting server type, server going to sleep...");
-                Bukkit.shutdown();
-                throw new RuntimeException();
-            }
-            for (String str : response) {
-                for (ServerType serverType1 : ServerType.values()) {
-                    if (str.contains(serverType1.toString())) {
-                        if (serverType1 != ServerType.SKYBLOCK_HUB && serverType1 != ServerType.SKYBLOCK_ISLAND
-                                && serverType1 != ServerType.SKYBLOCK_DUNGEON) continue;
-                        serverType = serverType1;
-                        serverName = serverType.getDisplayName() + str.replaceAll("[^\\d.]", "");
-                        break;
-                    }
-                }
-                if (serverType != null)
-                    break;
+            String serverTypeName = System.getenv("SKYBLOCK_SERVER_TYPE");
+            if (serverTypeName != null && ServerType.valueOf(serverTypeName) != null) {
+                serverType = ServerType.valueOf(System.getenv("SKYBLOCK_SERVER_TYPE"));
+                serverName = serverType.getDisplayName();
             }
         } else {
             //serverType = ServerType.SKYBLOCK_ISLAND;
-            //serverName = serverType.getDisplayName();
             serverType = devServerType;
-            serverName = serverType.getDisplayName() + "1";
+            serverName = serverType.getDisplayName();
         }
 
         System.out.println("§aServer type: " + serverType + " | " + serverType.getDisplayName());
         System.out.println("§aServer name: " + serverName);
 
-        if (!devMode) {
-            try {
-                HTTPUtils.postMethod("starting", serverName);
-            } catch (IOException e) {
-                Bukkit.shutdown();
-                throw new RuntimeException(e);
-            }
-        }
-
         System.out.println("------------------------------------------------");
         //CORE INIT PART 1
         System.out.println("Starting core part 1...");
-        saveDefaultConfig();
         RegisteredServiceProvider<LuckPerms> provider = Bukkit.getServicesManager().getRegistration(LuckPerms.class);
         if (provider != null) {
             api = provider.getProvider();
@@ -228,6 +201,7 @@ public class Main extends JavaPlugin {
             getLogger().warning("Le plugin HolographicDisplays est manquant.");
             Bukkit.getPluginManager().disablePlugin(this);
         }
+        saveResource("config.yml", true);
         saveResource("spawn.schem", true);
         saveResource("ZOMBIE_1.schem", true);
         saveResource("clear.schem", true);
@@ -242,9 +216,7 @@ public class Main extends JavaPlugin {
             return;
         }
 
-
         new HoloManager();
-
 
         new IslandManager();
         createMainWorld();
@@ -309,9 +281,9 @@ public class Main extends JavaPlugin {
             Bukkit.getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
                 @Override
                 public void run() {
-                    WineSpawn.SpawnPnj(new Location(Main.instance.mainWorld, -184.5, 70.5, -77.5, -90, 0));
-                    HolosSetup.SpawnPnj2(new Location(Main.instance.mainWorld, -155.5, 71, -60.5, 90, 0),
-                            new Location(Main.instance.mainWorld, -172.5, 71, -64.5, 90, 0));
+                    WineSpawn.SpawnPnj(new Location(Main.instance.mainWorld, -225.5, 60.5, -42.5, -180, 0));
+                    HolosSetup.SpawnPnj2(new Location(Main.instance.mainWorld, -224.5, 67.5, -99.5, -180, 0),
+                            new Location(Main.instance.mainWorld, -193.5, 71, -69.5, -45, 0));
                     HolosSetup.SpawnCrates();
                     CratesManager.SpawnCrates();
                 }
@@ -344,15 +316,6 @@ public class Main extends JavaPlugin {
         }
         System.out.println("Starting core part 2 FINISHED");
 
-        if (!devMode) {
-            try {
-                HTTPUtils.postMethod("created", serverName);
-            } catch (IOException e) {
-                Bukkit.shutdown();
-                throw new RuntimeException(e);
-            }
-        }
-
         System.out.println("§aDémarrage du plugin TERMINE!");
         System.out.println("------------------------------------------------");
 
@@ -367,7 +330,6 @@ public class Main extends JavaPlugin {
         StorageManager.instance.forceUpdateAllQueuedUsers();
         StorageManager.instance.forceUpdateAllQueuedIslands();
         if (serverType == ServerType.SKYBLOCK_ISLAND) {
-            ServersManager.instance.removeServerPlayersFromAPI();
             IslandManager.instance.saveAllIslands();
         }
         if (serverType == ServerType.SKYBLOCK_DUNGEON) {
@@ -380,6 +342,7 @@ public class Main extends JavaPlugin {
                 InvestManager.instance.giveReward(user);
             }
         }
+        
         /*CompletableFuture.runAsync(() -> {
             StorageJSONManager.instance.sendDataToAPIAuto(true);
         }).join();*/
@@ -389,18 +352,11 @@ public class Main extends JavaPlugin {
         for (NPC npc : CitizensAPI.getNPCRegistry().sorted()) {
             npc.destroy();
         }
-        saver.saveCooldown();
-
-        if (!devMode) {
-            try {
-                HTTPUtils.postMethod("remove", serverName);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
 
         Bukkit.unloadWorld(mainWorld.getName(), false);
         deleteWorld(mainWorld.getWorldFolder());
+        
+        saver.saveCooldown();
 
         System.out.println("-----------------------------------------------------------------------------------------------------");
         System.out.println("Plugin stoppé !");
@@ -445,7 +401,6 @@ public class Main extends JavaPlugin {
         //ISLAND LISTENER
         if (serverType == ServerType.SKYBLOCK_ISLAND) {
             getServer().getPluginManager().registerEvents(new Farm2WinGui(), this);
-            getServer().getPluginManager().registerEvents(new WineGui(), this);
             getServer().getPluginManager().registerEvents(new WarpGui(), this);
             getServer().getPluginManager().registerEvents(new IslandChallengesListener(), this);
             getServer().getPluginManager().registerEvents(new IslandGuiManager(), this);
@@ -465,6 +420,7 @@ public class Main extends JavaPlugin {
             getServer().getPluginManager().registerEvents(new AntiExplo(), this);
             getServer().getPluginManager().registerEvents(new CratesManager(), this);
             getServer().getPluginManager().registerEvents(new HolosSetup(), this);
+            getServer().getPluginManager().registerEvents(new WineGui(), this);
         }
 
 

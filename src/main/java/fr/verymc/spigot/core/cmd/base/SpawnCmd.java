@@ -16,7 +16,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class SpawnCmd implements CommandExecutor, TabCompleter {
-    public static final Location Spawn = new Location(Main.instance.mainWorld, -187.5, 72.5, -63.5, -90, 0);
+    public static final Location Spawn = new Location(Main.instance.mainWorld, -187.5, 71.5, -63.5, -180, 0);
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {

@@ -4,6 +4,7 @@ import main.java.fr.verymc.spigot.core.cmd.moderation.BuildCmd;
 import org.bukkit.Material;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -27,7 +28,7 @@ public class Interact implements Listener {
     @EventHandler
     public void OnInteract(PlayerInteractEvent e) {
         Player player = e.getPlayer();
-        if (!Build.contains(player.getUniqueId())) e.setCancelled(true);
+        if (!Build.contains(player.getUniqueId())) e.setUseInteractedBlock(Event.Result.DENY);
         if (e.getClickedBlock() == null) {
             return;
         }

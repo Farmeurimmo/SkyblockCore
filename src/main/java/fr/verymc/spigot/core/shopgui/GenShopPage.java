@@ -21,6 +21,7 @@ public class GenShopPage {
     public static HashMap<ItemStack, Integer> blocspage1 = new HashMap<>();
     public static HashMap<ItemStack, Integer> blocspage2 = new HashMap<>();
     public static HashMap<ItemStack, Integer> agripage = new HashMap<>();
+    public static HashMap<ItemStack, Integer> agripage2 = new HashMap<>();
     public static HashMap<ItemStack, Integer> foodpage = new HashMap<>();
     public static HashMap<ItemStack, Integer> colopage = new HashMap<>();
     public static HashMap<ItemStack, Integer> mineraipage = new HashMap<>();
@@ -82,10 +83,17 @@ public class GenShopPage {
                 toshowtemp.put(custom1, slot);
             }
             if (numberofitems > 28) {
-                if (page.equals("Blocs")) {
+                if (page.equalsIgnoreCase("Blocs")) {
                     if (currentpage == 1) {
                         for (Entry<ItemStack, Integer> cc : toshowtemp.entrySet()) {
                             blocspage1.put(cc.getKey(), cc.getValue());
+                        }
+                    }
+                }
+                if (page.equalsIgnoreCase("Agriculture")) {
+                    if (currentpage == 1) {
+                        for (Entry<ItemStack, Integer> cc : toshowtemp.entrySet()) {
+                            agripage.put(cc.getKey(), cc.getValue());
                         }
                     }
                 }
@@ -107,49 +115,41 @@ public class GenShopPage {
                 }
                 break;
             case "Agriculture":
-                agripage.clear();
                 for (Entry<ItemStack, Integer> cc : toshowtemp.entrySet()) {
-                    agripage.put(cc.getKey(), cc.getValue());
+                    agripage2.put(cc.getKey(), cc.getValue());
                 }
                 break;
             case "Nourritures":
-                foodpage.clear();
                 for (Entry<ItemStack, Integer> cc : toshowtemp.entrySet()) {
                     foodpage.put(cc.getKey(), cc.getValue());
                 }
                 break;
             case "Colorants":
-                colopage.clear();
                 for (Entry<ItemStack, Integer> cc : toshowtemp.entrySet()) {
                     colopage.put(cc.getKey(), cc.getValue());
                 }
                 break;
             case "Minerais":
-                mineraipage.clear();
                 for (Entry<ItemStack, Integer> cc : toshowtemp.entrySet()) {
                     mineraipage.put(cc.getKey(), cc.getValue());
                 }
                 break;
             case "Autres":
-                autrepage.clear();
                 for (Entry<ItemStack, Integer> cc : toshowtemp.entrySet()) {
                     autrepage.put(cc.getKey(), cc.getValue());
                 }
                 break;
             case "Drops":
-                lootmpage.clear();
                 for (Entry<ItemStack, Integer> cc : toshowtemp.entrySet()) {
                     lootmpage.put(cc.getKey(), cc.getValue());
                 }
                 break;
             case "Redstone":
-                redstonepage.clear();
                 for (Entry<ItemStack, Integer> cc : toshowtemp.entrySet()) {
                     redstonepage.put(cc.getKey(), cc.getValue());
                 }
                 break;
             case "Spawneurs":
-                spawneurpage.clear();
                 for (Entry<ItemStack, Integer> cc : toshowtemp.entrySet()) {
                     spawneurpage.put(cc.getKey(), cc.getValue());
                 }
@@ -160,7 +160,6 @@ public class GenShopPage {
     }
 
     public static void OpenPreGenPage(Player player, String page, int pagenum) {
-
 
         int numberofpage = maxpage.get(page);
 
@@ -177,8 +176,14 @@ public class GenShopPage {
                 }
             }
         } else if (page.equals("Agriculture")) {
-            for (Entry<ItemStack, Integer> cc : agripage.entrySet()) {
-                inv.setItem(cc.getValue(), cc.getKey());
+            if (pagenum == 1) {
+                for (Entry<ItemStack, Integer> cc : agripage.entrySet()) {
+                    inv.setItem(cc.getValue(), cc.getKey());
+                }
+            } else {
+                for (Entry<ItemStack, Integer> cc : agripage2.entrySet()) {
+                    inv.setItem(cc.getValue(), cc.getKey());
+                }
             }
         } else if (page.equals("Colorants")) {
             for (Entry<ItemStack, Integer> cc : colopage.entrySet()) {
@@ -262,7 +267,7 @@ public class GenShopPage {
         int max = items / 28;
         max += 1;
         maxpage.put("Blocs", max);
-        maxpage.put("Agriculture", 1);
+        maxpage.put("Agriculture", 2);
         maxpage.put("Nourritures", 1);
         maxpage.put("Colorants", 1);
         maxpage.put("Minerais", 1);

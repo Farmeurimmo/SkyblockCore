@@ -48,7 +48,7 @@ public class LevelAdvRewardManager {
             }
             if (reward.getToDo() != null) {
                 for (String toDo : reward.getToDo()) {
-                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lpv user " + player.getName() + " permission set " + toDo);
+                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + player.getName() + " permission set " + toDo + " server=skyblock");
                 }
             }
         }
@@ -78,7 +78,7 @@ public class LevelAdvRewardManager {
             return null;
         }
         if (level == 15) {
-            return null;
+            return new ArrayList<>(Arrays.asList("dongeon.access"));
         }
         if (level == 20) {
             return null;

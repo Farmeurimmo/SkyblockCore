@@ -10,7 +10,6 @@ public class WineSpawn {
 
     static NPC npc = CitizensAPI.getNPCRegistry().createNPC(EntityType.PLAYER, "§6Barman");
 
-
     public static void SpawnPnj(Location loc) {
         SkinTrait skin = npc.getTrait(SkinTrait.class);
         npc.setAlwaysUseNameHologram(false);
@@ -18,9 +17,5 @@ public class WineSpawn {
         npc.setFlyable(true);
         skin.setSkinName("MANDOWNS");
         npc.spawn(loc);
-    }
-
-    public static void DestroyPnj() {
-        npc.destroy();
     }
 }

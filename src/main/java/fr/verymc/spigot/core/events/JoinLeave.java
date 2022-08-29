@@ -14,11 +14,8 @@ import main.java.fr.verymc.spigot.dungeon.DungeonManager;
 import main.java.fr.verymc.spigot.hub.invest.InvestManager;
 import main.java.fr.verymc.spigot.island.Island;
 import main.java.fr.verymc.spigot.island.IslandManager;
-import main.java.fr.verymc.spigot.island.guis.IslandTopGui;
 import main.java.fr.verymc.spigot.island.perms.IslandRanks;
 import main.java.fr.verymc.spigot.utils.PlayerUtils;
-import net.luckperms.api.LuckPermsProvider;
-import net.luckperms.api.model.user.User;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
@@ -54,12 +51,18 @@ public class JoinLeave implements Listener {
         Island playerIsland = null;
         if (Main.instance.serverType == ServerType.SKYBLOCK_ISLAND) {
             playerIsland = IslandManager.instance.getPlayerIsland(player);
-            IslandManager.instance.setWorldBorder(player);
             if (playerIsland != null) {
                 playerIsland.toggleTimeAndWeather();
                 player.chat("/is go");
+                IslandManager.instance.setWorldBorder(player);
             } else {
-                IslandManager.instance.genIsland(player);
+                IslandManager.instance.addPlayerAwaiting(player);
+                Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.instance, () -> {
+                    if (!IslandManager.instance.awaiting.contains(player.getUniqueId())) return;
+                    if (player.isOnline())
+                        player.sendMessage("§6§lIles §8» §cVous n'avez pas d'ile. Merci de taper la commande /is create pour créer une ile. " +
+                                "Ou d'attendre qu'une personne vous invite sur son île");
+                }, 0L, 20L * 5);
             }
         }
 
@@ -71,17 +74,7 @@ public class JoinLeave implements Listener {
 
         ScoreBoard.acces.setScoreBoard(player);
 
-        if (skyblockUser.hasHasteActive()) {
-            player.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 999999999, 1));
-        }
-        if (skyblockUser.hasSpeedActive()) {
-            player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999999, 1));
-        }
-        if (skyblockUser.hasJumpActive()) {
-            player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 999999999, 2));
-        }
-
-        User user = LuckPermsProvider.get().getUserManager().getUser(player.getName());
+        /*User user = LuckPermsProvider.get().getUserManager().getUser(player.getName());
         String Grade = "§7N/A";
         assert user != null;
         if (user.getCachedData().getMetaData().getPrefix() != null) {
@@ -97,7 +90,18 @@ public class JoinLeave implements Listener {
             }
             JoinMessage = "§7[§a+§7] [#" + classement + "] " + Grade.replace("&", "§") + " " + player.getName();
         }
-        event.setJoinMessage(JoinMessage);
+        event.setJoinMessage(JoinMessage);*/
+        event.setJoinMessage(null);
+
+        if (skyblockUser.hasHasteActive()) {
+            player.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 999999999, 1));
+        }
+        if (skyblockUser.hasSpeedActive()) {
+            player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 999999999, 1));
+        }
+        if (skyblockUser.hasJumpActive()) {
+            player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 999999999, 2));
+        }
     }
 
     @EventHandler
@@ -114,6 +118,12 @@ public class JoinLeave implements Listener {
             Dungeon dungeon = DungeonManager.instance.getDungeonByPlayer(player);
             if (dungeon != null) {
                 dungeon.addDeadPlayer(player);
+            }
+        }
+        SkyblockUser skyblockUser = SkyblockUserManager.instance.getUser(player.getUniqueId());
+        if (skyblockUser != null) {
+            if (skyblockUser.isInInvestMode()) {
+                InvestManager.instance.giveReward(skyblockUser);
             }
         }
         Island playerIsland = null;
@@ -140,7 +150,8 @@ public class JoinLeave implements Listener {
                 }
             }
         }
-        User user = LuckPermsProvider.get().getUserManager().getUser(player.getUniqueId());
+        InventorySyncManager.instance.playerQuit(player);
+        /*User user = LuckPermsProvider.get().getUserManager().getUser(player.getName());
         String Grade = "§7N/A";
         assert user != null;
         if (user.getCachedData().getMetaData().getPrefix() != null) {
@@ -156,7 +167,8 @@ public class JoinLeave implements Listener {
             }
             LeaveMessage = "§7[§c-§7] [" + classement + "] " + Grade.replace("&", "§").replace("&", "§") + " " + player.getName();
         }
-        event.setQuitMessage(LeaveMessage);
+        event.setQuitMessage(LeaveMessage);*/
+        event.setQuitMessage(null);
     }
 
     @EventHandler
