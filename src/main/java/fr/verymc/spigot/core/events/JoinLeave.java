@@ -120,7 +120,6 @@ public class JoinLeave implements Listener {
                 dungeon.addDeadPlayer(player);
             }
         }
-        SkyblockUser skyblockUser = SkyblockUserManager.instance.getUser(player.getUniqueId());
         if (skyblockUser != null) {
             if (skyblockUser.isInInvestMode()) {
                 InvestManager.instance.giveReward(skyblockUser);
