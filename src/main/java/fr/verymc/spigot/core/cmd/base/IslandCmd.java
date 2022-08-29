@@ -207,6 +207,7 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
                         if (IslandManager.instance.getPlayerIsland(target).getMaxMembers() > IslandManager.instance.getPlayerIsland(target).getMembers().size()) {
                             if (IslandManager.instance.acceptInvite(target, p)) {
                                 p.sendMessage("§6§lIles §8» §fVous avez accepté l'invitation de §6" + target.getName());
+                                IslandManager.instance.removePlayerAwaiting(p);
                             } else {
                                 p.sendMessage("§6§lIles §8» §fVous n'avez pas reçu d'invitation de §6" + target.getName());
                             }
@@ -445,7 +446,7 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
             if (args.length == 1) {
                 subcmd.addAll(Arrays.asList("go", "home", "invite", "accept", "kick", "promote", "demote", "sethome", "upgrade", "bank",
                         "leave", "delete", "top", "coop", "uncoop", "chat", "public", "private", "bypass", "spy", "transfer", "ban",
-                        "unban", "expel", "cancelinvites", "rename", "settings", "blocvalues", "permissions"));
+                        "unban", "expel", "cancelinvites", "rename", "settings", "blocvalues", "permissions", "create"));
             } else {
                 if (IslandManager.instance.asAnIsland((Player) sender)) {
                     Island playerIsland = IslandManager.instance.getPlayerIsland((Player) sender);

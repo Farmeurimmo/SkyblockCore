@@ -52,7 +52,7 @@ public class TABManager {
                 UUID uuid = entry.getProfile().getId();
                 Optional<Player> playerOptional = server.getPlayer(uuid);
                 if (playerOptional.isPresent()) {
-                    entry.setLatency((int) (player.getPing() * 1000));
+                    entry.setLatency((int) player.getPing());
                 } else {
                     player.getTabList().removeEntry(uuid);
                 }
@@ -69,7 +69,7 @@ public class TABManager {
                         sendTabToPlayer(player);
                     }
                 })
-                .repeat(3L, TimeUnit.SECONDS)
+                .repeat(2L, TimeUnit.SECONDS)
                 .schedule();
     }
 }

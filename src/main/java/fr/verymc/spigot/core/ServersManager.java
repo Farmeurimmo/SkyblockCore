@@ -34,7 +34,7 @@ public class ServersManager {
             PluginMessageManager.instance.sendMessage(player, "subtp", jsonObject.toJSONString(), "skyblock:toproxy");
         }
         if (serverType != null) {
-            PluginMessageManager.instance.sendMessage(player, "tpServerType", "none", "skyblock:toproxy");
+            PluginMessageManager.instance.sendMessage(player, "tpServerType", serverType.toString(), "skyblock:toproxy");
             return;
         }
 

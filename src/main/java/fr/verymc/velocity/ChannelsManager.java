@@ -74,7 +74,7 @@ public class ChannelsManager {
                 return;
             }
             if (subchannel.equals("tpServerType")) {
-                RegisteredServer registeredServer = Main.instance.getServeurToLogin();
+                RegisteredServer registeredServer = Main.instance.getServeurOfType(ServerType.valueOf(rawData));
                 if (registeredServer == null) {
                     player.sendMessage(Component.text("§cErreur lors du changement de serveur, code STS. Merci de réessayer ultérieurement."));
                     return;

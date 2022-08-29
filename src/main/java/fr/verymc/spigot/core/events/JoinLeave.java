@@ -13,11 +13,8 @@ import main.java.fr.verymc.spigot.dungeon.DungeonManager;
 import main.java.fr.verymc.spigot.hub.invest.InvestManager;
 import main.java.fr.verymc.spigot.island.Island;
 import main.java.fr.verymc.spigot.island.IslandManager;
-import main.java.fr.verymc.spigot.island.guis.IslandTopGui;
 import main.java.fr.verymc.spigot.island.perms.IslandRanks;
 import main.java.fr.verymc.spigot.utils.PlayerUtils;
-import net.luckperms.api.LuckPermsProvider;
-import net.luckperms.api.model.user.User;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
@@ -67,9 +64,13 @@ public class JoinLeave implements Listener {
                 player.chat("/is go");
                 IslandManager.instance.setWorldBorder(player);
             } else {
-                player.sendMessage("§6§lIles §8» §cVous n'avez pas d'ile. Merci de taper la commande /is create pour créer une ile. " +
-                        "Ou d'attendre qu'une personne vous invite sur son île");
                 IslandManager.instance.addPlayerAwaiting(player);
+                Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.instance, () -> {
+                    if (!IslandManager.instance.awaiting.contains(player.getUniqueId())) return;
+                    if (player.isOnline())
+                        player.sendMessage("§6§lIles §8» §cVous n'avez pas d'ile. Merci de taper la commande /is create pour créer une ile. " +
+                                "Ou d'attendre qu'une personne vous invite sur son île");
+                }, 0L, 20L * 5);
             }
         }
 
@@ -81,7 +82,7 @@ public class JoinLeave implements Listener {
 
         ScoreBoard.acces.setScoreBoard(player);
 
-        User user = LuckPermsProvider.get().getUserManager().getUser(player.getName());
+        /*User user = LuckPermsProvider.get().getUserManager().getUser(player.getName());
         String Grade = "§7N/A";
         if (user.getCachedData().getMetaData().getPrefix() != null) {
             Grade = user.getCachedData().getMetaData().getPrefix();
@@ -96,7 +97,8 @@ public class JoinLeave implements Listener {
             }
             JoinMessage = "§7[§a+§7] [#" + classement + "] " + Grade.replace("&", "§") + " " + player.getName();
         }
-        event.setJoinMessage(JoinMessage);
+        event.setJoinMessage(JoinMessage);*/
+        event.setJoinMessage(null);
 
         if (skyblockUser.hasHasteActive()) {
             player.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, 999999999, 1));
@@ -118,8 +120,12 @@ public class JoinLeave implements Listener {
                 dungeon.addDeadPlayer(player);
             }
         }
-        InventorySyncManager.instance.playerQuit(player);
         SkyblockUser skyblockUser = SkyblockUserManager.instance.getUser(player.getUniqueId());
+        if (skyblockUser != null) {
+            if (skyblockUser.isInInvestMode()) {
+                InvestManager.instance.giveReward(skyblockUser);
+            }
+        }
         Island playerIsland = null;
         if (Main.instance.serverType == ServerType.SKYBLOCK_ISLAND) {
             playerIsland = IslandManager.instance.getPlayerIsland(player);
@@ -144,7 +150,8 @@ public class JoinLeave implements Listener {
                 }
             }
         }
-        User user = LuckPermsProvider.get().getUserManager().getUser(player.getName());
+        InventorySyncManager.instance.playerQuit(player);
+        /*User user = LuckPermsProvider.get().getUserManager().getUser(player.getName());
         String Grade = "§7N/A";
         if (user.getCachedData().getMetaData().getPrefix() != null) {
             Grade = user.getCachedData().getMetaData().getPrefix();
@@ -159,12 +166,8 @@ public class JoinLeave implements Listener {
             }
             LeaveMessage = "§7[§c-§7] [" + classement + "] " + Grade.replace("&", "§").replace("&", "§") + " " + player.getName();
         }
-        event.setQuitMessage(LeaveMessage);
-        if (skyblockUser != null) {
-            if (skyblockUser.isInInvestMode()) {
-                InvestManager.instance.giveReward(skyblockUser);
-            }
-        }
+        event.setQuitMessage(LeaveMessage);*/
+        event.setQuitMessage(null);
     }
 
     @EventHandler

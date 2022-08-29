@@ -90,11 +90,13 @@ public class Main {
     }
 
     public void sendConnectionMessage(Player player) {
-        Main.instance.sendMessageToSkyblock("§7[§a+§7] " + getPrefix(player.getUniqueId()) + player.getUsername() + getSuffix(player.getUniqueId()));
+        Main.instance.sendMessageToSkyblock("§7[§a+§7] " + getPrefix(player.getUniqueId()).replace("&", "§") + " " + player.getUsername() + " "
+                + getSuffix(player.getUniqueId()).replace("&", "§"));
     }
 
     public void sendDeconnectionMessage(Player player) {
-        Main.instance.sendMessageToSkyblock("§7[§c-§7] " + getPrefix(player.getUniqueId()) + player.getUsername() + getSuffix(player.getUniqueId()));
+        Main.instance.sendMessageToSkyblock("§7[§c-§7] " + getPrefix(player.getUniqueId()).replace("&", "§") + " " + player.getUsername() +
+                " " + getSuffix(player.getUniqueId()).replace("&", "§"));
     }
 
     public void startMaintenanceModule() {

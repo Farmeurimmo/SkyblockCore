@@ -43,6 +43,8 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.File;
@@ -76,13 +78,14 @@ public class IslandManager {
         awaiting.add(player.getUniqueId());
         player.setAllowFlight(true);
         player.setFlying(true);
-        player.teleportAsync(new Location(Main.instance.mainWorld, 500, 256, 500));
+        player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, Integer.MAX_VALUE, 10));
     }
 
     public void removePlayerAwaiting(Player player) {
         awaiting.remove(player.getUniqueId());
         player.setFlying(false);
         player.setAllowFlight(false);
+        player.removePotionEffect(PotionEffectType.BLINDNESS);
     }
 
     public void load() {
