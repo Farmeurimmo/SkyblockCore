@@ -29,10 +29,15 @@ public final class DungeonCmd implements SimpleCommand {
         Player player = (Player) source;
         String[] args = invocation.arguments();
 
-        /*if (!Main.instance.isSkyblockServer(player.getCurrentServer().get().getServer())) {
+        if (!player.hasPermission("dongeon.access")) {
+            player.sendMessage(Component.text("§6§lDongeons §8» §cVous n'avez pas atteint le niveau requis."));
+            return;
+        }
+
+        if (!Main.instance.isSkyblockServer(player.getCurrentServer().get().getServer())) {
             player.sendMessage(Component.text("§6§lDongeons §8» §cVous devez être sur un serveur Skyblock pour utiliser cette commande."));
             return;
-        }*/
+        }
 
         DungeonTeam dungeonTeam = DungeonTeamManager.instance.getPlayerTeam(player);
         boolean haveATeam = (dungeonTeam != null);

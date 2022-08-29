@@ -12,7 +12,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class ClaimCmd implements CommandExecutor, TabCompleter {
 
@@ -120,7 +122,8 @@ public class ClaimCmd implements CommandExecutor, TabCompleter {
         if (!(sender instanceof Player player)) {
             return false;
         }
-        if (args.length != 1) {
+        sender.sendMessage("§6§lKits §8» §cLa commande /kits est temporairement désactivée.");
+        /*if (args.length != 1) {
             player.sendMessage("§4/claim [nom du kit]");
             return false;
         }
@@ -161,7 +164,7 @@ public class ClaimCmd implements CommandExecutor, TabCompleter {
                 claimZeus(player);
             }
         }
-        saver.cooldown_manager();
+        saver.cooldown_manager();*/
         return false;
     }
 

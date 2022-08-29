@@ -3,18 +3,14 @@ package main.java.fr.verymc.spigot.core;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 import main.java.fr.verymc.commons.enums.ServerType;
-import main.java.fr.verymc.commons.utils.HTTPUtils;
 import main.java.fr.verymc.spigot.Main;
-import main.java.fr.verymc.spigot.island.IslandManager;
 import main.java.fr.verymc.spigot.utils.ObjectConverter;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,71 +22,6 @@ public class ServersManager {
 
     public ServersManager() {
         instance = this;
-
-        Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.instance, new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    if (Main.instance.serverType == ServerType.SKYBLOCK_ISLAND) {
-                        autoSendPlayers();
-                    }
-                    autoReadServers();
-                    autoReadPlayers();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }, 0L, 120L);
-    }
-
-    public void autoSendPlayers() {
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("serverName", Main.instance.serverName);
-        jsonObject.put("players", IslandManager.instance.getUUIDs());
-        try {
-            HTTPUtils.postMethod("players", jsonObject.toJSONString());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void removeServerPlayersFromAPI() {
-        try {
-            HTTPUtils.postMethod("players/removeserver", Main.instance.serverName);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void autoReadPlayers() {
-        ArrayList<String> returned = HTTPUtils.readFromUrl("players/get");
-        if (returned != null) {
-            JSONParser jsonParser = new JSONParser();
-            for (String str : returned) {
-                try {
-                    JSONObject jsonObject = (JSONObject) jsonParser.parse(str);
-                    stringJSONArrayHashMap.put((String) jsonObject.get("serverName"), (JSONArray) jsonObject.get("players"));
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    }
-
-    public void autoReadServers() {
-        ArrayList<String> returned = HTTPUtils.readFromUrl("get/all");
-        if (returned != null) {
-            servers.clear();
-            JSONParser jsonParser = new JSONParser();
-            for (String str : returned) {
-                try {
-                    JSONObject jsonObject = (JSONObject) jsonParser.parse(str);
-                    servers.put((String) jsonObject.get("nom"), ServerType.valueOf((String) jsonObject.get("serverType")));
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }
     }
 
     public void sendToServer(String serverName, Player player, Location location) {

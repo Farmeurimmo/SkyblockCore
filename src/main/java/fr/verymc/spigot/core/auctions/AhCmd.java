@@ -1,14 +1,10 @@
 package main.java.fr.verymc.spigot.core.auctions;
 
-import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
-
-import java.text.NumberFormat;
 
 public class AhCmd implements CommandExecutor {
 
@@ -19,8 +15,8 @@ public class AhCmd implements CommandExecutor {
             sender.sendMessage("§cVous devez être un joueur pour utiliser cette commande.");
             return true;
         }
-
-        if (args.length == 0) {
+        sender.sendMessage("§6§lAuctions §8» §cLa commande /ah est temporairement désactivée.");
+        /*if (args.length == 0) {
             AuctionGuis.instance.openAuction(player, 0);
             return true;
         }
@@ -55,7 +51,7 @@ public class AhCmd implements CommandExecutor {
                     + " §fpour §a" + NumberFormat.getInstance().format(value) + "$ §f!");
             player.getItemInHand().setAmount(0);
         }
-
+*/
         return true;
     }
 }

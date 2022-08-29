@@ -1,6 +1,5 @@
 package main.java.fr.verymc.spigot.core.cmd.base;
 
-import main.java.fr.verymc.spigot.core.eco.EcoAccountsManager;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -30,7 +29,9 @@ public class PayCmd implements CommandExecutor, TabCompleter {
         if (!(sender instanceof Player player)) {
             return false;
         }
-        if (args.length != 2) {
+
+        sender.sendMessage("§6§lMonnaie §8» §cLa commande /pay est temporairement désactivée.");
+        /*if (args.length != 2) {
             player.sendMessage("§6§lMonnaie §8» §fUtilisation, /pay <joueur> <montant>");
             return false;
         }
@@ -68,7 +69,7 @@ public class PayCmd implements CommandExecutor, TabCompleter {
         player.sendMessage("§6§lMonnaie §8» §fVous avez envoyé avec §asuccès §6" + amount + "$§f au joueur " + args[0]);
         if (Bukkit.getPlayer(args[0]) != null) {
             Bukkit.getPlayer(args[0]).sendMessage("§6§lMonnaie §8» §fVous avez reçu avec §asuccès §6" + amount + "$§f du joueur " + player.getName() + ".");
-        }
+        }*/
         return false;
     }
 

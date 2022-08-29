@@ -93,17 +93,11 @@ public class DungeonMobCreator {
                     NumberFormat.getInstance().format(z.getHealth()));
             z.setMetadata("boss", new FixedMetadataValue(Main.instance, "true"));
 
-            z.getEquipment().setHelmetDropChance(100);
-            z.getEquipment().setChestplateDropChance(100);
-            z.getEquipment().setLeggingsDropChance(100);
-            z.getEquipment().setBootsDropChance(100);
-            z.getEquipment().setItemInHandDropChance(100);
-        } else {
-            z.getEquipment().setHelmetDropChance(0);
-            z.getEquipment().setChestplateDropChance(0);
-            z.getEquipment().setLeggingsDropChance(0);
-            z.getEquipment().setBootsDropChance(0);
-            z.getEquipment().setItemInHandDropChance(0);
+            z.getEquipment().setHelmetDropChance(2);
+            z.getEquipment().setChestplateDropChance(2);
+            z.getEquipment().setLeggingsDropChance(2);
+            z.getEquipment().setBootsDropChance(2);
+            z.getEquipment().setItemInHandDropChance(2);
         }
 
         mob.spawnAt(spawnLoc, CreatureSpawnEvent.SpawnReason.SPAWNER_EGG);

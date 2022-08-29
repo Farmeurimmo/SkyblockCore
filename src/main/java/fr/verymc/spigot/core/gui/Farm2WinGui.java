@@ -53,18 +53,23 @@ public class Farm2WinGui implements Listener {
             event.setCancelled(true);
             if (current.getType() == Material.EMERALD_BLOCK) {
                 RankBuyGui.MakeRankGui(player);
+                return;
             }
             if (current.getType() == Material.CHEST) {
                 MakeItemGui.MakeRankGui(player);
+                return;
             }
             if (current.getType() == Material.ARROW) {
                 MenuGui.OpenMainMenu(player);
+                return;
             }
             if (current.getType() == Material.POTION) {
                 BuyAtoutGui.MakeBuyAtoutGui(player);
+                return;
             }
             if (current.getType() == Material.COMMAND_BLOCK_MINECART) {
                 CommandBuyGui.MakeCommandGui(player);
+                return;
             }
         }
         if (event.getView().getTitle().equalsIgnoreCase("§6Boutique des items Farm2Win")) {
@@ -140,24 +145,18 @@ public class Farm2WinGui implements Listener {
                     if (EcoAccountsManager.instance.getMoney(player.getUniqueId()) >= legendeprix) {
                         player.sendMessage("§6Vérification de la disponibilité du grade...");
                         current.setType(Material.BARRIER);
-                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
-                            public void run() {
-                                if (legendeachat == false) {
-                                    player.sendMessage("§cErreur, achat indisponible !");
-                                } else {
-                                    RankBuyGui.BuyRank("Légende", player);
-                                }
-                                current.setType(Material.IRON_BLOCK);
+                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, () -> {
+                            if (legendeachat == false) {
+                                player.sendMessage("§cErreur, achat indisponible !");
+                            } else {
+                                RankBuyGui.BuyRank("Légende", player);
                             }
+                            current.setType(Material.IRON_BLOCK);
                         }, 60);
                     } else {
                         player.sendMessage("§cFonds insuffisants !");
                         current.setType(Material.BARRIER);
-                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
-                            public void run() {
-                                current.setType(Material.IRON_BLOCK);
-                            }
-                        }, 60);
+                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, () -> current.setType(Material.IRON_BLOCK), 60);
                     }
                 }
                 return;
@@ -168,37 +167,27 @@ public class Farm2WinGui implements Listener {
                         if (player.hasPermission("group.legende")) {
                             player.sendMessage("§6Vérification de la disponibilité du grade...");
                             current.setType(Material.BARRIER);
-                            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
-                                public void run() {
-                                    if (legendeachat == false) {
-                                        player.sendMessage("§cErreur, achat indisponible !");
+                            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, () -> {
+                                if (legendeachat == false) {
+                                    player.sendMessage("§cErreur, achat indisponible !");
+                                } else {
+                                    if (player.hasPermission("group.legende")) {
+                                        RankBuyGui.BuyRank("Dieu", player);
                                     } else {
-                                        if (player.hasPermission("group.legende")) {
-                                            RankBuyGui.BuyRank("Dieu", player);
-                                        } else {
-                                            player.sendMessage("§cErreur, vous devez posséder tous les grades précédents !");
-                                        }
+                                        player.sendMessage("§cErreur, vous devez posséder tous les grades précédents !");
                                     }
-                                    current.setType(Material.GOLD_BLOCK);
                                 }
+                                current.setType(Material.GOLD_BLOCK);
                             }, 60);
                         } else {
                             player.sendMessage("§cErreur, vous devez possèder tous les grades précédents !");
                             current.setType(Material.BARRIER);
-                            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
-                                public void run() {
-                                    current.setType(Material.GOLD_BLOCK);
-                                }
-                            }, 60);
+                            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, () -> current.setType(Material.GOLD_BLOCK), 60);
                         }
                     } else {
                         player.sendMessage("§cFonds insuffisants !");
                         current.setType(Material.BARRIER);
-                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
-                            public void run() {
-                                current.setType(Material.GOLD_BLOCK);
-                            }
-                        }, 60);
+                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, () -> current.setType(Material.GOLD_BLOCK), 60);
                     }
                 }
                 return;
@@ -209,37 +198,27 @@ public class Farm2WinGui implements Listener {
                         if (player.hasPermission("group.legende") && player.hasPermission("group.dieu")) {
                             player.sendMessage("§6Vérification de la disponibilité du grade...");
                             current.setType(Material.BARRIER);
-                            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
-                                public void run() {
-                                    if (legendeachat == false) {
-                                        player.sendMessage("§cErreur, achat indisponible !");
+                            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, () -> {
+                                if (legendeachat == false) {
+                                    player.sendMessage("§cErreur, achat indisponible !");
+                                } else {
+                                    if (player.hasPermission("group.legende") && player.hasPermission("group.dieu")) {
+                                        RankBuyGui.BuyRank("Zeus", player);
                                     } else {
-                                        if (player.hasPermission("group.legende") && player.hasPermission("group.dieu")) {
-                                            RankBuyGui.BuyRank("Zeus", player);
-                                        } else {
-                                            player.sendMessage("§cErreur, vous devez posséder tous les grades précédents !");
-                                        }
+                                        player.sendMessage("§cErreur, vous devez posséder tous les grades précédents !");
                                     }
-                                    current.setType(Material.NETHERITE_BLOCK);
                                 }
+                                current.setType(Material.NETHERITE_BLOCK);
                             }, 60);
                         } else {
                             player.sendMessage("§cErreur, vous devez posséder tous les grades précédents !");
                             current.setType(Material.BARRIER);
-                            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
-                                public void run() {
-                                    current.setType(Material.NETHERITE_BLOCK);
-                                }
-                            }, 60);
+                            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, () -> current.setType(Material.NETHERITE_BLOCK), 60);
                         }
                     } else {
                         player.sendMessage("§cFonds insuffisants !");
                         current.setType(Material.BARRIER);
-                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
-                            public void run() {
-                                current.setType(Material.NETHERITE_BLOCK);
-                            }
-                        }, 60);
+                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, () -> current.setType(Material.NETHERITE_BLOCK), 60);
                     }
                 }
                 return;
@@ -258,24 +237,18 @@ public class Farm2WinGui implements Listener {
                     if (EcoAccountsManager.instance.getMoney(player.getUniqueId()) >= hatprix) {
                         player.sendMessage("§6Vérification de la disponibilité de la commande...");
                         current.setType(Material.BARRIER);
-                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
-                            public void run() {
-                                if (hatcmd == false) {
-                                    player.sendMessage("§cErreur, achat indisponible !");
-                                } else {
-                                    CommandBuyGui.BuyCmd("hat", player);
-                                }
-                                current.setType(Material.LEATHER_HELMET);
+                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, () -> {
+                            if (hatcmd == false) {
+                                player.sendMessage("§cErreur, achat indisponible !");
+                            } else {
+                                CommandBuyGui.BuyCmd("hat", player);
                             }
+                            current.setType(Material.LEATHER_HELMET);
                         }, 60);
                     } else {
                         player.sendMessage("§cFonds insuffisants !");
                         current.setType(Material.BARRIER);
-                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
-                            public void run() {
-                                current.setType(Material.LEATHER_HELMET);
-                            }
-                        }, 60);
+                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, () -> current.setType(Material.LEATHER_HELMET), 60);
                     }
                 }
                 return;
@@ -285,24 +258,18 @@ public class Farm2WinGui implements Listener {
                     if (EcoAccountsManager.instance.getMoney(player.getUniqueId()) >= sellallprix) {
                         player.sendMessage("§6Vérification de la disponibilité de la commande...");
                         current.setType(Material.BARRIER);
-                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
-                            public void run() {
-                                if (hatcmd == false) {
-                                    player.sendMessage("§cErreur, achat indisponible !");
-                                } else {
-                                    CommandBuyGui.BuyCmd("sellall", player);
-                                }
-                                current.setType(Material.OAK_SIGN);
+                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, () -> {
+                            if (hatcmd == false) {
+                                player.sendMessage("§cErreur, achat indisponible !");
+                            } else {
+                                CommandBuyGui.BuyCmd("sellall", player);
                             }
+                            current.setType(Material.OAK_SIGN);
                         }, 60);
                     } else {
                         player.sendMessage("§cFonds insuffisants !");
                         current.setType(Material.BARRIER);
-                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
-                            public void run() {
-                                current.setType(Material.OAK_SIGN);
-                            }
-                        }, 60);
+                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, () -> current.setType(Material.OAK_SIGN), 60);
                     }
                 }
                 return;
@@ -312,24 +279,18 @@ public class Farm2WinGui implements Listener {
                     if (EcoAccountsManager.instance.getMoney(player.getUniqueId()) >= flyprix) {
                         player.sendMessage("§6Vérification de la disponibilité de la commande...");
                         current.setType(Material.BARRIER);
-                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
-                            public void run() {
-                                if (flycmd == false) {
-                                    player.sendMessage("§cErreur, achat indisponible !");
-                                } else {
-                                    CommandBuyGui.BuyCmd("fly", player);
-                                }
-                                current.setType(Material.FEATHER);
+                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, () -> {
+                            if (flycmd == false) {
+                                player.sendMessage("§cErreur, achat indisponible !");
+                            } else {
+                                CommandBuyGui.BuyCmd("fly", player);
                             }
+                            current.setType(Material.FEATHER);
                         }, 60);
                     } else {
                         player.sendMessage("§cFonds insuffisants !");
                         current.setType(Material.BARRIER);
-                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
-                            public void run() {
-                                current.setType(Material.FEATHER);
-                            }
-                        }, 60);
+                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, () -> current.setType(Material.FEATHER), 60);
                     }
                 }
                 return;
@@ -339,24 +300,18 @@ public class Farm2WinGui implements Listener {
                     if (EcoAccountsManager.instance.getMoney(player.getUniqueId()) >= feedprix) {
                         player.sendMessage("§6Vérification de la disponibilité de la commande...");
                         current.setType(Material.BARRIER);
-                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
-                            public void run() {
-                                if (feedcmd == false) {
-                                    player.sendMessage("§cErreur, achat indisponible !");
-                                } else {
-                                    CommandBuyGui.BuyCmd("feed", player);
-                                }
-                                current.setType(Material.COOKED_BEEF);
+                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, () -> {
+                            if (feedcmd == false) {
+                                player.sendMessage("§cErreur, achat indisponible !");
+                            } else {
+                                CommandBuyGui.BuyCmd("feed", player);
                             }
+                            current.setType(Material.COOKED_BEEF);
                         }, 60);
                     } else {
                         player.sendMessage("§cFonds insuffisants !");
                         current.setType(Material.BARRIER);
-                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
-                            public void run() {
-                                current.setType(Material.COOKED_BEEF);
-                            }
-                        }, 60);
+                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, () -> current.setType(Material.COOKED_BEEF), 60);
                     }
                 }
                 return;
@@ -366,24 +321,18 @@ public class Farm2WinGui implements Listener {
                     if (EcoAccountsManager.instance.getMoney(player.getUniqueId()) >= craftprix) {
                         player.sendMessage("§6Vérification de la disponibilité de la commande...");
                         current.setType(Material.BARRIER);
-                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
-                            public void run() {
-                                if (craftcmd == false) {
-                                    player.sendMessage("§cErreur, achat indisponible !");
-                                } else {
-                                    CommandBuyGui.BuyCmd("craft", player);
-                                }
-                                current.setType(Material.CRAFTING_TABLE);
+                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, () -> {
+                            if (craftcmd == false) {
+                                player.sendMessage("§cErreur, achat indisponible !");
+                            } else {
+                                CommandBuyGui.BuyCmd("craft", player);
                             }
+                            current.setType(Material.CRAFTING_TABLE);
                         }, 60);
                     } else {
                         player.sendMessage("§cFonds insuffisants !");
                         current.setType(Material.BARRIER);
-                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
-                            public void run() {
-                                current.setType(Material.CRAFTING_TABLE);
-                            }
-                        }, 60);
+                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, () -> current.setType(Material.CRAFTING_TABLE), 60);
                     }
                 }
                 return;
@@ -393,24 +342,18 @@ public class Farm2WinGui implements Listener {
                     if (EcoAccountsManager.instance.getMoney(player.getUniqueId()) >= isrenameprix) {
                         player.sendMessage("§6Vérification de la disponibilité de la commande...");
                         current.setType(Material.BARRIER);
-                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
-                            public void run() {
-                                if (isrenamecmd == false) {
-                                    player.sendMessage("§cErreur, achat indisponible !");
-                                } else {
-                                    CommandBuyGui.BuyCmd("isrename", player);
-                                }
-                                current.setType(Material.NAME_TAG);
+                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, () -> {
+                            if (isrenamecmd == false) {
+                                player.sendMessage("§cErreur, achat indisponible !");
+                            } else {
+                                CommandBuyGui.BuyCmd("isrename", player);
                             }
+                            current.setType(Material.NAME_TAG);
                         }, 60);
                     } else {
                         player.sendMessage("§cFonds insuffisants !");
                         current.setType(Material.BARRIER);
-                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
-                            public void run() {
-                                current.setType(Material.NAME_TAG);
-                            }
-                        }, 60);
+                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, () -> current.setType(Material.NAME_TAG), 60);
                     }
                 }
                 return;
@@ -420,24 +363,18 @@ public class Farm2WinGui implements Listener {
                     if (EcoAccountsManager.instance.getMoney(player.getUniqueId()) >= enchantementprix) {
                         player.sendMessage("§6Vérification de la disponibilité de la commande...");
                         current.setType(Material.BARRIER);
-                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
-                            public void run() {
-                                if (enchantementcmd == false) {
-                                    player.sendMessage("§cErreur, achat indisponible !");
-                                } else {
-                                    CommandBuyGui.BuyCmd("enchantement", player);
-                                }
-                                current.setType(Material.ENCHANTING_TABLE);
+                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, () -> {
+                            if (enchantementcmd == false) {
+                                player.sendMessage("§cErreur, achat indisponible !");
+                            } else {
+                                CommandBuyGui.BuyCmd("enchantement", player);
                             }
+                            current.setType(Material.ENCHANTING_TABLE);
                         }, 60);
                     } else {
                         player.sendMessage("§cFonds insuffisants !");
                         current.setType(Material.BARRIER);
-                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, new Runnable() {
-                            public void run() {
-                                current.setType(Material.ENCHANTING_TABLE);
-                            }
-                        }, 60);
+                        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Main.instance, () -> current.setType(Material.ENCHANTING_TABLE), 60);
                     }
                 }
                 return;
