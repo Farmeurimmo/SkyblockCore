@@ -8,6 +8,9 @@ import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ProxyServer;
 import com.velocitypowered.api.proxy.ServerConnection;
 import com.velocitypowered.api.proxy.messages.MinecraftChannelIdentifier;
+import com.velocitypowered.api.proxy.server.RegisteredServer;
+import main.java.fr.verymc.commons.enums.ServerType;
+import net.kyori.adventure.text.Component;
 import org.slf4j.Logger;
 
 import java.io.ByteArrayInputStream;
@@ -57,14 +60,26 @@ public class ChannelsManager {
             String subchannel = in.readUTF();
             String rawData = in.readUTF();
 
-            System.out.println(subchannel + " : " + rawData);
-
             if (subchannel.equals("subtp")) {
-                awaitingServerSwitch.put(player.getUniqueId(), rawData);
+                if (ServerType.values().toString().contains(rawData)) {
+                    RegisteredServer registeredServer = Main.instance.getServeurOfType(ServerType.valueOf(rawData));
+                    awaitingServerSwitch.put(player.getUniqueId(), registeredServer.getServerInfo().getName());
+                } else {
+                    player.sendMessage(Component.text("§cErreur lors du sub tp, code ISOT"));
+                }
                 return;
             }
             if (subchannel.equals("messageToIsland")) {
                 sendPluginMessage(player, "messageToIsland", rawData);
+                return;
+            }
+            if (subchannel.equals("tpServerType")) {
+                RegisteredServer registeredServer = Main.instance.getServeurToLogin();
+                if (registeredServer == null) {
+                    player.sendMessage(Component.text("§cErreur lors du changement de serveur, code STS. Merci de réessayer ultérieurement."));
+                    return;
+                }
+                player.createConnectionRequest(registeredServer).fireAndForget();
                 return;
             }
         } catch (Exception e) {

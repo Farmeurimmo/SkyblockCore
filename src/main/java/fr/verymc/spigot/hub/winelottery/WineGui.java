@@ -46,8 +46,6 @@ public class WineGui implements Listener {
             e.setCancelled(true);
             if (current.getType() == Material.POTION && current.getItemMeta().getDisplayName().equalsIgnoreCase("§6Cidre")) {
                 Double money = EcoAccountsManager.instance.getMoney(player.getUniqueId());
-
-
                 if (money >= BuyWinePotion.cidreprice) {
                     EcoAccountsManager.instance.removeFounds(player, (double) BuyWinePotion.cidreprice, true);
                     player.sendMessage("§6§lBarman §8» §fMerci de m'avoir acheté du cidre.");
@@ -62,12 +60,10 @@ public class WineGui implements Listener {
                 } else {
                     player.sendMessage("§6§lBarman §8» §fVous n'avez pas assez d'argent.");
                 }
+                return;
             }
             if (current.getType() == Material.POTION && current.getItemMeta().getDisplayName().equalsIgnoreCase("§6Bière")) {
-
                 Double money = EcoAccountsManager.instance.getMoney(player.getUniqueId());
-
-
                 if (money >= BuyWinePotion.biereprice) {
                     EcoAccountsManager.instance.removeFounds(player, (double) BuyWinePotion.biereprice, true);
                     player.sendMessage("§6§lBarman §8» §fMerci de m'avoir achet§ de la Bière.");
@@ -82,11 +78,10 @@ public class WineGui implements Listener {
                 } else {
                     player.sendMessage("§6§lBarman §8» §fVous n'avez pas assez d'argent.");
                 }
+                return;
             }
             if (current.getType() == Material.POTION && current.getItemMeta().getDisplayName().equalsIgnoreCase("§6Rhum")) {
                 Double money = EcoAccountsManager.instance.getMoney(player.getUniqueId());
-
-
                 if (money >= BuyWinePotion.rhumprice) {
                     EcoAccountsManager.instance.removeFounds(player, (double) BuyWinePotion.rhumprice, true);
                     player.sendMessage("§6§lBarman §8» §fMerci de m'avoir acheté du rhum.");
@@ -101,12 +96,10 @@ public class WineGui implements Listener {
                 } else {
                     player.sendMessage("§6§lBarman §8» §fVous n'avez pas assez d'argent.");
                 }
+                return;
             }
             if (current.getType() == Material.POTION && current.getItemMeta().getDisplayName().equalsIgnoreCase("§6Vodka")) {
-
                 Double money = EcoAccountsManager.instance.getMoney(player.getUniqueId());
-
-
                 if (money >= BuyWinePotion.vodkaprice) {
                     EcoAccountsManager.instance.removeFounds(player, (double) BuyWinePotion.vodkaprice, true);
                     player.sendMessage("§6§lBarman §8» §fMerci de m'avoir acheté de la vodka.");
@@ -121,6 +114,7 @@ public class WineGui implements Listener {
                 } else {
                     player.sendMessage("§6§lBarman §8» §fVous n'avez pas assez d'argent.");
                 }
+                return;
             }
         }
     }

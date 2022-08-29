@@ -167,6 +167,15 @@ public class Main {
         return null;
     }
 
+    public RegisteredServer getServeurOfType(ServerType serverType) {
+        for (RegisteredServer registeredServer : getSkyblockServers()) {
+            if (registeredServer.getServerInfo().getName().contains(serverType.getDisplayName())) {
+                return registeredServer;
+            }
+        }
+        return null;
+    }
+
     public Optional<Player> getPlayer(String str) {
         return server.getPlayer(str);
     }

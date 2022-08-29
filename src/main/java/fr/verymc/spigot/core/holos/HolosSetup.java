@@ -21,9 +21,9 @@ public class HolosSetup implements Listener {
     static NPC npcb = CitizensAPI.getNPCRegistry().createNPC(EntityType.PLAYER, "§6Menu du skyblock");
 
     static Location holo1 = new Location(Main.instance.mainWorld, -33.5, 101, -130.5);
-    static Location legende = new Location(Main.instance.mainWorld, -157.5, 75.8, -67.5);
-    static Location dieu = new Location(Main.instance.mainWorld, -159.5, 75.8, -73.5);
-    static Location zeus = new Location(Main.instance.mainWorld, -164.5, 75.8, -77.5);
+    static Location legende = new Location(Main.instance.mainWorld, -196.5, 75, -63.5);
+    static Location dieu = new Location(Main.instance.mainWorld, -194.5, 75, -56.5);
+    static Location zeus = new Location(Main.instance.mainWorld, -187.5, 75, -54.5);
     static Hologram hologram1 = HologramsAPI.createHologram(Main.instance, holo1);
     static Hologram hololegende = HologramsAPI.createHologram(Main.instance, legende);
     static Hologram holodieu = HologramsAPI.createHologram(Main.instance, dieu);
@@ -49,7 +49,7 @@ public class HolosSetup implements Listener {
         hololegende.appendTextLine("§c§lPREMIER GRADE");
         hololegende.appendTextLine("");
         hololegende.appendTextLine("§6§lPRIX IG: §e§l2 500 000$");
-        hololegende.appendTextLine("§6§lPRIX BOUTIQUE: §e§l4.79€");
+        hololegende.appendTextLine("§6§lPRIX BOUTIQUE: §e§lNon achetable");
         hololegende.appendTextLine("");
         hololegende.appendTextLine("§6§lAvantages du Grade §e§lLégende");
         hololegende.appendTextLine("");
@@ -68,7 +68,7 @@ public class HolosSetup implements Listener {
         holodieu.appendTextLine("§c§lGRADE INTERMÉDIAIRE");
         holodieu.appendTextLine("");
         holodieu.appendTextLine("§6§lPRIX IG: §e§l7 500 000$");
-        holodieu.appendTextLine("§6§lPRIX BOUTIQUE: §e§l10.79€");
+        holodieu.appendTextLine("§6§lPRIX BOUTIQUE: §e§lNon achetable");
         holodieu.appendTextLine("");
         holodieu.appendTextLine("§6§lAvantages du Grade §9§lDieu");
         holodieu.appendTextLine("");

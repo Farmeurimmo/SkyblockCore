@@ -62,12 +62,14 @@ public class JoinLeave implements Listener {
         Island playerIsland = null;
         if (Main.instance.serverType == ServerType.SKYBLOCK_ISLAND) {
             playerIsland = IslandManager.instance.getPlayerIsland(player);
-            IslandManager.instance.setWorldBorder(player);
             if (playerIsland != null) {
                 playerIsland.toggleTimeAndWeather();
                 player.chat("/is go");
+                IslandManager.instance.setWorldBorder(player);
             } else {
-                IslandManager.instance.genIsland(player);
+                player.sendMessage("§6§lIles §8» §cVous n'avez pas d'ile. Merci de taper la commande /is create pour créer une ile. " +
+                        "Ou d'attendre qu'une personne vous invite sur son île");
+                IslandManager.instance.addPlayerAwaiting(player);
             }
         }
 

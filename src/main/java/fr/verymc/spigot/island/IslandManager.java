@@ -13,7 +13,6 @@ import com.sk89q.worldedit.function.operation.Operations;
 import com.sk89q.worldedit.math.BlockVector3;
 import com.sk89q.worldedit.session.ClipboardHolder;
 import main.java.fr.verymc.commons.enums.ServerType;
-import main.java.fr.verymc.commons.utils.HTTPUtils;
 import main.java.fr.verymc.spigot.Main;
 import main.java.fr.verymc.spigot.core.cmd.base.SpawnCmd;
 import main.java.fr.verymc.spigot.core.spawners.Spawner;
@@ -63,6 +62,7 @@ public class IslandManager {
     public File fileSchematic;
     public File fileEmptyIsland;
     public HashMap<Player, ArrayList<Player>> pendingInvites = new HashMap<>();
+    public ArrayList<UUID> awaiting = new ArrayList<>();
 
     public IslandManager() {
         instance = this;
@@ -70,6 +70,19 @@ public class IslandManager {
         new WorldBorderUtils(Main.instance);
         new IslandChallengesReset();
         new IslandRank();
+    }
+
+    public void addPlayerAwaiting(Player player) {
+        awaiting.add(player.getUniqueId());
+        player.setAllowFlight(true);
+        player.setFlying(true);
+        player.teleportAsync(new Location(Main.instance.mainWorld, 500, 256, 500));
+    }
+
+    public void removePlayerAwaiting(Player player) {
+        awaiting.remove(player.getUniqueId());
+        player.setFlying(false);
+        player.setAllowFlight(false);
     }
 
     public void load() {
@@ -102,20 +115,13 @@ public class IslandManager {
     }
 
     public void pasteAndLoadIslands() {
-        ArrayList<String> getted = HTTPUtils.readFromUrl("islands/loaded");
-        ArrayList<String> loadeds = new ArrayList<>();
         for (Island island : islands) {
-            if (getted.contains(island.getUUID().toString())) {
-                island.setLoadedHere(false);
-                continue;
-            }
             for (File file : Main.instance.getDataFolder().listFiles()) {
                 System.out.println(file.getName());
                 if (file.getName().contains(island.getUUID().toString())) {
                     FAWEUtils.instance.pasteSchemWithoutLockingThread(file, island.getCenter().clone().add(250,
                             0, 250));
                     island.setLoadedHere(true);
-                    loadeds.add(island.getUUID().toString());
                     break;
                 }
             }
@@ -123,36 +129,18 @@ public class IslandManager {
         ChestManager.instance.makeChestRepop();
         SpawnersManager.instance.respawnAllSpawners();
         MinionManager.instance.makeAllMinionRepop();
-        if (!Main.devMode) {
-            try {
-                HTTPUtils.postMethod("islands/addloaded", loadeds.toString());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
     }
 
     public void saveAllIslands() {
-        ArrayList<String> loadedToRemoveFromAPI = new ArrayList<>();
         MinionManager.instance.makeAllMinionDepop();
         for (Island island : islands) {
             if (island.isLoadedHere()) {
-                loadedToRemoveFromAPI.add(island.getUUID().toString());
-
                 Location pos1 = island.getCenter().clone().add(250, 0, 250);
                 pos1.set(pos1.getBlockX(), -64, pos1.getBlockZ());
                 Location pos2 = island.getCenter().clone().add(-250, 0, -250);
                 pos2.set(pos2.getBlockX(), 319, pos2.getBlockZ());
                 FAWEUtils.instance.saveSchem(String.valueOf(island.getUUID()), pos1,
                         pos2, island.getCenter().getWorld(), island.getCenter().clone());
-            }
-        }
-        if (!Main.devMode) {
-            try {
-                System.out.println(loadedToRemoveFromAPI + " <- loadedToRemoveFromAPI");
-                HTTPUtils.postMethod("islands/removeloaded", loadedToRemoveFromAPI.toString());
-            } catch (IOException e) {
-                e.printStackTrace();
             }
         }
     }

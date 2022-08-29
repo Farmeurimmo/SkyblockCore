@@ -17,14 +17,15 @@ import java.util.List;
 
 public class WarpCmd implements CommandExecutor, TabCompleter {
 
+    public static final Location Crates = new Location(Main.instance.mainWorld, -215.5, 66.5, -95.5, 45, 0);
+    public static final Location Enchantement = new Location(Main.instance.mainWorld, -187.5, 70.5, -63.5, -125, 20);
+    public static final Location Bar = new Location(Main.instance.mainWorld, -225.5, 59.5, -48.5, -180, 0);
+
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (!(sender instanceof Player player)) {
             return false;
         }
-        final Location Crates = new Location(Main.instance.mainWorld, -172.5, 70.5, -50.5, 40, 0);
-        final Location Enchantement = new Location(Main.instance.mainWorld, -187.5, 64.5, -52.5, -125, 20);
-        final Location Bar = new Location(Main.instance.mainWorld, -180.5, 70.5, -77.5, 90, 0);
         if (args.length == 1) {
             String str = args[0].toLowerCase();
             switch (str) {

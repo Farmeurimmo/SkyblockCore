@@ -18,6 +18,7 @@ public class PlayerWarpCmd implements CommandExecutor, TabCompleter {
 
         if (sender instanceof Player) {
             Player player = (Player) sender;
+            player.sendMessage("§6§lPlayerWarp §8» §cCommande désactivée temporairement.");
             if (args.length == 0) {
                 PlayerWarpManagingGui.instance.openManagingMenu(player);
                 return true;

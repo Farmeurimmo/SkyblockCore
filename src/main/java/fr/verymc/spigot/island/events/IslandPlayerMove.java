@@ -10,6 +10,10 @@ public class IslandPlayerMove implements Listener {
 
     @EventHandler
     public void playerTeleport(PlayerTeleportEvent e) {
+        if (IslandManager.instance.awaiting.contains(e.getPlayer().getUniqueId())) {
+            e.setCancelled(true);
+            return;
+        }
         Island island = IslandManager.instance.getIslandByLoc(e.getTo());
         if (island != null) {
             if (!island.getMembers().containsKey(e.getPlayer().getUniqueId())) {
