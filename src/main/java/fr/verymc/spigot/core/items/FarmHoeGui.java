@@ -30,9 +30,6 @@ public class FarmHoeGui implements Listener {
             return false;
         }
         if (!tosearch.contains(".")) {
-            if (farmhoe == null) {
-                return false;
-            }
             if (farmhoe.getType() == Material.AIR) {
                 return false;
             }

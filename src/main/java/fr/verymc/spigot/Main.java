@@ -44,10 +44,9 @@ import main.java.fr.verymc.spigot.core.shopgui.*;
 import main.java.fr.verymc.spigot.core.spawners.SpawnerCmd;
 import main.java.fr.verymc.spigot.core.spawners.SpawnersListener;
 import main.java.fr.verymc.spigot.core.spawners.SpawnersManager;
-import main.java.fr.verymc.spigot.core.storage.ConfigManager;
 import main.java.fr.verymc.spigot.core.storage.SkyblockUser;
 import main.java.fr.verymc.spigot.core.storage.SkyblockUserManager;
-import main.java.fr.verymc.spigot.core.storage.StorageJSONManager;
+import main.java.fr.verymc.spigot.core.storage.StorageManager;
 import main.java.fr.verymc.spigot.dungeon.DungeonManager;
 import main.java.fr.verymc.spigot.dungeon.cmd.DungeonAdminCmd;
 import main.java.fr.verymc.spigot.dungeon.events.DungeonEntityListener;
@@ -100,7 +99,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
-import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 
 public class Main extends JavaPlugin {
@@ -257,8 +255,10 @@ public class Main extends JavaPlugin {
 
         new ServersManager();
 
-        new ConfigManager();
-        new StorageJSONManager();
+        /*new ConfigManager();
+        new StorageJSONManager();*/
+
+        new StorageManager();
 
         System.out.println("Starting core part 1 FINISHED");
         System.out.println("------------------------------------------------");
@@ -327,6 +327,8 @@ public class Main extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        StorageManager.instance.forceUpdateAllQueuedUsers();
+        StorageManager.instance.forceUpdateAllQueuedIslands();
         if (serverType == ServerType.SKYBLOCK_ISLAND) {
             IslandManager.instance.saveAllIslands();
         }
@@ -334,11 +336,16 @@ public class Main extends JavaPlugin {
             DungeonManager.instance.makeAllDungeonsEnd();
             DungeonMobManager.instance.removeAllMobs();
         }
-        for (SkyblockUser user : SkyblockUserManager.instance.users) {
+        for (SkyblockUser user : SkyblockUserManager.instance.getUsers()) {
+            if (Bukkit.getPlayer(user.getUserUUID()) == null) continue;
             if (user.isInInvestMode()) {
                 InvestManager.instance.giveReward(user);
             }
         }
+        
+        /*CompletableFuture.runAsync(() -> {
+            StorageJSONManager.instance.sendDataToAPIAuto(true);
+        }).join();*/
         for (Hologram hologram : HologramsAPI.getHolograms(this)) {
             hologram.delete();
         }
@@ -348,10 +355,7 @@ public class Main extends JavaPlugin {
 
         Bukkit.unloadWorld(mainWorld.getName(), false);
         deleteWorld(mainWorld.getWorldFolder());
-
-        CompletableFuture.runAsync(() -> {
-            StorageJSONManager.instance.sendDataToAPIAuto(true);
-        }).join();
+        
         saver.saveCooldown();
 
         System.out.println("-----------------------------------------------------------------------------------------------------");

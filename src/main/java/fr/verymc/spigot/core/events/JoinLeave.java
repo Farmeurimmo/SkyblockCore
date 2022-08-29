@@ -8,6 +8,7 @@ import main.java.fr.verymc.spigot.core.scoreboard.ScoreBoard;
 import main.java.fr.verymc.spigot.core.storage.SkyblockUser;
 import main.java.fr.verymc.spigot.core.storage.SkyblockUserManager;
 import main.java.fr.verymc.spigot.core.storage.StorageJSONManager;
+import main.java.fr.verymc.spigot.core.storage.StorageManager;
 import main.java.fr.verymc.spigot.dungeon.Dungeon;
 import main.java.fr.verymc.spigot.dungeon.DungeonManager;
 import main.java.fr.verymc.spigot.hub.invest.InvestManager;
@@ -22,7 +23,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -33,21 +33,13 @@ import java.util.UUID;
 public class JoinLeave implements Listener {
 
     @EventHandler
-    public void postLogin(PlayerLoginEvent e) {
-        if (!e.getPlayer().hasPermission("maintenance")) {
-            e.disallow(PlayerLoginEvent.Result.KICK_OTHER, "§cLe serveur est en maintenance.");
-        }
-    }
-
-    @EventHandler
     public void OnJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
 
+        SkyblockUserManager.instance.fetchUser(player);
+        SkyblockUser skyblockUser = SkyblockUserManager.instance.getUser(player);
+
         InventorySyncManager.instance.playerJoin(player);
-
-        SkyblockUserManager.instance.checkForAccount(player);
-
-        SkyblockUser skyblockUser = SkyblockUserManager.instance.getUser(player.getUniqueId());
 
         player.setGameMode(GameMode.SURVIVAL);
 
@@ -84,10 +76,11 @@ public class JoinLeave implements Listener {
 
         /*User user = LuckPermsProvider.get().getUserManager().getUser(player.getName());
         String Grade = "§7N/A";
+        assert user != null;
         if (user.getCachedData().getMetaData().getPrefix() != null) {
             Grade = user.getCachedData().getMetaData().getPrefix();
         }
-        String JoinMessage = null;
+        String JoinMessage;
         if (playerIsland == null) {
             JoinMessage = "§7[§a+§7] " + Grade.replace("&", "§") + " " + player.getName();
         } else {
@@ -114,6 +107,13 @@ public class JoinLeave implements Listener {
     @EventHandler
     public void OnLeave(PlayerQuitEvent event) {
         Player player = event.getPlayer();
+
+        SkyblockUser skyblockUser = SkyblockUserManager.instance.getUser(player);
+        StorageManager.instance.updateUser(skyblockUser);
+
+        if (skyblockUser.isInInvestMode()) InvestManager.instance.giveReward(skyblockUser);
+        InventorySyncManager.instance.playerQuit(player);
+
         if (Main.instance.serverType == ServerType.SKYBLOCK_DUNGEON) {
             Dungeon dungeon = DungeonManager.instance.getDungeonByPlayer(player);
             if (dungeon != null) {
@@ -153,10 +153,11 @@ public class JoinLeave implements Listener {
         InventorySyncManager.instance.playerQuit(player);
         /*User user = LuckPermsProvider.get().getUserManager().getUser(player.getName());
         String Grade = "§7N/A";
+        assert user != null;
         if (user.getCachedData().getMetaData().getPrefix() != null) {
             Grade = user.getCachedData().getMetaData().getPrefix();
         }
-        String LeaveMessage = null;
+        String LeaveMessage;
         if (playerIsland == null) {
             LeaveMessage = "§7[§c-§7] " + Grade.replace("&", "§").replace("&", "§") + " " + player.getName();
         } else {

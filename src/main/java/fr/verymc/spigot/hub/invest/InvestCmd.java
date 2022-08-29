@@ -12,30 +12,23 @@ public class InvestCmd implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 
+        if (!(sender instanceof Player)) {
+            sender.sendMessage("§cVous ne pouvez pas utiliser cette commande dans la console.");
+            return false;
+        }
+
+        Player p = (Player) sender;
         if (!sender.hasPermission("invest.other")) {
-            if (sender instanceof Player) {
-                Player p = (Player) sender;
-
-                SkyblockUserManager.instance.checkForAccount(p);
-
-                InvestManager.instance.toggleInvestMode(p);
-            }
+            SkyblockUserManager.instance.checkForAccount(p);
+            InvestManager.instance.toggleInvestMode(p);
         } else {
             if (args.length == 0) {
-                if (sender instanceof Player) {
-                    Player p = (Player) sender;
-
-                    SkyblockUserManager.instance.checkForAccount(p);
-
-                    InvestManager.instance.toggleInvestMode(p);
-                } else {
-                    sender.sendMessage("§cVous devez être un joueur pour utiliser cette commande.");
-                }
+                SkyblockUserManager.instance.checkForAccount(p);
+                InvestManager.instance.toggleInvestMode(p);
             } else if (args.length == 1) {
-                Player p = Bukkit.getServer().getPlayer(args[0]);
+                p = Bukkit.getServer().getPlayer(args[0]);
                 if (p != null) {
                     SkyblockUserManager.instance.checkForAccount(p);
-
                     InvestManager.instance.toggleInvestMode(p);
                 } else {
                     sender.sendMessage("§cCe joueur n'est pas connecté sur le serveur.");
