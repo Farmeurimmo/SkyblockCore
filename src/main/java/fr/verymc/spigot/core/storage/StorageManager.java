@@ -2,28 +2,53 @@ package main.java.fr.verymc.spigot.core.storage;
 
 import fr.verymc.api.wrapper.ApiKey;
 import fr.verymc.api.wrapper.WrapperConfig;
+import fr.verymc.api.wrapper.games.skyblock.islands.SkyblockIsland;
+import fr.verymc.api.wrapper.games.skyblock.islands.SkyblockIslandManager;
+import fr.verymc.api.wrapper.games.skyblock.islands.dto.CreateIslandDto;
+import fr.verymc.api.wrapper.games.skyblock.islands.dto.UpdateIslandDto;
+import fr.verymc.api.wrapper.games.skyblock.users.SkyblockUserManager;
+import fr.verymc.api.wrapper.games.skyblock.users.dto.CreateUserDto;
+import fr.verymc.api.wrapper.games.skyblock.users.dto.UpdateUserDto;
 import main.java.fr.verymc.spigot.Main;
+import main.java.fr.verymc.spigot.core.spawners.Spawner;
 import main.java.fr.verymc.spigot.island.Island;
+import main.java.fr.verymc.spigot.island.bank.IslandBank;
+import main.java.fr.verymc.spigot.island.blocks.Chest;
+import main.java.fr.verymc.spigot.island.challenges.IslandChallenge;
+import main.java.fr.verymc.spigot.island.minions.Minion;
+import main.java.fr.verymc.spigot.island.perms.IslandPerms;
+import main.java.fr.verymc.spigot.island.perms.IslandRank;
+import main.java.fr.verymc.spigot.island.perms.IslandRanks;
+import main.java.fr.verymc.spigot.island.playerwarps.PlayerWarp;
+import main.java.fr.verymc.spigot.island.protections.IslandSettings;
+import main.java.fr.verymc.spigot.island.upgrade.IslandUpgradeGenerator;
+import main.java.fr.verymc.spigot.island.upgrade.IslandUpgradeMember;
+import main.java.fr.verymc.spigot.island.upgrade.IslandUpgradeSize;
+import main.java.fr.verymc.spigot.utils.ObjectConverter;
+import main.java.fr.verymc.spigot.utils.PlayerUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
+import org.json.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
+import java.util.concurrent.CompletableFuture;
+
+import static main.java.fr.verymc.spigot.island.Island.getReducedMapPerms;
 
 public class StorageManager {
 
     public static final int INTERVAL_TICKS = 3;
     public static final int MAX_EDIT_TIMES = 10;
-    private static final WrapperConfig WRAPPER_CONFIG_SKYBLOCK_USER = new WrapperConfig("games.verymc.fr/skyblock/users",
-            new ApiKey("games-skyblock", ""));
-    private static final WrapperConfig WRAPPER_CONFIG_SKYBLOCK_ISLANDS = new WrapperConfig("games.verymc.fr/skyblock/islands",
-            new ApiKey("games-skyblock", ""));
-    private static final WrapperConfig WRAPPER_CONFIG_SKYBLOCK_AUCTIONS = new WrapperConfig("games.verymc.fr/skyblock/auctions",
-            new ApiKey("games-skyblock", ""));
+    public static final ApiKey API_KEY = new ApiKey("games-skyblock", "key");
+    private static final WrapperConfig WRAPPER_CONFIG_SKYBLOCK_USER = new WrapperConfig("games.verymc.fr/skyblock/users", API_KEY);
+    private final static fr.verymc.api.wrapper.games.skyblock.users.SkyblockUserManager MANAGER_USER = new SkyblockUserManager(WRAPPER_CONFIG_SKYBLOCK_USER);
+    private static final WrapperConfig WRAPPER_CONFIG_SKYBLOCK_ISLANDS = new WrapperConfig("games.verymc.fr/skyblock/islands", API_KEY);
+    private final static SkyblockIslandManager MANAGER_ISLAND = new SkyblockIslandManager(WRAPPER_CONFIG_SKYBLOCK_ISLANDS);
+    /*private static final WrapperConfig WRAPPER_CONFIG_SKYBLOCK_AUCTIONS = new WrapperConfig("games.verymc.fr/skyblock/auctions",
+            new ApiKey("games-skyblock", ""));*/
     public static StorageManager instance;
-    //private final static SkyblockUserManager MANAGER_USER = new SkyblockUserManager(WRAPPER_CONFIG);
-    //private final static SKyblockIslandManager MANAGER_ISLAND = new SKyblockIslandManager(WRAPPER_CONFIG);
     //private final static SkyblockAuctionManager MANAGER_AUCTION = new SkyblockAuctionManager(WRAPPER_CONFIG);
     public HashMap<SkyblockUser, Integer> usersQueued = new HashMap<>();
     public HashMap<SkyblockUser, Integer> usersQueuedTimesEdited = new HashMap<>();
@@ -40,35 +65,181 @@ public class StorageManager {
     //ISLAND
 
     public void createIsland(Island island) {
+        CompletableFuture.runAsync(() -> MANAGER_ISLAND.createIsland(new CreateIslandDto(island.getUUID(), island.getName(),
+                ObjectConverter.instance.locationToString(PlayerUtils.instance.toCenterOf(island.getCenter(), island.getHome())),
+                new JSONObject(island.getMembers()).toString(), new org.json.simple.JSONObject(getReducedMapPerms(island)).toString(),
+                island.getSizeUpgrade().getLevel(), island.getMemberUpgrade().getLevel(), island.getGeneratorUpgrade().getLevel(),
+                island.getBank().getMoney() + ObjectConverter.SEPARATOR + island.getBank().getCrystaux() + ObjectConverter.SEPARATOR + island.getBank().getXp(),
+                island.getBanneds().toString(), island.isPublic(), Island.getChallengesString(island), island.getActivatedSettings().toString(),
+                Island.getChestsString(island), Island.getMinionsString(island), new org.json.simple.JSONObject(island.getStackedBlocs()).toString(),
+                Island.getSpawnersString(island))));
     }
 
-    public Island getIslandByUUID(UUID uuid) {
-        return null;
-    }
+    public ArrayList<Island> getIslands() {
+        SkyblockIsland[] islands = MANAGER_ISLAND.getIslands();
+        ArrayList<Island> islands1 = new ArrayList<>();
 
-    public Island getIslandByMember(UUID uuid) {
-        //if members map contains the uuid, return the island
-        //(c'est pour récupérer l'île d'un joueur qu'il soit membre ou chef de l'île)
-        return null;
+        for (SkyblockIsland i : islands) {
+            HashMap<UUID, IslandRanks> members = new HashMap<>();
+            org.json.simple.JSONObject jsonObjectMembers = null;
+            try {
+                jsonObjectMembers = (org.json.simple.JSONObject) new JSONParser().parse(i.getMembres());
+            } catch (ParseException e) {
+                return null;
+            }
+            for (Object o : jsonObjectMembers.keySet()) {
+                String key = (String) o;
+                String value = (String) jsonObjectMembers.get(key);
+                members.put(UUID.fromString(key), IslandRanks.match(value));
+            }
+            HashMap<IslandRanks, ArrayList<IslandPerms>> permsPerRanks = new HashMap<>();
+            org.json.simple.JSONObject jsonObjectPerms = null;
+            try {
+                jsonObjectPerms = (org.json.simple.JSONObject) new JSONParser().parse(i.getPermsPerRank());
+            } catch (ParseException e) {
+                return null;
+            }
+            for (Object o : jsonObjectPerms.keySet()) {
+                String key = (String) o;
+                String value = (String) jsonObjectPerms.get(key);
+                ArrayList<IslandPerms> perms = new ArrayList<>();
+                for (String s : ObjectConverter.instance.stringToArrayList(value)) {
+                    if (s.length() < 3) continue;
+                    perms.add(IslandPerms.match(s));
+                }
+                permsPerRanks.put(IslandRanks.valueOf(key), perms);
+            }
+            int current = permsPerRanks.size() - 1;
+            int run = 0;
+            ArrayList<IslandPerms> toHerit = new ArrayList<>();
+            while (current > 0) { //POUR LE CHEF PAS BESOIN DE LUI FAIRE HÉRITER LES PERMS VU QU'IL LES A TOUTES
+                for (Map.Entry<IslandRanks, ArrayList<IslandPerms>> e : permsPerRanks.entrySet()) {
+                    for (Map.Entry<IslandRanks, Integer> entry : IslandRank.getIslandRankPos().entrySet()) {
+                        if (current == entry.getValue()) {
+                            for (IslandPerms islandPerms : e.getValue()) {
+                                if (!toHerit.contains(islandPerms)) toHerit.add(islandPerms);
+                            }
+                            permsPerRanks.put(entry.getKey(), toHerit);
+                            current--;
+                        }
+                    }
+                }
+                if (run > 12) {
+                    break;
+                }
+                run++;
+            }
+            IslandUpgradeSize sizeUpgrade = new IslandUpgradeSize(i.getSizeUpgrade());
+            IslandUpgradeMember memberUpgrade = new IslandUpgradeMember(i.getMembreUpgrade());
+            IslandUpgradeGenerator generatorUpgrade = new IslandUpgradeGenerator(i.getGeneratorUpgrade());
+            String bank = i.getBank();
+            String[] bankSplit = bank.split(ObjectConverter.SEPARATOR);
+            double money = Double.parseDouble(bankSplit[0]);
+            double crystaux = Double.parseDouble(bankSplit[1]);
+            int xp = Integer.parseInt(bankSplit[2]);
+            IslandBank bank1 = new IslandBank(money, crystaux, xp);
+            ArrayList<UUID> banneds = new ArrayList<>();
+            for (String str : ObjectConverter.instance.stringToArrayList(i.getBank())) {
+                if (str.length() == 36) {
+                    banneds.add(UUID.fromString(str));
+                }
+            }
+            boolean isPublic = i.isPublic();
+            ArrayList<IslandChallenge> islandChallenges = new ArrayList<>();
+            String strCh = i.getChallenges();
+            String[] challenges = strCh.split(ObjectConverter.SEPARATOR_ELEMENT);
+            for (String str : challenges) {
+                if (str.length() > 1) {
+                    islandChallenges.add(IslandChallenge.fromString(str));
+                }
+            }
+            ArrayList<IslandSettings> activatedSettings = new ArrayList<>();
+            for (String str : ObjectConverter.instance.stringToArrayList(i.getSettings())) {
+                IslandSettings islandSettings = IslandSettings.matchSettings(str);
+                if (islandSettings != null) {
+                    activatedSettings.add(islandSettings);
+                }
+            }
+            ArrayList<Chest> chests = new ArrayList<>();
+            String strChest = i.getChests();
+            String[] chestsSplit = strChest.split(ObjectConverter.SEPARATOR_ELEMENT);
+            System.out.println("§4" + strChest);
+            for (int ia = 0; ia < chestsSplit.length; ia++) {
+                System.out.println("§2" + chestsSplit[ia]);
+                if (chestsSplit[ia].length() > 1)
+                    chests.add(Chest.fromString(chestsSplit[ia]));
+            }
+            ArrayList<Minion> minions = new ArrayList<>();
+            String strMinion = i.getMinions();
+            String[] minionsSplit = strMinion.split(ObjectConverter.SEPARATOR_ELEMENT);
+            for (String str : minionsSplit) {
+                if (str.length() > 1) {
+                    minions.add(Minion.fromString(str));
+                }
+            }
+            HashMap<Material, Double> stacked = new HashMap<>();
+            org.json.simple.JSONObject jsonObject1 = new org.json.simple.JSONObject(ObjectConverter.instance.stringToHashMap(i.getStacked()));
+            for (Object o : jsonObject1.keySet()) {
+                String key = (String) o;
+                Double value = Double.parseDouble(String.valueOf(jsonObject1.get(key)));
+                stacked.put(Material.matchMaterial(key), value);
+            }
+            ArrayList<Spawner> spawners = new ArrayList<>();
+            String strSpawners = i.getSpawners();
+            String[] spawnersSplit = strSpawners.split(ObjectConverter.SEPARATOR_ELEMENT);
+            for (String str : spawnersSplit) {
+                if (str.length() > 1) {
+                    spawners.add(Spawner.stringToSpawner(str));
+                }
+            }
+            islands1.add(new Island(i.getIslandName(), ObjectConverter.instance.locationFromString(i.getIslandHome()), null, i.getUuid(), members, sizeUpgrade,
+                    memberUpgrade, bank1, generatorUpgrade, banneds, islandChallenges, false, permsPerRanks, isPublic, 0.0, activatedSettings,
+                    chests, minions, stacked, false, spawners));
+        }
+        return islands1;
     }
 
     public void updateIsland(Island island) {
+        CompletableFuture.runAsync(() -> MANAGER_ISLAND.updateIsland(island.getUUID(), new UpdateIslandDto(island.getUUID(), island.getName(),
+                ObjectConverter.instance.locationToString(PlayerUtils.instance.toCenterOf(island.getCenter(), island.getHome())),
+                new JSONObject(island.getMembers()).toString(), new org.json.simple.JSONObject(getReducedMapPerms(island)).toString(),
+                island.getSizeUpgrade().getLevel(), island.getMemberUpgrade().getLevel(), island.getGeneratorUpgrade().getLevel(),
+                island.getBank().getMoney() + ObjectConverter.SEPARATOR + island.getBank().getCrystaux() + ObjectConverter.SEPARATOR + island.getBank().getXp(),
+                island.getBanneds().toString(), island.isPublic(), Island.getChallengesString(island), island.getActivatedSettings().toString(),
+                Island.getChestsString(island), Island.getMinionsString(island), new org.json.simple.JSONObject(island.getStackedBlocs()).toString(),
+                Island.getSpawnersString(island))));
     }
 
     public void deleteIsland(UUID uuid) {
+        CompletableFuture.runAsync(() -> MANAGER_ISLAND.destroyIsland(uuid));
     }
 
 
     //USER
 
     public void createUser(SkyblockUser skyblockUser) {
+        CompletableFuture.runAsync(() -> {
+            MANAGER_USER.createUser(new CreateUserDto(skyblockUser.getUserUUID(), skyblockUser.getUsername(), skyblockUser.getLevel(), skyblockUser.getExp(),
+                    skyblockUser.isActive(), skyblockUser.getFlyLeft(), skyblockUser.hasHaste(), skyblockUser.hasHasteActive(), skyblockUser.hasSpeed(),
+                    skyblockUser.hasSpeedActive(), skyblockUser.hasJump(), skyblockUser.hasJumpActive(), PlayerWarp.playerWarpToString(skyblockUser.getPlayerWarp()),
+                    skyblockUser.getMoney()));
+        });
     }
 
     public SkyblockUser getUser(UUID uuid) {
-        return null;
+        Optional<fr.verymc.api.wrapper.games.skyblock.users.SkyblockUser> skyblockUser = MANAGER_USER.getUser(uuid);
+        if (skyblockUser.isEmpty()) return null;
+        return new SkyblockUser(skyblockUser.get().getUsername(), skyblockUser.get().getUuid(), skyblockUser.get().getMoney(), skyblockUser.get().isHasHaste(),
+                skyblockUser.get().isHasHasteActive(), skyblockUser.get().isHasSpeed(), skyblockUser.get().isHasSpeedActive(), skyblockUser.get().isHasJump(),
+                skyblockUser.get().isHasJumpActive(), skyblockUser.get().getFlyLeft(), skyblockUser.get().isFlyActive(), false,
+                0, PlayerWarp.playerWarpFromString(skyblockUser.get().getPlayerWarp()), skyblockUser.get().getPlayerExp(), skyblockUser.get().getPlayerLevel());
     }
 
     public void updateUser(SkyblockUser skyblockUser) {
+        CompletableFuture.runAsync(() -> MANAGER_USER.updateUser(skyblockUser.getUserUUID(), new UpdateUserDto(skyblockUser.getUserUUID(), skyblockUser.getUsername(), skyblockUser.getLevel(), skyblockUser.getExp(),
+                skyblockUser.isActive(), skyblockUser.getFlyLeft(), skyblockUser.hasHaste(), skyblockUser.hasHasteActive(), skyblockUser.hasSpeed(),
+                skyblockUser.hasSpeedActive(), skyblockUser.hasJump(), skyblockUser.hasJumpActive(), PlayerWarp.playerWarpToString(skyblockUser.getPlayerWarp()),
+                skyblockUser.getMoney())));
     }
 
     public void deleteUser(SkyblockUser skyblockUser) {

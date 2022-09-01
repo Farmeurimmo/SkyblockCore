@@ -36,7 +36,7 @@ public class PlayerWarpManager {
                     @Override
                     public void run() {
                         playerWarps.clear();
-                        for (SkyblockUser user : SkyblockUserManager.instance.users) {
+                        for (SkyblockUser user : SkyblockUserManager.instance.getUsers()) {
                             if (user.getPlayerWarp() != null) {
                                 playerWarps.add(user.getPlayerWarp());
                             }
@@ -67,7 +67,7 @@ public class PlayerWarpManager {
     }
 
     public PlayerWarp getPlayerWarpFromUUID(UUID uuid) {
-        for (SkyblockUser skyblockUser : SkyblockUserManager.instance.users) {
+        for (SkyblockUser skyblockUser : SkyblockUserManager.instance.getUsers()) {
             if (skyblockUser.getUserUUID().equals(uuid)) {
                 return skyblockUser.getPlayerWarp();
             }
@@ -76,7 +76,7 @@ public class PlayerWarpManager {
     }
 
     public PlayerWarp getPlayerWarpFromPlayerName(String name) {
-        for (SkyblockUser skyblockUser : SkyblockUserManager.instance.users) {
+        for (SkyblockUser skyblockUser : SkyblockUserManager.instance.getUsers()) {
             if (skyblockUser.getUsername().equals(name)) {
                 return skyblockUser.getPlayerWarp();
             }
@@ -89,7 +89,7 @@ public class PlayerWarpManager {
     }
 
     public String getOwnerFromPlayerWarp(PlayerWarp playerWarp) {
-        for (SkyblockUser skyblockUser : SkyblockUserManager.instance.users) {
+        for (SkyblockUser skyblockUser : SkyblockUserManager.instance.getUsers()) {
             if (skyblockUser.getPlayerWarp() != null) {
                 if (skyblockUser.getPlayerWarp().equals(playerWarp)) {
                     return skyblockUser.getUsername();
@@ -100,7 +100,7 @@ public class PlayerWarpManager {
     }
 
     public UUID getOwnerUUIDFromPlayerWarp(PlayerWarp playerWarp) {
-        for (SkyblockUser skyblockUser : SkyblockUserManager.instance.users) {
+        for (SkyblockUser skyblockUser : SkyblockUserManager.instance.getUsers()) {
             if (skyblockUser.getPlayerWarp() != null) {
                 if (skyblockUser.getPlayerWarp().equals(playerWarp)) {
                     return skyblockUser.getUserUUID();

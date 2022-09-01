@@ -108,7 +108,7 @@ public class Main extends JavaPlugin {
     //Usage non recommandé pour les personnes ne le connaissant pas ce système ni les risques
     //qui peuvent en émerger
     public static boolean devMode = true;
-    public static ServerType devServerType = ServerType.SKYBLOCK_HUB;
+    public static ServerType devServerType = ServerType.SKYBLOCK_ISLAND;
     public static LuckPerms api;
     private final HashMap<String, Integer> spawncooldown = new HashMap<>();
     public ArrayList<Player> pending = new ArrayList<>();
@@ -355,7 +355,7 @@ public class Main extends JavaPlugin {
 
         Bukkit.unloadWorld(mainWorld.getName(), false);
         deleteWorld(mainWorld.getWorldFolder());
-        
+
         saver.saveCooldown();
 
         System.out.println("-----------------------------------------------------------------------------------------------------");

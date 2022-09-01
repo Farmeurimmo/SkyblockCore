@@ -43,7 +43,7 @@ public class CountdownFly implements Listener {
     }
 
     public void CountDown() {
-        for (SkyblockUser skyblockUser : SkyblockUserManager.instance.users) {
+        for (SkyblockUser skyblockUser : SkyblockUserManager.instance.getUsers()) {
             Player player = Bukkit.getPlayer(skyblockUser.getUserUUID());
             if (player != null) {
                 if (player.isOnline()) {

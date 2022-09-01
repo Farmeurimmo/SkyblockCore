@@ -117,6 +117,46 @@ public class Island {
         }, 0, 100L);
     }
 
+    public static String getChallengesString(Island island) {
+        String challenges = "";
+        if (island.getChallenges() != null) {
+            for (IslandChallenge islandChallenge : island.getChallenges()) {
+                challenges += IslandChallenge.toString(islandChallenge) + ObjectConverter.SEPARATOR_ELEMENT;
+            }
+        }
+        return challenges;
+    }
+
+    public static String getChestsString(Island island) {
+        String chestsString = "";
+        for (Chest chest : island.getChests()) {
+            if (chest.getBlock() != null)
+                chest.setBlock(PlayerUtils.instance.addCenterTo(island.getCenter(), chest.getBlock()));
+            chestsString += Chest.toString(chest) + ObjectConverter.SEPARATOR_ELEMENT;
+        }
+        return chestsString;
+    }
+
+    public static String getMinionsString(Island i) {
+        String minionsString = "";
+        for (Minion minion : i.getMinions()) {
+            if (minion.getChestBloc() != null)
+                minion.setChestBloc(PlayerUtils.instance.addCenterTo(i.getCenter(), minion.getChestBloc().getLocation()).getBlock());
+            minion.setBlocLocation(PlayerUtils.instance.addCenterTo(i.getCenter(), minion.getBlocLocation()));
+            minionsString += Minion.toString(minion) + ObjectConverter.SEPARATOR_ELEMENT;
+        }
+        return minionsString;
+    }
+
+    public static String getSpawnersString(Island i) {
+        String spawners = "";
+        for (Spawner spawner : i.getSpawners()) {
+            spawner.setLoc(PlayerUtils.instance.addCenterTo(i.getCenter(), spawner.getLoc()));
+            spawners += Spawner.spawnerToString(spawner) + ObjectConverter.SEPARATOR_ELEMENT;
+        }
+        return spawners;
+    }
+
     public static JSONObject islandToJSON(Island i) {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("name", i.getName());
@@ -130,36 +170,12 @@ public class Island {
         jsonObject.put("bank", i.getBank().getMoney() + ObjectConverter.SEPARATOR + i.getBank().getCrystaux() + ObjectConverter.SEPARATOR + i.getBank().getXp());
         jsonObject.put("bans", i.getBanneds().toString());
         jsonObject.put("public", i.isPublic());
-        String challenges = "";
-        if (i.getChallenges() != null) {
-            for (IslandChallenge islandChallenge : i.getChallenges()) {
-                challenges += IslandChallenge.toString(islandChallenge) + ObjectConverter.SEPARATOR_ELEMENT;
-            }
-        }
-        jsonObject.put("cha", challenges);
+        jsonObject.put("cha", getChallengesString(i));
         jsonObject.put("aS", i.getActivatedSettings().toString());
-        String chestsString = "";
-        for (Chest chest : i.getChests()) {
-            if (chest.getBlock() != null)
-                chest.setBlock(PlayerUtils.instance.addCenterTo(i.getCenter(), chest.getBlock()));
-            chestsString += Chest.toString(chest) + ObjectConverter.SEPARATOR_ELEMENT;
-        }
-        jsonObject.put("chests", chestsString);
-        String minionsString = "";
-        for (Minion minion : i.getMinions()) {
-            if (minion.getChestBloc() != null)
-                minion.setChestBloc(PlayerUtils.instance.addCenterTo(i.getCenter(), minion.getChestBloc().getLocation()).getBlock());
-            minion.setBlocLocation(PlayerUtils.instance.addCenterTo(i.getCenter(), minion.getBlocLocation()));
-            minionsString += Minion.toString(minion) + ObjectConverter.SEPARATOR_ELEMENT;
-        }
-        jsonObject.put("minions", minionsString);
+        jsonObject.put("chests", getChestsString(i));
+        jsonObject.put("minions", getMinionsString(i));
         jsonObject.put("stacked", new JSONObject(i.getStackedBlocs()).toString());
-        String spawners = "";
-        for (Spawner spawner : i.getSpawners()) {
-            spawner.setLoc(PlayerUtils.instance.addCenterTo(i.getCenter(), spawner.getLoc()));
-            spawners += Spawner.spawnerToString(spawner) + ObjectConverter.SEPARATOR_ELEMENT;
-        }
-        jsonObject.put("spawners", spawners);
+        jsonObject.put("spawners", getSpawnersString(i));
         System.out.println(jsonObject);
         return jsonObject;
     }

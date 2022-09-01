@@ -84,7 +84,7 @@ public class InvestManager {
         Bukkit.getScheduler().scheduleAsyncRepeatingTask(Main.instance, new Runnable() {
             @Override
             public void run() {
-                for (SkyblockUser skyblockUser : SkyblockUserManager.instance.users) {
+                for (SkyblockUser skyblockUser : SkyblockUserManager.instance.getUsers()) {
                     if (skyblockUser.isInInvestMode()) {
                         Player player = Bukkit.getPlayer(skyblockUser.getUserUUID());
                         if (player != null) {

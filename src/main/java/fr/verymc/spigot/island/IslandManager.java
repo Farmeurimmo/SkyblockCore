@@ -120,6 +120,7 @@ public class IslandManager {
     }
 
     public void pasteAndLoadIslands() {
+        islands = StorageManager.instance.getIslands();
         for (Island island : islands) {
             for (File file : Main.instance.getDataFolder().listFiles()) {
                 System.out.println(file.getName());
@@ -202,16 +203,6 @@ public class IslandManager {
         id++;
         toReturn.add(new IslandChallenge("Récolter de la citrouille", 0, Material.PUMPKIN, 0, id,
                 true, IslandChallengesListener.pumpkin));
-        return toReturn;
-    }
-
-    public ArrayList<UUID> getUUIDs() {
-        ArrayList<UUID> toReturn = new ArrayList<>();
-        for (Island island : islands) {
-            for (Map.Entry<UUID, IslandRanks> entry : island.getMembers().entrySet()) {
-                toReturn.add(entry.getKey());
-            }
-        }
         return toReturn;
     }
 
@@ -396,7 +387,12 @@ public class IslandManager {
     }
 
     public Island getPlayerIsland(Player p) {
-        return StorageManager.instance.getIslandByMember(p.getUniqueId());
+        for (Island island : islands) {
+            if (island.getMembers().containsKey(p.getUniqueId())) {
+                return island;
+            }
+        }
+        return null;
     }
 
     public boolean acceptInvite(Player p, Player target) {

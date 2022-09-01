@@ -22,7 +22,7 @@ public class BaltopManager {
                 while (current <= maxi) {
                     Double bestvalue = (double) 0;
                     SkyblockUser playerlayer = null;
-                    for (SkyblockUser user : SkyblockUserManager.instance.users) {
+                    for (SkyblockUser user : SkyblockUserManager.instance.getUsers()) {
                         if (users.containsValue(user)) {
                             continue;
                         }
