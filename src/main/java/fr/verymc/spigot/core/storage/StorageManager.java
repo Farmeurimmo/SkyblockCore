@@ -41,7 +41,7 @@ public class StorageManager {
 
     public static final int INTERVAL_TICKS = 3;
     public static final int MAX_EDIT_TIMES = 10;
-    public static final ApiKey API_KEY = new ApiKey("games-skyblock", "key");
+    public static final ApiKey API_KEY = new ApiKey("games-skyblock", "_LAtT4E3zonMoD4R5Gw2aMl9fWIorY1ESdbal26YKzjFx6D1nHVJ_1f4htTsQ6qQ.cFI1RW0tTkh0NV9CSWdqNQ.-QYLMb9cpRDbpQzZRfN_XsAPaZXgW1Z-id32Jn9NMh0");
     private static final WrapperConfig WRAPPER_CONFIG_SKYBLOCK_USER = new WrapperConfig("games.verymc.fr/skyblock/users", API_KEY);
     private final static fr.verymc.api.wrapper.games.skyblock.users.SkyblockUserManager MANAGER_USER = new SkyblockUserManager(WRAPPER_CONFIG_SKYBLOCK_USER);
     private static final WrapperConfig WRAPPER_CONFIG_SKYBLOCK_ISLANDS = new WrapperConfig("games.verymc.fr/skyblock/islands", API_KEY);

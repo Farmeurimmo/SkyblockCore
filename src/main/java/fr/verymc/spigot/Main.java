@@ -107,8 +107,8 @@ public class Main extends JavaPlugin {
     //DEV MODE
     //Usage non recommandé pour les personnes ne le connaissant pas ce système ni les risques
     //qui peuvent en émerger
-    public static boolean devMode = true;
-    public static ServerType devServerType = ServerType.SKYBLOCK_ISLAND;
+    public static boolean devMode = false;
+    public static ServerType devServerType = ServerType.SKYBLOCK_HUB;
     public static LuckPerms api;
     private final HashMap<String, Integer> spawncooldown = new HashMap<>();
     public ArrayList<Player> pending = new ArrayList<>();
@@ -278,16 +278,13 @@ public class Main extends JavaPlugin {
         //HUB ADDITIONNAL STARTUP
         if (serverType == ServerType.SKYBLOCK_HUB) {
             System.out.println("Starting Hub ADDITIONNAL module...");
-            Bukkit.getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
-                @Override
-                public void run() {
-                    WineSpawn.SpawnPnj(new Location(Main.instance.mainWorld, -225.5, 60.5, -42.5, -180, 0));
-                    HolosSetup.SpawnPnj2(new Location(Main.instance.mainWorld, -224.5, 67.5, -99.5, -180, 0),
-                            new Location(Main.instance.mainWorld, -193.5, 71, -69.5, -45, 0));
-                    HolosSetup.SpawnCrates();
-                    CratesManager.SpawnCrates();
-                }
-            }, 20 * 30L);
+            Bukkit.getScheduler().scheduleSyncDelayedTask(this, () -> {
+                WineSpawn.SpawnPnj(new Location(Main.instance.mainWorld, -225.5, 60.5, -42.5, -180, 0));
+                HolosSetup.SpawnPnj2(new Location(Main.instance.mainWorld, -224.5, 67.5, -99.5, -180, 0),
+                        new Location(Main.instance.mainWorld, -193.5, 71, -69.5, -45, 0));
+                HolosSetup.SpawnCrates();
+                CratesManager.SpawnCrates();
+            }, 20L * 60);
             new InvestManager();
             System.out.println("Starting Hub ADDITIONNAL module FINISHED");
         }
