@@ -30,10 +30,13 @@ public class AntiExplo implements Listener {
 
     @EventHandler
     public void OnDamage(EntityDamageEvent e) {
+        if (!(e.getEntity() instanceof Player)) {
+            return;
+        }
         e.setCancelled(true);
         if (e.getEntity().getLocation().getY() < -1) {
             Player player = (Player) e.getEntity();
-            player.teleport(SpawnCmd.Spawn);
+            player.teleportAsync(SpawnCmd.Spawn);
         }
     }
 
