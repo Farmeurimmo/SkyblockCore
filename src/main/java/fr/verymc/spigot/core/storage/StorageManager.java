@@ -58,6 +58,8 @@ public class StorageManager {
     public StorageManager() {
         instance = this;
 
+        loadAllUsers();
+
         skyblockUserCheckForUpdate();
         islandCheckForUpdate();
     }
@@ -81,10 +83,11 @@ public class StorageManager {
 
         for (SkyblockIsland i : islands) {
             HashMap<UUID, IslandRanks> members = new HashMap<>();
-            org.json.simple.JSONObject jsonObjectMembers = null;
+            org.json.simple.JSONObject jsonObjectMembers;
             try {
                 jsonObjectMembers = (org.json.simple.JSONObject) new JSONParser().parse(i.getMembres());
             } catch (ParseException e) {
+                System.out.println("Error while parsing members of island " + i.getUuid());
                 return null;
             }
             for (Object o : jsonObjectMembers.keySet()) {
@@ -93,10 +96,11 @@ public class StorageManager {
                 members.put(UUID.fromString(key), IslandRanks.match(value));
             }
             HashMap<IslandRanks, ArrayList<IslandPerms>> permsPerRanks = new HashMap<>();
-            org.json.simple.JSONObject jsonObjectPerms = null;
+            org.json.simple.JSONObject jsonObjectPerms;
             try {
                 jsonObjectPerms = (org.json.simple.JSONObject) new JSONParser().parse(i.getPermsPerRank());
             } catch (ParseException e) {
+                System.out.println("Error while parsing perms of island " + i.getUuid());
                 return null;
             }
             for (Object o : jsonObjectPerms.keySet()) {
@@ -218,12 +222,18 @@ public class StorageManager {
     //USER
 
     public void createUser(SkyblockUser skyblockUser) {
-        CompletableFuture.runAsync(() -> {
-            MANAGER_USER.createUser(new CreateUserDto(skyblockUser.getUserUUID(), skyblockUser.getUsername(), skyblockUser.getLevel(), skyblockUser.getExp(),
-                    skyblockUser.isActive(), skyblockUser.getFlyLeft(), skyblockUser.hasHaste(), skyblockUser.hasHasteActive(), skyblockUser.hasSpeed(),
-                    skyblockUser.hasSpeedActive(), skyblockUser.hasJump(), skyblockUser.hasJumpActive(), PlayerWarp.playerWarpToString(skyblockUser.getPlayerWarp()),
-                    skyblockUser.getMoney()));
-        });
+        CompletableFuture.runAsync(() -> MANAGER_USER.createUser(new CreateUserDto(skyblockUser.getUserUUID(), skyblockUser.getUsername(), skyblockUser.getLevel(), skyblockUser.getExp(),
+                skyblockUser.isActive(), skyblockUser.getFlyLeft(), skyblockUser.hasHaste(), skyblockUser.hasHasteActive(), skyblockUser.hasSpeed(),
+                skyblockUser.hasSpeedActive(), skyblockUser.hasJump(), skyblockUser.hasJumpActive(), (skyblockUser.getPlayerWarp() != null ? PlayerWarp.playerWarpToString(skyblockUser.getPlayerWarp()) : null),
+                skyblockUser.getMoney())));
+    }
+
+    public void loadAllUsers() {
+        CompletableFuture.runAsync(() -> Arrays.stream(MANAGER_USER.getUsers()).forEach(skyblockUser -> main.java.fr.verymc.spigot.core.storage.SkyblockUserManager.instance.addUser(
+                new SkyblockUser(skyblockUser.getUsername(), skyblockUser.getUuid(), skyblockUser.getMoney(), skyblockUser.isHasHaste(),
+                        skyblockUser.isHasHasteActive(), skyblockUser.isHasSpeed(), skyblockUser.isHasSpeedActive(), skyblockUser.isHasJump(),
+                        skyblockUser.isHasJumpActive(), skyblockUser.getFlyLeft(), skyblockUser.isFlyActive(), false,
+                        0, PlayerWarp.playerWarpFromString(skyblockUser.getPlayerWarp()), skyblockUser.getPlayerExp(), skyblockUser.getPlayerLevel()))));
     }
 
     public SkyblockUser getUser(UUID uuid) {
@@ -238,7 +248,7 @@ public class StorageManager {
     public void updateUser(SkyblockUser skyblockUser) {
         CompletableFuture.runAsync(() -> MANAGER_USER.updateUser(skyblockUser.getUserUUID(), new UpdateUserDto(skyblockUser.getUserUUID(), skyblockUser.getUsername(), skyblockUser.getLevel(), skyblockUser.getExp(),
                 skyblockUser.isActive(), skyblockUser.getFlyLeft(), skyblockUser.hasHaste(), skyblockUser.hasHasteActive(), skyblockUser.hasSpeed(),
-                skyblockUser.hasSpeedActive(), skyblockUser.hasJump(), skyblockUser.hasJumpActive(), PlayerWarp.playerWarpToString(skyblockUser.getPlayerWarp()),
+                skyblockUser.hasSpeedActive(), skyblockUser.hasJump(), skyblockUser.hasJumpActive(), (skyblockUser.getPlayerWarp() != null ? PlayerWarp.playerWarpToString(skyblockUser.getPlayerWarp()) : null),
                 skyblockUser.getMoney())));
     }
 

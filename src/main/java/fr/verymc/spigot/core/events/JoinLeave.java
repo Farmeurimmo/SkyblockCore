@@ -7,7 +7,6 @@ import main.java.fr.verymc.spigot.core.cmd.base.SpawnCmd;
 import main.java.fr.verymc.spigot.core.scoreboard.ScoreBoard;
 import main.java.fr.verymc.spigot.core.storage.SkyblockUser;
 import main.java.fr.verymc.spigot.core.storage.SkyblockUserManager;
-import main.java.fr.verymc.spigot.core.storage.StorageJSONManager;
 import main.java.fr.verymc.spigot.core.storage.StorageManager;
 import main.java.fr.verymc.spigot.dungeon.Dungeon;
 import main.java.fr.verymc.spigot.dungeon.DungeonManager;
@@ -21,7 +20,6 @@ import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.potion.PotionEffect;
@@ -168,13 +166,5 @@ public class JoinLeave implements Listener {
         }
         event.setQuitMessage(LeaveMessage);*/
         event.setQuitMessage(null);
-    }
-
-    @EventHandler
-    public void preLogin(AsyncPlayerPreLoginEvent event) {
-        if (StorageJSONManager.instance.loading) {
-            event.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER,
-                    "§cLe serveur est en cours de démarrage, veuillez patienter.");
-        }
     }
 }

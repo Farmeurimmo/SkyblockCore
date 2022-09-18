@@ -32,6 +32,7 @@ public class PlayerWarp {
     }
 
     public static PlayerWarp playerWarpFromString(String string) {
+        if (string == null) return null;
         String[] str = string.split(ObjectConverter.SEPARATOR);
         String name = str[0];
         Location location = ObjectConverter.instance.locationFromString(str[1]);

@@ -54,8 +54,12 @@ public class SkyblockUserManager {
     }
 
     public void checkForAccount(Player player) {
-        SkyblockUser skyblockUser = (users.get(player.getUniqueId()) != null) ? users.get(player.getUniqueId()) : StorageManager.instance.getUser(player.getUniqueId());
+        SkyblockUser skyblockUser = StorageManager.instance.getUser(player.getUniqueId());
         if (skyblockUser == null) {
+            if (users.containsKey(player.getUniqueId())) {
+                return;
+            }
+            System.out.println("user null");
             skyblockUser = new SkyblockUser(player.getName(), player.getUniqueId(), 200.0, false, false, false,
                     false, false, false, 0, false, false, 0, null, 0.0, 0.0);
             SkyblockUserManager.instance.addUser(skyblockUser);
