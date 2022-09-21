@@ -12,6 +12,7 @@ import fr.verymc.api.wrapper.games.skyblock.users.dto.UpdateUserDto;
 import main.java.fr.verymc.spigot.Main;
 import main.java.fr.verymc.spigot.core.spawners.Spawner;
 import main.java.fr.verymc.spigot.island.Island;
+import main.java.fr.verymc.spigot.island.IslandManager;
 import main.java.fr.verymc.spigot.island.bank.IslandBank;
 import main.java.fr.verymc.spigot.island.blocks.Chest;
 import main.java.fr.verymc.spigot.island.challenges.IslandChallenge;
@@ -59,6 +60,7 @@ public class StorageManager {
         instance = this;
 
         loadAllUsers();
+        loadAllIslands();
 
         skyblockUserCheckForUpdate();
         islandCheckForUpdate();
@@ -88,7 +90,7 @@ public class StorageManager {
                 jsonObjectMembers = (org.json.simple.JSONObject) new JSONParser().parse(i.getMembres());
             } catch (ParseException e) {
                 System.out.println("Error while parsing members of island " + i.getUuid());
-                return null;
+                break;
             }
             for (Object o : jsonObjectMembers.keySet()) {
                 String key = (String) o;
@@ -96,13 +98,7 @@ public class StorageManager {
                 members.put(UUID.fromString(key), IslandRanks.match(value));
             }
             HashMap<IslandRanks, ArrayList<IslandPerms>> permsPerRanks = new HashMap<>();
-            org.json.simple.JSONObject jsonObjectPerms;
-            try {
-                jsonObjectPerms = (org.json.simple.JSONObject) new JSONParser().parse(i.getPermsPerRank());
-            } catch (ParseException e) {
-                System.out.println("Error while parsing perms of island " + i.getUuid());
-                return null;
-            }
+            org.json.simple.JSONObject jsonObjectPerms = new org.json.simple.JSONObject(ObjectConverter.instance.stringToHashMap(i.getPermsPerRank()));
             for (Object o : jsonObjectPerms.keySet()) {
                 String key = (String) o;
                 String value = (String) jsonObjectPerms.get(key);
@@ -151,10 +147,12 @@ public class StorageManager {
             boolean isPublic = i.isPublic();
             ArrayList<IslandChallenge> islandChallenges = new ArrayList<>();
             String strCh = i.getChallenges();
-            String[] challenges = strCh.split(ObjectConverter.SEPARATOR_ELEMENT);
-            for (String str : challenges) {
-                if (str.length() > 1) {
-                    islandChallenges.add(IslandChallenge.fromString(str));
+            if (strCh != null) {
+                String[] challenges = strCh.split(ObjectConverter.SEPARATOR_ELEMENT);
+                for (String str : challenges) {
+                    if (str.length() > 1) {
+                        islandChallenges.add(IslandChallenge.fromString(str));
+                    }
                 }
             }
             ArrayList<IslandSettings> activatedSettings = new ArrayList<>();
@@ -166,19 +164,21 @@ public class StorageManager {
             }
             ArrayList<Chest> chests = new ArrayList<>();
             String strChest = i.getChests();
-            String[] chestsSplit = strChest.split(ObjectConverter.SEPARATOR_ELEMENT);
-            System.out.println("§4" + strChest);
-            for (int ia = 0; ia < chestsSplit.length; ia++) {
-                System.out.println("§2" + chestsSplit[ia]);
-                if (chestsSplit[ia].length() > 1)
-                    chests.add(Chest.fromString(chestsSplit[ia]));
+            if (strChest != null) {
+                String[] chestsSplit = strChest.split(ObjectConverter.SEPARATOR_ELEMENT);
+                for (String s : chestsSplit) {
+                    if (s.length() > 1)
+                        chests.add(Chest.fromString(s));
+                }
             }
             ArrayList<Minion> minions = new ArrayList<>();
             String strMinion = i.getMinions();
-            String[] minionsSplit = strMinion.split(ObjectConverter.SEPARATOR_ELEMENT);
-            for (String str : minionsSplit) {
-                if (str.length() > 1) {
-                    minions.add(Minion.fromString(str));
+            if (strMinion != null) {
+                String[] minionsSplit = strMinion.split(ObjectConverter.SEPARATOR_ELEMENT);
+                for (String str : minionsSplit) {
+                    if (str.length() > 1) {
+                        minions.add(Minion.fromString(str));
+                    }
                 }
             }
             HashMap<Material, Double> stacked = new HashMap<>();
@@ -190,10 +190,12 @@ public class StorageManager {
             }
             ArrayList<Spawner> spawners = new ArrayList<>();
             String strSpawners = i.getSpawners();
-            String[] spawnersSplit = strSpawners.split(ObjectConverter.SEPARATOR_ELEMENT);
-            for (String str : spawnersSplit) {
-                if (str.length() > 1) {
-                    spawners.add(Spawner.stringToSpawner(str));
+            if (strSpawners != null) {
+                String[] spawnersSplit = strSpawners.split(ObjectConverter.SEPARATOR_ELEMENT);
+                for (String str : spawnersSplit) {
+                    if (str.length() > 1) {
+                        spawners.add(Spawner.stringToSpawner(str));
+                    }
                 }
             }
             islands1.add(new Island(i.getIslandName(), ObjectConverter.instance.locationFromString(i.getIslandHome()), null, i.getUuid(), members, sizeUpgrade,
@@ -201,6 +203,18 @@ public class StorageManager {
                     chests, minions, stacked, false, spawners));
         }
         return islands1;
+    }
+
+    public void loadAllIslands() {
+        CompletableFuture.runAsync(() -> {
+            ArrayList<Island> islands = getIslands();
+            if (islands == null) return;
+            islands.forEach(island -> {
+                if (island != null) {
+                    IslandManager.instance.islands.add(island);
+                }
+            });
+        }).join();
     }
 
     public void updateIsland(Island island) {
@@ -233,7 +247,7 @@ public class StorageManager {
                 new SkyblockUser(skyblockUser.getUsername(), skyblockUser.getUuid(), skyblockUser.getMoney(), skyblockUser.isHasHaste(),
                         skyblockUser.isHasHasteActive(), skyblockUser.isHasSpeed(), skyblockUser.isHasSpeedActive(), skyblockUser.isHasJump(),
                         skyblockUser.isHasJumpActive(), skyblockUser.getFlyLeft(), skyblockUser.isFlyActive(), false,
-                        0, PlayerWarp.playerWarpFromString(skyblockUser.getPlayerWarp()), skyblockUser.getPlayerExp(), skyblockUser.getPlayerLevel()))));
+                        0, PlayerWarp.playerWarpFromString(skyblockUser.getPlayerWarp()), skyblockUser.getPlayerExp(), skyblockUser.getPlayerLevel())))).join();
     }
 
     public SkyblockUser getUser(UUID uuid) {
