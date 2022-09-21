@@ -139,6 +139,11 @@ public class IslandCmd implements CommandExecutor, TabCompleter {
                         p.sendMessage("§6§lIles §8» §fTu ne peux pas détruire cette île, tu n'es pas le propriétaire.");
                     }
                     return true;
+                } else if (args[0].equalsIgnoreCase("deleteforce")) {
+                    if (IslandManager.instance.getPlayerIsland(p).getOwnerUUID().equals(p.getUniqueId())) {
+                        IslandManager.instance.deleteIsland(p);
+                    }
+                    return true;
                 } else if (args[0].equalsIgnoreCase("recalc")) {
                     if (p.hasPermission("*")) {
                         IslandValueCalcManager.instance.makeCountForAllIsland();

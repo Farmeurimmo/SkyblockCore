@@ -122,7 +122,10 @@ public class IslandManager {
     public void pasteAndLoadIslands() {
         islands = StorageManager.instance.getIslands();
         for (Island island : islands) {
-            for (File file : Main.instance.getDataFolder().listFiles()) {
+            if (island.getCenter() == null) {
+                island.setCenter(getAFreeCenter());
+            }
+            for (File file : Objects.requireNonNull(Main.instance.getDataFolder().listFiles())) {
                 System.out.println(file.getName());
                 if (file.getName().contains(island.getUUID().toString())) {
                     FAWEUtils.instance.pasteSchemWithoutLockingThread(file, island.getCenter().clone().add(250,
@@ -208,6 +211,7 @@ public class IslandManager {
 
     public boolean isAnIslandByLoc(Location loc) {
         for (Island i : islands) {
+            if (i.getCenter() == null) return false;
             final int size = IslandUpgradeSize.getSizeFromLevel(i.getSizeUpgrade().getLevel());
             if (i.getCenter().getBlockX() + size >= loc.getBlockX() && i.getCenter().getBlockX() - size <= loc.getBlockX()
                     && i.getCenter().getBlockZ() + size >= loc.getBlockZ() && i.getCenter().getBlockZ() - size <= loc.getBlockZ()) {
@@ -219,6 +223,7 @@ public class IslandManager {
 
     public Island getIslandByLoc(Location loc) {
         for (Island i : islands) {
+            if (i.getCenter() == null) return null;
             final int size = IslandUpgradeSize.getSizeFromLevel(i.getSizeUpgrade().getLevel());
             if (i.getCenter().getBlockX() + size >= loc.getBlockX() && i.getCenter().getBlockX() - size <= loc.getBlockX()
                     && i.getCenter().getBlockZ() + size >= loc.getBlockZ() && i.getCenter().getBlockZ() - size <= loc.getBlockZ()) {
@@ -299,7 +304,9 @@ public class IslandManager {
     }
 
     public boolean isOwner(Player p) {
-        return false;
+        Island playerIsland = getIslandByLoc(p.getLocation());
+        if (playerIsland == null) return false;
+        return playerIsland.getOwnerUUID().equals(p.getUniqueId());
     }
 
     public void deleteIsland(Player p) {
@@ -326,16 +333,16 @@ public class IslandManager {
                     Operations.complete(operation);
                     editSession.flushSession();
 
+                    System.out.println("Destroying island on api");
+                    StorageManager.instance.deleteIsland(playerIsland.getUUID());
+
                     Bukkit.getScheduler().scheduleSyncDelayedTask(Main.instance, () -> {
                         for (Minion m : playerIsland.getMinions()) {
                             if (getIslandByLoc(m.getBlocLocation()) == playerIsland) {
                                 MinionManager.instance.removeMinion(m, playerIsland);
                             }
                         }
-                        ArrayList<Chest> chests = new ArrayList<>();
-                        for (Chest c : playerIsland.getChests()) {
-                            chests.add(c);
-                        }
+                        ArrayList<Chest> chests = new ArrayList<>(playerIsland.getChests());
                         for (Chest c : chests) {
                             if (getIslandByLoc(c.getBlock()) == playerIsland) {
                                 ChestManager.instance.removeChestFromLoc(c.getBlock());
@@ -345,9 +352,7 @@ public class IslandManager {
                             SpawnersManager.instance.destroySpawner(spawner, playerIsland, true);
                         }
 
-                        if (islands.contains(playerIsland)) {
-                            islands.remove(playerIsland);
-                        }
+                        islands.remove(playerIsland);
                         Long currentMills = System.currentTimeMillis();
                         playerIsland.sendMessageToEveryMember("§6§lIles §8» §4L'île a été §lsupprimée §4par le chef. §f(en " + (currentMills - start) + "ms)", p);
                         for (Map.Entry<UUID, IslandRanks> entry : playerIsland.getMembers().entrySet()) {
@@ -355,13 +360,13 @@ public class IslandManager {
                             if (member == null) {
                                 member = Bukkit.getOfflinePlayer(entry.getKey()).getPlayer();
                             }
+                            assert member != null;
                             PlayerUtils.instance.teleportPlayerFromRequest(member, SpawnCmd.Spawn, 0, ServerType.SKYBLOCK_HUB);
                         }
                         playerIsland.getMembers().clear();
                         HashMap<String, Object> toEdit = new HashMap<>();
                         toEdit.put(playerIsland.getUUID().toString(), null);
                         AsyncConfig.instance.setAndSaveAsync(toEdit, ConfigManager.instance.getDataIslands(), ConfigManager.instance.islandsFile);
-                        StorageManager.instance.deleteIsland(playerIsland.getUUID());
                     }, 0);
 
                 } catch (WorldEditException e) {
@@ -567,6 +572,7 @@ public class IslandManager {
             int maxx = 0;
             int maxz = 0;
             for (Island i : islands) {
+                if (i.getCenter() == null) continue;
                 if (minx > i.getCenter().getBlockX()) {
                     minx = i.getCenter().getBlockX();
                 }

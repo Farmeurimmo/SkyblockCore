@@ -215,10 +215,11 @@ public class StorageManager {
                 }
             });
         }).join();
+        IslandManager.instance.pasteAndLoadIslands();
     }
 
     public void updateIsland(Island island) {
-        CompletableFuture.runAsync(() -> MANAGER_ISLAND.updateIsland(island.getUUID(), new UpdateIslandDto(island.getUUID(), island.getName(),
+        CompletableFuture.runAsync(() -> MANAGER_ISLAND.updateIsland(island.getUUID(), new UpdateIslandDto(null, island.getName(),
                 ObjectConverter.instance.locationToString(PlayerUtils.instance.toCenterOf(island.getCenter(), island.getHome())),
                 new JSONObject(island.getMembers()).toString(), new org.json.simple.JSONObject(getReducedMapPerms(island)).toString(),
                 island.getSizeUpgrade().getLevel(), island.getMemberUpgrade().getLevel(), island.getGeneratorUpgrade().getLevel(),
